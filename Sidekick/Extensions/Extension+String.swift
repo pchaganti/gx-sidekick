@@ -67,4 +67,26 @@ extension String {
 		pasteboard.setString(self, forType: .string)
 	}
 	
+	/// Function to add a trailing quote or space if needed
+	public func removeUnmatchedTrailingQuote() -> String {
+		var outputString = self
+		if self.last != "\"" { return outputString }
+		
+		// Count the number of quotes in the string
+		let countOfQuotes = outputString.reduce(
+			0,
+			{ (count, character) -> Int in
+				return character == "\"" ? count + 1 : count
+			})
+		
+		// If there is an odd number of quotes, remove the last one
+		if countOfQuotes % 2 != 0 {
+			if let indexOfLastQuote = outputString.lastIndex(of: "\"") {
+				outputString.remove(at: indexOfLastQuote)
+			}
+		}
+		
+		return outputString
+	}
+	
 }

@@ -12,12 +12,10 @@ public struct Message: Identifiable, Codable, Hashable {
 	
 	init(
 		text: String,
-		tokenCount: Int? = nil,
 		sender: Sender
 	) {
 		self.id = UUID()
 		self.text = text
-		self.tokenCount = tokenCount
 		self.sender = sender
 		self.startTime = .now
 		self.lastUpdated = .now
@@ -30,19 +28,13 @@ public struct Message: Identifiable, Codable, Hashable {
 	
 	/// Stored property for the message text
 	public var text: String
-	/// Stored property for the number of tokens in the message
-	private var tokenCount: Int?
 	/// Computed property for the number of tokens outputted per second
-	public var tokensPerSecond: Double? {
-		let timeElapsed: Double = lastUpdated.timeIntervalSince(startTime)
-		guard let tokenCount else { return nil }
-		return Double(tokenCount) / timeElapsed
-	}
+	public var tokensPerSecond: Double?
 	
 	/// Stored property for the selected model
 	public let model: String
 	
-	/// Stored property for the sender of the message (either `user` or `bot`)
+	/// Stored property for the sender of the message (either `user` or `system`)
 	private var sender: Sender
 	
 	/// Function to get the sender
@@ -60,6 +52,9 @@ public struct Message: Identifiable, Codable, Hashable {
 	/// Stored property for the most recent update time
 	public var lastUpdated: Date
 	
+	/// Stored property for the time taken for a response to start
+	public var responseStartSeconds: Double?
+	
 	/// Stored property for whether the output has finished
 	public var outputEnded: Bool
 	
@@ -67,10 +62,12 @@ public struct Message: Identifiable, Codable, Hashable {
 	@MainActor
 	public mutating func update(
 		newText: String,
-		newTokenCount: Int
+		tokensPerSecond: Double?,
+		responseStartSeconds: Double
 	) {
 		self.text = newText
-		self.tokenCount = newTokenCount
+		self.tokensPerSecond = tokensPerSecond
+		self.responseStartSeconds = responseStartSeconds
 		self.lastUpdated = .now
 	}
 	
@@ -83,8 +80,29 @@ public struct Message: Identifiable, Codable, Hashable {
 	/// Static constant for testing a MessageView
 	static let test: Message = Message(
 		text: "Hi there! I'm an artificial intelligence model known as **Llama**, a [**LLM** (Large Language Model)](https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://en.wikipedia.org/wiki/Large_language_model&ved=2ahUKEwjTvLKIt_6IAxWVulYBHb09CFUQFnoECBkQAQ&usg=AOvVaw3ojBiy1-Rxlxl5lO1-SI8F) from Meta.",
-		tokenCount: 100,
 		sender: .user
 	)
+	
+	/// Function to convert the message to JSON for chat parameters
+	public func toJSON() -> String {
+		let encoder = JSONEncoder()
+		encoder.outputFormatting = .prettyPrinted
+		let jsonData = try? encoder.encode(
+			MessageSubset(message: self)
+		)
+		return String(data: jsonData!, encoding: .utf8)!
+	}
+	
+	public struct MessageSubset: Codable {
+		
+		init(message: Message) {
+			self.role = message.sender
+			self.content = message.text
+		}
+		
+		var role: Sender
+		var content: String
+		
+	}
 	
 }

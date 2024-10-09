@@ -8,6 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		200FBFD82CB627DD00A92A74 /* llama-server in Resources */ = {isa = PBXBuildFile; fileRef = 200FBFD72CB627DD00A92A74 /* llama-server */; };
+		200FBFE72CB6384400A92A74 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200FBFE52CB6384400A92A74 /* main.swift */; };
+		200FBFEC2CB63BEA00A92A74 /* llama-server-watchdog in Embed Helper Tools */ = {isa = PBXBuildFile; fileRef = 200FBFDD2CB6382F00A92A74 /* llama-server-watchdog */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		200FBFEE2CB6477400A92A74 /* LlamaServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200FBFED2CB6477400A92A74 /* LlamaServer.swift */; };
+		200FBFF12CB64CB400A92A74 /* EventSource in Frameworks */ = {isa = PBXBuildFile; productRef = 200FBFF02CB64CB400A92A74 /* EventSource */; };
+		200FBFF32CB66B8300A92A74 /* ServerHealth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200FBFF22CB66B8300A92A74 /* ServerHealth.swift */; };
+		200FBFF52CB66C0000A92A74 /* LlamaServerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200FBFF42CB66C0000A92A74 /* LlamaServerError.swift */; };
+		200FBFF72CB68ABF00A92A74 /* ChatParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200FBFF62CB68ABF00A92A74 /* ChatParameters.swift */; };
+		2038CCF32CB6CBC6005AA315 /* PendingMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2038CCF22CB6CBC6005AA315 /* PendingMessageView.swift */; };
 		20573F142CB50550004C19FE /* ConversationManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20573F132CB50550004C19FE /* ConversationManagerView.swift */; };
 		20573F162CB505DC004C19FE /* ConversationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20573F152CB505DC004C19FE /* ConversationListView.swift */; };
 		20573F182CB50743004C19FE /* ConversationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20573F172CB50743004C19FE /* ConversationView.swift */; };
@@ -81,13 +89,51 @@
 			remoteGlobalIDString = 200549722CAFA67B00A3DCF2;
 			remoteInfo = Sidekick;
 		};
+		200FBFE92CB63B1A00A92A74 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2005496B2CAFA67B00A3DCF2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 200FBFDC2CB6382F00A92A74;
+			remoteInfo = "llama-server-watchdog";
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		200FBFDB2CB6382F00A92A74 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		200FBFEB2CB63B9400A92A74 /* Embed Helper Tools */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				200FBFEC2CB63BEA00A92A74 /* llama-server-watchdog in Embed Helper Tools */,
+			);
+			name = "Embed Helper Tools";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		200549732CAFA67B00A3DCF2 /* Sidekick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sidekick.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		200549842CAFA67D00A3DCF2 /* SidekickTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SidekickTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2005498E2CAFA67D00A3DCF2 /* SidekickUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SidekickUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		200FBFD72CB627DD00A92A74 /* llama-server */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llama-server"; sourceTree = "<group>"; };
+		200FBFDD2CB6382F00A92A74 /* llama-server-watchdog */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "llama-server-watchdog"; sourceTree = BUILT_PRODUCTS_DIR; };
+		200FBFE52CB6384400A92A74 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		200FBFE82CB638B200A92A74 /* llama-server-watchdog.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "llama-server-watchdog.entitlements"; sourceTree = "<group>"; };
+		200FBFED2CB6477400A92A74 /* LlamaServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LlamaServer.swift; sourceTree = "<group>"; };
+		200FBFF22CB66B8300A92A74 /* ServerHealth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerHealth.swift; sourceTree = "<group>"; };
+		200FBFF42CB66C0000A92A74 /* LlamaServerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LlamaServerError.swift; sourceTree = "<group>"; };
+		200FBFF62CB68ABF00A92A74 /* ChatParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatParameters.swift; sourceTree = "<group>"; };
+		2038CCF22CB6CBC6005AA315 /* PendingMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingMessageView.swift; sourceTree = "<group>"; };
 		20573F132CB50550004C19FE /* ConversationManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationManagerView.swift; sourceTree = "<group>"; };
 		20573F152CB505DC004C19FE /* ConversationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListView.swift; sourceTree = "<group>"; };
 		20573F172CB50743004C19FE /* ConversationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationView.swift; sourceTree = "<group>"; };
@@ -145,6 +191,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				20E48C722CB5FCCC0085E7D6 /* LLM in Frameworks */,
+				200FBFF12CB64CB400A92A74 /* EventSource in Frameworks */,
 				20A8B6592CB26E4800B756FD /* SimilaritySearchKitDistilbert in Frameworks */,
 				20A8B6572CB26E4800B756FD /* SimilaritySearchKit in Frameworks */,
 				20573F282CB52F84004C19FE /* Splash in Frameworks */,
@@ -163,6 +210,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		2005498B2CAFA67D00A3DCF2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		200FBFDA2CB6382F00A92A74 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -188,6 +242,7 @@
 				200549732CAFA67B00A3DCF2 /* Sidekick.app */,
 				200549842CAFA67D00A3DCF2 /* SidekickTests.xctest */,
 				2005498E2CAFA67D00A3DCF2 /* SidekickUITests.xctest */,
+				200FBFDD2CB6382F00A92A74 /* llama-server-watchdog */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -195,9 +250,31 @@
 		200FBFD62CB627B100A92A74 /* llama.cpp */ = {
 			isa = PBXGroup;
 			children = (
+				200FBFED2CB6477400A92A74 /* LlamaServer.swift */,
+				200FBFF22CB66B8300A92A74 /* ServerHealth.swift */,
 				200FBFD72CB627DD00A92A74 /* llama-server */,
+				200FBFE62CB6384400A92A74 /* llama-server-watchdog */,
+				200FBFF82CB68CFC00A92A74 /* Types */,
 			);
 			path = llama.cpp;
+			sourceTree = "<group>";
+		};
+		200FBFE62CB6384400A92A74 /* llama-server-watchdog */ = {
+			isa = PBXGroup;
+			children = (
+				200FBFE82CB638B200A92A74 /* llama-server-watchdog.entitlements */,
+				200FBFE52CB6384400A92A74 /* main.swift */,
+			);
+			path = "llama-server-watchdog";
+			sourceTree = "<group>";
+		};
+		200FBFF82CB68CFC00A92A74 /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				200FBFF42CB66C0000A92A74 /* LlamaServerError.swift */,
+				200FBFF62CB68ABF00A92A74 /* ChatParameters.swift */,
+			);
+			path = Types;
 			sourceTree = "<group>";
 		};
 		20573F192CB508B4004C19FE /* Conversation */ = {
@@ -216,6 +293,7 @@
 			isa = PBXGroup;
 			children = (
 				20573F1E2CB5274E004C19FE /* MessagesView.swift */,
+				2038CCF22CB6CBC6005AA315 /* PendingMessageView.swift */,
 				20573F202CB527DB004C19FE /* MessageView.swift */,
 				20573F2E2CB5301F004C19FE /* Markdown */,
 			);
@@ -286,8 +364,8 @@
 		20B97CC02CAFE883009A0A5D /* Logic */ = {
 			isa = PBXGroup;
 			children = (
-				200FBFD62CB627B100A92A74 /* llama.cpp */,
 				2086E1AB2CB03CD200FFCF57 /* Dialogs.swift */,
+				200FBFD62CB627B100A92A74 /* llama.cpp */,
 				20B9E6152CB1465900BA0AD2 /* Data Models */,
 				20B9E60F2CB1429E00BA0AD2 /* Commands */,
 				20B9E6142CB1463D00BA0AD2 /* Inference */,
@@ -393,10 +471,12 @@
 				2005496F2CAFA67B00A3DCF2 /* Sources */,
 				200549702CAFA67B00A3DCF2 /* Frameworks */,
 				200549712CAFA67B00A3DCF2 /* Resources */,
+				200FBFEB2CB63B9400A92A74 /* Embed Helper Tools */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				200FBFEA2CB63B1A00A92A74 /* PBXTargetDependency */,
 			);
 			name = Sidekick;
 			packageProductDependencies = (
@@ -408,6 +488,7 @@
 				20573F272CB52F84004C19FE /* Splash */,
 				20573F292CB52F84004C19FE /* SplashMarkdown */,
 				20E48C712CB5FCCC0085E7D6 /* LLM */,
+				200FBFF02CB64CB400A92A74 /* EventSource */,
 			);
 			productName = Sidekick;
 			productReference = 200549732CAFA67B00A3DCF2 /* Sidekick.app */;
@@ -453,6 +534,25 @@
 			productReference = 2005498E2CAFA67D00A3DCF2 /* SidekickUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		200FBFDC2CB6382F00A92A74 /* llama-server-watchdog */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 200FBFE12CB6382F00A92A74 /* Build configuration list for PBXNativeTarget "llama-server-watchdog" */;
+			buildPhases = (
+				200FBFD92CB6382F00A92A74 /* Sources */,
+				200FBFDA2CB6382F00A92A74 /* Frameworks */,
+				200FBFDB2CB6382F00A92A74 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "llama-server-watchdog";
+			packageProductDependencies = (
+			);
+			productName = "llama-server-watchdog";
+			productReference = 200FBFDD2CB6382F00A92A74 /* llama-server-watchdog */;
+			productType = "com.apple.product-type.tool";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -474,6 +574,9 @@
 						CreatedOnToolsVersion = 16.1;
 						TestTargetID = 200549722CAFA67B00A3DCF2;
 					};
+					200FBFDC2CB6382F00A92A74 = {
+						CreatedOnToolsVersion = 16.1;
+					};
 				};
 			};
 			buildConfigurationList = 2005496E2CAFA67B00A3DCF2 /* Build configuration list for PBXProject "Sidekick" */;
@@ -492,6 +595,7 @@
 				20A8B6552CB26E4800B756FD /* XCRemoteSwiftPackageReference "similarity-search-kit" */,
 				20573F262CB52F84004C19FE /* XCRemoteSwiftPackageReference "Splash" */,
 				20E48C702CB5FCCC0085E7D6 /* XCRemoteSwiftPackageReference "LLM" */,
+				200FBFEF2CB64CB400A92A74 /* XCRemoteSwiftPackageReference "EventSource" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 200549742CAFA67B00A3DCF2 /* Products */;
@@ -501,6 +605,7 @@
 				200549722CAFA67B00A3DCF2 /* Sidekick */,
 				200549832CAFA67D00A3DCF2 /* SidekickTests */,
 				2005498D2CAFA67D00A3DCF2 /* SidekickUITests */,
+				200FBFDC2CB6382F00A92A74 /* llama-server-watchdog */,
 			);
 		};
 /* End PBXProject section */
@@ -540,10 +645,12 @@
 				20573F362CB53878004C19FE /* CircleMenuStyle.swift in Sources */,
 				20573F1F2CB5274E004C19FE /* MessagesView.swift in Sources */,
 				20B97CE72CB0066A009A0A5D /* Extension+String.swift in Sources */,
+				200FBFF72CB68ABF00A92A74 /* ChatParameters.swift in Sources */,
 				20B97CB52CAFE86C009A0A5D /* ContentView.swift in Sources */,
 				20B97CCE2CAFEC37009A0A5D /* Settings.swift in Sources */,
 				20B97CD42CAFECA2009A0A5D /* Extension+Template.swift in Sources */,
 				20573F232CB52E79004C19FE /* Extension+Theme.swift in Sources */,
+				200FBFF52CB66C0000A92A74 /* LlamaServerError.swift in Sources */,
 				20B97CE32CB00585009A0A5D /* Profile.swift in Sources */,
 				20573F212CB527DB004C19FE /* MessageView.swift in Sources */,
 				20573F162CB505DC004C19FE /* ConversationListView.swift in Sources */,
@@ -555,6 +662,7 @@
 				20B97CDD2CAFFE06009A0A5D /* Message.swift in Sources */,
 				20B97CD02CAFEC37009A0A5D /* Model.swift in Sources */,
 				20E48C742CB603B30085E7D6 /* ObservableScrollView.swift in Sources */,
+				200FBFEE2CB6477400A92A74 /* LlamaServer.swift in Sources */,
 				2086E1AC2CB03CD200FFCF57 /* Dialogs.swift in Sources */,
 				20573F2D2CB52FAF004C19FE /* SplashCodeSyntaxHighlighter.swift in Sources */,
 				20E48C262CB560730085E7D6 /* ChatStyle.swift in Sources */,
@@ -574,12 +682,14 @@
 				20573F302CB5302C004C19FE /* TextOutputFormat.swift in Sources */,
 				20573F1B2CB5099B004C19FE /* ConversationCommands.swift in Sources */,
 				20B9E60C2CB140A000BA0AD2 /* AppDelegate.swift in Sources */,
+				2038CCF32CB6CBC6005AA315 /* PendingMessageView.swift in Sources */,
 				20E48C2B2CB560E30085E7D6 /* Extension+CGKeyCode.swift in Sources */,
 				20B9E60E2CB1414100BA0AD2 /* DockMenuCommands.swift in Sources */,
 				20B9E6112CB142FD00BA0AD2 /* DebugCommands.swift in Sources */,
 				20573F252CB52EB6004C19FE /* CopyButton.swift in Sources */,
 				20A8B65B2CB2709100B756FD /* Resources.swift in Sources */,
 				20573F182CB50743004C19FE /* ConversationView.swift in Sources */,
+				200FBFF32CB66B8300A92A74 /* ServerHealth.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -600,6 +710,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		200FBFD92CB6382F00A92A74 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				200FBFE72CB6384400A92A74 /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -612,6 +730,11 @@
 			isa = PBXTargetDependency;
 			target = 200549722CAFA67B00A3DCF2 /* Sidekick */;
 			targetProxy = 2005498F2CAFA67D00A3DCF2 /* PBXContainerItemProxy */;
+		};
+		200FBFEA2CB63B1A00A92A74 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 200FBFDC2CB6382F00A92A74 /* llama-server-watchdog */;
+			targetProxy = 200FBFE92CB63B1A00A92A74 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -748,6 +871,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -777,6 +901,7 @@
 				ENABLE_PREVIEWS = YES;
 				"EXCLUDED_ARCHS[sdk=*]" = x86_64;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -859,6 +984,38 @@
 			};
 			name = Release;
 		};
+		200FBFE22CB6382F00A92A74 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "llama-server-watchdog.entitlements";
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = KM2C4ZAVPJ;
+				ENABLE_HARDENED_RUNTIME = YES;
+				OTHER_CODE_SIGN_FLAGS = "$(inherited) -i $(PRODUCT_BUNDLE_IDENTIFIER)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pattonium.Sidekick.llama-server-watchdog";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		200FBFE32CB6382F00A92A74 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "llama-server-watchdog.entitlements";
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = KM2C4ZAVPJ;
+				ENABLE_HARDENED_RUNTIME = YES;
+				OTHER_CODE_SIGN_FLAGS = "$(inherited) -i $(PRODUCT_BUNDLE_IDENTIFIER)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pattonium.Sidekick.llama-server-watchdog";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -898,9 +1055,26 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		200FBFE12CB6382F00A92A74 /* Build configuration list for PBXNativeTarget "llama-server-watchdog" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				200FBFE22CB6382F00A92A74 /* Debug */,
+				200FBFE32CB6382F00A92A74 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		200FBFEF2CB64CB400A92A74 /* XCRemoteSwiftPackageReference "EventSource" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Recouse/EventSource.git";
+			requirement = {
+				kind = exactVersion;
+				version = 0.0.5;
+			};
+		};
 		20573F262CB52F84004C19FE /* XCRemoteSwiftPackageReference "Splash" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/JohnSundell/Splash";
@@ -937,8 +1111,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.2;
+				kind = exactVersion;
+				version = 2.4.0;
 			};
 		};
 		20E48C702CB5FCCC0085E7D6 /* XCRemoteSwiftPackageReference "LLM" */ = {
@@ -952,6 +1126,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		200FBFF02CB64CB400A92A74 /* EventSource */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 200FBFEF2CB64CB400A92A74 /* XCRemoteSwiftPackageReference "EventSource" */;
+			productName = EventSource;
+		};
 		20573F272CB52F84004C19FE /* Splash */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 20573F262CB52F84004C19FE /* XCRemoteSwiftPackageReference "Splash" */;

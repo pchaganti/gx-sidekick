@@ -40,7 +40,12 @@ public class Settings {
 				result = url
 			} else {
 				// Get default
-				if let modelUrl: URL = Self.dirUrl.contents?.first {
+				let modelDirUrl: URL = Self.dirUrl.appendingPathComponent("Models")
+				if let modelUrl: URL = modelDirUrl.contents?.compactMap({
+					$0
+				}).filter({
+					$0.pathExtension == "gguf"
+				}).first {
 					result = modelUrl
 				} else {
 					// If no model, return nil
@@ -62,6 +67,18 @@ public class Settings {
 		} else {
 			// No model
 			return false
+		}
+	}
+	
+	/// Computed property for whether sound effects are played
+	static var playSoundEffects: Bool {
+		get {
+			return UserDefaults.standard.bool(
+				forKey: "playSoundEffects"
+			)
+		}
+		set {
+			UserDefaults.standard.set(newValue, forKey: "playSoundEffects")
 		}
 	}
 	

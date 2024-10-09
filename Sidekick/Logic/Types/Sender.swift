@@ -10,8 +10,8 @@ import SwiftUI
 
 public enum Sender: String, Codable {
 	
-	case user
-	case bot
+	case user = "user"
+	case system = "system"
 	
 	/// Computed property for the sender's icon
 	var icon: some View {

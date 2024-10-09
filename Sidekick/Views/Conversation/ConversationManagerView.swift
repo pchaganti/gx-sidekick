@@ -53,6 +53,16 @@ struct ConversationManagerView: View {
 		}
 		.navigationTitle(navTitle)
 		.environmentObject(model)
+		.onReceive(
+			NotificationCenter.default.publisher(
+				for: NSApplication.willTerminateNotification
+			)
+		) { output in
+			/// Stop server before app is quit
+			Task {
+				await model.llama.stopServer()
+			}
+		}
     }
 	
 	var conversationView: some View {

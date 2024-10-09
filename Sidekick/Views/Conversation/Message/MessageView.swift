@@ -28,7 +28,7 @@ struct MessageView: View {
 	}
 	
 	private var isOptionsDisabled: Bool {
-		return !message.outputEnded && message.getSender() == .bot
+		return !message.outputEnded && message.getSender() == .system
 	}
 	
 	private var nerdInfo: String {
@@ -117,7 +117,7 @@ Tokens per second: \(tokensPerSecondStr)
 				message.text.copy()
 			}
 			// Show info for bots
-			if message.getSender() == .bot {
+			if message.getSender() == .system {
 				Button("Stats for Nerds") {
 					showNerdInfo.toggle()
 				}

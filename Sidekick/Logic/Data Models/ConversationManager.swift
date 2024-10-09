@@ -114,7 +114,7 @@ public class ConversationManager: ObservableObject {
 		for conversationIndex in self.conversations.indices {
 			if conversation.id == self.conversations[conversationIndex].id {
 				self.conversations[conversationIndex] = conversation
-				break
+				return
 			}
 		}
 	}
