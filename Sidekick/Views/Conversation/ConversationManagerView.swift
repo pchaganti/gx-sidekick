@@ -48,6 +48,7 @@ struct ConversationManagerView: View {
 			ConversationNavigationListView(
 				selectedConversationId: $selectedConversationId
 			)
+			.padding(.top)
 		} detail: {
 			conversationView
 		}

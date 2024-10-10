@@ -40,7 +40,7 @@ struct ConversationControlsView: View {
 				.textFieldStyle(ChatStyle(isFocused: _isFocused))
 				.submitLabel(.send)
 				.padding([.vertical, .leading], 10)
-				.onAppear {
+				.onChange(of: selectedConversationId) {
 					self.isFocused = true
 				}
 		}

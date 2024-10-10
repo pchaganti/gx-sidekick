@@ -62,7 +62,7 @@ public actor LlamaServer {
 		monitor.standardInput = heartbeat
 		// Start monitor
 		try monitor.run()
-		print("Started monitor for \(serverPID)")
+		print("Started monitor for server with PID \(serverPID)")
 	}
 	
 	/// Function to start the `llama-server` process
@@ -105,7 +105,7 @@ public actor LlamaServer {
 		let endTime: Date = Date.now
 		let elapsedTime: Double = endTime.timeIntervalSince(startTime)
 #if DEBUG
-		print("Started server process in \(elapsedTime)ms")
+		print("Started server process in \(elapsedTime) secs")
 #endif
 	}
 	
@@ -151,8 +151,8 @@ public actor LlamaServer {
 		eventSource = EventSource(request: request)
 		eventSource!.connect()
 		
-		var response = ""
-		var responseDiff = 0.0
+		var response: String = ""
+		var responseDiff: Double = 0.0
 		var stopResponse: StopResponse?
 		
 		listenLoop: for await event in eventSource!.events {
@@ -177,11 +177,10 @@ public actor LlamaServer {
 							if responseObj.choices[0].finish_reason != nil {
 								do {
 									stopResponse = try decoder.decode(StopResponse.self, from: data)
-									print("StopResponse: \(String(decoding: data, as: UTF8.self))")
+									break listenLoop
 								} catch {
-									print("Error decoding stopResponse", error as Any, data)
+									print("Error decoding stopResponse, listenLoop will continue", error as Any, data)
 								}
-								break listenLoop
 							}
 						} catch {
 							print("Error decoding responseObj", error as Any)

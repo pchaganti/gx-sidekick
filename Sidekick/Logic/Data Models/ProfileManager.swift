@@ -20,7 +20,7 @@ public class ProfileManager: ObservableObject {
 	static public let shared: ProfileManager = .init()
 	
 	/// Published property for all profiles
-	@Published public var profiles: [Profile] = []{
+	@Published public var profiles: [Profile] = [] {
 		didSet {
 			self.save()
 		}
@@ -162,7 +162,7 @@ public class ProfileManager: ObservableObject {
 		// Setup directory
 		self.patchFileIntegrity()
 		// Add new datastore
-		self.profiles = []
+		self.profiles = Self.defaultProfiles
 		self.save()
 	}
 	
@@ -174,7 +174,7 @@ public class ProfileManager: ObservableObject {
 			title: "Delete All Profiles",
 			message: "Are you sure you want to delete all profiles?"
 		) {
-			// If yes, delete datastore
+		// If yes, delete datastore
 			FileManager.removeItem(at: self.datastoreUrl)
 			// Make new datastore
 			self.newDatastore()
@@ -214,6 +214,26 @@ public class ProfileManager: ObservableObject {
 	/// Computed property returning if datastore exists
 	private var datastoreExists: Bool {
 		return self.datastoreUrl.fileExists
+	}
+	
+	/// Function to remove unpersisted resources on app termination
+	public func removeUnpersistedResources() {
+		for index in self.profiles.indices {
+			if !self.profiles[index].persistResources {
+				let dirUrl: URL = profiles[index].resources.indexUrl
+				self.profiles[index].resources.resources.forEach { resource in
+					resource.deleteDirectory(resourcesDirUrl: dirUrl)
+				}
+				self.profiles[index].resources.resources.removeAll()
+			}
+		}
+	}
+	
+	/// Static constant for default profiles
+	public static var defaultProfiles: [Profile] {
+		return [
+			Profile.default
+		]
 	}
 	
 }

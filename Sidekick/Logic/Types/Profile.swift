@@ -38,6 +38,7 @@ public struct Profile: Identifiable, Codable, Hashable {
 	/// Computed property returning the profile's label
 	public var label: some View {
 		Label(self.name, systemImage: symbolName)
+			.labelStyle(.titleAndIcon)
 			.bold()
 			.padding(7)
 			.padding(.horizontal, 2)
@@ -58,6 +59,15 @@ public struct Profile: Identifiable, Codable, Hashable {
 	
 	/// Stored property for whether the profile is persisted across sessions
 	public var persistResources: Bool = true
+	
+	/// Static constant for the `default` profile
+	public static let `default`: Profile = Profile(
+		name: "Default",
+		symbolName: "person.fill",
+		color: Color.accentColor,
+		resources: Resources(),
+		persistResources: false
+	)
 	
 	public static func == (lhs: Profile, rhs: Profile) -> Bool {
 		lhs.id == rhs.id

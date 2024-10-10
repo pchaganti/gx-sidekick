@@ -14,23 +14,21 @@ struct ConversationNavigationListView: View {
 	
 	@Binding var selectedConversationId: UUID?
 	
-    var body: some View {
-		VStack(spacing: 0) {
-			List(
-				self.conversationManager.conversations.sorted(
-					by: \.createdAt,
-					order: .reverse
-				),
-				selection: $selectedConversationId
-			) { conversation in
-				NavigationLink(
-					conversation.title,
-					value: conversation.id
-				)
-				.contextMenu {
-					Button("Delete") {
-						self.conversationManager.delete(conversation)
-					}
+	var body: some View {
+		List(
+			self.conversationManager.conversations.sorted(
+				by: \.createdAt,
+				order: .reverse
+			),
+			selection: $selectedConversationId
+		) { conversation in
+			NavigationLink(
+				conversation.title,
+				value: conversation.id
+			)
+			.contextMenu {
+				Button("Delete") {
+					self.conversationManager.delete(conversation)
 				}
 			}
 		}
@@ -44,7 +42,7 @@ struct ConversationNavigationListView: View {
 				self.delete(conversationId)
 			}
 		}
-    }
+	}
 	
 	private func delete(_ conversationId: UUID) {
 		let _ = Dialogs.showConfirmation(

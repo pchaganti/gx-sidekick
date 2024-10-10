@@ -18,6 +18,8 @@ public class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
 	
 	/// Function that runs before the app is terminated
 	public func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
+		// Remove non-persisted resources
+		ProfileManager.shared.removeUnpersistedResources()
 		return .terminateNow
 	}
 	

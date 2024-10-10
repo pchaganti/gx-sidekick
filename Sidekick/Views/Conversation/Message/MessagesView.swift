@@ -13,7 +13,10 @@ struct MessagesView: View {
 	@EnvironmentObject private var conversationManager: ConversationManager
 	@EnvironmentObject private var profileManager: ProfileManager
 	
+	@Namespace var pendingViewId
 	@Namespace var scrollViewId
+	
+	@State private var didScrollNearBottom: Bool = false
 	
 	@State private var prevPendingMessage: String = ""
 	
@@ -30,6 +33,10 @@ struct MessagesView: View {
 		return self.selectedConversation?.messages ?? []
 	}
 	
+	var lastMessageId: UUID? {
+		return self.selectedConversation?.messages.last?.id
+	}
+	
 	var showPendingMessage: Bool {
 		let statusPass: Bool = self.model.status == .coldProcessing || self.model.status == .processing
 		let conversationPass: Bool = self.selectedConversation?.id == self.model.sentConversationId
@@ -38,7 +45,12 @@ struct MessagesView: View {
 	
 	var body: some View {
 		ScrollViewReader { proxy in
-			ScrollView {
+			EndDetectionScrollView(
+				.vertical,
+				showIndicators: true,
+				hasScrolledNearEnd: $didScrollNearBottom,
+				distanceFromEnd: 200
+			) {
 				HStack(alignment: .top) {
 					LazyVStack(
 						alignment: .leading,
@@ -48,24 +60,29 @@ struct MessagesView: View {
 							MessageView(
 								message: message
 							)
+							.id(message.id)
 						}
 						if showPendingMessage {
 							PendingMessageView()
+								.id(pendingViewId)
 						}
 					}
 					.padding(.vertical)
 					.padding(.bottom, 55)
-					.id(scrollViewId)
 					Spacer()
 				}
+				.id(scrollViewId)
 			}
 			.onReceive(self.model.$pendingMessage) { _ in
+				// Scroll to end if response was updated & user at bottom
 				self.scrollOnUpdate(proxy: proxy)
 			}
 			.onReceive(self.model.$sentConversationId) { _ in
+				// Scroll to end if message was sent
 				proxy.scrollTo(scrollViewId, anchor: .bottom)
 			}
 			.onChange(of: self.selectedConversationId) {
+				// Scroll to top if conversation was changed
 				proxy.scrollTo(scrollViewId, anchor: .top)
 			}
 		}
@@ -73,6 +90,11 @@ struct MessagesView: View {
 	
 	/// Function to scroll to bottom when the output refreshes
 	private func scrollOnUpdate(proxy: ScrollViewProxy) {
+		// Check if at end
+		if !self.didScrollNearBottom {
+			return
+		}
+		// Check line count
 		let lines: Int = self.model.pendingMessage.split(
 			separator: "\n"
 		).count
@@ -85,7 +107,7 @@ struct MessagesView: View {
 			return
 		} else if abs(prevLines - lines) >= 2 {
 			// Else, scroll to bottom if significant change
-			proxy.scrollTo(scrollViewId, anchor: .bottom)
+			proxy.scrollTo(pendingViewId, anchor: .bottom)
 			prevPendingMessage = self.model.pendingMessage
 		}
 	}
