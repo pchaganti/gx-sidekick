@@ -35,7 +35,7 @@ public struct ThumbnailView: View {
 	private var websiteThumbnail: some View {
 		Group {
 			Favicon(url: self.url).getFavicon(
-				size: .xxl,
+				size: .m,
 				width: thumbnailWidth
 			)
 		}
@@ -43,8 +43,8 @@ public struct ThumbnailView: View {
 	
 	private var fileThumbnail: some View {
 		Group {
-			if thumbnail != nil {
-				Image(thumbnail!, scale: 1.0, label: Text(""))
+			if let thumbnail = thumbnail {
+				Image(thumbnail, scale: 1.0, label: Text(""))
 					.resizable()
 					.aspectRatio(contentMode: .fit)
 					.frame(width: thumbnailWidth)

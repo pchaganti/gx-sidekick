@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		200FBFD82CB627DD00A92A74 /* llama-server in Resources */ = {isa = PBXBuildFile; fileRef = 200FBFD72CB627DD00A92A74 /* llama-server */; };
+		2004D7642CBC9DA2009F294E /* ConversationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2004D7632CBC9DA2009F294E /* ConversationState.swift */; };
 		200FBFE72CB6384400A92A74 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200FBFE52CB6384400A92A74 /* main.swift */; };
 		200FBFEC2CB63BEA00A92A74 /* llama-server-watchdog in Embed Helper Tools */ = {isa = PBXBuildFile; fileRef = 200FBFDD2CB6382F00A92A74 /* llama-server-watchdog */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		200FBFEE2CB6477400A92A74 /* LlamaServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200FBFED2CB6477400A92A74 /* LlamaServer.swift */; };
@@ -15,10 +15,13 @@
 		200FBFF32CB66B8300A92A74 /* ServerHealth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200FBFF22CB66B8300A92A74 /* ServerHealth.swift */; };
 		200FBFF52CB66C0000A92A74 /* LlamaServerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200FBFF42CB66C0000A92A74 /* LlamaServerError.swift */; };
 		200FBFF72CB68ABF00A92A74 /* ChatParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200FBFF62CB68ABF00A92A74 /* ChatParameters.swift */; };
+		202E3EDD2CBB8F7B00AF86C8 /* ReferencedURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202E3EDC2CBB8F7B00AF86C8 /* ReferencedURL.swift */; };
 		2038CCF32CB6CBC6005AA315 /* PendingMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2038CCF22CB6CBC6005AA315 /* PendingMessageView.swift */; };
 		204C79532CB7500800EED58E /* EndDetectionScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204C79522CB7500800EED58E /* EndDetectionScrollView.swift */; };
 		204C79562CB765D700EED58E /* ProfileSelectionMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204C79552CB765D700EED58E /* ProfileSelectionMenu.swift */; };
 		204C79582CB769A400EED58E /* Extension+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204C79572CB769A400EED58E /* Extension+View.swift */; };
+		204C795A2CB789B200EED58E /* llama-server in Resources */ = {isa = PBXBuildFile; fileRef = 204C79592CB789B200EED58E /* llama-server */; };
+		204C795C2CB79AB900EED58E /* ProfileManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204C795B2CB79AB900EED58E /* ProfileManagerView.swift */; };
 		20573F142CB50550004C19FE /* ConversationManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20573F132CB50550004C19FE /* ConversationManagerView.swift */; };
 		20573F162CB505DC004C19FE /* ConversationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20573F152CB505DC004C19FE /* ConversationListView.swift */; };
 		20573F182CB50743004C19FE /* ConversationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20573F172CB50743004C19FE /* ConversationView.swift */; };
@@ -33,8 +36,23 @@
 		20573F302CB5302C004C19FE /* TextOutputFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20573F2F2CB5302C004C19FE /* TextOutputFormat.swift */; };
 		20573F322CB53172004C19FE /* InferenceSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20573F312CB53172004C19FE /* InferenceSettings.swift */; };
 		20573F362CB53878004C19FE /* CircleMenuStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20573F352CB53878004C19FE /* CircleMenuStyle.swift */; };
+		207A9F532CB82D9600E727DE /* SymbolPicker in Frameworks */ = {isa = PBXBuildFile; productRef = 207A9F522CB82D9600E727DE /* SymbolPicker */; };
+		207A9F552CB8A96F00E727DE /* ProfileNavigationRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207A9F542CB8A96F00E727DE /* ProfileNavigationRowView.swift */; };
+		207A9F592CB8F4AF00E727DE /* ResourceSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207A9F582CB8F4AF00E727DE /* ResourceSelectionView.swift */; };
+		207A9F5D2CB8FD0900E727DE /* ResourceSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207A9F5C2CB8FD0900E727DE /* ResourceSectionView.swift */; };
+		207A9F5F2CB903FD00E727DE /* Extension+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207A9F5E2CB903FD00E727DE /* Extension+Binding.swift */; };
+		207A9F622CB94B0000E727DE /* WindowCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207A9F612CB94B0000E727DE /* WindowCommands.swift */; };
 		2086E1712CB036BB00FFCF57 /* ConversationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2086E1702CB036BB00FFCF57 /* ConversationManager.swift */; };
 		2086E1AC2CB03CD200FFCF57 /* Dialogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2086E1AB2CB03CD200FFCF57 /* Dialogs.swift */; };
+		2099BD9B2CB7B8C800E02732 /* Extension+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2099BD9A2CB7B8C800E02732 /* Extension+RawRepresentable.swift */; };
+		2099BD9D2CB7B8E700E02732 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2099BD9C2CB7B8E700E02732 /* Notifications.swift */; };
+		2099BD9F2CB7E9CE00E02732 /* QuickPrompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2099BD9E2CB7E9CE00E02732 /* QuickPrompt.swift */; };
+		2099BDA12CB7EABC00E02732 /* ConversationQuickPromptsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2099BDA02CB7EABC00E02732 /* ConversationQuickPromptsView.swift */; };
+		2099BDA32CB7EB0200E02732 /* CapsuleButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2099BDA22CB7EB0200E02732 /* CapsuleButtonStyle.swift */; };
+		2099BDA52CB8069800E02732 /* ConversationNameEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2099BDA42CB8069800E02732 /* ConversationNameEditor.swift */; };
+		2099BDA92CB81A1300E02732 /* ProfileListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2099BDA82CB81A1300E02732 /* ProfileListView.swift */; };
+		2099BDAD2CB8222A00E02732 /* ProfileEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2099BDAC2CB8222A00E02732 /* ProfileEditorView.swift */; };
+		2099BDB22CB828A500E02732 /* PopoverButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2099BDB12CB828A500E02732 /* PopoverButton.swift */; };
 		20A8B6572CB26E4800B756FD /* SimilaritySearchKit in Frameworks */ = {isa = PBXBuildFile; productRef = 20A8B6562CB26E4800B756FD /* SimilaritySearchKit */; };
 		20A8B6592CB26E4800B756FD /* SimilaritySearchKitDistilbert in Frameworks */ = {isa = PBXBuildFile; productRef = 20A8B6582CB26E4800B756FD /* SimilaritySearchKitDistilbert */; };
 		20A8B65B2CB2709100B756FD /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A8B65A2CB2709100B756FD /* Resources.swift */; };
@@ -53,7 +71,6 @@
 		20B97CCF2CAFEC37009A0A5D /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B97CCA2CAFEC37009A0A5D /* DownloadManager.swift */; };
 		20B97CD02CAFEC37009A0A5D /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B97CCC2CAFEC37009A0A5D /* Model.swift */; };
 		20B97CD12CAFEC37009A0A5D /* InferenceConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B97CCB2CAFEC37009A0A5D /* InferenceConstants.swift */; };
-		20B97CD42CAFECA2009A0A5D /* Extension+Template.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B97CD32CAFECA2009A0A5D /* Extension+Template.swift */; };
 		20B97CD62CAFF2E0009A0A5D /* SetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B97CD52CAFF2E0009A0A5D /* SetupView.swift */; };
 		20B97CD92CAFF2E7009A0A5D /* ModelSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B97CD72CAFF2E7009A0A5D /* ModelSelectionView.swift */; };
 		20B97CDA2CAFF2E7009A0A5D /* SetupCompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B97CD82CAFF2E7009A0A5D /* SetupCompleteView.swift */; };
@@ -74,6 +91,10 @@
 		20E48C292CB560B50085E7D6 /* ConversationControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E48C282CB560B50085E7D6 /* ConversationControlsView.swift */; };
 		20E48C2B2CB560E30085E7D6 /* Extension+CGKeyCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E48C2A2CB560E30085E7D6 /* Extension+CGKeyCode.swift */; };
 		20E48C722CB5FCCC0085E7D6 /* LLM in Frameworks */ = {isa = PBXBuildFile; productRef = 20E48C712CB5FCCC0085E7D6 /* LLM */; };
+		20FB0D892CBA8327006D062A /* Extension+SimilarityIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FB0D882CBA8327006D062A /* Extension+SimilarityIndex.swift */; };
+		20FB0D8B2CBA8828006D062A /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FB0D8A2CBA8828006D062A /* SearchResult.swift */; };
+		20FE94D82CB96D3A006E9F06 /* ConversationResourceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FE94D72CB96D3A006E9F06 /* ConversationResourceButton.swift */; };
+		20FE94DA2CB96DE8006E9F06 /* ExitButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FE94D92CB96DE8006E9F06 /* ExitButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -124,10 +145,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2004D7632CBC9DA2009F294E /* ConversationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationState.swift; sourceTree = "<group>"; };
 		200549732CAFA67B00A3DCF2 /* Sidekick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sidekick.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		200549842CAFA67D00A3DCF2 /* SidekickTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SidekickTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2005498E2CAFA67D00A3DCF2 /* SidekickUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SidekickUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		200FBFD72CB627DD00A92A74 /* llama-server */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llama-server"; sourceTree = "<group>"; };
 		200FBFDD2CB6382F00A92A74 /* llama-server-watchdog */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "llama-server-watchdog"; sourceTree = BUILT_PRODUCTS_DIR; };
 		200FBFE52CB6384400A92A74 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		200FBFE82CB638B200A92A74 /* llama-server-watchdog.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "llama-server-watchdog.entitlements"; sourceTree = "<group>"; };
@@ -135,10 +156,13 @@
 		200FBFF22CB66B8300A92A74 /* ServerHealth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerHealth.swift; sourceTree = "<group>"; };
 		200FBFF42CB66C0000A92A74 /* LlamaServerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LlamaServerError.swift; sourceTree = "<group>"; };
 		200FBFF62CB68ABF00A92A74 /* ChatParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatParameters.swift; sourceTree = "<group>"; };
+		202E3EDC2CBB8F7B00AF86C8 /* ReferencedURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferencedURL.swift; sourceTree = "<group>"; };
 		2038CCF22CB6CBC6005AA315 /* PendingMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingMessageView.swift; sourceTree = "<group>"; };
 		204C79522CB7500800EED58E /* EndDetectionScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndDetectionScrollView.swift; sourceTree = "<group>"; };
 		204C79552CB765D700EED58E /* ProfileSelectionMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSelectionMenu.swift; sourceTree = "<group>"; };
 		204C79572CB769A400EED58E /* Extension+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+View.swift"; sourceTree = "<group>"; };
+		204C79592CB789B200EED58E /* llama-server */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llama-server"; sourceTree = "<group>"; };
+		204C795B2CB79AB900EED58E /* ProfileManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManagerView.swift; sourceTree = "<group>"; };
 		20573F132CB50550004C19FE /* ConversationManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationManagerView.swift; sourceTree = "<group>"; };
 		20573F152CB505DC004C19FE /* ConversationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListView.swift; sourceTree = "<group>"; };
 		20573F172CB50743004C19FE /* ConversationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationView.swift; sourceTree = "<group>"; };
@@ -151,8 +175,22 @@
 		20573F2F2CB5302C004C19FE /* TextOutputFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextOutputFormat.swift; sourceTree = "<group>"; };
 		20573F312CB53172004C19FE /* InferenceSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InferenceSettings.swift; sourceTree = "<group>"; };
 		20573F352CB53878004C19FE /* CircleMenuStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleMenuStyle.swift; sourceTree = "<group>"; };
+		207A9F542CB8A96F00E727DE /* ProfileNavigationRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNavigationRowView.swift; sourceTree = "<group>"; };
+		207A9F582CB8F4AF00E727DE /* ResourceSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceSelectionView.swift; sourceTree = "<group>"; };
+		207A9F5C2CB8FD0900E727DE /* ResourceSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceSectionView.swift; sourceTree = "<group>"; };
+		207A9F5E2CB903FD00E727DE /* Extension+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Binding.swift"; sourceTree = "<group>"; };
+		207A9F612CB94B0000E727DE /* WindowCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowCommands.swift; sourceTree = "<group>"; };
 		2086E1702CB036BB00FFCF57 /* ConversationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationManager.swift; sourceTree = "<group>"; };
 		2086E1AB2CB03CD200FFCF57 /* Dialogs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dialogs.swift; sourceTree = "<group>"; };
+		2099BD9A2CB7B8C800E02732 /* Extension+RawRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+RawRepresentable.swift"; sourceTree = "<group>"; };
+		2099BD9C2CB7B8E700E02732 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
+		2099BD9E2CB7E9CE00E02732 /* QuickPrompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickPrompt.swift; sourceTree = "<group>"; };
+		2099BDA02CB7EABC00E02732 /* ConversationQuickPromptsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationQuickPromptsView.swift; sourceTree = "<group>"; };
+		2099BDA22CB7EB0200E02732 /* CapsuleButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleButtonStyle.swift; sourceTree = "<group>"; };
+		2099BDA42CB8069800E02732 /* ConversationNameEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationNameEditor.swift; sourceTree = "<group>"; };
+		2099BDA82CB81A1300E02732 /* ProfileListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileListView.swift; sourceTree = "<group>"; };
+		2099BDAC2CB8222A00E02732 /* ProfileEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditorView.swift; sourceTree = "<group>"; };
+		2099BDB12CB828A500E02732 /* PopoverButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverButton.swift; sourceTree = "<group>"; };
 		20A8B65A2CB2709100B756FD /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		20A8B65C2CB2829500B756FD /* ProfileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManager.swift; sourceTree = "<group>"; };
 		20B97CAC2CAFE86C009A0A5D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -167,7 +205,6 @@
 		20B97CCB2CAFEC37009A0A5D /* InferenceConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InferenceConstants.swift; sourceTree = "<group>"; };
 		20B97CCC2CAFEC37009A0A5D /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		20B97CCD2CAFEC37009A0A5D /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
-		20B97CD32CAFECA2009A0A5D /* Extension+Template.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Template.swift"; sourceTree = "<group>"; };
 		20B97CD52CAFF2E0009A0A5D /* SetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupView.swift; sourceTree = "<group>"; };
 		20B97CD72CAFF2E7009A0A5D /* ModelSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelSelectionView.swift; sourceTree = "<group>"; };
 		20B97CD82CAFF2E7009A0A5D /* SetupCompleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupCompleteView.swift; sourceTree = "<group>"; };
@@ -187,6 +224,11 @@
 		20E48C252CB560730085E7D6 /* ChatStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatStyle.swift; sourceTree = "<group>"; };
 		20E48C282CB560B50085E7D6 /* ConversationControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationControlsView.swift; sourceTree = "<group>"; };
 		20E48C2A2CB560E30085E7D6 /* Extension+CGKeyCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+CGKeyCode.swift"; sourceTree = "<group>"; };
+		20FB0D882CBA8327006D062A /* Extension+SimilarityIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+SimilarityIndex.swift"; sourceTree = "<group>"; };
+		20FB0D8A2CBA8828006D062A /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
+		20FE94D72CB96D3A006E9F06 /* ConversationResourceButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationResourceButton.swift; sourceTree = "<group>"; };
+		20FE94D92CB96DE8006E9F06 /* ExitButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitButton.swift; sourceTree = "<group>"; };
+		20FE94DB2CB96FCD006E9F06 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,6 +240,7 @@
 				200FBFF12CB64CB400A92A74 /* EventSource in Frameworks */,
 				20A8B6592CB26E4800B756FD /* SimilaritySearchKitDistilbert in Frameworks */,
 				20A8B6572CB26E4800B756FD /* SimilaritySearchKit in Frameworks */,
+				207A9F532CB82D9600E727DE /* SymbolPicker in Frameworks */,
 				20573F282CB52F84004C19FE /* Splash in Frameworks */,
 				20573F2A2CB52F84004C19FE /* SplashMarkdown in Frameworks */,
 				20B97CA82CAFE830009A0A5D /* FSKit-macOS in Frameworks */,
@@ -254,9 +297,9 @@
 		200FBFD62CB627B100A92A74 /* llama.cpp */ = {
 			isa = PBXGroup;
 			children = (
+				204C79592CB789B200EED58E /* llama-server */,
 				200FBFED2CB6477400A92A74 /* LlamaServer.swift */,
 				200FBFF22CB66B8300A92A74 /* ServerHealth.swift */,
-				200FBFD72CB627DD00A92A74 /* llama-server */,
 				200FBFE62CB6384400A92A74 /* llama-server-watchdog */,
 				200FBFF82CB68CFC00A92A74 /* Types */,
 			);
@@ -285,6 +328,11 @@
 			isa = PBXGroup;
 			children = (
 				204C79552CB765D700EED58E /* ProfileSelectionMenu.swift */,
+				204C795B2CB79AB900EED58E /* ProfileManagerView.swift */,
+				2099BDA82CB81A1300E02732 /* ProfileListView.swift */,
+				207A9F542CB8A96F00E727DE /* ProfileNavigationRowView.swift */,
+				2099BDAC2CB8222A00E02732 /* ProfileEditorView.swift */,
+				207A9F602CB9482600E727DE /* Resource */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -294,8 +342,11 @@
 			children = (
 				20573F132CB50550004C19FE /* ConversationManagerView.swift */,
 				20573F152CB505DC004C19FE /* ConversationListView.swift */,
+				2099BDA42CB8069800E02732 /* ConversationNameEditor.swift */,
 				20573F172CB50743004C19FE /* ConversationView.swift */,
 				20E48C282CB560B50085E7D6 /* ConversationControlsView.swift */,
+				20FE94D72CB96D3A006E9F06 /* ConversationResourceButton.swift */,
+				2099BDA02CB7EABC00E02732 /* ConversationQuickPromptsView.swift */,
 				20573F2B2CB52F9A004C19FE /* Message */,
 			);
 			path = Conversation;
@@ -321,6 +372,15 @@
 			path = Markdown;
 			sourceTree = "<group>";
 		};
+		207A9F602CB9482600E727DE /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				207A9F5C2CB8FD0900E727DE /* ResourceSectionView.swift */,
+				207A9F582CB8F4AF00E727DE /* ResourceSelectionView.swift */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
 		20B97CAD2CAFE86C009A0A5D /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
@@ -332,6 +392,7 @@
 		20B97CB22CAFE86C009A0A5D /* Sidekick */ = {
 			isa = PBXGroup;
 			children = (
+				20FE94DB2CB96FCD006E9F06 /* Info.plist */,
 				20B97CB12CAFE86C009A0A5D /* SidekickApp.swift */,
 				20B9E60B2CB140A000BA0AD2 /* AppDelegate.swift */,
 				20B97CBF2CAFE87D009A0A5D /* Views */,
@@ -390,13 +451,15 @@
 		20B97CD22CAFEC90009A0A5D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				20B97CD32CAFECA2009A0A5D /* Extension+Template.swift */,
 				20B97CE62CB0066A009A0A5D /* Extension+String.swift */,
 				20B97CE42CB00605009A0A5D /* Extension+Color.swift */,
 				20B97CEA2CB00912009A0A5D /* Extension+URL.swift */,
 				20573F222CB52E79004C19FE /* Extension+Theme.swift */,
 				20E48C2A2CB560E30085E7D6 /* Extension+CGKeyCode.swift */,
 				204C79572CB769A400EED58E /* Extension+View.swift */,
+				2099BD9A2CB7B8C800E02732 /* Extension+RawRepresentable.swift */,
+				207A9F5E2CB903FD00E727DE /* Extension+Binding.swift */,
+				20FB0D882CBA8327006D062A /* Extension+SimilarityIndex.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -404,13 +467,17 @@
 		20B97CDB2CAFFDE5009A0A5D /* Types */ = {
 			isa = PBXGroup;
 			children = (
-				20B97CDC2CAFFE06009A0A5D /* Message.swift */,
 				20B97CE02CB001E0009A0A5D /* Conversation.swift */,
-				20B97CDE2CAFFE6A009A0A5D /* Sender.swift */,
-				20B97CE22CB00585009A0A5D /* Profile.swift */,
-				20A8B65A2CB2709100B756FD /* Resources.swift */,
-				20B97CE82CB007DF009A0A5D /* Resource.swift */,
 				20B97CEC2CB00A28009A0A5D /* Favicon.swift */,
+				20B97CDC2CAFFE06009A0A5D /* Message.swift */,
+				2099BD9C2CB7B8E700E02732 /* Notifications.swift */,
+				20B97CE22CB00585009A0A5D /* Profile.swift */,
+				2099BD9E2CB7E9CE00E02732 /* QuickPrompt.swift */,
+				20B97CE82CB007DF009A0A5D /* Resource.swift */,
+				20A8B65A2CB2709100B756FD /* Resources.swift */,
+				20B97CDE2CAFFE6A009A0A5D /* Sender.swift */,
+				20FB0D8A2CBA8828006D062A /* SearchResult.swift */,
+				202E3EDC2CBB8F7B00AF86C8 /* ReferencedURL.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -421,6 +488,7 @@
 				20B9E60D2CB1414100BA0AD2 /* DockMenuCommands.swift */,
 				20B9E6102CB142FD00BA0AD2 /* DebugCommands.swift */,
 				20573F1A2CB5099B004C19FE /* ConversationCommands.swift */,
+				207A9F612CB94B0000E727DE /* WindowCommands.swift */,
 			);
 			path = Commands;
 			sourceTree = "<group>";
@@ -441,6 +509,8 @@
 				20B97CEE2CB010AD009A0A5D /* ThumbnailView.swift */,
 				20573F242CB52EB6004C19FE /* CopyButton.swift */,
 				204C79522CB7500800EED58E /* EndDetectionScrollView.swift */,
+				2099BDB12CB828A500E02732 /* PopoverButton.swift */,
+				20FE94D92CB96DE8006E9F06 /* ExitButton.swift */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -462,6 +532,7 @@
 				20A8B65C2CB2829500B756FD /* ProfileManager.swift */,
 				20B97CCD2CAFEC37009A0A5D /* Settings.swift */,
 				20573F312CB53172004C19FE /* InferenceSettings.swift */,
+				2004D7632CBC9DA2009F294E /* ConversationState.swift */,
 			);
 			path = "Data Models";
 			sourceTree = "<group>";
@@ -471,6 +542,7 @@
 			children = (
 				20573F352CB53878004C19FE /* CircleMenuStyle.swift */,
 				20E48C252CB560730085E7D6 /* ChatStyle.swift */,
+				2099BDA22CB7EB0200E02732 /* CapsuleButtonStyle.swift */,
 			);
 			path = Styles;
 			sourceTree = "<group>";
@@ -503,6 +575,7 @@
 				20573F292CB52F84004C19FE /* SplashMarkdown */,
 				20E48C712CB5FCCC0085E7D6 /* LLM */,
 				200FBFF02CB64CB400A92A74 /* EventSource */,
+				207A9F522CB82D9600E727DE /* SymbolPicker */,
 			);
 			productName = Sidekick;
 			productReference = 200549732CAFA67B00A3DCF2 /* Sidekick.app */;
@@ -610,6 +683,7 @@
 				20573F262CB52F84004C19FE /* XCRemoteSwiftPackageReference "Splash" */,
 				20E48C702CB5FCCC0085E7D6 /* XCRemoteSwiftPackageReference "LLM" */,
 				200FBFEF2CB64CB400A92A74 /* XCRemoteSwiftPackageReference "EventSource" */,
+				207A9F512CB82D9600E727DE /* XCRemoteSwiftPackageReference "SymbolPicker" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 200549742CAFA67B00A3DCF2 /* Products */;
@@ -629,7 +703,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				200FBFD82CB627DD00A92A74 /* llama-server in Resources */,
+				204C795A2CB789B200EED58E /* llama-server in Resources */,
 				20B97CB32CAFE86C009A0A5D /* Preview Assets.xcassets in Resources */,
 				20B97CB42CAFE86C009A0A5D /* Assets.xcassets in Resources */,
 			);
@@ -657,29 +731,40 @@
 			buildActionMask = 2147483647;
 			files = (
 				20573F362CB53878004C19FE /* CircleMenuStyle.swift in Sources */,
+				20FE94D82CB96D3A006E9F06 /* ConversationResourceButton.swift in Sources */,
 				20573F1F2CB5274E004C19FE /* MessagesView.swift in Sources */,
 				20B97CE72CB0066A009A0A5D /* Extension+String.swift in Sources */,
 				200FBFF72CB68ABF00A92A74 /* ChatParameters.swift in Sources */,
 				20B97CB52CAFE86C009A0A5D /* ContentView.swift in Sources */,
 				20B97CCE2CAFEC37009A0A5D /* Settings.swift in Sources */,
-				20B97CD42CAFECA2009A0A5D /* Extension+Template.swift in Sources */,
 				20573F232CB52E79004C19FE /* Extension+Theme.swift in Sources */,
 				200FBFF52CB66C0000A92A74 /* LlamaServerError.swift in Sources */,
 				20B97CE32CB00585009A0A5D /* Profile.swift in Sources */,
 				20573F212CB527DB004C19FE /* MessageView.swift in Sources */,
 				20573F162CB505DC004C19FE /* ConversationListView.swift in Sources */,
 				20B97CCF2CAFEC37009A0A5D /* DownloadManager.swift in Sources */,
+				207A9F592CB8F4AF00E727DE /* ResourceSelectionView.swift in Sources */,
+				20FB0D892CBA8327006D062A /* Extension+SimilarityIndex.swift in Sources */,
 				20B97CD92CAFF2E7009A0A5D /* ModelSelectionView.swift in Sources */,
 				20B97CDA2CAFF2E7009A0A5D /* SetupCompleteView.swift in Sources */,
+				207A9F5F2CB903FD00E727DE /* Extension+Binding.swift in Sources */,
+				2099BD9F2CB7E9CE00E02732 /* QuickPrompt.swift in Sources */,
+				207A9F5D2CB8FD0900E727DE /* ResourceSectionView.swift in Sources */,
 				20573F322CB53172004C19FE /* InferenceSettings.swift in Sources */,
+				2099BDA92CB81A1300E02732 /* ProfileListView.swift in Sources */,
+				204C795C2CB79AB900EED58E /* ProfileManagerView.swift in Sources */,
 				20B97CE52CB00605009A0A5D /* Extension+Color.swift in Sources */,
 				20B97CDD2CAFFE06009A0A5D /* Message.swift in Sources */,
 				20B97CD02CAFEC37009A0A5D /* Model.swift in Sources */,
 				200FBFEE2CB6477400A92A74 /* LlamaServer.swift in Sources */,
+				207A9F622CB94B0000E727DE /* WindowCommands.swift in Sources */,
+				2099BD9B2CB7B8C800E02732 /* Extension+RawRepresentable.swift in Sources */,
 				2086E1AC2CB03CD200FFCF57 /* Dialogs.swift in Sources */,
 				20573F2D2CB52FAF004C19FE /* SplashCodeSyntaxHighlighter.swift in Sources */,
 				20E48C262CB560730085E7D6 /* ChatStyle.swift in Sources */,
 				20B97CDF2CAFFE6A009A0A5D /* Sender.swift in Sources */,
+				202E3EDD2CBB8F7B00AF86C8 /* ReferencedURL.swift in Sources */,
+				2004D7642CBC9DA2009F294E /* ConversationState.swift in Sources */,
 				20B97CD12CAFEC37009A0A5D /* InferenceConstants.swift in Sources */,
 				2086E1712CB036BB00FFCF57 /* ConversationManager.swift in Sources */,
 				20B97CEB2CB00912009A0A5D /* Extension+URL.swift in Sources */,
@@ -688,24 +773,33 @@
 				20B97CED2CB00A28009A0A5D /* Favicon.swift in Sources */,
 				20573F142CB50550004C19FE /* ConversationManagerView.swift in Sources */,
 				20B97CB62CAFE86C009A0A5D /* SidekickApp.swift in Sources */,
+				2099BDA52CB8069800E02732 /* ConversationNameEditor.swift in Sources */,
 				204C79582CB769A400EED58E /* Extension+View.swift in Sources */,
+				2099BDAD2CB8222A00E02732 /* ProfileEditorView.swift in Sources */,
 				20E48C292CB560B50085E7D6 /* ConversationControlsView.swift in Sources */,
 				20B97CEF2CB010AD009A0A5D /* ThumbnailView.swift in Sources */,
 				20B97CE12CB001E0009A0A5D /* Conversation.swift in Sources */,
+				207A9F552CB8A96F00E727DE /* ProfileNavigationRowView.swift in Sources */,
 				20B97CE92CB007DF009A0A5D /* Resource.swift in Sources */,
 				20573F302CB5302C004C19FE /* TextOutputFormat.swift in Sources */,
+				20FB0D8B2CBA8828006D062A /* SearchResult.swift in Sources */,
+				20FE94DA2CB96DE8006E9F06 /* ExitButton.swift in Sources */,
 				20573F1B2CB5099B004C19FE /* ConversationCommands.swift in Sources */,
 				20B9E60C2CB140A000BA0AD2 /* AppDelegate.swift in Sources */,
 				204C79532CB7500800EED58E /* EndDetectionScrollView.swift in Sources */,
 				2038CCF32CB6CBC6005AA315 /* PendingMessageView.swift in Sources */,
 				20E48C2B2CB560E30085E7D6 /* Extension+CGKeyCode.swift in Sources */,
+				2099BD9D2CB7B8E700E02732 /* Notifications.swift in Sources */,
+				2099BDA12CB7EABC00E02732 /* ConversationQuickPromptsView.swift in Sources */,
 				20B9E60E2CB1414100BA0AD2 /* DockMenuCommands.swift in Sources */,
 				20B9E6112CB142FD00BA0AD2 /* DebugCommands.swift in Sources */,
 				20573F252CB52EB6004C19FE /* CopyButton.swift in Sources */,
+				2099BDA32CB7EB0200E02732 /* CapsuleButtonStyle.swift in Sources */,
 				204C79562CB765D700EED58E /* ProfileSelectionMenu.swift in Sources */,
 				20A8B65B2CB2709100B756FD /* Resources.swift in Sources */,
 				20573F182CB50743004C19FE /* ConversationView.swift in Sources */,
 				200FBFF32CB66B8300A92A74 /* ServerHealth.swift in Sources */,
+				2099BDB22CB828A500E02732 /* PopoverButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -887,6 +981,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Sidekick/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -917,6 +1012,7 @@
 				ENABLE_PREVIEWS = YES;
 				"EXCLUDED_ARCHS[sdk=*]" = x86_64;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Sidekick/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1099,6 +1195,14 @@
 				minimumVersion = 0.16.0;
 			};
 		};
+		207A9F512CB82D9600E727DE /* XCRemoteSwiftPackageReference "SymbolPicker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/xnth97/SymbolPicker";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.5.3;
+			};
+		};
 		20A8B6552CB26E4800B756FD /* XCRemoteSwiftPackageReference "similarity-search-kit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ZachNagengast/similarity-search-kit";
@@ -1156,6 +1260,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 20573F262CB52F84004C19FE /* XCRemoteSwiftPackageReference "Splash" */;
 			productName = SplashMarkdown;
+		};
+		207A9F522CB82D9600E727DE /* SymbolPicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 207A9F512CB82D9600E727DE /* XCRemoteSwiftPackageReference "SymbolPicker" */;
+			productName = SymbolPicker;
 		};
 		20A8B6562CB26E4800B756FD /* SimilaritySearchKit */ = {
 			isa = XCSwiftPackageProductDependency;

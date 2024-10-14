@@ -11,8 +11,7 @@ struct ConversationNavigationListView: View {
 	
 	@EnvironmentObject private var conversationManager: ConversationManager
 	@EnvironmentObject private var profileManager: ProfileManager
-	
-	@Binding var selectedConversationId: UUID?
+	@EnvironmentObject private var conversationState: ConversationState
 	
 	var body: some View {
 		List(
@@ -20,12 +19,20 @@ struct ConversationNavigationListView: View {
 				by: \.createdAt,
 				order: .reverse
 			),
-			selection: $selectedConversationId
+			selection: $conversationState.selectedConversationId
 		) { conversation in
-			NavigationLink(
-				conversation.title,
-				value: conversation.id
-			)
+			NavigationLink(value: conversation.id) {
+				ConversationNameEditor(conversation: conversation)
+			}
+			.onTapGesture {
+				// Remove text field focus
+				NotificationCenter.default.post(
+					name: Notifications.didSelectConversation.name,
+					object: nil
+				)
+				// Obtain focus
+				conversationState.selectedConversationId = conversation.id
+			}
 			.contextMenu {
 				Button("Delete") {
 					self.conversationManager.delete(conversation)
@@ -38,7 +45,7 @@ struct ConversationNavigationListView: View {
 			max: 225
 		)
 		.onDeleteCommand {
-			if let conversationId = selectedConversationId {
+			if let conversationId = conversationState.selectedConversationId {
 				self.delete(conversationId)
 			}
 		}

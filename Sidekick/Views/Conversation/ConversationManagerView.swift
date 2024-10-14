@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct ConversationManagerView: View {
 	
@@ -22,7 +23,6 @@ struct ConversationManagerView: View {
 		self._model = StateObject(
 			wrappedValue: Model(systemPrompt: systemPrompt)
 		)
-		self._selectedConversationId = selectedConversationId
 	}
 	
 	@StateObject private var model: Model
@@ -30,10 +30,19 @@ struct ConversationManagerView: View {
 	@EnvironmentObject private var conversationManager: ConversationManager
 	@EnvironmentObject private var profileManager: ProfileManager
 	
-	@Binding var selectedConversationId: UUID?
+	@EnvironmentObject private var conversationState: ConversationState
+	
+	var selectedProfile: Profile? {
+		guard let selectedProfileId = conversationState.selectedProfileId else {
+			return nil
+		}
+		return profileManager.getProfile(id: selectedProfileId)
+	}
 	
 	var selectedConversation: Conversation? {
-		guard let selectedConversationId else { return nil }
+		guard let selectedConversationId = conversationState.selectedConversationId else {
+			return nil
+		}
 		return self.conversationManager.getConversation(
 			id: selectedConversationId
 		)
@@ -45,15 +54,42 @@ struct ConversationManagerView: View {
 	
     var body: some View {
 		NavigationSplitView {
-			ConversationNavigationListView(
-				selectedConversationId: $selectedConversationId
-			)
-			.padding(.top)
+			ConversationNavigationListView()
+			.padding(.top, 7)
 		} detail: {
 			conversationView
 		}
-		.navigationTitle(navTitle)
-		.environmentObject(model)
+		.toolbar {
+			ToolbarItemGroup(placement: .principal) {
+				ProfileSelectionMenu()
+				.onChange(
+					of: conversationState.selectedProfileId
+				) {
+					guard var selectedConversation = self.selectedConversation else {
+						return
+					}
+					selectedConversation.profileId = self.conversationState.selectedProfileId
+					self.conversationManager.update(selectedConversation)
+				}
+			}
+		}
+		.if(selectedProfile != nil) { view in
+			return view
+				.toolbarBackground(
+					selectedProfile!.color,
+					for: .windowToolbar
+				)
+		}
+		.onChange(of: selectedProfile) {
+			updateSystemPrompt()
+		}
+		.onReceive(
+			NotificationCenter.default.publisher(
+				for: Notifications.systemPromptChanged.name
+			)
+		) { output in
+			updateSystemPrompt()
+		}
 		.onReceive(
 			NotificationCenter.default.publisher(
 				for: NSApplication.willTerminateNotification
@@ -64,16 +100,16 @@ struct ConversationManagerView: View {
 				await model.llama.stopServer()
 			}
 		}
+		.navigationTitle(navTitle)
+		.environmentObject(model)
     }
 	
 	var conversationView: some View {
 		Group {
-			if selectedConversationId == nil || selectedConversation == nil {
+			if conversationState.selectedConversationId == nil || selectedConversation == nil {
 				noSelectedConversation
 			} else {
-				ConversationView(
-					selectedConversationId: $selectedConversationId
-				)
+				ConversationView()
 			}
 		}
 	}
@@ -87,6 +123,19 @@ struct ConversationManagerView: View {
 			)
 			Text("to start a conversation.")
 		}
+	}
+	
+	private func updateSystemPrompt() {
+		// Set new prompt
+		var prompt: String = InferenceSettings.systemPrompt
+		if let systemPrompt = self.selectedProfile?.systemPrompt {
+			prompt = systemPrompt
+		}
+		
+		Task {
+			await self.model.updateSystemPrompt(prompt)
+		}
+		// Update conversation
 	}
 	
 }

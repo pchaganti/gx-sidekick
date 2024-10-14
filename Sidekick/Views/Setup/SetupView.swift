@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SetupView: View {
 	
-	@Binding var showSetup: Bool
+	@EnvironmentObject private var conversationState: ConversationState
 	@State private var selectedModel: Bool = Settings.hasModel
 	
     var body: some View {
@@ -19,7 +19,7 @@ struct SetupView: View {
 				ModelSelectionView(selectedModel: $selectedModel)
 			} else {
 				// Else, show setup complete screen
-				SetupCompleteView(showSetup: $showSetup)
+				SetupCompleteView()
 			}
 		}
 		.padding()

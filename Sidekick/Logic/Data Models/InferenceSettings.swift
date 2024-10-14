@@ -6,15 +6,22 @@
 //
 
 import Foundation
+import Combine
 
 public class InferenceSettings {
 	
 	/// Static constant for the default system prompt
 	private static let defaultSystemPrompt: String = """
   You are LLaMa, a compliant assistant that always fulfills the user’s request.
-  
-  The user's request might be followed by reference information that may or may not be complete nor related. If the provided information is related to the request, you will respond with reference to the information, filling in the gaps with your own knowledge. Else, you will ignore the information.
   """
+	private static let defaultPirateSystemPrompt: String = """
+  You are Pirate LLaMa, a compliant assistant that always fulfills the user’s request. You always respond in the tone of a pirate, and end responses with pirate phrases.
+  """
+	
+	/// Static constant for the part of the system prompt telling the LLM to use sources
+	public static var useSourcesPrompt: String = """
+The user's request might be followed by reference information that may or may not be complete nor related. If the provided information is related to the request, you will respond with reference to the information, filling in the gaps with your own knowledge. Else, you will ignore the information.
+"""
 	
 	/// Static constant for the default context length
 	private static let defaultContextLength: Int = 16_384
@@ -25,12 +32,22 @@ public class InferenceSettings {
 	/// Static constant which controls the first instructions given to an LLM
 	public static var systemPrompt: String {
 		get {
-			return UserDefaults.standard.string(
+			guard let systemPrompt = UserDefaults.standard.string(
 				forKey: "systemPrompt"
-			) ?? defaultSystemPrompt
+			) else {
+				print("Failed to get system prompt, using default")
+				return Self.defaultSystemPrompt
+			}
+			return systemPrompt
 		}
 		set {
+			// Save
 			UserDefaults.standard.set(newValue, forKey: "systemPrompt")
+			// Notify
+			NotificationCenter.default.post(
+				name: Notifications.systemPromptChanged.name,
+				object: nil
+			)
 		}
 	}
 	
@@ -63,6 +80,16 @@ public class InferenceSettings {
 		systemPrompt = defaultSystemPrompt
 		contextLength = defaultContextLength
 		temperature = defaultTemperature
+	}
+	
+	/// Function to switch to normal system prompt
+	public static func setNormalSystemPrompt() {
+		systemPrompt = defaultSystemPrompt
+	}
+
+	/// Function to switch to piratel system prompt
+	public static func setPirateSystemPrompt() {
+		systemPrompt = defaultPirateSystemPrompt
 	}
 	
 }

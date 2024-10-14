@@ -6,14 +6,26 @@
 //
 
 import Foundation
+import SimilaritySearchKit
 
 struct ChatParameters: Codable {
 	
 	init(
-		messages: [Message]
-	) {
-		self.messages = messages.map {
-			Message.MessageSubset(message: $0)
+		messages: [Message],
+		systemPrompt: String,
+		similarityIndex: SimilarityIndex?
+	) async {
+		let systemPromptMsg: Message = Message(
+			text: systemPrompt,
+			sender: .system
+		)
+		let messagesWithSystemPrompt: [Message] = [systemPromptMsg] + messages
+		let lastIndex: Int = messagesWithSystemPrompt.count - 1
+		self.messages = await messagesWithSystemPrompt.enumerated().asyncMap { index, message in
+			return await Message.MessageSubset(
+				message: message,
+				similarityIndex: index != lastIndex ? nil : similarityIndex
+			)
 		}
 	}
 	
@@ -42,6 +54,30 @@ struct ChatParameters: Codable {
 		encoder.outputFormatting = .prettyPrinted
 		let jsonData = try? encoder.encode(self)
 		return String(data: jsonData!, encoding: .utf8)!
+	}
+	
+	struct SystemPrompt: Codable {
+		
+		var prompt: String
+		var anti_prompt : String = "user:"
+		var assistant_name: String = "assistant:"
+		
+		var wrapper: SystemPromptWrapper {
+			.init(system_prompt: self)
+		}
+		
+		public struct SystemPromptWrapper: Codable {
+			var system_prompt: SystemPrompt
+			
+			/// Function to convert chat parameters to JSON
+			public func toJSON() -> String {
+				let encoder = JSONEncoder()
+				encoder.outputFormatting = .prettyPrinted
+				let jsonData = try? encoder.encode(self)
+				return String(data: jsonData!, encoding: .utf8)!
+			}
+			
+		}
 	}
 	
 }

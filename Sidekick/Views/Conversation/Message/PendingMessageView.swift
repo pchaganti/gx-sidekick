@@ -10,6 +10,7 @@ import SwiftUI
 struct PendingMessageView: View {
 	
 	@EnvironmentObject private var model: Model
+	@EnvironmentObject private var conversationState: ConversationState
 	
 	var pendingMessage: Message {
 		var text: String = "Loading model..."
@@ -18,16 +19,19 @@ struct PendingMessageView: View {
 		}
 		return Message(
 			text: text,
-			sender: .system
+			sender: .assistant
 		)
 	}
 	
     var body: some View {
-		MessageView(message: pendingMessage)
+		MessageView(
+			message: pendingMessage,
+			canEdit: false
+		)
     }
 	
 }
 
-#Preview {
-    PendingMessageView()
-}
+//#Preview {
+//    PendingMessageView()
+//}

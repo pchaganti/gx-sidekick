@@ -11,11 +11,35 @@ import SwiftUI
 
 struct MessageView: View {
 	
+	init(
+		message: Message,
+		canEdit: Bool = true
+	) {
+		self.messageText = message.text
+		self.message = message
+		self.canEdit = canEdit
+	}
+	
 	@Environment(\.colorScheme) private var colorScheme
+	@EnvironmentObject private var conversationManager: ConversationManager
+	@EnvironmentObject private var conversationState: ConversationState
 	
 	@State private var showNerdInfo: Bool = false
 	
+	@State private var isEditing: Bool = false
+	@State private var messageText: String
+	
+	var selectedConversation: Conversation? {
+		guard let selectedConversationId = conversationState.selectedConversationId else {
+			return nil
+		}
+		return self.conversationManager.getConversation(
+			id: selectedConversationId
+		)
+	}
+	
 	var message: Message
+	var canEdit: Bool
 	
 	private var theme: Splash.Theme {
 		// NOTE: We are ignoring the Splash theme font
@@ -28,7 +52,7 @@ struct MessageView: View {
 	}
 	
 	private var isOptionsDisabled: Bool {
-		return !message.outputEnded && message.getSender() == .system
+		return !message.outputEnded && message.getSender() == .assistant
 	}
 	
 	private var nerdInfo: String {
@@ -71,18 +95,74 @@ Tokens per second: \(tokensPerSecondStr)
     }
 	
 	var content: some View {
-		Markdown(message.text)
-			.markdownTheme(.gitHub)
-			.markdownCodeSyntaxHighlighter(
-				.splash(theme: self.theme)
-			)
-			.contextMenu {
-				Button {
-					self.message.text.copy()
-				} label: {
-					Text("Copy All")
+		Group {
+			if isEditing {
+				contentEditor
+			} else {
+				contentViewer
+			}
+		}
+	}
+	
+	var contentViewer: some View {
+		VStack(alignment: .leading) {
+			Markdown(message.displayedText)
+				.markdownTheme(.gitHub)
+				.markdownCodeSyntaxHighlighter(
+					.splash(theme: self.theme)
+				)
+				.textSelection(.enabled)
+				.contextMenu {
+					Button {
+						self.message.text.copy()
+					} label: {
+						Text("Copy All")
+					}
+					Button {
+						if canEdit { self.isEditing.toggle() }
+					} label: {
+						Text("Edit")
+					}
+				}
+			if !message.referencedURLs.isEmpty {
+				messageReferences
+			}
+		}
+	}
+	
+	var messageReferences: some View {
+		VStack(
+			alignment: .leading
+		) {
+			Text("References:")
+				.bold()
+				.font(.body)
+				.foregroundStyle(Color.secondary)
+			ForEach(
+				message.referencedURLs.indices,
+				id: \.self
+			) { index in
+				message.referencedURLs[index].openButton
+			}
+		}
+		.padding(.top, 8)
+	}
+	
+	var contentEditor: some View {
+		VStack {
+			TextEditor(text: $messageText)
+				.frame(minWidth: 0, maxWidth: .infinity)
+				.font(.title3)
+			HStack {
+				Button("Cancel") {
+					isEditing.toggle()
+				}
+				Button("Save") {
+					isEditing.toggle()
+					self.updateMessage()
 				}
 			}
+		}
 	}
 	
 	var options: some View {
@@ -117,12 +197,20 @@ Tokens per second: \(tokensPerSecondStr)
 				message.text.copy()
 			}
 			// Show info for bots
-			if message.getSender() == .system {
+			if message.getSender() == .assistant {
 				Button("Stats for Nerds") {
 					showNerdInfo.toggle()
 				}
 			}
 		}
+	}
+	
+	private func updateMessage() {
+		guard var conversation = selectedConversation else { return }
+		var message: Message = self.message
+		message.text = messageText
+		conversation.updateMessage(message)
+		conversationManager.update(conversation)
 	}
 	
 }

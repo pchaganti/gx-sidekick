@@ -7,11 +7,14 @@
 
 import EventSource
 import Foundation
+import FSKit_macOS
+import SimilaritySearchKit
 
 public actor LlamaServer {
 	
-	init(modelPath: String) {
+	init(modelPath: String, systemPrompt: String) {
 		self.modelPath = modelPath
+		self.systemPrompt = systemPrompt
 		self.contextLength = InferenceSettings.contextLength
 	}
 	
@@ -27,6 +30,11 @@ public actor LlamaServer {
 	var modelPath: String?
 	var modelName: String {
 		modelPath?.split(separator: "/").last?.map { String($0) }.joined() ?? "unknown"
+	}
+	
+	var systemPrompt: String
+	func getSystemPrompt() -> String {
+		systemPrompt
 	}
 	
 	var contextLength: Int
@@ -85,7 +93,7 @@ public actor LlamaServer {
 			"--threads", "\(max(1, Int(ceil(Double(processes) / 3.0 * 2.0))))",
 			"--ctx-size", "\(contextLength)",
 			"--port", port,
-			"--n-gpu-layers", "\(gpuLayers)",
+			"--n-gpu-layers", "\(gpuLayers)"
 		]
 		
 		print("Starting llama.cpp server \(process.arguments!.joined(separator: " "))")
@@ -104,6 +112,7 @@ public actor LlamaServer {
 		
 		let endTime: Date = Date.now
 		let elapsedTime: Double = endTime.timeIntervalSince(startTime)
+		
 #if DEBUG
 		print("Started server process in \(elapsedTime) secs")
 #endif
@@ -130,6 +139,7 @@ public actor LlamaServer {
 	/// Function to chat with the LLM
 	func chat(
 		messages: [Message],
+		similarityIndex: SimilarityIndex?,
 		progressHandler: (@Sendable (String) -> Void)? = nil
 	) async throws -> CompleteResponse {
 		
@@ -137,16 +147,17 @@ public actor LlamaServer {
 		try await startServer()
 		
 		// Hit localhost for completion
-		let params = ChatParameters(
-			messages: messages
+		async let params = ChatParameters(
+			messages: messages,
+			systemPrompt: systemPrompt,
+			similarityIndex: similarityIndex
 		)
 		var request = URLRequest(url: url("/v1/chat/completions"))
 		request.httpMethod = "POST"
 		request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 		request.setValue("text/event-stream", forHTTPHeaderField: "Accept")
 		request.setValue("keep-alive", forHTTPHeaderField: "Connection")
-		request.httpBody = params.toJSON().data(using: .utf8)
-		
+		request.httpBody = await params.toJSON().data(using: .utf8)
 		// Use EventSource to receive server sent events
 		eventSource = EventSource(request: request)
 		eventSource!.connect()
@@ -167,8 +178,13 @@ public actor LlamaServer {
 					if let data = message.data?.data(using: .utf8) {
 						let decoder = JSONDecoder()
 						do {
-							let responseObj = try decoder.decode(StreamResponse.self, from: data)
-							let fragment = responseObj.choices[0].delta.content ?? ""
+							let responseObj: StreamResponse = try decoder.decode(
+								StreamResponse.self,
+								from: data
+							)
+							let fragment: String = responseObj.choices.map({
+								$0.delta.content ?? ""
+							}).joined()
 							response.append(fragment)
 							progressHandler?(fragment)
 							if responseDiff == 0 {
@@ -185,7 +201,6 @@ public actor LlamaServer {
 						} catch {
 							print("Error decoding responseObj", error as Any)
 							print("responseObj: \(String(decoding: data, as: UTF8.self))")
-							break listenLoop
 						}
 					}
 				case .closed:

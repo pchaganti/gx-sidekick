@@ -11,7 +11,7 @@ import SimilaritySearchKit
 import SimilaritySearchKitDistilbert
 import SwiftUI
 
-public struct Resource: Identifiable, Codable, Hashable {
+public struct Resource: Identifiable, Codable, Hashable, Sendable {
 	
 	init(url: URL) {
 		self.url = url
@@ -53,10 +53,18 @@ public struct Resource: Identifiable, Codable, Hashable {
 	public var name: String {
 		// If website
 		if self.url.isWebURL {
-			let host: String = self.url.host(
-				percentEncoded: false
-			) ?? "Unknown"
-			return host.replacingOccurrences(of: "www.", with: "")
+			return self.url.absoluteString
+		} else {
+			// If file or directory
+			return self.url.lastPathComponent
+		}
+	}
+	
+	/// Computed property for the resource's filename
+	public var filename: String {
+		// If website
+		if self.url.isWebURL {
+			return self.url.host(percentEncoded: false)!
 		} else {
 			// If file or directory
 			return self.url.lastPathComponent
@@ -65,7 +73,7 @@ public struct Resource: Identifiable, Codable, Hashable {
 	
 	/// Returns false if the file is still at its last recorded path
 	public var wasMoved: Bool {
-		return url.fileExists
+		return !url.fileExists
 	}
 	
 	/// Function to get URL of index items JSON file's parent directory
@@ -112,21 +120,36 @@ public struct Resource: Identifiable, Codable, Hashable {
 	public func getIndexItems(
 		resourcesDirUrl: URL
 	) async -> [SimilarityIndex.IndexItem] {
-		// Init index
-		let similarityIndex: SimilarityIndex = await SimilarityIndex(
-			model: DistilbertEmbeddings(),
-			metric: DotProduct()
-		)
-		// Get index directory url
-		let indexUrl: URL = self.getIndexDirUrl(
-			resourcesDirUrl: resourcesDirUrl
-		)
-		// Load index items
-		let indexItems: [SimilarityIndex.IndexItem] = (
-			try? similarityIndex.loadIndex(fromDirectory: indexUrl) ?? []
-		) ?? []
-		// Return index
-		return indexItems
+		// If leaf node
+		if self.isLeafNode {
+			// Get index directory url
+			let indexUrl: URL = self.getIndexDirUrl(
+				resourcesDirUrl: resourcesDirUrl
+			)
+			let jsonUrl: URL = indexUrl.appendingPathComponent("\(self.filename).json")
+			// Load index items
+			do {
+				// Load data
+				let rawData: Data = try Data(contentsOf: jsonUrl)
+				let decoder: JSONDecoder = JSONDecoder()
+				let indexItems: [IndexItem] = try decoder.decode(
+					[IndexItem].self,
+					from: rawData
+				)
+				return indexItems
+			} catch {
+				return []
+			}
+		} else {
+			// Else, scan all children
+			var indexItems: [IndexItem] = []
+			for child in self.children {
+				indexItems += await child.getIndexItems(
+					resourcesDirUrl: resourcesDirUrl
+				)
+			}
+			return indexItems
+		}
 	}
 	
 	/// Function that saves a similarity index
@@ -135,7 +158,7 @@ public struct Resource: Identifiable, Codable, Hashable {
 			toDirectory: self.getIndexDirUrl(
 				resourcesDirUrl: resourcesDirUrl
 			),
-			name: self.name
+			name: self.filename
 		)
 	}
 	
@@ -168,7 +191,9 @@ public struct Resource: Identifiable, Codable, Hashable {
 			return
 		}
 		// Split text
-		let splitTexts: [String] = text.split(every: 512)
+		let splitTexts: [String] = text.groupIntoChunks(
+			maxChunkSize: 1024
+		)
 		// Init new similarity index
 		let similarityIndex: SimilarityIndex = await SimilarityIndex(
 			model: DistilbertEmbeddings(),
@@ -177,7 +202,7 @@ public struct Resource: Identifiable, Codable, Hashable {
 		// Add texts to index
 		for (index, splitText) in splitTexts.enumerated() {
 			let indexItemId: String = "\(id.uuidString)_\(index)"
-			let urlStr: String = self.url.absoluteString
+			let urlStr: String = self.url.isWebURL ? self.url.absoluteString : self.url.posixPath
 			await similarityIndex.addItem(
 				id: indexItemId,
 				text: splitText,
@@ -266,7 +291,7 @@ public struct Resource: Identifiable, Codable, Hashable {
 	public var indexState: IndexState = .noIndex
 	
 	/// Enum of all possible index states
-	public enum IndexState: CaseIterable, Codable {
+	public enum IndexState: CaseIterable, Codable, Sendable {
 		
 		case noIndex, indexing, indexed // New index item always starts with IndexState of .noIndex
 		

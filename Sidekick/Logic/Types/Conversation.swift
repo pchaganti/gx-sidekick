@@ -17,7 +17,7 @@ public struct Conversation: Identifiable, Codable, Hashable {
 	public var title: String
 	
 	/// Stored property for the selected profile's ID
-	public var profileId: UUID?
+	public var profileId: UUID? = ProfileManager.shared.firstProfile?.id
 	
 	/// Computed property returning the selected profile
 	public var profile: Profile? {
@@ -26,8 +26,8 @@ public struct Conversation: Identifiable, Codable, Hashable {
 	}
 	
 	/// Computed property returning the system prompt used
-	public var systemPrompt: String {
-		return profile?.systemPrompt ?? InferenceSettings.systemPrompt
+	public var systemPrompt: String? {
+		return profile?.systemPrompt
 	}
 	
 	/// Stored property for creation date

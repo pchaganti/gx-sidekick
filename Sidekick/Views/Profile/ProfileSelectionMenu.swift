@@ -10,11 +10,12 @@ import SwiftUI
 struct ProfileSelectionMenu: View {
 	
 	@EnvironmentObject private var profileManager: ProfileManager
-	@Binding var selectedProfileId: UUID?
-	@Binding var isCreatingProfile: Bool
+	@EnvironmentObject private var conversationState: ConversationState
 	
 	var selectedProfile: Profile? {
-		guard let selectedProfileId = selectedProfileId else { return nil }
+		guard let selectedProfileId = conversationState.selectedProfileId else {
+			return nil
+		}
 		return profileManager.getProfile(id: selectedProfileId)
 	}
 	
@@ -25,34 +26,68 @@ struct ProfileSelectionMenu: View {
 	}
 	
     var body: some View {
+		Group {
+			prevButton
+			menu
+			nextButton
+		}
+    }
+	
+	var prevButton: some View {
+		Button {
+			withAnimation(.linear) {
+				switchToPrevProfile()
+			}
+		} label: {
+			Label("Previous Profile", systemImage: "chevron.backward")
+		}
+		.keyboardShortcut("[", modifiers: [.command])
+	}
+	
+	var nextButton: some View {
+		Button {
+			withAnimation(.linear) {
+				switchToNextProfile()
+			}
+		} label: {
+			Label("Next Profile", systemImage: "chevron.forward")
+		}
+		.keyboardShortcut("]", modifiers: [.command])
+	}
+	
+	var menu: some View {
 		Menu {
 			Group {
 				selectOptions
 				if !inactiveProfiles.isEmpty {
 					Divider()
 				}
-				newProfileButton
+				manageProfilesButton
 			}
 		} label: {
 			label
 		}
-    }
+	}
 	
 	var selectOptions: some View {
-		ForEach(inactiveProfiles) { profile in
+		ForEach(
+			inactiveProfiles
+		) { profile in
 			Button {
-				selectedProfileId = profile.id
+				withAnimation(.linear) {
+					conversationState.selectedProfileId = profile.id
+				}
 			} label: {
 				profile.label
 			}
 		}
 	}
 	
-	var newProfileButton: some View {
+	var manageProfilesButton: some View {
 		Button {
-			isCreatingProfile.toggle()
+			conversationState.isManagingProfiles.toggle()
 		} label: {
-			Label("New Profile", systemImage: "plus")
+			Text("Manage Profiles")
 		}
 	}
 	
@@ -73,6 +108,28 @@ struct ProfileSelectionMenu: View {
 				selectedProfile?.label
 			}
 		}
+	}
+	
+	/// Function to switch to the next profile
+	private func switchToNextProfile() {
+		let profilesIds: [UUID] = (profileManager.profiles + profileManager.profiles).map({ $0.id })
+		guard let selectedProfileId = conversationState.selectedProfileId else {
+			conversationState.selectedProfileId = profileManager.firstProfile?.id
+			return
+		}
+		guard let index = profilesIds.firstIndex(of: selectedProfileId) else { return }
+		self.conversationState.selectedProfileId = profilesIds[index + 1]
+	}
+	
+	/// Function to switch to the last profile
+	private func switchToPrevProfile() {
+		let profilesIds: [UUID] = (profileManager.profiles + profileManager.profiles).map({ $0.id })
+		guard let selectedProfileId = conversationState.selectedProfileId else {
+			conversationState.selectedProfileId = profileManager.firstProfile?.id
+			return
+		}
+		guard let index = profilesIds.lastIndex(of: selectedProfileId) else { return }
+		self.conversationState.selectedProfileId = profilesIds[index - 1]
 	}
 	
 }

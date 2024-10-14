@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SimilaritySearchKit
 import SwiftUI
 
 public struct Message: Identifiable, Codable, Hashable {
@@ -28,6 +29,49 @@ public struct Message: Identifiable, Codable, Hashable {
 	
 	/// Stored property for the message text
 	public var text: String
+	
+	/// Computed property returning the displayed text
+	public var displayedText: String {
+		// Return original text if sender is not assistant
+		if self.sender != .assistant { return self.text }
+		// Remove urls
+		guard let jsonRange = text.range(of: "[", options: .backwards) else {
+			return text // If no JSON found, return the whole text
+		}
+		// Extract the text up to the start of the JSON string
+		let extractedText = text[..<jsonRange.lowerBound].trimmingCharacters(in: .whitespacesAndNewlines)
+		return extractedText
+	}
+	
+	/// Function returning the message text that is submitted to the LLM
+	public func submittedText(
+		similarityIndex: SimilarityIndex?
+	) async -> String {
+		if similarityIndex == nil || self.sender != .user {
+			return self.text
+		}
+		let results: [Sidekick.SearchResult] = await similarityIndex!.search(
+			query: text
+		)
+		// Skip if no results
+		if results.isEmpty { return self.text }
+		let resultsTexts: [String] = results.enumerated().map { index, result in
+			return """
+{
+	"text": "\(result.text)",
+	"url": "\(result.sourceUrlText!)"
+}
+"""
+		}
+		let resultText: String = resultsTexts.joined(separator: ",\n")
+		let sourceText: String = """
+Below is information that may or may not be relevant to my request in JSON format. If your response uses text from sources provided below, please end your response with a list of URLs or filepaths of all provided sources referenced in the format [{"url": "https://referencedurl.com"}, {"url": "/path/to/referenced/file.pdf"}]. If no provided sources were referenced, do not mention sources in your response, and end your response with an empty array of JSON objects: []. No section headers, labels or numbering are needed in this list of referenced sources.
+
+\(resultText)
+"""
+		return "\(self.text)\n\n\(sourceText)"
+	}
+	
 	/// Computed property for the number of tokens outputted per second
 	public var tokensPerSecond: Double?
 	
@@ -36,6 +80,31 @@ public struct Message: Identifiable, Codable, Hashable {
 	
 	/// Stored property for the sender of the message (either `user` or `system`)
 	private var sender: Sender
+	
+	/// Computed property for URLs of sources referenced in a response
+	public var referencedURLs: [ReferencedURL] {
+		// Get string with JSON
+		guard let jsonRange = text.range(of: "[", options: .backwards) else {
+			return []
+		}
+		guard let jsonString: NSString = text[jsonRange.lowerBound...].trimmingCharacters(
+			in: .whitespacesAndNewlines
+		) as NSString? else {
+			return []
+		}
+		// Decode string
+		guard let data: Data = try? jsonString.data() else {
+			return []
+		}
+		guard let urls: [ReferencedURL] = try? JSONDecoder().decode(
+			[ReferencedURL].self,
+			from: data
+		) else {
+			return []
+		}
+		// Return sorted, unique urls
+		return Array(Set(urls)).sorted(by: \.displayName)
+	}
 	
 	/// Function to get the sender
 	public func getSender() -> Sender {
@@ -84,20 +153,34 @@ public struct Message: Identifiable, Codable, Hashable {
 	)
 	
 	/// Function to convert the message to JSON for chat parameters
-	public func toJSON() -> String {
+	public func toJSON(
+		similarityIndex: SimilarityIndex
+	) async -> String {
 		let encoder = JSONEncoder()
 		encoder.outputFormatting = .prettyPrinted
 		let jsonData = try? encoder.encode(
-			MessageSubset(message: self)
+			await MessageSubset(
+				message: self,
+				similarityIndex: similarityIndex
+			)
 		)
 		return String(data: jsonData!, encoding: .utf8)!
 	}
 	
 	public struct MessageSubset: Codable {
 		
-		init(message: Message) {
+		init(
+			message: Message,
+			similarityIndex: SimilarityIndex?
+		) async {
 			self.role = message.sender
-			self.content = message.text
+			if let similarityIndex {
+				self.content = await message.submittedText(
+					similarityIndex: similarityIndex
+				)
+			} else {
+				self.content = message.text
+			}
 		}
 		
 		var role: Sender

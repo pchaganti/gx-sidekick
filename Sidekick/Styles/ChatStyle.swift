@@ -45,3 +45,37 @@ struct ChatStyle: TextFieldStyle {
 	}
 	
 }
+
+struct ChatButtonStyle: ButtonStyle {
+	
+	@Environment(\.colorScheme) var colorScheme
+	
+	let cornerRadius = 30.0
+	var rect: RoundedRectangle {
+		RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+	}
+	
+	func makeBody(configuration: Configuration) -> some View {
+		configuration.label
+			.bold()
+			.padding(10)
+			.cornerRadius(cornerRadius)
+			.background(
+				LinearGradient(
+					colors: [
+						Color.textBackground,
+						Color.textBackground.opacity(0.5)
+					],
+					startPoint: .leading,
+					endPoint: .trailing
+				)
+			)
+			.mask(rect)
+			.overlay(
+				rect
+					.stroke(style: StrokeStyle(lineWidth: 1))
+					.foregroundStyle(Color.white)
+			)
+	}
+	
+}

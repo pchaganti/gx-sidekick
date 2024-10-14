@@ -11,6 +11,7 @@ import SwiftUI
 public enum Sender: String, Codable {
 	
 	case user = "user"
+	case assistant = "assistant"
 	case system = "system"
 	
 	/// Computed property for the sender's icon

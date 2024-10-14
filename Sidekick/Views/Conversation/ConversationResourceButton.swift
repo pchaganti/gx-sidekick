@@ -1,0 +1,83 @@
+//
+//  ConversationResourceButton.swift
+//  Sidekick
+//
+//  Created by Bean John on 10/11/24.
+//
+
+import SwiftUI
+
+struct ConversationResourceButton: View {
+	
+	@EnvironmentObject private var profileManager: ProfileManager
+	@EnvironmentObject private var conversationState: ConversationState
+	
+	var selectedProfile: Profile? {
+		guard let selectedProfileId = conversationState.selectedProfileId else {
+			return nil
+		}
+		return profileManager.getProfile(id: selectedProfileId)
+	}
+	@Binding var profile: Profile
+	
+	@State private var isEditingResources: Bool = false
+	
+    var body: some View {
+		Button {
+			isEditingResources.toggle()
+			self.updateProfile()
+		} label: {
+			Label("Manage Resources", systemImage: "plus")
+				.labelStyle(.iconOnly)
+		}
+		.buttonStyle(ChatButtonStyle())
+		.onChange(of: selectedProfile) {
+			self.updateProfile()
+		}
+		.sheet(isPresented: $isEditingResources) {
+			VStack(
+				alignment: .leading,
+				spacing: 0
+			) {
+				HStack {
+					ExitButton {
+						isEditingResources.toggle()
+					}
+					Spacer()
+					Button {
+						self.updateProfile()
+					} label: {
+						Image(systemName: "arrow.trianglehead.clockwise")
+					}
+					.buttonStyle(PlainButtonStyle())
+				}
+				.padding([.top, .horizontal])
+				sheetContent
+			}
+		}
+    }
+	
+	var sheetContent: some View {
+		Form {
+			ResourceSectionView(profile: $profile)
+		}
+		.formStyle(.grouped)
+		.frame(maxWidth: 450, maxHeight: 600)
+		.onChange(of: profile) {
+			profileManager.update(profile)
+		}
+	}
+	
+	private func updateProfile() {
+		guard let selectedProfileId = conversationState.selectedProfileId else {
+			return
+		}
+		guard let profile = profileManager.getProfile(id: selectedProfileId) else { return }
+		self.profile = profile
+	}
+	
+}
+
+//#Preview {
+//    ConversationResourceButton()
+//}

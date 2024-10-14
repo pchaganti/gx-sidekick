@@ -7,6 +7,7 @@
 
 import Foundation
 import FSKit_macOS
+import SimilaritySearchKit
 
 @MainActor
 public class Model: ObservableObject {
@@ -17,17 +18,40 @@ public class Model: ObservableObject {
 		// Make sure bookmarks are loaded
 		let _ = Bookmarks.shared
 		// Set system prompt
-		self.systemPrompt = systemPrompt
+		self.systemPrompt = systemPrompt + "\n\n" + InferenceSettings.useSourcesPrompt
 		// Get model and context length
 		guard let modelPath: String = Settings.modelUrl?.posixPath else {
 			fatalError("Could not find modelUrl")
 		}
 		// Init `llama-server`
-		self.llama = LlamaServer(modelPath: modelPath)
+		self.llama = LlamaServer(
+			modelPath: modelPath,
+			systemPrompt: systemPrompt
+		)
 	}
 	
 	var id: UUID = UUID()
-	var systemPrompt: String
+	
+	/// Property for the system prompt
+	private var systemPrompt: String
+	/// Function that returns the system prompt
+	func getSystemPrompt() -> String {
+		systemPrompt
+	}
+	
+	/// Function to update to the default system prompt
+	public func updateSystemPrompt(_ systemPrompt: String) async {
+		self.systemPrompt = systemPrompt + "\n\n" + InferenceSettings.useSourcesPrompt
+		// Get model path
+		guard let modelPath: String = Settings.modelUrl?.posixPath else {
+			fatalError("Could not find modelUrl")
+		}
+		await self.llama.stopServer()
+		self.llama = LlamaServer(
+			modelPath: modelPath,
+			systemPrompt: self.systemPrompt
+		)
+	}
 	
 	// Dialogue is the dialogue from prompt without system prompt / internal thoughts
 	@Published var pendingMessage = ""
@@ -47,7 +71,8 @@ public class Model: ObservableObject {
 	// we respond before updating to avoid a long delay after user input
 	func listenThinkRespond(
 		sentConversationId: UUID,
-		messages: [Message]
+		messages: [Message],
+		similarityIndex: SimilarityIndex?
 	) async throws -> LlamaServer.CompleteResponse {
 		// Reset flags
 		self.sentConversationId = sentConversationId
@@ -59,7 +84,8 @@ public class Model: ObservableObject {
 		pendingMessage = ""
 		// Respond to prompt
 		let response = try await llama.chat(
-			messages: messages
+			messages: messages,
+			similarityIndex: similarityIndex
 		) { partialResponse in
 			DispatchQueue.main.async {
 				self.handleCompletionProgress(partialResponse: partialResponse)

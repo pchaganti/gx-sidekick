@@ -26,8 +26,21 @@ public class ProfileManager: ObservableObject {
 		}
 	}
 	
-	/// Stored property for default profile
-	public var defaultProfileId: UUID? = nil
+	/// Computed property returning the first profile
+	var firstProfile: Profile? {
+		if self.profiles.first == nil {
+			self.newDatastore()
+		}
+		return self.profiles.first
+	}
+	
+	/// Computed property returning the last profile
+	var lastProfile: Profile? {
+		if self.profiles.last == nil {
+			self.newDatastore()
+		}
+		return self.profiles.last
+	}
 	
 	/// Function to create a new profile
 	public func newProfile(
@@ -225,6 +238,7 @@ public class ProfileManager: ObservableObject {
 					resource.deleteDirectory(resourcesDirUrl: dirUrl)
 				}
 				self.profiles[index].resources.resources.removeAll()
+				print("Removed resources for profile \(profiles[index].name).")
 			}
 		}
 	}

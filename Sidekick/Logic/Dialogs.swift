@@ -47,4 +47,32 @@ public class Dialogs {
 		return result
 	}
 	
+	
+	/// Function to show a dichotomy modal
+	public static func dichotomy(
+		title: String,
+		message: String? = nil,
+		option1: String,
+		option2: String,
+		ifOption1: @escaping () -> Void,
+		ifOption2: @escaping () -> Void
+	) -> Bool {
+		// Define alert
+		let alert: NSAlert = NSAlert()
+		alert.messageText = title
+		if let message = message {
+			alert.informativeText = message
+		}
+		alert.addButton(withTitle: option1)
+		alert.addButton(withTitle: option2)
+		// Run modal
+		let result: Bool = alert.runModal() == .alertFirstButtonReturn
+		if result {
+			ifOption1()
+		} else {
+			ifOption2()
+		}
+		return result
+	}
+	
 }

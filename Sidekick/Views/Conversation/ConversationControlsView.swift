@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import SimilaritySearchKit
 
 struct ConversationControlsView: View {
 	
 	@EnvironmentObject private var model: Model
 	@EnvironmentObject private var conversationManager: ConversationManager
 	@EnvironmentObject private var profileManager: ProfileManager
+	@EnvironmentObject private var conversationState: ConversationState
 	
 	@FocusState private var isFocused: Bool
 	
@@ -19,32 +21,73 @@ struct ConversationControlsView: View {
 	
 	@State private var sentConversation: Conversation? = nil
 	
-	@Binding var selectedConversationId: UUID?
-	
 	var selectedConversation: Conversation? {
-		guard let selectedConversationId else { return nil }
+		guard let selectedConversationId = conversationState.selectedConversationId else {
+			return nil
+		}
 		return self.conversationManager.getConversation(
 			id: selectedConversationId
 		)
 	}
 	
+	var selectedProfile: Profile? {
+		guard let selectedProfileId = conversationState.selectedProfileId else {
+			return nil
+		}
+		return profileManager.getProfile(id: selectedProfileId)
+	}
+	@State private var profile: Profile = ProfileManager.shared.firstProfile!
+	
 	var messages: [Message] {
 		return selectedConversation?.messages ?? []
 	}
 	
+	var showQuickPrompts: Bool {
+		return prompt.isEmpty && messages.isEmpty
+	}
+	
 	var body: some View {
-		Group {
-			TextField("Message", text: $prompt, axis: .vertical)
-				.onSubmit(onSubmit)
-				.focused($isFocused)
-				.textFieldStyle(ChatStyle(isFocused: _isFocused))
-				.submitLabel(.send)
-				.padding([.vertical, .leading], 10)
-				.onChange(of: selectedConversationId) {
-					self.isFocused = true
+		VStack {
+			if showQuickPrompts {
+				ConversationQuickPromptsView(input: $prompt)
+			}
+			HStack {
+				inputField
+				if conversationState.selectedProfileId != nil {
+					ConversationResourceButton(
+						profile: $profile
+					)
+					.keyboardShortcut("r", modifiers: .command)
 				}
+			}
 		}
-    }
+	}
+	
+	var inputField: some View {
+		TextField(
+			"Message",
+			text: $prompt.animation(.linear),
+			axis: .vertical
+		)
+		.onSubmit(onSubmit)
+		.focused($isFocused)
+		.textFieldStyle(ChatStyle(isFocused: _isFocused))
+		.submitLabel(.send)
+		.padding([.vertical, .leading], 10)
+		.onChange(of: conversationState.selectedConversationId) {
+			self.isFocused = true
+		}
+		.onExitCommand {
+			self.isFocused = false
+		}
+		.onReceive(
+			NotificationCenter.default.publisher(
+				for: Notifications.didSelectConversation.name
+			)
+		) { output in
+			self.isFocused = false
+		}
+	}
 	
 	private func onSubmit() {
 		// New line if shift or option pressed
@@ -92,11 +135,14 @@ struct ConversationControlsView: View {
 		// Get response
 		var response: LlamaServer.CompleteResponse
 		do {
+			let index: SimilarityIndex? = await selectedProfile?.resources.loadIndex()
 			response = try await model.listenThinkRespond(
 				sentConversationId: conversation.id,
-				messages: self.messages
+				messages: self.messages,
+				similarityIndex: index
 			)
 		} catch let error as LlamaServerError {
+			print("Interupted response: \(error)")
 			await model.interrupt()
 			handleResponseError(error)
 			return
@@ -111,11 +157,10 @@ struct ConversationControlsView: View {
 				return
 			}
 			// Output final output to debug console
-//			print("response.text: \(response.text)")
 			// Make response message
 			var responseMessage: Message = Message(
 				text: "",
-				sender: .system
+				sender: .assistant
 			)
 			responseMessage.update(
 				newText: response.text,
@@ -144,6 +189,7 @@ struct ConversationControlsView: View {
 	}
 	
 }
+
 //
 //#Preview {
 //    ConversationControlsView()

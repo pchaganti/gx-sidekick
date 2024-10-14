@@ -28,6 +28,7 @@ struct SidekickApp: App {
 		.environmentObject(profileManager)
 		.commands {
 			ConversationCommands.commands
+			WindowCommands.commands
 #if DEBUG
 			DebugCommands.commands 
 #endif

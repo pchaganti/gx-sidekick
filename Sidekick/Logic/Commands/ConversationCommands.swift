@@ -13,7 +13,7 @@ public class ConversationCommands {
 	
 	static var commands: some Commands {
 		
-		CommandMenu("Conversation") {
+		CommandGroup(replacing: .newItem) {
 			Button(
 				action: ConversationManager.shared.newConversation
 			) {

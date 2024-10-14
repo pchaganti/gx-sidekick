@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SetupCompleteView: View {
 	
-	@Binding var showSetup: Bool
+	@EnvironmentObject private var conversationState: ConversationState
 	
     var body: some View {
 		VStack {
@@ -27,7 +27,7 @@ struct SetupCompleteView: View {
 			
 			Button("Continue") {
 				Settings.finishSetup()
-				showSetup = false
+				conversationState.showSetup = false
 			}
 			.buttonStyle(.borderedProminent)
 			.controlSize(.large)

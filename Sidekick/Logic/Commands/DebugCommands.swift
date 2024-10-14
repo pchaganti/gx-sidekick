@@ -32,7 +32,7 @@ public class DebugCommands {
 						url: URL.homeDirectory
 					)
 				} label: {
-					Text("Open Container")
+					Text("Show Container in Finder")
 				}
 			}
 		}

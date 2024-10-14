@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-public struct Profile: Identifiable, Codable, Hashable {
+public struct Profile: Identifiable, Codable, Hashable, Sendable {
 	
 	/// Stored property for `Identifiable` conformance
 	public var id: UUID = UUID()
@@ -64,7 +64,7 @@ public struct Profile: Identifiable, Codable, Hashable {
 	public static let `default`: Profile = Profile(
 		name: "Default",
 		symbolName: "person.fill",
-		color: Color.accentColor,
+		color: Color.blue,
 		resources: Resources(),
 		persistResources: false
 	)

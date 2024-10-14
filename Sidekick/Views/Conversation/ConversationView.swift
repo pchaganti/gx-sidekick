@@ -11,25 +11,22 @@ struct ConversationView: View {
 	
 	@EnvironmentObject private var conversationManager: ConversationManager
 	@EnvironmentObject private var profileManager: ProfileManager
-	
-	@Binding var selectedConversationId: UUID?
+	@EnvironmentObject private var conversationState: ConversationState
 	
 	var selectedConversation: Conversation? {
-		guard let selectedConversationId else { return nil }
+		guard let selectedConversationId = conversationState.selectedConversationId else {
+			return nil
+		}
 		return self.conversationManager.getConversation(
 			id: selectedConversationId
 		)
 	}
 	
     var body: some View {
-		MessagesView(
-			selectedConversationId: $selectedConversationId
-		)
+		MessagesView()
 		.padding(.horizontal)
 		.overlay(alignment: .bottom) {
-			ConversationControlsView(
-				selectedConversationId: $selectedConversationId
-			)
+			ConversationControlsView()
 			.padding(.trailing)
 		}
     }

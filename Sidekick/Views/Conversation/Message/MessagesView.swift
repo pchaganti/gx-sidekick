@@ -12,6 +12,7 @@ struct MessagesView: View {
 	@EnvironmentObject private var model: Model
 	@EnvironmentObject private var conversationManager: ConversationManager
 	@EnvironmentObject private var profileManager: ProfileManager
+	@EnvironmentObject private var conversationState: ConversationState
 	
 	@Namespace var pendingViewId
 	@Namespace var scrollViewId
@@ -20,10 +21,10 @@ struct MessagesView: View {
 	
 	@State private var prevPendingMessage: String = ""
 	
-	@Binding var selectedConversationId: UUID?
-	
 	var selectedConversation: Conversation? {
-		guard let selectedConversationId else { return nil }
+		guard let selectedConversationId = conversationState.selectedConversationId else {
+			return nil
+		}
 		return self.conversationManager.getConversation(
 			id: selectedConversationId
 		)
@@ -56,7 +57,9 @@ struct MessagesView: View {
 						alignment: .leading,
 						spacing: 13
 					) {
-						ForEach(self.messages) { message in
+						ForEach(
+							self.messages
+						) { message in
 							MessageView(
 								message: message
 							)
@@ -64,7 +67,7 @@ struct MessagesView: View {
 						}
 						if showPendingMessage {
 							PendingMessageView()
-								.id(pendingViewId)
+							.id(pendingViewId)
 						}
 					}
 					.padding(.vertical)
@@ -81,7 +84,9 @@ struct MessagesView: View {
 				// Scroll to end if message was sent
 				proxy.scrollTo(scrollViewId, anchor: .bottom)
 			}
-			.onChange(of: self.selectedConversationId) {
+			.onChange(
+				of: self.conversationState.selectedConversationId
+			) {
 				// Scroll to top if conversation was changed
 				proxy.scrollTo(scrollViewId, anchor: .top)
 			}
