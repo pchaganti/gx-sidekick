@@ -39,7 +39,7 @@ struct MessagesView: View {
 	}
 	
 	var showPendingMessage: Bool {
-		let statusPass: Bool = self.model.status == .coldProcessing || self.model.status == .processing
+		let statusPass: Bool = self.model.status == .coldProcessing || self.model.status == .processing || self.model.status == .querying
 		let conversationPass: Bool = self.selectedConversation?.id == self.model.sentConversationId
 		return statusPass && conversationPass
 	}
@@ -67,7 +67,7 @@ struct MessagesView: View {
 						}
 						if showPendingMessage {
 							PendingMessageView()
-							.id(pendingViewId)
+								.id(pendingViewId)
 						}
 					}
 					.padding(.vertical)

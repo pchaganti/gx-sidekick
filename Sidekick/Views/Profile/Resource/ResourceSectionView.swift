@@ -42,9 +42,12 @@ struct ResourceSectionView: View {
 						.font(.caption)
 				}
 				Spacer()
-				VStack(alignment: .trailing) {
-					Button("Add") {
-						add()
+				Button("Add") {
+					self.add()
+				}
+				Button("Update") {
+					Task.detached { @MainActor in
+						await $profile.update()
 					}
 				}
 			}

@@ -66,25 +66,42 @@ public class Model: ObservableObject {
 		return status == .processing || status == .coldProcessing
 	}
 	
+	/// Function to flag that querying has begun
+	func indicateStartedQuerying(
+		sentConversationId: UUID
+	) {
+		self.pendingMessage = ""
+		self.status = .querying
+		self.sentConversationId = sentConversationId
+	}
+	
 	// This is the main loop of the agent
 	// listen -> respond -> update mental model and save checkpoint
 	// we respond before updating to avoid a long delay after user input
 	func listenThinkRespond(
-		sentConversationId: UUID,
 		messages: [Message],
 		similarityIndex: SimilarityIndex?
 	) async throws -> LlamaServer.CompleteResponse {
-		// Reset flags
-		self.sentConversationId = sentConversationId
-		if status == .cold {
+		// Set flag
+		let preQueryStatus: Status = self.status
+		self.status = .querying
+		let lastIndex: Int = messages.count - 1
+		let messagesWithSources: [Message.MessageSubset] = await messages
+			.enumerated()
+			.asyncMap { index, message in
+				return await Message.MessageSubset(
+					message: message,
+					similarityIndex: index != lastIndex ? nil : similarityIndex
+				)
+			}
+		// Respond to prompt
+		if preQueryStatus == .cold {
 			status = .coldProcessing
 		} else {
 			status = .processing
 		}
-		pendingMessage = ""
-		// Respond to prompt
 		let response = try await llama.chat(
-			messages: messages,
+			messages: messagesWithSources,
 			similarityIndex: similarityIndex
 		) { partialResponse in
 			DispatchQueue.main.async {
@@ -112,6 +129,7 @@ public class Model: ObservableObject {
 	public enum Status: String {
 		case cold
 		case coldProcessing
+		case querying
 		case ready  // Ready
 		case processing
 	}

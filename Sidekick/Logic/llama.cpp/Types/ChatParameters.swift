@@ -11,7 +11,7 @@ import SimilaritySearchKit
 struct ChatParameters: Codable {
 	
 	init(
-		messages: [Message],
+		messages: [Message.MessageSubset],
 		systemPrompt: String,
 		similarityIndex: SimilarityIndex?
 	) async {
@@ -19,14 +19,12 @@ struct ChatParameters: Codable {
 			text: systemPrompt,
 			sender: .system
 		)
-		let messagesWithSystemPrompt: [Message] = [systemPromptMsg] + messages
-		let lastIndex: Int = messagesWithSystemPrompt.count - 1
-		self.messages = await messagesWithSystemPrompt.enumerated().asyncMap { index, message in
-			return await Message.MessageSubset(
-				message: message,
-				similarityIndex: index != lastIndex ? nil : similarityIndex
-			)
-		}
+		let systemPromptMsgSubset: Message.MessageSubset = await Message.MessageSubset(
+			message: systemPromptMsg,
+			similarityIndex: nil
+		)
+		let messagesWithSystemPrompt: [Message.MessageSubset] = [systemPromptMsgSubset] + messages
+		self.messages = messagesWithSystemPrompt
 	}
 	
 	var messages: [Message.MessageSubset]

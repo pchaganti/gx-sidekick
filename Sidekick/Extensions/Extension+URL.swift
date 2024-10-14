@@ -11,7 +11,9 @@ public extension URL {
 	
 	/// Computed property returning if URL is a web URL
 	var isWebURL: Bool {
-		return self.scheme == "http" || self.scheme == "https"
+		return self.absoluteString.hasPrefix("http") ||
+		self.absoluteString.hasPrefix("https") ||
+		self.absoluteString.hasPrefix("www")
 	}
 	
 	/// Function to get all files one level deep

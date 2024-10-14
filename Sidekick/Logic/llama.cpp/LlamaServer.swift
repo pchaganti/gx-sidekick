@@ -19,7 +19,7 @@ public actor LlamaServer {
 	}
 	
 	private let host: String = "127.0.0.1"
-	private let port: String = "8690"
+	private let port: String = "4579"
 	private let scheme: String = "http"
 	
 	private var serverUp = false
@@ -42,7 +42,7 @@ public actor LlamaServer {
 	/// Property for `llama-server-watchdog` process
 	private var monitor: Process = Process()
 	/// Property for `llama-server` process
-	private var process = Process()
+	private var process: Process = Process()
 	
 	/// Function to get path to llama-server
 	private func url(_ path: String) -> URL {
@@ -138,7 +138,7 @@ public actor LlamaServer {
 	
 	/// Function to chat with the LLM
 	func chat(
-		messages: [Message],
+		messages: [Message.MessageSubset],
 		similarityIndex: SimilarityIndex?,
 		progressHandler: (@Sendable (String) -> Void)? = nil
 	) async throws -> CompleteResponse {

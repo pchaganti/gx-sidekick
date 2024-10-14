@@ -62,15 +62,18 @@ struct ConversationManagerView: View {
 		.toolbar {
 			ToolbarItemGroup(placement: .principal) {
 				ProfileSelectionMenu()
-				.onChange(
-					of: conversationState.selectedProfileId
-				) {
-					guard var selectedConversation = self.selectedConversation else {
-						return
+					.onChange(
+						of: conversationState.selectedProfileId
+					) {
+						guard var selectedConversation = self.selectedConversation else {
+							return
+						}
+						selectedConversation.profileId = self.conversationState.selectedProfileId
+						self.conversationManager.update(selectedConversation)
 					}
-					selectedConversation.profileId = self.conversationState.selectedProfileId
-					self.conversationManager.update(selectedConversation)
-				}
+			}
+			ToolbarItem(placement: .confirmationAction) {
+				LengthyTasksToolbarButton()
 			}
 		}
 		.if(selectedProfile != nil) { view in

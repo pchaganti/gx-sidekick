@@ -57,7 +57,10 @@ public class ProfileManager: ObservableObject {
 		// Run setup function
 		await profile.resources.setup()
 		// Add resources
-		await profile.resources.addResources(resources)
+		await profile.resources.addResources(
+			resources,
+			profileName: name
+		)
 		// Add to profiles
 		self.profiles.append(profile)
 	}
@@ -70,7 +73,8 @@ public class ProfileManager: ObservableObject {
 		for index in self.profiles.indices {
 			if profileId == self.profiles[index].id {
 				await self.profiles[index].resources.addResources(
-					resources
+					resources,
+					profileName: self.profiles[index].name
 				)
 				break
 			}

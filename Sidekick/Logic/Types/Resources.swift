@@ -50,7 +50,13 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 	
 	/// Function to update resources index
 	@MainActor
-	private mutating func updateResourcesIndex() async {
+	public mutating func updateResourcesIndex(profileName: String) async {
+		// Add to task list
+		let taskId: UUID = UUID()
+		LengthyTasksController.shared.addTask(
+			id: taskId, 
+			task: "Updating resource index for profile \"\(profileName)\""
+		)
 		// Update for each file
 		for index in self.resources.indices  {
 			await self.resources[index].updateIndex(
@@ -58,6 +64,8 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 			)
 		}
 		resources = resources.filter({ !$0.wasMoved || $0.isWebResource })
+		// Remove from task list
+		LengthyTasksController.shared.finishTask(taskId: taskId)
 	}
 
 	/// Function to initialize directory for resources
@@ -71,18 +79,24 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 	
 	/// Function to add a resource
 	@MainActor
-	public mutating func addResource(_ resource: Resource) async {
+	public mutating func addResource(
+		_ resource: Resource,
+		profileName: String
+	) async {
 		// Check if exists
 		if self.resources.map(\.url).contains(resource.url) { return }
 		// Add to resources list
 		self.resources.append(resource)
 		// Reindex
-		await self.updateResourcesIndex()
+		await self.updateResourcesIndex(profileName: profileName)
 	}
 	
 	/// Function to add multiple resources
 	@MainActor
-	public mutating func addResources(_ resources: [Resource]) async {
+	public mutating func addResources(
+		_ resources: [Resource],
+		profileName: String
+	) async {
 		// Add to resources list
 		for resource in resources {
 			if self.resources.map(\.url).contains(resource.url) {
@@ -91,12 +105,15 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 			self.resources.append(resource)
 		}
 		// Reindex
-		await self.updateResourcesIndex()
+		await self.updateResourcesIndex(profileName: profileName)
 	}
 	
 	/// Function to remove a resource
 	@MainActor
-	public mutating func removeResource(_ resource: Resource) async {
+	public mutating func removeResource(
+		_ resource: Resource,
+		profileName: String
+	) async {
 		// Find matching resource
 		for index in self.resources.indices  {
 			if self.resources[index].id == resource.id {
@@ -107,7 +124,9 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 				// Remove from list
 				self.resources.remove(at: index)
 				// Reindex
-				await self.updateResourcesIndex()
+				await self.updateResourcesIndex(
+					profileName: profileName
+				)
 				break
 			}
 		}

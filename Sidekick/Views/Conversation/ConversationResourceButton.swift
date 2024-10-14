@@ -27,8 +27,13 @@ struct ConversationResourceButton: View {
 			isEditingResources.toggle()
 			self.updateProfile()
 		} label: {
-			Label("Manage Resources", systemImage: "plus")
-				.labelStyle(.iconOnly)
+			Circle()
+				.fill(profile.color.opacity(0.2))
+				.frame(width: 32, height: 32)
+				.overlay {
+					profile.image
+						.padding(8)
+				}
 		}
 		.buttonStyle(ChatButtonStyle())
 		.onChange(of: selectedProfile) {

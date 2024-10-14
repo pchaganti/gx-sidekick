@@ -22,6 +22,9 @@
 		204C79582CB769A400EED58E /* Extension+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204C79572CB769A400EED58E /* Extension+View.swift */; };
 		204C795A2CB789B200EED58E /* llama-server in Resources */ = {isa = PBXBuildFile; fileRef = 204C79592CB789B200EED58E /* llama-server */; };
 		204C795C2CB79AB900EED58E /* ProfileManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204C795B2CB79AB900EED58E /* ProfileManagerView.swift */; };
+		20571F6F2CBCE8F7004F3344 /* TasksController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20571F6E2CBCE8F7004F3344 /* TasksController.swift */; };
+		20571F722CBCEDD8004F3344 /* LengthyTasksList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20571F712CBCEDD8004F3344 /* LengthyTasksList.swift */; };
+		20571F742CBCEE90004F3344 /* LengthyTasksToolbarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20571F732CBCEE90004F3344 /* LengthyTasksToolbarButton.swift */; };
 		20573F142CB50550004C19FE /* ConversationManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20573F132CB50550004C19FE /* ConversationManagerView.swift */; };
 		20573F162CB505DC004C19FE /* ConversationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20573F152CB505DC004C19FE /* ConversationListView.swift */; };
 		20573F182CB50743004C19FE /* ConversationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20573F172CB50743004C19FE /* ConversationView.swift */; };
@@ -163,6 +166,9 @@
 		204C79572CB769A400EED58E /* Extension+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+View.swift"; sourceTree = "<group>"; };
 		204C79592CB789B200EED58E /* llama-server */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llama-server"; sourceTree = "<group>"; };
 		204C795B2CB79AB900EED58E /* ProfileManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManagerView.swift; sourceTree = "<group>"; };
+		20571F6E2CBCE8F7004F3344 /* TasksController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksController.swift; sourceTree = "<group>"; };
+		20571F712CBCEDD8004F3344 /* LengthyTasksList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LengthyTasksList.swift; sourceTree = "<group>"; };
+		20571F732CBCEE90004F3344 /* LengthyTasksToolbarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LengthyTasksToolbarButton.swift; sourceTree = "<group>"; };
 		20573F132CB50550004C19FE /* ConversationManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationManagerView.swift; sourceTree = "<group>"; };
 		20573F152CB505DC004C19FE /* ConversationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListView.swift; sourceTree = "<group>"; };
 		20573F172CB50743004C19FE /* ConversationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationView.swift; sourceTree = "<group>"; };
@@ -337,6 +343,15 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
+		20571F702CBCEDC1004F3344 /* LengthyTasks */ = {
+			isa = PBXGroup;
+			children = (
+				20571F732CBCEE90004F3344 /* LengthyTasksToolbarButton.swift */,
+				20571F712CBCEDD8004F3344 /* LengthyTasksList.swift */,
+			);
+			path = LengthyTasks;
+			sourceTree = "<group>";
+		};
 		20573F192CB508B4004C19FE /* Conversation */ = {
 			isa = PBXGroup;
 			children = (
@@ -396,6 +411,7 @@
 				20B97CB12CAFE86C009A0A5D /* SidekickApp.swift */,
 				20B9E60B2CB140A000BA0AD2 /* AppDelegate.swift */,
 				20B97CBF2CAFE87D009A0A5D /* Views */,
+				20571F702CBCEDC1004F3344 /* LengthyTasks */,
 				20B9E6132CB1458500BA0AD2 /* Misc */,
 				20E48C272CB560A30085E7D6 /* Styles */,
 				20B97CC02CAFE883009A0A5D /* Logic */,
@@ -451,15 +467,15 @@
 		20B97CD22CAFEC90009A0A5D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				20B97CE62CB0066A009A0A5D /* Extension+String.swift */,
-				20B97CE42CB00605009A0A5D /* Extension+Color.swift */,
-				20B97CEA2CB00912009A0A5D /* Extension+URL.swift */,
-				20573F222CB52E79004C19FE /* Extension+Theme.swift */,
-				20E48C2A2CB560E30085E7D6 /* Extension+CGKeyCode.swift */,
-				204C79572CB769A400EED58E /* Extension+View.swift */,
-				2099BD9A2CB7B8C800E02732 /* Extension+RawRepresentable.swift */,
 				207A9F5E2CB903FD00E727DE /* Extension+Binding.swift */,
+				20E48C2A2CB560E30085E7D6 /* Extension+CGKeyCode.swift */,
+				20B97CE42CB00605009A0A5D /* Extension+Color.swift */,
+				2099BD9A2CB7B8C800E02732 /* Extension+RawRepresentable.swift */,
 				20FB0D882CBA8327006D062A /* Extension+SimilarityIndex.swift */,
+				20B97CE62CB0066A009A0A5D /* Extension+String.swift */,
+				20573F222CB52E79004C19FE /* Extension+Theme.swift */,
+				20B97CEA2CB00912009A0A5D /* Extension+URL.swift */,
+				204C79572CB769A400EED58E /* Extension+View.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -533,6 +549,7 @@
 				20B97CCD2CAFEC37009A0A5D /* Settings.swift */,
 				20573F312CB53172004C19FE /* InferenceSettings.swift */,
 				2004D7632CBC9DA2009F294E /* ConversationState.swift */,
+				20571F6E2CBCE8F7004F3344 /* TasksController.swift */,
 			);
 			path = "Data Models";
 			sourceTree = "<group>";
@@ -767,6 +784,8 @@
 				2004D7642CBC9DA2009F294E /* ConversationState.swift in Sources */,
 				20B97CD12CAFEC37009A0A5D /* InferenceConstants.swift in Sources */,
 				2086E1712CB036BB00FFCF57 /* ConversationManager.swift in Sources */,
+				20571F6F2CBCE8F7004F3344 /* TasksController.swift in Sources */,
+				20571F742CBCEE90004F3344 /* LengthyTasksToolbarButton.swift in Sources */,
 				20B97CEB2CB00912009A0A5D /* Extension+URL.swift in Sources */,
 				20A8B65D2CB2829500B756FD /* ProfileManager.swift in Sources */,
 				20B97CD62CAFF2E0009A0A5D /* SetupView.swift in Sources */,
@@ -774,6 +793,7 @@
 				20573F142CB50550004C19FE /* ConversationManagerView.swift in Sources */,
 				20B97CB62CAFE86C009A0A5D /* SidekickApp.swift in Sources */,
 				2099BDA52CB8069800E02732 /* ConversationNameEditor.swift in Sources */,
+				20571F722CBCEDD8004F3344 /* LengthyTasksList.swift in Sources */,
 				204C79582CB769A400EED58E /* Extension+View.swift in Sources */,
 				2099BDAD2CB8222A00E02732 /* ProfileEditorView.swift in Sources */,
 				20E48C292CB560B50085E7D6 /* ConversationControlsView.swift in Sources */,

@@ -125,7 +125,7 @@ struct ProfileSelectionMenu: View {
 	private func switchToPrevProfile() {
 		let profilesIds: [UUID] = (profileManager.profiles + profileManager.profiles).map({ $0.id })
 		guard let selectedProfileId = conversationState.selectedProfileId else {
-			conversationState.selectedProfileId = profileManager.firstProfile?.id
+			conversationState.selectedProfileId = profileManager.lastProfile?.id
 			return
 		}
 		guard let index = profilesIds.lastIndex(of: selectedProfileId) else { return }

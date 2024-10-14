@@ -13,23 +13,15 @@ struct ConversationView: View {
 	@EnvironmentObject private var profileManager: ProfileManager
 	@EnvironmentObject private var conversationState: ConversationState
 	
-	var selectedConversation: Conversation? {
-		guard let selectedConversationId = conversationState.selectedConversationId else {
-			return nil
-		}
-		return self.conversationManager.getConversation(
-			id: selectedConversationId
-		)
-	}
-	
-    var body: some View {
+	var body: some View {
 		MessagesView()
-		.padding(.horizontal)
-		.overlay(alignment: .bottom) {
-			ConversationControlsView()
-			.padding(.trailing)
-		}
-    }
+			.padding(.horizontal)
+			.padding(.bottom, 20)
+			.overlay(alignment: .bottom) {
+				ConversationControlsView()
+					.padding(.trailing, 40)
+			}
+	}
 	
 }
 

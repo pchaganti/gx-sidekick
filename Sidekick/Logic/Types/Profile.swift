@@ -51,6 +51,16 @@ public struct Profile: Identifiable, Codable, Hashable, Sendable {
 			}
 	}
 	
+	/// Computed property returning the profile's image
+	public var image: some View {
+		Image(systemName: symbolName)
+			.resizable()
+			.aspectRatio(contentMode: .fit)
+			.foregroundStyle(
+				self.color
+			)
+	}
+	
 	/// Stored property for the profile's associated resources
 	public var resources: Resources = Resources()
 	

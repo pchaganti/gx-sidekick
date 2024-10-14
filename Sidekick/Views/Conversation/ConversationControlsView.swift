@@ -135,9 +135,11 @@ struct ConversationControlsView: View {
 		// Get response
 		var response: LlamaServer.CompleteResponse
 		do {
+			self.model.indicateStartedQuerying(
+				sentConversationId: conversation.id
+			)
 			let index: SimilarityIndex? = await selectedProfile?.resources.loadIndex()
 			response = try await model.listenThinkRespond(
-				sentConversationId: conversation.id,
 				messages: self.messages,
 				similarityIndex: index
 			)

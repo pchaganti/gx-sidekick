@@ -13,9 +13,12 @@ struct PendingMessageView: View {
 	@EnvironmentObject private var conversationState: ConversationState
 	
 	var pendingMessage: Message {
-		var text: String = "Loading model..."
-		if self.model.isProcessing {
+		var text: String = "Loading LLM..."
+		if !self.model.pendingMessage.isEmpty {
+			// Show progress if availible
 			text = self.model.pendingMessage
+		} else if self.model.status == .querying {
+			text = "Querying resources..."
 		}
 		return Message(
 			text: text,

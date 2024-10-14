@@ -17,6 +17,7 @@ public enum Sender: String, Codable {
 	/// Computed property for the sender's icon
 	var icon: some View {
 		Image(systemName: self == .user ? "person.fill" : "cpu.fill")
+			.foregroundStyle(Color.white)
 			.font(.system(size: 17))
 			.shadow(
 				color: .secondary.opacity(0.3),

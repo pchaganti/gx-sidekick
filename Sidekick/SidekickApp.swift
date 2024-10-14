@@ -19,6 +19,8 @@ struct SidekickApp: App {
 	@StateObject private var conversationManager: ConversationManager = .shared
 	@StateObject private var profileManager: ProfileManager = .shared
 	
+	@StateObject private var lengthyTasksController: LengthyTasksController = .shared
+	
     var body: some Scene {
         WindowGroup {
             ContentView()
@@ -26,6 +28,7 @@ struct SidekickApp: App {
 		.environmentObject(downloadManager)
 		.environmentObject(conversationManager)
 		.environmentObject(profileManager)
+		.environmentObject(lengthyTasksController)
 		.commands {
 			ConversationCommands.commands
 			WindowCommands.commands

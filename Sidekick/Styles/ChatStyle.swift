@@ -39,7 +39,7 @@ struct ChatStyle: TextFieldStyle {
 			.overlay(
 				rect
 					.stroke(style: StrokeStyle(lineWidth: 1))
-					.foregroundStyle(isFocused ? Color.orange : Color.white)
+					.foregroundStyle(isFocused ? Color.orange : Color.primary)
 			)
 			.animation(isFocused ? .easeIn(duration: 0.2) : .easeOut(duration: 0.0), value: isFocused)
 	}
@@ -58,7 +58,6 @@ struct ChatButtonStyle: ButtonStyle {
 	func makeBody(configuration: Configuration) -> some View {
 		configuration.label
 			.bold()
-			.padding(10)
 			.cornerRadius(cornerRadius)
 			.background(
 				LinearGradient(
@@ -74,7 +73,7 @@ struct ChatButtonStyle: ButtonStyle {
 			.overlay(
 				rect
 					.stroke(style: StrokeStyle(lineWidth: 1))
-					.foregroundStyle(Color.white)
+					.foregroundStyle(Color.primary)
 			)
 	}
 	
