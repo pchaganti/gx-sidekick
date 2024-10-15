@@ -63,7 +63,14 @@ struct ConversationManagerView: View {
 		} detail: {
 			conversationView
 		}
+		.navigationTitle("")
 		.toolbar {
+			ToolbarItem(placement: .navigation) {
+				Text(navTitle)
+					.font(.title3)
+					.bold()
+					.foregroundStyle(toolbarTextColor)
+			}
 			ToolbarItemGroup(placement: .principal) {
 				ProfileSelectionMenu()
 					.onChange(
@@ -105,15 +112,6 @@ struct ConversationManagerView: View {
 			/// Stop server before app is quit
 			Task {
 				await model.llama.stopServer()
-			}
-		}
-		.navigationTitle("")
-		.toolbar {
-			ToolbarItem(placement: .navigation) {
-				Text(navTitle)
-					.font(.title3)
-					.bold()
-					.foregroundStyle(toolbarTextColor)
 			}
 		}
 		.environmentObject(model)

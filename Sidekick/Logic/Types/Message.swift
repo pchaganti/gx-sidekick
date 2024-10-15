@@ -66,7 +66,7 @@ public struct Message: Identifiable, Codable, Hashable {
 		print("\(results.count) sources given.")
 		let resultText: String = resultsTexts.joined(separator: ",\n")
 		let sourceText: String = """
-Below is information that may or may not be relevant to my request in JSON format. If your response uses text from sources provided below, please end your response with a list of URLs or filepaths of all provided sources referenced in the format [{"url": "https://referencedurl.com"}, {"url": "/path/to/referenced/file.pdf"}], with no duplicates. If no provided sources were referenced, do not mention sources in your response, and end your response with an empty array of JSON objects: []. No section headers, labels or numbering are needed in this list of referenced sources.
+Below is information that may or may not be relevant to my request in JSON format. If your response uses information from sources provided below, you must end your response with a list of URLs or filepaths of all provided sources referenced in the format [{"url": "https://referencedurl.com"}, {"url": "/path/to/referenced/file.pdf"}], with no duplicates. If no provided sources were referenced, do not mention sources in your response, and end your response with an empty array of JSON objects: []. No section headers, labels or numbering are needed in this list of referenced sources.
 
 \(resultText)
 """

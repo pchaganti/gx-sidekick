@@ -36,7 +36,7 @@ public class InferenceSettings {
 	
 	/// Static constant for the part of the system prompt telling the LLM to use sources
 	public static var useSourcesPrompt: String = """
-The user's request might be followed by reference information that may or may not be complete nor related. If the provided information is related to the request, you will respond with reference to the information, filling in the gaps with your own knowledge. Else, you will ignore the information.
+The user's request might be followed by reference information that may or may not be complete nor related. If the provided information is related to the request, you must end respond with reference to the information, filling in the gaps with your own knowledge, and ending your response with a list of URLs or filepaths of all provided sources referenced in the format [{"url": "https://referencedurl.com"}, {"url": "/path/to/referenced/file.pdf"}], with no duplicates. Else, you will ignore the information, avoid mentioning sources in your response, and end your response with an empty array of JSON objects: [].
 """
 	
 	/// Static constant for the default context length

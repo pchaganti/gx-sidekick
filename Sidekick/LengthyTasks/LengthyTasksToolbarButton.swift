@@ -37,6 +37,7 @@ struct LengthyTasksToolbarButton: View {
 		} content: {
 			LengthyTasksList()
 		}
+		.keyboardShortcut("t", modifiers: [.command, .shift])
 	}
 	
 }
