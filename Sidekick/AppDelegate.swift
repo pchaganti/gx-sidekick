@@ -23,14 +23,14 @@ public class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
 	}
 	
 	/// Function to setup the app's dock menu
-	public func applicationDockMenu(_ sender: NSApplication) -> NSMenu? {
-		let dockMenu: NSMenu = NSMenu()
-		dockMenu.addItem(
-			withTitle: "Test",
-			action: #selector(DockMenuCommands.test(_:)),
-			keyEquivalent: ""
-		)
-		return dockMenu
-	}
+//	public func applicationDockMenu(_ sender: NSApplication) -> NSMenu? {
+//		let dockMenu: NSMenu = NSMenu()
+//		dockMenu.addItem(
+//			withTitle: "Test",
+//			action: #selector(DockMenuCommands.test(_:)),
+//			keyEquivalent: ""
+//		)
+//		return dockMenu
+//	}
 	
 }

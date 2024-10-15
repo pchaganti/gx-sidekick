@@ -47,6 +47,7 @@ A well-crafted system prompt helps the LLM focus on the correct task and reduces
 					InferenceSettings.systemPrompt = self.systemPrompt
 					isEditingSystemPrompt.toggle()
 				}
+				.keyboardShortcut("s", modifiers: .command)
 			}
 		}
 		.padding()

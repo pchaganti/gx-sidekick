@@ -149,6 +149,7 @@ Tokens per second: \(tokensPerSecondStr)
 					isEditing.toggle()
 					self.updateMessage()
 				}
+				.keyboardShortcut("s", modifiers: .command)
 			}
 		}
 	}

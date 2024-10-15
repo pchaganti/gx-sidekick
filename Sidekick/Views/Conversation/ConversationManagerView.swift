@@ -76,7 +76,7 @@ struct ConversationManagerView: View {
 						self.conversationManager.update(selectedConversation)
 					}
 			}
-			ToolbarItem(placement: .confirmationAction) {
+			ToolbarItem() {
 				LengthyTasksToolbarButton()
 			}
 		}

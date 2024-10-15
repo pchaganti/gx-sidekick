@@ -76,6 +76,8 @@ struct ConversationControlsView: View {
 		.padding([.vertical, .leading], 10)
 		.onChange(of: conversationState.selectedConversationId) {
 			self.isFocused = true
+			guard let selectedProfile else { return }
+			self.profile = selectedProfile
 		}
 		.onExitCommand {
 			self.isFocused = false

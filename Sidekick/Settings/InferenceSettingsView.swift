@@ -40,15 +40,21 @@ struct InferenceSettingsView: View {
 	var model: some View {
 		HStack(alignment: .top) {
 			VStack(alignment: .leading) {
-				Text("Model")
+				Text("Model: \(Settings.modelUrl?.lastPathComponent ?? "")")
 					.font(.title3)
 					.bold()
-				Text("This will be the default LLM used.")
+				Text("This is the default LLM used.")
 					.font(.caption)
 			}
 			Spacer()
 			Button {
-				let _ = Settings.selectModel()
+				let result: Bool = Settings.selectModel()
+				if result {
+					Dialogs.showAlert(
+						title: "Restart Required",
+						message: "Sidekick needs to restart to use the newly selected model."
+					)
+				}
 			} label: {
 				Text("Select")
 			}

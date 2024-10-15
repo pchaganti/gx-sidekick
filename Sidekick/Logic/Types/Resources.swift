@@ -64,15 +64,18 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 			)
 		}
 		// Record removed resources
-		let removedResources: String = resources.filter({
+		let removedResources: [Resource] = resources.filter({
 			!(!$0.wasMoved || $0.isWebResource)
-		}).map({
+		})
+		let removedResourcesDescription: String = removedResources.map({
 			return "\"\($0.name)\""
 		}).joined(separator: ", ")
-		Dialogs.showAlert(
-			title: "Remove Resources",
-			message: "The resources \(removedResources) were removed because they could not be located."
-		)
+		if !removedResources.isEmpty {
+			Dialogs.showAlert(
+				title: "Remove Resources",
+				message: "The resources \(removedResourcesDescription) were removed because they could not be located."
+			)
+		}
 		// Remove resources
 		resources = resources.filter({ !$0.wasMoved || $0.isWebResource })
 		// Remove from task list

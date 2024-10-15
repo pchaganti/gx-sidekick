@@ -25,6 +25,7 @@ struct SetupView: View {
 			}
 		}
 		.padding()
+		.padding(.vertical)
 		.interactiveDismissDisabled(true)
     }
 	

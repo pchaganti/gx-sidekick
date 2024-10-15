@@ -30,7 +30,7 @@ public class Settings {
 	/// Static constant for the LLM directory
 	static let dirUrl: URL = URL
 		.applicationSupportDirectory
-		.appendingPathComponent("Sidekick")
+		.appendingPathComponent("Models")
 	
 	/// Computed property for the LLM's location
 	static var modelUrl: URL? {
@@ -40,8 +40,7 @@ public class Settings {
 				result = url
 			} else {
 				// Get default
-				let modelDirUrl: URL = Self.dirUrl.appendingPathComponent("Models")
-				if let modelUrl: URL = modelDirUrl.contents?.compactMap({
+				if let modelUrl: URL = Self.dirUrl.contents?.compactMap({
 					$0
 				}).filter({
 					$0.pathExtension == "gguf"
