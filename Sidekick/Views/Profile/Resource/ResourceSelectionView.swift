@@ -5,6 +5,7 @@
 //  Created by Bean John on 10/11/24.
 //
 
+import Foundation
 import SwiftUI
 
 struct ResourceSelectionView: View {
@@ -36,7 +37,6 @@ struct ResourceRowView: View {
 	@Binding var resource: Resource
 	
 	@State private var isHovering: Bool = false
-	
 
 	var body: some View {
 		HStack {
@@ -51,6 +51,11 @@ struct ResourceRowView: View {
 		.onHover { hover in
 			withAnimation(.linear) {
 				isHovering = hover
+			}
+		}
+		.contextMenu {
+			if !resource.url.isWebURL && isHovering {
+				showInFinder
 			}
 		}
 	}
@@ -84,6 +89,17 @@ struct ResourceRowView: View {
 			}
 			.buttonStyle(PlainButtonStyle())
 		}
+	}
+	
+	var showInFinder: some View {
+		Button {
+			FileManager.showItemInFinder(
+				url: resource.url
+			)
+		} label: {
+			Text("Show in Finder")
+		}
+		.keyboardShortcut("f", modifiers: .command)
 	}
 	
 	@MainActor

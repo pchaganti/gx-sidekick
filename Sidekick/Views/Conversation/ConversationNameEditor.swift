@@ -34,6 +34,9 @@ struct ConversationNameEditor: View {
 					}
 			}
 		}
+		.contextMenu {
+			Button("Edit") { isEditing.toggle() }
+		}
     }
 	
 	private func exitEditingMode() {

@@ -22,6 +22,8 @@ class DownloadManager: NSObject, ObservableObject {
 	@Published var tasks: [URLSessionTask] = []
 	/// Published property for last update
 	@Published var lastUpdatedAt = Date()
+	/// Published property for whether the model was downloaded
+	@Published var didFinishDownloadingModel: Bool = false
 	
 	override private init() {
 		super.init()
@@ -126,6 +128,9 @@ extension DownloadManager: URLSessionDelegate, URLSessionDownloadDelegate {
 			try fileManager.moveItem(at: location, to: destinationURL)
 			// Point to the model
 			Settings.modelUrl = destinationURL
+			Task.detached { @MainActor in
+				self.didFinishDownloadingModel = true
+			}
 		} catch {
 			os_log("FileManager copy error at %@ to %@ error: %@", type: .error, location.absoluteString, destinationURL.absoluteString, error.localizedDescription)
 			return

@@ -12,6 +12,8 @@ struct SetupView: View {
 	@EnvironmentObject private var conversationState: ConversationState
 	@State private var selectedModel: Bool = Settings.hasModel
 	
+	@Binding var showSetup: Bool
+	
     var body: some View {
 		Group {
 			if !selectedModel {
@@ -19,10 +21,11 @@ struct SetupView: View {
 				ModelSelectionView(selectedModel: $selectedModel)
 			} else {
 				// Else, show setup complete screen
-				SetupCompleteView()
+				SetupCompleteView(showSetup: $showSetup)
 			}
 		}
 		.padding()
+		.interactiveDismissDisabled(true)
     }
 	
 }

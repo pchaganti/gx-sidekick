@@ -15,16 +15,18 @@ struct ModelSelectionView: View {
     var body: some View {
 		VStack {
 			welcome
-			downloadProgress
 			HStack {
 				downloadButton
 				selectButton
 			}
 			.padding(.top, 5)
-			
+			downloadProgress
 		}
 		.padding(.horizontal)
 		.padding()
+		.onChange(of: downloadManager.didFinishDownloadingModel) {
+			selectedModel = downloadManager.didFinishDownloadingModel
+		}
     }
 	
 	var welcome: some View {
@@ -36,7 +38,7 @@ struct ModelSelectionView: View {
 			Text("Welcome to Sidekick")
 				.foregroundStyle(.primary)
 				.font(.largeTitle)
-			Text("Download a Model to get started")
+			Text("Select a Model to get started")
 				.foregroundStyle(.secondary)
 				.font(.title3)
 		}
@@ -52,19 +54,18 @@ struct ModelSelectionView: View {
 					.progressViewStyle(.linear)
 			}
 		}
+		.padding(.top)
 	}
 	
 	var downloadButton: some View {
 		Button {
 			// Start download of the default model
 			self.downloadManager.startDownload(
-				url: InferenceConstants.defaultModelUrl
+				url: InferenceSettings.defaultModelUrl
 			)
 		} label: {
 			HStack {
 				Text("Download Default Model")
-				Text("8.54 GB")
-					.foregroundStyle(.white.opacity(0.7))
 			}
 			.padding(.horizontal, 20)
 		}

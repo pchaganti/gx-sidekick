@@ -16,14 +16,20 @@ struct ContentView: View {
 	
 	@StateObject private var conversationState: ConversationState = ConversationState()
 	
+	@State private var showSetup: Bool = Settings.showSetup
+	
     var body: some View {
 		Group {
-			ConversationManagerView(
-				selectedConversationId: $conversationState.selectedConversationId
-			)
+			if !showSetup {
+				ConversationManagerView(
+					selectedConversationId: $conversationState.selectedConversationId
+				)
+			} else {
+				EmptyView()
+			}
 		}
-		.sheet(isPresented: $conversationState.showSetup) {
-			SetupView()
+		.sheet(isPresented: $showSetup) {
+			SetupView(showSetup: $showSetup)
 		}
 		.sheet(isPresented: $conversationState.isManagingProfiles) {
 			ProfileManagerView()

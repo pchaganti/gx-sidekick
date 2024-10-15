@@ -71,7 +71,7 @@ struct MessagesView: View {
 						}
 					}
 					.padding(.vertical)
-					.padding(.bottom, 55)
+					.padding(.bottom, 100)
 					Spacer()
 				}
 				.id(scrollViewId)

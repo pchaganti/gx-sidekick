@@ -11,7 +11,6 @@ import SwiftUI
 @MainActor
 public class ConversationState: ObservableObject {
 	
-	@Published var showSetup: Bool = Settings.showSetup
 	@Published var isManagingProfiles: Bool = false
 
 	@Published var selectedConversationId: UUID? = latestConversation?.id

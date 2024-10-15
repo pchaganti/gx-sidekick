@@ -11,6 +11,8 @@ struct SetupCompleteView: View {
 	
 	@EnvironmentObject private var conversationState: ConversationState
 	
+	@Binding var showSetup: Bool
+	
     var body: some View {
 		VStack {
 			Image(systemName: "checkmark.circle.fill")
@@ -27,7 +29,7 @@ struct SetupCompleteView: View {
 			
 			Button("Continue") {
 				Settings.finishSetup()
-				conversationState.showSetup = false
+				self.showSetup = false
 			}
 			.buttonStyle(.borderedProminent)
 			.controlSize(.large)

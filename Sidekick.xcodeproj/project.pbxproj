@@ -78,7 +78,6 @@
 		20B97CCE2CAFEC37009A0A5D /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B97CCD2CAFEC37009A0A5D /* Settings.swift */; };
 		20B97CCF2CAFEC37009A0A5D /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B97CCA2CAFEC37009A0A5D /* DownloadManager.swift */; };
 		20B97CD02CAFEC37009A0A5D /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B97CCC2CAFEC37009A0A5D /* Model.swift */; };
-		20B97CD12CAFEC37009A0A5D /* InferenceConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B97CCB2CAFEC37009A0A5D /* InferenceConstants.swift */; };
 		20B97CD62CAFF2E0009A0A5D /* SetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B97CD52CAFF2E0009A0A5D /* SetupView.swift */; };
 		20B97CD92CAFF2E7009A0A5D /* ModelSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B97CD72CAFF2E7009A0A5D /* ModelSelectionView.swift */; };
 		20B97CDA2CAFF2E7009A0A5D /* SetupCompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B97CD82CAFF2E7009A0A5D /* SetupCompleteView.swift */; };
@@ -218,7 +217,6 @@
 		20B97CBA2CAFE872009A0A5D /* SidekickUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidekickUITests.swift; sourceTree = "<group>"; };
 		20B97CBB2CAFE872009A0A5D /* SidekickUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidekickUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		20B97CCA2CAFEC37009A0A5D /* DownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
-		20B97CCB2CAFEC37009A0A5D /* InferenceConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InferenceConstants.swift; sourceTree = "<group>"; };
 		20B97CCC2CAFEC37009A0A5D /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		20B97CCD2CAFEC37009A0A5D /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		20B97CD52CAFF2E0009A0A5D /* SetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupView.swift; sourceTree = "<group>"; };
@@ -565,8 +563,8 @@
 		20B9E6142CB1463D00BA0AD2 /* Inference */ = {
 			isa = PBXGroup;
 			children = (
-				20B97CCB2CAFEC37009A0A5D /* InferenceConstants.swift */,
 				20B97CCC2CAFEC37009A0A5D /* Model.swift */,
+				20573F312CB53172004C19FE /* InferenceSettings.swift */,
 			);
 			path = Inference;
 			sourceTree = "<group>";
@@ -578,7 +576,6 @@
 				2086E1702CB036BB00FFCF57 /* ConversationManager.swift */,
 				20A8B65C2CB2829500B756FD /* ProfileManager.swift */,
 				20B97CCD2CAFEC37009A0A5D /* Settings.swift */,
-				20573F312CB53172004C19FE /* InferenceSettings.swift */,
 				2004D7632CBC9DA2009F294E /* ConversationState.swift */,
 				20571F6E2CBCE8F7004F3344 /* TasksController.swift */,
 			);
@@ -816,7 +813,6 @@
 				20B97CDF2CAFFE6A009A0A5D /* Sender.swift in Sources */,
 				202E3EDD2CBB8F7B00AF86C8 /* ReferencedURL.swift in Sources */,
 				2004D7642CBC9DA2009F294E /* ConversationState.swift in Sources */,
-				20B97CD12CAFEC37009A0A5D /* InferenceConstants.swift in Sources */,
 				2086E1712CB036BB00FFCF57 /* ConversationManager.swift in Sources */,
 				20571F6F2CBCE8F7004F3344 /* TasksController.swift in Sources */,
 				20571F742CBCEE90004F3344 /* LengthyTasksToolbarButton.swift in Sources */,

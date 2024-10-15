@@ -13,7 +13,6 @@ public class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
 	
 	/// Function that runs after the app is initialized
 	public func applicationDidFinishLaunching(_ aNotification: Notification) {
-		
 	}
 	
 	/// Function that runs before the app is terminated
