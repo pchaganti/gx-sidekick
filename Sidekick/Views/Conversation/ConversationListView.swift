@@ -15,10 +15,8 @@ struct ConversationNavigationListView: View {
 	
 	var body: some View {
 		List(
-			self.conversationManager.conversations.sorted(
-				by: \.createdAt,
-				order: .reverse
-			),
+			self.$conversationManager.conversations,
+			editActions: .move,
 			selection: $conversationState.selectedConversationId
 		) { conversation in
 			NavigationLink(value: conversation.id) {

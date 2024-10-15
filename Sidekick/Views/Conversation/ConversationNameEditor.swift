@@ -9,21 +9,12 @@ import SwiftUI
 
 struct ConversationNameEditor: View {
 	
-	init(
-		conversation: Conversation
-	) {
-		self.title = conversation.title
-		self.conversation = conversation
-	}
-	
 	@EnvironmentObject private var conversationManager: ConversationManager
 	
 	@State private var isEditing: Bool = false
-	@State private var title: String
+	@Binding var conversation: Conversation
 	
 	@FocusState private var focused: Bool
-	
-	var conversation: Conversation
 	
     var body: some View {
 		Group {
@@ -33,26 +24,22 @@ struct ConversationNameEditor: View {
 						isEditing.toggle()
 					}
 			} else {
-				TextField("Title", text: $title)
+				TextField("Title", text: $conversation.title)
 					.textFieldStyle(.plain)
 					.onSubmit {
-						exitAndSave()
+						exitEditingMode()
 					}
 					.onExitCommand {
-						exitAndSave()
+						exitEditingMode()
 					}
 			}
 		}
     }
 	
-	private func exitAndSave() {
+	private func exitEditingMode() {
 		// Exit editing mode
 		focused = false
 		isEditing = false
-		// Save
-		var editedConversation: Conversation = conversation
-		editedConversation.title = title
-		conversationManager.update(editedConversation)
 	}
 }
 

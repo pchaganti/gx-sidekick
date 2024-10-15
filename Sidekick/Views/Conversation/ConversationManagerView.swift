@@ -39,6 +39,10 @@ struct ConversationManagerView: View {
 		return profileManager.getProfile(id: selectedProfileId)
 	}
 	
+	var toolbarTextColor: Color {
+		return selectedProfile?.color.adaptedTextColor ?? .primary
+	}
+	
 	var selectedConversation: Conversation? {
 		guard let selectedConversationId = conversationState.selectedConversationId else {
 			return nil
@@ -103,7 +107,15 @@ struct ConversationManagerView: View {
 				await model.llama.stopServer()
 			}
 		}
-		.navigationTitle(navTitle)
+		.navigationTitle("")
+		.toolbar {
+			ToolbarItem(placement: .navigation) {
+				Text(navTitle)
+					.font(.title3)
+					.bold()
+					.foregroundStyle(toolbarTextColor)
+			}
+		}
 		.environmentObject(model)
     }
 	

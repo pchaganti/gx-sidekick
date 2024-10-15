@@ -25,6 +25,11 @@
 		20571F6F2CBCE8F7004F3344 /* TasksController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20571F6E2CBCE8F7004F3344 /* TasksController.swift */; };
 		20571F722CBCEDD8004F3344 /* LengthyTasksList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20571F712CBCEDD8004F3344 /* LengthyTasksList.swift */; };
 		20571F742CBCEE90004F3344 /* LengthyTasksToolbarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20571F732CBCEE90004F3344 /* LengthyTasksToolbarButton.swift */; };
+		20571F772CBD6005004F3344 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20571F762CBD6005004F3344 /* SettingsView.swift */; };
+		20571F792CBD6019004F3344 /* GeneralSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20571F782CBD6019004F3344 /* GeneralSettingsView.swift */; };
+		20571F7B2CBD602B004F3344 /* InferenceSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20571F7A2CBD602B004F3344 /* InferenceSettingsView.swift */; };
+		20571F812CBD6A6D004F3344 /* SoundEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20571F802CBD6A6D004F3344 /* SoundEffects.swift */; };
+		20571F842CBD71C9004F3344 /* SystemPromptEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20571F832CBD71C9004F3344 /* SystemPromptEditor.swift */; };
 		20573F142CB50550004C19FE /* ConversationManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20573F132CB50550004C19FE /* ConversationManagerView.swift */; };
 		20573F162CB505DC004C19FE /* ConversationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20573F152CB505DC004C19FE /* ConversationListView.swift */; };
 		20573F182CB50743004C19FE /* ConversationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20573F172CB50743004C19FE /* ConversationView.swift */; };
@@ -169,6 +174,11 @@
 		20571F6E2CBCE8F7004F3344 /* TasksController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksController.swift; sourceTree = "<group>"; };
 		20571F712CBCEDD8004F3344 /* LengthyTasksList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LengthyTasksList.swift; sourceTree = "<group>"; };
 		20571F732CBCEE90004F3344 /* LengthyTasksToolbarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LengthyTasksToolbarButton.swift; sourceTree = "<group>"; };
+		20571F762CBD6005004F3344 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		20571F782CBD6019004F3344 /* GeneralSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingsView.swift; sourceTree = "<group>"; };
+		20571F7A2CBD602B004F3344 /* InferenceSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InferenceSettingsView.swift; sourceTree = "<group>"; };
+		20571F802CBD6A6D004F3344 /* SoundEffects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundEffects.swift; sourceTree = "<group>"; };
+		20571F832CBD71C9004F3344 /* SystemPromptEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemPromptEditor.swift; sourceTree = "<group>"; };
 		20573F132CB50550004C19FE /* ConversationManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationManagerView.swift; sourceTree = "<group>"; };
 		20573F152CB505DC004C19FE /* ConversationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListView.swift; sourceTree = "<group>"; };
 		20573F172CB50743004C19FE /* ConversationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationView.swift; sourceTree = "<group>"; };
@@ -352,6 +362,26 @@
 			path = LengthyTasks;
 			sourceTree = "<group>";
 		};
+		20571F752CBD5FF4004F3344 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				20571F762CBD6005004F3344 /* SettingsView.swift */,
+				20571F782CBD6019004F3344 /* GeneralSettingsView.swift */,
+				20571F7A2CBD602B004F3344 /* InferenceSettingsView.swift */,
+				20571F832CBD71C9004F3344 /* SystemPromptEditor.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		20571F822CBD6A95004F3344 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				2086E1AB2CB03CD200FFCF57 /* Dialogs.swift */,
+				20571F802CBD6A6D004F3344 /* SoundEffects.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		20573F192CB508B4004C19FE /* Conversation */ = {
 			isa = PBXGroup;
 			children = (
@@ -412,6 +442,7 @@
 				20B9E60B2CB140A000BA0AD2 /* AppDelegate.swift */,
 				20B97CBF2CAFE87D009A0A5D /* Views */,
 				20571F702CBCEDC1004F3344 /* LengthyTasks */,
+				20571F752CBD5FF4004F3344 /* Settings */,
 				20B9E6132CB1458500BA0AD2 /* Misc */,
 				20E48C272CB560A30085E7D6 /* Styles */,
 				20B97CC02CAFE883009A0A5D /* Logic */,
@@ -454,7 +485,7 @@
 		20B97CC02CAFE883009A0A5D /* Logic */ = {
 			isa = PBXGroup;
 			children = (
-				2086E1AB2CB03CD200FFCF57 /* Dialogs.swift */,
+				20571F822CBD6A95004F3344 /* Utilities */,
 				200FBFD62CB627B100A92A74 /* llama.cpp */,
 				20B9E6152CB1465900BA0AD2 /* Data Models */,
 				20B9E60F2CB1429E00BA0AD2 /* Commands */,
@@ -489,11 +520,11 @@
 				2099BD9C2CB7B8E700E02732 /* Notifications.swift */,
 				20B97CE22CB00585009A0A5D /* Profile.swift */,
 				2099BD9E2CB7E9CE00E02732 /* QuickPrompt.swift */,
+				202E3EDC2CBB8F7B00AF86C8 /* ReferencedURL.swift */,
 				20B97CE82CB007DF009A0A5D /* Resource.swift */,
 				20A8B65A2CB2709100B756FD /* Resources.swift */,
-				20B97CDE2CAFFE6A009A0A5D /* Sender.swift */,
 				20FB0D8A2CBA8828006D062A /* SearchResult.swift */,
-				202E3EDC2CBB8F7B00AF86C8 /* ReferencedURL.swift */,
+				20B97CDE2CAFFE6A009A0A5D /* Sender.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -748,6 +779,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				20573F362CB53878004C19FE /* CircleMenuStyle.swift in Sources */,
+				20571F842CBD71C9004F3344 /* SystemPromptEditor.swift in Sources */,
 				20FE94D82CB96D3A006E9F06 /* ConversationResourceButton.swift in Sources */,
 				20573F1F2CB5274E004C19FE /* MessagesView.swift in Sources */,
 				20B97CE72CB0066A009A0A5D /* Extension+String.swift in Sources */,
@@ -773,12 +805,14 @@
 				20B97CE52CB00605009A0A5D /* Extension+Color.swift in Sources */,
 				20B97CDD2CAFFE06009A0A5D /* Message.swift in Sources */,
 				20B97CD02CAFEC37009A0A5D /* Model.swift in Sources */,
+				20571F792CBD6019004F3344 /* GeneralSettingsView.swift in Sources */,
 				200FBFEE2CB6477400A92A74 /* LlamaServer.swift in Sources */,
 				207A9F622CB94B0000E727DE /* WindowCommands.swift in Sources */,
 				2099BD9B2CB7B8C800E02732 /* Extension+RawRepresentable.swift in Sources */,
 				2086E1AC2CB03CD200FFCF57 /* Dialogs.swift in Sources */,
 				20573F2D2CB52FAF004C19FE /* SplashCodeSyntaxHighlighter.swift in Sources */,
 				20E48C262CB560730085E7D6 /* ChatStyle.swift in Sources */,
+				20571F7B2CBD602B004F3344 /* InferenceSettingsView.swift in Sources */,
 				20B97CDF2CAFFE6A009A0A5D /* Sender.swift in Sources */,
 				202E3EDD2CBB8F7B00AF86C8 /* ReferencedURL.swift in Sources */,
 				2004D7642CBC9DA2009F294E /* ConversationState.swift in Sources */,
@@ -790,12 +824,14 @@
 				20A8B65D2CB2829500B756FD /* ProfileManager.swift in Sources */,
 				20B97CD62CAFF2E0009A0A5D /* SetupView.swift in Sources */,
 				20B97CED2CB00A28009A0A5D /* Favicon.swift in Sources */,
+				20571F772CBD6005004F3344 /* SettingsView.swift in Sources */,
 				20573F142CB50550004C19FE /* ConversationManagerView.swift in Sources */,
 				20B97CB62CAFE86C009A0A5D /* SidekickApp.swift in Sources */,
 				2099BDA52CB8069800E02732 /* ConversationNameEditor.swift in Sources */,
 				20571F722CBCEDD8004F3344 /* LengthyTasksList.swift in Sources */,
 				204C79582CB769A400EED58E /* Extension+View.swift in Sources */,
 				2099BDAD2CB8222A00E02732 /* ProfileEditorView.swift in Sources */,
+				20571F812CBD6A6D004F3344 /* SoundEffects.swift in Sources */,
 				20E48C292CB560B50085E7D6 /* ConversationControlsView.swift in Sources */,
 				20B97CEF2CB010AD009A0A5D /* ThumbnailView.swift in Sources */,
 				20B97CE12CB001E0009A0A5D /* Conversation.swift in Sources */,

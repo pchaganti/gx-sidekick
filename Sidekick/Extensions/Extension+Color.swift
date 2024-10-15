@@ -56,7 +56,7 @@ extension Color: Codable {
 	}
 	
 	// Luminance computed property
-	private var luminance: Double {
+	public var luminance: Double {
 		
 		// Convert SwiftUI Color to NSColor to CIColor
 		let osColor: NSColor = NSColor(self)

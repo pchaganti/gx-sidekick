@@ -76,6 +76,10 @@ struct ConversationControlsView: View {
 		.padding([.vertical, .leading], 10)
 		.onChange(of: conversationState.selectedConversationId) {
 			self.isFocused = true
+			guard let profileId = selectedConversation?.profileId else {
+				return
+			}
+			self.conversationState.selectedProfileId = profileId
 		}
 		.onExitCommand {
 			self.isFocused = false
@@ -100,6 +104,10 @@ struct ConversationControlsView: View {
 	}
 	
 	private func submit() {
+		// Make sound
+		if Settings.playSoundEffects {
+			SoundEffects.send.play()
+		}
 		// Get previous content
 		guard var conversation = selectedConversation else { return }
 		// Make request message
@@ -138,7 +146,12 @@ struct ConversationControlsView: View {
 			self.model.indicateStartedQuerying(
 				sentConversationId: conversation.id
 			)
-			let index: SimilarityIndex? = await selectedProfile?.resources.loadIndex()
+			var index: SimilarityIndex? = nil
+			// If there are resources
+			if !((selectedProfile?.resources.resources.isEmpty) ?? true) {
+				// Load
+				index = await selectedProfile?.resources.loadIndex()
+			}
 			response = try await model.listenThinkRespond(
 				messages: self.messages,
 				similarityIndex: index
@@ -175,6 +188,10 @@ struct ConversationControlsView: View {
 				responseMessage
 			)
 			conversationManager.update(conversation)
+			// Make sound
+			if Settings.playSoundEffects {
+				SoundEffects.ping.play()
+			}
 			// Reset sendConversation
 			self.sentConversation = nil
 		}

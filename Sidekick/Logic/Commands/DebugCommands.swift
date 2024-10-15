@@ -34,6 +34,13 @@ public class DebugCommands {
 				} label: {
 					Text("Show Container in Finder")
 				}
+				Button {
+					FileManager.showItemInFinder(
+						url: URL.applicationSupportDirectory
+					)
+				} label: {
+					Text("Show App Support Folder in Finder")
+				}
 			}
 		}
 	}

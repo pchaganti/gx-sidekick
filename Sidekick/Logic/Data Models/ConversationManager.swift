@@ -38,7 +38,7 @@ public class ConversationManager: ObservableObject {
 			createdAt: .now,
 			messages: []
 		)
-		self.conversations.append(newConversation)
+		self.conversations = [newConversation] + self.conversations
 	}
 	/// Function to save conversations to disk
 	public func save() {

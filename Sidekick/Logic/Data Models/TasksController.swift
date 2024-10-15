@@ -13,6 +13,11 @@ public class LengthyTasksController: ObservableObject {
 	
 	@Published var tasks: [LengthyTask] = []
 	
+	/// Computed property that returns whether there are tasks
+	public var hasTasks: Bool {
+		return !self.tasks.isEmpty
+	}
+	
 	/// Function to add task to list
 	public func addTask(id: UUID, task: String) {
 		self.tasks.append(

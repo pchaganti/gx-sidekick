@@ -21,21 +21,27 @@ struct SidekickApp: App {
 	
 	@StateObject private var lengthyTasksController: LengthyTasksController = .shared
 	
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
-		.environmentObject(downloadManager)
-		.environmentObject(conversationManager)
-		.environmentObject(profileManager)
-		.environmentObject(lengthyTasksController)
+	var body: some Scene {
+		
+		WindowGroup {
+			ContentView()
+				.environmentObject(downloadManager)
+				.environmentObject(conversationManager)
+				.environmentObject(profileManager)
+				.environmentObject(lengthyTasksController)
+		}
 		.commands {
 			ConversationCommands.commands
 			WindowCommands.commands
 #if DEBUG
-			DebugCommands.commands 
+			DebugCommands.commands
 #endif
 		}
-    }
+		
+		SwiftUI.Settings {
+			SettingsView()
+		}
+		
+	}
 	
 }

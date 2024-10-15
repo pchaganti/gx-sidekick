@@ -112,18 +112,6 @@ Tokens per second: \(tokensPerSecondStr)
 					.splash(theme: self.theme)
 				)
 				.textSelection(.enabled)
-				.contextMenu {
-					Button {
-						self.message.text.copy()
-					} label: {
-						Text("Copy All")
-					}
-					Button {
-						if canEdit { self.isEditing.toggle() }
-					} label: {
-						Text("Edit")
-					}
-				}
 			if !message.referencedURLs.isEmpty {
 				messageReferences
 			}
@@ -195,6 +183,14 @@ Tokens per second: \(tokensPerSecondStr)
 		Group {
 			Button("Copy to Clipboard") {
 				message.text.copy()
+			}
+			// Edit button
+			if self.canEdit && !self.isEditing {
+				Button {
+					if self.canEdit { self.isEditing.toggle() }
+				} label: {
+					Text("Edit")
+				}
 			}
 			// Show info for bots
 			if message.getSender() == .assistant {

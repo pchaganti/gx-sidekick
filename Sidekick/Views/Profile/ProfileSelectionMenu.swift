@@ -19,6 +19,11 @@ struct ProfileSelectionMenu: View {
 		return profileManager.getProfile(id: selectedProfileId)
 	}
 	
+	var isInverted: Bool {
+		guard let luminance = selectedProfile?.color.luminance else { return false }
+		return luminance > 0.5
+	}
+	
 	var inactiveProfiles: [Profile] {
 		return profileManager.profiles.filter({ profile in
 			profile != selectedProfile
@@ -31,13 +36,14 @@ struct ProfileSelectionMenu: View {
 			menu
 			nextButton
 		}
+		.if(isInverted) { view in
+			view.colorInvert()
+		}
     }
 	
 	var prevButton: some View {
 		Button {
-			withAnimation(.linear) {
-				switchToPrevProfile()
-			}
+			switchToPrevProfile()
 		} label: {
 			Label("Previous Profile", systemImage: "chevron.backward")
 		}
@@ -46,9 +52,7 @@ struct ProfileSelectionMenu: View {
 	
 	var nextButton: some View {
 		Button {
-			withAnimation(.linear) {
-				switchToNextProfile()
-			}
+			switchToNextProfile()
 		} label: {
 			Label("Next Profile", systemImage: "chevron.forward")
 		}
@@ -98,14 +102,17 @@ struct ProfileSelectionMenu: View {
 					.bold()
 					.padding(7)
 					.padding(.horizontal, 2)
-					.foregroundStyle(Color.black)
 					.background {
 						RoundedRectangle(cornerRadius: 8)
 							.fill(Color.white)
 							.opacity(0.5)
 					}
 			} else {
-				selectedProfile?.label
+				HStack {
+					Image(systemName: self.selectedProfile!.symbolName)
+					Text(self.selectedProfile!.name)
+						.bold()
+				}
 			}
 		}
 	}

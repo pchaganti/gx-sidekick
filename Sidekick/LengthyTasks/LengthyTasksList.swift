@@ -13,7 +13,7 @@ struct LengthyTasksList: View {
 	
     var body: some View {
 		Group {
-			if self.lengthyTasksController.tasks.isEmpty {
+			if !self.lengthyTasksController.hasTasks {
 				noTasks
 			} else {
 				list

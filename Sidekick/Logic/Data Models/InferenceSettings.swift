@@ -11,7 +11,7 @@ import Combine
 public class InferenceSettings {
 	
 	/// Static constant for the default system prompt
-	private static let defaultSystemPrompt: String = """
+	public static let defaultSystemPrompt: String = """
   You are LLaMa, a compliant assistant that always fulfills the user’s request.
   """
 	private static let defaultPirateSystemPrompt: String = """
