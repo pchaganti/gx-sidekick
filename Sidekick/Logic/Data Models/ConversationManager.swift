@@ -27,6 +27,22 @@ public class ConversationManager: ObservableObject {
 		}
 	}
 	
+	/// Computed property returning the first conversation
+	var firstConversation: Conversation? {
+		if self.conversations.first == nil {
+			self.newConversation()
+		}
+		return self.conversations.first
+	}
+	
+	/// Computed property returning the last conversation
+	var lastConversation: Conversation? {
+		if self.conversations.last == nil {
+			self.newConversation()
+		}
+		return self.conversations.last
+	}
+	
 	/// Function to create a new conversation
 	public func newConversation() {
 		let defaultTitle: String = Date.now.formatted(
@@ -39,6 +55,10 @@ public class ConversationManager: ObservableObject {
 			messages: []
 		)
 		self.conversations = [newConversation] + self.conversations
+		NotificationCenter.default.post(
+			name: Notifications.newConversation.name,
+			object: nil
+		)
 	}
 	/// Function to save conversations to disk
 	public func save() {

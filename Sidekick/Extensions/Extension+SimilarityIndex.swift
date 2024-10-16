@@ -18,7 +18,7 @@ public extension SimilarityIndex {
 		// Search
 		let results: [SimilaritySearchKit.SearchResult] = await self.search(
 			query,
-			top: 8,
+			top: 6,
 			metric: CosineSimilarity()
 		)
 		// Set similarity threshhold

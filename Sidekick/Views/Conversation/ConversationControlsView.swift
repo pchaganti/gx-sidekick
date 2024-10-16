@@ -61,6 +61,16 @@ struct ConversationControlsView: View {
 				}
 			}
 		}
+		.onChange(of: conversationState.selectedConversationId) {
+			self.isFocused = true
+			self.conversationState.selectedProfileId = nil
+		}
+		.onChange(of: conversationState.selectedProfileId) {
+			guard let selectedProfile else {
+				return
+			}
+			self.profile = selectedProfile
+		}
 	}
 	
 	var inputField: some View {
@@ -74,16 +84,6 @@ struct ConversationControlsView: View {
 		.textFieldStyle(ChatStyle(isFocused: _isFocused))
 		.submitLabel(.send)
 		.padding([.vertical, .leading], 10)
-		.onChange(of: conversationState.selectedConversationId) {
-			self.isFocused = true
-			self.conversationState.selectedProfileId = nil
-		}
-		.onChange(of: conversationState.selectedProfileId) {
-			guard let selectedProfile else {
-				return
-			}
-			self.profile = selectedProfile
-		}
 		.onExitCommand {
 			self.isFocused = false
 		}

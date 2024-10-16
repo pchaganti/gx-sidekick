@@ -11,5 +11,6 @@ public enum Notifications: String, NotificationName {
 	
 	case systemPromptChanged
 	case didSelectConversation
+	case newConversation
 	
 }

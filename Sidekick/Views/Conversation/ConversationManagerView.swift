@@ -106,6 +106,16 @@ struct ConversationManagerView: View {
 		}
 		.onReceive(
 			NotificationCenter.default.publisher(
+				for: Notifications.newConversation.name
+			)
+		) { output in
+			self.conversationState.selectedProfileId = nil
+			if let firstConversationId = conversationManager.firstConversation?.id {
+				self.conversationState.selectedConversationId = firstConversationId
+			}
+		}
+		.onReceive(
+			NotificationCenter.default.publisher(
 				for: NSApplication.willTerminateNotification
 			)
 		) { output in
@@ -130,10 +140,10 @@ struct ConversationManagerView: View {
 	var noSelectedConversation: some View {
 		HStack {
 			Text("Hit")
-			Button(
-				"Command ⌘ + N",
-				action: ConversationManager.shared.newConversation
-			)
+			Button("Command ⌘ + N") {
+				ConversationManager.shared.newConversation()
+				conversationState.selectedProfileId = nil
+			}
 			Text("to start a conversation.")
 		}
 	}

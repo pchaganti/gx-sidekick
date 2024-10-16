@@ -46,31 +46,55 @@ public struct Message: Identifiable, Codable, Hashable {
 	/// Function returning the message text that is submitted to the LLM
 	public func submittedText(
 		similarityIndex: SimilarityIndex?
-	) async -> String {
-		if similarityIndex == nil || self.sender != .user {
-			return self.text
+	) async -> (
+		text: String,
+		sources: Int
+	) {
+		// If assistant or system, no sources needed
+		if self.sender != .user {
+			return (self.text, 0)
 		}
-		let results: [Sidekick.SearchResult] = await similarityIndex!.search(
+		// Search in profile resources
+		// If no resources, return blank array
+		let hasResources: Bool = similarityIndex != nil && !(similarityIndex?.indexItems.isEmpty ?? true)
+		let resourcesResults: [(text: String, source: String)] = await similarityIndex?.search(
 			query: text
+		).map({ result in
+			return (result.text, result.sourceUrlText!)
+		}) ?? []
+		// Search Tavily
+		let resultsCount: Int = (hasResources && !resourcesResults.isEmpty) ? 3 : 6
+		var tavilyResults: [(text: String, source: String)]? = try? await TavilySearch.search(
+			query: text,
+			resultCount: resultsCount
 		)
+		if tavilyResults == nil {
+			tavilyResults = try? await TavilySearch.search(
+				query: text,
+				resultCount: resultsCount,
+				useBackupApi: true
+			)
+		}
+		// Combine
+		let results: [(text: String, source: String)] = resourcesResults + (tavilyResults ?? [])
 		// Skip if no results
-		if results.isEmpty { return self.text }
+		if results.isEmpty { return (self.text, 0) }
 		let resultsTexts: [String] = results.enumerated().map { index, result in
 			return """
 {
 	"text": "\(result.text)",
-	"url": "\(result.sourceUrlText!)"
+	"url": "\(result.source)"
 }
 """
 		}
 		print("\(results.count) sources given.")
 		let resultText: String = resultsTexts.joined(separator: ",\n")
 		let sourceText: String = """
-Below is information that may or may not be relevant to my request in JSON format. If your response uses information from sources provided below, you must end your response with a list of URLs or filepaths of all provided sources referenced in the format [{"url": "https://referencedurl.com"}, {"url": "/path/to/referenced/file.pdf"}], with no duplicates. If no provided sources were referenced, do not mention sources in your response, and end your response with an empty array of JSON objects: []. No section headers, labels or numbering are needed in this list of referenced sources.
+Below is information that may or may not be relevant to my request in JSON format. If your response uses information from sources provided below, you must end your response with a list of URLs or filepaths of all provided sources referenced in the format [{"url": "https://referencedurl.com"}, {"url": "/path/to/referenced/file.pdf"}], with no duplicates. If you did not reference provided sources, do not mention sources in your response, and end your response with an empty array of JSON objects: []. No section headers, labels or numbering are needed in this list of referenced sources.
 
 \(resultText)
 """
-		return "\(self.text)\n\n\(sourceText)"
+		return ("\(self.text)\n\n\(sourceText)", results.count)
 	}
 	
 	/// Computed property for the number of tokens outputted per second
@@ -97,12 +121,20 @@ Below is information that may or may not be relevant to my request in JSON forma
 		guard let data: Data = try? jsonString.data() else {
 			return []
 		}
-		guard let urls: [ReferencedURL] = try? JSONDecoder().decode(
+		guard var urls: [ReferencedURL] = try? JSONDecoder().decode(
 			[ReferencedURL].self,
 			from: data
 		) else {
 			return []
 		}
+		let filterUrls: [URL] = [
+			URL(string: "https://tavily.com")!,
+			URL(fileURLWithPath: "/path/to/referenced/file.pdf"),
+			URL(fileURLWithPath: "https://referencedurl.com")
+		]
+		urls = urls.filter({ url in
+			!filterUrls.contains(url.url)
+		})
 		// Return sorted, unique urls
 		return Array(Set(urls)).sorted(by: \.displayName)
 	}
@@ -149,20 +181,22 @@ Below is information that may or may not be relevant to my request in JSON forma
 	
 	/// Static constant for testing a MessageView
 	static let test: Message = Message(
-		text: "Hi there! I'm an artificial intelligence model known as **Llama**, a [**LLM** (Large Language Model)](https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://en.wikipedia.org/wiki/Large_language_model&ved=2ahUKEwjTvLKIt_6IAxWVulYBHb09CFUQFnoECBkQAQ&usg=AOvVaw3ojBiy1-Rxlxl5lO1-SI8F) from Meta.",
+		text: "Hi there! I'm an artificial intelligence model known as **Llama**, a [**LLM** (Large Language Model)](https://www.tavily.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://en.wikipedia.org/wiki/Large_language_model&ved=2ahUKEwjTvLKIt_6IAxWVulYBHb09CFUQFnoECBkQAQ&usg=AOvVaw3ojBiy1-Rxlxl5lO1-SI8F) from Meta.",
 		sender: .user
 	)
 	
 	/// Function to convert the message to JSON for chat parameters
 	public func toJSON(
-		similarityIndex: SimilarityIndex
+		similarityIndex: SimilarityIndex,
+		shouldAddSources: Bool
 	) async -> String {
 		let encoder = JSONEncoder()
 		encoder.outputFormatting = .prettyPrinted
 		let jsonData = try? encoder.encode(
 			await MessageSubset(
 				message: self,
-				similarityIndex: similarityIndex
+				similarityIndex: similarityIndex,
+				shouldAddSources: shouldAddSources
 			)
 		)
 		return String(data: jsonData!, encoding: .utf8)!
@@ -172,15 +206,16 @@ Below is information that may or may not be relevant to my request in JSON forma
 		
 		init(
 			message: Message,
-			similarityIndex: SimilarityIndex?
+			similarityIndex: SimilarityIndex?,
+			shouldAddSources: Bool
 		) async {
 			self.role = message.sender
-			if let similarityIndex {
+			if shouldAddSources {
 				self.content = await message.submittedText(
 					similarityIndex: similarityIndex
-				)
+				).text
 			} else {
-				self.content = message.text
+				self.content = message.displayedText
 			}
 		}
 		

@@ -1,5 +1,5 @@
 {
-  "originHash" : "0d7fbc4e3735b23101aa948c412b5acb92a7bfd34cc3aa15ce6e8da5315ecd98",
+  "originHash" : "71f575ad46b1fad1d20ae28784411d7562ccca779842d7679959874bb9eab90f",
   "pins" : [
     {
       "identity" : "browserkit",
@@ -97,6 +97,15 @@
       "state" : {
         "branch" : "master",
         "revision" : "5eb6e13df2298423b10dd70109ede58cbce6dde3"
+      }
+    },
+    {
+      "identity" : "securedefaults?tab=readme-ov-file#usage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/vpeschenkov/SecureDefaults?tab=readme-ov-file#usage",
+      "state" : {
+        "revision" : "3f9d5d19f7401250791840bff857ed5f6b8c8ddf",
+        "version" : "1.2.2"
       }
     },
     {

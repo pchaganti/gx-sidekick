@@ -20,6 +20,12 @@ struct SettingsView: View {
 						GeneralSettingsView()
 					}
 					Tab(
+						"Retrieval",
+						systemImage: "magnifyingglass"
+					) {
+						RetrievalSettingsView()
+					}
+					Tab(
 						"Inference",
 						systemImage: "brain.fill"
 					) {
@@ -33,6 +39,13 @@ struct SettingsView: View {
 							Label(
 								"General",
 								systemImage: "gear"
+							)
+						}
+					RetrievalSettingsView()
+						.tabItem {
+							Label(
+								"Retrieval",
+								systemImage: "magnifyingglass"
 							)
 						}
 					InferenceSettingsView()

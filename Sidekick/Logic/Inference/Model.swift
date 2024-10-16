@@ -91,7 +91,8 @@ public class Model: ObservableObject {
 			.asyncMap { index, message in
 				return await Message.MessageSubset(
 					message: message,
-					similarityIndex: index != lastIndex ? nil : similarityIndex
+					similarityIndex: similarityIndex,
+					shouldAddSources: (index == lastIndex)
 				)
 			}
 		// Respond to prompt
