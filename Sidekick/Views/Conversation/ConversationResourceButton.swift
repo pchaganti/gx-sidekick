@@ -32,7 +32,7 @@ struct ConversationResourceButton: View {
 				.frame(width: 32, height: 32)
 				.overlay {
 					profile.image
-						.padding(8)
+						.padding(10)
 				}
 		}
 		.buttonStyle(ChatButtonStyle())

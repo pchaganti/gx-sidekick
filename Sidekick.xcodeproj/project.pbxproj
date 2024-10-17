@@ -100,6 +100,8 @@
 		20B9E60C2CB140A000BA0AD2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B9E60B2CB140A000BA0AD2 /* AppDelegate.swift */; };
 		20B9E60E2CB1414100BA0AD2 /* DockMenuCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B9E60D2CB1414100BA0AD2 /* DockMenuCommands.swift */; };
 		20B9E6112CB142FD00BA0AD2 /* DebugCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B9E6102CB142FD00BA0AD2 /* DebugCommands.swift */; };
+		20D65DD32CC0B8A20052D826 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 20D65DD22CC0B8A20052D826 /* README.md */; };
+		20D65DD52CC0CC6C0052D826 /* StopGenerationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D65DD42CC0CC6C0052D826 /* StopGenerationButton.swift */; };
 		20E48C262CB560730085E7D6 /* ChatStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E48C252CB560730085E7D6 /* ChatStyle.swift */; };
 		20E48C292CB560B50085E7D6 /* ConversationControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E48C282CB560B50085E7D6 /* ConversationControlsView.swift */; };
 		20E48C2B2CB560E30085E7D6 /* Extension+CGKeyCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E48C2A2CB560E30085E7D6 /* Extension+CGKeyCode.swift */; };
@@ -246,6 +248,8 @@
 		20B9E60B2CB140A000BA0AD2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		20B9E60D2CB1414100BA0AD2 /* DockMenuCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DockMenuCommands.swift; sourceTree = "<group>"; };
 		20B9E6102CB142FD00BA0AD2 /* DebugCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugCommands.swift; sourceTree = "<group>"; };
+		20D65DD22CC0B8A20052D826 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		20D65DD42CC0CC6C0052D826 /* StopGenerationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopGenerationButton.swift; sourceTree = "<group>"; };
 		20E48C252CB560730085E7D6 /* ChatStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatStyle.swift; sourceTree = "<group>"; };
 		20E48C282CB560B50085E7D6 /* ConversationControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationControlsView.swift; sourceTree = "<group>"; };
 		20E48C2A2CB560E30085E7D6 /* Extension+CGKeyCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+CGKeyCode.swift"; sourceTree = "<group>"; };
@@ -302,6 +306,7 @@
 		2005496A2CAFA67B00A3DCF2 = {
 			isa = PBXGroup;
 			children = (
+				20D65DD22CC0B8A20052D826 /* README.md */,
 				20B97CB22CAFE86C009A0A5D /* Sidekick */,
 				20B97CB82CAFE870009A0A5D /* SidekickTests */,
 				20B97CBC2CAFE872009A0A5D /* SidekickUITests */,
@@ -401,6 +406,7 @@
 				2099BDA42CB8069800E02732 /* ConversationNameEditor.swift */,
 				20573F172CB50743004C19FE /* ConversationView.swift */,
 				20E48C282CB560B50085E7D6 /* ConversationControlsView.swift */,
+				20D65DD42CC0CC6C0052D826 /* StopGenerationButton.swift */,
 				20FE94D72CB96D3A006E9F06 /* ConversationResourceButton.swift */,
 				2099BDA02CB7EABC00E02732 /* ConversationQuickPromptsView.swift */,
 				20573F2B2CB52F9A004C19FE /* Message */,
@@ -777,6 +783,7 @@
 			files = (
 				20B97CB32CAFE86C009A0A5D /* Preview Assets.xcassets in Resources */,
 				20B97CB42CAFE86C009A0A5D /* Assets.xcassets in Resources */,
+				20D65DD32CC0B8A20052D826 /* README.md in Resources */,
 				202FDDF12CC0B43000537F89 /* llama-server in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -861,6 +868,7 @@
 				20E48C292CB560B50085E7D6 /* ConversationControlsView.swift in Sources */,
 				20B97CEF2CB010AD009A0A5D /* ThumbnailView.swift in Sources */,
 				208388EF2CBF86A100C2A9F8 /* Extension+UserDefaults.swift in Sources */,
+				20D65DD52CC0CC6C0052D826 /* StopGenerationButton.swift in Sources */,
 				20B97CE12CB001E0009A0A5D /* Conversation.swift in Sources */,
 				207A9F552CB8A96F00E727DE /* ProfileNavigationRowView.swift in Sources */,
 				20B97CE92CB007DF009A0A5D /* Resource.swift in Sources */,

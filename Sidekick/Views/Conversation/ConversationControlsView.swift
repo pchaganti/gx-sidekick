@@ -51,16 +51,25 @@ struct ConversationControlsView: View {
 			if showQuickPrompts {
 				ConversationQuickPromptsView(input: $prompt)
 			}
-			HStack {
+			HStack(spacing: 0) {
+				if model.isProcessing {
+					StopGenerationButton()
+						.keyboardShortcut(
+							"s",
+							modifiers: [.command, .option]
+						)
+				}
 				inputField
 				if conversationState.selectedProfileId != nil {
 					ConversationResourceButton(
 						profile: $profile
 					)
 					.keyboardShortcut("r", modifiers: .command)
+					.padding(.leading, 7)
 				}
 			}
 		}
+		.padding(.leading)
 		.onChange(of: conversationState.selectedConversationId) {
 			self.isFocused = true
 			self.conversationState.selectedProfileId = profileManager.default?.id
