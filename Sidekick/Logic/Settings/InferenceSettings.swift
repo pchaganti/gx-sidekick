@@ -50,7 +50,13 @@ The user's request might be followed by reference information, organized by sour
 """
 	
 	/// Static constant for the default context length
-	private static let defaultContextLength: Int = 16_384
+	private static var defaultContextLength: Int {
+		if self.unifiedMemorySize < 16 {
+			return 8_192
+		} else {
+			return 16_384
+		}
+	}
 	
 	/// Static constant for the default temperature
 	private static let defaultTemperature: Double = 0.8
