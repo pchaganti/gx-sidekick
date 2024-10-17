@@ -10,7 +10,7 @@ Chat with an LLM with RAG (Retrieval Augmentented Generation) on your Mac withou
 ## Installation
 
 **Requirements**
-- An Apple Silicon Mac
+- A Mac with Apple Silicon
 - RAM ≥ 8 GB
 
 **Prebuilt Package**
