@@ -32,11 +32,11 @@ Sidekick is a native LLM application for macOS that runs completely locally. Dow
 - Open source. What's the point of running local AI if you can't audit that it's actually running locally?
 - Context aware. Aware of your files, folders and content on the web. 
 
-### Contributing
+## Contributing
 
 Contributions are very welcome. Let's make Sidekick simple and powerful.
 
-### Credits
+## Credits
 
 This project would not be possible without the hard work of:
 
