@@ -85,7 +85,6 @@ struct ConversationControlsView: View {
 				for: Notifications.didSelectProfile.name
 			)
 		) { output in
-			print("Selected profile")
 			self.updateProfile()
 		}
 	}

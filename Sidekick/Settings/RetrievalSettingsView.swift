@@ -71,11 +71,13 @@ struct RetrievalSettingsView: View {
 				useTavilySearch && apiKey.isEmpty ? .red : .primary
 			)
 			Spacer()
-			SecureField("", text: $apiKey)
-				.textFieldStyle(.plain)
-		}
-		.onChange(of: apiKey) {
-			RetrievalSettings.apiKey = self.apiKey
+			VStack(alignment: .trailing) {
+				SecureField("", text: $apiKey)
+					.textFieldStyle(.plain)
+				Button("Save") {
+					RetrievalSettings.apiKey = self.apiKey
+				}
+			}
 		}
 	}
 	
@@ -89,11 +91,13 @@ struct RetrievalSettingsView: View {
 					.font(.caption)
 			}
 			Spacer()
-			SecureField("", text: $backupApiKey)
-				.textFieldStyle(.plain)
-		}
-		.onChange(of: backupApiKey) {
-			RetrievalSettings.backupApiKey = self.backupApiKey
+			VStack(alignment: .trailing) {
+				SecureField("", text: $backupApiKey)
+					.textFieldStyle(.plain)
+				Button("Save") {
+					RetrievalSettings.backupApiKey = self.backupApiKey
+				}
+			}
 		}
 	}
 	
