@@ -10,15 +10,26 @@ import Combine
 
 public class InferenceSettings {
 	
-	/// Static computed property for the default LLM
-	static var defaultModelUrl: URL {
+	/// Static computed property returning unified memory size in GB
+	static var unifiedMemorySize: Int {
 		let memory: Double = Double(ProcessInfo.processInfo.physicalMemory)
 		let memoryGb: Int = Int(memory / pow(2,30))
+		return memoryGb
+	}
+	
+	/// Static computed property returning if the system has low unified memory
+	static var lowUnifiedMemory: Bool {
+		return Self.unifiedMemorySize <= 12
+	}
+	
+	/// Static computed property for the default LLM
+	static var defaultModelUrl: URL {
+		let memoryGb: Int = Self.unifiedMemorySize
 		if memoryGb <= 8 {
-			return URL(string: "https://huggingface.co/bartowski/Llama-3.2-1B-Instruct-GGUF/resolve/main/Llama-3.2-1B-Instruct-Q8_0.gguf")!
+			return URL(string: "https://huggingface.co/bartowski/gemma-2-2b-it-GGUF/resolve/main/gemma-2-2b-it-Q6_K_L.gguf")!
 		} else if memoryGb <= 16 {
-			return URL(string:"https://huggingface.co/bartowski/Llama-3.2-3B-Instruct-GGUF/resolve/main/Llama-3.2-3B-Instruct-Q8_0.gguf")!
-		} else if memoryGb <= 24 {
+			return URL(string: "https://huggingface.co/bartowski/gemma-2-2b-it-GGUF/resolve/main/gemma-2-2b-it-Q8_0.gguf")!
+		} else if memoryGb <= 18 {
 			return URL(string:"https://huggingface.co/bartowski/Meta-Llama-3.1-8B-Instruct-GGUF/resolve/main/Meta-Llama-3.1-8B-Instruct-Q6_K_L.gguf")!
 		} else {
 			return URL(string: "https://huggingface.co/bartowski/Meta-Llama-3.1-8B-Instruct-GGUF/resolve/main/Meta-Llama-3.1-8B-Instruct-Q8_0.gguf")!
@@ -35,7 +46,7 @@ public class InferenceSettings {
 	
 	/// Static constant for the part of the system prompt telling the LLM to use sources
 	public static var useSourcesPrompt: String = """
-The user's request might be followed by reference information, organized by source, that may or may not be complete nor related. If the provided information is related to the request, you will respond with reference to the information, filling in the gaps with your own knowledge, and ending your response with a list of URLs or filepaths of all provided sources referenced in the format [{"url": "https://referencedurl.com"}, {"url": "/path/to/referenced/file.pdf"}], with no duplicates. If no sources are relevant, you will avoid referring to sources in your response, and end your response with an empty array of JSON objects: [].
+The user's request might be followed by reference information, organized by source, that may or may not be complete nor related. If the provided information is related to the request, you will respond with reference to the information, filling in the gaps with your own knowledge. If the reference information provided is irrelavant, your response will ignore and avoid mentioning the existence of reference information.
 """
 	
 	/// Static constant for the default context length

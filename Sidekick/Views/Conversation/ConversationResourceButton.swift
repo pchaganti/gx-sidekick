@@ -36,9 +36,6 @@ struct ConversationResourceButton: View {
 				}
 		}
 		.buttonStyle(ChatButtonStyle())
-		.onChange(of: selectedProfile) {
-			self.updateProfile()
-		}
 		.sheet(isPresented: $isEditingResources) {
 			VStack(
 				alignment: .leading,

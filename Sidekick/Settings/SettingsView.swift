@@ -59,7 +59,6 @@ struct SettingsView: View {
 			}
 		}
 		.frame(maxWidth: 600)
-		.padding()
     }
 	
 }

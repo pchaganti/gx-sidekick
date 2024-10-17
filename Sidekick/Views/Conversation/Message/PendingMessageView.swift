@@ -11,6 +11,18 @@ struct PendingMessageView: View {
 	
 	@EnvironmentObject private var model: Model
 	@EnvironmentObject private var conversationState: ConversationState
+	@EnvironmentObject private var profileManager: ProfileManager
+	
+	var selectedProfile: Profile? {
+		guard let selectedProfileId = conversationState.selectedProfileId else {
+			return nil
+		}
+		return profileManager.getProfile(id: selectedProfileId)
+	}
+	
+	var useWebSearch: Bool {
+		return selectedProfile?.useWebSearch ?? true
+	}
 	
 	var pendingMessage: Message {
 		var text: String = "Processing..."
@@ -18,7 +30,7 @@ struct PendingMessageView: View {
 			// Show progress if availible
 			text = self.model.pendingMessage
 		} else if self.model.status == .querying {
-			if RetrievalSettings.useTavilySearch {
+			if RetrievalSettings.useTavilySearch && useWebSearch {
 				text = "Searching in resources and on the web..."
 			} else {
 				text = "Searching in resources..."

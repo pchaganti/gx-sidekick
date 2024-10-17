@@ -19,6 +19,6 @@ public class ConversationState: ObservableObject {
 			.sorted(by: \.createdAt).last
 	}
 	
-	@Published var selectedProfileId: UUID? = nil
+	@Published var selectedProfileId: UUID? = ProfileManager.shared.default?.id
 	
 }

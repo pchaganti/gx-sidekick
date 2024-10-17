@@ -61,6 +61,9 @@ public struct Profile: Identifiable, Codable, Hashable, Sendable {
 			)
 	}
 	
+	/// Stored property for whether web search is used
+	public var useWebSearch: Bool = true
+	
 	/// Stored property for the profile's associated resources
 	public var resources: Resources = Resources()
 	

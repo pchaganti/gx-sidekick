@@ -83,7 +83,10 @@ struct ConversationManagerView: View {
 						self.conversationManager.update(selectedConversation)
 					}
 			}
-			ToolbarItem() {
+			ToolbarItemGroup() {
+				if InferenceSettings.lowUnifiedMemory {
+					lowMemoryWarning
+				}
 				LengthyTasksToolbarButton()
 			}
 		}
@@ -109,7 +112,7 @@ struct ConversationManagerView: View {
 				for: Notifications.newConversation.name
 			)
 		) { output in
-			self.conversationState.selectedProfileId = nil
+			self.conversationState.selectedProfileId = profileManager.default?.id
 			if let firstConversationId = conversationManager.firstConversation?.id {
 				self.conversationState.selectedConversationId = firstConversationId
 			}
@@ -142,9 +145,19 @@ struct ConversationManagerView: View {
 			Text("Hit")
 			Button("Command ⌘ + N") {
 				ConversationManager.shared.newConversation()
-				conversationState.selectedProfileId = nil
+				conversationState.selectedProfileId = profileManager.default?.id
 			}
 			Text("to start a conversation.")
+		}
+	}
+	
+	var lowMemoryWarning: some View {
+		PopoverButton {
+			Label("Low Memory", systemImage: "exclamationmark.triangle.fill")
+				.foregroundStyle(.yellow)
+		} content: {
+			Text("Your system has only \(InferenceSettings.unifiedMemorySize) GB of RAM, which may not be sufficient for running an LLM. \nPlease save progress in all open apps, and close memory hogging applications **in case a system crash occurs.**")
+				.padding()
 		}
 	}
 	

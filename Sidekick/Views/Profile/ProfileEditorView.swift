@@ -59,6 +59,11 @@ struct ProfileEditorView: View {
 			}
 			ResourceSectionView(profile: $profile)
 			Section {
+				webSearch
+			} header: {
+				Text("Web Search")
+			}
+			Section {
 				systemPromptEditor
 			} header: {
 				Text("System Prompt")
@@ -141,32 +146,54 @@ struct ProfileEditorView: View {
 		}
 	}
 	
-	var systemPromptEditor: some View {
+	var webSearch: some View {
 		Group {
-			Group {
+			if RetrievalSettings.useTavilySearch {
 				HStack(alignment: .top) {
 					VStack(alignment: .leading) {
-						Text("System Prompt")
+						Text("Use Web Search")
 							.font(.title3)
 							.bold()
-						Text("This profile's system prompt")
+						Text("Controls whether this profile searches the web before answering. Note that when enabled, this feature may lead to slower responses.")
 							.font(.caption)
-						Button("Use Default") {
-							systemPrompt = InferenceSettings.systemPrompt
-						}
 					}
 					Spacer()
-					TextEditor(text: $systemPrompt)
-						.font(.title2)
-						.onChange(
-							of: systemPrompt
-						) {
-							saveSystemPrompt()
-						}
+					Toggle("", isOn: $profile.useWebSearch)
 				}
+				.padding(.horizontal, 5)
+			} else {
+				Text("Search is not enabled in Settings")
+					.font(.title3)
+					.bold()
+					.padding()
 			}
-			.padding(.horizontal, 5)
 		}
+	}
+	
+	var systemPromptEditor: some View {
+		Group {
+			HStack(alignment: .top) {
+				VStack(alignment: .leading) {
+					Text("System Prompt")
+						.font(.title3)
+						.bold()
+					Text("This profile's system prompt")
+						.font(.caption)
+					Button("Use Default") {
+						systemPrompt = InferenceSettings.systemPrompt
+					}
+				}
+				Spacer()
+				TextEditor(text: $systemPrompt)
+					.font(.title2)
+					.onChange(
+						of: systemPrompt
+					) {
+						saveSystemPrompt()
+					}
+			}
+		}
+		.padding(.horizontal, 5)
 	}
 	
 	private func saveSystemPrompt() {

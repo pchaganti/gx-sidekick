@@ -14,7 +14,7 @@ fileprivate struct ServerHealthRequest {
 	}
 	
 	/// Function to check if the server is alive
-	func checkOK(url: URL) async throws -> Bool {
+	func checkOk(url: URL) async throws -> Bool {
 		let config = URLSessionConfiguration.default
 		config.timeoutIntervalForRequest = 3
 		config.timeoutIntervalForResource = 1
@@ -64,14 +64,14 @@ actor ServerHealth {
 		guard let url = self.url else { return }
 		let startTime = CFAbsoluteTimeGetCurrent()
 		do {
-			let resOK = try await healthRequest.checkOK(url: url)
+			let resOK = try await healthRequest.checkOk(url: url)
 			let delta = CFAbsoluteTimeGetCurrent() - startTime
 			let deltaV = (1 - (delta - thresholdSeconds) / thresholdSeconds)
 			let deltaW = (deltaV > 1 ? 1 : deltaV) * 0.25
 			let resW = (resOK ? 1 : 0) * 0.75
 			putResponse(ServerHealthResponse(ok: resOK, ms: delta, score: resW + deltaW))
 		} catch {
-			print("Error requesting url \(url.absoluteString): ", error)
+//			print("Error requesting url \(url.absoluteString): ", error)
 			putResponse(ServerHealthResponse(ok: false, ms: nil, score: 0))
 		}
 	}

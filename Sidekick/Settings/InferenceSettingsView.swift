@@ -30,6 +30,7 @@ struct InferenceSettingsView: View {
 			}
 		}
 		.formStyle(.grouped)
+		.scrollIndicators(.never)
 		.sheet(isPresented: $isEditingSystemPrompt) {
 			SystemPromptEditor(
 				isEditingSystemPrompt: $isEditingSystemPrompt
@@ -54,6 +55,7 @@ struct InferenceSettingsView: View {
 						title: "Restart Required",
 						message: "Sidekick needs to restart to use the newly selected model."
 					)
+					NSApplication.shared.terminate(nil)
 				}
 			} label: {
 				Text("Select")

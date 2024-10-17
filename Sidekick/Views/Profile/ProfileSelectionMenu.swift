@@ -30,7 +30,7 @@ struct ProfileSelectionMenu: View {
 		})
 	}
 	
-    var body: some View {
+	var body: some View {
 		Group {
 			prevButton
 			menu
@@ -39,7 +39,7 @@ struct ProfileSelectionMenu: View {
 		.if(isInverted) { view in
 			view.colorInvert()
 		}
-    }
+	}
 	
 	var prevButton: some View {
 		Button {
@@ -81,6 +81,7 @@ struct ProfileSelectionMenu: View {
 				withAnimation(.linear) {
 					conversationState.selectedProfileId = profile.id
 				}
+				self.sendNotification()
 			} label: {
 				profile.label
 			}
@@ -122,10 +123,14 @@ struct ProfileSelectionMenu: View {
 		let profilesIds: [UUID] = (profileManager.profiles + profileManager.profiles).map({ $0.id })
 		guard let selectedProfileId = conversationState.selectedProfileId else {
 			conversationState.selectedProfileId = profileManager.firstProfile?.id
+			sendNotification()
 			return
 		}
-		guard let index = profilesIds.firstIndex(of: selectedProfileId) else { return }
+		guard let index = profilesIds.firstIndex(of: selectedProfileId) else {
+			return sendNotification()
+		}
 		self.conversationState.selectedProfileId = profilesIds[index + 1]
+		sendNotification()
 	}
 	
 	/// Function to switch to the last profile
@@ -133,10 +138,23 @@ struct ProfileSelectionMenu: View {
 		let profilesIds: [UUID] = (profileManager.profiles + profileManager.profiles).map({ $0.id })
 		guard let selectedProfileId = conversationState.selectedProfileId else {
 			conversationState.selectedProfileId = profileManager.lastProfile?.id
+			sendNotification()
 			return
 		}
-		guard let index = profilesIds.lastIndex(of: selectedProfileId) else { return }
+		guard let index = profilesIds.lastIndex(of: selectedProfileId) else {
+			sendNotification()
+			return
+		}
 		self.conversationState.selectedProfileId = profilesIds[index - 1]
+		sendNotification()
+	}
+	
+	private func sendNotification() {
+		// Send notification
+		NotificationCenter.default.post(
+			name: Notifications.didSelectProfile.name,
+			object: nil
+		)
 	}
 	
 }

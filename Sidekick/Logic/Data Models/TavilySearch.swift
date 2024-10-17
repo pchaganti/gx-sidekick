@@ -49,6 +49,7 @@ public class TavilySearch {
 		resultCount: Int
 	) async throws -> [Tavily.Response.Result] {
 		// Set up query params
+		let startTime: Date = .now
 		let params = Tavily.Request(
 			api_key: apiKey,
 			query: query,
@@ -64,11 +65,14 @@ public class TavilySearch {
 		request.httpBody = params.toJSON().data(using: .utf8)
 		// Hit the API
 		let urlSession: URLSession = URLSession.shared
-		urlSession.configuration.timeoutIntervalForRequest = 20
-		urlSession.configuration.timeoutIntervalForResource = 20
+		urlSession.configuration.waitsForConnectivity = false
+		urlSession.configuration.timeoutIntervalForRequest = 7.5
+		urlSession.configuration.timeoutIntervalForResource = 10
 		let (data, _): (Data, URLResponse) = try await URLSession.shared.data(
 			for: request
 		)
+//		print(String(data: data, encoding: .utf8) ?? "")
+		print("Tavily returned results in \(Date.now.timeIntervalSince(startTime)) secs")
 		let decoder: JSONDecoder = JSONDecoder()
 		let response: Tavily.Response = try decoder.decode(
 			Tavily.Response.self,

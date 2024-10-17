@@ -22,7 +22,8 @@ struct ChatParameters: Codable {
 		let systemPromptMsgSubset: Message.MessageSubset = await Message.MessageSubset(
 			message: systemPromptMsg,
 			similarityIndex: nil,
-			shouldAddSources: false
+			shouldAddSources: false,
+			useWebSearch: false
 		)
 		let messagesWithSystemPrompt: [Message.MessageSubset] = [systemPromptMsgSubset] + messages
 		self.messages = messagesWithSystemPrompt

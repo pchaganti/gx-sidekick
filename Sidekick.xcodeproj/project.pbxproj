@@ -16,11 +16,11 @@
 		200FBFF52CB66C0000A92A74 /* LlamaServerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200FBFF42CB66C0000A92A74 /* LlamaServerError.swift */; };
 		200FBFF72CB68ABF00A92A74 /* ChatParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200FBFF62CB68ABF00A92A74 /* ChatParameters.swift */; };
 		202E3EDD2CBB8F7B00AF86C8 /* ReferencedURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202E3EDC2CBB8F7B00AF86C8 /* ReferencedURL.swift */; };
+		202FDDF12CC0B43000537F89 /* llama-server in Resources */ = {isa = PBXBuildFile; fileRef = 202FDDF02CC0B43000537F89 /* llama-server */; };
 		2038CCF32CB6CBC6005AA315 /* PendingMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2038CCF22CB6CBC6005AA315 /* PendingMessageView.swift */; };
 		204C79532CB7500800EED58E /* EndDetectionScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204C79522CB7500800EED58E /* EndDetectionScrollView.swift */; };
 		204C79562CB765D700EED58E /* ProfileSelectionMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204C79552CB765D700EED58E /* ProfileSelectionMenu.swift */; };
 		204C79582CB769A400EED58E /* Extension+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204C79572CB769A400EED58E /* Extension+View.swift */; };
-		204C795A2CB789B200EED58E /* llama-server in Resources */ = {isa = PBXBuildFile; fileRef = 204C79592CB789B200EED58E /* llama-server */; };
 		204C795C2CB79AB900EED58E /* ProfileManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204C795B2CB79AB900EED58E /* ProfileManagerView.swift */; };
 		20571F6F2CBCE8F7004F3344 /* TasksController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20571F6E2CBCE8F7004F3344 /* TasksController.swift */; };
 		20571F722CBCEDD8004F3344 /* LengthyTasksList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20571F712CBCEDD8004F3344 /* LengthyTasksList.swift */; };
@@ -170,11 +170,11 @@
 		200FBFF42CB66C0000A92A74 /* LlamaServerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LlamaServerError.swift; sourceTree = "<group>"; };
 		200FBFF62CB68ABF00A92A74 /* ChatParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatParameters.swift; sourceTree = "<group>"; };
 		202E3EDC2CBB8F7B00AF86C8 /* ReferencedURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferencedURL.swift; sourceTree = "<group>"; };
+		202FDDF02CC0B43000537F89 /* llama-server */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llama-server"; sourceTree = "<group>"; };
 		2038CCF22CB6CBC6005AA315 /* PendingMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingMessageView.swift; sourceTree = "<group>"; };
 		204C79522CB7500800EED58E /* EndDetectionScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndDetectionScrollView.swift; sourceTree = "<group>"; };
 		204C79552CB765D700EED58E /* ProfileSelectionMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSelectionMenu.swift; sourceTree = "<group>"; };
 		204C79572CB769A400EED58E /* Extension+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+View.swift"; sourceTree = "<group>"; };
-		204C79592CB789B200EED58E /* llama-server */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llama-server"; sourceTree = "<group>"; };
 		204C795B2CB79AB900EED58E /* ProfileManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManagerView.swift; sourceTree = "<group>"; };
 		20571F6E2CBCE8F7004F3344 /* TasksController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksController.swift; sourceTree = "<group>"; };
 		20571F712CBCEDD8004F3344 /* LengthyTasksList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LengthyTasksList.swift; sourceTree = "<group>"; };
@@ -323,7 +323,7 @@
 		200FBFD62CB627B100A92A74 /* llama.cpp */ = {
 			isa = PBXGroup;
 			children = (
-				204C79592CB789B200EED58E /* llama-server */,
+				202FDDF02CC0B43000537F89 /* llama-server */,
 				200FBFED2CB6477400A92A74 /* LlamaServer.swift */,
 				200FBFF22CB66B8300A92A74 /* ServerHealth.swift */,
 				200FBFE62CB6384400A92A74 /* llama-server-watchdog */,
@@ -775,9 +775,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				204C795A2CB789B200EED58E /* llama-server in Resources */,
 				20B97CB32CAFE86C009A0A5D /* Preview Assets.xcassets in Resources */,
 				20B97CB42CAFE86C009A0A5D /* Assets.xcassets in Resources */,
+				202FDDF12CC0B43000537F89 /* llama-server in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

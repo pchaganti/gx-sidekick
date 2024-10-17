@@ -80,7 +80,8 @@ public class Model: ObservableObject {
 	// we respond before updating to avoid a long delay after user input
 	func listenThinkRespond(
 		messages: [Message],
-		similarityIndex: SimilarityIndex?
+		similarityIndex: SimilarityIndex?,
+		useWebSearch: Bool
 	) async throws -> LlamaServer.CompleteResponse {
 		// Set flag
 		let preQueryStatus: Status = self.status
@@ -92,7 +93,8 @@ public class Model: ObservableObject {
 				return await Message.MessageSubset(
 					message: message,
 					similarityIndex: similarityIndex,
-					shouldAddSources: (index == lastIndex)
+					shouldAddSources: (index == lastIndex),
+					useWebSearch: useWebSearch
 				)
 			}
 		// Respond to prompt

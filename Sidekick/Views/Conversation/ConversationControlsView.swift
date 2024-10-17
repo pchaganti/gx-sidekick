@@ -36,7 +36,7 @@ struct ConversationControlsView: View {
 		}
 		return profileManager.getProfile(id: selectedProfileId)
 	}
-	@State private var profile: Profile = ProfileManager.shared.firstProfile!
+	@State private var profile: Profile = .default
 	
 	var messages: [Message] {
 		return selectedConversation?.messages ?? []
@@ -63,13 +63,21 @@ struct ConversationControlsView: View {
 		}
 		.onChange(of: conversationState.selectedConversationId) {
 			self.isFocused = true
-			self.conversationState.selectedProfileId = nil
+			self.conversationState.selectedProfileId = profileManager.default?.id
 		}
 		.onChange(of: conversationState.selectedProfileId) {
 			guard let selectedProfile else {
 				return
 			}
 			self.profile = selectedProfile
+		}
+		.onReceive(
+			NotificationCenter.default.publisher(
+				for: Notifications.didSelectProfile.name
+			)
+		) { output in
+			print("Selected profile")
+			self.updateProfile()
 		}
 	}
 	
@@ -94,6 +102,16 @@ struct ConversationControlsView: View {
 		) { output in
 			self.isFocused = false
 		}
+	}
+	
+	private func updateProfile() {
+		guard let selectedProfileId = conversationState.selectedProfileId else {
+			return
+		}
+		guard let profile = profileManager.getProfile(id: selectedProfileId) else {
+			return
+		}
+		self.profile = profile
 	}
 	
 	private func onSubmit() {
@@ -155,9 +173,11 @@ struct ConversationControlsView: View {
 				// Load
 				index = await selectedProfile?.resources.loadIndex()
 			}
+			let useWebSearch: Bool = selectedProfile?.useWebSearch ?? true
 			response = try await model.listenThinkRespond(
 				messages: self.messages,
-				similarityIndex: index
+				similarityIndex: index,
+				useWebSearch: useWebSearch
 			)
 		} catch let error as LlamaServerError {
 			print("Interupted response: \(error)")

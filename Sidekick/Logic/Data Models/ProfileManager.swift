@@ -42,6 +42,14 @@ public class ProfileManager: ObservableObject {
 		return self.profiles.last
 	}
 	
+	/// Computed property returning the default profile
+	var `default`: Profile? {
+		if self.profiles.filter({ $0.name == "Default" }).isEmpty {
+			self.profiles = [.default] + self.profiles
+		}
+		return self.profiles.filter({ $0.name == "Default" }).first
+	}
+	
 	/// Function to create a new profile
 	public func newProfile(
 		name: String,

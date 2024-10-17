@@ -45,7 +45,8 @@ public struct Message: Identifiable, Codable, Hashable {
 	
 	/// Function returning the message text that is submitted to the LLM
 	public func submittedText(
-		similarityIndex: SimilarityIndex?
+		similarityIndex: SimilarityIndex?,
+		useWebSearch: Bool
 	) async -> (
 		text: String,
 		sources: Int
@@ -64,16 +65,19 @@ public struct Message: Identifiable, Codable, Hashable {
 		}) ?? []
 		// Search Tavily
 		let resultsCount: Int = (hasResources && !resourcesResults.isEmpty) ? 3 : 6
-		var tavilyResults: [(text: String, source: String)]? = try? await TavilySearch.search(
-			query: text,
-			resultCount: resultsCount
-		)
-		if tavilyResults == nil {
+		var tavilyResults: [(text: String, source: String)]? = []
+		if useWebSearch {
 			tavilyResults = try? await TavilySearch.search(
 				query: text,
-				resultCount: resultsCount,
-				useBackupApi: true
+				resultCount: resultsCount
 			)
+			if tavilyResults == nil {
+				tavilyResults = try? await TavilySearch.search(
+					query: text,
+					resultCount: resultsCount,
+					useBackupApi: true
+				)
+			}
 		}
 		// Combine
 		let results: [(text: String, source: String)] = resourcesResults + (tavilyResults ?? [])
@@ -90,7 +94,7 @@ public struct Message: Identifiable, Codable, Hashable {
 		print("\(results.count) sources given.")
 		let resultText: String = resultsTexts.joined(separator: ",\n")
 		let sourceText: String = """
-Below is information that may or may not be relevant to my request in JSON format. If your response uses information from sources provided below, you must end your response with a list of URLs or filepaths of all provided sources referenced in the format [{"url": "https://referencedurl.com"}, {"url": "/path/to/referenced/file.pdf"}], with no duplicates. If you did not reference provided sources, do not mention sources in your response, and end your response with an empty array of JSON objects: []. No section headers, labels or numbering are needed in this list of referenced sources.
+Below is information that may or may not be relevant to my request in JSON format. If your response uses information from sources provided below, you must end your response with one list of URLs or filepaths of all provided sources referenced in the format [{"url": "https://referencedurl.com"}, {"url": "/path/to/referenced/file.pdf"}], with no duplicates. If you did not reference provided sources, do not mention sources in your response, and end your response with an empty array of JSON objects: []. No section headers, labels or numbering are needed in this list of referenced sources.
 
 \(resultText)
 """
@@ -127,13 +131,15 @@ Below is information that may or may not be relevant to my request in JSON forma
 		) else {
 			return []
 		}
-		let filterUrls: [URL] = [
-			URL(string: "https://tavily.com")!,
-			URL(fileURLWithPath: "/path/to/referenced/file.pdf"),
-			URL(fileURLWithPath: "https://referencedurl.com")
+		let filterUrls: [String] = [
+			"tavily.com",
+			"/path/to/referenced/file.pdf",
+			"referencedurl.com"
 		]
 		urls = urls.filter({ url in
-			!filterUrls.contains(url.url)
+			return !filterUrls.map({ filterUrl in
+				return url.url.absoluteString.contains(filterUrl)
+			}).contains(true)
 		})
 		// Return sorted, unique urls
 		return Array(Set(urls)).sorted(by: \.displayName)
@@ -179,47 +185,28 @@ Below is information that may or may not be relevant to my request in JSON forma
 		self.outputEnded = true
 	}
 	
-	/// Static constant for testing a MessageView
-	static let test: Message = Message(
-		text: "Hi there! I'm an artificial intelligence model known as **Llama**, a [**LLM** (Large Language Model)](https://www.tavily.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://en.wikipedia.org/wiki/Large_language_model&ved=2ahUKEwjTvLKIt_6IAxWVulYBHb09CFUQFnoECBkQAQ&usg=AOvVaw3ojBiy1-Rxlxl5lO1-SI8F) from Meta.",
-		sender: .user
-	)
-	
-	/// Function to convert the message to JSON for chat parameters
-	public func toJSON(
-		similarityIndex: SimilarityIndex,
-		shouldAddSources: Bool
-	) async -> String {
-		let encoder = JSONEncoder()
-		encoder.outputFormatting = .prettyPrinted
-		let jsonData = try? encoder.encode(
-			await MessageSubset(
-				message: self,
-				similarityIndex: similarityIndex,
-				shouldAddSources: shouldAddSources
-			)
-		)
-		return String(data: jsonData!, encoding: .utf8)!
-	}
-	
 	public struct MessageSubset: Codable {
 		
 		init(
 			message: Message,
 			similarityIndex: SimilarityIndex?,
-			shouldAddSources: Bool
+			shouldAddSources: Bool,
+			useWebSearch: Bool
 		) async {
 			self.role = message.sender
 			if shouldAddSources {
 				self.content = await message.submittedText(
-					similarityIndex: similarityIndex
+					similarityIndex: similarityIndex,
+					useWebSearch: useWebSearch
 				).text
 			} else {
 				self.content = message.displayedText
 			}
 		}
 		
+		/// Stored property for who sent the message
 		var role: Sender
+		/// Stored property for the message's content
 		var content: String
 		
 	}
