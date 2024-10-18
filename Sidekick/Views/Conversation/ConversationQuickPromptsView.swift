@@ -21,10 +21,19 @@ struct ConversationQuickPromptsView: View {
 					)
 				}
 			}
-			.padding(.horizontal, 10)
+			.padding(.horizontal, 20)
 			.padding(.top, 200)
 		}
 		.frame(maxWidth: .infinity)
+		.mask {
+			Rectangle()
+				.overlay(alignment: .leading) {
+					ScrollMask(isLeading: true)
+				}
+				.overlay(alignment: .trailing) {
+					ScrollMask(isLeading: false)
+				}
+		}
 	}
 	
 }
@@ -55,6 +64,23 @@ struct QuickPromptButton: View {
 		}
 		.buttonStyle(CapsuleButtonStyle())
 		.frame(maxWidth: 300)
+	}
+	
+}
+
+struct ScrollMask: View {
+	
+	let isLeading: Bool
+	
+	var body: some View {
+		LinearGradient(
+			colors: [.black, .clear],
+			startPoint: UnitPoint(x: isLeading ? 0 : 1, y: 0.5),
+			endPoint: UnitPoint(x: isLeading ? 1 : 0, y: 0.5)
+		)
+		.frame(width: 50)
+		.frame(maxHeight: .infinity)
+		.blendMode(.destinationOut)
 	}
 	
 }

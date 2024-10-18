@@ -17,6 +17,7 @@ struct ResourceSectionView: View {
 		Section {
 			VStack {
 				selectResources
+				Divider()
 				persistResources
 			}
 			.padding(.horizontal, 5)
@@ -51,6 +52,7 @@ struct ResourceSectionView: View {
 					}
 				}
 			}
+			Divider()
 			ResourceSelectionView(profile: $profile)
 		}
 	}

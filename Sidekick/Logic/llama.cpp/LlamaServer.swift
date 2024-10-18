@@ -87,10 +87,12 @@ public actor LlamaServer {
 		let processes = ProcessInfo.processInfo.activeProcessorCount
 		
 		let gpuLayers: Int = 99
+		let threadsToUse: Int = max(1, Int(ceil(Double(processes) / 3.0 * 2.0)))
 		
 		process.arguments = [
 			"--model", modelPath,
-			"--threads", "\(max(1, Int(ceil(Double(processes) / 3.0 * 2.0))))",
+			"--threads", "\(threadsToUse)",
+			"--threads-batch", "\(threadsToUse)",
 			"--ctx-size", "\(contextLength)",
 			"--port", port,
 			"--n-gpu-layers", "\(gpuLayers)"

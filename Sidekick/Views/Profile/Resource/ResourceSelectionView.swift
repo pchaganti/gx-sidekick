@@ -12,23 +12,45 @@ struct ResourceSelectionView: View {
 	
 	@Binding var profile: Profile
 	
-	var body: some View {
-		GroupBox {
-			List(
-				$profile.resources.resources,
-				editActions: .move
-			) { resource in
-				ResourceRowView(
-					profile: $profile,
-					resource: resource
-				)
-			}
-			.scrollDisabled(false)
-			.frame(minHeight: 150, maxHeight: 200)
-			.padding(3)
-		}
-		.padding(.vertical, 3)
+	var hasResources: Bool {
+		return !profile.resources.resources.isEmpty
 	}
+	
+	var body: some View {
+		Group {
+			if hasResources {
+				list
+			} else {
+				noResources
+			}
+		}
+		.frame(minHeight: 30)
+		.padding(3)
+	}
+	
+	var list: some View {
+		List(
+			$profile.resources.resources,
+			editActions: .move
+		) { resource in
+			ResourceRowView(
+				profile: $profile,
+				resource: resource
+			)
+		}
+		.padding(.horizontal)
+		.listStyle(.plain)
+	}
+	
+	var noResources: some View {
+		HStack {
+			Spacer()
+			Text("No resources")
+				.foregroundStyle(.secondary)
+			Spacer()
+		}
+	}
+	
 }
 
 struct ResourceRowView: View {

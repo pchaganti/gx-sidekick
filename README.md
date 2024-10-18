@@ -14,7 +14,7 @@ Chat with an LLM with RAG (Retrieval Augmentented Generation) on your Mac withou
 - RAM ≥ 8 GB
 
 **Prebuilt Package**
-- Download the packages from [Releases](https://github.com/johnbean393/Sidekick/releases), and open it. Note that since the package is not notarized, you will need to enable it in System Settings. 
+- Download the packages from [Releases](https://github.com/johnbean393/Sidekick/releases/tag/default), and open it. Note that since the package is not notarized, you will need to enable it in System Settings. 
 
 **Build it yourself**
 - Download, open in Xcode, and build it.
