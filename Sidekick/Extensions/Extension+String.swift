@@ -106,10 +106,11 @@ public extension String {
 		// Group
 		var chunks: [String] = []
 		var chunk: [String] = []
-		for sentence in sentences {
+		for (index, sentence) in sentences.enumerated() {
 			// Calculate length accounting for spaces
 			let chunkLength: Int = chunk.map(\.count).reduce(0,+) + sentence.count - 1
-			if chunkLength < maxChunkSize {
+			let islastSentence: Bool = index == (sentences.count - 1)
+			if chunkLength < maxChunkSize || islastSentence {
 				chunk.append(sentence)
 			} else {
 				chunks.append(chunk.joined(separator: " "))
