@@ -1,6 +1,8 @@
 <h1 align="center">Sidekick</h1>
 
-Chat with an LLM with RAG (Retrieval Augmentented Generation) on your Mac without installing any other software. All conversations happen offline, and your data is saved locally.
+Chat with an local LLM with RAG (Retrieval Augmentented Generation) capabilities on your Mac without installing any other software. All conversations happen offline, and your data is saved locally.
+
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/sidekickSecureImage.png)
 
 - Try any llama.cpp compatible GGUF model
 - Customize model behaviour by setting up profiles with a custom system prompt
