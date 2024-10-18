@@ -36,6 +36,10 @@ Sidekick is a native LLM application for macOS that runs completely locally. Dow
 
 Contributions are very welcome. Let's make Sidekick simple and powerful.
 
+## Contact
+
+Contact this repository's owner at johnbean393@gmail.com, or file an issue.
+
 ## Credits
 
 This project would not be possible without the hard work of:
