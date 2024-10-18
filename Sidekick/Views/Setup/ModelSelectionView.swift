@@ -71,7 +71,7 @@ struct ModelSelectionView: View {
 		}
 		.keyboardShortcut(.defaultAction)
 		.controlSize(.large)
-		.frame(minWidth: 250)
+		.frame(minWidth: 220)
 	}
 	
 	var selectButton: some View {

@@ -11,7 +11,7 @@ import SwiftUI
 
 @MainActor
 /// Controls the download of LLMs
-class DownloadManager: NSObject, ObservableObject {
+public class DownloadManager: NSObject, ObservableObject {
 	
 	/// Global instance of `DownloadManager`
 	static var shared: DownloadManager = DownloadManager()
@@ -83,7 +83,7 @@ class DownloadManager: NSObject, ObservableObject {
 
 extension DownloadManager: URLSessionDelegate, URLSessionDownloadDelegate {
 	
-	nonisolated func urlSession(
+	nonisolated public func urlSession(
 		_: URLSession,
 		downloadTask: URLSessionDownloadTask,
 		didWriteData _: Int64,
@@ -98,7 +98,7 @@ extension DownloadManager: URLSessionDelegate, URLSessionDownloadDelegate {
 		}
 	}
 	
-	nonisolated func urlSession(
+	nonisolated public func urlSession(
 		_: URLSession,
 		task: URLSessionTask,
 		didCompleteWithError error: Error?
@@ -115,7 +115,7 @@ extension DownloadManager: URLSessionDelegate, URLSessionDownloadDelegate {
 		}
 	}
 	
-	nonisolated func urlSession(
+	nonisolated public func urlSession(
 		_: URLSession,
 		downloadTask: URLSessionDownloadTask,
 		didFinishDownloadingTo location: URL

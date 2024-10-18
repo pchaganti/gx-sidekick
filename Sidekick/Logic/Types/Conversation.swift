@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import LLM
 
 public struct Conversation: Identifiable, Codable, Hashable {
 	

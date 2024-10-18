@@ -60,10 +60,11 @@ struct MessageView: View {
 		if let tokensPerSecond = message.tokensPerSecond {
 			tokensPerSecondStr = "\(round(tokensPerSecond * 10) / 10)"
 		}
-		return """
+		let infoDescription: String.LocalizationValue = """
 Model: \(message.model)
 Tokens per second: \(tokensPerSecondStr)
 """
+		return String(localized: infoDescription)
 	}
 	
 	private var timeDescription: String {

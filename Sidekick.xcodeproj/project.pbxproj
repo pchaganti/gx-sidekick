@@ -105,7 +105,6 @@
 		20E48C262CB560730085E7D6 /* ChatStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E48C252CB560730085E7D6 /* ChatStyle.swift */; };
 		20E48C292CB560B50085E7D6 /* ConversationControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E48C282CB560B50085E7D6 /* ConversationControlsView.swift */; };
 		20E48C2B2CB560E30085E7D6 /* Extension+CGKeyCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E48C2A2CB560E30085E7D6 /* Extension+CGKeyCode.swift */; };
-		20E48C722CB5FCCC0085E7D6 /* LLM in Frameworks */ = {isa = PBXBuildFile; productRef = 20E48C712CB5FCCC0085E7D6 /* LLM */; };
 		20F2D5122CC1F33B004CE730 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 20F2D5112CC1F33B004CE730 /* Localizable.xcstrings */; };
 		20FB0D892CBA8327006D062A /* Extension+SimilarityIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FB0D882CBA8327006D062A /* Extension+SimilarityIndex.swift */; };
 		20FB0D8B2CBA8828006D062A /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FB0D8A2CBA8828006D062A /* SearchResult.swift */; };
@@ -267,7 +266,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				20E48C722CB5FCCC0085E7D6 /* LLM in Frameworks */,
 				200FBFF12CB64CB400A92A74 /* EventSource in Frameworks */,
 				20A8B6592CB26E4800B756FD /* SimilaritySearchKitDistilbert in Frameworks */,
 				20A8B6572CB26E4800B756FD /* SimilaritySearchKit in Frameworks */,
@@ -652,7 +650,6 @@
 				20A8B6582CB26E4800B756FD /* SimilaritySearchKitDistilbert */,
 				20573F272CB52F84004C19FE /* Splash */,
 				20573F292CB52F84004C19FE /* SplashMarkdown */,
-				20E48C712CB5FCCC0085E7D6 /* LLM */,
 				200FBFF02CB64CB400A92A74 /* EventSource */,
 				207A9F522CB82D9600E727DE /* SymbolPicker */,
 				208388DC2CBF4E8A00C2A9F8 /* SecureDefaults */,
@@ -762,7 +759,6 @@
 				20B97CC72CAFEBEA009A0A5D /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 				20A8B6552CB26E4800B756FD /* XCRemoteSwiftPackageReference "similarity-search-kit" */,
 				20573F262CB52F84004C19FE /* XCRemoteSwiftPackageReference "Splash" */,
-				20E48C702CB5FCCC0085E7D6 /* XCRemoteSwiftPackageReference "LLM" */,
 				200FBFEF2CB64CB400A92A74 /* XCRemoteSwiftPackageReference "EventSource" */,
 				207A9F512CB82D9600E727DE /* XCRemoteSwiftPackageReference "SymbolPicker" */,
 				208388DB2CBF4E8A00C2A9F8 /* XCRemoteSwiftPackageReference "SecureDefaults" */,
@@ -1342,14 +1338,6 @@
 				version = 2.4.0;
 			};
 		};
-		20E48C702CB5FCCC0085E7D6 /* XCRemoteSwiftPackageReference "LLM" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/johnbean393/LLM.swift";
-			requirement = {
-				branch = pinned;
-				kind = branch;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1402,11 +1390,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 20B97CC72CAFEBEA009A0A5D /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
 			productName = MarkdownUI;
-		};
-		20E48C712CB5FCCC0085E7D6 /* LLM */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 20E48C702CB5FCCC0085E7D6 /* XCRemoteSwiftPackageReference "LLM" */;
-			productName = LLM;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

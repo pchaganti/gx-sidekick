@@ -61,6 +61,14 @@ struct InferenceSettingsView: View {
 				Text("Select")
 			}
 		}
+		.contextMenu {
+			Button {
+				guard let modelUrl: URL = Settings.modelUrl else { return }
+				FileManager.showItemInFinder(url: modelUrl)
+			} label: {
+				Text("Show in Finder")
+			}
+		}
 	}
 	
 	var parameters: some View {
