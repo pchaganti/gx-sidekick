@@ -36,8 +36,8 @@ public class Dialogs {
 		if let message = message {
 			alert.informativeText = message
 		}
-		alert.addButton(withTitle: "Yes")
-		alert.addButton(withTitle: "No")
+		alert.addButton(withTitle: String(localized: "Yes"))
+		alert.addButton(withTitle: String(localized: "No"))
 		// Run modal
 		let result: Bool = alert.runModal() == .alertFirstButtonReturn
 		if result {
@@ -73,6 +73,16 @@ public class Dialogs {
 			ifOption2()
 		}
 		return result
+	}
+	
+	/// Function to post low RAM warning
+	public static func lowUnifiedMemoryWarning() {
+		if InferenceSettings.lowUnifiedMemory {
+			Self.showAlert(
+				title: "Low Unified Memory",
+				message: "Your system has only \(InferenceSettings.unifiedMemorySize) GB of RAM, which may not be sufficient for running an LLM. \nPlease save progress in all open apps, and close memory hogging applications in case a system crash occurs."
+			)
+		}
 	}
 	
 }

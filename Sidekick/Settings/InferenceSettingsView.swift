@@ -52,8 +52,8 @@ struct InferenceSettingsView: View {
 				let result: Bool = Settings.selectModel()
 				if result {
 					Dialogs.showAlert(
-						title: "Restart Required",
-						message: "Sidekick needs to restart to use the newly selected model."
+						title: String(localized: "Restart Required"),
+						message: String(localized: "Sidekick needs to restart to use the newly selected model.")
 					)
 					NSApplication.shared.terminate(nil)
 				}
@@ -118,14 +118,14 @@ struct InferenceSettingsView: View {
 				Text("Temperature is a parameter that influences LLM output, determining whether it is more random and creative or more predictable.")
 					.font(.caption)
 			}
-			.frame(width: 250)
+			.frame(minWidth: 250)
 			Spacer()
 			Slider(
 				value: $temperature,
 				in: 0...2,
 				step: 0.1
 			)
-			.frame(minWidth: 275)
+			.frame(minWidth: 280)
 			.overlay(alignment: .leading) {
 				Text(String(format: "%g", self.temperature))
 					.font(.body)

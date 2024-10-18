@@ -41,6 +41,23 @@ class DownloadManager: NSObject, ObservableObject {
 		self.updateTasks()
 	}
 	
+	/// Function to download the default large language model
+	func downloadDefaultModel() {
+		URL.verifyURL(
+			urlPath: InferenceSettings.defaultModelUrlString
+		) { isValid in
+			if isValid {
+				self.startDownload(
+					url: InferenceSettings.defaultModelUrl
+				)
+			} else {
+				self.startDownload(
+					url: InferenceSettings.defaultModelMirrorUrl
+				)
+			}
+		}
+	}
+	
 	func startDownload(url: URL) {
 		print("Starting download ", url)
 		// Ignore download if it's already in progress

@@ -196,8 +196,8 @@ public class ProfileManager: ObservableObject {
 	public func resetDatastore() {
 		// Present confirmation modal
 		let _ = Dialogs.showConfirmation(
-			title: "Delete All Profiles",
-			message: "Are you sure you want to delete all profiles?"
+			title: String(localized: "Delete All Profiles"),
+			message: String(localized: "Are you sure you want to delete all profiles?")
 		) {
 		// If yes, delete datastore
 			FileManager.removeItem(at: self.datastoreUrl)

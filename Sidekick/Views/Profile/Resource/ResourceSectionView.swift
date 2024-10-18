@@ -79,19 +79,20 @@ struct ResourceSectionView: View {
 	@MainActor
 	private func add() {
 		let _ = Dialogs.dichotomy(
-			title: "Do yo want to add files, folders or websites?",
-			option1: "File/Folder",
-			option2: "Website") {
-				addFile()
-			} ifOption2: {
-				isAddingWebsite.toggle()
-			}
+			title: String(localized: "Do you want to add files, folders or webpages?"),
+			option1: String(localized: "File/Folder"),
+			option2: String(localized: "Webpage")
+		) {
+			addFile()
+		} ifOption2: {
+			isAddingWebsite.toggle()
+		}
 	}
 	
 	@MainActor
 	private func addFile() {
 		guard let selectedUrls: [URL] = try? FileManager.selectFile(
-			dialogTitle: "Select Files or Folders",
+			dialogTitle: String(localized: "Select Files or Folders"),
 			allowMultipleSelection: true
 		) else { return }
 		let resources: [Resource] = selectedUrls.map({

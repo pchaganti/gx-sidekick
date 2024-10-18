@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ProfileSelectionMenu: View {
 	
+	@Environment(\.colorScheme) var colorScheme
+	
 	@EnvironmentObject private var profileManager: ProfileManager
 	@EnvironmentObject private var conversationState: ConversationState
 	
@@ -21,7 +23,11 @@ struct ProfileSelectionMenu: View {
 	
 	var isInverted: Bool {
 		guard let luminance = selectedProfile?.color.luminance else { return false }
-		return luminance > 0.5
+		let forDark: Bool = (luminance > 0.5) && (colorScheme == .dark)
+		let forLight: Bool = (luminance < 0.5) && (
+			colorScheme == .light
+		)
+		return forDark || forLight
 	}
 	
 	var inactiveProfiles: [Profile] {

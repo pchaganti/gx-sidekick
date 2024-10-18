@@ -9,6 +9,8 @@ import SwiftUI
 
 struct LengthyTasksToolbarButton: View {
 	
+	var usePadding: Bool = false
+	
 	@EnvironmentObject private var lengthyTasksController: LengthyTasksController
 	@EnvironmentObject private var conversationState: ConversationState
 	@EnvironmentObject private var profileManager: ProfileManager
@@ -33,6 +35,9 @@ struct LengthyTasksToolbarButton: View {
 			)
 			.if(isInverted) { view in
 				view.colorInvert()
+			}
+			.if(usePadding) { view in
+				view.padding(7)
 			}
 		} content: {
 			LengthyTasksList()

@@ -54,6 +54,56 @@
         }
       }
     },
+    "Are you sure you want clear all Settings? This will delete all settings and quit Sidekick." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您确定要清除所有设置吗？这将删除所有设置并退出 Sidekick。"
+          }
+        }
+      }
+    },
+    "Are you sure you want to delete all conversations?" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您确实要删除所有对话吗？"
+          }
+        }
+      }
+    },
+    "Are you sure you want to delete all profiles?" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您确实要删除所有专家吗？"
+          }
+        }
+      }
+    },
+    "Are you sure you want to delete this conversation?" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您确定要删除此对话吗？"
+          }
+        }
+      }
+    },
+    "Are you sure you want to delete this Profile?" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您确定要删除此专家吗？"
+          }
+        }
+      }
+    },
     "Backup API Key (Optional)" : {
       "localizations" : {
         "zh-Hans" : {
@@ -134,6 +184,16 @@
         }
       }
     },
+    "Conversations" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所有聊天"
+          }
+        }
+      }
+    },
     "Copy to Clipboard" : {
       "localizations" : {
         "zh-Hans" : {
@@ -194,6 +254,36 @@
         }
       }
     },
+    "Delete Conversation" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除对话"
+          }
+        }
+      }
+    },
+    "Delete Profile" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除专家"
+          }
+        }
+      }
+    },
+    "Do you want to add files, folders or webpages?" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您想添加文件或文件夹，还是网页？"
+          }
+        }
+      }
+    },
     "Done" : {
       "localizations" : {
         "zh-Hans" : {
@@ -240,6 +330,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "进入全屏"
+          }
+        }
+      }
+    },
+    "Error" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "错误"
+          }
+        }
+      }
+    },
+    "Failed to open %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开 %@ 时出现错误"
+          }
+        }
+      }
+    },
+    "File/Folder" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文件 / 文件夹"
           }
         }
       }
@@ -435,6 +555,16 @@
         }
       }
     },
+    "No" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消"
+          }
+        }
+      }
+    },
     "No resources" : {
       "localizations" : {
         "zh-Hans" : {
@@ -545,6 +675,16 @@
         }
       }
     },
+    "Remove Resources" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "移除资源"
+          }
+        }
+      }
+    },
     "Resources" : {
       "localizations" : {
         "zh-Hans" : {
@@ -561,6 +701,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "资源：%lld"
+          }
+        }
+      }
+    },
+    "Restart Required" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重启"
           }
         }
       }
@@ -635,6 +785,16 @@
         }
       }
     },
+    "Select Files or Folders" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请选择文件或文件夹"
+          }
+        }
+      }
+    },
     "Set Inference Settings to Defaults" : {
       "localizations" : {
         "zh-Hans" : {
@@ -660,7 +820,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "在访达中显示 Container"
+            "value" : "在访达中显示容器"
           }
         }
       }
@@ -671,6 +831,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "在访达中显示"
+          }
+        }
+      }
+    },
+    "Sidekick needs to restart to use the newly selected model." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sidekick 需要重新启动才能使用这个模型。"
           }
         }
       }
@@ -761,6 +931,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "已安装模型"
+          }
+        }
+      }
+    },
+    "The resources %@ were removed because they could not be located." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "由于Sidekick 无法找到%@，相关的资源已被清除。"
           }
         }
       }
@@ -905,6 +1085,16 @@
         }
       }
     },
+    "Webpage" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "网页"
+          }
+        }
+      }
+    },
     "Welcome to Sidekick" : {
       "localizations" : {
         "zh-Hans" : {
@@ -915,12 +1105,22 @@
         }
       }
     },
+    "Yes" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "确认"
+          }
+        }
+      }
+    },
     "Your system has only %lld GB of RAM, which may not be sufficient for running an LLM. \nPlease save progress in all open apps, and close memory hogging applications **in case a system crash occurs.**" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "由于你的电脑只有 % GB 的内存，运行大模型时可能会捉襟见肘。请保存其他应用程序的进度，并关闭占用大量内存的应用程序，**以防系统崩溃。**"
+            "value" : "由于你的电脑只有 %lld GB 的内存，运行大模型时可能会捉襟见肘。请保存其他应用程序的进度，并关闭占用大量内存的应用程序，**以防系统崩溃。**"
           }
         }
       }

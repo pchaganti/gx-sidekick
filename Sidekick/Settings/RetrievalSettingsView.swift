@@ -75,7 +75,8 @@ struct RetrievalSettingsView: View {
 			Spacer()
 			VStack(alignment: .trailing) {
 				SecureField("", text: $apiKey)
-					.textFieldStyle(.plain)
+					.textFieldStyle(.roundedBorder)
+					.frame(width: 300)
 				Button {
 					RetrievalSettings.apiKey = self.apiKey
 				} label: {
@@ -97,7 +98,8 @@ struct RetrievalSettingsView: View {
 			Spacer()
 			VStack(alignment: .trailing) {
 				SecureField("", text: $backupApiKey)
-					.textFieldStyle(.plain)
+					.textFieldStyle(.roundedBorder)
+					.frame(width: 300)
 				Button {
 					RetrievalSettings.backupApiKey = self.backupApiKey
 				} label: {

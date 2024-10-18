@@ -67,6 +67,9 @@ struct ConversationControlsView: View {
 					.keyboardShortcut("r", modifiers: .command)
 					.padding(.leading, 7)
 				}
+				if #unavailable(macOS 15) {
+					lengthyTasksButton
+				}
 			}
 		}
 		.padding(.leading)
@@ -112,6 +115,16 @@ struct ConversationControlsView: View {
 		}
 	}
 	
+	var lengthyTasksButton: some View {
+		LengthyTasksToolbarButton(
+			usePadding: true
+		)
+		.labelStyle(.iconOnly)
+		.buttonStyle(ChatButtonStyle())
+		.padding(.leading, 7)
+	}
+	
+	/// Function to update the profile shown in the profile resource button
 	private func updateProfile() {
 		guard let selectedProfileId = conversationState.selectedProfileId else {
 			return
@@ -122,6 +135,7 @@ struct ConversationControlsView: View {
 		self.profile = profile
 	}
 	
+	/// Function to run when the `return` key is hit
 	private func onSubmit() {
 		// New line if shift or option pressed
 		if CGKeyCode.kVK_Shift.isPressed || CGKeyCode.kVK_Option.isPressed {
@@ -132,6 +146,7 @@ struct ConversationControlsView: View {
 		}
 	}
 	
+	/// Function to send to bot
 	private func submit() {
 		// Make sound
 		if Settings.playSoundEffects {
@@ -151,7 +166,7 @@ struct ConversationControlsView: View {
 		sentConversation = conversation
 		// Get response
 		Task {
-			await getResponse()
+			await self.getResponse()
 		}
 	}
 	

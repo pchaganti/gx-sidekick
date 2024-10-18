@@ -72,8 +72,8 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 		}).joined(separator: ", ")
 		if !removedResources.isEmpty {
 			Dialogs.showAlert(
-				title: "Remove Resources",
-				message: "The resources \(removedResourcesDescription) were removed because they could not be located."
+				title: String(localized: "Remove Resources"),
+				message: String(localized: "The resources \(removedResourcesDescription) were removed because they could not be located.")
 			)
 		}
 		// Remove resources

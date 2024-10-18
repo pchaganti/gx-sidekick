@@ -103,7 +103,7 @@ public class Settings {
 	@MainActor static func clearUserDefaults() {
 		// Show dialog
 		let _ = Dialogs.showConfirmation(
-			title: "Are you sure you want clear all Settings? This will delete all settings and quit Sidekick."
+			title: String(localized: "Are you sure you want clear all Settings? This will delete all settings and quit Sidekick.")
 		) {
 			// If "yes"
 			UserDefaults.standard.dictionaryRepresentation().keys.forEach({

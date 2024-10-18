@@ -66,8 +66,8 @@ public struct ReferencedURL: Codable, Equatable, Hashable {
 		let result: Bool = NSWorkspace.shared.open(url)
 		if !result {
 			let _ = Dialogs.showAlert(
-				title: "Error",
-				message: "Failed to open \(self.url.absoluteString)"
+				title: String(localized: "Error"),
+				message: String(localized: "Failed to open \(self.url.absoluteString)")
 			)
 		}
 	}

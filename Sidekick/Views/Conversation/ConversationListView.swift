@@ -53,8 +53,8 @@ struct ConversationNavigationListView: View {
 	
 	private func delete(_ conversationId: UUID) {
 		let _ = Dialogs.showConfirmation(
-			title: "Delete Conversation",
-			message: "Are you sure you want to delete this conversation?"
+			title: String(localized: "Delete Conversation"),
+			message: String(localized: "Are you sure you want to delete this conversation?")
 		) {
 			if let conversation = conversationManager.getConversation(
 				id: conversationId

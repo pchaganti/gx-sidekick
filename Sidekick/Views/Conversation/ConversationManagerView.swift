@@ -53,7 +53,9 @@ struct ConversationManagerView: View {
 	}
 	
 	var navTitle: String {
-		return self.selectedConversation?.title ?? "Conversations"
+		return self.selectedConversation?.title ?? String(
+			localized: "Conversations"
+		)
 	}
 	
     var body: some View {
@@ -87,7 +89,9 @@ struct ConversationManagerView: View {
 				if InferenceSettings.lowUnifiedMemory {
 					lowMemoryWarning
 				}
-				LengthyTasksToolbarButton()
+				if #available(macOS 15, *) {
+					LengthyTasksToolbarButton()
+				}
 			}
 		}
 		.if(selectedProfile != nil) { view in

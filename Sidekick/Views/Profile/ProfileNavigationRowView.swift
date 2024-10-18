@@ -60,8 +60,8 @@ struct ProfileNavigationRowView: View {
 	
 	private func delete(_ profileId: UUID) {
 		let _ = Dialogs.showConfirmation(
-			title: "Delete Profile",
-			message: "Are you sure you want to delete this Profile?"
+			title: String(localized: "Delete Profile"),
+			message: String(localized: "Are you sure you want to delete this Profile?")
 		) {
 			if let profile = profileManager.getProfile(
 				id: profileId

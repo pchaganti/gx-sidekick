@@ -84,10 +84,9 @@ public actor LlamaServer {
 		
 		process.executableURL = Bundle.main.resourceURL?.appendingPathComponent("llama-server")
 		
-		let processes = ProcessInfo.processInfo.activeProcessorCount
-		
 		let gpuLayers: Int = 99
-		let threadsToUse: Int = max(1, Int(ceil(Double(processes) / 3.0 * 2.0)))
+		let processors: Int = ProcessInfo.processInfo.activeProcessorCount
+		let threadsToUse: Int = max(1, Int(ceil(Double(processors) / 3.0 * 2.0)))
 		
 		process.arguments = [
 			"--model", modelPath,

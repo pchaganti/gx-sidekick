@@ -90,8 +90,8 @@ struct ResourceRowView: View {
 				)
 				if !result {
 					let _ = Dialogs.showAlert(
-						title: "Error",
-						message: "Failed to open \(resource.filename)"
+						title: String(localized: "Error"),
+						message: String(localized: "Failed to open \(resource.filename)")
 					)
 				}
 			} label: {

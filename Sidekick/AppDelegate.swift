@@ -13,6 +13,7 @@ public class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
 	
 	/// Function that runs after the app is initialized
 	public func applicationDidFinishLaunching(_ aNotification: Notification) {
+		
 	}
 	
 	/// Function that runs before the app is terminated
@@ -21,16 +22,5 @@ public class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
 		ProfileManager.shared.removeUnpersistedResources()
 		return .terminateNow
 	}
-	
-	/// Function to setup the app's dock menu
-//	public func applicationDockMenu(_ sender: NSApplication) -> NSMenu? {
-//		let dockMenu: NSMenu = NSMenu()
-//		dockMenu.addItem(
-//			withTitle: "Test",
-//			action: #selector(DockMenuCommands.test(_:)),
-//			keyEquivalent: ""
-//		)
-//		return dockMenu
-//	}
 	
 }

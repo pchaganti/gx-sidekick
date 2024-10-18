@@ -165,8 +165,8 @@ public class ConversationManager: ObservableObject {
 	public func resetDatastore() {
 		// Present confirmation modal
 		let _ = Dialogs.showConfirmation(
-			title: "Delete All Conversations",
-			message: "Are you sure you want to delete all conversations?"
+			title: String(localized: "Delete All Conversations"),
+			message: String(localized: "Are you sure you want to delete all conversations?")
 		) {
 			// If yes, delete datastore
 			FileManager.removeItem(at: self.datastoreUrl)
