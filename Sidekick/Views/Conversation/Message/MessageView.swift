@@ -230,7 +230,7 @@ Tokens per second: \(tokensPerSecondStr)
 	var optionsMenu: some View {
 		Group {
 			Button {
-				message.text.copy()
+				message.displayedText.copy()
 			} label: {
 				Text("Copy to Clipboard")
 			}
