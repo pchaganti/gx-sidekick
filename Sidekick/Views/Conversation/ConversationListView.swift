@@ -32,8 +32,10 @@ struct ConversationNavigationListView: View {
 				conversationState.selectedConversationId = conversation.id
 			}
 			.contextMenu {
-				Button("Delete") {
+				Button {
 					self.conversationManager.delete(conversation)
+				} label: {
+					Text("Delete")
 				}
 			}
 		}

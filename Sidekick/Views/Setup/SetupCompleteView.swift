@@ -27,9 +27,11 @@ struct SetupCompleteView: View {
 			Text("The model was installed.")
 				.font(.title3)
 			
-			Button("Continue") {
+			Button {
 				Settings.finishSetup()
 				self.showSetup = false
+			} label: {
+				Text("Continue")
 			}
 			.buttonStyle(.borderedProminent)
 			.controlSize(.large)

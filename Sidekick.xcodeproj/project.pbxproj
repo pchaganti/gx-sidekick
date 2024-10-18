@@ -106,6 +106,7 @@
 		20E48C292CB560B50085E7D6 /* ConversationControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E48C282CB560B50085E7D6 /* ConversationControlsView.swift */; };
 		20E48C2B2CB560E30085E7D6 /* Extension+CGKeyCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E48C2A2CB560E30085E7D6 /* Extension+CGKeyCode.swift */; };
 		20E48C722CB5FCCC0085E7D6 /* LLM in Frameworks */ = {isa = PBXBuildFile; productRef = 20E48C712CB5FCCC0085E7D6 /* LLM */; };
+		20F2D5122CC1F33B004CE730 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 20F2D5112CC1F33B004CE730 /* Localizable.xcstrings */; };
 		20FB0D892CBA8327006D062A /* Extension+SimilarityIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FB0D882CBA8327006D062A /* Extension+SimilarityIndex.swift */; };
 		20FB0D8B2CBA8828006D062A /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FB0D8A2CBA8828006D062A /* SearchResult.swift */; };
 		20FE94D82CB96D3A006E9F06 /* ConversationResourceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FE94D72CB96D3A006E9F06 /* ConversationResourceButton.swift */; };
@@ -253,6 +254,7 @@
 		20E48C252CB560730085E7D6 /* ChatStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatStyle.swift; sourceTree = "<group>"; };
 		20E48C282CB560B50085E7D6 /* ConversationControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationControlsView.swift; sourceTree = "<group>"; };
 		20E48C2A2CB560E30085E7D6 /* Extension+CGKeyCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+CGKeyCode.swift"; sourceTree = "<group>"; };
+		20F2D5112CC1F33B004CE730 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		20FB0D882CBA8327006D062A /* Extension+SimilarityIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+SimilarityIndex.swift"; sourceTree = "<group>"; };
 		20FB0D8A2CBA8828006D062A /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 		20FE94D72CB96D3A006E9F06 /* ConversationResourceButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationResourceButton.swift; sourceTree = "<group>"; };
@@ -464,6 +466,7 @@
 		20B97CB22CAFE86C009A0A5D /* Sidekick */ = {
 			isa = PBXGroup;
 			children = (
+				20F2D5112CC1F33B004CE730 /* Localizable.xcstrings */,
 				20FE94DB2CB96FCD006E9F06 /* Info.plist */,
 				20B97CB12CAFE86C009A0A5D /* SidekickApp.swift */,
 				20B9E60B2CB140A000BA0AD2 /* AppDelegate.swift */,
@@ -749,6 +752,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = 2005496A2CAFA67B00A3DCF2;
 			minimizedProjectReferenceProxies = 1;
@@ -782,6 +786,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				20B97CB32CAFE86C009A0A5D /* Preview Assets.xcassets in Resources */,
+				20F2D5122CC1F33B004CE730 /* Localizable.xcstrings in Resources */,
 				20B97CB42CAFE86C009A0A5D /* Assets.xcassets in Resources */,
 				20D65DD32CC0B8A20052D826 /* README.md in Resources */,
 				202FDDF12CC0B43000537F89 /* llama-server in Resources */,
@@ -1000,6 +1005,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -1056,6 +1062,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 			};
 			name = Release;
 		};

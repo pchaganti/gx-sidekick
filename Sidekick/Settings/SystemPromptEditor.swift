@@ -36,16 +36,22 @@ A well-crafted system prompt helps the LLM focus on the correct task and reduces
 			Divider()
 			HStack {
 				Spacer()
-				Button("Cancel") {
+				Button {
 					isEditingSystemPrompt.toggle()
+				} label: {
+					Text("Cancel")
 				}
-				Button("Restore to Default") {
+				Button {
 					self.systemPrompt = InferenceSettings.defaultSystemPrompt
 					InferenceSettings.setNormalSystemPrompt()
+				} label: {
+					Text("Use Default")
 				}
-				Button("Save") {
+				Button {
 					InferenceSettings.systemPrompt = self.systemPrompt
 					isEditingSystemPrompt.toggle()
+				} label: {
+					Text("Save")
 				}
 				.keyboardShortcut("s", modifiers: .command)
 			}

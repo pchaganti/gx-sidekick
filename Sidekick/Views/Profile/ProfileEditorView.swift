@@ -27,8 +27,10 @@ struct ProfileEditorView: View {
 			Divider()
 			HStack {
 				Spacer()
-				Button("Done") {
+				Button {
 					isEditing.toggle()
+				} label: {
+					Text("Done")
 				}
 				.keyboardShortcut(.defaultAction)
 			}
@@ -179,8 +181,10 @@ struct ProfileEditorView: View {
 						.bold()
 					Text("This profile's system prompt")
 						.font(.caption)
-					Button("Use Default") {
+					Button {
 						systemPrompt = InferenceSettings.systemPrompt
+					} label: {
+						Text("Use Default")
 					}
 				}
 				Spacer()

@@ -142,12 +142,16 @@ Tokens per second: \(tokensPerSecondStr)
 				.frame(minWidth: 0, maxWidth: .infinity)
 				.font(.title3)
 			HStack {
-				Button("Cancel") {
+				Button {
 					isEditing.toggle()
+				} label: {
+					Text("Cancel")
 				}
-				Button("Save") {
+				Button {
 					isEditing.toggle()
 					self.updateMessage()
+				} label: {
+					Text("Save")
 				}
 				.keyboardShortcut("s", modifiers: .command)
 			}
@@ -182,8 +186,10 @@ Tokens per second: \(tokensPerSecondStr)
 	
 	var optionsMenu: some View {
 		Group {
-			Button("Copy to Clipboard") {
+			Button {
 				message.text.copy()
+			} label: {
+				Text("Copy to Clipboard")
 			}
 			// Edit button
 			if self.canEdit && !self.isEditing {
@@ -195,8 +201,10 @@ Tokens per second: \(tokensPerSecondStr)
 			}
 			// Show info for bots
 			if message.getSender() == .assistant {
-				Button("Stats for Nerds") {
+				Button {
 					showNerdInfo.toggle()
+				} label: {
+					Text("Stats for Nerds")
 				}
 			}
 		}

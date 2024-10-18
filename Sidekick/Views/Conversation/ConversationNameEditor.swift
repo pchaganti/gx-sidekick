@@ -35,7 +35,11 @@ struct ConversationNameEditor: View {
 			}
 		}
 		.contextMenu {
-			Button("Edit") { isEditing.toggle() }
+			Button {
+				isEditing.toggle()
+			} label: {
+				Text("Edit")
+			}
 		}
     }
 	

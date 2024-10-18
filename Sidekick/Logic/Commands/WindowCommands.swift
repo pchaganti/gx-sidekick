@@ -14,12 +14,14 @@ public class WindowCommands {
 	static var commands: some Commands {
 		
 		CommandGroup(after: CommandGroupPlacement.windowArrangement) {
-			Button("Enter Full Screen") {
+			Button {
 				for window in NSApplication.shared.windows {
 					if window.isKeyWindow {
 						window.toggleFullScreen(nil)
 					}
 				}
+			} label: {
+				Text("Enter Full Screen")
 			}
 			.keyboardShortcut("f", modifiers: [.control, .command])
 		}

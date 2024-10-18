@@ -14,8 +14,10 @@ public class ConversationCommands {
 	static var commands: some Commands {
 		
 		CommandGroup(replacing: .newItem) {
-			Button("New Conversation") {
+			Button {
 				ConversationManager.shared.newConversation()
+			} label: {
+				Text("New Conversation")
 			}
 			.keyboardShortcut("n", modifiers: .command)
 		}

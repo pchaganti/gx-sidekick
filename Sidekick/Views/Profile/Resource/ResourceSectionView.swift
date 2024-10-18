@@ -43,13 +43,17 @@ struct ResourceSectionView: View {
 						.font(.caption)
 				}
 				Spacer()
-				Button("Add") {
+				Button {
 					self.add()
+				} label: {
+					Text("Add")
 				}
-				Button("Update") {
+				Button {
 					Task.detached { @MainActor in
 						await $profile.update()
 					}
+				} label: {
+					Text("Update")
 				}
 			}
 			Divider()
@@ -134,13 +138,17 @@ struct ResourceSectionView: View {
 				Divider()
 				HStack {
 					Spacer()
-					Button("Cancel") {
+					Button {
 						isAddingWebsite = false
+					} label: {
+						Text("Cancel")
 					}
-					Button("Add") {
+					Button {
 						Task.detached { @MainActor in
 							await add()
 						}
+					} label: {
+						Text("Add")
 					}
 					.disabled(!isValidUrl)
 					.keyboardShortcut(.defaultAction)

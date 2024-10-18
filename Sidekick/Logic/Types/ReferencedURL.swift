@@ -46,8 +46,10 @@ public struct ReferencedURL: Codable, Equatable, Hashable {
 		.foregroundStyle(Color.secondary)
 		.contextMenu {
 			if !self.url.isWebURL {
-				Button("Show in Finder") {
+				Button {
 					self.showInFinder()
+				} label: {
+					Text("Show in Finder")
 				}
 			}
 		}

@@ -62,9 +62,11 @@ struct RetrievalSettingsView: View {
 					.bold()
 				Text("Needed to access the Tavily API")
 					.font(.caption)
-				Button("Get an API Key") {
+				Button {
 					let url: URL = URL(string: "https://app.tavily.com/home")!
 					NSWorkspace.shared.open(url)
+				} label: {
+					Text("Get an API Key")
 				}
 			}
 			.foregroundStyle(
@@ -74,8 +76,10 @@ struct RetrievalSettingsView: View {
 			VStack(alignment: .trailing) {
 				SecureField("", text: $apiKey)
 					.textFieldStyle(.plain)
-				Button("Save") {
+				Button {
 					RetrievalSettings.apiKey = self.apiKey
+				} label: {
+					Text("Save")
 				}
 			}
 		}
@@ -94,8 +98,10 @@ struct RetrievalSettingsView: View {
 			VStack(alignment: .trailing) {
 				SecureField("", text: $backupApiKey)
 					.textFieldStyle(.plain)
-				Button("Save") {
+				Button {
 					RetrievalSettings.backupApiKey = self.backupApiKey
+				} label: {
+					Text("Save")
 				}
 			}
 		}
