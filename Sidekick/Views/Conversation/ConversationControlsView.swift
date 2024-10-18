@@ -52,13 +52,6 @@ struct ConversationControlsView: View {
 				ConversationQuickPromptsView(input: $prompt)
 			}
 			HStack(spacing: 0) {
-				if model.isProcessing {
-					StopGenerationButton()
-						.keyboardShortcut(
-							"s",
-							modifiers: [.command, .option]
-						)
-				}
 				inputField
 				if conversationState.selectedProfileId != nil {
 					ConversationResourceButton(
@@ -94,7 +87,7 @@ struct ConversationControlsView: View {
 	
 	var inputField: some View {
 		TextField(
-			"Message",
+			"Send a Message",
 			text: $prompt.animation(.linear),
 			axis: .vertical
 		)

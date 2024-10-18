@@ -21,6 +21,13 @@ struct MessageView: View {
 	}
 	
 	@Environment(\.colorScheme) private var colorScheme
+	var shadowColor: SwiftUI.Color {
+		return colorScheme == .dark ? .white : .black
+	}
+	var shadowRadius: CGFloat {
+		return colorScheme == .dark ? 5 : 0
+	}
+	
 	@EnvironmentObject private var conversationManager: ConversationManager
 	@EnvironmentObject private var conversationState: ConversationState
 	
@@ -51,7 +58,7 @@ struct MessageView: View {
 		}
 	}
 	
-	private var isOptionsDisabled: Bool {
+	private var isGenerating: Bool {
 		return !message.outputEnded && message.getSender() == .assistant
 	}
 	
@@ -89,10 +96,14 @@ Tokens per second: \(tokensPerSecondStr)
 					Text(timeDescription)
 						.foregroundStyle(.secondary)
 					options
+					if self.isGenerating {
+						stopButton
+					}
 				}
 				content
 			}
 		}
+		.padding(.trailing)
     }
 	
 	var content: some View {
@@ -103,6 +114,29 @@ Tokens per second: \(tokensPerSecondStr)
 				contentViewer
 			}
 		}
+		.padding(11)
+		.background {
+			background
+		}
+	}
+	
+	var background: some View {
+		UnevenRoundedRectangle(
+			cornerRadii: .init(
+				topLeading: 0,
+				bottomLeading: 12,
+				bottomTrailing: 12,
+				topTrailing: 12
+			),
+			style: .circular
+		)
+		.fill(
+			Color(nsColor: .textBackgroundColor)
+		)
+		.shadow(
+			color: shadowColor,
+			radius: shadowRadius
+		)
 	}
 	
 	var contentViewer: some View {
@@ -180,9 +214,17 @@ Tokens per second: \(tokensPerSecondStr)
 				.font(.caption)
 				.textSelection(.enabled)
 		}
-		.disabled(isOptionsDisabled)
+		.disabled(isGenerating)
 		.padding(0)
 		.padding(.vertical, 2)
+	}
+	
+	var stopButton: some View {
+		StopGenerationButton()
+			.menuStyle(.circle)
+			.disabled(!isGenerating)
+			.padding(0)
+			.padding(.vertical, 2)
 	}
 	
 	var optionsMenu: some View {
