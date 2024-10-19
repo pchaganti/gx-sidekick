@@ -60,12 +60,13 @@ public class RetrievalSettings {
 		}
 	}
 	
-	/// Computed property for whether tavily search is used
+	/// Computed property for whether the context of a search result is used
 	static var useSearchResultContext: Bool {
 		get {
 			// Set default
 			if !UserDefaults.standard.exists(key: "useSearchResultContext") {
-				Self.useSearchResultContext = true
+				// Default to false for higher throughput and more sources
+				Self.useSearchResultContext = false
 			}
 			return UserDefaults.standard.bool(
 				forKey: "useSearchResultContext"
