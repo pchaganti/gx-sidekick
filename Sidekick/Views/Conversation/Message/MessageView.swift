@@ -25,7 +25,7 @@ struct MessageView: View {
 		return colorScheme == .dark ? .white : .black
 	}
 	var shadowRadius: CGFloat {
-		return colorScheme == .dark ? 5 : 0
+		return colorScheme == .dark ? 2.5 : 0
 	}
 	
 	@EnvironmentObject private var conversationManager: ConversationManager
