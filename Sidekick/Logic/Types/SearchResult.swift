@@ -30,6 +30,12 @@ public struct SearchResult: Identifiable, Codable {
 	/// Property for the metadata
 	private var metadata: [String: String]
 	
+	/// Computed property returning the result's source's index
+	public var itemIndex: Int? {
+		guard let itemIndex: String = self.metadata["itemIndex"] else { return nil }
+		return Int(itemIndex)
+	}
+	
 	/// Computed property returning the result's source's URL
 	public var sourceUrl: URL? {
 		guard let source: String = self.metadata["source"] else { return nil }

@@ -12,10 +12,20 @@ struct ChatStyle: TextFieldStyle {
 	@Environment(\.colorScheme) var colorScheme
 	
 	@FocusState var isFocused: Bool
+	@Binding var isRecording: Bool
 	
 	let cornerRadius = 16.0
 	var rect: RoundedRectangle {
 		RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+	}
+	
+	var outlineColor: Color {
+		if isRecording {
+			return .red
+		} else if isFocused {
+			return .accentColor
+		}
+		return .primary
 	}
 	
 	func _body(configuration: TextField<Self._Label>) -> some View {
@@ -23,6 +33,7 @@ struct ChatStyle: TextFieldStyle {
 			.textFieldStyle(.plain)
 			.frame(maxWidth: .infinity)
 			.padding(EdgeInsets(top: 0, leading: 6, bottom: 0, trailing: 6))
+			.padding(.trailing, 15)
 			.padding(8)
 			.cornerRadius(cornerRadius)
 			.background(
@@ -39,7 +50,7 @@ struct ChatStyle: TextFieldStyle {
 			.overlay(
 				rect
 					.stroke(style: StrokeStyle(lineWidth: 1))
-					.foregroundStyle(isFocused ? Color.orange : Color.primary)
+					.foregroundStyle(outlineColor)
 			)
 			.animation(isFocused ? .easeIn(duration: 0.2) : .easeOut(duration: 0.0), value: isFocused)
 	}

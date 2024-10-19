@@ -60,4 +60,36 @@ public class RetrievalSettings {
 		}
 	}
 	
+	/// Computed property for whether tavily search is used
+	static var useSearchResultContext: Bool {
+		get {
+			// Set default
+			if !UserDefaults.standard.exists(key: "useSearchResultContext") {
+				Self.useSearchResultContext = true
+			}
+			return UserDefaults.standard.bool(
+				forKey: "useSearchResultContext"
+			)
+		}
+		set {
+			UserDefaults.standard.set(newValue, forKey: "useSearchResultContext")
+		}
+	}
+	
+	/// Computed property for how many search results are returned
+	static var searchResultsMultiplier: Int {
+		get {
+			// Set default
+			if !UserDefaults.standard.exists(key: "searchResultsMultiplier") {
+				Self.searchResultsMultiplier = 3
+			}
+			return UserDefaults.standard.integer(
+				forKey: "searchResultsMultiplier"
+			)
+		}
+		set {
+			UserDefaults.standard.set(newValue, forKey: "searchResultsMultiplier")
+		}
+	}
+	
 }

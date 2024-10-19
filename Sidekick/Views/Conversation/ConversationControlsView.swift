@@ -10,15 +10,15 @@ import SimilaritySearchKit
 
 struct ConversationControlsView: View {
 	
+	@StateObject private var promptController: PromptController = .init()
+	
 	@EnvironmentObject private var model: Model
 	@EnvironmentObject private var conversationManager: ConversationManager
 	@EnvironmentObject private var profileManager: ProfileManager
 	@EnvironmentObject private var conversationState: ConversationState
 	
 	@FocusState private var isFocused: Bool
-	
-	@State private var prompt: String = ""
-	
+
 	@State private var sentConversation: Conversation? = nil
 	
 	var selectedConversation: Conversation? {
@@ -43,13 +43,15 @@ struct ConversationControlsView: View {
 	}
 	
 	var showQuickPrompts: Bool {
-		return prompt.isEmpty && messages.isEmpty
+		return promptController.prompt.isEmpty && messages.isEmpty
 	}
 	
 	var body: some View {
 		VStack {
 			if showQuickPrompts {
-				ConversationQuickPromptsView(input: $prompt)
+				ConversationQuickPromptsView(
+					input: $promptController.prompt
+				)
 			}
 			HStack(spacing: 0) {
 				inputField
@@ -60,7 +62,7 @@ struct ConversationControlsView: View {
 					.keyboardShortcut("r", modifiers: .command)
 					.padding(.leading, 7)
 				}
-				if #unavailable(macOS 15) {
+				if ProcessInfo.processInfo.operatingSystemVersion.majorVersion <= 14 {
 					lengthyTasksButton
 				}
 			}
@@ -88,12 +90,20 @@ struct ConversationControlsView: View {
 	var inputField: some View {
 		TextField(
 			"Send a Message",
-			text: $prompt.animation(.linear),
+			text: $promptController.prompt.animation(.linear),
 			axis: .vertical
 		)
 		.onSubmit(onSubmit)
 		.focused($isFocused)
-		.textFieldStyle(ChatStyle(isFocused: _isFocused))
+		.textFieldStyle(
+			ChatStyle(
+				isFocused: _isFocused,
+				isRecording: $promptController.isRecording
+			)
+		)
+		.overlay(alignment: .trailing) {
+			recordingButton
+		}
 		.submitLabel(.send)
 		.padding([.vertical, .leading], 10)
 		.onExitCommand {
@@ -106,6 +116,21 @@ struct ConversationControlsView: View {
 		) { output in
 			self.isFocused = false
 		}
+	}
+	
+	var recordingButton: some View {
+		Button {
+			withAnimation(.linear) {
+				self.promptController.toggleRecording()
+			}
+		} label: {
+			Label("", systemImage: "microphone.fill")
+				.foregroundStyle(
+					promptController.isRecording ? .red : .secondary
+				)
+		}
+		.buttonStyle(.plain)
+		.padding([.trailing, .bottom], 3)
 	}
 	
 	var lengthyTasksButton: some View {
@@ -132,8 +157,8 @@ struct ConversationControlsView: View {
 	private func onSubmit() {
 		// New line if shift or option pressed
 		if CGKeyCode.kVK_Shift.isPressed || CGKeyCode.kVK_Option.isPressed {
-			prompt += "\n"
-		} else if prompt.trimmingCharacters(in: .whitespacesAndNewlines) != "" {
+			promptController.prompt += "\n"
+		} else if promptController.prompt.trimmingCharacters(in: .whitespacesAndNewlines) != "" {
 			// Send message
 			self.submit()
 		}
@@ -149,12 +174,12 @@ struct ConversationControlsView: View {
 		guard var conversation = selectedConversation else { return }
 		// Make request message
 		let newUserMessage: Message = Message(
-			text: prompt,
+			text: promptController.prompt,
 			sender: .user
 		)
 		let _ = conversation.addMessage(newUserMessage)
 		conversationManager.update(conversation)
-		prompt = ""
+		promptController.prompt = ""
 		// Set sentConversation
 		sentConversation = conversation
 		// Get response

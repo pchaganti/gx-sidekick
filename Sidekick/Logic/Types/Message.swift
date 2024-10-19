@@ -58,13 +58,36 @@ public struct Message: Identifiable, Codable, Hashable {
 		// Search in profile resources
 		// If no resources, return blank array
 		let hasResources: Bool = similarityIndex != nil && !(similarityIndex?.indexItems.isEmpty ?? true)
-		let resourcesResults: [(text: String, source: String)] = await similarityIndex?.search(
-			query: text
-		).map({ result in
-			return (result.text, result.sourceUrlText!)
-		}) ?? []
+		let searchResultsMultiplier: Int = RetrievalSettings.searchResultsMultiplier * (RetrievalSettings.useSearchResultContext ? 1 : 2)
+		let resourcesSearchResults: [SearchResult] = await similarityIndex?.search(
+			query: text,
+			maxResults: searchResultsMultiplier
+		) ?? []
+		let resourcesResults: [(text: String, source: String)] = resourcesSearchResults.map { result in
+			// Get item index
+			guard let index: Int = result.itemIndex else {
+				return (result.text, result.sourceUrlText!)
+			}
+			// Get items in the same file
+			guard let sameFileItems: [IndexItem] = similarityIndex?.indexItems.filter({
+				$0.sourceUrlText == result.sourceUrlText
+			}) else {
+				return (result.text, result.sourceUrlText!)
+			}
+			// Get pre & post content
+			let preContent: String = sameFileItems.filter({
+				$0.itemIndex == index - 1
+			}).first?.text ?? ""
+			let postContent: String = sameFileItems.filter({
+				$0.itemIndex == index + 1
+			}).first?.text ?? ""
+			// Make final text
+			let fullText: String = [preContent, result.text, postContent].joined(separator: " ")
+			return (fullText, result.sourceUrlText!)
+		}
 		// Search Tavily
-		let resultsCount: Int = (hasResources && !resourcesResults.isEmpty) ? 3 : 6
+		var resultsCount: Int = (hasResources && !resourcesResults.isEmpty) ? 1 : 2
+		resultsCount = resultsCount * searchResultsMultiplier
 		var tavilyResults: [(text: String, source: String)]? = []
 		if useWebSearch {
 			tavilyResults = try? await TavilySearch.search(
@@ -92,11 +115,12 @@ public struct Message: Identifiable, Codable, Hashable {
 """
 		}
 		print("\(results.count) sources given.")
-		let resultText: String = resultsTexts.joined(separator: ",\n")
+		let resultsText: String = resultsTexts.joined(separator: ",\n")
+		print("resultsText.count: \(resultsText.count)")
 		let sourceText: String = """
 Below is information that may or may not be relevant to my request in JSON format. If your response uses information from sources provided below, you must end your response with one list of URLs or filepaths of all provided sources referenced in the format [{"url": "https://referencedurl.com"}, {"url": "/path/to/referenced/file.pdf"}], with no duplicates. If you did not reference provided sources, do not mention sources in your response, and end your response with an empty array of JSON objects: []. No section headers, labels or numbering are needed in this list of referenced sources.
 
-\(resultText)
+\(resultsText)
 """
 		return ("\(self.text)\n\n\(sourceText)", results.count)
 	}

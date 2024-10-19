@@ -13,12 +13,13 @@ public extension SimilarityIndex {
 	
 	/// Function to search similarity index
 	func search(
-		query: String
+		query: String,
+		maxResults: Int
 	) async -> [Sidekick.SearchResult] {
 		// Search
 		let results: [SimilaritySearchKit.SearchResult] = await self.search(
 			query,
-			top: 6,
+			top: maxResults,
 			metric: CosineSimilarity()
 		)
 		// Set similarity threshhold

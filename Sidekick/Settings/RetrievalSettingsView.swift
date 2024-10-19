@@ -13,8 +13,16 @@ struct RetrievalSettingsView: View {
 	@State private var apiKey: String = RetrievalSettings.apiKey
 	@State private var backupApiKey: String = RetrievalSettings.backupApiKey
 	
+	@State private var searchResultMultiplier: Int = RetrievalSettings.searchResultsMultiplier
+	@State private var useSearchResultContext: Bool = RetrievalSettings.useSearchResultContext
+
     var body: some View {
 		Form {
+			Section {
+				resourcesSearch
+			} header: {
+				Text("Resources Search")
+			}
 			Section {
 				tavilySearch
 			} header: {
@@ -106,6 +114,59 @@ struct RetrievalSettingsView: View {
 					Text("Save")
 				}
 			}
+		}
+	}
+	
+	var resourcesSearch: some View {
+		Group {
+			searchResultCount
+			searchResultContext
+		}
+	}
+	
+	var searchResultCount: some View {
+		HStack(alignment: .top) {
+			VStack(alignment: .leading) {
+				Text("Search Results")
+					.font(.title3)
+					.bold()
+				Text("Controls the number of search results from profile resources fed to the chatbot. The more results, the slower the chatbot will respond.")
+					.font(.caption)
+			}
+			.frame(minWidth: 250)
+			Spacer()
+			Picker(selection: $searchResultMultiplier) {
+				Text("Less")
+					.tag(2)
+				Text("Default")
+					.tag(3)
+				Text("More")
+					.tag(4)
+				Text("Most")
+					.tag(6)
+			}
+			.pickerStyle(.segmented)
+		}
+		.onChange(of: searchResultMultiplier) {
+			RetrievalSettings.searchResultsMultiplier = self.searchResultMultiplier
+		}
+	}
+	
+	var searchResultContext: some View {
+		HStack(alignment: .top) {
+			VStack(alignment: .leading) {
+				Text("Search Result Context")
+					.font(.title3)
+					.bold()
+				Text("Controls whether context of a search result is given to the chatbot. Turning this on will reduce the number of search results, but will increase the length of each search result.")
+					.font(.caption)
+			}
+			.frame(minWidth: 250)
+			Spacer()
+			Toggle("", isOn: $useSearchResultContext)
+		}
+		.onChange(of: useSearchResultContext) {
+			RetrievalSettings.useSearchResultContext = self.useSearchResultContext
 		}
 	}
 	

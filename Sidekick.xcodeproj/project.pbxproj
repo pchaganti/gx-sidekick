@@ -72,6 +72,8 @@
 		20A8B6592CB26E4800B756FD /* SimilaritySearchKitDistilbert in Frameworks */ = {isa = PBXBuildFile; productRef = 20A8B6582CB26E4800B756FD /* SimilaritySearchKitDistilbert */; };
 		20A8B65B2CB2709100B756FD /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A8B65A2CB2709100B756FD /* Resources.swift */; };
 		20A8B65D2CB2829500B756FD /* ProfileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A8B65C2CB2829500B756FD /* ProfileManager.swift */; };
+		20B4D6AF2CC3C12C00817E15 /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B4D6AE2CC3C12C00817E15 /* SpeechRecognizer.swift */; };
+		20B4D6B12CC3D72700817E15 /* Extension+IndexItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B4D6B02CC3D72700817E15 /* Extension+IndexItem.swift */; };
 		20B97CA82CAFE830009A0A5D /* FSKit-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = 20B97CA72CAFE830009A0A5D /* FSKit-macOS */; };
 		20B97CAB2CAFE861009A0A5D /* ExtractKit-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = 20B97CAA2CAFE861009A0A5D /* ExtractKit-macOS */; };
 		20B97CB32CAFE86C009A0A5D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20B97CAC2CAFE86C009A0A5D /* Preview Assets.xcassets */; };
@@ -223,6 +225,8 @@
 		2099BDB12CB828A500E02732 /* PopoverButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverButton.swift; sourceTree = "<group>"; };
 		20A8B65A2CB2709100B756FD /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		20A8B65C2CB2829500B756FD /* ProfileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManager.swift; sourceTree = "<group>"; };
+		20B4D6AE2CC3C12C00817E15 /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
+		20B4D6B02CC3D72700817E15 /* Extension+IndexItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+IndexItem.swift"; sourceTree = "<group>"; };
 		20B97CAC2CAFE86C009A0A5D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		20B97CAE2CAFE86C009A0A5D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		20B97CAF2CAFE86C009A0A5D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -540,6 +544,7 @@
 				20B97CEA2CB00912009A0A5D /* Extension+URL.swift */,
 				204C79572CB769A400EED58E /* Extension+View.swift */,
 				208388EE2CBF86A100C2A9F8 /* Extension+UserDefaults.swift */,
+				20B4D6B02CC3D72700817E15 /* Extension+IndexItem.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -613,6 +618,7 @@
 				2004D7632CBC9DA2009F294E /* ConversationState.swift */,
 				20571F6E2CBCE8F7004F3344 /* TasksController.swift */,
 				208388D92CBF4DF500C2A9F8 /* TavilySearch.swift */,
+				20B4D6AE2CC3C12C00817E15 /* SpeechRecognizer.swift */,
 			);
 			path = "Data Models";
 			sourceTree = "<group>";
@@ -816,6 +822,7 @@
 			files = (
 				20573F362CB53878004C19FE /* CircleMenuStyle.swift in Sources */,
 				20571F842CBD71C9004F3344 /* SystemPromptEditor.swift in Sources */,
+				20B4D6B12CC3D72700817E15 /* Extension+IndexItem.swift in Sources */,
 				20FE94D82CB96D3A006E9F06 /* ConversationResourceButton.swift in Sources */,
 				20573F1F2CB5274E004C19FE /* MessagesView.swift in Sources */,
 				20B97CE72CB0066A009A0A5D /* Extension+String.swift in Sources */,
@@ -891,6 +898,7 @@
 				20B9E60E2CB1414100BA0AD2 /* DockMenuCommands.swift in Sources */,
 				20B9E6112CB142FD00BA0AD2 /* DebugCommands.swift in Sources */,
 				20573F252CB52EB6004C19FE /* CopyButton.swift in Sources */,
+				20B4D6AF2CC3C12C00817E15 /* SpeechRecognizer.swift in Sources */,
 				2099BDA32CB7EB0200E02732 /* CapsuleButtonStyle.swift in Sources */,
 				204C79562CB765D700EED58E /* ProfileSelectionMenu.swift in Sources */,
 				20A8B65B2CB2709100B756FD /* Resources.swift in Sources */,
@@ -1083,6 +1091,8 @@
 				INFOPLIST_FILE = Sidekick/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Sidekick needs access to the microphone for transcription.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Sidekick needs access to speech recognition services for transcription.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -1114,6 +1124,8 @@
 				INFOPLIST_FILE = Sidekick/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Sidekick needs access to the microphone for transcription.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Sidekick needs access to speech recognition services for transcription.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",

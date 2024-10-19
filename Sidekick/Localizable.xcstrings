@@ -175,6 +175,26 @@
         }
       }
     },
+    "Controls the number of search results from profile resources fed to the chatbot. The more results, the slower the chatbot will respond." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "控制输入​​到聊天机器人的个人资料资源的搜索结果数量。结果越多，聊天机器人的响应速度就越慢。"
+          }
+        }
+      }
+    },
+    "Controls whether context of a search result is given to the chatbot. Turning this on will reduce the number of search results, but will increase the length of each search result." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "控制是否向聊天机器人提供搜索结果的上下文。启用此功能将使搜索结果数量减少，但每个搜索结果的长度将增加。"
+          }
+        }
+      }
+    },
     "Controls whether this profile searches the web before answering. Note that when enabled, this feature may lead to slower responses." : {
       "localizations" : {
         "zh-Hans" : {
@@ -222,6 +242,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "调试"
+          }
+        }
+      }
+    },
+    "Default" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "默认"
           }
         }
       }
@@ -457,6 +487,16 @@
         }
       }
     },
+    "Less" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "偏少"
+          }
+        }
+      }
+    },
     "Link or URL" : {
       "localizations" : {
         "zh-Hans" : {
@@ -519,6 +559,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "模型：%1$@\n每秒令牌数：%2$@"
+          }
+        }
+      }
+    },
+    "More" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "偏多"
+          }
+        }
+      }
+    },
+    "Most" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最多"
           }
         }
       }
@@ -663,6 +723,16 @@
         }
       }
     },
+    "Processing..." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在处理…"
+          }
+        }
+      }
+    },
     "References:" : {
       "localizations" : {
         "zh-Hans" : {
@@ -699,6 +769,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "资源"
+          }
+        }
+      }
+    },
+    "Resources Search" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "资源搜索"
           }
         }
       }
@@ -749,6 +829,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "请在设置里启用网络搜索"
+          }
+        }
+      }
+    },
+    "Search Result Context" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "搜索结果上下文"
+          }
+        }
+      }
+    },
+    "Search Results" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "搜索结果"
+          }
+        }
+      }
+    },
+    "Searching in resources and on the web..." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在资源中和网络上搜索…"
+          }
+        }
+      }
+    },
+    "Searching in resources..." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在资源中搜索…"
           }
         }
       }
