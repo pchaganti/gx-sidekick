@@ -189,22 +189,23 @@ public class SourcesManager: ObservableObject {
 	}
 	
 	/// Function to remove sources with no message
-	public func removeStaleSources() async {
+	@MainActor
+	public func removeStaleSources() {
 		// Get all message IDs
-		let allMessageIds: [UUID] = await ConversationManager.shared.allMessagesIds
-		var staleSources: [Int] = []
+		let allMessageIds: [UUID] = ConversationManager.shared.allMessagesIds
+		var staleSources: [UUID] = []
 		// Locate stale sources
-		for index in self.sources.indices {
-			let messageId: UUID = self.sources[index].messageId
+		for source in self.sources {
+			let messageId: UUID = source.messageId
 			// Set to remove if not found
 			if !allMessageIds.contains(messageId) {
-				staleSources.append(index)
+				staleSources.append(messageId)
 			}
 		}
 		// Remove
-		staleSources.forEach { index in
-			self.sources.remove(at: index)
-		}
+		self.sources = self.sources.filter({ sources in
+			!staleSources.contains(sources.messageId)
+		})
 		// Save
 		self.save()
 	}

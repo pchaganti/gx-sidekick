@@ -19,9 +19,7 @@ public class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
 	/// Function that runs before the app is terminated
 	public func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
 		// Remove stale sources
-		Task {
-			await SourcesManager.shared.removeStaleSources()
-		}
+		SourcesManager.shared.removeStaleSources()
 		// Remove non-persisted resources
 		ProfileManager.shared.removeUnpersistedResources()
 		return .terminateNow
