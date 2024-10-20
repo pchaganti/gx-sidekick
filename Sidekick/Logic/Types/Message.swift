@@ -64,6 +64,13 @@ public struct Message: Identifiable, Codable, Hashable {
 			maxResults: searchResultsMultiplier
 		) ?? []
 		let resourcesResults: [Source] = resourcesSearchResults.map { result in
+			// If search result context is not being used, skip
+			if !RetrievalSettings.useSearchResultContext {
+				return Source(
+					text: result.text,
+					source: result.sourceUrlText!
+				)
+			}
 			// Get item index
 			guard let index: Int = result.itemIndex else {
 				return Source(
