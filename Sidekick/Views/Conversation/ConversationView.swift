@@ -16,7 +16,6 @@ struct ConversationView: View {
 	var body: some View {
 		MessagesView()
 			.padding(.leading)
-			.padding(.bottom, 20)
 			.overlay(alignment: .bottom) {
 				ConversationControlsView()
 					.padding(.trailing, 40)

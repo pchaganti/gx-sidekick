@@ -84,6 +84,16 @@
         }
       }
     },
+    "Are you sure you want to delete all sources?" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您确实要删除所有资料来源吗？"
+          }
+        }
+      }
+    },
     "Are you sure you want to delete this conversation?" : {
       "localizations" : {
         "zh-Hans" : {
@@ -135,7 +145,6 @@
       }
     },
     "Clear All Settings" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -236,7 +245,6 @@
       }
     },
     "Debug" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -282,6 +290,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "删除所有专家"
+          }
+        }
+      }
+    },
+    "Delete All Sources" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除所有资料来源"
           }
         }
       }
@@ -376,12 +394,42 @@
         }
       }
     },
+    "Export" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导出"
+          }
+        }
+      }
+    },
     "Failed to open %@" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "打开 %@ 时出现错误"
+          }
+        }
+      }
+    },
+    "Failed to render image." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "图片生成失败"
+          }
+        }
+      }
+    },
+    "Failed to save image." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "图片保存失败"
           }
         }
       }
@@ -823,6 +871,16 @@
         }
       }
     },
+    "Search" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "搜索"
+          }
+        }
+      }
+    },
     "Search is not enabled in Settings" : {
       "localizations" : {
         "zh-Hans" : {
@@ -913,6 +971,16 @@
         }
       }
     },
+    "Select a Save Location" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请选择文件夹"
+          }
+        }
+      }
+    },
     "Select Files or Folders" : {
       "localizations" : {
         "zh-Hans" : {
@@ -934,7 +1002,6 @@
       }
     },
     "Set Inference Settings to Defaults" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -945,7 +1012,6 @@
       }
     },
     "Show App Support Folder in Finder" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -956,7 +1022,6 @@
       }
     },
     "Show Container in Finder" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -992,6 +1057,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "声效"
+          }
+        }
+      }
+    },
+    "Sources" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "资料来源"
           }
         }
       }
@@ -1162,6 +1237,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "开始对话。"
+          }
+        }
+      }
+    },
+    "Unknown Source" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "资料来源不明"
           }
         }
       }

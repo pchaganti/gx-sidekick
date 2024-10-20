@@ -69,6 +69,24 @@ public class Settings {
 		}
 	}
 	
+	
+	/// Computed property for whether the app is in debug mode
+	static var isDebugMode: Bool {
+		get {
+			// Set default
+			if !UserDefaults.standard.exists(key: "isDebugMode") {
+				// Default to false
+				Self.isDebugMode = false
+			}
+			return UserDefaults.standard.bool(
+				forKey: "isDebugMode"
+			)
+		}
+		set {
+			UserDefaults.standard.set(newValue, forKey: "isDebugMode")
+		}
+	}
+	
 	/// Computed property for whether sound effects are played
 	static var playSoundEffects: Bool {
 		get {

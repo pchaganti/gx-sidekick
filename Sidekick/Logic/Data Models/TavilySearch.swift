@@ -15,7 +15,7 @@ public class TavilySearch {
 		query: String,
 		resultCount: Int,
 		useBackupApi: Bool = false
-	) async throws -> [(text: String, source: String)] {
+	) async throws -> [Source] {
 		// Check if search is on
 		if !RetrievalSettings.useTavilySearch {
 			throw TavilySearchError.notActivated
@@ -32,9 +32,12 @@ public class TavilySearch {
 				resultCount: resultCount
 			)
 			// Get all site content
-			let websiteContent: [(String, String)] = tavilyResults.map({ result in
-				return (result.content, result.url)
-			})
+			let websiteContent: [Source] = tavilyResults.map { result in
+				return Source(
+					text: result.content,
+					source: result.url
+				)
+			}
 			return websiteContent
 		} catch {
 			print("tavilyError: \(error)")

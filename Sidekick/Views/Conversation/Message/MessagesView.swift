@@ -38,7 +38,19 @@ struct MessagesView: View {
 		return self.selectedConversation?.messages.last?.id
 	}
 	
-	var showPendingMessage: Bool {
+	var selectedProfile: Profile? {
+		guard let selectedProfileId = conversationState.selectedProfileId else {
+			return nil
+		}
+		return profileManager.getProfile(id: selectedProfileId)
+	}
+	
+	var isInverted: Bool {
+		guard let luminance = selectedProfile?.color.luminance else { return false }
+		return luminance > 0.5
+	}
+	
+	var isGenerating: Bool {
 		let statusPass: Bool = self.model.status == .coldProcessing || self.model.status == .processing || self.model.status == .querying
 		let conversationPass: Bool = self.selectedConversation?.id == self.model.sentConversationId
 		return statusPass && conversationPass
@@ -50,28 +62,23 @@ struct MessagesView: View {
 				.vertical,
 				showIndicators: true,
 				hasScrolledNearEnd: $didScrollNearBottom,
-				distanceFromEnd: 200
+				distanceFromEnd: 75
 			) {
 				HStack(alignment: .top) {
 					LazyVStack(
 						alignment: .leading,
 						spacing: 13
 					) {
-						ForEach(
-							self.messages
-						) { message in
-							MessageView(
-								message: message
-							)
-							.id(message.id)
-						}
-						if showPendingMessage {
-							PendingMessageView()
-								.id(pendingViewId)
+						Group {
+							messagesView
+							if isGenerating {
+								PendingMessageView()
+									.id(pendingViewId)
+							}
 						}
 					}
 					.padding(.vertical)
-					.padding(.bottom, 100)
+					.padding(.bottom, 150)
 					Spacer()
 				}
 				.id(scrollViewId)
@@ -91,6 +98,66 @@ struct MessagesView: View {
 				proxy.scrollTo(scrollViewId, anchor: .top)
 			}
 		}
+		.toolbar {
+			ToolbarItemGroup() {
+				exportButton
+			}
+		}
+	}
+	
+	var messagesView: some View {
+		ForEach(
+			self.messages
+		) { message in
+			MessageView(
+				message: message
+			)
+			.id(message.id)
+		}
+	}
+	
+	var exportButton: some View {
+		Button {
+			self.generatePdf()
+		} label: {
+			Label("Export", systemImage: "square.and.arrow.up")
+		}
+		.disabled(isGenerating)
+		.if(isInverted) { view in
+			view.colorInvert()
+		}
+	}
+	
+	/// Function to generate and save conversation as a PDF
+	private func generatePdf() {
+		// Select path
+		guard var destination: URL = try? FileManager.selectFile(
+				dialogTitle: String(localized: "Select a Save Location"),
+				canSelectFiles: false,
+				canSelectDirectories: true,
+				allowMultipleSelection: false,
+				persistPermissions: false
+		).first else {
+			return
+		}
+		let filename: String = selectedConversation?.title ?? Date.now.ISO8601Format()
+		destination = destination.appendingPathComponent("\(filename).png")
+		// Render and save
+		let renderer: ImageRenderer = ImageRenderer(
+			content: VStack(alignment: .leading, spacing: 15) { messagesView }
+				.padding()
+				.background(Color.gray)
+				.frame(width: 1000)
+		)
+		renderer.scale = 2.0
+		guard let cgImage: CGImage = renderer.cgImage else {
+			Dialogs.showAlert(
+				title: String(localized: "Error"),
+				message: String(localized: "Failed to render image.")
+			)
+			return
+		}
+		cgImage.save(to: destination)
 	}
 	
 	/// Function to scroll to bottom when the output refreshes

@@ -27,6 +27,11 @@ public class ConversationManager: ObservableObject {
 		}
 	}
 	
+	/// Computed property returning the IDs of all messages
+	var allMessagesIds: [UUID] {
+		return self.conversations.flatMap(\.messages).map(\.id)
+	}
+	
 	/// Computed property returning the first conversation
 	var firstConversation: Conversation? {
 		if self.conversations.first == nil {

@@ -35,6 +35,7 @@ struct MessageView: View {
 	
 	@State private var isEditing: Bool = false
 	@State private var messageText: String
+	@State private var isShowingSources: Bool = false
 	
 	var selectedConversation: Conversation? {
 		guard let selectedConversationId = conversationState.selectedConversationId else {
@@ -47,6 +48,17 @@ struct MessageView: View {
 	
 	var message: Message
 	var canEdit: Bool
+	
+	var sources: Sources? {
+		SourcesManager.shared.getSources(
+			id: message.id
+		)
+	}
+	
+	var showSources: Bool {
+		let hasSources: Bool = !(sources?.sources.isEmpty ?? true)
+		return hasSources && self.message.getSender() == .user
+	}
 	
 	private var theme: Splash.Theme {
 		// NOTE: We are ignoring the Splash theme font
@@ -96,6 +108,9 @@ Tokens per second: \(tokensPerSecondStr)
 					Text(timeDescription)
 						.foregroundStyle(.secondary)
 					options
+					if showSources {
+						sourcesButton
+					}
 					if self.isGenerating {
 						stopButton
 					}
@@ -104,6 +119,13 @@ Tokens per second: \(tokensPerSecondStr)
 			}
 		}
 		.padding(.trailing)
+		.sheet(isPresented: $isShowingSources) {
+			SourcesView(
+				isShowingSources: $isShowingSources,
+				sources: self.sources!
+			)
+			.frame(minWidth: 600, minHeight: 800)
+		}
     }
 	
 	var content: some View {
@@ -217,6 +239,14 @@ Tokens per second: \(tokensPerSecondStr)
 		.disabled(isGenerating)
 		.padding(0)
 		.padding(.vertical, 2)
+	}
+	
+	var sourcesButton: some View {
+		SourcesButton(showSources: $isShowingSources)
+			.menuStyle(.circle)
+			.disabled(!showSources)
+			.padding(0)
+			.padding(.vertical, 2)
 	}
 	
 	var stopButton: some View {
