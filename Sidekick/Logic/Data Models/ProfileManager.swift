@@ -44,7 +44,7 @@ public class ProfileManager: ObservableObject {
 	
 	/// Computed property returning the default profile
 	var `default`: Profile? {
-		if self.profiles.filter({ $0.name == "Default" }).isEmpty {
+		if self.profiles.filter({ $0.name == String(localized: "Default") }).isEmpty {
 			self.profiles = [.default] + self.profiles
 		}
 		return self.profiles.filter({ $0.name == "Default" }).first

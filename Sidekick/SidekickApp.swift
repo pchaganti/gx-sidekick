@@ -30,6 +30,7 @@ struct SidekickApp: App {
 				.environmentObject(profileManager)
 				.environmentObject(lengthyTasksController)
 		}
+		.windowToolbarStyle(.unified)
 		.commands {
 			ConversationCommands.commands
 			WindowCommands.commands

@@ -75,7 +75,7 @@ public struct Profile: Identifiable, Codable, Hashable, Sendable {
 	
 	/// Static constant for the `default` profile
 	public static let `default`: Profile = Profile(
-		name: "Default",
+		name: String(localized: "Default"),
 		symbolName: "person.fill",
 		color: Color.blue,
 		resources: Resources(),
