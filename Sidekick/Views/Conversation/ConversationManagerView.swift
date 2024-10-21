@@ -175,7 +175,6 @@ struct ConversationManagerView: View {
 		Task {
 			await self.model.updateSystemPrompt(prompt)
 		}
-		// Update conversation
 	}
 	
 }

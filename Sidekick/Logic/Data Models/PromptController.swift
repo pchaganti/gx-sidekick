@@ -66,14 +66,12 @@ public class PromptController: ObservableObject {
 		}
 	}
 	
-	private func stopRecording() {
+	public func stopRecording() {
 		audioEngine.stop()
 		audioEngine.inputNode.removeTap(onBus: 0)
 		recognitionRequest?.endAudio()
 		recognitionTask?.cancel()
-		DispatchQueue.main.async {
-			self.isRecording = false
-		}
+		self.isRecording = false
 	}
 	
 	// MARK: - Speech recognition tasks (reset, create, setup & handle recognition results)
@@ -101,7 +99,10 @@ public class PromptController: ObservableObject {
 		recognitionTask = speechRecognizer?.recognitionTask(with: recognitionRequest) { result, error in
 			if let result = result {
 				DispatchQueue.main.async {
-					self.prompt = result.bestTranscription.formattedString
+					let resultString: String = result.bestTranscription.formattedString
+					if !resultString.isEmpty {
+						self.prompt = resultString
+					}
 				}
 			}
 			

@@ -159,6 +159,8 @@ struct ConversationControlsView: View {
 		if CGKeyCode.kVK_Shift.isPressed || CGKeyCode.kVK_Option.isPressed {
 			promptController.prompt += "\n"
 		} else if promptController.prompt.trimmingCharacters(in: .whitespacesAndNewlines) != "" {
+			// End recording
+			self.promptController.stopRecording()
 			// Send message
 			self.submit()
 		}
@@ -179,9 +181,12 @@ struct ConversationControlsView: View {
 		)
 		let _ = conversation.addMessage(newUserMessage)
 		conversationManager.update(conversation)
-		promptController.prompt = ""
 		// Set sentConversation
 		sentConversation = conversation
+		// Clear prompt
+		DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+			self.promptController.prompt.removeAll()
+		}
 		// Get response
 		Task {
 			await self.getResponse()

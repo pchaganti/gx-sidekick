@@ -35,6 +35,7 @@ struct ExitButton: View {
 				isHovering = hover
 			}
 		}
+		.keyboardShortcut("w", modifiers: .command)
 	}
 	
 }
