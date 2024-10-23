@@ -89,11 +89,11 @@ struct ViewReferenceTip: Tip {
 	static var hasReference: Bool = false
 	
 	var title: Text {
-		Text("View Resources")
+		Text("View Reference")
 	}
 	
 	var message: Text? {
-		Text("Click to view resources referenced in the chatbot's response.")
+		Text("Click to view a resource referenced in the chatbot's response.")
 	}
 	
 	var rules: [Rule] {

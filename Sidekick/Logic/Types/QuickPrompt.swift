@@ -29,16 +29,8 @@ struct QuickPrompt: Identifiable {
 			rest: "Please introduce yourself."
 		),
 		QuickPrompt(
-			title: "Write an email",
-			rest: "asking a colleague for a quick status update."
-		),
-		QuickPrompt(
 			title: "Write a bullet summary",
 			rest: "of the leadup and impact of the French Revolution."
-		),
-		QuickPrompt(
-			title: "Write a SQL query",
-			rest: "to count rows in my Users table."
 		),
 		QuickPrompt(
 			title: "How do you",
@@ -49,24 +41,24 @@ struct QuickPrompt: Identifiable {
 			rest: "for the perfect martini."
 		),
 		QuickPrompt(
-			title: "Write a Linux 1-liner",
-			rest: "to count lines of code in a directory."
-		),
-		QuickPrompt(
-			title: "Write me content",
-			rest: "for LinkedIn to maximize engagement. It should be about how this post was written by AI. Keep it brief, concise and smart."
-		),
-		QuickPrompt(
 			title: "Teach me how",
 			rest: "to make a pizza in 10 simple steps, with timings and portions."
 		),
 		QuickPrompt(
-			title: "How do I",
-			rest: "practice basketball while driving?"
+			title: "Write a Linux 1-liner",
+			rest: "to count lines of code in a directory."
 		),
 		QuickPrompt(
 			title: "Can you tell me",
 			rest: "about the gate all around transistor?"
+		),
+		QuickPrompt(
+			title: "How does",
+			rest: "cache speed up processing?"
+		),
+		QuickPrompt(
+			title: "Write an email",
+			rest: "asking a colleague for a quick status update."
 		)
 	]
 	

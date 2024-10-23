@@ -145,9 +145,17 @@
       }
     },
     "Check progress of lengthy tasks, like updating your profile with new resources." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "检查耗时任务的进度，例如新添资源的扫描进度。"
+          }
+        }
+      }
     },
     "Clear All Settings" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -157,8 +165,15 @@
         }
       }
     },
-    "Click to view resources referenced in the chatbot's response." : {
-
+    "Click to view a resource referenced in the chatbot's response." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "单击查看聊天机器人引用的资源。"
+          }
+        }
+      }
     },
     "Color:" : {
       "localizations" : {
@@ -241,10 +256,24 @@
       }
     },
     "Create a Profile" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "创建专家"
+          }
+        }
+      }
     },
     "Create profiles that **customise** chatbot behaviour, making it **reply with context from your files**." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "创建专家，让聊天机器人使用文件，网页资源中的资料"
+          }
+        }
+      }
     },
     "Customise" : {
       "localizations" : {
@@ -257,6 +286,7 @@
       }
     },
     "Debug" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1014,6 +1044,7 @@
       }
     },
     "Set Inference Settings to Defaults" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1024,6 +1055,7 @@
       }
     },
     "Show App Support Folder in Finder" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1034,6 +1066,7 @@
       }
     },
     "Show Container in Finder" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1284,10 +1317,24 @@
       }
     },
     "Use Dictation" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "语音输入"
+          }
+        }
+      }
     },
-    "Use dictation to give instructions to your chatbot, hands free." : {
-
+    "Use dictation to instruct your chatbot, hands free." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用语音输入指导您的聊天机器人，无需动手。"
+          }
+        }
+      }
     },
     "Use Tavily Search" : {
       "localizations" : {
@@ -1320,10 +1367,24 @@
       }
     },
     "View Progress" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查看进度"
+          }
+        }
+      }
     },
-    "View Resources" : {
-
+    "View Reference" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查看资源"
+          }
+        }
+      }
     },
     "Web Search" : {
       "localizations" : {

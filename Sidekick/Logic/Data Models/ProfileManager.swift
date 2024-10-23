@@ -47,7 +47,7 @@ public class ProfileManager: ObservableObject {
 		if self.profiles.filter({ $0.name == String(localized: "Default") }).isEmpty {
 			self.profiles = [.default] + self.profiles
 		}
-		return self.profiles.filter({ $0.name == "Default" }).first
+		return self.profiles.filter({ $0.name == String(localized: "Default") }).first
 	}
 	
 	/// Function to create a new profile
