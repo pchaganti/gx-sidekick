@@ -39,7 +39,7 @@ public struct Message: Identifiable, Codable, Hashable {
 			return text // If no JSON found, return the whole text
 		}
 		// If JSON is not references, do not remove
-		if self.trailingJSONType != .references {
+		if ![.references, .empty].contains(self.trailingJSONType) {
 			return text
 		}
 		// Extract the text up to the start of the JSON string

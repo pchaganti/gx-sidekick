@@ -15,6 +15,8 @@
 		200FBFF32CB66B8300A92A74 /* ServerHealth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200FBFF22CB66B8300A92A74 /* ServerHealth.swift */; };
 		200FBFF52CB66C0000A92A74 /* LlamaServerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200FBFF42CB66C0000A92A74 /* LlamaServerError.swift */; };
 		200FBFF72CB68ABF00A92A74 /* ChatParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200FBFF62CB68ABF00A92A74 /* ChatParameters.swift */; };
+		202801F42CC93C80005C1F7D /* DictationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202801F32CC93C80005C1F7D /* DictationButton.swift */; };
+		202801F62CC93CD5005C1F7D /* PromptInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202801F52CC93CD5005C1F7D /* PromptInputField.swift */; };
 		202E3EDD2CBB8F7B00AF86C8 /* ReferencedURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202E3EDC2CBB8F7B00AF86C8 /* ReferencedURL.swift */; };
 		202FDDF12CC0B43000537F89 /* llama-server in Resources */ = {isa = PBXBuildFile; fileRef = 202FDDF02CC0B43000537F89 /* llama-server */; };
 		2038CCF32CB6CBC6005AA315 /* PendingMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2038CCF22CB6CBC6005AA315 /* PendingMessageView.swift */; };
@@ -119,7 +121,6 @@
 		20F36B242CC4FD980053417B /* sidekickSecureImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 20F36B232CC4FD980053417B /* sidekickSecureImage.png */; };
 		20FB0D892CBA8327006D062A /* Extension+SimilarityIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FB0D882CBA8327006D062A /* Extension+SimilarityIndex.swift */; };
 		20FB0D8B2CBA8828006D062A /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FB0D8A2CBA8828006D062A /* SearchResult.swift */; };
-		20FE94D82CB96D3A006E9F06 /* ConversationResourceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FE94D72CB96D3A006E9F06 /* ConversationResourceButton.swift */; };
 		20FE94DA2CB96DE8006E9F06 /* ExitButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FE94D92CB96DE8006E9F06 /* ExitButton.swift */; };
 /* End PBXBuildFile section */
 
@@ -182,6 +183,8 @@
 		200FBFF22CB66B8300A92A74 /* ServerHealth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerHealth.swift; sourceTree = "<group>"; };
 		200FBFF42CB66C0000A92A74 /* LlamaServerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LlamaServerError.swift; sourceTree = "<group>"; };
 		200FBFF62CB68ABF00A92A74 /* ChatParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatParameters.swift; sourceTree = "<group>"; };
+		202801F32CC93C80005C1F7D /* DictationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictationButton.swift; sourceTree = "<group>"; };
+		202801F52CC93CD5005C1F7D /* PromptInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptInputField.swift; sourceTree = "<group>"; };
 		202E3EDC2CBB8F7B00AF86C8 /* ReferencedURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferencedURL.swift; sourceTree = "<group>"; };
 		202FDDF02CC0B43000537F89 /* llama-server */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llama-server"; sourceTree = "<group>"; };
 		2038CCF22CB6CBC6005AA315 /* PendingMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingMessageView.swift; sourceTree = "<group>"; };
@@ -278,7 +281,6 @@
 		20F36B232CC4FD980053417B /* sidekickSecureImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sidekickSecureImage.png; sourceTree = "<group>"; };
 		20FB0D882CBA8327006D062A /* Extension+SimilarityIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+SimilarityIndex.swift"; sourceTree = "<group>"; };
 		20FB0D8A2CBA8828006D062A /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
-		20FE94D72CB96D3A006E9F06 /* ConversationResourceButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationResourceButton.swift; sourceTree = "<group>"; };
 		20FE94D92CB96DE8006E9F06 /* ExitButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitButton.swift; sourceTree = "<group>"; };
 		20FE94DB2CB96FCD006E9F06 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -378,6 +380,26 @@
 			path = Types;
 			sourceTree = "<group>";
 		};
+		202801F12CC93C0D005C1F7D /* Controls */ = {
+			isa = PBXGroup;
+			children = (
+				2099BDA02CB7EABC00E02732 /* ConversationQuickPromptsView.swift */,
+				20E48C282CB560B50085E7D6 /* ConversationControlsView.swift */,
+				202801F52CC93CD5005C1F7D /* PromptInputField.swift */,
+				202801F32CC93C80005C1F7D /* DictationButton.swift */,
+			);
+			path = Controls;
+			sourceTree = "<group>";
+		};
+		202801F22CC93C2B005C1F7D /* Options */ = {
+			isa = PBXGroup;
+			children = (
+				20D65DD42CC0CC6C0052D826 /* StopGenerationButton.swift */,
+				20C2210A2CC4B88F00A99796 /* SourcesButton.swift */,
+			);
+			path = Options;
+			sourceTree = "<group>";
+		};
 		204C79542CB765C100EED58E /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -428,11 +450,7 @@
 				20573F152CB505DC004C19FE /* ConversationListView.swift */,
 				2099BDA42CB8069800E02732 /* ConversationNameEditor.swift */,
 				20573F172CB50743004C19FE /* ConversationView.swift */,
-				20E48C282CB560B50085E7D6 /* ConversationControlsView.swift */,
-				20D65DD42CC0CC6C0052D826 /* StopGenerationButton.swift */,
-				20C2210A2CC4B88F00A99796 /* SourcesButton.swift */,
-				20FE94D72CB96D3A006E9F06 /* ConversationResourceButton.swift */,
-				2099BDA02CB7EABC00E02732 /* ConversationQuickPromptsView.swift */,
+				202801F12CC93C0D005C1F7D /* Controls */,
 				20573F2B2CB52F9A004C19FE /* Message */,
 			);
 			path = Conversation;
@@ -445,6 +463,7 @@
 				2038CCF22CB6CBC6005AA315 /* PendingMessageView.swift */,
 				20573F202CB527DB004C19FE /* MessageView.swift */,
 				20AA5A532CC89AAA003E5519 /* MessageBackgroundView.swift */,
+				202801F22CC93C2B005C1F7D /* Options */,
 				20C221072CC4B59B00A99796 /* Sources */,
 				20573F2E2CB5301F004C19FE /* Markdown */,
 			);
@@ -864,7 +883,6 @@
 				20571F842CBD71C9004F3344 /* SystemPromptEditor.swift in Sources */,
 				20C221062CC4B15600A99796 /* SourcesManager.swift in Sources */,
 				20B4D6B12CC3D72700817E15 /* Extension+IndexItem.swift in Sources */,
-				20FE94D82CB96D3A006E9F06 /* ConversationResourceButton.swift in Sources */,
 				20573F1F2CB5274E004C19FE /* MessagesView.swift in Sources */,
 				20B97CE72CB0066A009A0A5D /* Extension+String.swift in Sources */,
 				200FBFF72CB68ABF00A92A74 /* ChatParameters.swift in Sources */,
@@ -904,6 +922,7 @@
 				20571F7B2CBD602B004F3344 /* InferenceSettingsView.swift in Sources */,
 				20B97CDF2CAFFE6A009A0A5D /* Sender.swift in Sources */,
 				202E3EDD2CBB8F7B00AF86C8 /* ReferencedURL.swift in Sources */,
+				202801F42CC93C80005C1F7D /* DictationButton.swift in Sources */,
 				2004D7642CBC9DA2009F294E /* ConversationState.swift in Sources */,
 				2086E1712CB036BB00FFCF57 /* ConversationManager.swift in Sources */,
 				20C221092CC4B5A800A99796 /* SourcesView.swift in Sources */,
@@ -913,6 +932,7 @@
 				20A8B65D2CB2829500B756FD /* ProfileManager.swift in Sources */,
 				20B97CD62CAFF2E0009A0A5D /* SetupView.swift in Sources */,
 				20B97CED2CB00A28009A0A5D /* Favicon.swift in Sources */,
+				202801F62CC93CD5005C1F7D /* PromptInputField.swift in Sources */,
 				20571F772CBD6005004F3344 /* SettingsView.swift in Sources */,
 				20573F142CB50550004C19FE /* ConversationManagerView.swift in Sources */,
 				20B97CB62CAFE86C009A0A5D /* SidekickApp.swift in Sources */,

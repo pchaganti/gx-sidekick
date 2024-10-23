@@ -1,24 +1,23 @@
 //
-//  ConversationControlsView.swift
+//  PromptInputField.swift
 //  Sidekick
 //
-//  Created by Bean John on 10/8/24.
+//  Created by Bean John on 10/23/24.
 //
 
 import SwiftUI
 import SimilaritySearchKit
 
-struct ConversationControlsView: View {
+struct PromptInputField: View {
 	
-	@StateObject private var promptController: PromptController = .init()
+	@FocusState private var isFocused: Bool
 	
 	@EnvironmentObject private var model: Model
 	@EnvironmentObject private var conversationManager: ConversationManager
 	@EnvironmentObject private var profileManager: ProfileManager
 	@EnvironmentObject private var conversationState: ConversationState
+	@EnvironmentObject private var promptController: PromptController
 	
-	@FocusState private var isFocused: Bool
-
 	@State private var sentConversation: Conversation? = nil
 	
 	var selectedConversation: Conversation? {
@@ -36,7 +35,6 @@ struct ConversationControlsView: View {
 		}
 		return profileManager.getProfile(id: selectedProfileId)
 	}
-	@State private var profile: Profile = .default
 	
 	var messages: [Message] {
 		return selectedConversation?.messages ?? []
@@ -46,43 +44,7 @@ struct ConversationControlsView: View {
 		return promptController.prompt.isEmpty && messages.isEmpty
 	}
 	
-	var dictationTip: DictationTip = .init()
-	
-	var body: some View {
-		VStack {
-			if showQuickPrompts {
-				ConversationQuickPromptsView(
-					input: $promptController.prompt
-				)
-			}
-			HStack(spacing: 0) {
-				inputField
-				if #unavailable(macOS 15) {
-					lengthyTasksButton
-				}
-			}
-		}
-		.padding(.leading)
-		.onChange(of: conversationState.selectedConversationId) {
-			self.isFocused = true
-			self.conversationState.selectedProfileId = profileManager.default?.id
-		}
-		.onChange(of: conversationState.selectedProfileId) {
-			guard let selectedProfile else {
-				return
-			}
-			self.profile = selectedProfile
-		}
-		.onReceive(
-			NotificationCenter.default.publisher(
-				for: Notifications.didSelectProfile.name
-			)
-		) { output in
-			self.updateProfile()
-		}
-	}
-	
-	var inputField: some View {
+    var body: some View {
 		TextField(
 			"Send a Message",
 			text: $promptController.prompt.animation(.linear),
@@ -97,7 +59,7 @@ struct ConversationControlsView: View {
 			)
 		)
 		.overlay(alignment: .trailing) {
-			recordingButton
+			DictationButton()
 		}
 		.submitLabel(.send)
 		.padding([.vertical, .leading], 10)
@@ -117,43 +79,11 @@ struct ConversationControlsView: View {
 				DictationTip.readyForDictation = true
 			}
 		}
-	}
-	
-	var recordingButton: some View {
-		Button {
-			withAnimation(.linear) {
-				self.promptController.toggleRecording()
-			}
-		} label: {
-			Label("", systemImage: "microphone.fill")
-				.foregroundStyle(
-					promptController.isRecording ? .red : .secondary
-				)
+		.onChange(of: conversationState.selectedConversationId) {
+			self.isFocused = true
+			self.conversationState.selectedProfileId = profileManager.default?.id
 		}
-		.buttonStyle(.plain)
-		.padding([.trailing, .bottom], 3)
-		.popoverTip(dictationTip)
-	}
-	
-	var lengthyTasksButton: some View {
-		LengthyTasksToolbarButton(
-			usePadding: true
-		)
-		.labelStyle(.iconOnly)
-		.buttonStyle(ChatButtonStyle())
-		.padding(.leading, 7)
-	}
-	
-	/// Function to update the profile shown in the profile resource button
-	private func updateProfile() {
-		guard let selectedProfileId = conversationState.selectedProfileId else {
-			return
-		}
-		guard let profile = profileManager.getProfile(id: selectedProfileId) else {
-			return
-		}
-		self.profile = profile
-	}
+    }
 	
 	/// Function to run when the `return` key is hit
 	private func onSubmit() {
@@ -281,7 +211,6 @@ struct ConversationControlsView: View {
 	
 }
 
-//
 //#Preview {
-//    ConversationControlsView()
+//    PromptInputField()
 //}
