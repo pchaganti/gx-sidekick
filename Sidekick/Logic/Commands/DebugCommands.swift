@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import TipKit
 
 @MainActor
 public class DebugCommands {
@@ -40,6 +41,11 @@ public class DebugCommands {
 					)
 				} label: {
 					Text("Show App Support Folder in Finder")
+				}
+				Button {
+					try? Tips.resetDatastore()
+				} label: {
+					Text("Reset Tips Datastore")
 				}
 			}
 		}

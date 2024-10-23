@@ -851,6 +851,16 @@
         }
       }
     },
+    "Reset Tips Datastore" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重置教程进度"
+          }
+        }
+      }
+    },
     "Resources" : {
       "localizations" : {
         "zh-Hans" : {

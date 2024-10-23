@@ -126,7 +126,7 @@ struct MessagesView: View {
 		} label: {
 			Label("Export", systemImage: "square.and.arrow.up")
 		}
-		.disabled(isGenerating)
+		.disabled(isGenerating || self.messages.isEmpty)
 		.if(isInverted) { view in
 			view.colorInvert()
 		}
