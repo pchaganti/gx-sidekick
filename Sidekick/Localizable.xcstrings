@@ -144,6 +144,9 @@
         }
       }
     },
+    "Check progress of lengthy tasks, like updating your profile with new resources." : {
+
+    },
     "Clear All Settings" : {
       "localizations" : {
         "zh-Hans" : {
@@ -153,6 +156,9 @@
           }
         }
       }
+    },
+    "Click to view resources referenced in the chatbot's response." : {
+
     },
     "Color:" : {
       "localizations" : {
@@ -233,6 +239,12 @@
           }
         }
       }
+    },
+    "Create a Profile" : {
+
+    },
+    "Create profiles that **customise** chatbot behaviour, making it **reply with context from your files**." : {
+
     },
     "Customise" : {
       "localizations" : {
@@ -1271,6 +1283,12 @@
         }
       }
     },
+    "Use Dictation" : {
+
+    },
+    "Use dictation to give instructions to your chatbot, hands free." : {
+
+    },
     "Use Tavily Search" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1300,6 +1318,12 @@
           }
         }
       }
+    },
+    "View Progress" : {
+
+    },
+    "View Resources" : {
+
     },
     "Web Search" : {
       "localizations" : {

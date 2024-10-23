@@ -8,12 +8,19 @@
 import AppKit
 import Foundation
 import SwiftUI
+import TipKit
 
 public class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
 	
 	/// Function that runs after the app is initialized
 	public func applicationDidFinishLaunching(_ aNotification: Notification) {
-		
+		// Configure Tip's data container
+		try? Tips.configure(
+			[
+				.datastoreLocation(.applicationDefault),
+				.displayFrequency(.immediate)
+			]
+		)
 	}
 	
 	/// Function that runs before the app is terminated

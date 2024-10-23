@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TipKit
 
 struct LengthyTasksToolbarButton: View {
 	
@@ -27,11 +28,21 @@ struct LengthyTasksToolbarButton: View {
 		return luminance > 0.5
 	}
 	
+	var iconName: String {
+		if #available(macOS 15, *) {
+			return "arrow.trianglehead.2.clockwise"
+		} else {
+			return "arrow.triangle.2.circlepath"
+		}
+	}
+	
+	var lengthyTasksProgressTip: LengthyTasksProgressTip = .init()
+	
 	var body: some View {
 		PopoverButton(arrowEdge: .bottom) {
 			Label(
 				"Tasks",
-				systemImage: "arrow.trianglehead.2.clockwise"
+				systemImage: iconName
 			)
 			.if(isInverted) { view in
 				view.colorInvert()
@@ -43,6 +54,7 @@ struct LengthyTasksToolbarButton: View {
 			LengthyTasksList()
 		}
 		.keyboardShortcut("t", modifiers: [.command, .shift])
+		.popoverTip(lengthyTasksProgressTip)
 	}
 	
 }

@@ -21,15 +21,12 @@ public class PromptController: ObservableObject {
 	private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
 	private var recognitionTask: SFSpeechRecognitionTask?
 	
-	init() {
-		requestSpeechRecognitionAccess()
-		requestMicrophoneAccess()
-	}
-	
 	func toggleRecording() {
 		if isRecording {
 			stopRecording()
 		} else {
+			requestSpeechRecognitionAccess()
+			requestMicrophoneAccess()
 			checkPermissionsAndStartRecording()
 		}
 	}
@@ -71,7 +68,9 @@ public class PromptController: ObservableObject {
 		audioEngine.inputNode.removeTap(onBus: 0)
 		recognitionRequest?.endAudio()
 		recognitionTask?.cancel()
-		self.isRecording = false
+		DispatchQueue.main.async {
+			self.isRecording = false
+		}
 	}
 	
 	// MARK: - Speech recognition tasks (reset, create, setup & handle recognition results)

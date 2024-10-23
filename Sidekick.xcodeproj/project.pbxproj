@@ -22,7 +22,7 @@
 		204C79562CB765D700EED58E /* ProfileSelectionMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204C79552CB765D700EED58E /* ProfileSelectionMenu.swift */; };
 		204C79582CB769A400EED58E /* Extension+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204C79572CB769A400EED58E /* Extension+View.swift */; };
 		204C795C2CB79AB900EED58E /* ProfileManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204C795B2CB79AB900EED58E /* ProfileManagerView.swift */; };
-		20571F6F2CBCE8F7004F3344 /* TasksController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20571F6E2CBCE8F7004F3344 /* TasksController.swift */; };
+		20571F6F2CBCE8F7004F3344 /* LengthyTasksController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20571F6E2CBCE8F7004F3344 /* LengthyTasksController.swift */; };
 		20571F722CBCEDD8004F3344 /* LengthyTasksList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20571F712CBCEDD8004F3344 /* LengthyTasksList.swift */; };
 		20571F742CBCEE90004F3344 /* LengthyTasksToolbarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20571F732CBCEE90004F3344 /* LengthyTasksToolbarButton.swift */; };
 		20571F772CBD6005004F3344 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20571F762CBD6005004F3344 /* SettingsView.swift */; };
@@ -71,6 +71,8 @@
 		20A8B6592CB26E4800B756FD /* SimilaritySearchKitDistilbert in Frameworks */ = {isa = PBXBuildFile; productRef = 20A8B6582CB26E4800B756FD /* SimilaritySearchKitDistilbert */; };
 		20A8B65B2CB2709100B756FD /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A8B65A2CB2709100B756FD /* Resources.swift */; };
 		20A8B65D2CB2829500B756FD /* ProfileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A8B65C2CB2829500B756FD /* ProfileManager.swift */; };
+		20AA5A522CC87032003E5519 /* Tips.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20AA5A512CC87032003E5519 /* Tips.swift */; };
+		20AA5A542CC89AAA003E5519 /* MessageBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20AA5A532CC89AAA003E5519 /* MessageBackgroundView.swift */; };
 		20B4D6AF2CC3C12C00817E15 /* PromptController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B4D6AE2CC3C12C00817E15 /* PromptController.swift */; };
 		20B4D6B12CC3D72700817E15 /* Extension+IndexItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B4D6B02CC3D72700817E15 /* Extension+IndexItem.swift */; };
 		20B97CA82CAFE830009A0A5D /* FSKit-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = 20B97CA72CAFE830009A0A5D /* FSKit-macOS */; };
@@ -187,7 +189,7 @@
 		204C79552CB765D700EED58E /* ProfileSelectionMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSelectionMenu.swift; sourceTree = "<group>"; };
 		204C79572CB769A400EED58E /* Extension+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+View.swift"; sourceTree = "<group>"; };
 		204C795B2CB79AB900EED58E /* ProfileManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManagerView.swift; sourceTree = "<group>"; };
-		20571F6E2CBCE8F7004F3344 /* TasksController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksController.swift; sourceTree = "<group>"; };
+		20571F6E2CBCE8F7004F3344 /* LengthyTasksController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LengthyTasksController.swift; sourceTree = "<group>"; };
 		20571F712CBCEDD8004F3344 /* LengthyTasksList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LengthyTasksList.swift; sourceTree = "<group>"; };
 		20571F732CBCEE90004F3344 /* LengthyTasksToolbarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LengthyTasksToolbarButton.swift; sourceTree = "<group>"; };
 		20571F762CBD6005004F3344 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -230,6 +232,8 @@
 		2099BDB12CB828A500E02732 /* PopoverButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverButton.swift; sourceTree = "<group>"; };
 		20A8B65A2CB2709100B756FD /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		20A8B65C2CB2829500B756FD /* ProfileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManager.swift; sourceTree = "<group>"; };
+		20AA5A512CC87032003E5519 /* Tips.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tips.swift; sourceTree = "<group>"; };
+		20AA5A532CC89AAA003E5519 /* MessageBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBackgroundView.swift; sourceTree = "<group>"; };
 		20B4D6AE2CC3C12C00817E15 /* PromptController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptController.swift; sourceTree = "<group>"; };
 		20B4D6B02CC3D72700817E15 /* Extension+IndexItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+IndexItem.swift"; sourceTree = "<group>"; };
 		20B97CAC2CAFE86C009A0A5D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -440,6 +444,7 @@
 				20573F1E2CB5274E004C19FE /* MessagesView.swift */,
 				2038CCF22CB6CBC6005AA315 /* PendingMessageView.swift */,
 				20573F202CB527DB004C19FE /* MessageView.swift */,
+				20AA5A532CC89AAA003E5519 /* MessageBackgroundView.swift */,
 				20C221072CC4B59B00A99796 /* Sources */,
 				20573F2E2CB5301F004C19FE /* Markdown */,
 			);
@@ -472,6 +477,14 @@
 				208388E42CBF526E00C2A9F8 /* RetrievalSettings.swift */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		20AA5A502CC87026003E5519 /* Tips */ = {
+			isa = PBXGroup;
+			children = (
+				20AA5A512CC87032003E5519 /* Tips.swift */,
+			);
+			path = Tips;
 			sourceTree = "<group>";
 		};
 		20B97CAD2CAFE86C009A0A5D /* Preview Content */ = {
@@ -534,6 +547,7 @@
 		20B97CC02CAFE883009A0A5D /* Logic */ = {
 			isa = PBXGroup;
 			children = (
+				20AA5A502CC87026003E5519 /* Tips */,
 				208388E32CBF525A00C2A9F8 /* Settings */,
 				20571F822CBD6A95004F3344 /* Utilities */,
 				200FBFD62CB627B100A92A74 /* llama.cpp */,
@@ -628,15 +642,15 @@
 		20B9E6152CB1465900BA0AD2 /* Data Models */ = {
 			isa = PBXGroup;
 			children = (
-				20B97CCA2CAFEC37009A0A5D /* DownloadManager.swift */,
 				2086E1702CB036BB00FFCF57 /* ConversationManager.swift */,
-				20A8B65C2CB2829500B756FD /* ProfileManager.swift */,
-				20C221052CC4B15600A99796 /* SourcesManager.swift */,
 				2004D7632CBC9DA2009F294E /* ConversationState.swift */,
-				20571F6E2CBCE8F7004F3344 /* TasksController.swift */,
-				208388D92CBF4DF500C2A9F8 /* TavilySearch.swift */,
+				20B97CCA2CAFEC37009A0A5D /* DownloadManager.swift */,
+				20A8B65C2CB2829500B756FD /* ProfileManager.swift */,
 				20B4D6AE2CC3C12C00817E15 /* PromptController.swift */,
 				20C221032CC4AFAF00A99796 /* SourceLogger.swift */,
+				20C221052CC4B15600A99796 /* SourcesManager.swift */,
+				20571F6E2CBCE8F7004F3344 /* LengthyTasksController.swift */,
+				208388D92CBF4DF500C2A9F8 /* TavilySearch.swift */,
 			);
 			path = "Data Models";
 			sourceTree = "<group>";
@@ -856,6 +870,7 @@
 				200FBFF72CB68ABF00A92A74 /* ChatParameters.swift in Sources */,
 				20B97CB52CAFE86C009A0A5D /* ContentView.swift in Sources */,
 				20B97CCE2CAFEC37009A0A5D /* Settings.swift in Sources */,
+				20AA5A522CC87032003E5519 /* Tips.swift in Sources */,
 				20573F232CB52E79004C19FE /* Extension+Theme.swift in Sources */,
 				200FBFF52CB66C0000A92A74 /* LlamaServerError.swift in Sources */,
 				20B97CE32CB00585009A0A5D /* Profile.swift in Sources */,
@@ -892,7 +907,7 @@
 				2004D7642CBC9DA2009F294E /* ConversationState.swift in Sources */,
 				2086E1712CB036BB00FFCF57 /* ConversationManager.swift in Sources */,
 				20C221092CC4B5A800A99796 /* SourcesView.swift in Sources */,
-				20571F6F2CBCE8F7004F3344 /* TasksController.swift in Sources */,
+				20571F6F2CBCE8F7004F3344 /* LengthyTasksController.swift in Sources */,
 				20571F742CBCEE90004F3344 /* LengthyTasksToolbarButton.swift in Sources */,
 				20B97CEB2CB00912009A0A5D /* Extension+URL.swift in Sources */,
 				20A8B65D2CB2829500B756FD /* ProfileManager.swift in Sources */,
@@ -905,6 +920,7 @@
 				2099BDA52CB8069800E02732 /* ConversationNameEditor.swift in Sources */,
 				20C221042CC4AFAF00A99796 /* SourceLogger.swift in Sources */,
 				20571F722CBCEDD8004F3344 /* LengthyTasksList.swift in Sources */,
+				20AA5A542CC89AAA003E5519 /* MessageBackgroundView.swift in Sources */,
 				204C79582CB769A400EED58E /* Extension+View.swift in Sources */,
 				2099BDAD2CB8222A00E02732 /* ProfileEditorView.swift in Sources */,
 				20571F812CBD6A6D004F3344 /* SoundEffects.swift in Sources */,

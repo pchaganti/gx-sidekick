@@ -21,12 +21,6 @@ struct MessageView: View {
 	}
 	
 	@Environment(\.colorScheme) private var colorScheme
-	var shadowColor: SwiftUI.Color {
-		return colorScheme == .dark ? .white : .black
-	}
-	var shadowRadius: CGFloat {
-		return colorScheme == .dark ? 2.5 : 0
-	}
 	
 	@EnvironmentObject private var conversationManager: ConversationManager
 	@EnvironmentObject private var conversationState: ConversationState
@@ -69,6 +63,8 @@ struct MessageView: View {
 				return .sunset(withFont: .init(size: 16))
 		}
 	}
+	
+	var viewReferenceTip: ViewReferenceTip = .init()
 	
 	private var isGenerating: Bool {
 		return !message.outputEnded && message.getSender() == .assistant
@@ -138,27 +134,8 @@ Tokens per second: \(tokensPerSecondStr)
 		}
 		.padding(11)
 		.background {
-			background
+			MessageBackgroundView()
 		}
-	}
-	
-	var background: some View {
-		UnevenRoundedRectangle(
-			cornerRadii: .init(
-				topLeading: 0,
-				bottomLeading: 12,
-				bottomTrailing: 12,
-				topTrailing: 12
-			),
-			style: .circular
-		)
-		.fill(
-			Color(nsColor: .textBackgroundColor)
-		)
-		.shadow(
-			color: shadowColor,
-			radius: shadowRadius
-		)
 	}
 	
 	var contentViewer: some View {
@@ -188,9 +165,15 @@ Tokens per second: \(tokensPerSecondStr)
 				id: \.self
 			) { index in
 				message.referencedURLs[index].openButton
+					.if(index == 0) { view in
+						view.popoverTip(viewReferenceTip)
+					}
 			}
 		}
 		.padding(.top, 8)
+		.onAppear {
+			ViewReferenceTip.hasReference = true
+		}
 	}
 	
 	var contentEditor: some View {
@@ -244,6 +227,7 @@ Tokens per second: \(tokensPerSecondStr)
 	var sourcesButton: some View {
 		SourcesButton(showSources: $isShowingSources)
 			.menuStyle(.circle)
+			.foregroundStyle(.secondary)
 			.disabled(!showSources)
 			.padding(0)
 			.padding(.vertical, 2)
@@ -252,6 +236,7 @@ Tokens per second: \(tokensPerSecondStr)
 	var stopButton: some View {
 		StopGenerationButton()
 			.menuStyle(.circle)
+			.foregroundStyle(.secondary)
 			.disabled(!isGenerating)
 			.padding(0)
 			.padding(.vertical, 2)

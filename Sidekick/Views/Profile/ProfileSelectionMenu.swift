@@ -36,10 +36,19 @@ struct ProfileSelectionMenu: View {
 		})
 	}
 	
+	var createProfileTip: CreateProfilesTip = .init()
+	
 	var body: some View {
 		Group {
 			prevButton
 			menu
+				.popoverTip(
+					createProfileTip,
+					arrowEdge: .top
+				) { action in
+					// Open profile editor
+					conversationState.isManagingProfiles.toggle()
+				}
 			nextButton
 		}
 		.if(isInverted) { view in
@@ -99,6 +108,13 @@ struct ProfileSelectionMenu: View {
 			conversationState.isManagingProfiles.toggle()
 		} label: {
 			Text("Manage Profiles")
+		}
+		.onChange(of: conversationState.isManagingProfiles) {
+			// Show tip if needed
+			if !conversationState.isManagingProfiles &&
+				LengthyTasksController.shared.hasTasks {
+				LengthyTasksProgressTip.hasLengthyTask = true
+			}
 		}
 	}
 	

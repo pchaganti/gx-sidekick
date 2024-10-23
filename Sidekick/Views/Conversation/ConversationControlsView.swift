@@ -46,6 +46,8 @@ struct ConversationControlsView: View {
 		return promptController.prompt.isEmpty && messages.isEmpty
 	}
 	
+	var dictationTip: DictationTip = .init()
+	
 	var body: some View {
 		VStack {
 			if showQuickPrompts {
@@ -55,14 +57,7 @@ struct ConversationControlsView: View {
 			}
 			HStack(spacing: 0) {
 				inputField
-				if conversationState.selectedProfileId != nil {
-					ConversationResourceButton(
-						profile: $profile
-					)
-					.keyboardShortcut("r", modifiers: .command)
-					.padding(.leading, 7)
-				}
-				if ProcessInfo.processInfo.operatingSystemVersion.majorVersion <= 14 {
+				if #unavailable(macOS 15) {
 					lengthyTasksButton
 				}
 			}
@@ -116,6 +111,12 @@ struct ConversationControlsView: View {
 		) { output in
 			self.isFocused = false
 		}
+		.onChange(of: isFocused) {
+			// Show dictation if needed
+			if self.isFocused {
+				DictationTip.readyForDictation = true
+			}
+		}
 	}
 	
 	var recordingButton: some View {
@@ -131,6 +132,7 @@ struct ConversationControlsView: View {
 		}
 		.buttonStyle(.plain)
 		.padding([.trailing, .bottom], 3)
+		.popoverTip(dictationTip)
 	}
 	
 	var lengthyTasksButton: some View {
@@ -184,6 +186,7 @@ struct ConversationControlsView: View {
 		// Set sentConversation
 		sentConversation = conversation
 		// Clear prompt
+		self.promptController.prompt.removeAll()
 		DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
 			self.promptController.prompt.removeAll()
 		}

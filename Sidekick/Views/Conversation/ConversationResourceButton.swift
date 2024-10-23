@@ -57,6 +57,16 @@ struct ConversationResourceButton: View {
 				sheetContent
 			}
 		}
+		.onChange(of: isEditingResources) {
+			// Show tip if needed
+			if !isEditingResources &&
+				LengthyTasksController.shared.hasTasks {
+				LengthyTasksProgressTip.hasLengthyTask = true
+			}
+		}
+		.onChange(of: profile) {
+			profileManager.update(profile)
+		}
     }
 	
 	var sheetContent: some View {
@@ -65,9 +75,6 @@ struct ConversationResourceButton: View {
 		}
 		.formStyle(.grouped)
 		.frame(maxWidth: 450, maxHeight: 600)
-		.onChange(of: profile) {
-			profileManager.update(profile)
-		}
 	}
 	
 	private func updateProfile() {
