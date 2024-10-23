@@ -34,9 +34,13 @@ public struct Message: Identifiable, Codable, Hashable {
 	public var displayedText: String {
 		// Return original text if sender is not assistant
 		if self.sender != .assistant { return self.text }
-		// Remove urls
+		// Remove urls if needed
 		guard let jsonRange = text.range(of: "[", options: .backwards) else {
 			return text // If no JSON found, return the whole text
+		}
+		// If JSON is not references, do not remove
+		if self.trailingJSONType != .references {
+			return text
 		}
 		// Extract the text up to the start of the JSON string
 		let extractedText = text[..<jsonRange.lowerBound].trimmingCharacters(in: .whitespacesAndNewlines)
@@ -157,15 +161,47 @@ Below is information that may or may not be relevant to my request in JSON forma
 	/// Stored property for the sender of the message (either `user` or `system`)
 	private var sender: Sender
 	
-	/// Computed property for URLs of sources referenced in a response
-	public var referencedURLs: [ReferencedURL] {
+	/// Computed property for trailing JSON string
+	private var trailingJSONString: String? {
 		// Get string with JSON
 		guard let jsonRange = text.range(of: "[", options: .backwards) else {
-			return []
+			return nil
 		}
 		guard let jsonString: NSString = text[jsonRange.lowerBound...].trimmingCharacters(
 			in: .whitespacesAndNewlines
 		) as NSString? else {
+			return nil
+		}
+		return String(jsonString)
+	}
+	
+	private var trailingJSONType: JSONType {
+		let jsonString: String? = self.trailingJSONString
+		// Check if is blank array
+		if jsonString == "[]" {
+			return .empty
+		}
+		// Decode string to data
+		guard let data: Data = try? jsonString.data(
+			using: .init(encoding: .utf8, allowLossyConversion: false)
+		) else {
+			return .unknown
+		}
+		// Check if is references
+		if let _: [ReferencedURL] = try? JSONDecoder().decode(
+			[ReferencedURL].self,
+			from: data
+		) {
+			return .references
+		}
+		// Return unknown state
+		return .unknown
+	}
+	
+	/// Computed property for URLs of sources referenced in a response
+	public var referencedURLs: [ReferencedURL] {
+		// Get string with JSON
+		guard let jsonString = self.trailingJSONString else {
 			return []
 		}
 		// Decode string
@@ -256,6 +292,12 @@ Below is information that may or may not be relevant to my request in JSON forma
 		/// Stored property for the message's content
 		var content: String
 		
+	}
+	
+	private enum JSONType: String {
+		case unknown
+		case empty
+		case references
 	}
 	
 }
