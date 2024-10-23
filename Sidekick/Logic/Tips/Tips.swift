@@ -24,7 +24,10 @@ struct CreateProfilesTip: Tip {
 	
 	var actions: [Action] {
 		[
-			Action(id: "view", title: "View Profiles")
+			Action(
+				id: "view",
+				title: String(localized: "View Profiles")
+			)
 		]
 	}
 	

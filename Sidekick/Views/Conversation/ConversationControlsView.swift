@@ -57,9 +57,9 @@ struct ConversationControlsView: View {
 			}
 			HStack(spacing: 0) {
 				inputField
-				if #unavailable(macOS 15) {
+//				if #unavailable(macOS 15) {
 					lengthyTasksButton
-				}
+//				}
 			}
 		}
 		.padding(.leading)

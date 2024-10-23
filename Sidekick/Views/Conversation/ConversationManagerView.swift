@@ -60,8 +60,7 @@ struct ConversationManagerView: View {
 	
     var body: some View {
 		NavigationSplitView {
-			ConversationNavigationListView()
-			.padding(.top, 7)
+			conversationList
 		} detail: {
 			conversationView
 		}
@@ -134,6 +133,24 @@ struct ConversationManagerView: View {
 		.environmentObject(model)
     }
 	
+	var conversationList: some View {
+		VStack(alignment: .leading) {
+			ConversationNavigationListView()
+			Spacer()
+			Button {
+				self.newConversation()
+			} label: {
+				Label("New Conversation", systemImage: "plus")
+					.labelStyle(.iconOnly)
+					.foregroundStyle(.secondary)
+					.bold()
+			}
+			.buttonStyle(.plain)
+			.padding([.leading, .bottom], 10)
+		}
+		.padding(.top, 7)
+	}
+	
 	var conversationView: some View {
 		Group {
 			if conversationState.selectedConversationId == nil || selectedConversation == nil {
@@ -148,8 +165,7 @@ struct ConversationManagerView: View {
 		HStack {
 			Text("Hit")
 			Button("Command ⌘ + N") {
-				ConversationManager.shared.newConversation()
-				conversationState.selectedProfileId = profileManager.default?.id
+				self.newConversation()
 			}
 			Text("to start a conversation.")
 		}
@@ -163,6 +179,11 @@ struct ConversationManagerView: View {
 			Text("Your system has only \(InferenceSettings.unifiedMemorySize) GB of RAM, which may not be sufficient for running an LLM. \nPlease save progress in all open apps, and close memory hogging applications **in case a system crash occurs.**")
 				.padding()
 		}
+	}
+	
+	private func newConversation() {
+		ConversationManager.shared.newConversation()
+		conversationState.selectedProfileId = profileManager.default?.id
 	}
 	
 	private func updateSystemPrompt() {

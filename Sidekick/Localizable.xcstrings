@@ -155,7 +155,6 @@
       }
     },
     "Clear All Settings" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -286,7 +285,6 @@
       }
     },
     "Debug" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1044,7 +1042,6 @@
       }
     },
     "Set Inference Settings to Defaults" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1055,7 +1052,6 @@
       }
     },
     "Show App Support Folder in Finder" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1066,7 +1062,6 @@
       }
     },
     "Show Container in Finder" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1362,6 +1357,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "如果主 API 密钥访问失败，会被用于访问 Tavily API。"
+          }
+        }
+      }
+    },
+    "View Profiles" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查看专家"
           }
         }
       }

@@ -59,8 +59,6 @@ struct ChatStyle: TextFieldStyle {
 
 struct ChatButtonStyle: ButtonStyle {
 	
-	@Environment(\.colorScheme) var colorScheme
-	
 	let cornerRadius = 30.0
 	var rect: RoundedRectangle {
 		RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)

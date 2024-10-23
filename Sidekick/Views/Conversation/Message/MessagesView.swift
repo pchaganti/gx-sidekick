@@ -9,6 +9,8 @@ import SwiftUI
 
 struct MessagesView: View {
 	
+	@Environment(\.colorScheme) var colorScheme
+	
 	@EnvironmentObject private var model: Model
 	@EnvironmentObject private var conversationManager: ConversationManager
 	@EnvironmentObject private var profileManager: ProfileManager
@@ -47,7 +49,9 @@ struct MessagesView: View {
 	
 	var isInverted: Bool {
 		guard let luminance = selectedProfile?.color.luminance else { return false }
-		return luminance > 0.5
+		let darkModeResult: Bool = luminance > 0.5
+		let lightModeResult: Bool = !(luminance > 0.5)
+		return colorScheme == .dark ? darkModeResult : lightModeResult
 	}
 	
 	var isGenerating: Bool {
