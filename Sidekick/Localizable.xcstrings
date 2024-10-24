@@ -25,7 +25,14 @@
       }
     },
     "Add a File" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加文件"
+          }
+        }
+      }
     },
     "Add Profile" : {
       "localizations" : {
@@ -448,10 +455,24 @@
       }
     },
     "Extracting text..." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在提取文本…"
+          }
+        }
+      }
     },
     "Failed to extract text" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文本提取失败"
+          }
+        }
+      }
     },
     "Failed to open %@" : {
       "localizations" : {
@@ -524,7 +545,14 @@
       }
     },
     "Give the chatbot temporary access to a file by dropping it here." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "将文件拖放至此处，即可授予聊天机器人对文件的临时访问权限。"
+          }
+        }
+      }
     },
     "Hit" : {
       "localizations" : {

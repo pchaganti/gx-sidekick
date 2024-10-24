@@ -126,6 +126,7 @@ struct MessagesView: View {
 		} label: {
 			Label("Export", systemImage: "square.and.arrow.up")
 		}
+		.keyboardShortcut("s", modifiers: .command)
 		.disabled(isGenerating || self.messages.isEmpty)
 		.if(isInverted) { view in
 			view.colorInvert()

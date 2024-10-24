@@ -16,11 +16,15 @@ struct ProfileNavigationRowView: View {
 	
 	@Binding var profile: Profile
 	
+	var isDefault: Bool {
+		return profile.id == profileManager.default?.id
+	}
+	
 	var body: some View {
 		HStack {
 			profile.label
 			Spacer()
-			if isHovering {
+			if isHovering && !isDefault {
 				buttons
 			}
 		}
@@ -47,13 +51,11 @@ struct ProfileNavigationRowView: View {
 	}
 	
 	var buttons: some View {
-		Group {
-			Button {
-				self.delete(profile.id)
-			} label: {
-				Label("Delete", systemImage: "trash")
-					.foregroundStyle(.red)
-			}
+		Button {
+			self.delete(profile.id)
+		} label: {
+			Label("Delete", systemImage: "trash")
+				.foregroundStyle(.red)
 		}
 		.labelStyle(.iconOnly)
 	}
