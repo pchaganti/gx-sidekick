@@ -44,6 +44,8 @@ struct PromptInputField: View {
 		return promptController.prompt.isEmpty && messages.isEmpty
 	}
 	
+	var addFilesTip: AddFilesTip = .init()
+	
     var body: some View {
 		TextField(
 			"Send a Message",
@@ -74,8 +76,9 @@ struct PromptInputField: View {
 			self.isFocused = false
 		}
 		.onChange(of: isFocused) {
-			// Show dictation if needed
+			// Show add files and dictation tips if needed
 			if self.isFocused {
+				AddFilesTip.readyForAddingFiles = true
 				DictationTip.readyForDictation = true
 			}
 		}
@@ -83,6 +86,7 @@ struct PromptInputField: View {
 			self.isFocused = true
 			self.conversationState.selectedProfileId = profileManager.default?.id
 		}
+		.popoverTip(addFilesTip)
     }
 	
 	/// Function to run when the `return` key is hit
@@ -115,25 +119,37 @@ struct PromptInputField: View {
 		conversationManager.update(conversation)
 		// Set sentConversation
 		sentConversation = conversation
+		// Capture temp resources
+		let tempResources: [TemporaryResource] = self.promptController.tempResources
 		// Clear prompt
-		self.promptController.prompt.removeAll()
+		self.clearInputs()
 		DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-			self.promptController.prompt.removeAll()
+			self.clearInputs()
 		}
 		// Get response
 		Task {
-			await self.getResponse()
+			await self.getResponse(
+				tempResources: tempResources
+			)
 		}
 	}
 	
-	private func getResponse() async {
+	private func clearInputs() {
+		self.promptController.prompt.removeAll()
+	}
+	
+	private func getResponse(
+		tempResources: [TemporaryResource]
+	) async {
 		// If processing, use recursion to update
 		if (model.status == .processing || model.status == .coldProcessing) {
 			Task {
 				await model.interrupt()
 				Task.detached(priority: .userInitiated) {
 					try? await Task.sleep(for: .seconds(1))
-					await getResponse()
+					await getResponse(
+						tempResources: tempResources
+					)
 				}
 			}
 			return
@@ -156,7 +172,8 @@ struct PromptInputField: View {
 			response = try await model.listenThinkRespond(
 				messages: self.messages,
 				similarityIndex: index,
-				useWebSearch: useWebSearch
+				useWebSearch: useWebSearch,
+				temporaryResources: tempResources
 			)
 		} catch let error as LlamaServerError {
 			print("Interupted response: \(error)")

@@ -18,7 +18,7 @@ public class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
 		try? Tips.configure(
 			[
 				.datastoreLocation(.applicationDefault),
-				.displayFrequency(.immediate)
+				.displayFrequency(.daily)
 			]
 		)
 	}

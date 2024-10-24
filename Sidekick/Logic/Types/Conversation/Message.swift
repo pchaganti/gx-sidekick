@@ -50,7 +50,8 @@ public struct Message: Identifiable, Codable, Hashable {
 	/// Function returning the message text that is submitted to the LLM
 	public func submittedText(
 		similarityIndex: SimilarityIndex?,
-		useWebSearch: Bool
+		useWebSearch: Bool,
+		temporaryResources: [TemporaryResource]
 	) async -> (
 		text: String,
 		sources: Int
@@ -122,10 +123,14 @@ public struct Message: Identifiable, Codable, Hashable {
 				)
 			}
 		}
+		// Get temporary resources as sources
+		let temporaryResourcesSources: [Source] = temporaryResources.map(
+			\.source
+		).compactMap({ $0 })
 		// Combine
 		let results: [Source] = resourcesResults + (
 			tavilyResults ?? []
-		)
+		) + temporaryResourcesSources
 		// Save sources
 		let sources: Sources = Sources(
 			messageId: self.id,
@@ -142,7 +147,6 @@ public struct Message: Identifiable, Codable, Hashable {
 }
 """
 		}
-		print("\(results.count) sources given.")
 		let resultsText: String = resultsTexts.joined(separator: ",\n")
 		let sourceText: String = """
 Below is information that may or may not be relevant to my request in JSON format. If your response uses information from sources provided below, you must end your response with one list of URLs or filepaths of all provided sources referenced in the format [{"url": "https://referencedurl.com"}, {"url": "/path/to/referenced/file.pdf"}], with no duplicates. If you did not reference provided sources, do not mention sources in your response, and end your response with an empty array of JSON objects: []. No section headers, labels or numbering are needed in this list of referenced sources.
@@ -274,13 +278,15 @@ Below is information that may or may not be relevant to my request in JSON forma
 			message: Message,
 			similarityIndex: SimilarityIndex?,
 			shouldAddSources: Bool,
-			useWebSearch: Bool
+			useWebSearch: Bool,
+			temporaryResources: [TemporaryResource]
 		) async {
 			self.role = message.sender
 			if shouldAddSources {
 				self.content = await message.submittedText(
 					similarityIndex: similarityIndex,
-					useWebSearch: useWebSearch
+					useWebSearch: useWebSearch,
+					temporaryResources: temporaryResources
 				).text
 			} else {
 				self.content = message.displayedText

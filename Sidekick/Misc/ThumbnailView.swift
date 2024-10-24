@@ -65,18 +65,11 @@ public struct QLThumbnail: View {
 		Group {
 			if let image {
 				Group {
-					if #available(iOS 14, macOS 11, *) {
-						image
-							.if(resizable) {
-								$0.resizable()
-							}
-							.quickLookPreview($previewItem)
-					} else {
-						image
-							.if(true) {
-								$0.resizable()
-							}
-					}
+					image
+						.if(resizable) {
+							$0.resizable()
+						}
+						.quickLookPreview($previewItem)
 				}
 				.allowsHitTesting(tapToPreview)
 				.onTapGesture {

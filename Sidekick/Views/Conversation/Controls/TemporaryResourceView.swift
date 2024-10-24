@@ -9,31 +9,101 @@ import SwiftUI
 
 struct TemporaryResourceView: View {
 	
-	@Binding var tempResource: TemporaryResource
+	@EnvironmentObject private var promptController: PromptController
 	
+	@Binding var tempResource: TemporaryResource
 	@State private var isHovering: Bool = false
+	
+	var buttonOpacity: CGFloat {
+		return isHovering ? 1 : 0
+	}
 	
     var body: some View {
 		Button {
 			self.open()
 		} label: {
-			HStack {
-				QLThumbnail(
-					url: tempResource.url,
-					resolution: CGSize(width: 512, height: 512),
-					scale: 0.5,
-					representationTypes: .thumbnail,
-					tapToPreview: true,
-					resizable: false
+			self.label
+				.frame(
+					maxWidth: 275,
+					maxHeight: 60
 				)
-			}
 		}
 		.buttonStyle(CapsuleButtonStyle())
-		.frame(maxWidth: 300)
+		.overlay(alignment: .topTrailing) {
+			removeButton
+				.opacity(buttonOpacity)
+		}
 		.onHover { hovering in
 			self.isHovering = hovering
 		}
+		.onAppear {
+			Task.detached { @MainActor in
+				await $tempResource.scan()
+			}
+		}
     }
+	
+	var removeButton: some View {
+		Button {
+			self.promptController.tempResources = self.promptController.tempResources.filter {
+				$0.id != self.tempResource.id
+			}
+		} label: {
+			Image(systemName: "xmark.circle.fill")
+				.foregroundStyle(.red)
+				.background {
+					Circle()
+						.fill(.white)
+						.padding(3)
+				}
+		}
+		.buttonStyle(.plain)
+	}
+	
+	var label: some View {
+		HStack(spacing: 10) {
+			QLThumbnail(
+				url: tempResource.url,
+				resolution: CGSize(
+					width: 128,
+					height: 128
+				),
+				scale: 1,
+				representationTypes: .thumbnail,
+				tapToPreview: true,
+				resizable: false
+			)
+			Text(tempResource.name)
+				.bold()
+				.foregroundStyle(.secondary)
+				.frame(maxWidth: 225)
+				.lineLimit(nil)
+				.padding(.vertical, 5)
+		}
+		.padding(.trailing, 5)
+		.if(self.tempResource.state == .notScanned) { view in
+			view
+				.brightness(-0.5)
+				.blur(radius: 10)
+				.overlay(loadingOverlay)
+		}
+		.if(self.tempResource.state == .failed) { view in
+			view
+				.brightness(-0.5)
+				.blur(radius: 10)
+				.overlay {
+					Text("Failed to extract text")
+				}
+		}
+	}
+	
+	var loadingOverlay: some View {
+		HStack {
+			ProgressView()
+				.progressViewStyle(.circular)
+			Text("Extracting text...")
+		}
+	}
 	
 	private func open() {
 		NSWorkspace.shared.open(tempResource.url)

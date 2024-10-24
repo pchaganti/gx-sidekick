@@ -24,6 +24,9 @@
         }
       }
     },
+    "Add a File" : {
+
+    },
     "Add Profile" : {
       "localizations" : {
         "zh-Hans" : {
@@ -444,6 +447,12 @@
         }
       }
     },
+    "Extracting text..." : {
+
+    },
+    "Failed to extract text" : {
+
+    },
     "Failed to open %@" : {
       "localizations" : {
         "zh-Hans" : {
@@ -513,6 +522,9 @@
           }
         }
       }
+    },
+    "Give the chatbot temporary access to a file by dropping it here." : {
+
     },
     "Hit" : {
       "localizations" : {

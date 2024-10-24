@@ -8,6 +8,15 @@
 import Foundation
 import SwiftUI
 
+extension Binding where Value == TemporaryResource {
+	
+	/// Function to scan temporary resource
+	func scan() async {
+		let _ = await wrappedValue.scan()
+	}
+}
+
+
 extension Binding where Value == Profile {
 	
 	/// Function to add a resource

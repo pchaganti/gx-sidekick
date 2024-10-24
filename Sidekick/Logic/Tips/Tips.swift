@@ -31,6 +31,12 @@ struct CreateProfilesTip: Tip {
 		]
 	}
 	
+	var options: [TipOption] {
+		[
+			Tip.IgnoresDisplayFrequency(true)
+		]
+	}
+	
 }
 
 struct LengthyTasksProgressTip: Tip {
@@ -78,6 +84,34 @@ struct DictationTip: Tip {
 	var rules: [Rule] {
 		[
 			#Rule(Self.$readyForDictation) {
+				$0 == true
+			}
+		]
+	}
+	
+}
+
+struct AddFilesTip: Tip {
+	
+	// Track whether the user is ready for adding files
+	@Parameter
+	static var readyForAddingFiles: Bool = false
+	
+	var title: Text {
+		Text("Add a File")
+	}
+	
+	var message: Text? {
+		Text("Give the chatbot temporary access to a file by dropping it here.")
+	}
+	
+	var image: Image? {
+		Image(systemName: "doc.fill")
+	}
+	
+	var rules: [Rule] {
+		[
+			#Rule(Self.$readyForAddingFiles) {
 				$0 == true
 			}
 		]

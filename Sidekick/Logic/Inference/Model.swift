@@ -81,7 +81,8 @@ public class Model: ObservableObject {
 	func listenThinkRespond(
 		messages: [Message],
 		similarityIndex: SimilarityIndex?,
-		useWebSearch: Bool
+		useWebSearch: Bool,
+		temporaryResources: [TemporaryResource]
 	) async throws -> LlamaServer.CompleteResponse {
 		// Set flag
 		let preQueryStatus: Status = self.status
@@ -94,7 +95,8 @@ public class Model: ObservableObject {
 					message: message,
 					similarityIndex: similarityIndex,
 					shouldAddSources: (index == lastIndex),
-					useWebSearch: useWebSearch
+					useWebSearch: useWebSearch,
+					temporaryResources: temporaryResources
 				)
 			}
 		// Respond to prompt

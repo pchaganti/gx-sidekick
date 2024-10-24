@@ -36,7 +36,10 @@ struct ConversationControlsView: View {
 	}
 	
 	var showQuickPrompts: Bool {
-		return promptController.prompt.isEmpty && messages.isEmpty
+		let noPrompt: Bool = promptController.prompt.isEmpty
+		let noMessages: Bool = messages.isEmpty
+		let noResources: Bool = !promptController.hasResources
+		return noPrompt && noMessages && noResources
 	}
 	
 	var body: some View {
@@ -46,14 +49,28 @@ struct ConversationControlsView: View {
 					input: $promptController.prompt
 				)
 			}
+			if promptController.hasResources {
+				TemporaryResourcesView()
+			}
 			HStack(spacing: 0) {
 				PromptInputField()
+					.overlay {
+						Color.clear
+							.onDrop(
+								of: ["public.file-url"],
+								delegate: promptController
+							)
+					}
 				if #unavailable(macOS 15) {
 					lengthyTasksButton
 				}
 			}
 		}
 		.padding(.leading)
+		.onDrop(
+			of: ["public.file-url"],
+			delegate: promptController
+		)
 		.environmentObject(promptController)
 	}
 	

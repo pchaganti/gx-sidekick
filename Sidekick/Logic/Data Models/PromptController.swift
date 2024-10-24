@@ -8,14 +8,20 @@
 import Foundation
 import AVFoundation
 import Speech
+import SwiftUI
 
-public class PromptController: ObservableObject {
+@MainActor
+public class PromptController: ObservableObject, DropDelegate {
 	
 	@Published var isRecording: Bool = false
 	@Published var prompt: String = ""
 	@Published var audioLevel: Float = 0.0
 	@Published var audioSamples: [Float] = []
 	@Published var tempResources: [TemporaryResource] = []
+	
+	public var hasResources: Bool {
+		!tempResources.isEmpty
+	}
 	
 	private var audioEngine: AVAudioEngine = AVAudioEngine()
 	private var speechRecognizer: SFSpeechRecognizer? = SFSpeechRecognizer()
@@ -179,6 +185,47 @@ public class PromptController: ObservableObject {
 			} else {
 				self.stopRecording()
 			}
+		}
+	}
+	
+	/// Function to validate dropped item
+	public func validateDrop(info: DropInfo) -> Bool {
+		return info.hasItemsConforming(to: ["public.file-url"])
+	}
+	
+	/// Function to handle drop
+	public func performDrop(info: DropInfo) -> Bool {
+		for itemProvider in info.itemProviders(for: ["public.file-url"]) {
+			itemProvider.loadItem(
+				forTypeIdentifier: "public.file-url",
+				options: nil
+			) { (item, error) in
+				if let data = item as? Data {
+					Task.detached { @MainActor in
+						await self.addFile(data)
+					}
+				}
+			}
+		}
+		return true
+	}
+	
+	public func addFile(_ data: Data) async {
+		if let url = URL(
+			dataRepresentation: data,
+			relativeTo: nil
+		) {
+			// Add temp resource if needed
+			if self.tempResources.map(
+				\.url
+			).contains(url) {
+				return
+			}
+			self.tempResources.append(
+				TemporaryResource(
+					url: url
+				)
+			)
 		}
 	}
 }
