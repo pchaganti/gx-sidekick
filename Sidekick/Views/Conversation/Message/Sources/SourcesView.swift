@@ -5,6 +5,8 @@
 //  Created by Bean John on 10/20/24.
 //
 
+import MarkdownUI
+import Splash
 import SwiftUI
 
 struct SourcesView: View {
@@ -72,10 +74,23 @@ struct SourceRowView: View {
 		return colorScheme == .dark ? 2.5 : 1.5
 	}
 	
+	private var theme: Splash.Theme {
+		// NOTE: We are ignoring the Splash theme font
+		switch colorScheme {
+			case ColorScheme.dark:
+				return .wwdc17(withFont: .init(size: 16))
+			default:
+				return .sunset(withFont: .init(size: 16))
+		}
+	}
+	
 	var body: some View {
 		VStack {
-			Text(source.text)
-				.font(.body)
+			Markdown(source.text)
+				.markdownTheme(.gitHub)
+				.markdownCodeSyntaxHighlighter(
+					.splash(theme: self.theme)
+				)
 				.textSelection(.enabled)
 			Divider()
 			HStack {
