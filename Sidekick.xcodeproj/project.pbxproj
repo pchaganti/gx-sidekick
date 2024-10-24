@@ -17,6 +17,8 @@
 		200FBFF72CB68ABF00A92A74 /* ChatParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200FBFF62CB68ABF00A92A74 /* ChatParameters.swift */; };
 		202801F42CC93C80005C1F7D /* DictationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202801F32CC93C80005C1F7D /* DictationButton.swift */; };
 		202801F62CC93CD5005C1F7D /* PromptInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202801F52CC93CD5005C1F7D /* PromptInputField.swift */; };
+		202801FA2CC949F2005C1F7D /* TemporaryResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202801F92CC949F2005C1F7D /* TemporaryResource.swift */; };
+		202801FC2CC9C5C2005C1F7D /* TemporaryResourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202801FB2CC9C5C2005C1F7D /* TemporaryResourceView.swift */; };
 		202E3EDD2CBB8F7B00AF86C8 /* ReferencedURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202E3EDC2CBB8F7B00AF86C8 /* ReferencedURL.swift */; };
 		202FDDF12CC0B43000537F89 /* llama-server in Resources */ = {isa = PBXBuildFile; fileRef = 202FDDF02CC0B43000537F89 /* llama-server */; };
 		2038CCF32CB6CBC6005AA315 /* PendingMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2038CCF22CB6CBC6005AA315 /* PendingMessageView.swift */; };
@@ -185,6 +187,8 @@
 		200FBFF62CB68ABF00A92A74 /* ChatParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatParameters.swift; sourceTree = "<group>"; };
 		202801F32CC93C80005C1F7D /* DictationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictationButton.swift; sourceTree = "<group>"; };
 		202801F52CC93CD5005C1F7D /* PromptInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptInputField.swift; sourceTree = "<group>"; };
+		202801F92CC949F2005C1F7D /* TemporaryResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryResource.swift; sourceTree = "<group>"; };
+		202801FB2CC9C5C2005C1F7D /* TemporaryResourceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryResourceView.swift; sourceTree = "<group>"; };
 		202E3EDC2CBB8F7B00AF86C8 /* ReferencedURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferencedURL.swift; sourceTree = "<group>"; };
 		202FDDF02CC0B43000537F89 /* llama-server */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llama-server"; sourceTree = "<group>"; };
 		2038CCF22CB6CBC6005AA315 /* PendingMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingMessageView.swift; sourceTree = "<group>"; };
@@ -387,6 +391,7 @@
 				20E48C282CB560B50085E7D6 /* ConversationControlsView.swift */,
 				202801F52CC93CD5005C1F7D /* PromptInputField.swift */,
 				202801F32CC93C80005C1F7D /* DictationButton.swift */,
+				202801FB2CC9C5C2005C1F7D /* TemporaryResourceView.swift */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -398,6 +403,28 @@
 				20C2210A2CC4B88F00A99796 /* SourcesButton.swift */,
 			);
 			path = Options;
+			sourceTree = "<group>";
+		};
+		202801F72CC94938005C1F7D /* Conversation */ = {
+			isa = PBXGroup;
+			children = (
+				20B97CE02CB001E0009A0A5D /* Conversation.swift */,
+				20B97CDC2CAFFE06009A0A5D /* Message.swift */,
+				20B97CDE2CAFFE6A009A0A5D /* Sender.swift */,
+				20C221012CC4A9E800A99796 /* Source.swift */,
+				202801F92CC949F2005C1F7D /* TemporaryResource.swift */,
+			);
+			path = Conversation;
+			sourceTree = "<group>";
+		};
+		202801F82CC94962005C1F7D /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				20B97CE22CB00585009A0A5D /* Profile.swift */,
+				20A8B65A2CB2709100B756FD /* Resources.swift */,
+				20B97CE82CB007DF009A0A5D /* Resource.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		204C79542CB765C100EED58E /* Profile */ = {
@@ -600,19 +627,14 @@
 		20B97CDB2CAFFDE5009A0A5D /* Types */ = {
 			isa = PBXGroup;
 			children = (
-				20B97CE02CB001E0009A0A5D /* Conversation.swift */,
 				20B97CEC2CB00A28009A0A5D /* Favicon.swift */,
-				20B97CDC2CAFFE06009A0A5D /* Message.swift */,
 				2099BD9C2CB7B8E700E02732 /* Notifications.swift */,
-				20B97CE22CB00585009A0A5D /* Profile.swift */,
 				2099BD9E2CB7E9CE00E02732 /* QuickPrompt.swift */,
 				202E3EDC2CBB8F7B00AF86C8 /* ReferencedURL.swift */,
-				20B97CE82CB007DF009A0A5D /* Resource.swift */,
-				20A8B65A2CB2709100B756FD /* Resources.swift */,
 				20FB0D8A2CBA8828006D062A /* SearchResult.swift */,
-				20B97CDE2CAFFE6A009A0A5D /* Sender.swift */,
 				208388EC2CBF825400C2A9F8 /* Tavily.swift */,
-				20C221012CC4A9E800A99796 /* Source.swift */,
+				202801F72CC94938005C1F7D /* Conversation */,
+				202801F82CC94962005C1F7D /* Profile */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -894,6 +916,7 @@
 				20B97CE32CB00585009A0A5D /* Profile.swift in Sources */,
 				208388E52CBF526E00C2A9F8 /* RetrievalSettings.swift in Sources */,
 				20573F212CB527DB004C19FE /* MessageView.swift in Sources */,
+				202801FA2CC949F2005C1F7D /* TemporaryResource.swift in Sources */,
 				20573F162CB505DC004C19FE /* ConversationListView.swift in Sources */,
 				20B97CCF2CAFEC37009A0A5D /* DownloadManager.swift in Sources */,
 				207A9F592CB8F4AF00E727DE /* ResourceSelectionView.swift in Sources */,
@@ -970,6 +993,7 @@
 				2099BDA32CB7EB0200E02732 /* CapsuleButtonStyle.swift in Sources */,
 				204C79562CB765D700EED58E /* ProfileSelectionMenu.swift in Sources */,
 				20A8B65B2CB2709100B756FD /* Resources.swift in Sources */,
+				202801FC2CC9C5C2005C1F7D /* TemporaryResourceView.swift in Sources */,
 				20573F182CB50743004C19FE /* ConversationView.swift in Sources */,
 				200FBFF32CB66B8300A92A74 /* ServerHealth.swift in Sources */,
 				2099BDB22CB828A500E02732 /* PopoverButton.swift in Sources */,

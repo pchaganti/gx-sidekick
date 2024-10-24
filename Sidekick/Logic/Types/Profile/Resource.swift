@@ -281,12 +281,7 @@ public struct Resource: Identifiable, Codable, Hashable, Sendable {
 			}
 		}
 	}
-	
-	/// Computed property returning a view for the resource's thumbnail
-	public var thumbnail: some View {
-		ThumbnailView(url: self.url)
-	}
-	
+
 	/// The current indexing state, used to prevent duplicate indexes
 	public var indexState: IndexState = .noIndex
 	

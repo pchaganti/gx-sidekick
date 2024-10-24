@@ -11,7 +11,6 @@ struct ConversationControlsView: View {
 	
 	@StateObject private var promptController: PromptController = .init()
 	
-	@EnvironmentObject private var model: Model
 	@EnvironmentObject private var conversationManager: ConversationManager
 	@EnvironmentObject private var profileManager: ProfileManager
 	@EnvironmentObject private var conversationState: ConversationState

@@ -15,6 +15,7 @@ public class PromptController: ObservableObject {
 	@Published var prompt: String = ""
 	@Published var audioLevel: Float = 0.0
 	@Published var audioSamples: [Float] = []
+	@Published var tempResources: [TemporaryResource] = []
 	
 	private var audioEngine: AVAudioEngine = AVAudioEngine()
 	private var speechRecognizer: SFSpeechRecognizer? = SFSpeechRecognizer()
