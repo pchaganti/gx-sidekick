@@ -11,6 +11,21 @@ struct CapsuleButtonStyle: ButtonStyle {
 	
 	@State private var hovered: Bool = false
 	
+	@Environment(\.colorScheme) var colorScheme
+	
+	var background: some View {
+		Group {
+			if !hovered {
+				Color.buttonBackground
+			} else {
+				Color.buttonBackground
+					.brightness(
+						colorScheme == .dark ? 0.1 : -0.1
+					)
+			}
+		}
+	}
+	
 	func makeBody(configuration: Configuration) -> some View {
 		configuration.label
 			.font(hovered ? .body.bold() : .body)
@@ -19,10 +34,13 @@ struct CapsuleButtonStyle: ButtonStyle {
 					cornerSize: CGSize(width: 10, height: 10),
 					style: .continuous
 				)
-				.strokeBorder(hovered ? Color.primary.opacity(0) : Color.primary.opacity(0.2), lineWidth: 0.5)
+				.strokeBorder(
+					hovered ? Color.primary.opacity(0) : Color.primary.opacity(0.2),
+					lineWidth: 0.5
+				)
 				.foregroundColor(Color.primary)
 				.background(
-					hovered ? Color.primary.opacity(0.1) : Color.clear
+					background
 				)
 			)
 			.multilineTextAlignment(.leading) // Center-align multiline text

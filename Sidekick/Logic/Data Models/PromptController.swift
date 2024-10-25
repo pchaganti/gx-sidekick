@@ -221,11 +221,13 @@ public class PromptController: ObservableObject, DropDelegate {
 			).contains(url) {
 				return
 			}
-			self.tempResources.append(
-				TemporaryResource(
-					url: url
+			withAnimation(.linear) {
+				self.tempResources.append(
+					TemporaryResource(
+						url: url
+					)
 				)
-			)
+			}
 		}
 	}
 }

@@ -41,7 +41,7 @@ struct ConversationNameEditor: View {
 				Text("Edit")
 			}
 		}
-    }
+	}
 	
 	private func exitEditingMode() {
 		// Exit editing mode

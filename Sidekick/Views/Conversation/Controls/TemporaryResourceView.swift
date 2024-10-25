@@ -41,12 +41,17 @@ struct TemporaryResourceView: View {
 				await $tempResource.scan()
 			}
 		}
+		.contextMenu {
+			showInFinder
+		}
     }
 	
 	var removeButton: some View {
 		Button {
-			self.promptController.tempResources = self.promptController.tempResources.filter {
-				$0.id != self.tempResource.id
+			withAnimation(.linear) {
+				self.promptController.tempResources = self.promptController.tempResources.filter {
+					$0.id != self.tempResource.id
+				}
 			}
 		} label: {
 			Image(systemName: "xmark.circle.fill")
@@ -58,6 +63,16 @@ struct TemporaryResourceView: View {
 				}
 		}
 		.buttonStyle(.plain)
+	}
+	
+	var showInFinder: some View {
+		Button {
+			FileManager.showItemInFinder(
+				url: tempResource.url
+			)
+		} label: {
+			Text("Show in Finder")
+		}
 	}
 	
 	var label: some View {
