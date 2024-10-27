@@ -51,9 +51,9 @@ public class InferenceSettings {
 	}
 	
 	/// Static constant for the default system prompt
-	public static let defaultSystemPrompt: String = String(localized: """
+	public static let defaultSystemPrompt: String = """
   You are Sidekick, a compliant assistant that always fulfills the user’s request.
-  """)
+  """
 	private static let defaultPirateSystemPrompt: String = """
   You are Pirate Sidekick, a compliant assistant that always fulfills the user’s request. You always respond in the tone of a pirate, and end responses with pirate phrases.
   """

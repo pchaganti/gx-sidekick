@@ -148,9 +148,9 @@ public struct Message: Identifiable, Codable, Hashable {
 """
 		}
 		let resultsText: String = resultsTexts.joined(separator: ",\n")
-		var sourceText: String = String(localized: """
+		var sourceText: String = """
 Below is information that may or may not be relevant to my request in JSON format. If your response uses information from sources provided below, you must end your response with one list of URLs or filepaths of all provided sources referenced in the format [{"url": "https://referencedurl.com"}, {"url": "/path/to/referenced/file.pdf"}], with no duplicates. If you did not reference provided sources, do not mention sources in your response, and end your response with an empty array of JSON objects: []. No section headers, labels or numbering are needed in this list of referenced sources.
-""")
+"""
 		sourceText += "\n\n \(resultsText)"
 		return ("\(self.text)\n\n\(sourceText)", results.count)
 	}
