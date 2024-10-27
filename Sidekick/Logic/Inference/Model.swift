@@ -105,12 +105,20 @@ public class Model: ObservableObject {
 		} else {
 			status = .processing
 		}
+		var fullPartialResponse: String = ""
 		let response = try await llama.chat(
 			messages: messagesWithSources,
 			similarityIndex: similarityIndex
 		) { partialResponse in
 			DispatchQueue.main.async {
-				self.handleCompletionProgress(partialResponse: partialResponse)
+				// Update response
+				fullPartialResponse += partialResponse
+//				 Display if large update
+				let fullCount: Int = fullPartialResponse.count
+				let displayedCount = self.pendingMessage.count
+				if (fullCount - displayedCount) >= 20 {
+					self.handleCompletionProgress(partialResponse: partialResponse)
+				}
 			}
 		}
 		// When prompt finishes...

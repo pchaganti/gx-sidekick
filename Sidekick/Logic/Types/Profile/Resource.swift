@@ -11,8 +11,11 @@ import SimilaritySearchKit
 import SimilaritySearchKitDistilbert
 import SwiftUI
 
+/// An object that manages a single resource
 public struct Resource: Identifiable, Codable, Hashable, Sendable {
 	
+	/// Initializes a resource from a `URL`
+	/// - Parameter url: The url of the resource (could point to a website or an item in the file system)
 	init(url: URL) {
 		self.url = url
 	}
@@ -20,26 +23,26 @@ public struct Resource: Identifiable, Codable, Hashable, Sendable {
 	/// Stored property for `Identifiable` conformance
 	public var id: UUID = UUID()
 	
-	/// Stored property for the resource's url
+	/// The resource's url of type `URL`
 	public var url: URL
 	
-	/// Computed property that returns if the resource is a web resource
+	/// A  Boolean value that indicates if the resource is a web resource
 	public var isWebResource: Bool {
 		return self.url.isWebURL
 	}
 	
-	/// Stored property for the resource's children
+	/// An Array of type ``Resource`` containing the resource's child resources
 	public var children: [Resource] = []
 	
-	/// Computed property returning if the resource is a leaf node
+	/// A Boolean value that indicates if the resource is a leaf node
 	public var isLeafNode: Bool {
 		return !(!self.children.isEmpty || self.url.hasDirectoryPath)
 	}
 	
-	/// Stored property for the date of previous index
+	/// The date of previous index of type `Date`
 	public var prevIndexDate: Date = .distantPast
 	
-	/// Computed property that returns whether the resource was scanned since last modified
+	/// A Boolean values indicating whether the resource was scanned since last modified
 	public var scannedSinceLastModified: Bool {
 		// Get last modified date
 		guard let lastModified: Date = self.url.lastModified else {
@@ -49,7 +52,7 @@ public struct Resource: Identifiable, Codable, Hashable, Sendable {
 		return self.prevIndexDate > lastModified
 	}
 	
-	/// Computed property for the resource's name
+	/// The resource's name of type `String`
 	public var name: String {
 		// If website
 		if self.url.isWebURL {
@@ -60,7 +63,7 @@ public struct Resource: Identifiable, Codable, Hashable, Sendable {
 		}
 	}
 	
-	/// Computed property for the resource's filename
+	/// The resource's filename of type `String`
 	public var filename: String {
 		// If website
 		if self.url.isWebURL {
@@ -71,19 +74,28 @@ public struct Resource: Identifiable, Codable, Hashable, Sendable {
 		}
 	}
 	
-	/// Returns false if the file is still at its last recorded path
+	/// A Boolean value indicating if the file is still at its last recorded path
 	public var wasMoved: Bool {
 		return !url.fileExists
 	}
+
 	
 	/// Function to get URL of index items JSON file's parent directory
-	private func getIndexDirUrl(resourcesDirUrl url: URL) -> URL {
+	/// - Parameter url: The URL of the resources's index directory
+	/// - Returns: The URL of the individual resource's index directory
+	private func getIndexDirUrl(
+		resourcesDirUrl url: URL
+	) -> URL {
 		let url: URL = url.appendingPathComponent(
 			id.uuidString
 		)
 		return url
 	}
+	
+	
 	/// Function to get URL of index items JSON file
+	/// - Parameter url: The URL of the resources's index directory
+	/// - Returns: The URL of the individual resource's index's JSON file
 	private func getIndexUrl(resourcesDirUrl url: URL) -> URL {
 		return self.getIndexDirUrl(
 			resourcesDirUrl: url
@@ -92,15 +104,21 @@ public struct Resource: Identifiable, Codable, Hashable, Sendable {
 		)
 	}
 	
+	
 	/// Function to create directory that houses the JSON file
-	public func createDirectory(resourcesDirUrl url: URL) {
+	/// - Parameter url: The URL of the resources's index directory
+	public func createDirectory(
+		resourcesDirUrl url: URL
+	) {
 		try! FileManager.default.createDirectory(
 			at: getIndexDirUrl(resourcesDirUrl: url),
 			withIntermediateDirectories: true
 		)
 	}
 	
+	
 	/// Function to delete directory that houses the JSON file and its contents
+	/// - Parameter url: The URL of the resources's index directory
 	public func deleteDirectory(resourcesDirUrl url: URL) {
 		let indexUrl: URL = getIndexUrl(resourcesDirUrl: url)
 		let dirUrl: URL = url.appendingPathComponent(
@@ -117,6 +135,8 @@ public struct Resource: Identifiable, Codable, Hashable, Sendable {
 	}
 	
 	/// Function that returns index items in JSON file
+	/// - Parameter resourcesDirUrl: The URL of the resources's index directory
+	/// - Returns: An array of type `SimilarityIndex.IndexItem` containing all indexed items
 	public func getIndexItems(
 		resourcesDirUrl: URL
 	) async -> [SimilarityIndex.IndexItem] {
@@ -153,6 +173,9 @@ public struct Resource: Identifiable, Codable, Hashable, Sendable {
 	}
 	
 	/// Function that saves a similarity index
+	/// - Parameters:
+	///   - resourcesDirUrl: The URL of the resources's index directory
+	///   - similarityIndex: The similarity index of indexed items of type ``SimilarityIndex``
 	private func saveIndex(resourcesDirUrl: URL, similarityIndex: SimilarityIndex) {
 		let _ = try! similarityIndex.saveIndex(
 			toDirectory: self.getIndexDirUrl(
@@ -163,7 +186,10 @@ public struct Resource: Identifiable, Codable, Hashable, Sendable {
 	}
 	
 	/// Function that re-scans the file, then saves the updated similarity index
-	public mutating func updateIndex(resourcesDirUrl: URL) async {
+	/// - Parameter resourcesDirUrl: The URL of the resources's index directory
+	public mutating func updateIndex(
+		resourcesDirUrl: URL
+	) async {
 		// Create directory if needed
 		if !self.getIndexDirUrl(
 			resourcesDirUrl: resourcesDirUrl
@@ -226,6 +252,8 @@ public struct Resource: Identifiable, Codable, Hashable, Sendable {
 	}
 	
 	/// Function to check if update is appropriate
+	/// - Parameter resourcesDirUrl: The URL of the resources's index directory
+	/// - Returns: A Boolean value indicating if an update is needed
 	private mutating func shouldUpdateIndex(
 		resourcesDirUrl: URL
 	) async -> Bool {
@@ -290,10 +318,12 @@ public struct Resource: Identifiable, Codable, Hashable, Sendable {
 		
 		case noIndex, indexing, indexed // New index item always starts with IndexState of .noIndex
 		
-		// Mutating functions to toggle state
+		/// Function to indicate that indexing is in progress
 		mutating func startIndex() {
 			self = .indexing
 		}
+		
+		/// Function to indicate that indexing has finished
 		mutating func finishIndex() {
 			self = .indexed
 		}

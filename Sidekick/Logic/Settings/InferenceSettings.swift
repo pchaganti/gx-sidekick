@@ -51,17 +51,17 @@ public class InferenceSettings {
 	}
 	
 	/// Static constant for the default system prompt
-	public static let defaultSystemPrompt: String = """
+	public static let defaultSystemPrompt: String = String(localized: """
   You are Sidekick, a compliant assistant that always fulfills the user’s request.
-  """
+  """)
 	private static let defaultPirateSystemPrompt: String = """
   You are Pirate Sidekick, a compliant assistant that always fulfills the user’s request. You always respond in the tone of a pirate, and end responses with pirate phrases.
   """
 	
 	/// Static constant for the part of the system prompt telling the LLM to use sources
-	public static var useSourcesPrompt: String = """
+	public static var useSourcesPrompt: String = String(localized: """
 The user's request might be followed by reference information, organized by source, that may or may not be complete nor related. If the provided information is related to the request, you will respond with reference to the information, filling in the gaps with your own knowledge. If the reference information provided is irrelavant, your response will ignore and avoid mentioning the existence of reference information.
-"""
+""")
 	
 	/// Static constant for the default context length
 	private static var defaultContextLength: Int {

@@ -23,13 +23,7 @@ struct ConversationNavigationListView: View {
 				ConversationNameEditor(conversation: conversation)
 			}
 			.onTapGesture {
-				// Remove text field focus
-				NotificationCenter.default.post(
-					name: Notifications.didSelectConversation.name,
-					object: nil
-				)
-				// Obtain focus
-				conversationState.selectedConversationId = conversation.id
+				self.selectConversation(conversation.wrappedValue)
 			}
 			.contextMenu {
 				Button {
@@ -49,6 +43,16 @@ struct ConversationNavigationListView: View {
 				self.delete(conversationId)
 			}
 		}
+	}
+	
+	private func selectConversation(_ conversation: Conversation) {
+		// Remove text field focus
+		NotificationCenter.default.post(
+			name: Notifications.didSelectConversation.name,
+			object: nil
+		)
+		// Obtain focus
+		conversationState.selectedConversationId = conversation.id
 	}
 	
 	private func delete(_ conversationId: UUID) {

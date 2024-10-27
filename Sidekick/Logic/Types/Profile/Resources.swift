@@ -10,15 +10,16 @@ import FSKit_macOS
 import SimilaritySearchKit
 import SimilaritySearchKitDistilbert
 
+/// An object that manages a profile's resources
 public struct Resources: Identifiable, Codable, Hashable, Sendable {
 	
 	/// Stored property for `Identifiable` conformance
 	public var id: UUID = UUID()
 	
-	/// Stored property for all resources associated with this profile
+	/// An array of all resources associated with this profile of type  ``Resource``
 	public var resources: [Resource] = []
 	
-	/// Computed property retuning the URL of the profile's index directory
+	/// A URL of the profile's index directory of type `URL`
 	public var indexUrl: URL {
 		return URL
 			.applicationSupportDirectory
@@ -26,9 +27,9 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 			.appendingPathComponent(self.id.uuidString)
 	}
 	
-	/// TODO: shareAllResources
 	
-	/// Function to load `SimilarityIndex`, must cache after initial load to improve performance
+	/// Function to load a similarity index of type `SimilarityIndex`, must cache after initial load to improve performance
+	/// - Returns: Returns a similarity index of type `SimilarityIndex`
 	public func loadIndex() async -> SimilarityIndex {
 		let startTime: Date = .now
 		// Init index
@@ -48,9 +49,13 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 		return similarityIndex
 	}
 	
+	
 	/// Function to update resources index
+	/// - Parameter profileName: The name of the profile whose resources is being updated
 	@MainActor
-	public mutating func updateResourcesIndex(profileName: String) async {
+	public mutating func updateResourcesIndex(
+		profileName: String
+	) async {
 		// Add to task list
 		let taskId: UUID = UUID()
 		LengthyTasksController.shared.addTask(
@@ -82,7 +87,8 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 		LengthyTasksController.shared.finishTask(taskId: taskId)
 	}
 
-	/// Function to initialize directory for resources
+	
+	/// Function to initialize directory for the resources's index
 	public mutating func setup() async {
 		// Make directory
 		try! FileManager.default.createDirectory(
@@ -91,7 +97,11 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 		)
 	}
 	
+	
 	/// Function to add a resource
+	/// - Parameters:
+	///   - resource: The resource that will be added to the profile
+	///   - profileName: The name of the profile containing the newly added resource
 	@MainActor
 	public mutating func addResource(
 		_ resource: Resource,
@@ -105,7 +115,11 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 		await self.updateResourcesIndex(profileName: profileName)
 	}
 	
+	
 	/// Function to add multiple resources
+	/// - Parameters:
+	///   - resources: The resources that will be added to the profile
+	///   - profileName: The name of the the profile containing the newly added resources
 	@MainActor
 	public mutating func addResources(
 		_ resources: [Resource],
@@ -122,7 +136,11 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 		await self.updateResourcesIndex(profileName: profileName)
 	}
 	
-	/// Function to remove a resource
+	
+	/// Function to show index directory in Finder
+	/// - Parameters:
+	///   - resource: The resource to be removed
+	///   - profileName: The name of the the profile containing the resource
 	@MainActor
 	public mutating func removeResource(
 		_ resource: Resource,
@@ -146,7 +164,7 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 		}
 	}
 	
-	/// Function to show index directory
+	/// Function to show the resources's index directory in Finder
 	public func showIndexDirectory() async {
 		await MainActor.run {
 			FileManager.showItemInFinder(url: self.indexUrl)

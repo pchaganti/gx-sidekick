@@ -8,21 +8,22 @@
 import Foundation
 import SwiftUI
 
+/// An object that manages a chatbot profile
 public struct Profile: Identifiable, Codable, Hashable, Sendable {
 	
 	/// Stored property for `Identifiable` conformance
 	public var id: UUID = UUID()
 	
-	/// Stored property for the profile's name
+	/// The profile's name of type `String`
 	public var name: String
 	
-	/// Stored property for the profile's symbol name
+	/// The profile's symbol name of type `String`
 	public var symbolName: String
 	
-	/// Stored property for profile color
+	/// The profile's color of type `Color`
 	public var color: Color
 	
-	/// Computed property returning the profile's symbol
+	/// Computed property returning the profile's symbol of type `View`
 	public var symbol: some View {
 		Image(systemName: symbolName)
 			.padding(5)
@@ -35,7 +36,7 @@ public struct Profile: Identifiable, Codable, Hashable, Sendable {
 			}
 	}
 	
-	/// Computed property returning the profile's label
+	/// Computed property returning the profile's label of type ``View``
 	public var label: some View {
 		Label(self.name, systemImage: symbolName)
 			.labelStyle(.titleAndIcon)
@@ -51,7 +52,7 @@ public struct Profile: Identifiable, Codable, Hashable, Sendable {
 			}
 	}
 	
-	/// Computed property returning the profile's image
+	/// Computed property returning the profile's image of type `View`
 	public var image: some View {
 		Image(systemName: symbolName)
 			.resizable()
@@ -61,19 +62,19 @@ public struct Profile: Identifiable, Codable, Hashable, Sendable {
 			)
 	}
 	
-	/// Stored property for whether web search is used
+	/// Whether web search is used of type `Bool`
 	public var useWebSearch: Bool = true
 	
-	/// Stored property for the profile's associated resources
+	/// The profile's associated resources of type `Resource`
 	public var resources: Resources = Resources()
 	
-	/// Stored property for system prompt (if customised)
+	/// The profile's system prompt (if customised) of type `String?`
 	public var systemPrompt: String? = nil
 	
 	/// Stored property for whether the profile is persisted across sessions
 	public var persistResources: Bool = true
 	
-	/// Static constant for the `default` profile
+	/// Static constant for the `default` profile of type ``Profile``
 	public static let `default`: Profile = Profile(
 		name: String(localized: "Default"),
 		symbolName: "person.fill",
