@@ -105,19 +105,24 @@ public class Model: ObservableObject {
 		} else {
 			status = .processing
 		}
-		var fullPartialResponse: String = ""
+		// Declare variables for incremental update
+		var updateResponse: String = ""
+		let increment: Int = 7
 		let response = try await llama.chat(
 			messages: messagesWithSources,
 			similarityIndex: similarityIndex
 		) { partialResponse in
 			DispatchQueue.main.async {
 				// Update response
-				fullPartialResponse += partialResponse
+				updateResponse += partialResponse
 				// Display if large update
-				let fullCount: Int = fullPartialResponse.count
+				let updateCount: Int = updateResponse.count
 				let displayedCount = self.pendingMessage.count
-				if (fullCount - displayedCount) >= 20 || self.pendingMessage.isEmpty {
-					self.handleCompletionProgress(partialResponse: partialResponse)
+				if updateCount > increment || displayedCount <= increment {
+					self.handleCompletionProgress(
+						partialResponse: updateResponse
+					)
+					updateResponse = ""
 				}
 			}
 		}

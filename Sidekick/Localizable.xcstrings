@@ -165,7 +165,6 @@
       }
     },
     "Clear All Settings" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -235,6 +234,16 @@
         }
       }
     },
+    "Controls whether the GPU is used for inference. On most computers, using the GPU offers faster inference but uses more memory and power." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "控制推理是否调用 GPU。在大多数计算机上，使用 GPU 可以实现更快的推理，但会消耗更多的内存和电量。"
+          }
+        }
+      }
+    },
     "Controls whether this profile searches the web before answering. Note that when enabled, this feature may lead to slower responses." : {
       "localizations" : {
         "zh-Hans" : {
@@ -296,7 +305,6 @@
       }
     },
     "Debug" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -894,7 +902,6 @@
       }
     },
     "Reset Tips Datastore" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1095,7 +1102,6 @@
       }
     },
     "Set Inference Settings to Defaults" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1106,7 +1112,6 @@
       }
     },
     "Show App Support Folder in Finder" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1117,7 +1122,6 @@
       }
     },
     "Show Container in Finder" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1403,6 +1407,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "使用语音输入指导您的聊天机器人，无需动手。"
+          }
+        }
+      }
+    },
+    "Use GPU Acceleration" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用 GPU"
           }
         }
       }

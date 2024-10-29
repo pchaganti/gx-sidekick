@@ -86,7 +86,9 @@ public actor LlamaServer {
 		
 		let gpuLayers: Int = 99
 		let processors: Int = ProcessInfo.processInfo.activeProcessorCount
-		let threadsToUse: Int = max(1, Int(ceil(Double(processors) / 3.0 * 2.0)))
+		let threadsToUseIfGPU: Int = max(1, Int(ceil(Double(processors) / 3.0 * 2.0)))
+		let threadsToUseIfCPU: Int = processors
+		let threadsToUse: Int = InferenceSettings.useGPUAcceleration ? threadsToUseIfGPU : threadsToUseIfCPU
 		
 		process.arguments = [
 			"--model", modelPath,
@@ -94,7 +96,7 @@ public actor LlamaServer {
 			"--threads-batch", "\(threadsToUse)",
 			"--ctx-size", "\(contextLength)",
 			"--port", port,
-			"--n-gpu-layers", "\(gpuLayers)"
+			"--n-gpu-layers", InferenceSettings.useGPUAcceleration ? "\(gpuLayers)" : "0"
 		]
 		
 		print("Starting llama.cpp server \(process.arguments!.joined(separator: " "))")

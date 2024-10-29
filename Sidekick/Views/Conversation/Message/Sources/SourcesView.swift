@@ -62,8 +62,19 @@ struct SourceRowView: View {
 	
 	var source: Source
 	var referencedUrl: ReferencedURL? {
-		guard let url: URL = URL(string: source.source) else { return nil }
-		return ReferencedURL(url: url)
+		var urlStr: String = source.source
+		guard let url: URL = URL(string: urlStr) else {
+			return nil
+		}
+		if url.isWebURL {
+			return ReferencedURL(url: url)
+		} else {
+			urlStr = source.source.removingPercentEncoding ?? source.source
+			guard let url: URL = URL(string: urlStr) else {
+				return nil
+			}
+			return ReferencedURL(url: url)
+		}
 	}
 	
 	@Environment(\.colorScheme) private var colorScheme

@@ -14,6 +14,7 @@ struct InferenceSettingsView: View {
 	@State private var isEditingSystemPrompt: Bool = false
 	
 	@State private var temperature: Double = InferenceSettings.temperature
+	@State private var useGPUAcceleration: Bool = InferenceSettings.useGPUAcceleration
 	@State private var contextLength: Int = InferenceSettings.contextLength
 	
     var body: some View {
@@ -76,6 +77,7 @@ struct InferenceSettingsView: View {
 			systemPromptEditor
 			contextLengthEditor
 			temperatureEditor
+			useGPUAccelerationToggle
 		}
 	}
 		
@@ -143,6 +145,24 @@ struct InferenceSettingsView: View {
 		}
 		.onChange(of: temperature) {
 			InferenceSettings.temperature = self.temperature
+		}
+	}
+	
+	var useGPUAccelerationToggle: some View {
+		HStack(alignment: .top) {
+			VStack(alignment: .leading) {
+				Text("Use GPU Acceleration")
+					.font(.title3)
+					.bold()
+				Text("Controls whether the GPU is used for inference. On most computers, using the GPU offers faster inference but uses more memory and power.")
+					.font(.caption)
+			}
+			Spacer()
+				.frame(maxWidth: 60)
+			Toggle("", isOn: $useGPUAcceleration)
+		}
+		.onChange(of: useGPUAcceleration) {
+			InferenceSettings.useGPUAcceleration = self.useGPUAcceleration
 		}
 	}
 	

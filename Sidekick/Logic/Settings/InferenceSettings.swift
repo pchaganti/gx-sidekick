@@ -121,6 +121,23 @@ The user's request might be followed by reference information, organized by sour
 		}
 	}
 	
+	/// Computed property for whether the LLM uses GPU acceleration
+	static var useGPUAcceleration: Bool {
+		get {
+			// Set default
+			if !UserDefaults.standard.exists(key: "useGPUAcceleration") {
+				// Default to true
+				Self.useGPUAcceleration = true
+			}
+			return UserDefaults.standard.bool(
+				forKey: "useGPUAcceleration"
+			)
+		}
+		set {
+			UserDefaults.standard.set(newValue, forKey: "useGPUAcceleration")
+		}
+	}
+	
 	/// Function that sets default values
 	public static func setDefaults() {
 		systemPrompt = defaultSystemPrompt

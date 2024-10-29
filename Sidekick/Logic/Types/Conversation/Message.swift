@@ -204,7 +204,7 @@ Below is information that may or may not be relevant to my request in JSON forma
 	/// Computed property for URLs of sources referenced in a response
 	public var referencedURLs: [ReferencedURL] {
 		// Get string with JSON
-		guard let jsonString = self.trailingJSONString else {
+		guard var jsonString = self.trailingJSONString else {
 			return []
 		}
 		// Decode string
