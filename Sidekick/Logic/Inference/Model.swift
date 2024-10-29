@@ -113,10 +113,10 @@ public class Model: ObservableObject {
 			DispatchQueue.main.async {
 				// Update response
 				fullPartialResponse += partialResponse
-//				 Display if large update
+				// Display if large update
 				let fullCount: Int = fullPartialResponse.count
 				let displayedCount = self.pendingMessage.count
-				if (fullCount - displayedCount) >= 20 {
+				if (fullCount - displayedCount) >= 20 || self.pendingMessage.isEmpty {
 					self.handleCompletionProgress(partialResponse: partialResponse)
 				}
 			}

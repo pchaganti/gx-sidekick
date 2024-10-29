@@ -73,7 +73,7 @@ The user's request might be followed by reference information, organized by sour
 	}
 	
 	/// Static constant for the default temperature
-	private static let defaultTemperature: Double = 0.8
+	private static let defaultTemperature: Double = 0.7
 	
 	/// Static constant which controls the first instructions given to an LLM
 	public static var systemPrompt: String {
