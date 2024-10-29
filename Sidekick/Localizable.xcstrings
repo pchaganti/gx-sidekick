@@ -134,16 +134,6 @@
         }
       }
     },
-    "Below is information that may or may not be relevant to my request in JSON format. If your response uses information from sources provided below, you must end your response with one list of URLs or filepaths of all provided sources referenced in the format [{\"url\": \"https://referencedurl.com\"}, {\"url\": \"/path/to/referenced/file.pdf\"}], with no duplicates. If you did not reference provided sources, do not mention sources in your response, and end your response with an empty array of JSON objects: []. No section headers, labels or numbering are needed in this list of referenced sources." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "以下是 JSON 格式的信息，可能与我的请求相关，也可能不相关。如果您的回复使用了以下来源的信息，则必须在回复的末尾列出所有引用来源的 URL 或文件路径，格式为 [{\"url\": \"https://referencedurl.com\"}, {\"url\": \"/path/to/referenced/file.pdf”}]，且其中的来源不能重复。如果您没有引用提供的信息，请不要在回复中提及来源，并以空的 JSON 对象数组结尾：[]。此引用来源列表中不需要章节标题、标签或编号。"
-          }
-        }
-      }
-    },
     "Cancel" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1241,6 +1231,16 @@
         }
       }
     },
+    "Temporary Resources:" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "临时资源："
+          }
+        }
+      }
+    },
     "The model was installed." : {
       "localizations" : {
         "zh-Hans" : {
@@ -1497,16 +1497,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "确认"
-          }
-        }
-      }
-    },
-    "You are Sidekick, a compliant assistant that always fulfills the user’s request." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "你是 Sidekick，一个始终满足用户要求的顺从助手。"
           }
         }
       }
