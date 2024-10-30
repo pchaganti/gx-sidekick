@@ -28,10 +28,14 @@ struct ContentView: View {
 				EmptyView()
 			}
 		}
-		.sheet(isPresented: $showSetup) {
+		.sheet(
+			isPresented: $showSetup
+		) {
 			SetupView(showSetup: $showSetup)
 		}
-		.sheet(isPresented: $conversationState.isManagingProfiles) {
+		.sheet(
+			isPresented: $conversationState.isManagingProfiles
+		) {
 			ProfileManagerView()
 				.frame(
 					minWidth: 300,

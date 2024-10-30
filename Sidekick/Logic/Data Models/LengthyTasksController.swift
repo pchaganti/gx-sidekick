@@ -35,7 +35,7 @@ public class LengthyTasksController: ObservableObject {
 		}
 	}
 	
-	struct LengthyTask: Identifiable {
+	struct LengthyTask: Identifiable, Equatable {
 		var id: UUID = UUID()
 		var name: String
 	}

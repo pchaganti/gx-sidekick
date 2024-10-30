@@ -2,7 +2,7 @@
 
 Chat with an local LLM with RAG (Retrieval Augmentented Generation) capabilities on your Mac without installing any other software. All conversations happen offline, and your data is saved locally.
 
-![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/sidekickSecureImage.png)
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/screenshot.png)
 
 - Try any llama.cpp compatible GGUF model
 - Customize model behaviour by setting up profiles with a custom system prompt

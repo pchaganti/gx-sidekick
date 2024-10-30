@@ -49,13 +49,24 @@ struct LengthyTasksToolbarButton: View {
 				systemImage: iconName
 			)
 			.if(usePadding) { view in
-				view.foregroundStyle(Color.secondary)
+				view
+					.foregroundStyle(Color.secondary)
+					.padding(7)
+					.padding(.horizontal, 1)
 			}
 			.if(isInverted) { view in
 				view.colorInvert()
 			}
-			.if(usePadding) { view in
-				view.padding(7).padding(.horizontal, 1)
+			.if(lengthyTasksController.hasTasks) { view in
+				view
+					.padding([.top, .trailing], 2)
+					.overlay(
+						alignment: .topTrailing
+					) {
+						Circle()
+							.fill(Color.red)
+							.frame(width: 8)
+					}
 			}
 		} content: {
 			LengthyTasksList()

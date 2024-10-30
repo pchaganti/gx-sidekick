@@ -133,6 +133,9 @@ Tokens per second: \(tokensPerSecondStr)
 			}
 		}
 		.padding(11)
+		.transition(
+			.scale(1.0, anchor: .topLeading)
+		)
 		.background {
 			MessageBackgroundView()
 		}
@@ -188,7 +191,11 @@ Tokens per second: \(tokensPerSecondStr)
 					Text("Cancel")
 				}
 				Button {
-					isEditing.toggle()
+					withAnimation(
+						.linear(duration: 0.5)
+					) {
+						self.isEditing.toggle()
+					}
 					self.updateMessage()
 				} label: {
 					Text("Save")
@@ -252,7 +259,13 @@ Tokens per second: \(tokensPerSecondStr)
 			// Edit button
 			if self.canEdit && !self.isEditing {
 				Button {
-					if self.canEdit { self.isEditing.toggle() }
+					if self.canEdit {
+						withAnimation(
+							.linear(duration: 0.5)
+						) {
+							self.isEditing.toggle()
+						}
+					}
 				} label: {
 					Text("Edit")
 				}

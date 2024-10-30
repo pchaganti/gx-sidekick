@@ -107,7 +107,7 @@ public class Model: ObservableObject {
 		}
 		// Declare variables for incremental update
 		var updateResponse: String = ""
-		let increment: Int = 7
+		let increment: Int = 5
 		let response = try await llama.chat(
 			messages: messagesWithSources,
 			similarityIndex: similarityIndex
@@ -118,7 +118,7 @@ public class Model: ObservableObject {
 				// Display if large update
 				let updateCount: Int = updateResponse.count
 				let displayedCount = self.pendingMessage.count
-				if updateCount > increment || displayedCount <= increment {
+				if updateCount >= increment || displayedCount < increment {
 					self.handleCompletionProgress(
 						partialResponse: updateResponse
 					)
