@@ -107,7 +107,7 @@ public class Model: ObservableObject {
 		}
 		// Declare variables for incremental update
 		var updateResponse: String = ""
-		let increment: Int = 5
+		let increment: Int = 3
 		let response = try await llama.chat(
 			messages: messagesWithSources,
 			similarityIndex: similarityIndex

@@ -88,6 +88,9 @@ struct PromptInputField: View {
 			self.isFocused = true
 			self.conversationState.selectedProfileId = profileManager.default?.id
 		}
+		.onAppear {
+			self.isFocused = true
+		}
 		.popoverTip(addFilesTip)
     }
 	

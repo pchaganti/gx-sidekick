@@ -58,6 +58,7 @@ struct ConversationControlsView: View {
 			Spacer()
 				.frame(maxHeight: maxHeight)
 		}
+		.environmentObject(promptController)
 	}
 	
 	var controls: some View {
@@ -87,7 +88,6 @@ struct ConversationControlsView: View {
 			of: ["public.file-url"],
 			delegate: promptController
 		)
-		.environmentObject(promptController)
 	}
 	
 	var typedText: some View {
@@ -96,7 +96,7 @@ struct ConversationControlsView: View {
 		) {
 			TypedTextView(
 				String(localized: "How can I help you?"),
-				duration: 0.75,
+				duration: 0.6,
 				didFinish: $didFinishTyping
 			)
 			.font(.title)

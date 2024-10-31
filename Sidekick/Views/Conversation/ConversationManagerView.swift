@@ -157,6 +157,7 @@ struct ConversationManagerView: View {
 				noSelectedConversation
 			} else {
 				ConversationView()
+					.frame(minWidth: 450, minHeight: 500)
 			}
 		}
 	}
