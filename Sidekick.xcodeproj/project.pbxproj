@@ -394,12 +394,10 @@
 		202801F12CC93C0D005C1F7D /* Controls */ = {
 			isa = PBXGroup;
 			children = (
-				2099BDA02CB7EABC00E02732 /* ConversationQuickPromptsView.swift */,
 				20E48C282CB560B50085E7D6 /* ConversationControlsView.swift */,
-				202801F52CC93CD5005C1F7D /* PromptInputField.swift */,
-				202801F32CC93C80005C1F7D /* DictationButton.swift */,
-				202801FB2CC9C5C2005C1F7D /* TemporaryResourceView.swift */,
-				204FC5C92CC9C8B400CA1DB4 /* TemporaryResourcesView.swift */,
+				2099BDA02CB7EABC00E02732 /* ConversationQuickPromptsView.swift */,
+				20B8294C2CD37C7F004E5E9B /* Input Field */,
+				20B8294B2CD37C76004E5E9B /* Temporary Resource */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -540,6 +538,24 @@
 				20AA5A512CC87032003E5519 /* Tips.swift */,
 			);
 			path = Tips;
+			sourceTree = "<group>";
+		};
+		20B8294B2CD37C76004E5E9B /* Temporary Resource */ = {
+			isa = PBXGroup;
+			children = (
+				202801FB2CC9C5C2005C1F7D /* TemporaryResourceView.swift */,
+				204FC5C92CC9C8B400CA1DB4 /* TemporaryResourcesView.swift */,
+			);
+			path = "Temporary Resource";
+			sourceTree = "<group>";
+		};
+		20B8294C2CD37C7F004E5E9B /* Input Field */ = {
+			isa = PBXGroup;
+			children = (
+				202801F52CC93CD5005C1F7D /* PromptInputField.swift */,
+				202801F32CC93C80005C1F7D /* DictationButton.swift */,
+			);
+			path = "Input Field";
 			sourceTree = "<group>";
 		};
 		20B97CAD2CAFE86C009A0A5D /* Preview Content */ = {

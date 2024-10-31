@@ -47,6 +47,35 @@ struct PromptInputField: View {
 	var addFilesTip: AddFilesTip = .init()
 	
     var body: some View {
+		textField
+			.onExitCommand {
+				self.isFocused = false
+			}
+			.onReceive(
+				NotificationCenter.default.publisher(
+					for: Notifications.didSelectConversation.name
+				)
+			) { output in
+				self.isFocused = false
+			}
+			.onChange(of: isFocused) {
+				// Show add files and dictation tips if needed
+				if self.isFocused {
+					AddFilesTip.readyForAddingFiles = true
+					DictationTip.readyForDictation = true
+				}
+			}
+			.onChange(of: conversationState.selectedConversationId) {
+				self.isFocused = true
+				self.conversationState.selectedProfileId = profileManager.default?.id
+			}
+			.onAppear {
+				self.isFocused = true
+			}
+			.popoverTip(addFilesTip)
+    }
+	
+	var textField: some View {
 		TextField(
 			"Send a Message",
 			text: $promptController.prompt.animation(
@@ -67,32 +96,7 @@ struct PromptInputField: View {
 		}
 		.submitLabel(.send)
 		.padding([.vertical, .leading], 10)
-		.onExitCommand {
-			self.isFocused = false
-		}
-		.onReceive(
-			NotificationCenter.default.publisher(
-				for: Notifications.didSelectConversation.name
-			)
-		) { output in
-			self.isFocused = false
-		}
-		.onChange(of: isFocused) {
-			// Show add files and dictation tips if needed
-			if self.isFocused {
-				AddFilesTip.readyForAddingFiles = true
-				DictationTip.readyForDictation = true
-			}
-		}
-		.onChange(of: conversationState.selectedConversationId) {
-			self.isFocused = true
-			self.conversationState.selectedProfileId = profileManager.default?.id
-		}
-		.onAppear {
-			self.isFocused = true
-		}
-		.popoverTip(addFilesTip)
-    }
+	}
 	
 	/// Function to run when the `return` key is hit
 	private func onSubmit() {
@@ -121,11 +125,9 @@ struct PromptInputField: View {
 			sender: .user
 		)
 		let _ = conversation.addMessage(newUserMessage)
-		withAnimation(.linear) {
-			conversationManager.update(conversation)
-		}
+		conversationManager.update(conversation)
 		// Set sentConversation
-		sentConversation = conversation
+		self.sentConversation = conversation
 		// Capture temp resources
 		let tempResources: [TemporaryResource] = self.promptController.tempResources
 		// Clear prompt
@@ -224,7 +226,7 @@ struct PromptInputField: View {
 	}
 	
 	@MainActor
-	func handleResponseError(_ error: LlamaServerError) {
+	private func handleResponseError(_ error: LlamaServerError) {
 		print("Handle response error:", error.localizedDescription)
 		let errorDescription: String = error.errorDescription ?? "Unknown Error"
 		let recoverySuggestion: String = error.recoverySuggestion
@@ -232,9 +234,5 @@ struct PromptInputField: View {
 			title: "\(errorDescription): \(recoverySuggestion)"
 		)
 	}
-	
-}
 
-//#Preview {
-//    PromptInputField()
-//}
+}
