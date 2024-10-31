@@ -16,6 +16,8 @@ struct ConversationControlsView: View {
 	@EnvironmentObject private var profileManager: ProfileManager
 	@EnvironmentObject private var conversationState: ConversationState
 	
+	@State private var didFinishTyping: Bool = false
+	
 	var selectedConversation: Conversation? {
 		guard let selectedConversationId = conversationState.selectedConversationId else {
 			return nil
@@ -63,9 +65,7 @@ struct ConversationControlsView: View {
 			if messages.isEmpty {
 				Group {
 					if promptController.prompt.isEmpty {
-						Markdown(
-							String(localized: "# How can I help you?")
-						)
+						typedText
 					}
 					inputField
 				}
@@ -88,6 +88,25 @@ struct ConversationControlsView: View {
 			delegate: promptController
 		)
 		.environmentObject(promptController)
+	}
+	
+	var typedText: some View {
+		HStack(
+			spacing: 5
+		) {
+			TypedTextView(
+				String(localized: "How can I help you?"),
+				duration: 0.75,
+				didFinish: $didFinishTyping
+			)
+			.font(.title)
+			.bold()
+			if !didFinishTyping {
+				Circle()
+					.fill(.white)
+					.frame(width: 15, height: 15)
+			}
+		}
 	}
 	
 	var inputField: some View {

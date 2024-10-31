@@ -21,6 +21,7 @@
 		202801FC2CC9C5C2005C1F7D /* TemporaryResourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202801FB2CC9C5C2005C1F7D /* TemporaryResourceView.swift */; };
 		202E3EDD2CBB8F7B00AF86C8 /* ReferencedURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202E3EDC2CBB8F7B00AF86C8 /* ReferencedURL.swift */; };
 		2038CCF32CB6CBC6005AA315 /* PendingMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2038CCF22CB6CBC6005AA315 /* PendingMessageView.swift */; };
+		204592172CD32DEF00DEAA96 /* TypedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204592162CD32DEF00DEAA96 /* TypedTextView.swift */; };
 		204C79532CB7500800EED58E /* EndDetectionScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204C79522CB7500800EED58E /* EndDetectionScrollView.swift */; };
 		204C79562CB765D700EED58E /* ProfileSelectionMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204C79552CB765D700EED58E /* ProfileSelectionMenu.swift */; };
 		204C79582CB769A400EED58E /* Extension+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204C79572CB769A400EED58E /* Extension+View.swift */; };
@@ -194,6 +195,7 @@
 		202801FB2CC9C5C2005C1F7D /* TemporaryResourceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryResourceView.swift; sourceTree = "<group>"; };
 		202E3EDC2CBB8F7B00AF86C8 /* ReferencedURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferencedURL.swift; sourceTree = "<group>"; };
 		2038CCF22CB6CBC6005AA315 /* PendingMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingMessageView.swift; sourceTree = "<group>"; };
+		204592162CD32DEF00DEAA96 /* TypedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypedTextView.swift; sourceTree = "<group>"; };
 		204C79522CB7500800EED58E /* EndDetectionScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndDetectionScrollView.swift; sourceTree = "<group>"; };
 		204C79552CB765D700EED58E /* ProfileSelectionMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSelectionMenu.swift; sourceTree = "<group>"; };
 		204C79572CB769A400EED58E /* Extension+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+View.swift"; sourceTree = "<group>"; };
@@ -676,6 +678,7 @@
 				2099BDB12CB828A500E02732 /* PopoverButton.swift */,
 				20FE94D92CB96DE8006E9F06 /* ExitButton.swift */,
 				208AA3F02CC9E42F00A0891F /* ScrollMask.swift */,
+				204592162CD32DEF00DEAA96 /* TypedTextView.swift */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -910,6 +913,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				20573F362CB53878004C19FE /* CircleMenuStyle.swift in Sources */,
+				204592172CD32DEF00DEAA96 /* TypedTextView.swift in Sources */,
 				20571F842CBD71C9004F3344 /* SystemPromptEditor.swift in Sources */,
 				20C221062CC4B15600A99796 /* SourcesManager.swift in Sources */,
 				20B4D6B12CC3D72700817E15 /* Extension+IndexItem.swift in Sources */,
