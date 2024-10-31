@@ -33,11 +33,10 @@ struct LengthyTasksToolbarButton: View {
 	}
 	
 	var iconName: String {
-		if #available(macOS 15, *) {
-			return "arrow.trianglehead.2.clockwise"
-		} else {
+		if #unavailable(macOS 15) {
 			return "arrow.triangle.2.circlepath"
 		}
+		return "arrow.trianglehead.2.clockwise"
 	}
 	
 	var lengthyTasksProgressTip: LengthyTasksProgressTip = .init()
@@ -46,13 +45,13 @@ struct LengthyTasksToolbarButton: View {
 		PopoverButton(arrowEdge: .bottom) {
 			Label(
 				"Tasks",
-				systemImage: iconName
+				systemImage: self.iconName
 			)
 			.if(usePadding) { view in
 				view
 					.foregroundStyle(Color.secondary)
 					.padding(7)
-					.padding(.horizontal, 1)
+					.padding(.horizontal, 2)
 			}
 			.if(isInverted) { view in
 				view.colorInvert()

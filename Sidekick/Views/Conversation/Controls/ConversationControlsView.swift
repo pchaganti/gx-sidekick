@@ -110,14 +110,21 @@ struct ConversationControlsView: View {
 	}
 	
 	var inputField: some View {
-		PromptInputField()
-			.overlay {
-				Color.clear
-					.onDrop(
-						of: ["public.file-url"],
-						delegate: promptController
-					)
+		HStack {
+			PromptInputField()
+				.overlay {
+					Color.clear
+						.onDrop(
+							of: ["public.file-url"],
+							delegate: promptController
+						)
+				}
+			if #unavailable(macOS 15) {
+				LengthyTasksToolbarButton(usePadding: true)
+					.labelStyle(.iconOnly)
+					.buttonStyle(ChatButtonStyle())
 			}
+		}
 	}
 	
 }

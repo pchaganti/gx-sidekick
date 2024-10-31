@@ -13,13 +13,20 @@ struct DictationButton: View {
 	
 	var dictationTip: DictationTip = .init()
 	
+	var microphoneIcon: String {
+		if #unavailable(macOS 15) {
+			return "mic.fill"
+		}
+		return "microphone.fill"
+	}
+	
     var body: some View {
 		Button {
 			withAnimation(.linear) {
 				self.promptController.toggleRecording()
 			}
 		} label: {
-			Label("", systemImage: "microphone.fill")
+			Label("", systemImage: self.microphoneIcon)
 				.foregroundStyle(
 					promptController.isRecording ? .red : .secondary
 				)
