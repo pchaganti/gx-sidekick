@@ -5,6 +5,7 @@
 //  Created by Bean John on 10/8/24.
 //
 
+import MarkdownUI
 import SwiftUI
 
 struct ConversationControlsView: View {
@@ -42,8 +43,33 @@ struct ConversationControlsView: View {
 		return noPrompt && noMessages && noResources
 	}
 	
+	var maxHeight: CGFloat {
+		let center: Bool = promptController.prompt.isEmpty && messages.isEmpty
+		return center ? .infinity : 0
+	}
+	
 	var body: some View {
 		VStack {
+			Spacer()
+				.frame(maxHeight: maxHeight)
+			controls
+			Spacer()
+				.frame(maxHeight: maxHeight)
+		}
+	}
+	
+	var controls: some View {
+		VStack {
+			if messages.isEmpty {
+				Group {
+					if promptController.prompt.isEmpty {
+						Markdown(
+							String(localized: "# How can I help you?")
+						)
+					}
+					inputField
+				}
+			}
 			if showQuickPrompts {
 				ConversationQuickPromptsView(
 					input: $promptController.prompt
@@ -52,18 +78,8 @@ struct ConversationControlsView: View {
 			if promptController.hasResources {
 				TemporaryResourcesView()
 			}
-			HStack(spacing: 0) {
-				PromptInputField()
-					.overlay {
-						Color.clear
-							.onDrop(
-								of: ["public.file-url"],
-								delegate: promptController
-							)
-					}
-				if #unavailable(macOS 15) {
-					lengthyTasksButton
-				}
+			if !messages.isEmpty {
+				inputField
 			}
 		}
 		.padding(.leading)
@@ -74,13 +90,15 @@ struct ConversationControlsView: View {
 		.environmentObject(promptController)
 	}
 	
-	var lengthyTasksButton: some View {
-		LengthyTasksToolbarButton(
-			usePadding: true
-		)
-		.labelStyle(.iconOnly)
-		.buttonStyle(ChatButtonStyle())
-		.padding(.leading, 7)
+	var inputField: some View {
+		PromptInputField()
+			.overlay {
+				Color.clear
+					.onDrop(
+						of: ["public.file-url"],
+						delegate: promptController
+					)
+			}
 	}
 	
 }

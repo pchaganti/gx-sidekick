@@ -12,19 +12,11 @@ struct ConversationQuickPromptsView: View {
 	@Binding var input: String
 	
 	var body: some View {
-		ScrollView(.horizontal, showsIndicators: false) {
-			HStack {
-				ForEach(QuickPrompt.quickPrompts) { prompt in
-					QuickPromptButton(
-						input: $input,
-						prompt: prompt
-					)
-				}
-			}
-			.padding(.horizontal, 20)
-			.padding(.top, 200)
+		ScrollView(
+			.horizontal, showsIndicators: false
+		) {
+			prompts
 		}
-		.frame(maxWidth: .infinity)
 		.mask {
 			Rectangle()
 				.overlay(alignment: .leading) {
@@ -34,6 +26,18 @@ struct ConversationQuickPromptsView: View {
 					ScrollMask(isLeading: false)
 				}
 		}
+	}
+	
+	var prompts: some View {
+		HStack {
+			ForEach(QuickPrompt.quickPrompts) { prompt in
+				QuickPromptButton(
+					input: $input,
+					prompt: prompt
+				)
+			}
+		}
+		.padding(.horizontal, 20)
 	}
 	
 }
@@ -46,21 +50,18 @@ struct QuickPromptButton: View {
 	
 	var body: some View {
 		Button {
-			input = prompt.text
-		} label: {
-			VStack(alignment: .leading) {
-				Text(prompt.title)
-					.bold()
-					.font(.caption2)
-					.lineLimit(1)
-				Text(prompt.rest)
-					.font(.caption2)
-					.lineLimit(1)
-					.foregroundColor(.secondary)
+			withAnimation(.linear) {
+				self.input = self.prompt.text
 			}
-			.padding(.vertical, 8)
-			.padding(.horizontal, 10)
-			.frame(maxWidth: .infinity, alignment: .leading)
+		} label: {
+			prompt.label
+				.padding(.vertical, 8)
+				.padding(.horizontal, 10)
+				.frame(
+					maxWidth: .infinity,
+					alignment: .leading
+				)
+				.frame(minHeight: 35)
 		}
 		.buttonStyle(CapsuleButtonStyle())
 		.frame(maxWidth: 300)

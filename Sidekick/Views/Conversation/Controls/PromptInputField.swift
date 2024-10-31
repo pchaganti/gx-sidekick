@@ -49,7 +49,9 @@ struct PromptInputField: View {
     var body: some View {
 		TextField(
 			"Send a Message",
-			text: $promptController.prompt.animation(.linear),
+			text: $promptController.prompt.animation(
+				.linear
+			),
 			axis: .vertical
 		)
 		.onSubmit(onSubmit)
@@ -116,7 +118,9 @@ struct PromptInputField: View {
 			sender: .user
 		)
 		let _ = conversation.addMessage(newUserMessage)
-		conversationManager.update(conversation)
+		withAnimation(.linear) {
+			conversationManager.update(conversation)
+		}
 		// Set sentConversation
 		sentConversation = conversation
 		// Capture temp resources

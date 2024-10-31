@@ -6,59 +6,94 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct QuickPrompt: Identifiable {
 	
 	/// Conform to identifiable
 	let id: UUID = UUID()
 	
-	/// String containing the title of the prompt
-	var title: String
-	/// String containing the rest of the prompt
-	var rest: String
+	/// String containing the text of the prompt
+	var text: String
 	
-	/// Computed property that returns the full prompt
-	var text: String {
-		return "\(self.title) \(self.rest)"
+	/// String containing a short description of the prompt
+	private var description: String
+	/// The identifier used for the prompt's icon's image
+	private var icon: String
+	/// The color used for the prompt's icon's image
+	private var color: Color = Color.secondary
+	
+	/// This prompt's label
+	var label: some View {
+		Label {
+			Text(description)
+				.foregroundStyle(.secondary)
+		} icon: {
+			Image(systemName: icon)
+				.foregroundStyle(color)
+		}
 	}
 	
 	/// Static constant containing all quick prompts
 	static var quickPrompts = [
 		QuickPrompt(
-			title: "Hi there!",
-			rest: "Please introduce yourself."
+			text: String(localized: "Hi there! Please introduce yourself."),
+			description: String(localized: "Say hi"),
+			icon: "hand.wave.fill",
+			color: .yellow
 		),
 		QuickPrompt(
-			title: "Write a bullet summary",
-			rest: "of the leadup and impact of the French Revolution."
+			text: String(localized: "Teach me how to "),
+			description: String(localized: "Teach me"),
+			icon: "graduationcap.fill",
+			color: .blue
 		),
 		QuickPrompt(
-			title: "How do you",
-			rest: "know when a steak is done?"
+			text: String(localized: "Paraphrase the text below:\n\n\"\""),
+			description: String(localized: "Paraphrase"),
+			icon: "text.chevron.left",
+			color: .teal
 		),
 		QuickPrompt(
-			title: "Write a recipe",
-			rest: "for the perfect martini."
+			text: String(localized: "Rewrite the text below into bullet points:\n\n\"\""),
+			description: String(localized: "Make bullet points"),
+			icon: "list.bullet.rectangle.portrait.fill",
+			color: .red
 		),
 		QuickPrompt(
-			title: "Teach me how",
-			rest: "to make a pizza in 10 simple steps, with timings and portions."
+			text: String(localized: "Summarize the text below:\n\n\"\""),
+			description: String(localized: "Summarize"),
+			icon: "doc.plaintext.fill",
+			color: .orange
 		),
 		QuickPrompt(
-			title: "Write a Linux 1-liner",
-			rest: "to count lines of code in a directory."
+			text: String(localized: "Explain how "),
+			description: String(localized: "Explain how"),
+			icon: "person.fill.questionmark",
+			color: .green
 		),
 		QuickPrompt(
-			title: "Can you tell me",
-			rest: "about the gate all around transistor?"
+			text: String(localized: "Brainstorm ideas for "),
+			description: String(localized: "Brainstorm"),
+			icon: "brain.fill",
+			color: .pink
 		),
 		QuickPrompt(
-			title: "How does",
-			rest: "cache speed up processing?"
+			text: String(localized: "Write an email to "),
+			description: String(localized: "Write email"),
+			icon: "envelope.fill",
+			color: .cyan
 		),
 		QuickPrompt(
-			title: "Write an email",
-			rest: "asking a colleague for a quick status update."
+			text: String(localized: "Write a Unix command to "),
+			description: String(localized: "Write a command"),
+			icon: {
+				if #available (macOS 15, *) {
+					return "apple.terminal.fill"
+				}
+				return "terminal.fill"
+			}(),
+			color: .purple
 		)
 	]
 	

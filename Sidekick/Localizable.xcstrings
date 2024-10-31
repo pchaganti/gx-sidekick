@@ -14,6 +14,16 @@
         }
       }
     },
+    "# How can I help you?" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "# 我能为您做些什么？"
+          }
+        }
+      }
+    },
     "Add" : {
       "localizations" : {
         "zh-Hans" : {
@@ -130,6 +140,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "后备 API 密钥（可选）"
+          }
+        }
+      }
+    },
+    "Brainstorm" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "头脑风暴"
+          }
+        }
+      }
+    },
+    "Brainstorm ideas for " : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请推荐一些方案，如何"
           }
         }
       }
@@ -454,6 +484,26 @@
         }
       }
     },
+    "Explain how" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "解释"
+          }
+        }
+      }
+    },
+    "Explain how " : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "解释如何"
+          }
+        }
+      }
+    },
     "Export" : {
       "localizations" : {
         "zh-Hans" : {
@@ -564,6 +614,16 @@
         }
       }
     },
+    "Hi there! Please introduce yourself." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你好！请进行自我介绍。"
+          }
+        }
+      }
+    },
     "Hit" : {
       "localizations" : {
         "zh-Hans" : {
@@ -651,6 +711,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "内存不足"
+          }
+        }
+      }
+    },
+    "Make bullet points" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "列出要点"
           }
         }
       }
@@ -821,6 +891,26 @@
         }
       }
     },
+    "Paraphrase" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "改写"
+          }
+        }
+      }
+    },
+    "Paraphrase the text below:\n\n\"\"" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请改写这段文字：\n\n“”"
+          }
+        }
+      }
+    },
     "Persist Resources" : {
       "localizations" : {
         "zh-Hans" : {
@@ -961,12 +1051,32 @@
         }
       }
     },
+    "Rewrite the text below into bullet points:\n\n\"\"" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请将这段文字重写为要点：\n\n“”"
+          }
+        }
+      }
+    },
     "Save" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "保存"
+          }
+        }
+      }
+    },
+    "Say hi" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你好！"
           }
         }
       }
@@ -1181,6 +1291,26 @@
         }
       }
     },
+    "Summarize" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "总结"
+          }
+        }
+      }
+    },
+    "Summarize the text below:\n\n\"\"" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "总结这段文字：\n\n“”"
+          }
+        }
+      }
+    },
     "Symbol:" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1217,6 +1347,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tavily 搜索"
+          }
+        }
+      }
+    },
+    "Teach me" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "教我"
+          }
+        }
+      }
+    },
+    "Teach me how to " : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "教我如何"
           }
         }
       }
@@ -1507,6 +1657,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "欢迎使用 Sidekick"
+          }
+        }
+      }
+    },
+    "Write a command" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "编写命令"
+          }
+        }
+      }
+    },
+    "Write a Unix command to " : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "编写 Unix 命令，以"
+          }
+        }
+      }
+    },
+    "Write an email to " : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "写电子邮件，告诉"
+          }
+        }
+      }
+    },
+    "Write email" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "写邮件"
           }
         }
       }

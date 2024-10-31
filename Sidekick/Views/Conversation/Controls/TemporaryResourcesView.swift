@@ -11,7 +11,7 @@ struct TemporaryResourcesView: View {
 	
 	@EnvironmentObject private var promptController: PromptController
 	
-    var body: some View {
+	var body: some View {
 		VStack(
 			alignment: .leading,
 			spacing: 4
@@ -19,7 +19,7 @@ struct TemporaryResourcesView: View {
 			label
 			resourcesCarousel
 		}
-    }
+	}
 	
 	var label: some View {
 		Text("Temporary Resources:")

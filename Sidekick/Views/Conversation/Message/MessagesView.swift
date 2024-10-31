@@ -104,7 +104,9 @@ struct MessagesView: View {
 		}
 		.toolbar {
 			ToolbarItemGroup() {
-				exportButton
+				MessageShareMenu(
+					messagesView: messagesView
+				)
 			}
 		}
 	}
@@ -118,50 +120,6 @@ struct MessagesView: View {
 			)
 			.id(message.id)
 		}
-	}
-	
-	var exportButton: some View {
-		Button {
-			self.generatePdf()
-		} label: {
-			Label("Export", systemImage: "square.and.arrow.up")
-		}
-		.disabled(isGenerating || self.messages.isEmpty)
-		.if(isInverted) { view in
-			view.colorInvert()
-		}
-	}
-	
-	/// Function to generate and save conversation as a PDF
-	private func generatePdf() {
-		// Select path
-		guard var destination: URL = try? FileManager.selectFile(
-				dialogTitle: String(localized: "Select a Save Location"),
-				canSelectFiles: false,
-				canSelectDirectories: true,
-				allowMultipleSelection: false,
-				persistPermissions: false
-		).first else {
-			return
-		}
-		let filename: String = selectedConversation?.title ?? Date.now.ISO8601Format()
-		destination = destination.appendingPathComponent("\(filename).png")
-		// Render and save
-		let renderer: ImageRenderer = ImageRenderer(
-			content: VStack(alignment: .leading, spacing: 15) { messagesView }
-				.padding()
-				.background(Color.gray)
-				.frame(width: 1000)
-		)
-		renderer.scale = 2.0
-		guard let cgImage: CGImage = renderer.cgImage else {
-			Dialogs.showAlert(
-				title: String(localized: "Error"),
-				message: String(localized: "Failed to render image.")
-			)
-			return
-		}
-		cgImage.save(to: destination)
 	}
 	
 	/// Function to scroll to bottom when the output refreshes
