@@ -119,11 +119,6 @@ struct ConversationControlsView: View {
 							delegate: promptController
 						)
 				}
-			if #unavailable(macOS 15) {
-				LengthyTasksToolbarButton(usePadding: true)
-					.labelStyle(.iconOnly)
-					.buttonStyle(ChatButtonStyle())
-			}
 		}
 	}
 	

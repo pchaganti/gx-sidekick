@@ -58,6 +58,17 @@ struct ConversationManagerView: View {
 		)
 	}
 	
+	@Environment(\.colorScheme) var colorScheme
+	
+	var isInverted: Bool {
+		guard let luminance = selectedProfile?.color.luminance else { return false }
+		let forDark: Bool = (luminance > 0.5) && (colorScheme == .dark)
+		let forLight: Bool = (luminance < 0.5) && (
+			colorScheme == .light
+		)
+		return forDark || forLight
+	}
+	
     var body: some View {
 		NavigationSplitView {
 			conversationList
@@ -71,6 +82,9 @@ struct ConversationManagerView: View {
 					.font(.title3)
 					.bold()
 					.foregroundStyle(toolbarTextColor)
+					.if(isInverted) { view in
+						view.colorInvert()
+					}
 			}
 			ToolbarItemGroup(placement: .principal) {
 				ProfileSelectionMenu()
@@ -116,8 +130,8 @@ struct ConversationManagerView: View {
 			)
 		) { output in
 			self.conversationState.selectedProfileId = profileManager.default?.id
-			if let firstConversationId = conversationManager.firstConversation?.id {
-				self.conversationState.selectedConversationId = firstConversationId
+			if let recentConversationId = conversationManager.recentConversation?.id {
+				self.conversationState.selectedConversationId = recentConversationId
 			}
 		}
 		.onReceive(
@@ -137,13 +151,20 @@ struct ConversationManagerView: View {
 		VStack(alignment: .leading) {
 			ConversationNavigationListView()
 			Spacer()
-			Button {
-				self.newConversation()
-			} label: {
-				Label("New Conversation", systemImage: "plus")
+			HStack {
+				Button {
+					self.newConversation()
+				} label: {
+					Label("New Conversation", systemImage: "plus")
+						.labelStyle(.iconOnly)
+						.foregroundStyle(.secondary)
+				}
+				Divider()
+					.frame(maxHeight: 18)
+				LengthyTasksToolbarButton()
 					.labelStyle(.iconOnly)
 					.foregroundStyle(.secondary)
-					.bold()
+				Spacer()
 			}
 			.buttonStyle(.plain)
 			.padding([.leading, .bottom], 10)

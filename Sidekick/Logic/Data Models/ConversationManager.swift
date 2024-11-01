@@ -48,6 +48,19 @@ public class ConversationManager: ObservableObject {
 		return self.conversations.last
 	}
 	
+	/// Computed property returning the most recent conversation
+	var recentConversation: Conversation? {
+		if self.conversations.sorted(
+			by: \.createdAt
+		).last == nil {
+			self.newConversation()
+		}
+		return self.conversations.sorted(
+			by: \.createdAt
+		).last
+	}
+	
+	
 	/// Function to create a new conversation
 	public func newConversation() {
 		let defaultTitle: String = Date.now.formatted(
