@@ -131,7 +131,9 @@ struct ConversationManagerView: View {
 		) { output in
 			self.conversationState.selectedProfileId = profileManager.default?.id
 			if let recentConversationId = conversationManager.recentConversation?.id {
-				self.conversationState.selectedConversationId = recentConversationId
+				withAnimation(.linear) {
+					self.conversationState.selectedConversationId = recentConversationId
+				}
 			}
 		}
 		.onReceive(

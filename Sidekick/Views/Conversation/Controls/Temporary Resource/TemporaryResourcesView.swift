@@ -47,6 +47,9 @@ struct TemporaryResourcesView: View {
 					TemporaryResourceView(
 						tempResource: tempResource
 					)
+					.transition(
+						.scale
+					)
 				}
 				Spacer()
 			}

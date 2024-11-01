@@ -67,6 +67,13 @@ struct ConversationControlsView: View {
 				Group {
 					if promptController.prompt.isEmpty {
 						typedText
+							.transition(
+								.asymmetric(
+									insertion: .push(from: .bottom),
+									removal: .move(edge: .bottom)
+								)
+								.combined(with: .opacity)
+							)
 					}
 					inputField
 				}
@@ -75,9 +82,19 @@ struct ConversationControlsView: View {
 				ConversationQuickPromptsView(
 					input: $promptController.prompt
 				)
+				.transition(
+					.asymmetric(
+						insertion: .push(from: .top),
+						removal: .move(edge: .top)
+					)
+					.combined(with: .opacity)
+				)
 			}
 			if promptController.hasResources {
 				TemporaryResourcesView()
+					.transition(
+						.opacity
+					)
 			}
 			if !messages.isEmpty {
 				inputField
