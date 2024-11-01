@@ -133,9 +133,6 @@ Tokens per second: \(tokensPerSecondStr)
 			}
 		}
 		.padding(11)
-		.transition(
-			.scale(1.0, anchor: .topLeading)
-		)
 		.background {
 			MessageBackgroundView()
 		}
