@@ -17,7 +17,7 @@ public class DefaultModels {
 	]
 	
 	/// All default models that can be run by the device, in an array of ``HuggingFaceModel``
-	private static var defaultModels: [HuggingFaceModel] {
+	private static var models: [HuggingFaceModel] {
 		let models: [HuggingFaceModel] = self.modelFamilies.map { family in
 			family.models
 		}.reduce([], +)
@@ -27,11 +27,11 @@ public class DefaultModels {
 	/// The reccomended model for the device, of type ``HuggingFaceModel``
 	public static var recommendedModel: HuggingFaceModel {
 		// Get baseline model
-		let minModel: HuggingFaceModel = defaultModels.sorted(
+		let minModel: HuggingFaceModel = models.sorted(
 			by: \.minRam
 		).first!
 		// Get top end model that can be run
-		if let maxModel: HuggingFaceModel = defaultModels.filter({
+		if let maxModel: HuggingFaceModel = models.filter({
 			$0.canRun()
 		}).sorted(
 			by: \.mmluScore,
@@ -53,11 +53,11 @@ public class DefaultModels {
 		gpuCoreCount: Int
 	) -> HuggingFaceModel {
 		// Get baseline model
-		let minModel: HuggingFaceModel = defaultModels.sorted(
+		let minModel: HuggingFaceModel = models.sorted(
 			by: \.minRam
 		).first!
 		// Get top end model that can be run
-		if let maxModel: HuggingFaceModel = defaultModels.filter({
+		if let maxModel: HuggingFaceModel = models.filter({
 			$0.canRun(
 				unifiedMemorySize: ramSize,
 				gpuCoreCount: gpuCoreCount
