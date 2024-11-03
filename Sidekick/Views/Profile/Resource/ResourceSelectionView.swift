@@ -37,6 +37,12 @@ struct ResourceSelectionView: View {
 				profile: $profile,
 				resource: resource
 			)
+			.transition(
+				.asymmetric(
+					insertion: .push(from: .leading),
+					removal: .move(edge: .leading)
+				)
+			)
 		}
 		.padding(.horizontal)
 		.listStyle(.plain)

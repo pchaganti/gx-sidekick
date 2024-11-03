@@ -20,6 +20,14 @@
 		202801FA2CC949F2005C1F7D /* TemporaryResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202801F92CC949F2005C1F7D /* TemporaryResource.swift */; };
 		202801FC2CC9C5C2005C1F7D /* TemporaryResourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202801FB2CC9C5C2005C1F7D /* TemporaryResourceView.swift */; };
 		202E3EDD2CBB8F7B00AF86C8 /* ReferencedURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202E3EDC2CBB8F7B00AF86C8 /* ReferencedURL.swift */; };
+		202ED94A2CD7791600D96030 /* HuggingFaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202ED9492CD7791600D96030 /* HuggingFaceModel.swift */; };
+		202ED94D2CD7815D00D96030 /* ModelSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202ED94C2CD7815D00D96030 /* ModelSet.swift */; };
+		202ED9522CD781A000D96030 /* LLaMa3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202ED9512CD781A000D96030 /* LLaMa3.swift */; };
+		202ED9542CD7826E00D96030 /* Qwen2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202ED9532CD7826E00D96030 /* Qwen2.swift */; };
+		202ED9562CD7827400D96030 /* Gemma2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202ED9552CD7827400D96030 /* Gemma2.swift */; };
+		202ED9582CD7841100D96030 /* DefaultModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202ED9572CD7841100D96030 /* DefaultModels.swift */; };
+		202ED95C2CD7878700D96030 /* AppleGPUInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202ED95B2CD7878700D96030 /* AppleGPUInfo.swift */; };
+		202ED95E2CD787A600D96030 /* CAppleGPUInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202ED95D2CD787A600D96030 /* CAppleGPUInfo.swift */; };
 		2038CCF32CB6CBC6005AA315 /* PendingMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2038CCF22CB6CBC6005AA315 /* PendingMessageView.swift */; };
 		204592172CD32DEF00DEAA96 /* TypedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204592162CD32DEF00DEAA96 /* TypedTextView.swift */; };
 		204C79532CB7500800EED58E /* EndDetectionScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204C79522CB7500800EED58E /* EndDetectionScrollView.swift */; };
@@ -194,6 +202,15 @@
 		202801F92CC949F2005C1F7D /* TemporaryResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryResource.swift; sourceTree = "<group>"; };
 		202801FB2CC9C5C2005C1F7D /* TemporaryResourceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryResourceView.swift; sourceTree = "<group>"; };
 		202E3EDC2CBB8F7B00AF86C8 /* ReferencedURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferencedURL.swift; sourceTree = "<group>"; };
+		202ED9492CD7791600D96030 /* HuggingFaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HuggingFaceModel.swift; sourceTree = "<group>"; };
+		202ED94C2CD7815D00D96030 /* ModelSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelSet.swift; sourceTree = "<group>"; };
+		202ED9512CD781A000D96030 /* LLaMa3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLaMa3.swift; sourceTree = "<group>"; };
+		202ED9532CD7826E00D96030 /* Qwen2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Qwen2.swift; sourceTree = "<group>"; };
+		202ED9552CD7827400D96030 /* Gemma2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gemma2.swift; sourceTree = "<group>"; };
+		202ED9572CD7841100D96030 /* DefaultModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultModels.swift; sourceTree = "<group>"; };
+		202ED95A2CD7876A00D96030 /* AppleGPUInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppleGPUInfo.h; sourceTree = "<group>"; };
+		202ED95B2CD7878700D96030 /* AppleGPUInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleGPUInfo.swift; sourceTree = "<group>"; };
+		202ED95D2CD787A600D96030 /* CAppleGPUInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAppleGPUInfo.swift; sourceTree = "<group>"; };
 		2038CCF22CB6CBC6005AA315 /* PendingMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingMessageView.swift; sourceTree = "<group>"; };
 		204592162CD32DEF00DEAA96 /* TypedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypedTextView.swift; sourceTree = "<group>"; };
 		204C79522CB7500800EED58E /* EndDetectionScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndDetectionScrollView.swift; sourceTree = "<group>"; };
@@ -433,6 +450,53 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
+		202ED94B2CD780BE00D96030 /* Default Models */ = {
+			isa = PBXGroup;
+			children = (
+				202ED9572CD7841100D96030 /* DefaultModels.swift */,
+				202ED94C2CD7815D00D96030 /* ModelSet.swift */,
+				202ED9492CD7791600D96030 /* HuggingFaceModel.swift */,
+				202ED94E2CD7818200D96030 /* LLaMa */,
+				202ED94F2CD7818C00D96030 /* Qwen */,
+				202ED9502CD7819300D96030 /* Gemma */,
+			);
+			path = "Default Models";
+			sourceTree = "<group>";
+		};
+		202ED94E2CD7818200D96030 /* LLaMa */ = {
+			isa = PBXGroup;
+			children = (
+				202ED9512CD781A000D96030 /* LLaMa3.swift */,
+			);
+			path = LLaMa;
+			sourceTree = "<group>";
+		};
+		202ED94F2CD7818C00D96030 /* Qwen */ = {
+			isa = PBXGroup;
+			children = (
+				202ED9532CD7826E00D96030 /* Qwen2.swift */,
+			);
+			path = Qwen;
+			sourceTree = "<group>";
+		};
+		202ED9502CD7819300D96030 /* Gemma */ = {
+			isa = PBXGroup;
+			children = (
+				202ED9552CD7827400D96030 /* Gemma2.swift */,
+			);
+			path = Gemma;
+			sourceTree = "<group>";
+		};
+		202ED9592CD7871700D96030 /* GPU Info */ = {
+			isa = PBXGroup;
+			children = (
+				202ED95A2CD7876A00D96030 /* AppleGPUInfo.h */,
+				202ED95B2CD7878700D96030 /* AppleGPUInfo.swift */,
+				202ED95D2CD787A600D96030 /* CAppleGPUInfo.swift */,
+			);
+			path = "GPU Info";
+			sourceTree = "<group>";
+		};
 		204C79542CB765C100EED58E /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -626,6 +690,7 @@
 				20B9E60F2CB1429E00BA0AD2 /* Commands */,
 				20B9E6142CB1463D00BA0AD2 /* Inference */,
 				20B97CDB2CAFFDE5009A0A5D /* Types */,
+				202ED9592CD7871700D96030 /* GPU Info */,
 			);
 			path = Logic;
 			sourceTree = "<group>";
@@ -658,6 +723,7 @@
 				202E3EDC2CBB8F7B00AF86C8 /* ReferencedURL.swift */,
 				20FB0D8A2CBA8828006D062A /* SearchResult.swift */,
 				208388EC2CBF825400C2A9F8 /* Tavily.swift */,
+				202ED94B2CD780BE00D96030 /* Default Models */,
 				202801F72CC94938005C1F7D /* Conversation */,
 				202801F82CC94962005C1F7D /* Profile */,
 			);
@@ -930,6 +996,7 @@
 			files = (
 				20573F362CB53878004C19FE /* CircleMenuStyle.swift in Sources */,
 				204592172CD32DEF00DEAA96 /* TypedTextView.swift in Sources */,
+				202ED9562CD7827400D96030 /* Gemma2.swift in Sources */,
 				20571F842CBD71C9004F3344 /* SystemPromptEditor.swift in Sources */,
 				20C221062CC4B15600A99796 /* SourcesManager.swift in Sources */,
 				20B4D6B12CC3D72700817E15 /* Extension+IndexItem.swift in Sources */,
@@ -937,13 +1004,17 @@
 				20B97CE72CB0066A009A0A5D /* Extension+String.swift in Sources */,
 				200FBFF72CB68ABF00A92A74 /* ChatParameters.swift in Sources */,
 				20B97CB52CAFE86C009A0A5D /* ContentView.swift in Sources */,
+				202ED9542CD7826E00D96030 /* Qwen2.swift in Sources */,
+				202ED9582CD7841100D96030 /* DefaultModels.swift in Sources */,
 				20B97CCE2CAFEC37009A0A5D /* Settings.swift in Sources */,
 				20AA5A522CC87032003E5519 /* Tips.swift in Sources */,
+				202ED95E2CD787A600D96030 /* CAppleGPUInfo.swift in Sources */,
 				20573F232CB52E79004C19FE /* Extension+Theme.swift in Sources */,
 				200FBFF52CB66C0000A92A74 /* LlamaServerError.swift in Sources */,
 				20B97CE32CB00585009A0A5D /* Profile.swift in Sources */,
 				208388E52CBF526E00C2A9F8 /* RetrievalSettings.swift in Sources */,
 				20573F212CB527DB004C19FE /* MessageView.swift in Sources */,
+				202ED95C2CD7878700D96030 /* AppleGPUInfo.swift in Sources */,
 				202801FA2CC949F2005C1F7D /* TemporaryResource.swift in Sources */,
 				20573F162CB505DC004C19FE /* ConversationListView.swift in Sources */,
 				20B97CCF2CAFEC37009A0A5D /* DownloadManager.swift in Sources */,
@@ -954,6 +1025,7 @@
 				208388E22CBF51F900C2A9F8 /* RetrievalSettingsView.swift in Sources */,
 				207A9F5F2CB903FD00E727DE /* Extension+Binding.swift in Sources */,
 				2099BD9F2CB7E9CE00E02732 /* QuickPrompt.swift in Sources */,
+				202ED9522CD781A000D96030 /* LLaMa3.swift in Sources */,
 				207A9F5D2CB8FD0900E727DE /* ResourceSectionView.swift in Sources */,
 				20D9A9732CD2769300171FDE /* MessageShareMenu.swift in Sources */,
 				20573F322CB53172004C19FE /* InferenceSettings.swift in Sources */,
@@ -972,6 +1044,7 @@
 				2086E1AC2CB03CD200FFCF57 /* Dialogs.swift in Sources */,
 				20573F2D2CB52FAF004C19FE /* SplashCodeSyntaxHighlighter.swift in Sources */,
 				20E48C262CB560730085E7D6 /* ChatStyle.swift in Sources */,
+				202ED94D2CD7815D00D96030 /* ModelSet.swift in Sources */,
 				20571F7B2CBD602B004F3344 /* InferenceSettingsView.swift in Sources */,
 				20B97CDF2CAFFE6A009A0A5D /* Sender.swift in Sources */,
 				202E3EDD2CBB8F7B00AF86C8 /* ReferencedURL.swift in Sources */,
@@ -1028,6 +1101,7 @@
 				202801FC2CC9C5C2005C1F7D /* TemporaryResourceView.swift in Sources */,
 				20573F182CB50743004C19FE /* ConversationView.swift in Sources */,
 				200FBFF32CB66B8300A92A74 /* ServerHealth.swift in Sources */,
+				202ED94A2CD7791600D96030 /* HuggingFaceModel.swift in Sources */,
 				2099BDB22CB828A500E02732 /* PopoverButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

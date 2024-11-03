@@ -60,9 +60,7 @@ struct ModelSelectionView: View {
 	var downloadButton: some View {
 		Button {
 			// Start download of the default model
-			self.downloadManager.startDownload(
-				url: InferenceSettings.defaultModelUrl
-			)
+			self.downloadManager.downloadDefaultModel()
 		} label: {
 			HStack {
 				Text("Download Default Model")

@@ -152,7 +152,7 @@ public class ProfileManager: ObservableObject {
 	
 	/// Function to add a profile
 	public func add(_ profile: Profile) {
-		withAnimation(.spring()) {
+		withAnimation(.linear) {
 			self.profiles.append(profile)
 		}
 	}

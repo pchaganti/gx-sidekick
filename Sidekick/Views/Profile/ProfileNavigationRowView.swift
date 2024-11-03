@@ -68,7 +68,7 @@ struct ProfileNavigationRowView: View {
 			if let profile = profileManager.getProfile(
 				id: profileId
 			) {
-				profileManager.delete(profile)
+				self.profileManager.delete(profile)
 			}
 		}
 	}

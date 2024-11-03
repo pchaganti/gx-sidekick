@@ -43,22 +43,28 @@ public class DownloadManager: NSObject, ObservableObject {
 	
 	/// Function to download the default large language model
 	func downloadDefaultModel() {
+		// Get default model
+		let model: HuggingFaceModel = DefaultModels.recommendedModel
+		print("Trying to download \(model.name)")
+		// Check if accessible
 		URL.verifyURL(
-			urlPath: InferenceSettings.defaultModelUrlString
+			urlPath: model.urlString
 		) { isValid in
 			if isValid {
+				// If accessible
 				self.startDownload(
-					url: InferenceSettings.defaultModelUrl
+					url: model.url
 				)
 			} else {
+				// If not accessible
 				self.startDownload(
-					url: InferenceSettings.defaultModelMirrorUrl
+					url: model.mirrorUrl
 				)
 			}
 		}
 	}
 	
-	func startDownload(url: URL) {
+	private func startDownload(url: URL) {
 		print("Starting download ", url)
 		// Ignore download if it's already in progress
 		if self.tasks.contains(where: {
@@ -67,7 +73,9 @@ public class DownloadManager: NSObject, ObservableObject {
 			return
 		}
 		let task: URLSessionTask = urlSession.downloadTask(with: url)
-		self.tasks.append(task)
+		DispatchQueue.main.async {
+			self.tasks.append(task)
+		}
 		task.resume()
 	}
 	

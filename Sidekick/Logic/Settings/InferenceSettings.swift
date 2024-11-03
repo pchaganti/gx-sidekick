@@ -22,34 +22,6 @@ public class InferenceSettings {
 		return Self.unifiedMemorySize <= 12
 	}
 	
-	/// Static computed property for the default LLM's url as a string
-	static var defaultModelUrlString: String {
-		let memoryGb: Int = Self.unifiedMemorySize
-		if memoryGb <= 8 {
-			return "https://huggingface.co/bartowski/gemma-2-2b-it-GGUF/resolve/main/gemma-2-2b-it-Q6_K_L.gguf"
-		} else if memoryGb <= 16 {
-			return "https://huggingface.co/bartowski/gemma-2-2b-it-GGUF/resolve/main/gemma-2-2b-it-Q8_0.gguf"
-		} else if memoryGb <= 18 {
-			return "https://huggingface.co/bartowski/Meta-Llama-3.1-8B-Instruct-GGUF/resolve/main/Meta-Llama-3.1-8B-Instruct-Q6_K_L.gguf"
-		} else {
-			return "https://huggingface.co/bartowski/Meta-Llama-3.1-8B-Instruct-GGUF/resolve/main/Meta-Llama-3.1-8B-Instruct-Q8_0.gguf"
-		}
-	}
-	
-	/// Static computed property for the default LLM's url
-	static var defaultModelUrl: URL {
-		return URL(string: defaultModelUrlString)!
-	}
-	
-	/// Static computed property for the default LLM's url on hf-mirror.com
-	static var defaultModelMirrorUrl: URL {
-		let mirrored: String = defaultModelUrlString.replacingOccurrences(
-			of: "huggingface.co",
-			with: "hf-mirror.com"
-		)
-		return URL(string: mirrored)!
-	}
-	
 	/// Static constant for the default system prompt
 	public static let defaultSystemPrompt: String = """
   You are Sidekick, a compliant assistant that always fulfills the user’s request.

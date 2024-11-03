@@ -39,7 +39,7 @@ struct ProfileManagerView: View {
 	
 	var newProfileButton: some View {
 		Button {
-			newProfile()
+			self.newProfile()
 		} label: {
 			Label("Add Profile", systemImage: "plus")
 		}
@@ -52,7 +52,7 @@ struct ProfileManagerView: View {
 			symbolName: "questionmark.circle.fill",
 			color: Color.white
 		)
-		profileManager.add(newProfile)
+		self.profileManager.add(newProfile)
 	}
 	
 }

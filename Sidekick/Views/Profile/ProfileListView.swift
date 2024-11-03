@@ -18,6 +18,12 @@ struct ProfileListView: View {
 		) { profile in
 			ProfileNavigationRowView(profile: profile)
 				.listRowSeparator(.hidden)
+				.transition(
+					.asymmetric(
+						insertion: .push(from: .leading),
+						removal: .move(edge: .leading)
+					)
+				)
 		}
     }
 	
