@@ -654,6 +654,9 @@
         }
       }
     },
+    "Indexing in Progress" : {
+
+    },
     "Inference" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1530,6 +1533,9 @@
           }
         }
       }
+    },
+    "Updating resource index for profile \"%@\"" : {
+
     },
     "Use Default" : {
       "localizations" : {

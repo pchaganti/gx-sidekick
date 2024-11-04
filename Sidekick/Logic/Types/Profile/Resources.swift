@@ -58,9 +58,10 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 	) async {
 		// Add to task list
 		let taskId: UUID = UUID()
+		let taskName: String = String(localized: "Updating resource index for profile \"\(profileName)\"")
 		LengthyTasksController.shared.addTask(
 			id: taskId, 
-			task: "Updating resource index for profile \"\(profileName)\""
+			task: taskName
 		)
 		// Update for each file
 		for index in self.resources.indices  {

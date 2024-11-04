@@ -66,7 +66,7 @@ struct MessagesView: View {
 				.vertical,
 				showIndicators: true,
 				hasScrolledNearEnd: $didScrollNearBottom,
-				distanceFromEnd: 20
+				distanceFromEnd: 50
 			) {
 				HStack(alignment: .top) {
 					LazyVStack(

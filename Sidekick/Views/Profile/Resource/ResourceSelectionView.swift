@@ -11,9 +11,21 @@ import SwiftUI
 struct ResourceSelectionView: View {
 	
 	@Binding var profile: Profile
+	@EnvironmentObject private var lengthyTasksController: LengthyTasksController
 	
 	var hasResources: Bool {
 		return !profile.resources.resources.isEmpty
+	}
+	
+	var isUpdating: Bool {
+		let taskName: String = String(
+			localized: "Updating resource index for profile \"\(self.profile.name)\""
+		)
+		return lengthyTasksController.tasks
+			.map(\.name)
+			.contains(
+				taskName
+			)
 	}
 	
 	var body: some View {
@@ -51,8 +63,13 @@ struct ResourceSelectionView: View {
 	var noResources: some View {
 		HStack {
 			Spacer()
-			Text("No resources")
+			Text(!isUpdating ? String(localized: "No resources") : String(localized: "Indexing in Progress"))
 				.foregroundStyle(.secondary)
+			if isUpdating {
+				ProgressView()
+					.progressViewStyle(.circular)
+					.scaleEffect(0.5)
+			}
 			Spacer()
 		}
 	}

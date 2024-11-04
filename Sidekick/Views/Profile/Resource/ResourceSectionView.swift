@@ -13,6 +13,19 @@ struct ResourceSectionView: View {
 	
 	@State private var isAddingWebsite: Bool = false
 	
+	@EnvironmentObject private var lengthyTasksController: LengthyTasksController
+	
+	var isUpdating: Bool {
+		let taskName: String = String(
+			localized: "Updating resource index for profile \"\(self.profile.name)\""
+		)
+		return lengthyTasksController.tasks
+			.map(\.name)
+			.contains(
+				taskName
+			)
+	}
+	
     var body: some View {
 		Section {
 			VStack {
@@ -41,6 +54,11 @@ struct ResourceSectionView: View {
 						.bold()
 					Text("Files, folders or websites stored in the chatbot's \"conscience\"")
 						.font(.caption)
+				}
+				if isUpdating {
+					ProgressView()
+						.progressViewStyle(.circular)
+						.scaleEffect(0.5)
 				}
 				Spacer()
 				Button {
