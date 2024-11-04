@@ -15,11 +15,9 @@ struct ModelSelectionView: View {
     var body: some View {
 		VStack {
 			welcome
-			HStack {
-				downloadButton
-				selectButton
-			}
-			.padding(.top, 5)
+			downloadButton
+				.padding(.top, 5)
+			selectButton
 			downloadProgress
 		}
 		.padding(.horizontal)
@@ -81,7 +79,7 @@ struct ModelSelectionView: View {
 		} label: {
 			Text("Select a Model")
 		}
-		.controlSize(.large)
+		.buttonStyle(.link)
 	}
 	
 }

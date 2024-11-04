@@ -287,7 +287,3 @@ Tokens per second: \(tokensPerSecondStr)
 	}
 	
 }
-
-//#Preview {
-//	MessageView()
-//}

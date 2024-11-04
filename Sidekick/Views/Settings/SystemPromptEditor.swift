@@ -34,29 +34,33 @@ A well-crafted system prompt helps the LLM focus on the correct task and reduces
 			TextEditor(text: $systemPrompt)
 				.frame(minHeight: 100)
 			Divider()
-			HStack {
-				Spacer()
-				Button {
-					isEditingSystemPrompt.toggle()
-				} label: {
-					Text("Cancel")
-				}
-				Button {
-					self.systemPrompt = InferenceSettings.defaultSystemPrompt
-					InferenceSettings.setNormalSystemPrompt()
-				} label: {
-					Text("Use Default")
-				}
-				Button {
-					InferenceSettings.systemPrompt = self.systemPrompt
-					isEditingSystemPrompt.toggle()
-				} label: {
-					Text("Save")
-				}
-				.keyboardShortcut("s", modifiers: .command)
-			}
+			controls
 		}
 		.padding()
+	}
+	
+	var controls: some View {
+		HStack {
+			Spacer()
+			Button {
+				isEditingSystemPrompt.toggle()
+			} label: {
+				Text("Cancel")
+			}
+			Button {
+				self.systemPrompt = InferenceSettings.defaultSystemPrompt
+				InferenceSettings.setNormalSystemPrompt()
+			} label: {
+				Text("Use Default")
+			}
+			Button {
+				InferenceSettings.systemPrompt = self.systemPrompt
+				isEditingSystemPrompt.toggle()
+			} label: {
+				Text("Save")
+			}
+			.keyboardShortcut("s", modifiers: .command)
+		}
 	}
 	
 }

@@ -1052,6 +1052,7 @@
       }
     },
     "Restart Required" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1272,6 +1273,7 @@
       }
     },
     "Sidekick needs to restart to use the newly selected model." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {

@@ -50,14 +50,7 @@ struct InferenceSettingsView: View {
 			}
 			Spacer()
 			Button {
-				let result: Bool = Settings.selectModel()
-				if result {
-					Dialogs.showAlert(
-						title: String(localized: "Restart Required"),
-						message: String(localized: "Sidekick needs to restart to use the newly selected model.")
-					)
-					NSApplication.shared.terminate(nil)
-				}
+				let _: Bool = Settings.selectModel()
 			} label: {
 				Text("Select")
 			}

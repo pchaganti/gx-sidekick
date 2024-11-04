@@ -378,6 +378,27 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		200C3E2B2CD8B0A40033909F /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				207A9F5E2CB903FD00E727DE /* Extension+Binding.swift */,
+				20B97CE42CB00605009A0A5D /* Extension+Color.swift */,
+				20573F222CB52E79004C19FE /* Extension+Theme.swift */,
+				204C79572CB769A400EED58E /* Extension+View.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		200C3E2C2CD8B1380033909F /* AppKit */ = {
+			isa = PBXGroup;
+			children = (
+				20DEABEC2CC4D68A0046447C /* Extension+CGImage.swift */,
+				20E48C2A2CB560E30085E7D6 /* Extension+CGKeyCode.swift */,
+				208388EE2CBF86A100C2A9F8 /* Extension+UserDefaults.swift */,
+			);
+			path = AppKit;
+			sourceTree = "<group>";
+		};
 		200FBFD62CB627B100A92A74 /* llama.cpp */ = {
 			isa = PBXGroup;
 			children = (
@@ -699,18 +720,13 @@
 		20B97CD22CAFEC90009A0A5D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				207A9F5E2CB903FD00E727DE /* Extension+Binding.swift */,
-				20DEABEC2CC4D68A0046447C /* Extension+CGImage.swift */,
-				20E48C2A2CB560E30085E7D6 /* Extension+CGKeyCode.swift */,
-				20B97CE42CB00605009A0A5D /* Extension+Color.swift */,
 				20B4D6B02CC3D72700817E15 /* Extension+IndexItem.swift */,
 				2099BD9A2CB7B8C800E02732 /* Extension+RawRepresentable.swift */,
 				20FB0D882CBA8327006D062A /* Extension+SimilarityIndex.swift */,
 				20B97CE62CB0066A009A0A5D /* Extension+String.swift */,
-				20573F222CB52E79004C19FE /* Extension+Theme.swift */,
 				20B97CEA2CB00912009A0A5D /* Extension+URL.swift */,
-				208388EE2CBF86A100C2A9F8 /* Extension+UserDefaults.swift */,
-				204C79572CB769A400EED58E /* Extension+View.swift */,
+				200C3E2B2CD8B0A40033909F /* UI */,
+				200C3E2C2CD8B1380033909F /* AppKit */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
