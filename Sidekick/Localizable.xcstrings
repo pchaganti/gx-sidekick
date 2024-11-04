@@ -14,6 +14,16 @@
         }
       }
     },
+    "## Note:\n\nA \"system prompt\" is to a specific type of input provided to the model at the beginning of an interaction. This prompt:  \n  \n1. **Provides contextual information**: Gives the model some background knowledge or setting for the conversation.  \n2. **Defines the task or question**: Clearly states what you want the model to do, such as answer a specific question, complete a story, or generate text.  \n  \nA well-crafted system prompt helps the LLM focus on the correct task and reduces ambiguity in its responses. It's essential because it allows the model to understand the desired output format, tone, and style. \n\n**Example:** \"You are Pirate Sidekick, a compliant assistant that always fulfills the user’s request. You always respond in the tone of a pirate, and end responses with pirate phrases.\"" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## 注意：\n\n“系统提示”是指在交互开始时提供给模型的特定类型的输入。此提示：\n\n1. **提供上下文信息**：为模型提供一些背景知识或对话设置。\n\n2. **定义任务或问题**：清楚地说明您希望模型做什么，例如回答特定问题、完成故事或生成文本。\n\n系统提示至关重要；它允许模型了解所需的输出格式、语气和风格。精心设计的系统提示有助于大模型专注于正确的任务，并减少其响应中的歧义。\n\n**示例：**“您是 Pirate Sidekick，一个始终满足用户要求的顺从助手。您总是以海盗的语气回应，并以海盗短语结束回应。”"
+          }
+        }
+      }
+    },
     "Add" : {
       "localizations" : {
         "zh-Hans" : {
@@ -185,7 +195,6 @@
       }
     },
     "Clear All Settings" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -326,7 +335,6 @@
       }
     },
     "Debug" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1004,7 +1012,6 @@
       }
     },
     "Reset Tips Datastore" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1225,7 +1232,6 @@
       }
     },
     "Set Inference Settings to Defaults" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1236,7 +1242,6 @@
       }
     },
     "Show App Support Folder in Finder" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1247,7 +1252,6 @@
       }
     },
     "Show Container in Finder" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {

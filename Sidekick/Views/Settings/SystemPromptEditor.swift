@@ -14,7 +14,7 @@ struct SystemPromptEditor: View {
 	
 	@State private var systemPrompt: String = InferenceSettings.systemPrompt
 	
-	let note: String = """
+	let note: String = String(localized: """
 ## Note:
 
 A "system prompt" is to a specific type of input provided to the model at the beginning of an interaction. This prompt:  
@@ -25,7 +25,7 @@ A "system prompt" is to a specific type of input provided to the model at the be
 A well-crafted system prompt helps the LLM focus on the correct task and reduces ambiguity in its responses. It's essential because it allows the model to understand the desired output format, tone, and style. 
 
 **Example:** "You are Pirate Sidekick, a compliant assistant that always fulfills the user’s request. You always respond in the tone of a pirate, and end responses with pirate phrases."
-"""
+""")
 	
 	var body: some View {
 		VStack {
