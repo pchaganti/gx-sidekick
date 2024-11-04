@@ -89,7 +89,7 @@ struct MessagesView: View {
 			}
 			.onReceive(self.model.$pendingMessage) { _ in
 				// Scroll to end if response was updated & user at bottom
-				self.scrollOnUpdate(proxy: proxy)
+//				self.scrollOnUpdate(proxy: proxy)
 			}
 			.onReceive(self.model.$sentConversationId) { _ in
 				// Scroll to end if message was sent
@@ -147,7 +147,3 @@ struct MessagesView: View {
 	}
 	
 }
-
-//#Preview {
-//    MessagesView()
-//}
