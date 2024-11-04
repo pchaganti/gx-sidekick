@@ -655,7 +655,14 @@
       }
     },
     "Indexing in Progress" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在扫描"
+          }
+        }
+      }
     },
     "Inference" : {
       "localizations" : {
@@ -1535,7 +1542,14 @@
       }
     },
     "Updating resource index for profile \"%@\"" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在扫描新添加到“%@”的资源"
+          }
+        }
+      }
     },
     "Use Default" : {
       "localizations" : {
