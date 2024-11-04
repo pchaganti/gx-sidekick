@@ -156,7 +156,7 @@ Below is information that may or may not be relevant to my request in JSON forma
 
 When multiple sources provide correct, but conflicting information (e.g. different definitions), prioritize the use of sources from local files, not websites. 
 
-If your response uses information from one or more sources, your response MUST END WITH A SINGLE EXAUSTIVE LIST OF URLS OR FILEPATHS OF ALL REFERENCED SOURCES, in the format [{"url": "https://referencedwebsite.com"}, {"url": "/path/to/referenced/file.pdf"}], with no duplicates. 
+If your response uses information from one or more sources, your response MUST BE FOLLOWED WITH A SINGLE EXAUSTIVE LIST OF URLS OR FILEPATHS OF ALL REFERENCED SOURCES, in the format [{"url": "https://referencedwebsite.com"}, {"url": "/path/to/referenced/file.pdf"}], with no duplicates. 
 
 DO NOT reference sources outside of those provided below. If you did not reference provided sources, do not mention sources in your response. NO headers, labels, numbering or comments are needed in this list of referenced sources.
 
@@ -178,10 +178,21 @@ DO NOT reference sources outside of those provided below. If you did not referen
 	/// Computed property for trailing JSON string
 	private var trailingJSONString: String? {
 		// Get string with JSON
-		guard let jsonRange = text.range(of: "[", options: .backwards) else {
+		guard let jsonStartRange = text.range(of: "[", options: .backwards) else {
 			return nil
 		}
-		guard let jsonString: NSString = text[jsonRange.lowerBound...].trimmingCharacters(
+		guard let jsonEndRange = text.range(of: "]", options: .backwards) else {
+			return nil
+		}
+		let rawJsonString: String = {
+			if jsonStartRange.lowerBound >= jsonEndRange.upperBound {
+				return String(text[jsonStartRange.lowerBound...])
+			}
+			return String(
+				text[jsonStartRange.lowerBound..<jsonEndRange.upperBound]
+			)
+		}()
+		guard let jsonString: NSString = rawJsonString.trimmingCharacters(
 			in: .whitespacesAndNewlines
 		) as NSString? else {
 			return nil
