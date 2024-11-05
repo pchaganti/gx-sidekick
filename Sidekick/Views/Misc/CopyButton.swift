@@ -23,13 +23,16 @@ struct CopyButton: View {
 		Button (
 			action: copyCode
 		) {
-			if buttonText.isEmpty {
-				Image(systemName: imageName)
-					.padding(.vertical, 2)
-			} else {
-				Label(buttonText, systemImage: imageName)
-					.padding(.vertical, 2)
+			Group {
+				if buttonText.isEmpty {
+					Image(systemName: imageName)
+						.padding(.vertical, 2)
+				} else {
+					Label(buttonText, systemImage: imageName)
+						.padding(.vertical, 2)
+				}
 			}
+			.foregroundStyle(justCopied ? .green : .primary)
 		}
 		.frame(alignment: .center)
 	}

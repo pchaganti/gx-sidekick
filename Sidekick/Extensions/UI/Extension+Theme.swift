@@ -124,7 +124,22 @@ extension Theme {
 				.fixedSize(horizontal: false, vertical: true)
 			}
 			.codeBlock { configuration in
-				ZStack(alignment: .topTrailing) {
+				VStack {
+					HStack {
+						Text(
+							configuration.language?.capitalized ?? String(
+								localized: "Unknown Language"
+							)
+						)
+						.bold()
+						Spacer()
+						ExportButton(
+							text: configuration.content,
+							language: configuration.language
+						)
+						CopyButton(text: configuration.content)
+					}
+					Divider()
 					ScrollView(.horizontal) {
 						configuration.label
 							.relativeLineSpacing(.em(0.225))
@@ -132,15 +147,18 @@ extension Theme {
 								FontFamilyVariant(.monospaced)
 								FontSize(.em(0.85))
 							}
-							.padding(16)
 					}
-					.background(Color.secondaryBackground)
-					.clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
-					.markdownMargin(top: 0, bottom: 16)
-					
-					CopyButton(text: configuration.content)
-						.padding(10)
 				}
+				.padding(.horizontal, 16)
+				.padding(.vertical, 10)
+				.background(Color.secondaryBackground)
+				.clipShape(
+					RoundedRectangle(
+						cornerRadius: 6,
+						style: .continuous
+					)
+				)
+				.markdownMargin(top: 0, bottom: 16)
 			}
 			.listItem { configuration in
 				configuration.label

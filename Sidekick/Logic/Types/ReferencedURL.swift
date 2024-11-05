@@ -9,6 +9,7 @@ import AppKit
 import Foundation
 import FSKit_macOS
 import SwiftUI
+import UniformTypeIdentifiers
 
 public struct ReferencedURL: Codable, Equatable, Hashable {
 	
@@ -41,6 +42,7 @@ public struct ReferencedURL: Codable, Equatable, Hashable {
 				Capsule()
 					.stroke(lineWidth: 1)
 			}
+			.draggable(self.url)
 		}
 		.buttonStyle(.plain)
 		.foregroundStyle(Color.secondary)

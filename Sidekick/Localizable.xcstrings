@@ -564,12 +564,32 @@
         }
       }
     },
+    "File Extension:" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文件后缀："
+          }
+        }
+      }
+    },
     "File/Folder" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "文件 / 文件夹"
+          }
+        }
+      }
+    },
+    "Filename:" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文件名："
           }
         }
       }
@@ -1051,17 +1071,6 @@
         }
       }
     },
-    "Restart Required" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "重启"
-          }
-        }
-      }
-    },
     "Retrieval" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1172,6 +1181,16 @@
         }
       }
     },
+    "Select a Folder" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择文件夹"
+          }
+        }
+      }
+    },
     "Select a Model" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1268,17 +1287,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "在访达中显示"
-          }
-        }
-      }
-    },
-    "Sidekick needs to restart to use the newly selected model." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sidekick 需要重新启动才能使用这个模型。"
           }
         }
       }
@@ -1529,6 +1537,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "开始对话。"
+          }
+        }
+      }
+    },
+    "Unknown Language" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未知编程语言"
           }
         }
       }

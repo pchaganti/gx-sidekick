@@ -22,7 +22,7 @@ public class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
 			]
 		)
 		// Call function to check model reccomendations
-		DefaultModels.checkModelRecommendations()
+//		DefaultModels.checkModelRecommendations()
 	}
 	
 	/// Function that runs before the app is terminated
