@@ -10,8 +10,8 @@ import SwiftUI
 struct RetrievalSettingsView: View {
 	
 	@State private var useTavilySearch: Bool = RetrievalSettings.useTavilySearch
-	@State private var apiKey: String = RetrievalSettings.apiKey
-	@State private var backupApiKey: String = RetrievalSettings.backupApiKey
+	@AppStorage("apiKey") private var apiKey: String = RetrievalSettings.apiKey
+	@AppStorage("backupApiKey") private var backupApiKey: String = RetrievalSettings.backupApiKey
 	
 	@State private var searchResultMultiplier: Int = RetrievalSettings.searchResultsMultiplier
 	@State private var useSearchResultContext: Bool = RetrievalSettings.useSearchResultContext
@@ -81,16 +81,9 @@ struct RetrievalSettingsView: View {
 				useTavilySearch && apiKey.isEmpty ? .red : .primary
 			)
 			Spacer()
-			VStack(alignment: .trailing) {
-				SecureField("", text: $apiKey)
-					.textFieldStyle(.roundedBorder)
-					.frame(width: 300)
-				Button {
-					RetrievalSettings.apiKey = self.apiKey
-				} label: {
-					Text("Save")
-				}
-			}
+			SecureField("", text: $apiKey)
+				.textFieldStyle(.roundedBorder)
+				.frame(width: 300)
 		}
 	}
 	
@@ -104,16 +97,9 @@ struct RetrievalSettingsView: View {
 					.font(.caption)
 			}
 			Spacer()
-			VStack(alignment: .trailing) {
-				SecureField("", text: $backupApiKey)
-					.textFieldStyle(.roundedBorder)
-					.frame(width: 300)
-				Button {
-					RetrievalSettings.backupApiKey = self.backupApiKey
-				} label: {
-					Text("Save")
-				}
-			}
+			SecureField("", text: $backupApiKey)
+				.textFieldStyle(.roundedBorder)
+				.frame(width: 300)
 		}
 	}
 	
@@ -171,7 +157,3 @@ struct RetrievalSettingsView: View {
 	}
 	
 }
-
-//#Preview {
-//    RetrievalSettingsView()
-//}

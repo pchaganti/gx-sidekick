@@ -11,6 +11,8 @@ import UniformTypeIdentifiers
 
 struct InferenceSettingsView: View {
 	
+	@AppStorage("modelUrl") private var modelUrl: URL?
+	
 	@State private var isEditingSystemPrompt: Bool = false
 	
 	@State private var temperature: Double = InferenceSettings.temperature
@@ -42,7 +44,7 @@ struct InferenceSettingsView: View {
 	var model: some View {
 		HStack(alignment: .top) {
 			VStack(alignment: .leading) {
-				Text("Model: \(Settings.modelUrl?.lastPathComponent ?? "")")
+				Text("Model: \(modelUrl?.lastPathComponent ?? "")")
 					.font(.title3)
 					.bold()
 				Text("This is the default LLM used.")

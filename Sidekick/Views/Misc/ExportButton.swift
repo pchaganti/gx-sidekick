@@ -14,13 +14,18 @@ struct ExportButton: View {
 	var text: String
 	var language: String?
 	
-	let imageName: String = "document.badge.plus.fill"
+	let iconName: String = {
+		if #available(macOS 15, *) {
+			return "document.badge.plus.fill"
+		}
+		return "doc.fill.badge.plus"
+	}()
 	
     var body: some View {
 		Button {
 			isPresented.toggle()
 		} label: {
-			Image(systemName: imageName)
+			Image(systemName: iconName)
 				.padding(.vertical, 2)
 		}
 		.frame(alignment: .center)
@@ -30,6 +35,7 @@ struct ExportButton: View {
 				text: text,
 				language: language
 			)
+			.frame(idealWidth: 400)
 		}
     }
 	
@@ -121,7 +127,9 @@ extension ExportButton.ConfirmationSheet {
 	
 	struct ProgrammingLanguage {
 		
+		/// Name of the programming language, in type `String`
 		var name: String
+		/// File extension of the program files, in type `String`
 		var fileExtension: String
 		
 		static let languages: [ProgrammingLanguage] = [

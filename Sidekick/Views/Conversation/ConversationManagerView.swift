@@ -58,17 +58,6 @@ struct ConversationManagerView: View {
 		)
 	}
 	
-	@Environment(\.colorScheme) var colorScheme
-	
-	var isInverted: Bool {
-		guard let luminance = selectedProfile?.color.luminance else { return false }
-		let forDark: Bool = (luminance > 0.5) && (colorScheme == .dark)
-		let forLight: Bool = (luminance < 0.5) && (
-			colorScheme == .light
-		)
-		return forDark || forLight
-	}
-	
     var body: some View {
 		NavigationSplitView {
 			conversationList
@@ -82,9 +71,6 @@ struct ConversationManagerView: View {
 					.font(.title3)
 					.bold()
 					.foregroundStyle(toolbarTextColor)
-					.if(isInverted) { view in
-						view.colorInvert()
-					}
 			}
 			ToolbarItemGroup(placement: .principal) {
 				ProfileSelectionMenu()

@@ -12,20 +12,27 @@ import TipKit
 @MainActor
 public class DebugCommands {
 	
-#if DEBUG
 	static var commands: some Commands {
 		CommandGroup(after: .help) {
 			Menu("Debug") {
-				Button(action: Settings.clearUserDefaults) {
+				Button(
+					action: Settings.clearUserDefaults
+				) {
 					Text("Clear All Settings")
 				}
-				Button(action: InferenceSettings.setDefaults) {
+				Button(
+					action: InferenceSettings.setDefaults
+				) {
 					Text("Set Inference Settings to Defaults")
 				}
-				Button(action: ConversationManager.shared.resetDatastore) {
+				Button(
+					action: ConversationManager.shared.resetDatastore
+				) {
 					Text("Delete All Conversations")
 				}
-				Button(action: ProfileManager.shared.resetDatastore) {
+				Button(
+					action: ProfileManager.shared.resetDatastore
+				) {
 					Text("Delete All Profiles")
 				}
 				Button {
@@ -50,6 +57,5 @@ public class DebugCommands {
 			}
 		}
 	}
-#endif
 	
 }

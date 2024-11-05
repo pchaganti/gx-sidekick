@@ -34,9 +34,7 @@ struct SidekickApp: App {
 		.commands {
 			ConversationCommands.commands
 			WindowCommands.commands
-#if DEBUG
 			DebugCommands.commands
-#endif
 		}
 		
 		SwiftUI.Settings {
