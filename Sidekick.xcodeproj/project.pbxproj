@@ -88,6 +88,7 @@
 		20A8B65D2CB2829500B756FD /* ProfileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A8B65C2CB2829500B756FD /* ProfileManager.swift */; };
 		20AA5A522CC87032003E5519 /* Tips.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20AA5A512CC87032003E5519 /* Tips.swift */; };
 		20AA5A542CC89AAA003E5519 /* MessageBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20AA5A532CC89AAA003E5519 /* MessageBackgroundView.swift */; };
+		20AC3CE52CDA700700947FDA /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20AC3CE42CDA700700947FDA /* AppState.swift */; };
 		20B22E252CD9BC8B0030A8D3 /* ExportButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B22E242CD9BC8B0030A8D3 /* ExportButton.swift */; };
 		20B4D6AF2CC3C12C00817E15 /* PromptController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B4D6AE2CC3C12C00817E15 /* PromptController.swift */; };
 		20B4D6B12CC3D72700817E15 /* Extension+IndexItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B4D6B02CC3D72700817E15 /* Extension+IndexItem.swift */; };
@@ -266,6 +267,7 @@
 		20A8B65C2CB2829500B756FD /* ProfileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManager.swift; sourceTree = "<group>"; };
 		20AA5A512CC87032003E5519 /* Tips.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tips.swift; sourceTree = "<group>"; };
 		20AA5A532CC89AAA003E5519 /* MessageBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBackgroundView.swift; sourceTree = "<group>"; };
+		20AC3CE42CDA700700947FDA /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		20B22E242CD9BC8B0030A8D3 /* ExportButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportButton.swift; sourceTree = "<group>"; };
 		20B4D6AE2CC3C12C00817E15 /* PromptController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptController.swift; sourceTree = "<group>"; };
 		20B4D6B02CC3D72700817E15 /* Extension+IndexItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+IndexItem.swift"; sourceTree = "<group>"; };
@@ -660,6 +662,7 @@
 				20FE94DB2CB96FCD006E9F06 /* Info.plist */,
 				20B97CB12CAFE86C009A0A5D /* SidekickApp.swift */,
 				20B9E60B2CB140A000BA0AD2 /* AppDelegate.swift */,
+				20AC3CE42CDA700700947FDA /* AppState.swift */,
 				20B97CBF2CAFE87D009A0A5D /* Views */,
 				20B97CC02CAFE883009A0A5D /* Logic */,
 				20B97CD22CAFEC90009A0A5D /* Extensions */,
@@ -1043,6 +1046,7 @@
 				20B97CDA2CAFF2E7009A0A5D /* SetupCompleteView.swift in Sources */,
 				208388E22CBF51F900C2A9F8 /* RetrievalSettingsView.swift in Sources */,
 				207A9F5F2CB903FD00E727DE /* Extension+Binding.swift in Sources */,
+				20AC3CE52CDA700700947FDA /* AppState.swift in Sources */,
 				2099BD9F2CB7E9CE00E02732 /* QuickPrompt.swift in Sources */,
 				202ED9522CD781A000D96030 /* LLaMa3.swift in Sources */,
 				207A9F5D2CB8FD0900E727DE /* ResourceSectionView.swift in Sources */,

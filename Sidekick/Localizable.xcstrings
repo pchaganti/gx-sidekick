@@ -1001,6 +1001,16 @@
         }
       }
     },
+    "Profiles" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "专家"
+          }
+        }
+      }
+    },
     "References:" : {
       "localizations" : {
         "zh-Hans" : {

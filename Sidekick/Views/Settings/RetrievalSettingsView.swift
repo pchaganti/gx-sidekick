@@ -10,8 +10,8 @@ import SwiftUI
 struct RetrievalSettingsView: View {
 	
 	@State private var useTavilySearch: Bool = RetrievalSettings.useTavilySearch
-	@AppStorage("apiKey") private var apiKey: String = RetrievalSettings.apiKey
-	@AppStorage("backupApiKey") private var backupApiKey: String = RetrievalSettings.backupApiKey
+	@State private var apiKey: String = RetrievalSettings.apiKey
+	@State private var backupApiKey: String = RetrievalSettings.backupApiKey
 	
 	@State private var searchResultMultiplier: Int = RetrievalSettings.searchResultsMultiplier
 	@State private var useSearchResultContext: Bool = RetrievalSettings.useSearchResultContext
@@ -41,6 +41,10 @@ struct RetrievalSettingsView: View {
 			}
 			.foregroundStyle(useTavilySearch ? .primary : .secondary)
 			.disabled(!useTavilySearch)
+		}
+		.onAppear {
+			apiKey = RetrievalSettings.apiKey
+			backupApiKey = RetrievalSettings.backupApiKey
 		}
 	}
 	
@@ -80,6 +84,9 @@ struct RetrievalSettingsView: View {
 			.foregroundStyle(
 				useTavilySearch && apiKey.isEmpty ? .red : .primary
 			)
+			.onChange(of: apiKey) { oldValue, newValue in
+				RetrievalSettings.apiKey = newValue
+			}
 			Spacer()
 			SecureField("", text: $apiKey)
 				.textFieldStyle(.roundedBorder)
@@ -100,6 +107,9 @@ struct RetrievalSettingsView: View {
 			SecureField("", text: $backupApiKey)
 				.textFieldStyle(.roundedBorder)
 				.frame(width: 300)
+				.onChange(of: backupApiKey) { oldValue, newValue in
+					RetrievalSettings.backupApiKey = newValue
+				}
 		}
 	}
 	

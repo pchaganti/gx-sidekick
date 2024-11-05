@@ -25,7 +25,11 @@ struct ConversationManagerView: View {
 		)
 	}
 	
+	@Environment(\.appearsActive) var appearsActive
+	
 	@StateObject private var model: Model
+	
+	@EnvironmentObject private var appState: AppState
 	
 	@EnvironmentObject private var conversationManager: ConversationManager
 	@EnvironmentObject private var profileManager: ProfileManager
@@ -120,6 +124,16 @@ struct ConversationManagerView: View {
 				withAnimation(.linear) {
 					self.conversationState.selectedConversationId = recentConversationId
 				}
+			}
+		}
+		.onReceive(
+			NotificationCenter.default.publisher(
+				for: Notifications.didCommandSelectProfile.name
+			)
+		) { output in
+			// Update profile if needed
+			if self.appearsActive {
+				self.conversationState.selectedProfileId = self.appState.commandSelectedProfileId
 			}
 		}
 		.onReceive(

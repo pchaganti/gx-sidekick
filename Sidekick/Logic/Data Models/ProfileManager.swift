@@ -96,6 +96,18 @@ public class ProfileManager: ObservableObject {
 		return self.profiles.filter({ $0.id == profileId }).first
 	}
 	
+	/// Function returning a profile's index
+	public func getProfileIndex(
+		profile targetProfile: Profile
+	) -> Int {
+		for (index, profile) in self.profiles.enumerated() {
+			if profile == targetProfile {
+				return index
+			}
+		}
+		return 0
+	}
+	
 	/// Function to save profiles to disk
 	public func save() {
 		do {

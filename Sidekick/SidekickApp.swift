@@ -15,6 +15,8 @@ struct SidekickApp: App {
 	
 	@NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 	
+	@StateObject private var appState: AppState = .shared
+	
 	@StateObject private var downloadManager: DownloadManager = .shared
 	@StateObject private var conversationManager: ConversationManager = .shared
 	@StateObject private var profileManager: ProfileManager = .shared
@@ -25,6 +27,7 @@ struct SidekickApp: App {
 		
 		WindowGroup {
 			ContentView()
+				.environmentObject(appState)
 				.environmentObject(downloadManager)
 				.environmentObject(conversationManager)
 				.environmentObject(profileManager)
@@ -33,6 +36,7 @@ struct SidekickApp: App {
 		.windowToolbarStyle(.unified)
 		.commands {
 			ConversationCommands.commands
+			ConversationCommands.profileCommands
 			WindowCommands.commands
 			DebugCommands.commands
 		}
