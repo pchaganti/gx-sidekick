@@ -126,11 +126,19 @@ extension Theme {
 			.codeBlock { configuration in
 				VStack {
 					HStack {
-						Text(
-							configuration.language?.capitalized ?? String(
-								localized: "Unknown Language"
-							)
-						)
+						Text({
+							guard let langName: String = configuration.language?.capitalized else {
+								return String(
+									localized: "Unknown Language"
+								)
+							}
+							if langName.isEmpty {
+								return String(
+									localized: "Unknown Language"
+								)
+							}
+							return langName
+						}())
 						.bold()
 						Spacer()
 						ExportButton(
