@@ -29,7 +29,7 @@ public class Qwen2: ModelSet {
 	private static let qwen_2pt5_3b: HuggingFaceModel = HuggingFaceModel(
 		urlString: "https://huggingface.co/Qwen/Qwen2.5-3B-Instruct-GGUF/resolve/main/qwen2.5-3b-instruct-q8_0.gguf?download=true",
 		minRam: 16,
-		minGpu: 10,
+		minGpu: 8,
 		mmluScore: 65.6
 	)
 	

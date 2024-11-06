@@ -43,8 +43,9 @@ struct RetrievalSettingsView: View {
 			.disabled(!useTavilySearch)
 		}
 		.onAppear {
-			apiKey = RetrievalSettings.apiKey
-			backupApiKey = RetrievalSettings.backupApiKey
+			self.useTavilySearch = RetrievalSettings.useTavilySearch
+			self.apiKey = RetrievalSettings.apiKey
+			self.backupApiKey = RetrievalSettings.backupApiKey
 		}
 	}
 	

@@ -15,6 +15,14 @@
 		200FBFF32CB66B8300A92A74 /* ServerHealth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200FBFF22CB66B8300A92A74 /* ServerHealth.swift */; };
 		200FBFF52CB66C0000A92A74 /* LlamaServerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200FBFF42CB66C0000A92A74 /* LlamaServerError.swift */; };
 		200FBFF72CB68ABF00A92A74 /* ChatParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200FBFF62CB68ABF00A92A74 /* ChatParameters.swift */; };
+		201A1A8E2CDB7C1C001E9BA9 /* MarkdownDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201A1A8D2CDB7C1C001E9BA9 /* MarkdownDataView.swift */; };
+		201A1A912CDB7D8E001E9BA9 /* MarkdownDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201A1A902CDB7D8E001E9BA9 /* MarkdownDataViewController.swift */; };
+		201A1A932CDB8109001E9BA9 /* Extension+Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201A1A922CDB8109001E9BA9 /* Extension+Collection.swift */; };
+		201A1A962CDB99C6001E9BA9 /* MarkdownTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201A1A952CDB99C6001E9BA9 /* MarkdownTableView.swift */; };
+		201A1A982CDB9DED001E9BA9 /* MarkdownPieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201A1A972CDB9DED001E9BA9 /* MarkdownPieChartView.swift */; };
+		201A1A9A2CDBA802001E9BA9 /* MarkdownBarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201A1A992CDBA802001E9BA9 /* MarkdownBarChartView.swift */; };
+		201A1A9C2CDBB5B1001E9BA9 /* MarkdownScatterPlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201A1A9B2CDBB5B1001E9BA9 /* MarkdownScatterPlotView.swift */; };
+		201A1A9E2CDBBA25001E9BA9 /* MarkdownLineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201A1A9D2CDBBA25001E9BA9 /* MarkdownLineChartView.swift */; };
 		202801F42CC93C80005C1F7D /* DictationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202801F32CC93C80005C1F7D /* DictationButton.swift */; };
 		202801F62CC93CD5005C1F7D /* PromptInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202801F52CC93CD5005C1F7D /* PromptInputField.swift */; };
 		202801FA2CC949F2005C1F7D /* TemporaryResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202801F92CC949F2005C1F7D /* TemporaryResource.swift */; };
@@ -199,6 +207,14 @@
 		200FBFF22CB66B8300A92A74 /* ServerHealth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerHealth.swift; sourceTree = "<group>"; };
 		200FBFF42CB66C0000A92A74 /* LlamaServerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LlamaServerError.swift; sourceTree = "<group>"; };
 		200FBFF62CB68ABF00A92A74 /* ChatParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatParameters.swift; sourceTree = "<group>"; };
+		201A1A8D2CDB7C1C001E9BA9 /* MarkdownDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownDataView.swift; sourceTree = "<group>"; };
+		201A1A902CDB7D8E001E9BA9 /* MarkdownDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownDataViewController.swift; sourceTree = "<group>"; };
+		201A1A922CDB8109001E9BA9 /* Extension+Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Collection.swift"; sourceTree = "<group>"; };
+		201A1A952CDB99C6001E9BA9 /* MarkdownTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTableView.swift; sourceTree = "<group>"; };
+		201A1A972CDB9DED001E9BA9 /* MarkdownPieChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownPieChartView.swift; sourceTree = "<group>"; };
+		201A1A992CDBA802001E9BA9 /* MarkdownBarChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownBarChartView.swift; sourceTree = "<group>"; };
+		201A1A9B2CDBB5B1001E9BA9 /* MarkdownScatterPlotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownScatterPlotView.swift; sourceTree = "<group>"; };
+		201A1A9D2CDBBA25001E9BA9 /* MarkdownLineChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownLineChartView.swift; sourceTree = "<group>"; };
 		202801F32CC93C80005C1F7D /* DictationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictationButton.swift; sourceTree = "<group>"; };
 		202801F52CC93CD5005C1F7D /* PromptInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptInputField.swift; sourceTree = "<group>"; };
 		202801F92CC949F2005C1F7D /* TemporaryResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryResource.swift; sourceTree = "<group>"; };
@@ -431,6 +447,30 @@
 				200FBFF62CB68ABF00A92A74 /* ChatParameters.swift */,
 			);
 			path = Types;
+			sourceTree = "<group>";
+		};
+		201A1A8F2CDB7D7F001E9BA9 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				2004D7632CBC9DA2009F294E /* ConversationState.swift */,
+				201A1A902CDB7D8E001E9BA9 /* MarkdownDataViewController.swift */,
+				20B4D6AE2CC3C12C00817E15 /* PromptController.swift */,
+				20571F6E2CBCE8F7004F3344 /* LengthyTasksController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		201A1A942CDB99B6001E9BA9 /* Markdown */ = {
+			isa = PBXGroup;
+			children = (
+				201A1A8D2CDB7C1C001E9BA9 /* MarkdownDataView.swift */,
+				201A1A952CDB99C6001E9BA9 /* MarkdownTableView.swift */,
+				201A1A972CDB9DED001E9BA9 /* MarkdownPieChartView.swift */,
+				201A1A992CDBA802001E9BA9 /* MarkdownBarChartView.swift */,
+				201A1A9B2CDBB5B1001E9BA9 /* MarkdownScatterPlotView.swift */,
+				201A1A9D2CDBBA25001E9BA9 /* MarkdownLineChartView.swift */,
+			);
+			path = Markdown;
 			sourceTree = "<group>";
 		};
 		202801F12CC93C0D005C1F7D /* Controls */ = {
@@ -697,6 +737,7 @@
 				20573F192CB508B4004C19FE /* Conversation */,
 				20571F702CBCEDC1004F3344 /* LengthyTasks */,
 				204C79542CB765C100EED58E /* Profile */,
+				201A1A942CDB99B6001E9BA9 /* Markdown */,
 				20B9E6122CB1457200BA0AD2 /* Setup */,
 				20571F752CBD5FF4004F3344 /* Settings */,
 				20B9E6132CB1458500BA0AD2 /* Misc */,
@@ -708,6 +749,7 @@
 		20B97CC02CAFE883009A0A5D /* Logic */ = {
 			isa = PBXGroup;
 			children = (
+				201A1A8F2CDB7D7F001E9BA9 /* View Controllers */,
 				20AA5A502CC87026003E5519 /* Tips */,
 				208388E32CBF525A00C2A9F8 /* Settings */,
 				20571F822CBD6A95004F3344 /* Utilities */,
@@ -725,6 +767,7 @@
 		20B97CD22CAFEC90009A0A5D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				201A1A922CDB8109001E9BA9 /* Extension+Collection.swift */,
 				20B4D6B02CC3D72700817E15 /* Extension+IndexItem.swift */,
 				2099BD9A2CB7B8C800E02732 /* Extension+RawRepresentable.swift */,
 				20FB0D882CBA8327006D062A /* Extension+SimilarityIndex.swift */,
@@ -799,13 +842,10 @@
 			isa = PBXGroup;
 			children = (
 				2086E1702CB036BB00FFCF57 /* ConversationManager.swift */,
-				2004D7632CBC9DA2009F294E /* ConversationState.swift */,
 				20B97CCA2CAFEC37009A0A5D /* DownloadManager.swift */,
 				20A8B65C2CB2829500B756FD /* ProfileManager.swift */,
-				20B4D6AE2CC3C12C00817E15 /* PromptController.swift */,
 				20C221032CC4AFAF00A99796 /* SourceLogger.swift */,
 				20C221052CC4B15600A99796 /* SourcesManager.swift */,
-				20571F6E2CBCE8F7004F3344 /* LengthyTasksController.swift */,
 				208388D92CBF4DF500C2A9F8 /* TavilySearch.swift */,
 			);
 			path = "Data Models";
@@ -1036,6 +1076,7 @@
 				20B97CE32CB00585009A0A5D /* Profile.swift in Sources */,
 				208388E52CBF526E00C2A9F8 /* RetrievalSettings.swift in Sources */,
 				20573F212CB527DB004C19FE /* MessageView.swift in Sources */,
+				201A1A962CDB99C6001E9BA9 /* MarkdownTableView.swift in Sources */,
 				202ED95C2CD7878700D96030 /* AppleGPUInfo.swift in Sources */,
 				202801FA2CC949F2005C1F7D /* TemporaryResource.swift in Sources */,
 				20573F162CB505DC004C19FE /* ConversationListView.swift in Sources */,
@@ -1046,6 +1087,7 @@
 				20B97CDA2CAFF2E7009A0A5D /* SetupCompleteView.swift in Sources */,
 				208388E22CBF51F900C2A9F8 /* RetrievalSettingsView.swift in Sources */,
 				207A9F5F2CB903FD00E727DE /* Extension+Binding.swift in Sources */,
+				201A1A982CDB9DED001E9BA9 /* MarkdownPieChartView.swift in Sources */,
 				20AC3CE52CDA700700947FDA /* AppState.swift in Sources */,
 				2099BD9F2CB7E9CE00E02732 /* QuickPrompt.swift in Sources */,
 				202ED9522CD781A000D96030 /* LLaMa3.swift in Sources */,
@@ -1053,6 +1095,7 @@
 				20D9A9732CD2769300171FDE /* MessageShareMenu.swift in Sources */,
 				20573F322CB53172004C19FE /* InferenceSettings.swift in Sources */,
 				2099BDA92CB81A1300E02732 /* ProfileListView.swift in Sources */,
+				201A1A9C2CDBB5B1001E9BA9 /* MarkdownScatterPlotView.swift in Sources */,
 				204C795C2CB79AB900EED58E /* ProfileManagerView.swift in Sources */,
 				20DEABED2CC4D68A0046447C /* Extension+CGImage.swift in Sources */,
 				20B97CE52CB00605009A0A5D /* Extension+Color.swift in Sources */,
@@ -1077,12 +1120,14 @@
 				2086E1712CB036BB00FFCF57 /* ConversationManager.swift in Sources */,
 				20C221092CC4B5A800A99796 /* SourcesView.swift in Sources */,
 				20571F6F2CBCE8F7004F3344 /* LengthyTasksController.swift in Sources */,
+				201A1A9A2CDBA802001E9BA9 /* MarkdownBarChartView.swift in Sources */,
 				20571F742CBCEE90004F3344 /* LengthyTasksToolbarButton.swift in Sources */,
 				20B97CEB2CB00912009A0A5D /* Extension+URL.swift in Sources */,
 				20A8B65D2CB2829500B756FD /* ProfileManager.swift in Sources */,
 				20B97CD62CAFF2E0009A0A5D /* SetupView.swift in Sources */,
 				20B97CED2CB00A28009A0A5D /* Favicon.swift in Sources */,
 				202801F62CC93CD5005C1F7D /* PromptInputField.swift in Sources */,
+				201A1A932CDB8109001E9BA9 /* Extension+Collection.swift in Sources */,
 				20571F772CBD6005004F3344 /* SettingsView.swift in Sources */,
 				20573F142CB50550004C19FE /* ConversationManagerView.swift in Sources */,
 				20B97CB62CAFE86C009A0A5D /* SidekickApp.swift in Sources */,
@@ -1097,6 +1142,7 @@
 				20571F812CBD6A6D004F3344 /* SoundEffects.swift in Sources */,
 				20E48C292CB560B50085E7D6 /* ConversationControlsView.swift in Sources */,
 				20B97CEF2CB010AD009A0A5D /* ThumbnailView.swift in Sources */,
+				201A1A912CDB7D8E001E9BA9 /* MarkdownDataViewController.swift in Sources */,
 				208388EF2CBF86A100C2A9F8 /* Extension+UserDefaults.swift in Sources */,
 				204FC5CA2CC9C8B400CA1DB4 /* TemporaryResourcesView.swift in Sources */,
 				20C2210B2CC4B88F00A99796 /* SourcesButton.swift in Sources */,
@@ -1121,9 +1167,11 @@
 				20B4D6AF2CC3C12C00817E15 /* PromptController.swift in Sources */,
 				2099BDA32CB7EB0200E02732 /* CapsuleButtonStyle.swift in Sources */,
 				204C79562CB765D700EED58E /* ProfileSelectionMenu.swift in Sources */,
+				201A1A8E2CDB7C1C001E9BA9 /* MarkdownDataView.swift in Sources */,
 				20A8B65B2CB2709100B756FD /* Resources.swift in Sources */,
 				202801FC2CC9C5C2005C1F7D /* TemporaryResourceView.swift in Sources */,
 				20573F182CB50743004C19FE /* ConversationView.swift in Sources */,
+				201A1A9E2CDBBA25001E9BA9 /* MarkdownLineChartView.swift in Sources */,
 				200FBFF32CB66B8300A92A74 /* ServerHealth.swift in Sources */,
 				202ED94A2CD7791600D96030 /* HuggingFaceModel.swift in Sources */,
 				2099BDB22CB828A500E02732 /* PopoverButton.swift in Sources */,
@@ -1320,7 +1368,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.0.5;
+				MARKETING_VERSION = 0.0.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pattonium.Sidekick;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1353,7 +1401,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.0.5;
+				MARKETING_VERSION = 0.0.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pattonium.Sidekick;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

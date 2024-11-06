@@ -43,7 +43,3 @@ struct SetupCompleteView: View {
     }
 	
 }
-
-//#Preview {
-//    SetupCompleteView()
-//}

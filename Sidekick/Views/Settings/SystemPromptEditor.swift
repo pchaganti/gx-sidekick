@@ -29,10 +29,12 @@ A well-crafted system prompt helps the LLM focus on the correct task and reduces
 	
 	var body: some View {
 		VStack {
-			Markdown(self.note)
+			ScrollView {
+				Markdown(self.note)
+			}
 			Divider()
 			TextEditor(text: $systemPrompt)
-				.frame(minHeight: 100)
+				.frame(minHeight: 100, idealHeight: 200, maxHeight: 300)
 			Divider()
 			controls
 		}

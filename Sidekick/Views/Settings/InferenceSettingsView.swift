@@ -38,6 +38,7 @@ struct InferenceSettingsView: View {
 			SystemPromptEditor(
 				isEditingSystemPrompt: $isEditingSystemPrompt
 			)
+			.frame(maxHeight: 700)
 		}
     }
 	
