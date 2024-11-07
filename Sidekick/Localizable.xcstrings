@@ -304,6 +304,16 @@
         }
       }
     },
+    "Copy" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "复制"
+          }
+        }
+      }
+    },
     "Copy to Clipboard" : {
       "localizations" : {
         "zh-Hans" : {
@@ -524,6 +534,16 @@
         }
       }
     },
+    "Export as Image" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导出照片"
+          }
+        }
+      }
+    },
     "Extracting text..." : {
       "localizations" : {
         "zh-Hans" : {
@@ -533,6 +553,9 @@
           }
         }
       }
+    },
+    "Failed to convert image to data." : {
+
     },
     "Failed to extract text" : {
       "localizations" : {

@@ -65,49 +65,17 @@ struct MessageShareMenu<MessagesView: View>: View {
 	
 	var pngButton: some View {
 		Button("Save as Image") {
-			self.generatePng(
-				messagesView: messagesView
-			)
-		}
-	}
-	
-	
-	
-	/// Function to generate and save conversation as an image
-	private func generatePng<Content: View>(
-		messagesView: Content
-	) {
-		// Select path
-		guard var destination: URL = try? FileManager.selectFile(
-			dialogTitle: String(localized: "Select a Save Location"),
-			canSelectFiles: false,
-			canSelectDirectories: true,
-			allowMultipleSelection: false,
-			persistPermissions: false
-		).first else {
-			return
-		}
-		let filename: String = selectedConversation?.title ?? Date.now.ISO8601Format()
-		destination = destination.appendingPathComponent("\(filename).png")
-		// Render and save
-		let renderer: ImageRenderer = ImageRenderer(
-			content: VStack(
+			VStack(
 				alignment: .leading,
 				spacing: 15
-			) { messagesView }
-				.padding()
-				.background(Color.gray)
-				.frame(width: 1000)
-		)
-		renderer.scale = 2.0
-		guard let cgImage: CGImage = renderer.cgImage else {
-			Dialogs.showAlert(
-				title: String(localized: "Error"),
-				message: String(localized: "Failed to render image.")
-			)
-			return
+			) {
+				messagesView
+			}
+			.padding()
+			.background(Color.gray)
+			.frame(width: 1000)
+			.generatePng()
 		}
-		cgImage.save(to: destination)
 	}
 	
 }

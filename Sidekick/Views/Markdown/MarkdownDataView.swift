@@ -32,6 +32,14 @@ struct MarkdownDataView: View {
 			alignment: .center
 		) {
 			display
+				.if(controller.selectedVisualization != .table) { view in
+					view.contextMenu {
+						Group {
+							exportButton
+							copyButton
+						}
+					}
+				}
 			if showPicker {
 				visualizationPicker
 					.fixedSize()
@@ -56,6 +64,38 @@ struct MarkdownDataView: View {
 		}
 		.environmentObject(controller)
 		.transition(.scale)
+	}
+	
+	var exportDisplay: some View {
+		Color.clear
+			.aspectRatio(1.0, contentMode: .fit)
+			.frame(idealWidth: 400)
+			.overlay {
+				display
+			}
+	}
+	
+	var exportButton: some View {
+		Button {
+			self.exportDisplay.generatePng()
+		} label: {
+			Text("Export as Image")
+		}
+	}
+	
+	var copyButton: some View {
+		Button {
+			// Get data
+			guard let data = self.exportDisplay.generatePngData() else {
+				print("Failed to get data")
+				return
+			}
+			// Set pasteboard
+			let pasteboard: NSPasteboard = .general
+			pasteboard.setData(data, forType: .png)
+		} label: {
+			Text("Copy")
+		}
 	}
 	
 	var visualizationPicker: some View {

@@ -16,10 +16,10 @@ struct MarkdownScatterPlotView: View {
 	@State private var selectedPoint: Point? = nil
 	
 	var xIndex: Int {
-		return flipAxis ? 1 : 2
+		return flipAxis ? 2 : 1
 	}
 	var yIndex: Int {
-		return flipAxis ? 2 : 1
+		return flipAxis ? 1 : 2
 	}
 	
 	var xAxisLabel: String {

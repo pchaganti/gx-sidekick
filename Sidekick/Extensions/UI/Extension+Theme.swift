@@ -124,47 +124,8 @@ extension Theme {
 				.fixedSize(horizontal: false, vertical: true)
 			}
 			.codeBlock { configuration in
-				VStack {
-					HStack {
-						Text({
-							guard let langName: String = configuration.language?.capitalized else {
-								return String(
-									localized: "Unknown Language"
-								)
-							}
-							if langName.isEmpty {
-								return String(
-									localized: "Unknown Language"
-								)
-							}
-							return langName
-						}())
-						.bold()
-						Spacer()
-						ExportButton(
-							text: configuration.content,
-							language: configuration.language
-						)
-						CopyButton(text: configuration.content)
-					}
-					Divider()
-					ScrollView(.horizontal) {
-						configuration.label
-							.relativeLineSpacing(.em(0.225))
-							.markdownTextStyle {
-								FontFamilyVariant(.monospaced)
-								FontSize(.em(0.85))
-							}
-					}
-				}
-				.padding(.horizontal, 16)
-				.padding(.vertical, 10)
-				.background(Color.secondaryBackground)
-				.clipShape(
-					RoundedRectangle(
-						cornerRadius: 6,
-						style: .continuous
-					)
+				MarkdownCodeBlockView(
+					configuration: configuration
 				)
 				.markdownMargin(top: 0, bottom: 16)
 			}
@@ -205,6 +166,7 @@ extension Theme {
 					.markdownMargin(top: 24, bottom: 24)
 			}
 	}
+	
 }
 
 extension Color {

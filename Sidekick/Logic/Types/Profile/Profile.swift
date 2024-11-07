@@ -79,6 +79,7 @@ public struct Profile: Identifiable, Codable, Hashable, Sendable {
 		name: String(localized: "Default"),
 		symbolName: "person.fill",
 		color: Color.blue,
+		useWebSearch: false, 
 		resources: Resources(),
 		persistResources: false
 	)

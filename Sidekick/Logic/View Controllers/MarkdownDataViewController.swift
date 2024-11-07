@@ -16,18 +16,33 @@ public class MarkdownDataViewController: ObservableObject {
 	) {
 		self.configuration = configuration
 		self.content = configuration.content
+		// Get data
+		let string: String = configuration.content.renderMarkdown()
+		let rawData: [[String]]? = Self.parseMarkdownTable(string)
+		self.data =  rawData
+		// Get rows
+		if let rawData, (rawData.count > 1) {
+			var rows: [[String]] = Array(rawData.dropFirst())
+			// Drop header indicator
+			if rows.first!.allSatisfy({ $0 == "---" }) {
+				rows = Array(rows.dropFirst())
+			}
+			self.rows = rows
+		} else {
+			self.rows = []
+		}
 	}
 	
 	@Published var selectedVisualization: Visualization = .table
 	
+	/// The configuration for this "block" of Markdown
 	var configuration: BlockConfiguration
+	
+	/// The Markdown markdown content displayed
 	var content: MarkdownContent
 	
 	/// The data held in the table, in type `[[String]]?`
-	public var data: [[String]]? {
-		let string: String = content.renderMarkdown()
-		return self.parseMarkdownTable(string)
-	}
+	public var data: [[String]]?
 	
 	/// The data's headers
 	public var headers: [String] {
@@ -35,17 +50,7 @@ public class MarkdownDataViewController: ObservableObject {
 	}
 	
 	/// The data's data in rows
-	public var rows: [[String]] {
-		guard let data else { return [] }
-		// Drop header
-		var rawData: [[String]] = Array(data.dropFirst())
-		if rawData.isEmpty { return [] }
-		// Drop header indicator
-		if rawData.first!.allSatisfy({ $0 == "---" }) {
-			rawData = Array(rawData.dropFirst())
-		}
-		return rawData
-	}
+	public var rows: [[String]]
 	
 	/// The data's data in columns
 	public var columns: [[String]] {
@@ -140,7 +145,7 @@ public class MarkdownDataViewController: ObservableObject {
 	/// Function to convert raw markdown to its constituent data
 	/// - Parameter markdown: Raw markdown text of type `String`
 	/// - Returns: Constituent data of type `[[String]]?`
-	private func parseMarkdownTable(_ markdown: String) -> [[String]]? {
+	private static func parseMarkdownTable(_ markdown: String) -> [[String]]? {
 		// Split the input by newline characters to get rows
 		let rows = markdown.components(separatedBy: .newlines)
 		

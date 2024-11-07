@@ -16,10 +16,10 @@ struct MarkdownLineChartView: View {
 	@State private var selectedPoint: Point? = nil
 	
 	var xIndex: Int {
-		return flipAxis ? 0 : 1
+		return flipAxis ? 1 : 0
 	}
 	var yIndex: Int {
-		return flipAxis ? 1 : 0
+		return flipAxis ? 0 : 1
 	}
 	
 	var xAxisLabel: String {
