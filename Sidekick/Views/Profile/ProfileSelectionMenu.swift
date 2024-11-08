@@ -58,7 +58,9 @@ struct ProfileSelectionMenu: View {
 	
 	var prevButton: some View {
 		Button {
-			switchToPrevProfile()
+			withAnimation(.linear) {
+				switchToPrevProfile()
+			}
 		} label: {
 			Label("Previous Profile", systemImage: "chevron.backward")
 		}
@@ -67,7 +69,9 @@ struct ProfileSelectionMenu: View {
 	
 	var nextButton: some View {
 		Button {
-			switchToNextProfile()
+			withAnimation(.linear) {
+				switchToNextProfile()
+			}
 		} label: {
 			Label("Next Profile", systemImage: "chevron.forward")
 		}

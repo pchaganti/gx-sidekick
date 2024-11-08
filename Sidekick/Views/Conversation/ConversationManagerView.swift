@@ -130,7 +130,9 @@ struct ConversationManagerView: View {
 				for: Notifications.newConversation.name
 			)
 		) { output in
-			self.conversationState.selectedProfileId = profileManager.default?.id
+			withAnimation(.linear) {
+				self.conversationState.selectedProfileId = profileManager.default?.id
+			}
 			if let recentConversationId = conversationManager.recentConversation?.id {
 				withAnimation(.linear) {
 					self.conversationState.selectedConversationId = recentConversationId
@@ -144,7 +146,9 @@ struct ConversationManagerView: View {
 		) { output in
 			// Update profile if needed
 			if self.appearsActive {
-				self.conversationState.selectedProfileId = self.appState.commandSelectedProfileId
+				withAnimation(.linear) {
+					self.conversationState.selectedProfileId = self.appState.commandSelectedProfileId
+				}
 			}
 		}
 		.onReceive(
@@ -218,7 +222,9 @@ struct ConversationManagerView: View {
 	
 	private func newConversation() {
 		ConversationManager.shared.newConversation()
-		conversationState.selectedProfileId = profileManager.default?.id
+		withAnimation(.linear) {
+			conversationState.selectedProfileId = profileManager.default?.id
+		}
 	}
 	
 	private func refreshModel() {

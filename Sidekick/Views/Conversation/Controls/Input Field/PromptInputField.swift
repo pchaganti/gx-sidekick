@@ -67,7 +67,9 @@ struct PromptInputField: View {
 			}
 			.onChange(of: conversationState.selectedConversationId) {
 				self.isFocused = true
-				self.conversationState.selectedProfileId = profileManager.default?.id
+				withAnimation(.linear) {
+					self.conversationState.selectedProfileId = profileManager.default?.id
+				}
 			}
 			.onAppear {
 				self.isFocused = true
