@@ -135,6 +135,9 @@ Tokens per second: \(tokensPerSecondStr)
 		.padding(11)
 		.background {
 			MessageBackgroundView()
+				.contextMenu {
+					copyButton
+				}
 		}
 	}
 	
@@ -248,11 +251,7 @@ Tokens per second: \(tokensPerSecondStr)
 	
 	var optionsMenu: some View {
 		Group {
-			Button {
-				self.copy()
-			} label: {
-				Text("Copy to Clipboard")
-			}
+			copyButton
 			// Edit button
 			if self.canEdit && !self.isEditing {
 				Button {
@@ -275,6 +274,14 @@ Tokens per second: \(tokensPerSecondStr)
 					Text("Stats for Nerds")
 				}
 			}
+		}
+	}
+	
+	var copyButton: some View {
+		Button {
+			self.copy()
+		} label: {
+			Text("Copy to Clipboard")
 		}
 	}
 	

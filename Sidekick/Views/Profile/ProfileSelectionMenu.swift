@@ -58,9 +58,7 @@ struct ProfileSelectionMenu: View {
 	
 	var prevButton: some View {
 		Button {
-			withAnimation(.linear) {
-				switchToPrevProfile()
-			}
+			switchToPrevProfile()
 		} label: {
 			Label("Previous Profile", systemImage: "chevron.backward")
 		}
@@ -69,9 +67,7 @@ struct ProfileSelectionMenu: View {
 	
 	var nextButton: some View {
 		Button {
-			withAnimation(.linear) {
-				switchToNextProfile()
-			}
+			switchToNextProfile()
 		} label: {
 			Label("Next Profile", systemImage: "chevron.forward")
 		}
@@ -100,7 +96,6 @@ struct ProfileSelectionMenu: View {
 				withAnimation(.linear) {
 					conversationState.selectedProfileId = profile.id
 				}
-				self.sendNotification()
 			} label: {
 				profile.label
 			}
@@ -148,39 +143,34 @@ struct ProfileSelectionMenu: View {
 	private func switchToNextProfile() {
 		let profilesIds: [UUID] = (profileManager.profiles + profileManager.profiles).map({ $0.id })
 		guard let selectedProfileId = conversationState.selectedProfileId else {
-			conversationState.selectedProfileId = profileManager.firstProfile?.id
-			sendNotification()
+			withAnimation(.linear) {
+				self.conversationState.selectedProfileId = profileManager.firstProfile?.id
+			}
 			return
 		}
 		guard let index = profilesIds.firstIndex(of: selectedProfileId) else {
-			return sendNotification()
+			return
 		}
-		self.conversationState.selectedProfileId = profilesIds[index + 1]
-		sendNotification()
+		withAnimation(.linear) {
+			self.conversationState.selectedProfileId = profilesIds[index + 1]
+		}
 	}
 	
 	/// Function to switch to the last profile
 	private func switchToPrevProfile() {
 		let profilesIds: [UUID] = (profileManager.profiles + profileManager.profiles).map({ $0.id })
 		guard let selectedProfileId = conversationState.selectedProfileId else {
-			conversationState.selectedProfileId = profileManager.lastProfile?.id
-			sendNotification()
+			withAnimation(.linear) {
+				self.conversationState.selectedProfileId = profileManager.lastProfile?.id
+			}
 			return
 		}
 		guard let index = profilesIds.lastIndex(of: selectedProfileId) else {
-			sendNotification()
 			return
 		}
-		self.conversationState.selectedProfileId = profilesIds[index - 1]
-		sendNotification()
-	}
-	
-	private func sendNotification() {
-		// Send notification
-		NotificationCenter.default.post(
-			name: Notifications.didSelectProfile.name,
-			object: nil
-		)
+		withAnimation(.linear) {
+			self.conversationState.selectedProfileId = profilesIds[index - 1]
+		}
 	}
 	
 }
