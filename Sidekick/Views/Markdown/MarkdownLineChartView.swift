@@ -12,14 +12,13 @@ struct MarkdownLineChartView: View {
 	
 	@EnvironmentObject private var controller: MarkdownDataViewController
 	
-	@State private var flipAxis: Bool = false
 	@State private var selectedPoint: Point? = nil
 	
 	var xIndex: Int {
-		return flipAxis ? 1 : 0
+		return controller.flipAxis ? 1 : 0
 	}
 	var yIndex: Int {
-		return flipAxis ? 0 : 1
+		return controller.flipAxis ? 0 : 1
 	}
 	
 	var xAxisLabel: String {
@@ -61,24 +60,9 @@ struct MarkdownLineChartView: View {
 	}
 	
 	var body: some View {
-		VStack {
-			chart
-			Divider()
-			toggle
-		}
-		.frame(maxWidth: 350)
-		.padding(5)
-	}
-	
-	var toggle: some View {
-		Button {
-			withAnimation(.linear) {
-				flipAxis.toggle()
-			}
-		} label: {
-			Text("Flip Axes")
-		}
-		.buttonStyle(.plain)
+		chart
+			.frame(maxWidth: 350)
+			.padding(5)
 	}
 	
 	var chart: some View {

@@ -14,6 +14,7 @@ struct InferenceSettingsView: View {
 	@AppStorage("modelUrl") private var modelUrl: URL?
 	
 	@State private var isEditingSystemPrompt: Bool = false
+	@State private var isSelectingModel: Bool = false
 	
 	@State private var temperature: Double = InferenceSettings.temperature
 	@State private var useGPUAcceleration: Bool = InferenceSettings.useGPUAcceleration
@@ -53,9 +54,9 @@ struct InferenceSettingsView: View {
 			}
 			Spacer()
 			Button {
-				let _: Bool = Settings.selectModel()
+				self.isSelectingModel.toggle()
 			} label: {
-				Text("Select")
+				Text("Manage")
 			}
 		}
 		.contextMenu {
@@ -65,6 +66,12 @@ struct InferenceSettingsView: View {
 			} label: {
 				Text("Show in Finder")
 			}
+		}
+		.sheet(isPresented: $isSelectingModel) {
+			ModelListView(
+				isPresented: $isSelectingModel
+			)
+			.frame(maxHeight: 600)
 		}
 	}
 	

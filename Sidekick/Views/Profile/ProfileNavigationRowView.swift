@@ -22,19 +22,26 @@ struct ProfileNavigationRowView: View {
 	
 	var body: some View {
 		HStack {
-			profile.label
+			Button {
+				self.isEditing.toggle()
+			} label: {
+				self.profile.label
+			}
+			.buttonStyle(.plain)
 			Spacer()
 			if isHovering && !isDefault {
-				buttons
+				Group {
+					deleteButton
+					Image(systemName: "line.3.horizontal")
+						.foregroundStyle(.secondary)
+				}
 			}
 		}
-		.padding(.horizontal)
+		.padding(.leading, 4)
+		.padding(.trailing)
 		.background {
-			RoundedRectangle(cornerRadius: 8)
-				.fill(profile.color)
-		}
-		.onTapGesture {
-			isEditing.toggle()
+			RoundedRectangle(cornerRadius: 7)
+				.fill(self.profile.color)
 		}
 		.sheet(isPresented: $isEditing) {
 			ProfileEditorView(
@@ -43,21 +50,23 @@ struct ProfileNavigationRowView: View {
 			.frame(minWidth: 500, maxHeight: 800)
 		}
 		.contextMenu {
-			buttons
+			deleteButton
 		}
 		.onHover { hover in
 			isHovering = hover
 		}
 	}
 	
-	var buttons: some View {
+	var deleteButton: some View {
 		Button {
 			self.delete(profile.id)
 		} label: {
 			Label("Delete", systemImage: "trash")
 				.foregroundStyle(.red)
+				.labelStyle(.iconOnly)
+				.bold()
 		}
-		.labelStyle(.iconOnly)
+		.buttonStyle(.plain)
 	}
 	
 	private func delete(_ profileId: UUID) {
@@ -74,7 +83,3 @@ struct ProfileNavigationRowView: View {
 	}
 	
 }
-
-//#Preview {
-//    ProfileNavigationRowView()
-//}

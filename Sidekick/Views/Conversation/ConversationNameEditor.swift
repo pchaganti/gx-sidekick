@@ -14,42 +14,44 @@ struct ConversationNameEditor: View {
 	@State private var isEditing: Bool = false
 	@Binding var conversation: Conversation
 	
-	@FocusState private var focused: Bool
+	@FocusState private var isFocused: Bool
 	
     var body: some View {
 		Group {
 			if !isEditing {
 				Text(conversation.title)
-					.onTapGesture(count: 2) {
-						isEditing.toggle()
-					}
 			} else {
 				TextField("Title", text: $conversation.title)
+					.focused($isFocused)
 					.textFieldStyle(.plain)
 					.onSubmit {
-						exitEditingMode()
+						self.toggleEditingMode()
 					}
 					.onExitCommand {
-						exitEditingMode()
+						self.toggleEditingMode()
 					}
 			}
 		}
 		.contextMenu {
-			Button {
-				isEditing.toggle()
-			} label: {
-				Text("Edit")
+			Group {
+				Button {
+					self.toggleEditingMode()
+				} label: {
+					Text("Rename")
+				}
+				Button {
+					self.conversationManager.delete(conversation)
+				} label: {
+					Text("Delete")
+				}
 			}
 		}
 	}
 	
-	private func exitEditingMode() {
+	private func toggleEditingMode() {
 		// Exit editing mode
-		focused = false
-		isEditing = false
+		self.isFocused.toggle()
+		self.isEditing.toggle()
 	}
+	
 }
-
-//#Preview {
-//    ConversationNameEditor()
-//}

@@ -60,7 +60,6 @@ public class ConversationManager: ObservableObject {
 		).last
 	}
 	
-	
 	/// Function to create a new conversation
 	public func newConversation() {
 		let defaultTitle: String = Date.now.formatted(

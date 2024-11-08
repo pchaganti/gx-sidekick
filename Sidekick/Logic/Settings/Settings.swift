@@ -108,8 +108,13 @@ public class Settings {
 			allowMultipleSelection: false,
 			persistPermissions: true
 		) {
+			guard let modelUrl = modelUrls.first else {
+				return false
+			}
 			// Set and signal success
-			Self.modelUrl = modelUrls.first
+			Self.modelUrl = modelUrl
+			// Add to model list
+			ModelManager.shared.add(modelUrl)
 			return true
 		} else {
 			// Signal failure

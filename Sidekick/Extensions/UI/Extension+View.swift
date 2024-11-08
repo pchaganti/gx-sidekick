@@ -34,6 +34,40 @@ extension View {
 		}
 	}
 	
+	/// Function to generate conversation as an CGImage
+	public func generateCgImage() -> CGImage? {
+		// Render and save
+		let renderer: ImageRenderer = ImageRenderer(
+			content: self
+		)
+		renderer.scale = 2.0
+		guard let cgImage: CGImage = renderer.cgImage else {
+			Dialogs.showAlert(
+				title: String(localized: "Error"),
+				message: String(localized: "Failed to render image.")
+			)
+			return nil
+		}
+		return cgImage
+	}
+	
+	/// Function to generate conversation as a SwiftUI `Image`
+	public func generateImage() -> Image? {
+		// Render and save
+		let renderer: ImageRenderer = ImageRenderer(
+			content: self
+		)
+		renderer.scale = 2.0
+		guard let cgImage: CGImage = renderer.cgImage else {
+			Dialogs.showAlert(
+				title: String(localized: "Error"),
+				message: String(localized: "Failed to render image.")
+			)
+			return nil
+		}
+		return Image(cgImage: cgImage)
+	}
+	
 	/// Function to generate and save conversation as an image
 	public func generatePng() {
 		// Select path
@@ -49,15 +83,7 @@ extension View {
 		let filename: String = Date.now.ISO8601Format()
 		destination = destination.appendingPathComponent("\(filename).png")
 		// Render and save
-		let renderer: ImageRenderer = ImageRenderer(
-			content: self
-		)
-		renderer.scale = 2.0
-		guard let cgImage: CGImage = renderer.cgImage else {
-			Dialogs.showAlert(
-				title: String(localized: "Error"),
-				message: String(localized: "Failed to render image.")
-			)
+		guard let cgImage = generateCgImage() else {
 			return
 		}
 		cgImage.save(to: destination)
@@ -66,15 +92,7 @@ extension View {
 	/// Function to generate png data
 	public func generatePngData() -> Data? {
 		// Render and save
-		let renderer: ImageRenderer = ImageRenderer(
-			content: self
-		)
-		renderer.scale = 2.0
-		guard let cgImage: CGImage = renderer.cgImage else {
-			Dialogs.showAlert(
-				title: String(localized: "Error"),
-				message: String(localized: "Failed to render image.")
-			)
+		guard let cgImage = generateCgImage() else {
 			return nil
 		}
 		// Convert to data

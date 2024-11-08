@@ -34,6 +34,7 @@ public class MarkdownDataViewController: ObservableObject {
 	}
 	
 	@Published var selectedVisualization: Visualization = .table
+	@Published var flipAxis: Bool = false
 	
 	/// The configuration for this "block" of Markdown
 	var configuration: BlockConfiguration
@@ -199,6 +200,18 @@ public enum Visualization: String, CaseIterable, Identifiable {
 				return String(localized: "Scatter Plot")
 			case .lineChart:
 				return String(localized: "Line Chart")
+		}
+	}
+	
+	/// A `Bool` representing if the graph's axis can be flipped
+	public var canFlipAxis: Bool {
+		switch self {
+			case .scatterPlot:
+				return true
+			case .lineChart:
+				return true
+			default:
+				return false
 		}
 	}
 	

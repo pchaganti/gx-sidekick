@@ -44,7 +44,10 @@ struct ConversationManagerView: View {
 	}
 	
 	var toolbarTextColor: Color {
-		return selectedProfile?.color.adaptedTextColor ?? .primary
+		guard let luminance = selectedProfile?.color.luminance else {
+			return .accentColor
+		}
+		return (luminance > 0.5) ? .toolbarText : .white
 	}
 	
 	var selectedConversation: Conversation? {
@@ -75,6 +78,7 @@ struct ConversationManagerView: View {
 					.font(.title3)
 					.bold()
 					.foregroundStyle(toolbarTextColor)
+					.opacity(0.9)
 			}
 			ToolbarItemGroup(placement: .principal) {
 				ProfileSelectionMenu()
@@ -105,14 +109,21 @@ struct ConversationManagerView: View {
 				)
 		}
 		.onChange(of: selectedProfile) {
-			updateSystemPrompt()
+			refreshModel()
 		}
 		.onReceive(
 			NotificationCenter.default.publisher(
 				for: Notifications.systemPromptChanged.name
 			)
 		) { output in
-			updateSystemPrompt()
+			refreshModel()
+		}
+		.onReceive(
+			NotificationCenter.default.publisher(
+				for: Notifications.didSelectModel.name
+			)
+		) { output in
+			refreshModel()
 		}
 		.onReceive(
 			NotificationCenter.default.publisher(
@@ -210,15 +221,14 @@ struct ConversationManagerView: View {
 		conversationState.selectedProfileId = profileManager.default?.id
 	}
 	
-	private func updateSystemPrompt() {
+	private func refreshModel() {
 		// Set new prompt
 		var prompt: String = InferenceSettings.systemPrompt
 		if let systemPrompt = self.selectedProfile?.systemPrompt {
 			prompt = systemPrompt
 		}
-		
 		Task {
-			await self.model.updateSystemPrompt(prompt)
+			await self.model.refreshModel(prompt)
 		}
 	}
 	

@@ -13,10 +13,10 @@ public class ConversationState: ObservableObject {
 	
 	@Published var isManagingProfiles: Bool = false
 
-	@Published var selectedConversationId: UUID? = latestConversation?.id
-	static var latestConversation: Conversation? {
-		return ConversationManager.shared.conversations
-			.sorted(by: \.createdAt).last
+	@Published var selectedConversationId: UUID? = topmostConversation?.id
+	
+	static var topmostConversation: Conversation? {
+		return ConversationManager.shared.conversations.first
 	}
 	
 	@Published var selectedProfileId: UUID? = ProfileManager.shared.default?.id

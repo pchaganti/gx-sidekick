@@ -44,6 +44,16 @@
         }
       }
     },
+    "Add Model" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加"
+          }
+        }
+      }
+    },
     "Add Profile" : {
       "localizations" : {
         "zh-Hans" : {
@@ -555,7 +565,14 @@
       }
     },
     "Failed to convert image to data." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "图像生成失败"
+          }
+        }
+      }
     },
     "Failed to extract text" : {
       "localizations" : {
@@ -637,7 +654,7 @@
         }
       }
     },
-    "Flip Axes" : {
+    "Flip Axis" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -814,6 +831,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "列出要点"
+          }
+        }
+      }
+    },
+    "Manage" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "管理"
           }
         }
       }
@@ -1104,6 +1131,9 @@
         }
       }
     },
+    "Rename" : {
+
+    },
     "Reset Tips Datastore" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1250,16 +1280,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "正在资源中搜索…"
-          }
-        }
-      }
-    },
-    "Select" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "选择"
           }
         }
       }

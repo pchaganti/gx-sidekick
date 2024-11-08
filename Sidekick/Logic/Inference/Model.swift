@@ -39,8 +39,8 @@ public class Model: ObservableObject {
 		systemPrompt
 	}
 	
-	/// Function to update to the default system prompt
-	public func updateSystemPrompt(_ systemPrompt: String) async {
+	/// Function to refresh `llama-server` with the newly selected model / system prompt
+	public func refreshModel(_ systemPrompt: String) async {
 		self.systemPrompt = systemPrompt + "\n\n" + InferenceSettings.useSourcesPrompt
 		// Get model path
 		guard let modelPath: String = Settings.modelUrl?.posixPath else {

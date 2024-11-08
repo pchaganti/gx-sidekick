@@ -26,17 +26,37 @@ struct MarkdownDataView: View {
 	var showPicker: Bool {
 		return controller.visualizationTypes.count > 1 && controller.canVisualize
 	}
+	
+	/// An image of the chart
+	var image: Image? {
+		return exportDisplay
+			.environmentObject(controller)
+			.generateImage()
+	}
+	
+	/// A `Bool` indicating if the image can be exported via dragging
+	var canDrag: Bool {
+		return image != nil && controller.selectedVisualization != .table
+	}
 
 	var body: some View {
 		VStack(
 			alignment: .center
 		) {
 			display
+				.if(
+					controller.selectedVisualization.canFlipAxis
+				) { view in
+					view.gesture(rotateGesture)
+				}
 				.if(controller.selectedVisualization != .table) { view in
 					view.contextMenu {
 						Group {
-							exportButton
+							if controller.selectedVisualization.canFlipAxis {
+								flipAxisButton
+							}
 							copyButton
+							exportButton
 						}
 					}
 				}
@@ -45,6 +65,10 @@ struct MarkdownDataView: View {
 					.fixedSize()
 			}
 		}
+		.if(canDrag) { view in
+			view.draggable(image!)
+		}
+		.environmentObject(controller)
 	}
 	
 	var display: some View {
@@ -62,8 +86,10 @@ struct MarkdownDataView: View {
 					MarkdownLineChartView()
 			}
 		}
-		.environmentObject(controller)
-		.transition(.scale)
+		.transition(
+			.scale
+				.combined(with: .opacity)
+		)
 	}
 	
 	var exportDisplay: some View {
@@ -73,6 +99,14 @@ struct MarkdownDataView: View {
 			.overlay {
 				display
 			}
+	}
+	
+	var flipAxisButton: some View {
+		Button {
+			self.flipAxis()
+		} label: {
+			Text("Flip Axis")
+		}
 	}
 	
 	var exportButton: some View {
@@ -87,11 +121,12 @@ struct MarkdownDataView: View {
 		Button {
 			// Get data
 			guard let data = self.exportDisplay.generatePngData() else {
-				print("Failed to get data")
 				return
 			}
 			// Set pasteboard
 			let pasteboard: NSPasteboard = .general
+			pasteboard.clearContents()
+			pasteboard.declareTypes([.png], owner: nil)
 			pasteboard.setData(data, forType: .png)
 		} label: {
 			Text("Copy")
@@ -111,6 +146,22 @@ struct MarkdownDataView: View {
 			}
 		}
 		.pickerStyle(.segmented)
+	}
+	
+	var rotateGesture: some Gesture {
+		RotationGesture()
+			.onEnded { rotation in
+				if abs(rotation.degrees) >= 5 {
+					self.flipAxis()
+				}
+			}
+	}
+	
+	/// Function to flip the x and y axis
+	private func flipAxis() {
+		withAnimation(.linear) {
+			self.controller.flipAxis.toggle()
+		}
 	}
 	
 }

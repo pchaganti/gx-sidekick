@@ -156,7 +156,7 @@ Below is information that may or may not be relevant to my request in JSON forma
 
 When multiple sources provide correct, but conflicting information (e.g. different definitions), prioritize the use of sources from local files, not websites. 
 
-If your response uses information from one or more sources, your response MUST BE FOLLOWED WITH A SINGLE EXAUSTIVE LIST OF URLS OR FILEPATHS OF ALL REFERENCED SOURCES, in the format [{"url": "https://referencedwebsite.com"}, {"url": "/path/to/referenced/file.pdf"}], with no duplicates. 
+If your response uses information from one or more sources, your response MUST be followed with a single exaustive LIST OF FILEPATHS AND URLS of ALL referenced sources, in the format [{"url": "/path/to/referenced/file.pdf"}, {"url": "/path/to/another/referenced/file.docx"}, {"url": "https://referencedwebsite.com"}, "https://anotherreferencedwebsite.com"}], with no duplicates.
 
 DO NOT reference sources outside of those provided below. If you did not reference provided sources, do not mention sources in your response. NO headers, labels, numbering or comments are needed in this list of referenced sources.
 

@@ -16,7 +16,7 @@ public class ProfileManager: ObservableObject {
 		self.load()
 	}
 	
-	/// Static constant for the global `ProfileManager` object
+	/// Static constant for the global ``ProfileManager`` object
 	static public let shared: ProfileManager = .init()
 	
 	/// Published property for all profiles

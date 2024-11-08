@@ -249,7 +249,7 @@ Tokens per second: \(tokensPerSecondStr)
 	var optionsMenu: some View {
 		Group {
 			Button {
-				message.displayedText.copy()
+				self.copy()
 			} label: {
 				Text("Copy to Clipboard")
 			}
@@ -284,6 +284,11 @@ Tokens per second: \(tokensPerSecondStr)
 		message.text = messageText
 		conversation.updateMessage(message)
 		conversationManager.update(conversation)
+	}
+	
+	/// Function to copy message text to clipboard
+	private func copy() {
+		self.message.displayedText.copy()
 	}
 	
 }

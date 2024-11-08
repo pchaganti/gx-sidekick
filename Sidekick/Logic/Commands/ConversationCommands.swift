@@ -32,34 +32,53 @@ public class ConversationCommands {
 				ForEach(
 					Self.profiles
 				) { profile in
-					Button {
-						AppState.setCommandSelectedProfileId(
-							profile.id
-						)
-						NotificationCenter.default.post(
-							name: Notifications.didCommandSelectProfile.name,
-							object: nil
-						)
-					} label: {
-						Text(profile.name)
-					}
-					.keyboardShortcut(
-						KeyEquivalent(
-							Character(
-								stringValue: String(
-									ProfileManager.shared.getProfileIndex(
-										profile: profile
-									) + 1
-								)
-							)!
-						),
-						modifiers: .command
+					ProfileSelectionButton(
+						profile: profile
 					)
 				}
 			} label: {
 				Text("Profiles")
 			}
 		}
+	}
+	
+	private struct ProfileSelectionButton: View {
+		
+		public var profile: Profile
+		
+		private var index: Int {
+			return ProfileManager.shared.getProfileIndex(
+				profile: profile
+			) + 1
+		}
+		
+		public var body: some View {
+			Button {
+				AppState.setCommandSelectedProfileId(
+					profile.id
+				)
+				NotificationCenter.default.post(
+					name: Notifications.didCommandSelectProfile.name,
+					object: nil
+				)
+			} label: {
+				Text(profile.name)
+			}
+			.if(index <= 10) { view in
+				view
+					.keyboardShortcut(
+						KeyEquivalent(
+							Character(
+								stringValue: String(
+									(index % 10)
+								)
+							)!
+						),
+						modifiers: .command
+					)
+			}
+		}
+		
 	}
 	
 }

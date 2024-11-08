@@ -25,13 +25,6 @@ struct ConversationNavigationListView: View {
 			.onTapGesture {
 				self.selectConversation(conversation.wrappedValue)
 			}
-			.contextMenu {
-				Button {
-					self.conversationManager.delete(conversation)
-				} label: {
-					Text("Delete")
-				}
-			}
 		}
 		.navigationSplitViewColumnWidth(
 			min: 90,

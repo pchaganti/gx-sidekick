@@ -28,30 +28,47 @@ struct SourcesView: View {
 		VStack(
 			alignment: .leading
 		) {
-			HStack {
-				Text("Sources")
-					.font(.title2)
-					.bold()
-				Spacer()
-				TextField(text: $query, label: {
-					Label("Search", systemImage: "magnifyingglass")
-						.labelStyle(.titleAndIcon)
-				})
-				.textFieldStyle(.roundedBorder)
-				.frame(maxWidth: 180)
-				ExitButton {
-					isShowingSources.toggle()
-				}
-			}
-			.padding([.top, .trailing])
+			toolbar
 			Divider()
-			List(
-				filteredSources
-			) { source in
-				SourceRowView(source: source)
-					.listRowSeparator(.hidden)
-			}
+			list
 		}
 		.padding(.leading)
     }
+	
+	var toolbar: some View {
+		HStack {
+			Text("Sources")
+				.font(.title2)
+				.bold()
+			Spacer()
+			TextField(text: $query) {
+				Label("Search", systemImage: "magnifyingglass")
+					.labelStyle(.titleAndIcon)
+			}
+			.textFieldStyle(.roundedBorder)
+			.frame(maxWidth: 180)
+			ExitButton {
+				isShowingSources.toggle()
+			}
+		}
+		.padding([.top, .trailing])
+	}
+	
+	var list: some View {
+		Group {
+			if self.filteredSources.isEmpty {
+				Color.clear
+					.overlay {
+						ContentUnavailableView.search
+					}
+			} else {
+				List(
+					filteredSources
+				) { source in
+					SourceRowView(source: source)
+						.listRowSeparator(.hidden)
+				}
+			}
+		}
+	}
 }

@@ -31,15 +31,17 @@ struct ContentView: View {
 		.sheet(
 			isPresented: $showSetup
 		) {
-			SetupView(showSetup: $showSetup)
+			SetupView(
+				showSetup: $showSetup
+			)
 		}
 		.sheet(
 			isPresented: $conversationState.isManagingProfiles
 		) {
 			ProfileManagerView()
 				.frame(
-					minWidth: 300,
-					maxWidth: 350,
+					minWidth: 250,
+					maxWidth: 300,
 					minHeight: 450
 				)
 		}
