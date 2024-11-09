@@ -49,12 +49,10 @@ public class ModelManager: ObservableObject {
 				contentsOf: self.datastoreUrl
 			)
 			let decoder: JSONDecoder = JSONDecoder()
-			let rawModels: [ModelFile] = try decoder.decode(
+			self.models = try decoder.decode(
 				[ModelFile].self,
 				from: rawData
 			)
-			// Filter out missing models
-			self.models = rawModels.filter({ $0.url.fileExists })
 		} catch {
 			// Indicate error
 			print("Failed to load models: \(error)")

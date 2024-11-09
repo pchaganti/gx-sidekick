@@ -130,6 +130,8 @@
 		20B97CEB2CB00912009A0A5D /* Extension+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B97CEA2CB00912009A0A5D /* Extension+URL.swift */; };
 		20B97CED2CB00A28009A0A5D /* Favicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B97CEC2CB00A28009A0A5D /* Favicon.swift */; };
 		20B97CEF2CB010AD009A0A5D /* ThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B97CEE2CB010AD009A0A5D /* ThumbnailView.swift */; };
+		20B9B1212CDF91CD00B66D4D /* PerformanceGaugeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B9B1202CDF91CD00B66D4D /* PerformanceGaugeView.swift */; };
+		20B9B1252CDF99CC00B66D4D /* GPU.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B9B1242CDF99CC00B66D4D /* GPU.swift */; };
 		20B9E60C2CB140A000BA0AD2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B9E60B2CB140A000BA0AD2 /* AppDelegate.swift */; };
 		20B9E60E2CB1414100BA0AD2 /* DockMenuCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B9E60D2CB1414100BA0AD2 /* DockMenuCommands.swift */; };
 		20B9E6112CB142FD00BA0AD2 /* DebugCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B9E6102CB142FD00BA0AD2 /* DebugCommands.swift */; };
@@ -318,6 +320,8 @@
 		20B97CEA2CB00912009A0A5D /* Extension+URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+URL.swift"; sourceTree = "<group>"; };
 		20B97CEC2CB00A28009A0A5D /* Favicon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favicon.swift; sourceTree = "<group>"; };
 		20B97CEE2CB010AD009A0A5D /* ThumbnailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailView.swift; sourceTree = "<group>"; };
+		20B9B1202CDF91CD00B66D4D /* PerformanceGaugeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceGaugeView.swift; sourceTree = "<group>"; };
+		20B9B1242CDF99CC00B66D4D /* GPU.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPU.swift; sourceTree = "<group>"; };
 		20B9E60B2CB140A000BA0AD2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		20B9E60D2CB1414100BA0AD2 /* DockMenuCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DockMenuCommands.swift; sourceTree = "<group>"; };
 		20B9E6102CB142FD00BA0AD2 /* DebugCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugCommands.swift; sourceTree = "<group>"; };
@@ -565,6 +569,7 @@
 				202ED95A2CD7876A00D96030 /* AppleGPUInfo.h */,
 				202ED95B2CD7878700D96030 /* AppleGPUInfo.swift */,
 				202ED95D2CD787A600D96030 /* CAppleGPUInfo.swift */,
+				20B9B1242CDF99CC00B66D4D /* GPU.swift */,
 			);
 			path = "GPU Info";
 			sourceTree = "<group>";
@@ -803,6 +808,17 @@
 			path = Types;
 			sourceTree = "<group>";
 		};
+		20B9B11F2CDF91A900B66D4D /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				20573F242CB52EB6004C19FE /* CopyButton.swift */,
+				20B22E242CD9BC8B0030A8D3 /* ExportButton.swift */,
+				2099BDB12CB828A500E02732 /* PopoverButton.swift */,
+				20FE94D92CB96DE8006E9F06 /* ExitButton.swift */,
+			);
+			path = Buttons;
+			sourceTree = "<group>";
+		};
 		20B9E60F2CB1429E00BA0AD2 /* Commands */ = {
 			isa = PBXGroup;
 			children = (
@@ -828,13 +844,11 @@
 			isa = PBXGroup;
 			children = (
 				20B97CEE2CB010AD009A0A5D /* ThumbnailView.swift */,
-				20573F242CB52EB6004C19FE /* CopyButton.swift */,
-				20B22E242CD9BC8B0030A8D3 /* ExportButton.swift */,
 				204C79522CB7500800EED58E /* EndDetectionScrollView.swift */,
-				2099BDB12CB828A500E02732 /* PopoverButton.swift */,
-				20FE94D92CB96DE8006E9F06 /* ExitButton.swift */,
 				208AA3F02CC9E42F00A0891F /* ScrollMask.swift */,
 				204592162CD32DEF00DEAA96 /* TypedTextView.swift */,
+				20B9B1202CDF91CD00B66D4D /* PerformanceGaugeView.swift */,
+				20B9B11F2CDF91A900B66D4D /* Buttons */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -1118,11 +1132,13 @@
 				20C221022CC4A9E800A99796 /* Source.swift in Sources */,
 				207A9F622CB94B0000E727DE /* WindowCommands.swift in Sources */,
 				205B50D12CD3025A0057769F /* SourceRowView.swift in Sources */,
+				20B9B1252CDF99CC00B66D4D /* GPU.swift in Sources */,
 				2099BD9B2CB7B8C800E02732 /* Extension+RawRepresentable.swift in Sources */,
 				2086E1AC2CB03CD200FFCF57 /* Dialogs.swift in Sources */,
 				20573F2D2CB52FAF004C19FE /* SplashCodeSyntaxHighlighter.swift in Sources */,
 				20B22E252CD9BC8B0030A8D3 /* ExportButton.swift in Sources */,
 				20E48C262CB560730085E7D6 /* ChatStyle.swift in Sources */,
+				20B9B1212CDF91CD00B66D4D /* PerformanceGaugeView.swift in Sources */,
 				202ED94D2CD7815D00D96030 /* ModelSet.swift in Sources */,
 				20571F7B2CBD602B004F3344 /* InferenceSettingsView.swift in Sources */,
 				20B97CDF2CAFFE6A009A0A5D /* Sender.swift in Sources */,
@@ -1297,6 +1313,16 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_UPCOMING_FEATURE_CONCISE_MAGIC_FILE = YES;
+				SWIFT_UPCOMING_FEATURE_DEPRECATE_APPLICATION_MAIN = YES;
+				SWIFT_UPCOMING_FEATURE_DISABLE_OUTWARD_ACTOR_ISOLATION = YES;
+				SWIFT_UPCOMING_FEATURE_FORWARD_TRAILING_CLOSURES = YES;
+				SWIFT_UPCOMING_FEATURE_GLOBAL_CONCURRENCY = YES;
+				SWIFT_UPCOMING_FEATURE_IMPLICIT_OPEN_EXISTENTIALS = YES;
+				SWIFT_UPCOMING_FEATURE_IMPORT_OBJC_FORWARD_DECLS = YES;
+				SWIFT_UPCOMING_FEATURE_INFER_SENDABLE_FROM_CAPTURES = YES;
+				SWIFT_UPCOMING_FEATURE_ISOLATED_DEFAULT_VALUES = YES;
+				SWIFT_UPCOMING_FEATURE_REGION_BASED_ISOLATION = NO;
 			};
 			name = Debug;
 		};
@@ -1353,6 +1379,16 @@
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_CONCISE_MAGIC_FILE = YES;
+				SWIFT_UPCOMING_FEATURE_DEPRECATE_APPLICATION_MAIN = YES;
+				SWIFT_UPCOMING_FEATURE_DISABLE_OUTWARD_ACTOR_ISOLATION = YES;
+				SWIFT_UPCOMING_FEATURE_FORWARD_TRAILING_CLOSURES = YES;
+				SWIFT_UPCOMING_FEATURE_GLOBAL_CONCURRENCY = YES;
+				SWIFT_UPCOMING_FEATURE_IMPLICIT_OPEN_EXISTENTIALS = YES;
+				SWIFT_UPCOMING_FEATURE_IMPORT_OBJC_FORWARD_DECLS = YES;
+				SWIFT_UPCOMING_FEATURE_INFER_SENDABLE_FROM_CAPTURES = YES;
+				SWIFT_UPCOMING_FEATURE_ISOLATED_DEFAULT_VALUES = YES;
+				SWIFT_UPCOMING_FEATURE_REGION_BASED_ISOLATION = NO;
 			};
 			name = Release;
 		};

@@ -26,6 +26,7 @@ struct ModelRowView: View {
 			Text(modelFile.name)
 			Spacer()
 			button
+			state
 		}
 		.onTapGesture {
 			self.select()
@@ -52,6 +53,24 @@ struct ModelRowView: View {
 				self.isSelected ? Color.green : Color.clear
 			)
 			.frame(width: 5, height: 5)
+	}
+	
+	var state: some View {
+		Group {
+			if !modelFile.url.fileExists {
+				Text("Missing")
+					.font(.caption)
+					.bold()
+					.padding(2)
+					.padding(.horizontal, 2)
+					.overlay {
+						RoundedRectangle(cornerRadius: 3)
+							.fill(Color.yellow.opacity(0.2))
+							.strokeBorder(Color.yellow, lineWidth: 1)
+					}
+					.help("Model could not be found")
+			}
+		}
 	}
 	
 	var button: some View {

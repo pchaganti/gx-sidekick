@@ -82,6 +82,6 @@ struct EndDetectionScrollView<Content: View>: View {
 }
 
 struct OffsetPreferenceKey: PreferenceKey {
-	static var defaultValue: CGFloat = .zero
+	@MainActor static var defaultValue: CGFloat = .zero
 	static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {}
 }

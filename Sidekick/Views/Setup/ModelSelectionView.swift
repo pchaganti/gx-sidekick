@@ -36,7 +36,7 @@ struct ModelSelectionView: View {
 			Text("Welcome to Sidekick")
 				.foregroundStyle(.primary)
 				.font(.largeTitle)
-			Text("Select a Model to get started")
+			Text("Download or Select a Model to get started")
 				.foregroundStyle(.secondary)
 				.font(.title3)
 		}
@@ -83,7 +83,3 @@ struct ModelSelectionView: View {
 	}
 	
 }
-
-//#Preview {
-//    ModelSelectionView()
-//}

@@ -37,6 +37,9 @@ struct SourcesView: View {
 	
 	var toolbar: some View {
 		HStack {
+			ExitButton {
+				isShowingSources.toggle()
+			}
 			Text("Sources")
 				.font(.title2)
 				.bold()
@@ -47,9 +50,6 @@ struct SourcesView: View {
 			}
 			.textFieldStyle(.roundedBorder)
 			.frame(maxWidth: 180)
-			ExitButton {
-				isShowingSources.toggle()
-			}
 		}
 		.padding([.top, .trailing])
 	}

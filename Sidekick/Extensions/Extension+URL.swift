@@ -40,11 +40,15 @@ public extension URL {
 	}
 	
 	/// Function to verify if url is reachable
-	static func verifyURL(urlPath: String, completion: @escaping (_ isValid: Bool) ->()) {
+	static func verifyURL(
+		urlPath: String,
+		timeoutInterval: Double = 3,
+		completion: @escaping (_ isValid: Bool) ->()
+	) {
 		if let url = URL(string: urlPath) {
 			var request = URLRequest(
 				url: url,
-				timeoutInterval: 5
+				timeoutInterval: timeoutInterval
 			)
 			request.httpMethod = "HEAD"
 			let task = URLSession.shared.dataTask(

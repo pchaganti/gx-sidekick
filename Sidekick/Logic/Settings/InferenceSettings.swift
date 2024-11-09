@@ -31,7 +31,7 @@ public class InferenceSettings {
   """
 	
 	/// Static constant for the part of the system prompt telling the LLM to use sources
-	public static var useSourcesPrompt: String = String(localized: """
+	public static let useSourcesPrompt: String = String(localized: """
 The user's request might be followed by reference information, organized by source, that may or may not be complete nor related. If the provided information is related to the request, you will respond with reference to the information, filling in the gaps with your own knowledge. If the reference information provided is irrelavant, your response will ignore and avoid mentioning the existence of reference information.
 """)
 	

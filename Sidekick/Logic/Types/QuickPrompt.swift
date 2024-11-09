@@ -35,7 +35,7 @@ struct QuickPrompt: Identifiable {
 	}
 	
 	/// Static constant containing all quick prompts
-	static var quickPrompts = [
+	static let quickPrompts = [
 		QuickPrompt(
 			text: String(localized: "Hi there! Please introduce yourself."),
 			description: String(localized: "Say hi"),

@@ -284,12 +284,12 @@
         }
       }
     },
-    "Controls whether the GPU is used for inference. On most computers, using the GPU offers faster inference but uses more memory and power." : {
+    "Controls whether the GPU is used for inference." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "控制推理是否调用 GPU。在大多数计算机上，使用 GPU 可以实现更快的推理，但会消耗更多的内存和电量。"
+            "value" : "控制推理是否调用 GPU。"
           }
         }
       }
@@ -470,6 +470,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "下载默认模型"
+          }
+        }
+      }
+    },
+    "Download More Models" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下载更多模型"
+          }
+        }
+      }
+    },
+    "Download or Select a Model to get started" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请下载或选择一个模型"
           }
         }
       }
@@ -694,6 +714,26 @@
         }
       }
     },
+    "GPU poor" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "算力较弱"
+          }
+        }
+      }
+    },
+    "GPU rich" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "算力较强"
+          }
+        }
+      }
+    },
     "Hi there! Please introduce yourself." : {
       "localizations" : {
         "zh-Hans" : {
@@ -855,12 +895,32 @@
         }
       }
     },
+    "Missing" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模型文件消失"
+          }
+        }
+      }
+    },
     "Model" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "模型"
+          }
+        }
+      }
+    },
+    "Model could not be found" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模型文件竟然凭空消失了？！"
           }
         }
       }
@@ -1307,16 +1367,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "选择一个模型"
-          }
-        }
-      }
-    },
-    "Select a Model to get started" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "开始前，请选择一个模型"
           }
         }
       }
@@ -1877,6 +1927,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "确认"
+          }
+        }
+      }
+    },
+    "Your " : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你的 "
           }
         }
       }

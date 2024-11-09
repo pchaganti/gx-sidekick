@@ -24,14 +24,14 @@ extension Theme {
 	/// Numbered list | ![](GitHubNumberedList)
 	/// Table | ![](GitHubTable)
 	
-	@AppStorage("fontSizeOption") private static var fontSizeOption: Int = 14
-	
 	public static var gitHub: Theme {
 		Theme()
 			.text {
 				ForegroundColor(.text)
 				BackgroundColor(.background)
-				FontSize(CGFloat(fontSizeOption))
+				FontSize(
+					NSFont.systemFontSize + 2.0
+				)
 			}
 			.code {
 				FontFamilyVariant(.monospaced)

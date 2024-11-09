@@ -102,7 +102,9 @@ public class Settings {
 	/// Function to select a model
 	@MainActor static func selectModel() -> Bool {
 		if let modelUrls = try? FileManager.selectFile(
-			dialogTitle: "Select a Model",
+			dialogTitle: String(
+				localized: "Select a Model"
+			),
 			canSelectDirectories: false,
 			allowedContentTypes: [Self.ggufType],
 			allowMultipleSelection: false,
@@ -126,7 +128,9 @@ public class Settings {
 	@MainActor static func clearUserDefaults() {
 		// Show dialog
 		let _ = Dialogs.showConfirmation(
-			title: String(localized: "Are you sure you want clear all Settings? This will delete all settings and quit Sidekick.")
+			title: String(
+				localized: "Are you sure you want clear all Settings? This will delete all settings and quit Sidekick."
+			)
 		) {
 			// If "yes"
 			UserDefaults.standard.dictionaryRepresentation().keys.forEach({

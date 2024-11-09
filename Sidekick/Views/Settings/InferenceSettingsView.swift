@@ -152,20 +152,26 @@ struct InferenceSettingsView: View {
 	}
 	
 	var useGPUAccelerationToggle: some View {
-		HStack(alignment: .top) {
-			VStack(alignment: .leading) {
-				Text("Use GPU Acceleration")
-					.font(.title3)
-					.bold()
-				Text("Controls whether the GPU is used for inference. On most computers, using the GPU offers faster inference but uses more memory and power.")
-					.font(.caption)
+		VStack {
+			HStack(
+				alignment: .top
+			) {
+				VStack(
+					alignment: .leading
+				) {
+					Text("Use GPU Acceleration")
+						.font(.title3)
+						.bold()
+					Text("Controls whether the GPU is used for inference.")
+						.font(.caption)
+				}
+				Spacer()
+				Toggle("", isOn: $useGPUAcceleration)
 			}
-			Spacer()
-				.frame(maxWidth: 60)
-			Toggle("", isOn: $useGPUAcceleration)
-		}
-		.onChange(of: useGPUAcceleration) {
-			InferenceSettings.useGPUAcceleration = self.useGPUAcceleration
+			.onChange(of: useGPUAcceleration) {
+				InferenceSettings.useGPUAcceleration = self.useGPUAcceleration
+			}
+			PerformanceGaugeView()
 		}
 	}
 	
