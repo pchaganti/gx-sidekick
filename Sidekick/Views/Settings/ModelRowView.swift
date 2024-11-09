@@ -5,6 +5,7 @@
 //  Created by Bean John on 11/8/24.
 //
 
+import FSKit_macOS
 import SwiftUI
 
 struct ModelRowView: View {
@@ -32,7 +33,18 @@ struct ModelRowView: View {
 		.onHover { isHovering in
 			self.isHovering = isHovering
 		}
+		.contextMenu {
+			openButton
+		}
     }
+	
+	var openButton: some View {
+		Button {
+			FileManager.showItemInFinder(url: modelFile.url)
+		} label: {
+			Text("Show in Finder")
+		}
+	}
 	
 	var selectedIndicator: some View {
 		Circle()

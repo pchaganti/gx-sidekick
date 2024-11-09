@@ -51,13 +51,6 @@ struct PromptInputField: View {
 			.onExitCommand {
 				self.isFocused = false
 			}
-			.onReceive(
-				NotificationCenter.default.publisher(
-					for: Notifications.didSelectConversation.name
-				)
-			) { output in
-				self.isFocused = false
-			}
 			.onChange(of: isFocused) {
 				// Show add files and dictation tips if needed
 				if self.isFocused {

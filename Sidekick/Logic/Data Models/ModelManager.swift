@@ -54,7 +54,7 @@ public class ModelManager: ObservableObject {
 				from: rawData
 			)
 			// Filter out missing models
-			self.models = rawModels
+			self.models = rawModels.filter({ $0.url.fileExists })
 		} catch {
 			// Indicate error
 			print("Failed to load models: \(error)")

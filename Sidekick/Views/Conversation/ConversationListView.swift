@@ -22,32 +22,14 @@ struct ConversationNavigationListView: View {
 			NavigationLink(value: conversation.id) {
 				ConversationNameEditor(conversation: conversation)
 			}
-			.onTapGesture {
-				self.selectConversation(conversation.wrappedValue)
-			}
 		}
 		.navigationSplitViewColumnWidth(
 			min: 90,
 			ideal: 150,
 			max: 225
 		)
-		.onDeleteCommand {
-			if let conversationId = conversationState.selectedConversationId {
-				self.delete(conversationId)
-			}
-		}
 	}
-	
-	private func selectConversation(_ conversation: Conversation) {
-		// Remove text field focus
-		NotificationCenter.default.post(
-			name: Notifications.didSelectConversation.name,
-			object: nil
-		)
-		// Obtain focus
-		conversationState.selectedConversationId = conversation.id
-	}
-	
+
 	private func delete(_ conversationId: UUID) {
 		let _ = Dialogs.showConfirmation(
 			title: String(localized: "Delete Conversation"),
@@ -62,7 +44,3 @@ struct ConversationNavigationListView: View {
 	}
 	
 }
-
-//#Preview {
-//    ConversationNavigationListView()
-//}

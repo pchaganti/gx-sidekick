@@ -19,7 +19,6 @@ struct ModelListView: View {
 			alignment: .center
 		) {
 			exitButton
-				.padding(.bottom, 3)
 			list
 				.frame(
 					minHeight: 200,
@@ -69,6 +68,7 @@ struct ModelListView: View {
 			ExitButton {
 				self.isPresented.toggle()
 			}
+			.padding([.leading, .top], 3)
 			Spacer()
 		}
 	}

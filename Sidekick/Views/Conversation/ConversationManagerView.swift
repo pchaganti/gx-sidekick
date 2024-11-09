@@ -92,7 +92,8 @@ struct ConversationManagerView: View {
 						self.conversationManager.update(selectedConversation)
 					}
 			}
-			ToolbarItemGroup() {
+			ToolbarItemGroup(placement: .primaryAction) {
+				Spacer()
 				if InferenceSettings.lowUnifiedMemory {
 					lowMemoryWarning
 				}

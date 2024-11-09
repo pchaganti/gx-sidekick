@@ -122,7 +122,7 @@ The user's request might be followed by reference information, organized by sour
 		systemPrompt = defaultSystemPrompt
 	}
 
-	/// Function to switch to piratel system prompt
+	/// Function to switch to pirate system prompt
 	public static func setPirateSystemPrompt() {
 		systemPrompt = defaultPirateSystemPrompt
 	}
