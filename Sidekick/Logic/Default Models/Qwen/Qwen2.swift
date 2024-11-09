@@ -21,23 +21,23 @@ public class Qwen2: ModelSet {
 	private static let qwen_2Pt5_1pt5b: HuggingFaceModel = HuggingFaceModel(
 		urlString: "https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct-GGUF/resolve/main/qwen2.5-1.5b-instruct-q8_0.gguf?download=true",
 		minRam: 8,
-		minGpu: 7,
+		minGpuTflops: 2.2,
 		mmluScore: 60.9
 	)
 	
 	/// Static constant for the Qwen 2.5 3B model
 	private static let qwen_2pt5_3b: HuggingFaceModel = HuggingFaceModel(
 		urlString: "https://huggingface.co/Qwen/Qwen2.5-3B-Instruct-GGUF/resolve/main/qwen2.5-3b-instruct-q8_0.gguf?download=true",
-		minRam: 16,
-		minGpu: 8,
+		minRam: 12,
+		minGpuTflops: 2.6,
 		mmluScore: 65.6
 	)
 	
 	/// Static constant for the Qwen 2.5 7B model
 	private static let qwen_2pt5_7b: HuggingFaceModel = HuggingFaceModel(
 		urlString: "https://huggingface.co/bartowski/Qwen2.5-7B-Instruct-GGUF/resolve/main/Qwen2.5-7B-Instruct-Q8_0.gguf?download=true",
-		minRam: 24,
-		minGpu: 19,
+		minRam: 16,
+		minGpuTflops: 5.3,
 		mmluScore: 70.3
 	)
 	
@@ -45,7 +45,7 @@ public class Qwen2: ModelSet {
 	private static let qwen_2pt5_14b: HuggingFaceModel = HuggingFaceModel(
 		urlString: "https://huggingface.co/bartowski/Qwen2.5-14B-Instruct-GGUF/resolve/main/Qwen2.5-14B-Instruct-Q8_0.gguf?download=true",
 		minRam: 32,
-		minGpu: 40,
+		minGpuTflops: 16.2,
 		mmluScore: 79.7
 	)
 	

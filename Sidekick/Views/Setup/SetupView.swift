@@ -17,7 +17,7 @@ struct SetupView: View {
     var body: some View {
 		Group {
 			if !selectedModel {
-				// If no model, select a model
+				// If no model, download or select a model
 				ModelSelectionView(selectedModel: $selectedModel)
 			} else {
 				// Else, show setup complete screen
@@ -30,7 +30,3 @@ struct SetupView: View {
     }
 	
 }
-
-//#Preview {
-//    SetupView()
-//}

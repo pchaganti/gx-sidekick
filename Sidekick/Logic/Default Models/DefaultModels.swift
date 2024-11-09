@@ -50,7 +50,7 @@ public class DefaultModels {
 	/// - Returns: The reccomended model for the device, in type ``HuggingFaceModel``
 	private static func getReccomendedModelForSpecs(
 		ramSize: Int,
-		gpuCoreCount: Int
+		gpuTflops: Double
 	) -> HuggingFaceModel {
 		// Get baseline model
 		let minModel: HuggingFaceModel = models.sorted(
@@ -60,7 +60,7 @@ public class DefaultModels {
 		if let maxModel: HuggingFaceModel = models.filter({
 			$0.canRun(
 				unifiedMemorySize: ramSize,
-				gpuCoreCount: gpuCoreCount
+				gpuTflops: gpuTflops
 			)
 		}).sorted(
 			by: \.mmluScore,
@@ -76,28 +76,28 @@ public class DefaultModels {
 	public static func checkModelRecommendations() {
 		// List configs for testing
 		let configs: [
-			(ramSize: Int, gpuCoreCount: Int)
+			(ramSize: Int, gpuTflops: Double)
 		] = [
-			(8, 7),
-			(8, 8),
-			(8, 10),
-			(16, 8),
-			(16, 10),
-			(16, 19),
-			(18, 16),
-			(32, 19),
-			(32, 30),
-			(32, 38),
-			(64, 38),
-			(64, 40)
+			(8, 2.2),
+			(8, 2.6),
+			(8, 3.5),
+			(16, 2.6),
+			(16, 3.5),
+			(16, 5.3),
+			(18, 5.7),
+			(32, 6.8),
+			(32, 10),
+			(32, 13.5),
+			(64, 13.5),
+			(64, 16.3)
 		]
 		// Get reccomendations
-		configs.forEach { ramSize, gpuCoreCount in
+		configs.forEach { ramSize, gpuTflops in
 			let model: HuggingFaceModel = DefaultModels.getReccomendedModelForSpecs(
 				ramSize: ramSize,
-				gpuCoreCount: gpuCoreCount
+				gpuTflops: gpuTflops
 			)
-			print("A Mac with \(ramSize) GB of RAM and \(gpuCoreCount) GPU cores is recommended to use \(model.name).")
+			print("A Mac with \(ramSize) GB of RAM and \(gpuTflops) GPU TFLOPS is recommended to use \(model.name).")
 		}
 	}
 	

@@ -18,7 +18,7 @@ public class Gemma2: ModelSet {
 	private static let gemma_2_2b: HuggingFaceModel = HuggingFaceModel(
 		urlString: "https://huggingface.co/bartowski/gemma-2-2b-it-GGUF/resolve/main/gemma-2-2b-it-Q8_0.gguf",
 		minRam: 8,
-		minGpu: 7,
+		minGpuTflops: 2.2,
 		mmluScore: 52.2
 	)
 	

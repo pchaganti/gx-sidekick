@@ -13,12 +13,12 @@ public struct HuggingFaceModel: Codable {
 	init(
 		urlString: String,
 		minRam: Int,
-		minGpu: Int,
+		minGpuTflops: Double,
 		mmluScore: Float
 	) {
 		self.urlString = urlString
 		self.minRam = minRam
-		self.minGpu = minGpu
+		self.minGpuTflops = minGpuTflops
 		self.mmluScore = mmluScore
 	}
 	
@@ -28,8 +28,8 @@ public struct HuggingFaceModel: Codable {
 	/// The minimum RAM needed for the model, in type 	`Int`
 	public var minRam: Int
 	
-	/// The minimum GPU core count needed, in type `Int`
-	public var minGpu: Int
+	/// The minimum GPU float32 throughput needed, in type `Double`
+	public var minGpuTflops: Double
 	
 	/// Score in the MMLU benchmark, in type `Float`
 	public var mmluScore: Float
@@ -56,16 +56,16 @@ public struct HuggingFaceModel: Codable {
 	/// A function to indicate whether the device can run the model
 	/// - Parameters:
 	///   - unifiedMemorySize: The amount of RAM in the device, in type `Int`
-	///   - gpuCoreCount: The number of GPU cores in the device, in type `Int`
+	///   - gpuTflops: The GPU's float32 performance, in type `Double`
 	/// - Returns: A `Bool` indicating whether the device can run the model
 	public func canRun(
 		unifiedMemorySize: Int? = nil,
-		gpuCoreCount: Int? = nil
+		gpuTflops: Double? = nil
 	) -> Bool {
 		let unifiedMemorySize: Int = unifiedMemorySize ?? self.unifiedMemorySize
-		let gpuCoreCount: Int = gpuCoreCount ?? self.gpuCoreCount
+		let gpuTflops: Double = gpuTflops ?? (self.gpuFlops / pow(10, 12))
 		let ramPass: Bool = unifiedMemorySize >= self.minRam
-		let gpuPass: Bool = gpuCoreCount >= self.minGpu
+		let gpuPass: Bool = gpuTflops >= self.minGpuTflops
 		return ramPass && gpuPass
 	}
 	
@@ -76,12 +76,12 @@ public struct HuggingFaceModel: Codable {
 		return memoryGb
 	}
 	
-	/// The device's GPU core count, of type `Int`
-	private var gpuCoreCount: Int {
+	/// The device's GPU Float 32 throughput, of type `Double`
+	private var gpuFlops: Double {
 		guard let device: GPUInfoDevice = try? .init() else {
-			return .maximum
+			return 0
 		}
-		return device.coreCount
+		return device.flops
 	}
 	
 }

@@ -94,7 +94,7 @@ struct PerformanceGaugeView: View {
 		var width: CGFloat
 		
 		var pointScale: CGFloat {
-			return isCurrentDevice ? 1.75 : 1.00
+			return isCurrentDevice ? 1.5 : 1.00
 		}
 		
 		var min: CGFloat
@@ -137,7 +137,7 @@ struct PerformanceGaugeView: View {
 		var circle: some View {
 			Circle()
 				.fill(
-					isCurrentDevice ? fillColor : .secondary.opacity(0.5)
+					isCurrentDevice ? fillColor : .secondary.opacity(0.6)
 				)
 				.frame(width: diameter)
 		}
