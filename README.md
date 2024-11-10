@@ -1,6 +1,6 @@
 <h1 align="center">Sidekick</h1>
 
-Chat with an local LLM with RAG (Retrieval Augmentented Generation) capabilities on your Mac without installing any other software. All conversations happen offline, and your data is saved locally.
+Chat with an local LLM with context of your files, folders and websites on your Mac without installing any other software. All conversations happen offline, and your data is saved locally.
 
 ![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/Sidekick/Assets.xcassets/demoScreenshot.imageset/demoScreenshot.png)
 
