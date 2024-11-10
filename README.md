@@ -9,6 +9,16 @@ Chat with an local LLM with RAG (Retrieval Augmentented Generation) capabilities
 - Associate resources (files, folders and websites) to a profile to allow RAG (Retrieval Augmentented Generation)
 - Optionally use [Tavily](https://tavily.com/) to allow up to date responses with information from web search
 
+## Example Use
+
+Let’s say you're' collecting evidence for a History paper about interactions between the Aztecs and Spanish troops, and you’re looking for evidence about whether the Aztecs used captured Spanish weapons.
+
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/Sidekick/Assets.xcassets/demoScreenshot.imageset/demoScreenshot.png)
+
+Here, you can ask Sidekick, “Did the Aztecs use captured Spanish weapons?”, and it responds with direct quotes with page numbers and a brief analysis.
+
+To verify Sidekick’s answer, you can just click on the references displayed below Sidekick’s answer, and the academic paper referenced by Sidekick immediately opens in your viewer.
+
 ## Installation
 
 **Requirements**
