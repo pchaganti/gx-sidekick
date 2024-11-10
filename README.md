@@ -17,6 +17,8 @@ Let’s say you're' collecting evidence for a History paper about interactions b
 
 Here, you can ask Sidekick, “Did the Aztecs use captured Spanish weapons?”, and it responds with direct quotes with page numbers and a brief analysis.
 
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/Sidekick/Assets.xcassets/demoHistorySource.imageset/demoHistorySource.png)
+
 To verify Sidekick’s answer, you can just click on the references displayed below Sidekick’s answer, and the academic paper referenced by Sidekick immediately opens in your viewer.
 
 ## Installation
