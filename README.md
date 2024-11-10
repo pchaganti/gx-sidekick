@@ -13,7 +13,7 @@ Chat with an local LLM with RAG (Retrieval Augmentented Generation) capabilities
 
 Let’s say you're' collecting evidence for a History paper about interactions between the Aztecs and Spanish troops, and you’re looking for evidence about whether the Aztecs used captured Spanish weapons.
 
-![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/Sidekick/Assets.xcassets/demoScreenshot.imageset/demoHistoryScreenshot.png)
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/Sidekick/Assets.xcassets/demoHistoryScreenshot.imageset/demoHistoryScreenshot.png)
 
 Here, you can ask Sidekick, “Did the Aztecs use captured Spanish weapons?”, and it responds with direct quotes with page numbers and a brief analysis.
 
