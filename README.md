@@ -11,7 +11,7 @@ Chat with an local LLM with context of your files, folders and websites on your 
 
 ## Example Use
 
-Let’s say you're' collecting evidence for a History paper about interactions between the Aztecs and Spanish troops, and you’re looking for evidence about whether the Aztecs used captured Spanish weapons.
+Let’s say you're collecting evidence for a History paper about interactions between Aztecs and Spanish troops, and you’re looking for text about whether the Aztecs used captured Spanish weapons.
 
 ![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/Sidekick/Assets.xcassets/demoHistoryScreenshot.imageset/demoHistoryScreenshot.png)
 
@@ -19,7 +19,7 @@ Here, you can ask Sidekick, “Did the Aztecs use captured Spanish weapons?”, 
 
 ![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/Sidekick/Assets.xcassets/demoHistorySource.imageset/demoHistorySource.png)
 
-To verify Sidekick’s answer, you can just click on the references displayed below Sidekick’s answer, and the academic paper referenced by Sidekick immediately opens in your viewer.
+To verify Sidekick’s answer, just click on the references displayed below Sidekick’s answer, and the academic paper referenced by Sidekick immediately opens in your viewer.
 
 ## Installation
 

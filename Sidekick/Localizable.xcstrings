@@ -134,7 +134,7 @@
         }
       }
     },
-    "Are you sure you want to delete this Profile?" : {
+    "Are you sure you want to delete this profile?" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -435,6 +435,7 @@
       }
     },
     "Delete Profile" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {

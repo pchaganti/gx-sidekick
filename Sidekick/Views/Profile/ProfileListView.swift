@@ -16,19 +16,11 @@ struct ProfileListView: View {
 			self.$profileManager.profiles,
 			editActions: .move
 		) { profile in
-			ProfileNavigationRowView(profile: profile)
-				.listRowSeparator(.hidden)
-				.transition(
-					.asymmetric(
-						insertion: .push(from: .leading),
-						removal: .move(edge: .leading)
-					)
-				)
+			ProfileNavigationRowView(
+				profile: profile
+			)
+			.listRowSeparator(.hidden)
 		}
     }
 	
 }
-
-//#Preview {
-//	ProfileListView()
-//}

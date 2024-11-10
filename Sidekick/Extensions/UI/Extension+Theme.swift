@@ -30,12 +30,14 @@ extension Theme {
 				ForegroundColor(.text)
 				BackgroundColor(.background)
 				FontSize(
-					NSFont.systemFontSize + 2.0
+					NSFont.systemFontSize + 1.0
 				)
 			}
 			.code {
 				FontFamilyVariant(.monospaced)
-				FontSize(.em(0.85))
+				FontSize(
+					.em(0.85)
+				)
 				BackgroundColor(.secondaryBackground)
 			}
 			.strong {

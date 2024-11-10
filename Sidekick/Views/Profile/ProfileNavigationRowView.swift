@@ -12,7 +12,7 @@ struct ProfileNavigationRowView: View {
 	@EnvironmentObject private var profileManager: ProfileManager
 	
 	@State private var isEditing: Bool = false
-	@State private var isHovering: Bool = false
+	@State private var isDeleting: Bool = false
 	
 	@Binding var profile: Profile
 	
@@ -22,20 +22,9 @@ struct ProfileNavigationRowView: View {
 	
 	var body: some View {
 		HStack {
-			Button {
-				self.isEditing.toggle()
-			} label: {
-				self.profile.label
-			}
-			.buttonStyle(.plain)
+			editButton
 			Spacer()
-			if isHovering && !isDefault {
-				Group {
-					deleteButton
-					Image(systemName: "line.3.horizontal")
-						.foregroundStyle(.secondary)
-				}
-			}
+			controls
 		}
 		.padding(.leading, 4)
 		.padding(.trailing)
@@ -52,34 +41,52 @@ struct ProfileNavigationRowView: View {
 		.contextMenu {
 			deleteButton
 		}
-		.onHover { hover in
-			isHovering = hover
+		.confirmationDialog(
+			"Delete",
+			isPresented: $isDeleting
+		) {
+			Button("Confirm") {
+				self.profileManager.delete(
+					self.profile
+				)
+				self.isDeleting = false
+			}
+		} message: {
+			Text("Are you sure you want to delete this profile?")
+		}
+	}
+	
+	var editButton: some View {
+		Button {
+			self.isEditing.toggle()
+		} label: {
+			self.profile.label
+		}
+		.buttonStyle(.plain)
+	}
+	
+	var controls: some View {
+		Group {
+			if !isDefault {
+				Group {
+					deleteButton
+						.labelStyle(.iconOnly)
+					Image(systemName: "line.3.horizontal")
+						.foregroundStyle(.secondary)
+				}
+			}
 		}
 	}
 	
 	var deleteButton: some View {
 		Button {
-			self.delete(profile.id)
+			self.isDeleting.toggle()
 		} label: {
 			Label("Delete", systemImage: "trash")
 				.foregroundStyle(.red)
-				.labelStyle(.iconOnly)
 				.bold()
 		}
 		.buttonStyle(.plain)
-	}
-	
-	private func delete(_ profileId: UUID) {
-		let _ = Dialogs.showConfirmation(
-			title: String(localized: "Delete Profile"),
-			message: String(localized: "Are you sure you want to delete this Profile?")
-		) {
-			if let profile = profileManager.getProfile(
-				id: profileId
-			) {
-				self.profileManager.delete(profile)
-			}
-		}
 	}
 	
 }
