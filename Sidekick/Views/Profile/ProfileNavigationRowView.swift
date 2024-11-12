@@ -14,6 +14,8 @@ struct ProfileNavigationRowView: View {
 	@State private var isEditing: Bool = false
 	@State private var isDeleting: Bool = false
 	
+	@State private var isHovering: Bool = false
+	
 	@Binding var profile: Profile
 	
 	var isDefault: Bool {

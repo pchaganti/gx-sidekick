@@ -105,7 +105,6 @@
 		20B4D6AF2CC3C12C00817E15 /* PromptController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B4D6AE2CC3C12C00817E15 /* PromptController.swift */; };
 		20B4D6B12CC3D72700817E15 /* Extension+IndexItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B4D6B02CC3D72700817E15 /* Extension+IndexItem.swift */; };
 		20B97CA82CAFE830009A0A5D /* FSKit-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = 20B97CA72CAFE830009A0A5D /* FSKit-macOS */; };
-		20B97CAB2CAFE861009A0A5D /* ExtractKit-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = 20B97CAA2CAFE861009A0A5D /* ExtractKit-macOS */; };
 		20B97CB32CAFE86C009A0A5D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20B97CAC2CAFE86C009A0A5D /* Preview Assets.xcassets */; };
 		20B97CB42CAFE86C009A0A5D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20B97CAE2CAFE86C009A0A5D /* Assets.xcassets */; };
 		20B97CB52CAFE86C009A0A5D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B97CAF2CAFE86C009A0A5D /* ContentView.swift */; };
@@ -139,6 +138,11 @@
 		20C221062CC4B15600A99796 /* SourcesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C221052CC4B15600A99796 /* SourcesManager.swift */; };
 		20C221092CC4B5A800A99796 /* SourcesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C221082CC4B5A800A99796 /* SourcesView.swift */; };
 		20C2210B2CC4B88F00A99796 /* SourcesButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C2210A2CC4B88F00A99796 /* SourcesButton.swift */; };
+		20CC0C2F2CE2401600A3BC40 /* ExtractKit-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = 20CC0C2E2CE2401600A3BC40 /* ExtractKit-macOS */; };
+		20CEA7572CE3082F0070579B /* SwiftMath in Frameworks */ = {isa = PBXBuildFile; productRef = 20CEA7562CE3082F0070579B /* SwiftMath */; };
+		20CEA7592CE3084E0070579B /* MathView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CEA7582CE3084E0070579B /* MathView.swift */; };
+		20CEA75B2CE308AD0070579B /* MessageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CEA75A2CE308AD0070579B /* MessageContentView.swift */; };
+		20CEA75E2CE309F10070579B /* MessageOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CEA75D2CE309F10070579B /* MessageOptionsView.swift */; };
 		20D65DD32CC0B8A20052D826 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 20D65DD22CC0B8A20052D826 /* README.md */; };
 		20D65DD52CC0CC6C0052D826 /* StopGenerationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D65DD42CC0CC6C0052D826 /* StopGenerationButton.swift */; };
 		20D9A9732CD2769300171FDE /* MessageShareMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D9A9722CD2769300171FDE /* MessageShareMenu.swift */; };
@@ -329,6 +333,9 @@
 		20C221052CC4B15600A99796 /* SourcesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesManager.swift; sourceTree = "<group>"; };
 		20C221082CC4B5A800A99796 /* SourcesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesView.swift; sourceTree = "<group>"; };
 		20C2210A2CC4B88F00A99796 /* SourcesButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesButton.swift; sourceTree = "<group>"; };
+		20CEA7582CE3084E0070579B /* MathView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathView.swift; sourceTree = "<group>"; };
+		20CEA75A2CE308AD0070579B /* MessageContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageContentView.swift; sourceTree = "<group>"; };
+		20CEA75D2CE309F10070579B /* MessageOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageOptionsView.swift; sourceTree = "<group>"; };
 		20D65DD22CC0B8A20052D826 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		20D65DD42CC0CC6C0052D826 /* StopGenerationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopGenerationButton.swift; sourceTree = "<group>"; };
 		20D9A9722CD2769300171FDE /* MessageShareMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageShareMenu.swift; sourceTree = "<group>"; };
@@ -350,14 +357,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				200FBFF12CB64CB400A92A74 /* EventSource in Frameworks */,
+				20CEA7572CE3082F0070579B /* SwiftMath in Frameworks */,
 				20A8B6592CB26E4800B756FD /* SimilaritySearchKitDistilbert in Frameworks */,
 				20A8B6572CB26E4800B756FD /* SimilaritySearchKit in Frameworks */,
 				207A9F532CB82D9600E727DE /* SymbolPicker in Frameworks */,
 				208388DD2CBF4E8A00C2A9F8 /* SecureDefaults in Frameworks */,
+				20CC0C2F2CE2401600A3BC40 /* ExtractKit-macOS in Frameworks */,
 				20573F282CB52F84004C19FE /* Splash in Frameworks */,
 				20573F2A2CB52F84004C19FE /* SplashMarkdown in Frameworks */,
 				20B97CA82CAFE830009A0A5D /* FSKit-macOS in Frameworks */,
-				20B97CAB2CAFE861009A0A5D /* ExtractKit-macOS in Frameworks */,
 				20B97CC92CAFEBEA009A0A5D /* MarkdownUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -627,24 +635,23 @@
 				2099BDA42CB8069800E02732 /* ConversationNameEditor.swift */,
 				20573F172CB50743004C19FE /* ConversationView.swift */,
 				202801F12CC93C0D005C1F7D /* Controls */,
-				20573F2B2CB52F9A004C19FE /* Message */,
+				20573F2B2CB52F9A004C19FE /* Messages */,
 			);
 			path = Conversation;
 			sourceTree = "<group>";
 		};
-		20573F2B2CB52F9A004C19FE /* Message */ = {
+		20573F2B2CB52F9A004C19FE /* Messages */ = {
 			isa = PBXGroup;
 			children = (
 				20573F1E2CB5274E004C19FE /* MessagesView.swift */,
 				20D9A9722CD2769300171FDE /* MessageShareMenu.swift */,
 				2038CCF22CB6CBC6005AA315 /* PendingMessageView.swift */,
-				20573F202CB527DB004C19FE /* MessageView.swift */,
-				20AA5A532CC89AAA003E5519 /* MessageBackgroundView.swift */,
+				20CEA75C2CE308B50070579B /* Message */,
 				202801F22CC93C2B005C1F7D /* Options */,
 				20C221072CC4B59B00A99796 /* Sources */,
 				20573F2E2CB5301F004C19FE /* Markdown */,
 			);
-			path = Message;
+			path = Messages;
 			sourceTree = "<group>";
 		};
 		20573F2E2CB5301F004C19FE /* Markdown */ = {
@@ -849,6 +856,7 @@
 				204592162CD32DEF00DEAA96 /* TypedTextView.swift */,
 				20B9B1202CDF91CD00B66D4D /* PerformanceGaugeView.swift */,
 				20B9B11F2CDF91A900B66D4D /* Buttons */,
+				20CEA7582CE3084E0070579B /* MathView.swift */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -883,6 +891,17 @@
 			path = Sources;
 			sourceTree = "<group>";
 		};
+		20CEA75C2CE308B50070579B /* Message */ = {
+			isa = PBXGroup;
+			children = (
+				20573F202CB527DB004C19FE /* MessageView.swift */,
+				20CEA75A2CE308AD0070579B /* MessageContentView.swift */,
+				20AA5A532CC89AAA003E5519 /* MessageBackgroundView.swift */,
+				20CEA75D2CE309F10070579B /* MessageOptionsView.swift */,
+			);
+			path = Message;
+			sourceTree = "<group>";
+		};
 		20E48C272CB560A30085E7D6 /* Styles */ = {
 			isa = PBXGroup;
 			children = (
@@ -913,7 +932,6 @@
 			name = Sidekick;
 			packageProductDependencies = (
 				20B97CA72CAFE830009A0A5D /* FSKit-macOS */,
-				20B97CAA2CAFE861009A0A5D /* ExtractKit-macOS */,
 				20B97CC82CAFEBEA009A0A5D /* MarkdownUI */,
 				20A8B6562CB26E4800B756FD /* SimilaritySearchKit */,
 				20A8B6582CB26E4800B756FD /* SimilaritySearchKitDistilbert */,
@@ -922,6 +940,8 @@
 				200FBFF02CB64CB400A92A74 /* EventSource */,
 				207A9F522CB82D9600E727DE /* SymbolPicker */,
 				208388DC2CBF4E8A00C2A9F8 /* SecureDefaults */,
+				20CC0C2E2CE2401600A3BC40 /* ExtractKit-macOS */,
+				20CEA7562CE3082F0070579B /* SwiftMath */,
 			);
 			productName = Sidekick;
 			productReference = 200549732CAFA67B00A3DCF2 /* Sidekick.app */;
@@ -1024,13 +1044,14 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				20B97CA62CAFE830009A0A5D /* XCRemoteSwiftPackageReference "FSKit-macOS" */,
-				20B97CA92CAFE861009A0A5D /* XCRemoteSwiftPackageReference "ExtractKit-macOS" */,
 				20B97CC72CAFEBEA009A0A5D /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 				20A8B6552CB26E4800B756FD /* XCRemoteSwiftPackageReference "similarity-search-kit" */,
 				20573F262CB52F84004C19FE /* XCRemoteSwiftPackageReference "Splash" */,
 				200FBFEF2CB64CB400A92A74 /* XCRemoteSwiftPackageReference "EventSource" */,
 				207A9F512CB82D9600E727DE /* XCRemoteSwiftPackageReference "SymbolPicker" */,
 				208388DB2CBF4E8A00C2A9F8 /* XCRemoteSwiftPackageReference "SecureDefaults" */,
+				20CC0C2D2CE2401600A3BC40 /* XCRemoteSwiftPackageReference "ExtractKit-macOS" */,
+				20CEA7552CE3082F0070579B /* XCRemoteSwiftPackageReference "SwiftMath" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 200549742CAFA67B00A3DCF2 /* Products */;
@@ -1079,6 +1100,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20CEA75E2CE309F10070579B /* MessageOptionsView.swift in Sources */,
 				20573F362CB53878004C19FE /* CircleMenuStyle.swift in Sources */,
 				204592172CD32DEF00DEAA96 /* TypedTextView.swift in Sources */,
 				202ED9562CD7827400D96030 /* Gemma2.swift in Sources */,
@@ -1144,6 +1166,7 @@
 				20B97CDF2CAFFE6A009A0A5D /* Sender.swift in Sources */,
 				202E3EDD2CBB8F7B00AF86C8 /* ReferencedURL.swift in Sources */,
 				202801F42CC93C80005C1F7D /* DictationButton.swift in Sources */,
+				20CEA7592CE3084E0070579B /* MathView.swift in Sources */,
 				2004D7642CBC9DA2009F294E /* ConversationState.swift in Sources */,
 				2086E1712CB036BB00FFCF57 /* ConversationManager.swift in Sources */,
 				20C221092CC4B5A800A99796 /* SourcesView.swift in Sources */,
@@ -1197,6 +1220,7 @@
 				204C79562CB765D700EED58E /* ProfileSelectionMenu.swift in Sources */,
 				201A1A8E2CDB7C1C001E9BA9 /* MarkdownDataView.swift in Sources */,
 				20A8B65B2CB2709100B756FD /* Resources.swift in Sources */,
+				20CEA75B2CE308AD0070579B /* MessageContentView.swift in Sources */,
 				202801FC2CC9C5C2005C1F7D /* TemporaryResourceView.swift in Sources */,
 				20573F182CB50743004C19FE /* ConversationView.swift in Sources */,
 				201A1A9E2CDBBA25001E9BA9 /* MarkdownLineChartView.swift in Sources */,
@@ -1315,16 +1339,16 @@
 				SWIFT_ENABLE_BARE_SLASH_REGEX = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_STRICT_CONCURRENCY = minimal;
-				SWIFT_UPCOMING_FEATURE_CONCISE_MAGIC_FILE = YES;
-				SWIFT_UPCOMING_FEATURE_DEPRECATE_APPLICATION_MAIN = YES;
+				SWIFT_UPCOMING_FEATURE_CONCISE_MAGIC_FILE = NO;
+				SWIFT_UPCOMING_FEATURE_DEPRECATE_APPLICATION_MAIN = NO;
 				SWIFT_UPCOMING_FEATURE_DISABLE_OUTWARD_ACTOR_ISOLATION = NO;
-				SWIFT_UPCOMING_FEATURE_FORWARD_TRAILING_CLOSURES = YES;
-				SWIFT_UPCOMING_FEATURE_GLOBAL_CONCURRENCY = YES;
-				SWIFT_UPCOMING_FEATURE_IMPLICIT_OPEN_EXISTENTIALS = YES;
-				SWIFT_UPCOMING_FEATURE_IMPORT_OBJC_FORWARD_DECLS = YES;
-				SWIFT_UPCOMING_FEATURE_INFER_SENDABLE_FROM_CAPTURES = YES;
+				SWIFT_UPCOMING_FEATURE_FORWARD_TRAILING_CLOSURES = NO;
+				SWIFT_UPCOMING_FEATURE_GLOBAL_CONCURRENCY = NO;
+				SWIFT_UPCOMING_FEATURE_IMPLICIT_OPEN_EXISTENTIALS = NO;
+				SWIFT_UPCOMING_FEATURE_IMPORT_OBJC_FORWARD_DECLS = NO;
+				SWIFT_UPCOMING_FEATURE_INFER_SENDABLE_FROM_CAPTURES = NO;
 				SWIFT_UPCOMING_FEATURE_INTERNAL_IMPORTS_BY_DEFAULT = NO;
-				SWIFT_UPCOMING_FEATURE_ISOLATED_DEFAULT_VALUES = YES;
+				SWIFT_UPCOMING_FEATURE_ISOLATED_DEFAULT_VALUES = NO;
 				SWIFT_UPCOMING_FEATURE_REGION_BASED_ISOLATION = NO;
 			};
 			name = Debug;
@@ -1384,16 +1408,16 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_ENABLE_BARE_SLASH_REGEX = NO;
 				SWIFT_STRICT_CONCURRENCY = minimal;
-				SWIFT_UPCOMING_FEATURE_CONCISE_MAGIC_FILE = YES;
-				SWIFT_UPCOMING_FEATURE_DEPRECATE_APPLICATION_MAIN = YES;
+				SWIFT_UPCOMING_FEATURE_CONCISE_MAGIC_FILE = NO;
+				SWIFT_UPCOMING_FEATURE_DEPRECATE_APPLICATION_MAIN = NO;
 				SWIFT_UPCOMING_FEATURE_DISABLE_OUTWARD_ACTOR_ISOLATION = NO;
-				SWIFT_UPCOMING_FEATURE_FORWARD_TRAILING_CLOSURES = YES;
-				SWIFT_UPCOMING_FEATURE_GLOBAL_CONCURRENCY = YES;
-				SWIFT_UPCOMING_FEATURE_IMPLICIT_OPEN_EXISTENTIALS = YES;
-				SWIFT_UPCOMING_FEATURE_IMPORT_OBJC_FORWARD_DECLS = YES;
-				SWIFT_UPCOMING_FEATURE_INFER_SENDABLE_FROM_CAPTURES = YES;
+				SWIFT_UPCOMING_FEATURE_FORWARD_TRAILING_CLOSURES = NO;
+				SWIFT_UPCOMING_FEATURE_GLOBAL_CONCURRENCY = NO;
+				SWIFT_UPCOMING_FEATURE_IMPLICIT_OPEN_EXISTENTIALS = NO;
+				SWIFT_UPCOMING_FEATURE_IMPORT_OBJC_FORWARD_DECLS = NO;
+				SWIFT_UPCOMING_FEATURE_INFER_SENDABLE_FROM_CAPTURES = NO;
 				SWIFT_UPCOMING_FEATURE_INTERNAL_IMPORTS_BY_DEFAULT = NO;
-				SWIFT_UPCOMING_FEATURE_ISOLATED_DEFAULT_VALUES = YES;
+				SWIFT_UPCOMING_FEATURE_ISOLATED_DEFAULT_VALUES = NO;
 				SWIFT_UPCOMING_FEATURE_REGION_BASED_ISOLATION = NO;
 			};
 			name = Release;
@@ -1662,7 +1686,15 @@
 				kind = branch;
 			};
 		};
-		20B97CA92CAFE861009A0A5D /* XCRemoteSwiftPackageReference "ExtractKit-macOS" */ = {
+		20B97CC72CAFEBEA009A0A5D /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui";
+			requirement = {
+				kind = exactVersion;
+				version = 2.4.0;
+			};
+		};
+		20CC0C2D2CE2401600A3BC40 /* XCRemoteSwiftPackageReference "ExtractKit-macOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/johnbean393/ExtractKit-macOS";
 			requirement = {
@@ -1670,12 +1702,12 @@
 				kind = branch;
 			};
 		};
-		20B97CC72CAFEBEA009A0A5D /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
+		20CEA7552CE3082F0070579B /* XCRemoteSwiftPackageReference "SwiftMath" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui";
+			repositoryURL = "https://github.com/mgriebling/SwiftMath";
 			requirement = {
-				kind = exactVersion;
-				version = 2.4.0;
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.6.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1721,15 +1753,20 @@
 			package = 20B97CA62CAFE830009A0A5D /* XCRemoteSwiftPackageReference "FSKit-macOS" */;
 			productName = "FSKit-macOS";
 		};
-		20B97CAA2CAFE861009A0A5D /* ExtractKit-macOS */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 20B97CA92CAFE861009A0A5D /* XCRemoteSwiftPackageReference "ExtractKit-macOS" */;
-			productName = "ExtractKit-macOS";
-		};
 		20B97CC82CAFEBEA009A0A5D /* MarkdownUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 20B97CC72CAFEBEA009A0A5D /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
 			productName = MarkdownUI;
+		};
+		20CC0C2E2CE2401600A3BC40 /* ExtractKit-macOS */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 20CC0C2D2CE2401600A3BC40 /* XCRemoteSwiftPackageReference "ExtractKit-macOS" */;
+			productName = "ExtractKit-macOS";
+		};
+		20CEA7562CE3082F0070579B /* SwiftMath */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 20CEA7552CE3082F0070579B /* XCRemoteSwiftPackageReference "SwiftMath" */;
+			productName = SwiftMath;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

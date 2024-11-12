@@ -18,7 +18,13 @@ public class Model: ObservableObject {
 		// Make sure bookmarks are loaded
 		let _ = Bookmarks.shared
 		// Set system prompt
-		self.systemPrompt = systemPrompt + "\n\n" + InferenceSettings.useSourcesPrompt
+		self.systemPrompt = """
+\(systemPrompt)
+
+\(InferenceSettings.useLatexPrompt)
+
+\(InferenceSettings.useSourcesPrompt)
+"""
 		// Get model and context length
 		guard let modelPath: String = Settings.modelUrl?.posixPath else {
 			fatalError("Could not find modelUrl")
@@ -41,7 +47,13 @@ public class Model: ObservableObject {
 	
 	/// Function to refresh `llama-server` with the newly selected model / system prompt
 	public func refreshModel(_ systemPrompt: String) async {
-		self.systemPrompt = systemPrompt + "\n\n" + InferenceSettings.useSourcesPrompt
+		self.systemPrompt = """
+\(systemPrompt)
+
+\(InferenceSettings.useLatexPrompt)
+
+\(InferenceSettings.useSourcesPrompt)
+"""
 		// Get model path
 		guard let modelPath: String = Settings.modelUrl?.posixPath else {
 			fatalError("Could not find modelUrl")

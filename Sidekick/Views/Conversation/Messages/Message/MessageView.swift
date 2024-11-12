@@ -20,12 +20,8 @@ struct MessageView: View {
 		self.canEdit = canEdit
 	}
 	
-	@Environment(\.colorScheme) private var colorScheme
-	
 	@EnvironmentObject private var conversationManager: ConversationManager
 	@EnvironmentObject private var conversationState: ConversationState
-	
-	@State private var showNerdInfo: Bool = false
 	
 	@State private var isEditing: Bool = false
 	@State private var messageText: String
@@ -41,6 +37,11 @@ struct MessageView: View {
 	}
 	
 	var message: Message
+	
+	private var isGenerating: Bool {
+		return !message.outputEnded && message.getSender() == .assistant
+	}
+	
 	var canEdit: Bool
 	
 	var sources: Sources? {
@@ -52,34 +53,6 @@ struct MessageView: View {
 	var showSources: Bool {
 		let hasSources: Bool = !(sources?.sources.isEmpty ?? true)
 		return hasSources && self.message.getSender() == .user
-	}
-	
-	private var theme: Splash.Theme {
-		// NOTE: We are ignoring the Splash theme font
-		switch colorScheme {
-			case ColorScheme.dark:
-				return .wwdc17(withFont: .init(size: 16))
-			default:
-				return .sunset(withFont: .init(size: 16))
-		}
-	}
-	
-	var viewReferenceTip: ViewReferenceTip = .init()
-	
-	private var isGenerating: Bool {
-		return !message.outputEnded && message.getSender() == .assistant
-	}
-	
-	private var nerdInfo: String {
-		var tokensPerSecondStr: String = "Unknown"
-		if let tokensPerSecond = message.tokensPerSecond {
-			tokensPerSecondStr = "\(round(tokensPerSecond * 10) / 10)"
-		}
-		let infoDescription: String.LocalizationValue = """
-Model: \(message.model)
-Tokens per second: \(tokensPerSecondStr)
-"""
-		return String(localized: infoDescription)
 	}
 	
 	private var timeDescription: String {
@@ -103,7 +76,11 @@ Tokens per second: \(tokensPerSecondStr)
 				HStack {
 					Text(timeDescription)
 						.foregroundStyle(.secondary)
-					options
+					MessageOptionsView(
+						isEditing: $isEditing,
+						message: message,
+						canEdit: canEdit
+					)
 					if showSources {
 						sourcesButton
 					}
@@ -129,7 +106,7 @@ Tokens per second: \(tokensPerSecondStr)
 			if isEditing {
 				contentEditor
 			} else {
-				contentViewer
+				MessageContentView(message: message)
 			}
 		}
 		.padding(11)
@@ -138,44 +115,6 @@ Tokens per second: \(tokensPerSecondStr)
 				.contextMenu {
 					copyButton
 				}
-		}
-	}
-	
-	var contentViewer: some View {
-		VStack(alignment: .leading) {
-			Markdown(message.displayedText)
-				.markdownTheme(.gitHub)
-				.markdownCodeSyntaxHighlighter(
-					.splash(theme: self.theme)
-				)
-				.textSelection(.enabled)
-			if !message.referencedURLs.isEmpty {
-				messageReferences
-			}
-		}
-	}
-	
-	var messageReferences: some View {
-		VStack(
-			alignment: .leading
-		) {
-			Text("References:")
-				.bold()
-				.font(.body)
-				.foregroundStyle(Color.secondary)
-			ForEach(
-				message.referencedURLs.indices,
-				id: \.self
-			) { index in
-				message.referencedURLs[index].openButton
-					.if(index == 0) { view in
-						view.popoverTip(viewReferenceTip)
-					}
-			}
-		}
-		.padding(.top, 8)
-		.onAppear {
-			ViewReferenceTip.hasReference = true
 		}
 	}
 	
@@ -205,32 +144,6 @@ Tokens per second: \(tokensPerSecondStr)
 		}
 	}
 	
-	var options: some View {
-		Menu(content: {
-			optionsMenu
-		}, label: {
-			Image(systemName: "ellipsis.circle")
-				.imageScale(.medium)
-				.background(.clear)
-				.imageScale(.small)
-				.padding(.leading, 1)
-				.padding(.horizontal, 3)
-				.frame(width: 15, height: 15)
-				.scaleEffect(CGSize(width: 0.96, height: 0.96))
-				.background(.primary.opacity(0.00001)) // Needs to be clickable
-		})
-		.menuStyle(.circle)
-		.popover(isPresented: $showNerdInfo) {
-			Text(nerdInfo)
-				.padding(12)
-				.font(.caption)
-				.textSelection(.enabled)
-		}
-		.disabled(isGenerating)
-		.padding(0)
-		.padding(.vertical, 2)
-	}
-	
 	var sourcesButton: some View {
 		SourcesButton(showSources: $isShowingSources)
 			.menuStyle(.circle)
@@ -247,34 +160,6 @@ Tokens per second: \(tokensPerSecondStr)
 			.disabled(!isGenerating)
 			.padding(0)
 			.padding(.vertical, 2)
-	}
-	
-	var optionsMenu: some View {
-		Group {
-			copyButton
-			// Edit button
-			if self.canEdit && !self.isEditing {
-				Button {
-					if self.canEdit {
-						withAnimation(
-							.linear(duration: 0.5)
-						) {
-							self.isEditing.toggle()
-						}
-					}
-				} label: {
-					Text("Edit")
-				}
-			}
-			// Show info for bots
-			if message.getSender() == .assistant {
-				Button {
-					showNerdInfo.toggle()
-				} label: {
-					Text("Stats for Nerds")
-				}
-			}
-		}
 	}
 	
 	var copyButton: some View {

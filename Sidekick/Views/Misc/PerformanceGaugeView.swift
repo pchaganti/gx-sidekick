@@ -120,18 +120,23 @@ struct PerformanceGaugeView: View {
 			return ((width - diameter) * percent) / pointScale
 		}
 		
+		@State private var isHovering: Bool = false
+		
 		var body: some View {
-			PopoverButton {
-				circle
-			} content: {
-				Text(valueDescription)
-					.padding(7)
-			}
-			.buttonStyle(.plain)
-			.offset(
-				x: xOffset
-			)
-			.scaleEffect(pointScale)
+			circle
+				.popover(isPresented: $isHovering) {
+					Text(valueDescription)
+						.padding(7)
+				}
+				.onHover { hovering in
+					withAnimation(.linear) {
+						self.isHovering = hovering
+					}
+				}
+				.offset(
+					x: xOffset
+				)
+				.scaleEffect(pointScale)
 		}
 		
 		var circle: some View {

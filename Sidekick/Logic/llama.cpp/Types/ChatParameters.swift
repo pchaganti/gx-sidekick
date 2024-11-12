@@ -15,8 +15,15 @@ struct ChatParameters: Codable {
 		systemPrompt: String,
 		similarityIndex: SimilarityIndex?
 	) async {
+		let fullSystemPrompt: String = """
+\(systemPrompt)
+
+\(InferenceSettings.useLatexPrompt)
+
+\(InferenceSettings.useSourcesPrompt)
+"""
 		let systemPromptMsg: Message = Message(
-			text: systemPrompt,
+			text: fullSystemPrompt,
 			sender: .system
 		)
 		let systemPromptMsgSubset: Message.MessageSubset = await Message.MessageSubset(

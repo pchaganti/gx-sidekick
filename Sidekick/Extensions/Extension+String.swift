@@ -141,11 +141,67 @@ public extension String {
 					min(count, r.lowerBound)
 				),
 				upper: min(count, max(0, r.upperBound))
-)
-)
+			)
+		)
 		let start = index(startIndex, offsetBy: range.lowerBound)
 		let end = index(start, offsetBy: range.upperBound - range.lowerBound)
 		return String(self[start ..< end])
+	}
+	
+	/// An `NSString` derived from the string
+	private var nsString: NSString {
+		return NSString(string: self)
+	}
+	
+	/// Function to split the string into LaTeX and non-LaTeX sections
+	func splitByLatex() -> [(string: String, isLatex: Bool)] {
+		// Regex pattern to match LaTeX
+		let latexPattern: String = "\\\\\\[(.*?)\\\\\\]"
+		let regex = try! NSRegularExpression(
+			pattern: latexPattern,
+			options: [.dotMatchesLineSeparators]
+		)
+		
+		// Define variables
+		var sections: [(string: String, isLatex: Bool)] = []
+		var lastIndex = 0
+		
+		// Get matches
+		let matches = regex.matches(
+			in: self,
+			options: [],
+			range: NSRange(location: 0, length: self.utf16.count)
+		)
+		
+		// Loop through matches
+		for match in matches {
+			let matchRange = match.range
+			
+			// Add text before LaTeX if any
+			if matchRange.location > lastIndex {
+				let textRange = NSRange(location: lastIndex, length: matchRange.location - lastIndex)
+				let textSection = nsString.substring(with: textRange)
+				if !textSection.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+					sections.append((textSection, false))
+				}
+			}
+			
+			// Add LaTeX section
+			let latexSection = nsString.substring(with: matchRange)
+			sections.append((latexSection, true))
+			
+			lastIndex = matchRange.location + matchRange.length
+		}
+		
+		// Add remaining text if any
+		if lastIndex < self.utf16.count {
+			let textSection = nsString.substring(from: lastIndex)
+			if !textSection.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+				sections.append((textSection, false))
+			}
+		}
+		
+		return sections
 	}
 	
 }
