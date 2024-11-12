@@ -111,4 +111,18 @@ extension View {
 		return data
 	}
 	
+	@ViewBuilder public func applyMaterial(
+		shapeStyle: any ShapeStyle
+	) -> some View {
+		if #available(macOS 15, *) {
+			self
+				.containerBackground(
+					.ultraThickMaterial,
+					for: .window
+				)
+		} else {
+			self
+		}
+	}
+	
 }

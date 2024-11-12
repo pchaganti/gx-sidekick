@@ -32,6 +32,9 @@ struct SidekickApp: App {
 				.environmentObject(conversationManager)
 				.environmentObject(profileManager)
 				.environmentObject(lengthyTasksController)
+				.applyMaterial(
+					shapeStyle: .regularMaterial
+				)
 		}
 		.windowToolbarStyle(.unified)
 		.commands {
@@ -43,6 +46,7 @@ struct SidekickApp: App {
 		
 		SwiftUI.Settings {
 			SettingsView()
+				.applyMaterial(shapeStyle: .regularMaterial)
 		}
 		
 	}
