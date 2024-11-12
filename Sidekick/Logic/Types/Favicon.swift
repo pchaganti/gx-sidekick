@@ -26,7 +26,7 @@ public struct Favicon {
 	public func getFavicon(size: Size, width: CGFloat) -> some View {
 		Group {
 			if let domain = self.domain {
-				let urlStr: String = "https://www.tavily.com/s2/favicons?sz=\(size.rawValue)&domain=\(domain)"
+				let urlStr: String = "https://www.gogle.com/s2/favicons?sz=\(size.rawValue)&domain=\(domain)"
 				AsyncImage(url: URL(string: urlStr)!)
 					.aspectRatio(contentMode: .fit)
 					.frame(width: width)

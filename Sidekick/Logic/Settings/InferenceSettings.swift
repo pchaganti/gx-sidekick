@@ -32,7 +32,7 @@ public class InferenceSettings {
 	
 	/// Static constant for the part of the system prompt telling the LLM to use proper LaTeX
 	public static let useLatexPrompt: String = """
- In your response, use proper LaTeX for mathematical expressions. However, DO NOT use inline LaTeX expressions such as $math expression$. For block expression, use the format \\[ math expression \\] instead of $$math expression$$. 
+ In your response, use proper LaTeX for mathematical expressions. However, DO NOT use inline LaTeX expressions such as \\( math expression \\) or $math expression$. For block expression, use the format \\[ math expression \\] instead of $$math expression$$. 
  """
 	/// Static constant for the part of the system prompt telling the LLM to use sources
 	public static let useSourcesPrompt: String = """
