@@ -25,12 +25,10 @@ struct InferenceSettingsView: View {
 	
     var body: some View {
 		Form {
-			if !InferenceSettings.useServer {
-				Section {
-					model
-				} header: {
-					Text("Model")
-				}
+			Section {
+				model
+			} header: {
+				Text("Model")
 			}
 			Section {
 				parameters
@@ -113,7 +111,7 @@ struct InferenceSettingsView: View {
 	var contextLengthEditor: some View {
 		HStack(alignment: .top) {
 			VStack(alignment: .leading) {
-				Text("Context length")
+				Text("Context Length")
 					.font(.title3)
 					.bold()
 				Text("Context length is the maximum amount of information it can take as input for a query. A larger context length allows an LLM to recall more information, at the cost of slower output and more memory usage.")
