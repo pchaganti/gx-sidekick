@@ -45,8 +45,30 @@ public actor LlamaServer {
 	private var process: Process = Process()
 	
 	/// Function to get path to llama-server
-	private func url(_ path: String) -> URL {
-		URL(string: "\(scheme)://\(host):\(port)\(path)")!
+	private func url(_ path: String) async -> URL {
+		// Check endpoint
+		let endpoint: String = InferenceSettings.endpoint
+		let urlString: String
+		if await !self.serverIsReachable() || !InferenceSettings.useServer {
+			 urlString = "\(scheme)://\(host):\(port)\(path)"
+		} else {
+			urlString = "\(endpoint)\(path)"
+		}
+		return URL(string: urlString)!
+	}
+	
+	/// Function to check if the inference server is reachable
+	private func serverIsReachable() async -> Bool {
+		// Check endpoint
+		let endpointUrl: URL = URL(
+			string: "\(InferenceSettings.endpoint)/health"
+		)!
+		let serverHealth = ServerHealth()
+		await serverHealth.updateURL(endpointUrl)
+		await serverHealth.check()
+		let score: Double = await serverHealth.score
+		let serverIsHealthy: Bool = score > 0.25
+		return serverIsHealthy
 	}
 	
 	/// Function to start a monitor process that will terminate the server when our app dies
@@ -75,9 +97,13 @@ public actor LlamaServer {
 	
 	/// Function to start the `llama-server` process
 	private func startServer() async throws {
+		// If a server is used, exit
+		if await self.serverIsReachable() && InferenceSettings.useServer {
+			return
+		}
 		// If server is running, exit
 		guard !process.isRunning, let modelPath = self.modelPath else { return }
-		stopServer()
+		await stopServer()
 		// Initialize `llama-server` process
 		process = Process()
 		let startTime: Date = Date.now
@@ -122,7 +148,12 @@ public actor LlamaServer {
 	}
 	
 	/// Function to stop the `llama-server` process
-	public func stopServer() {
+	public func stopServer() async {
+		// If a server is used, exit
+		if await self.serverIsReachable() && InferenceSettings.useServer {
+			return
+		}
+		// Terminate processes
 		if process.isRunning {
 			process.terminate()
 		}
@@ -155,7 +186,9 @@ public actor LlamaServer {
 			systemPrompt: systemPrompt,
 			similarityIndex: similarityIndex
 		)
-		var request = URLRequest(url: url("/v1/chat/completions"))
+		var request = await URLRequest(
+			url: url("/v1/chat/completions")
+		)
 		request.httpMethod = "POST"
 		request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 		request.setValue("text/event-stream", forHTTPHeaderField: "Accept")
@@ -239,6 +272,7 @@ public actor LlamaServer {
 	
 	/// Function run for waiting for the server
 	private func waitForServer() async throws {
+		// Check health
 		guard process.isRunning else { return }
 		interrupted = false
 		serverErrorMessage = ""
@@ -247,7 +281,7 @@ public actor LlamaServer {
 		await serverHealth.updateURL(url("/health"))
 		await serverHealth.check()
 		
-		var timeout = 60
+		var timeout = 30
 		let tick = 1
 		while true {
 			await serverHealth.check()

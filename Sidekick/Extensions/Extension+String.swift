@@ -156,7 +156,7 @@ public extension String {
 	/// Function to split the string into LaTeX and non-LaTeX sections
 	func splitByLatex() -> [(string: String, isLatex: Bool)] {
 		// Regex pattern to match LaTeX
-		let latexPattern: String = "\\\\\\[(.*?)\\\\\\]"
+		let latexPattern: String = "(\\\\\\[(.*?)\\\\\\])|(\\$\\$(.*?)\\$\\$)"
 		let regex = try! NSRegularExpression(
 			pattern: latexPattern,
 			options: [.dotMatchesLineSeparators]
@@ -202,6 +202,14 @@ public extension String {
 		}
 		
 		return sections
+	}
+	
+	/// Function to replace the suffix in a `String`
+	func replacingSuffix(_ suffix: String, with newSuffix: String) -> String {
+		if self.hasSuffix(suffix) {
+			return self.dropLast(suffix.count) + newSuffix
+		}
+		return self
 	}
 	
 }

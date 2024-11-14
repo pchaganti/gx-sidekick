@@ -34,6 +34,9 @@ struct ProfileNavigationRowView: View {
 			RoundedRectangle(cornerRadius: 7)
 				.fill(self.profile.color)
 		}
+		.onHover { hovering in
+			self.isHovering = hovering
+		}
 		.sheet(isPresented: $isEditing) {
 			ProfileEditorView(
 				profile: $profile, isEditing: $isEditing
@@ -69,12 +72,15 @@ struct ProfileNavigationRowView: View {
 	
 	var controls: some View {
 		Group {
-			if !isDefault {
+			if !isDefault && isHovering {
 				Group {
 					deleteButton
 						.labelStyle(.iconOnly)
 					Image(systemName: "line.3.horizontal")
 						.foregroundStyle(.secondary)
+						.foregroundStyle(
+							self.profile.color.adaptedTextColor
+						)
 				}
 			}
 		}

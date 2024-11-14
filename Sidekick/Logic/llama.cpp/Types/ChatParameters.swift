@@ -18,8 +18,6 @@ struct ChatParameters: Codable {
 		let fullSystemPrompt: String = """
 \(systemPrompt)
 
-\(InferenceSettings.useLatexPrompt)
-
 \(InferenceSettings.useSourcesPrompt)
 """
 		let systemPromptMsg: Message = Message(

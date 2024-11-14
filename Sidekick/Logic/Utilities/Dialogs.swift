@@ -47,7 +47,6 @@ public class Dialogs {
 		return result
 	}
 	
-	
 	/// Function to show a dichotomy modal
 	public static func dichotomy(
 		title: String,

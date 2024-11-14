@@ -21,8 +21,6 @@ public class Model: ObservableObject {
 		self.systemPrompt = """
 \(systemPrompt)
 
-\(InferenceSettings.useLatexPrompt)
-
 \(InferenceSettings.useSourcesPrompt)
 """
 		// Get model and context length
@@ -49,8 +47,6 @@ public class Model: ObservableObject {
 	public func refreshModel(_ systemPrompt: String) async {
 		self.systemPrompt = """
 \(systemPrompt)
-
-\(InferenceSettings.useLatexPrompt)
 
 \(InferenceSettings.useSourcesPrompt)
 """

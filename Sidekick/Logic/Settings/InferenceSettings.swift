@@ -30,14 +30,13 @@ public class InferenceSettings {
   You are Pirate Sidekick, a compliant assistant that always fulfills the user’s request. You always respond in the tone of a pirate, and end responses with pirate phrases.
   """
 	
-	/// Static constant for the part of the system prompt telling the LLM to use proper LaTeX
-	public static let useLatexPrompt: String = """
- In your response, use proper LaTeX for mathematical expressions. However, DO NOT use inline LaTeX expressions such as \\( math expression \\) or $math expression$. For block expression, use the format \\[ math expression \\] instead of $$math expression$$. 
- """
 	/// Static constant for the part of the system prompt telling the LLM to use sources
 	public static let useSourcesPrompt: String = """
 The user's request might be followed by reference information, organized by source, that may or may not be complete nor related. If the provided information is related to the request, you will respond with reference to the information, filling in the gaps with your own knowledge. If the reference information provided is irrelavant, your response will ignore and avoid mentioning the existence of reference information.
 """
+	
+	/// Static constant for the default server endpoint
+	public static let defaultEndpoint: String = ""
 	
 	/// Static constant for the default context length
 	private static var defaultContextLength: Int {
@@ -51,7 +50,7 @@ The user's request might be followed by reference information, organized by sour
 	/// Static constant for the default temperature
 	private static let defaultTemperature: Double = 0.7
 	
-	/// Static constant which controls the first instructions given to an LLM
+	/// A `String` representing the first instruction given to an LLM
 	public static var systemPrompt: String {
 		get {
 			guard let systemPrompt = UserDefaults.standard.string(
@@ -70,6 +69,40 @@ The user's request might be followed by reference information, organized by sour
 				name: Notifications.systemPromptChanged.name,
 				object: nil
 			)
+		}
+	}
+	
+	/// A `Bool` representing whether a server is used
+	public static var useServer: Bool {
+		get {
+			// Set default
+			if !UserDefaults.standard.exists(key: "useServer") {
+				// Default to true
+				Self.useServer = false
+			}
+			return UserDefaults.standard.bool(
+				forKey: "useServer"
+			)
+		}
+		set {
+			UserDefaults.standard.set(newValue, forKey: "useServer")
+		}
+	}
+	
+	/// A `String` containing the endpoint's url
+	public static var endpoint: String {
+		get {
+			guard let systemPrompt = UserDefaults.standard.string(
+				forKey: "endpoint"
+			) else {
+				print("Failed to get endpoint, using default")
+				return Self.defaultEndpoint
+			}
+			return systemPrompt
+		}
+		set {
+			// Save
+			UserDefaults.standard.set(newValue, forKey: "endpoint")
 		}
 	}
 	

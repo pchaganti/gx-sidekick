@@ -16,7 +16,14 @@ public struct Message: Identifiable, Codable, Hashable {
 		sender: Sender
 	) {
 		self.id = UUID()
-		self.text = text
+		self.text = text.replacingOccurrences(
+			of: "\\[",
+			with: "$$"
+		)
+		.replacingOccurrences(
+			of: "\\]",
+			with: "$$"
+		)
 		self.sender = sender
 		self.startTime = .now
 		self.lastUpdated = .now

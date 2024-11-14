@@ -24,6 +24,16 @@
         }
       }
     },
+    "A restart is required to apply the changes." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新设置会在重启后奏效。"
+          }
+        }
+      }
+    },
     "Add" : {
       "localizations" : {
         "zh-Hans" : {
@@ -244,6 +254,16 @@
         }
       }
     },
+    "Context length" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上下文长度"
+          }
+        }
+      }
+    },
     "Context length is the maximum amount of information it can take as input for a query. A larger context length allows an LLM to recall more information, at the cost of slower output and more memory usage." : {
       "localizations" : {
         "zh-Hans" : {
@@ -270,6 +290,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "控制输入​​到聊天机器人的个人资料资源的搜索结果数量。结果越多，聊天机器人的响应速度就越慢。"
+          }
+        }
+      }
+    },
+    "Controls whether a server is used for inference when it is available." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "控制服务器会不会用于推理。"
           }
         }
       }
@@ -434,17 +464,6 @@
         }
       }
     },
-    "Delete Profile" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "删除专家"
-          }
-        }
-      }
-    },
     "Do you want to add files, folders or webpages?" : {
       "localizations" : {
         "zh-Hans" : {
@@ -501,6 +520,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "编辑"
+          }
+        }
+      }
+    },
+    "Endpoint" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "端点"
           }
         }
       }
@@ -1242,6 +1271,16 @@
         }
       }
     },
+    "Restart Required" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重启 Sidekick"
+          }
+        }
+      }
+    },
     "Retrieval" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1408,6 +1447,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "发送一条信息"
+          }
+        }
+      }
+    },
+    "Server" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "服务器"
           }
         }
       }
@@ -1582,12 +1631,12 @@
         }
       }
     },
-    "Temperature is a parameter that influences LLM output, determining whether it is more random and creative or more predictable." : {
+    "Temperature is a parameter that influences LLM output, determining whether it is more random and creative or more predictable. The lower the setting the more predictable the model acts." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "温度是影响模型输出的一个参数，决定其输出是更加随机、更具创造性还是更加可预测。"
+            "value" : "温度是影响模型输出的一个参数，决定其输出是更加随机、更具创造性还是更加可预测。更低的温度往往会令输出更随机，更有创造性。"
           }
         }
       }
@@ -1598,6 +1647,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "临时资源："
+          }
+        }
+      }
+    },
+    "The endpoint on the server used for inference. This endpoint must be accessible from this device, and provide an OpenAI compatible API. (e.g. http://localhost:11434, where http://localhost:11434/v1/chat/completions is accessible)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用于推理的服务器上的端点。此端点必须可从此设备访问，并提供与 OpenAI 兼容的 API。 （例如 http://localhost:11434，其中 http://localhost:11434/v1/chat/completions 可被访问）"
           }
         }
       }
@@ -1618,17 +1677,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "由于Sidekick 无法找到%@，相关的资源已被清除。"
-          }
-        }
-      }
-    },
-    "The user's request might be followed by reference information, organized by source, that may or may not be complete nor related. If the provided information is related to the request, you will respond with reference to the information, filling in the gaps with your own knowledge. If the reference information provided is irrelavant, your response will ignore and avoid mentioning the existence of reference information." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "用户的请求后面可能会有参考信息，这些信息按来源组织，可能不完整或与用户请求不相关。如果提供的信息与请求相关，您将参考这些信息做出回应，用您自己的知识填补空白。如果提供的参考信息不相关，您的回应将忽略并避免提及参考信息的存在。"
           }
         }
       }
@@ -1789,6 +1837,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "使用 GPU"
+          }
+        }
+      }
+    },
+    "Use Server" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用服务器"
           }
         }
       }

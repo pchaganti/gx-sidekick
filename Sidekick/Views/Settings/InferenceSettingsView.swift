@@ -20,17 +20,27 @@ struct InferenceSettingsView: View {
 	@State private var useGPUAcceleration: Bool = InferenceSettings.useGPUAcceleration
 	@State private var contextLength: Int = InferenceSettings.contextLength
 	
+	@State private var useServer: Bool = InferenceSettings.useServer
+	@State private var serverEndpoint: String = InferenceSettings.endpoint
+	
     var body: some View {
 		Form {
-			Section {
-				model
-			} header: {
-				Text("Model")
+			if !InferenceSettings.useServer {
+				Section {
+					model
+				} header: {
+					Text("Model")
+				}
 			}
 			Section {
 				parameters
 			} header: {
 				Text("Parameters")
+			}
+			Section {
+				server
+			} header: {
+				Text("Server")
 			}
 		}
 		.formStyle(.grouped)
@@ -103,7 +113,7 @@ struct InferenceSettingsView: View {
 	var contextLengthEditor: some View {
 		HStack(alignment: .top) {
 			VStack(alignment: .leading) {
-				Text("Model")
+				Text("Context length")
 					.font(.title3)
 					.bold()
 				Text("Context length is the maximum amount of information it can take as input for a query. A larger context length allows an LLM to recall more information, at the cost of slower output and more memory usage.")
@@ -128,7 +138,7 @@ struct InferenceSettingsView: View {
 				Text("Temperature")
 					.font(.title3)
 					.bold()
-				Text("Temperature is a parameter that influences LLM output, determining whether it is more random and creative or more predictable.")
+				Text("Temperature is a parameter that influences LLM output, determining whether it is more random and creative or more predictable. The lower the setting the more predictable the model acts.")
 					.font(.caption)
 			}
 			.frame(minWidth: 250)
@@ -172,6 +182,68 @@ struct InferenceSettingsView: View {
 				InferenceSettings.useGPUAcceleration = self.useGPUAcceleration
 			}
 			PerformanceGaugeView()
+		}
+	}
+	
+	
+	var server: some View {
+		Group {
+			useServerToggle
+			if useServer {
+				serverEndpointEditor
+			}
+		}
+	}
+	
+	var useServerToggle: some View {
+		HStack(alignment: .top) {
+			VStack(alignment: .leading) {
+				Text("Use Server")
+					.font(.title3)
+					.bold()
+				Text("Controls whether a server is used for inference when it is available.")
+					.font(.caption)
+			}
+			Spacer()
+			Toggle("", isOn: $useServer)
+		}
+		.onChange(of: useServer) {
+			InferenceSettings.useServer = self.useServer
+			Dialogs.showAlert(
+				title: String(localized: "Restart Required"),
+				message: String(localized: "A restart is required to apply the changes.")
+			)
+			NSApplication.shared.terminate(nil)
+		}
+	}
+	
+	var serverEndpointEditor: some View {
+		HStack(alignment: .top) {
+			VStack(alignment: .leading) {
+				Text("Endpoint")
+					.font(.title3)
+					.bold()
+				Text("The endpoint on the server used for inference. This endpoint must be accessible from this device, and provide an OpenAI compatible API. (e.g. http://localhost:11434, where http://localhost:11434/v1/chat/completions is accessible)")
+					.font(.caption)
+			}
+			Spacer()
+			VStack(
+				alignment: .trailing
+			) {
+				TextField("", text: $serverEndpoint)
+					.textFieldStyle(.roundedBorder)
+					.frame(maxWidth: 250)
+				Button {
+					InferenceSettings.endpoint = self.serverEndpoint
+					Dialogs.showAlert(
+						title: String(localized: "Restart Required"),
+						message: String(localized: "A restart is required to apply the changes.")
+					)
+					NSApplication.shared.terminate(nil)
+				} label: {
+					Text("Save")
+				}
+			}
 		}
 	}
 	
