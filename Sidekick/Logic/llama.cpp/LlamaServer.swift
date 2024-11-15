@@ -49,7 +49,7 @@ public actor LlamaServer {
 		// Check endpoint
 		let endpoint: String = InferenceSettings.endpoint
 		let urlString: String
-		if await !self.remoteServerIsReachable() || !InferenceSettings.useServer {
+		if await !Self.remoteServerIsReachable() || !InferenceSettings.useServer {
 			 urlString = "\(scheme)://\(host):\(port)\(path)"
 		} else {
 			urlString = "\(endpoint)\(path)"
@@ -58,7 +58,9 @@ public actor LlamaServer {
 	}
 	
 	/// Function to check if the remote server is reachable
-	private func remoteServerIsReachable() async -> Bool {
+	public static func remoteServerIsReachable() async -> Bool {
+		// Return false if server is unused
+		if !InferenceSettings.useServer { return false }
 		// Check endpoint
 		let endpointUrl: URL = URL(
 			string: "\(InferenceSettings.endpoint)/health"
@@ -98,7 +100,7 @@ public actor LlamaServer {
 	/// Function to start the `llama-server` process
 	private func startServer() async throws {
 		// If a server is used, exit
-		if await self.remoteServerIsReachable() && InferenceSettings.useServer {
+		if await Self.remoteServerIsReachable() && InferenceSettings.useServer {
 			return
 		}
 		// If server is running, exit
@@ -150,7 +152,7 @@ public actor LlamaServer {
 	/// Function to stop the `llama-server` process
 	public func stopServer() async {
 		// If a server is used, exit
-		if await self.remoteServerIsReachable() && InferenceSettings.useServer {
+		if await Self.remoteServerIsReachable() && InferenceSettings.useServer {
 			return
 		}
 		// Terminate processes

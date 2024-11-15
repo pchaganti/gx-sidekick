@@ -207,11 +207,9 @@ struct InferenceSettingsView: View {
 		}
 		.onChange(of: useServer) {
 			InferenceSettings.useServer = self.useServer
-			Dialogs.showAlert(
-				title: String(localized: "Restart Required"),
-				message: String(localized: "A restart is required to apply the changes.")
-			)
-			NSApplication.shared.terminate(nil)
+		}
+		.onAppear {
+			self.useServer = InferenceSettings.useServer
 		}
 	}
 	
@@ -232,16 +230,17 @@ struct InferenceSettingsView: View {
 					.textFieldStyle(.roundedBorder)
 					.frame(maxWidth: 250)
 				Button {
-					InferenceSettings.endpoint = self.serverEndpoint
-					Dialogs.showAlert(
-						title: String(localized: "Restart Required"),
-						message: String(localized: "A restart is required to apply the changes.")
+					InferenceSettings.endpoint = self.serverEndpoint.replacingSuffix(
+						"/",
+						with: ""
 					)
-					NSApplication.shared.terminate(nil)
 				} label: {
 					Text("Save")
 				}
 			}
+		}
+		.onAppear {
+			self.serverEndpoint = InferenceSettings.endpoint
 		}
 	}
 	

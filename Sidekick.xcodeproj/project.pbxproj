@@ -66,6 +66,7 @@
 		20573F322CB53172004C19FE /* InferenceSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20573F312CB53172004C19FE /* InferenceSettings.swift */; };
 		20573F362CB53878004C19FE /* CircleMenuStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20573F352CB53878004C19FE /* CircleMenuStyle.swift */; };
 		205B50D12CD3025A0057769F /* SourceRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205B50D02CD3025A0057769F /* SourceRowView.swift */; };
+		205D2AFA2CE6E7F000EAAFD6 /* llama-server in Resources */ = {isa = PBXBuildFile; fileRef = 205D2AF92CE6E7F000EAAFD6 /* llama-server */; };
 		207A9F532CB82D9600E727DE /* SymbolPicker in Frameworks */ = {isa = PBXBuildFile; productRef = 207A9F522CB82D9600E727DE /* SymbolPicker */; };
 		207A9F552CB8A96F00E727DE /* ProfileNavigationRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207A9F542CB8A96F00E727DE /* ProfileNavigationRowView.swift */; };
 		207A9F592CB8F4AF00E727DE /* ResourceSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207A9F582CB8F4AF00E727DE /* ResourceSelectionView.swift */; };
@@ -145,7 +146,6 @@
 		20CEA75E2CE309F10070579B /* MessageOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CEA75D2CE309F10070579B /* MessageOptionsView.swift */; };
 		20D65DD52CC0CC6C0052D826 /* StopGenerationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D65DD42CC0CC6C0052D826 /* StopGenerationButton.swift */; };
 		20D9A9732CD2769300171FDE /* MessageShareMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D9A9722CD2769300171FDE /* MessageShareMenu.swift */; };
-		20DBEE042CDE578800A59BFE /* llama-server in Resources */ = {isa = PBXBuildFile; fileRef = 20DBEE032CDE578800A59BFE /* llama-server */; };
 		20DEABED2CC4D68A0046447C /* Extension+CGImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DEABEC2CC4D68A0046447C /* Extension+CGImage.swift */; };
 		20E48C262CB560730085E7D6 /* ChatStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E48C252CB560730085E7D6 /* ChatStyle.swift */; };
 		20E48C292CB560B50085E7D6 /* ConversationControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E48C282CB560B50085E7D6 /* ConversationControlsView.swift */; };
@@ -265,6 +265,7 @@
 		20573F312CB53172004C19FE /* InferenceSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InferenceSettings.swift; sourceTree = "<group>"; };
 		20573F352CB53878004C19FE /* CircleMenuStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleMenuStyle.swift; sourceTree = "<group>"; };
 		205B50D02CD3025A0057769F /* SourceRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceRowView.swift; sourceTree = "<group>"; };
+		205D2AF92CE6E7F000EAAFD6 /* llama-server */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llama-server"; sourceTree = "<group>"; };
 		207A9F542CB8A96F00E727DE /* ProfileNavigationRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNavigationRowView.swift; sourceTree = "<group>"; };
 		207A9F582CB8F4AF00E727DE /* ResourceSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceSelectionView.swift; sourceTree = "<group>"; };
 		207A9F5C2CB8FD0900E727DE /* ResourceSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceSectionView.swift; sourceTree = "<group>"; };
@@ -338,7 +339,6 @@
 		20D65DD22CC0B8A20052D826 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		20D65DD42CC0CC6C0052D826 /* StopGenerationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopGenerationButton.swift; sourceTree = "<group>"; };
 		20D9A9722CD2769300171FDE /* MessageShareMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageShareMenu.swift; sourceTree = "<group>"; };
-		20DBEE032CDE578800A59BFE /* llama-server */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llama-server"; sourceTree = "<group>"; };
 		20DEABEC2CC4D68A0046447C /* Extension+CGImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+CGImage.swift"; sourceTree = "<group>"; };
 		20E48C252CB560730085E7D6 /* ChatStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatStyle.swift; sourceTree = "<group>"; };
 		20E48C282CB560B50085E7D6 /* ConversationControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationControlsView.swift; sourceTree = "<group>"; };
@@ -439,7 +439,7 @@
 		200FBFD62CB627B100A92A74 /* llama.cpp */ = {
 			isa = PBXGroup;
 			children = (
-				20DBEE032CDE578800A59BFE /* llama-server */,
+				205D2AF92CE6E7F000EAAFD6 /* llama-server */,
 				200FBFED2CB6477400A92A74 /* LlamaServer.swift */,
 				200FBFF22CB66B8300A92A74 /* ServerHealth.swift */,
 				200FBFE62CB6384400A92A74 /* llama-server-watchdog */,
@@ -1073,7 +1073,7 @@
 				20B97CB32CAFE86C009A0A5D /* Preview Assets.xcassets in Resources */,
 				20F2D5122CC1F33B004CE730 /* Localizable.xcstrings in Resources */,
 				20B97CB42CAFE86C009A0A5D /* Assets.xcassets in Resources */,
-				20DBEE042CDE578800A59BFE /* llama-server in Resources */,
+				205D2AFA2CE6E7F000EAAFD6 /* llama-server in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1433,6 +1433,7 @@
 				DEVELOPMENT_TEAM = KM2C4ZAVPJ;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
+				GCC_OPTIMIZATION_LEVEL = s;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sidekick/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
@@ -1448,6 +1449,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.pattonium.Sidekick;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -1466,6 +1468,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				"EXCLUDED_ARCHS[sdk=*]" = x86_64;
+				GCC_OPTIMIZATION_LEVEL = s;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sidekick/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
@@ -1481,6 +1484,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.pattonium.Sidekick;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
