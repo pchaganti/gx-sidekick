@@ -45,16 +45,20 @@ public actor LlamaServer {
 	private var process: Process = Process()
 	
 	/// Function to get path to llama-server
-	private func url(_ path: String) async -> URL {
+	private func url(_ path: String) async -> (
+		url: URL,
+		usingRemoteServer: Bool
+	) {
 		// Check endpoint
 		let endpoint: String = InferenceSettings.endpoint
 		let urlString: String
-		if await !Self.remoteServerIsReachable() || !InferenceSettings.useServer {
+		let notUsingServer: Bool = await !Self.remoteServerIsReachable() || !InferenceSettings.useServer
+		if notUsingServer {
 			 urlString = "\(scheme)://\(host):\(port)\(path)"
 		} else {
 			urlString = "\(endpoint)\(path)"
 		}
-		return URL(string: urlString)!
+		return (URL(string: urlString)!, !notUsingServer)
 	}
 	
 	/// Function to check if the remote server is reachable
@@ -65,12 +69,19 @@ public actor LlamaServer {
 		let endpointUrl: URL = URL(
 			string: "\(InferenceSettings.endpoint)/health"
 		)!
-		let serverHealth = ServerHealth()
-		await serverHealth.updateURL(endpointUrl)
-		await serverHealth.check()
-		let score: Double = await serverHealth.score
-		let serverIsHealthy: Bool = score > 0.25
-		return serverIsHealthy
+		do {
+			let response: (data: Data, URLResponse) = try await URLSession.shared.data(
+				from: endpointUrl
+			)
+			let decoder: JSONDecoder = JSONDecoder()
+			let healthStatus: HealthResponse = try decoder.decode(
+				HealthResponse.self,
+				from: response.data
+			)
+			return healthStatus.isHealthy
+		} catch {
+			return false
+		}
 	}
 	
 	/// Function to start a monitor process that will terminate the server when our app dies
@@ -99,10 +110,6 @@ public actor LlamaServer {
 	
 	/// Function to start the `llama-server` process
 	private func startServer() async throws {
-		// If a server is used, exit
-		if await Self.remoteServerIsReachable() && InferenceSettings.useServer {
-			return
-		}
 		// If server is running, exit
 		guard !process.isRunning, let modelPath = self.modelPath else { return }
 		await stopServer()
@@ -179,8 +186,12 @@ public actor LlamaServer {
 		progressHandler: (@Sendable (String) -> Void)? = nil
 	) async throws -> CompleteResponse {
 		
+		let rawUrl = await self.url("/v1/chat/completions")
+		
 		let start: CFAbsoluteTime = CFAbsoluteTimeGetCurrent()
-		try await startServer()
+		if !rawUrl.usingRemoteServer {
+			try await startServer()
+		}
 		
 		// Hit localhost for completion
 		async let params = ChatParameters(
@@ -188,13 +199,16 @@ public actor LlamaServer {
 			systemPrompt: systemPrompt,
 			similarityIndex: similarityIndex
 		)
-		var request = await URLRequest(
-			url: url("/v1/chat/completions")
+		var request = URLRequest(
+			url: rawUrl.url
 		)
 		request.httpMethod = "POST"
 		request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 		request.setValue("text/event-stream", forHTTPHeaderField: "Accept")
 		request.setValue("keep-alive", forHTTPHeaderField: "Connection")
+		if rawUrl.usingRemoteServer {
+			request.setValue("nil", forHTTPHeaderField: "ngrok-skip-browser-warning")
+		}
 		request.httpBody = await params.toJSON().data(using: .utf8)
 		// Use EventSource to receive server sent events
 		eventSource = EventSource(request: request)
@@ -265,7 +279,8 @@ public actor LlamaServer {
 			responseStartSeconds: responseDiff,
 			predictedPerSecond: Double(tokens) / generationTime,
 			modelName: modelName,
-			nPredicted: tokens
+			nPredicted: tokens,
+			usedServer: rawUrl.usingRemoteServer
 		)
 	}
 	
@@ -280,7 +295,7 @@ public actor LlamaServer {
 		serverErrorMessage = ""
 		
 		let serverHealth = ServerHealth()
-		await serverHealth.updateURL(url("/health"))
+		await serverHealth.updateURL(url("/health").url)
 		await serverHealth.check()
 		
 		var timeout = 30
@@ -300,6 +315,14 @@ public actor LlamaServer {
 				throw LlamaServerError.modelError(modelName: modelName)
 			}
 		}
+	}
+	
+	struct HealthResponse: Codable {
+		
+		var status: String
+		
+		var isHealthy: Bool { self.status == "ok" }
+		
 	}
 	
 	struct StreamMessage: Codable {
@@ -332,6 +355,7 @@ public actor LlamaServer {
 		var predictedPerSecond: Double?
 		var modelName: String?
 		var nPredicted: Int?
+		var usedServer: Bool
 	}
 	
 }

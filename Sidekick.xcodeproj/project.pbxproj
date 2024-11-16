@@ -581,6 +581,13 @@
 			path = "GPU Info";
 			sourceTree = "<group>";
 		};
+		2048941B2CE76ABD00473107 /* View Modifiers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "View Modifiers";
+			sourceTree = "<group>";
+		};
 		204C79542CB765C100EED58E /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -762,6 +769,7 @@
 				20571F752CBD5FF4004F3344 /* Settings */,
 				20B9E6132CB1458500BA0AD2 /* Misc */,
 				20E48C272CB560A30085E7D6 /* Styles */,
+				2048941B2CE76ABD00473107 /* View Modifiers */,
 			);
 			path = Views;
 			sourceTree = "<group>";

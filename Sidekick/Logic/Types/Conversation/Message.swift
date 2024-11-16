@@ -14,7 +14,8 @@ public struct Message: Identifiable, Codable, Hashable {
 	init(
 		text: String,
 		sender: Sender,
-		usedServer: Bool? = nil
+		model: String? = nil,
+		usedServer: Bool = false
 	) {
 		self.id = UUID()
 		self.text = text.replacingOccurrences(
@@ -29,13 +30,13 @@ public struct Message: Identifiable, Codable, Hashable {
 		self.startTime = .now
 		self.lastUpdated = .now
 		self.outputEnded = false
+		var modelName: String = model ?? String(
+			localized: "Unknown"
+		)
 		if usedServer == true {
-			self.model = String(localized: "Remote Model on Server")
-		} else {
-			self.model = Settings.modelUrl?.lastPathComponent ?? String(
-				localized: "Unknown"
-			)
+			modelName = String(localized: "Remote Model: ") + modelName
 		}
+		self.model = modelName
 	}
 	
 	/// Stored property for `Identifiable` conformance

@@ -64,7 +64,7 @@ struct MessageShareMenu<MessagesView: View>: View {
 	}
 	
 	var pngButton: some View {
-		Button("Save as Image") {
+		Button {
 			VStack(
 				alignment: .leading,
 				spacing: 15
@@ -75,6 +75,8 @@ struct MessageShareMenu<MessagesView: View>: View {
 			.background(Color.gray)
 			.frame(width: 1000)
 			.generatePng()
+		} label: {
+			Text("Save as Image")
 		}
 	}
 	

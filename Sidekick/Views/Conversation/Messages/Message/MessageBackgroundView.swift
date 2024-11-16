@@ -9,34 +9,36 @@ import SwiftUI
 
 struct MessageBackgroundView: View {
 	
-	@Environment(\.colorScheme) private var colorScheme
+	private let cornerRadius: CGFloat = 13
+	private let borderWidth: CGFloat = 0.5
 	
-	var shadowColor: SwiftUI.Color {
-		return colorScheme == .dark ? .white : .black
+	var body: some View {
+		unevenRoundedRectangle(cornerRadius)
+			.fill(
+				Color(nsColor: .textBackgroundColor)
+			)
+			.padding(borderWidth)
+			.background {
+				unevenRoundedRectangle(cornerRadius + borderWidth)
+					.fill(Color.secondary)
+					.opacity(0.5)
+			}
 	}
 	
-	var shadowRadius: CGFloat {
-		return colorScheme == .dark ? 2.5 : 0
-	}
-	
-    var body: some View {
+	private func unevenRoundedRectangle(
+		_ cornerRadius: CGFloat
+	) -> some Shape {
 		UnevenRoundedRectangle(
 			cornerRadii: .init(
 				topLeading: 0,
-				bottomLeading: 12,
-				bottomTrailing: 12,
-				topTrailing: 12
+				bottomLeading: cornerRadius,
+				bottomTrailing: cornerRadius,
+				topTrailing: cornerRadius
 			),
 			style: .circular
 		)
-		.fill(
-			Color(nsColor: .textBackgroundColor)
-		)
-		.shadow(
-			color: shadowColor,
-			radius: shadowRadius
-		)
-    }
+	}
+	
 }
 
 #Preview {

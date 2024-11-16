@@ -145,8 +145,6 @@ struct PromptInputField: View {
 	private func getResponse(
 		tempResources: [TemporaryResource]
 	) async {
-		// Check if remote server was used
-		let usedServer: Bool = await LlamaServer.remoteServerIsReachable() && InferenceSettings.useServer
 		// If processing, use recursion to update
 		if (model.status == .processing || model.status == .coldProcessing) {
 			Task {
@@ -201,7 +199,8 @@ struct PromptInputField: View {
 			var responseMessage: Message = Message(
 				text: "",
 				sender: .assistant,
-				usedServer: usedServer
+				model: response.modelName,
+				usedServer: response.usedServer
 			)
 			responseMessage.update(
 				newText: response.text,
