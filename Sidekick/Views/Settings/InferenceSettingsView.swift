@@ -219,7 +219,7 @@ struct InferenceSettingsView: View {
 				Text("Endpoint")
 					.font(.title3)
 					.bold()
-				Text("The endpoint on the server used for inference. This endpoint must be accessible from this device, and provide an OpenAI compatible API. (e.g. http://localhost:11434, where http://localhost:11434/v1/chat/completions is accessible)\n\nTo ensure privacy and security of your data, host your own server.")
+				Text("The endpoint on the server used for inference. This endpoint must be accessible from this device, and provide an OpenAI compatible API. (e.g. http://localhost:8000, where http://localhost:8000/v1/chat/completions is accessible)\n\nTo ensure privacy and security of your data, host your own server.")
 					.font(.caption)
 			}
 			Spacer()

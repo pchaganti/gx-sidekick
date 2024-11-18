@@ -1651,12 +1651,12 @@
         }
       }
     },
-    "The endpoint on the server used for inference. This endpoint must be accessible from this device, and provide an OpenAI compatible API. (e.g. http://localhost:11434, where http://localhost:11434/v1/chat/completions is accessible)\n\nTo ensure privacy and security of your data, host your own server." : {
+    "The endpoint on the server used for inference. This endpoint must be accessible from this device, and provide an OpenAI compatible API. (e.g. http://localhost:8000, where http://localhost:8000/v1/chat/completions is accessible)\n\nTo ensure privacy and security of your data, host your own server." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "用于推理的服务器上的端点。此端点必须可从此设备访问，并提供与 OpenAI 兼容的 API。 （例如 http://localhost:11434，其中 http://localhost:11434/v1/chat/completions 可被访问）\n\n为保障隐私和数据安全，我们建议你托管您自己的服务器。"
+            "value" : "用于推理的服务器上的端点。此端点必须可从此设备访问，并提供与 OpenAI 兼容的 API。 （例如 http://localhost:8000，其中 http://localhost:8000/v1/chat/completions 可被访问）\n\n为保障隐私和数据安全，我们建议你托管您自己的服务器。"
           }
         }
       }
