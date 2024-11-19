@@ -10,24 +10,9 @@ import Combine
 
 struct ConversationManagerView: View {
 	
-	init(
-		selectedConversationId: Binding<UUID?>
-	) {
-		var systemPrompt: String = InferenceSettings.systemPrompt
-		if let conversationId = selectedConversationId.wrappedValue {
-			systemPrompt = ConversationManager.shared
-				.getConversation(
-					id: conversationId
-				)?.systemPrompt ?? InferenceSettings.systemPrompt
-		}
-		self._model = StateObject(
-			wrappedValue: Model(systemPrompt: systemPrompt)
-		)
-	}
-	
 	@Environment(\.appearsActive) var appearsActive
 	
-	@StateObject private var model: Model
+	@StateObject private var model: Model = .shared
 	
 	@EnvironmentObject private var appState: AppState
 	

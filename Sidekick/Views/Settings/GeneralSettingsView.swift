@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import KeyboardShortcuts
 
 struct GeneralSettingsView: View {
 	
@@ -17,6 +18,11 @@ struct GeneralSettingsView: View {
 				soundEffects
 			} header: {
 				Text("Sound Effects")
+			}
+			Section {
+				inlineAssistantShortcut
+			} header: {
+				Text("Inline Assistant")
 			}
 		}
 		.formStyle(.grouped)
@@ -37,6 +43,23 @@ struct GeneralSettingsView: View {
 		}
 		.onChange(of: playSoundEffects) {
 			Settings.playSoundEffects = self.playSoundEffects
+		}
+	}
+	
+	var inlineAssistantShortcut: some View {
+		HStack {
+			VStack(alignment: .leading) {
+				Text("Shortcut")
+					.font(.title3)
+					.bold()
+				Text("The shortcut used to trigger and dismiss the inline writing assistant.")
+					.font(.caption)
+			}
+			Spacer()
+			KeyboardShortcuts.Recorder(
+				"",
+				name: .toggleInlineAssistant
+			)
 		}
 	}
 	

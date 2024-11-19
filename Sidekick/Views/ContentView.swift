@@ -21,9 +21,7 @@ struct ContentView: View {
     var body: some View {
 		Group {
 			if !showSetup {
-				ConversationManagerView(
-					selectedConversationId: $conversationState.selectedConversationId
-				)
+				ConversationManagerView()
 			} else {
 				EmptyView()
 			}

@@ -36,8 +36,20 @@
 		202ED9582CD7841100D96030 /* DefaultModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202ED9572CD7841100D96030 /* DefaultModels.swift */; };
 		202ED95C2CD7878700D96030 /* AppleGPUInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202ED95B2CD7878700D96030 /* AppleGPUInfo.swift */; };
 		202ED95E2CD787A600D96030 /* CAppleGPUInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202ED95D2CD787A600D96030 /* CAppleGPUInfo.swift */; };
+		2031B98E2CEAE1A700627D53 /* Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2031B98D2CEAE1A700627D53 /* Accessibility.swift */; };
+		2031B9902CEAE33900627D53 /* InlineAssistantController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2031B98F2CEAE33900627D53 /* InlineAssistantController.swift */; };
+		2031B9922CEAE3CC00627D53 /* Extension+NSWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2031B9912CEAE3CC00627D53 /* Extension+NSWindow.swift */; };
+		2031B9952CEAE66400627D53 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 2031B9942CEAE66400627D53 /* KeyboardShortcuts */; };
+		2031B9982CEAE78F00627D53 /* ShortcutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2031B9972CEAE78F00627D53 /* ShortcutController.swift */; };
+		2031B99A2CEAE7A900627D53 /* Extension+KeyboardShortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2031B9992CEAE7A900627D53 /* Extension+KeyboardShortcut.swift */; };
 		2038CCF32CB6CBC6005AA315 /* PendingMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2038CCF22CB6CBC6005AA315 /* PendingMessageView.swift */; };
 		204592172CD32DEF00DEAA96 /* TypedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204592162CD32DEF00DEAA96 /* TypedTextView.swift */; };
+		204AE3B62CEAF4C20086B42D /* InlineAssistantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204AE3B52CEAF4C20086B42D /* InlineAssistantView.swift */; };
+		204AE3B92CEAF57E0086B42D /* CommandManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204AE3B82CEAF57E0086B42D /* CommandManager.swift */; };
+		204AE3BB2CEAF5AC0086B42D /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204AE3BA2CEAF5AC0086B42D /* Command.swift */; };
+		204AE3BD2CEB56750086B42D /* WrappingHStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204AE3BC2CEB56750086B42D /* WrappingHStack.swift */; };
+		204AE3C02CEB57330086B42D /* CommandButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204AE3BF2CEB57330086B42D /* CommandButton.swift */; };
+		204AE3C62CEC7C030086B42D /* NewCommandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204AE3C52CEC7C030086B42D /* NewCommandView.swift */; };
 		204C79532CB7500800EED58E /* EndDetectionScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204C79522CB7500800EED58E /* EndDetectionScrollView.swift */; };
 		204C79562CB765D700EED58E /* ProfileSelectionMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204C79552CB765D700EED58E /* ProfileSelectionMenu.swift */; };
 		204C79582CB769A400EED58E /* Extension+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204C79572CB769A400EED58E /* Extension+View.swift */; };
@@ -237,8 +249,19 @@
 		202ED95A2CD7876A00D96030 /* AppleGPUInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppleGPUInfo.h; sourceTree = "<group>"; };
 		202ED95B2CD7878700D96030 /* AppleGPUInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleGPUInfo.swift; sourceTree = "<group>"; };
 		202ED95D2CD787A600D96030 /* CAppleGPUInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAppleGPUInfo.swift; sourceTree = "<group>"; };
+		2031B98D2CEAE1A700627D53 /* Accessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accessibility.swift; sourceTree = "<group>"; };
+		2031B98F2CEAE33900627D53 /* InlineAssistantController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InlineAssistantController.swift; sourceTree = "<group>"; };
+		2031B9912CEAE3CC00627D53 /* Extension+NSWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+NSWindow.swift"; sourceTree = "<group>"; };
+		2031B9972CEAE78F00627D53 /* ShortcutController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutController.swift; sourceTree = "<group>"; };
+		2031B9992CEAE7A900627D53 /* Extension+KeyboardShortcut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+KeyboardShortcut.swift"; sourceTree = "<group>"; };
 		2038CCF22CB6CBC6005AA315 /* PendingMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingMessageView.swift; sourceTree = "<group>"; };
 		204592162CD32DEF00DEAA96 /* TypedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypedTextView.swift; sourceTree = "<group>"; };
+		204AE3B52CEAF4C20086B42D /* InlineAssistantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InlineAssistantView.swift; sourceTree = "<group>"; };
+		204AE3B82CEAF57E0086B42D /* CommandManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandManager.swift; sourceTree = "<group>"; };
+		204AE3BA2CEAF5AC0086B42D /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
+		204AE3BC2CEB56750086B42D /* WrappingHStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappingHStack.swift; sourceTree = "<group>"; };
+		204AE3BF2CEB57330086B42D /* CommandButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandButton.swift; sourceTree = "<group>"; };
+		204AE3C52CEC7C030086B42D /* NewCommandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCommandView.swift; sourceTree = "<group>"; };
 		204C79522CB7500800EED58E /* EndDetectionScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndDetectionScrollView.swift; sourceTree = "<group>"; };
 		204C79552CB765D700EED58E /* ProfileSelectionMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSelectionMenu.swift; sourceTree = "<group>"; };
 		204C79572CB769A400EED58E /* Extension+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+View.swift"; sourceTree = "<group>"; };
@@ -360,6 +383,7 @@
 				20A8B6592CB26E4800B756FD /* SimilaritySearchKitDistilbert in Frameworks */,
 				20A8B6572CB26E4800B756FD /* SimilaritySearchKit in Frameworks */,
 				207A9F532CB82D9600E727DE /* SymbolPicker in Frameworks */,
+				2031B9952CEAE66400627D53 /* KeyboardShortcuts in Frameworks */,
 				208388DD2CBF4E8A00C2A9F8 /* SecureDefaults in Frameworks */,
 				20CC0C2F2CE2401600A3BC40 /* ExtractKit-macOS in Frameworks */,
 				20573F282CB52F84004C19FE /* Splash in Frameworks */,
@@ -432,6 +456,7 @@
 				20DEABEC2CC4D68A0046447C /* Extension+CGImage.swift */,
 				20E48C2A2CB560E30085E7D6 /* Extension+CGKeyCode.swift */,
 				208388EE2CBF86A100C2A9F8 /* Extension+UserDefaults.swift */,
+				2031B9912CEAE3CC00627D53 /* Extension+NSWindow.swift */,
 			);
 			path = AppKit;
 			sourceTree = "<group>";
@@ -473,6 +498,7 @@
 				201A1A902CDB7D8E001E9BA9 /* MarkdownDataViewController.swift */,
 				20B4D6AE2CC3C12C00817E15 /* PromptController.swift */,
 				20571F6E2CBCE8F7004F3344 /* LengthyTasksController.swift */,
+				2031B98F2CEAE33900627D53 /* InlineAssistantController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -581,11 +607,37 @@
 			path = "GPU Info";
 			sourceTree = "<group>";
 		};
+		2031B9962CEAE77F00627D53 /* Inline Assistant */ = {
+			isa = PBXGroup;
+			children = (
+				2031B98D2CEAE1A700627D53 /* Accessibility.swift */,
+			);
+			path = "Inline Assistant";
+			sourceTree = "<group>";
+		};
 		2048941B2CE76ABD00473107 /* View Modifiers */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			path = "View Modifiers";
+			sourceTree = "<group>";
+		};
+		204AE3B72CEAF4D30086B42D /* Inline Assistant */ = {
+			isa = PBXGroup;
+			children = (
+				204AE3B52CEAF4C20086B42D /* InlineAssistantView.swift */,
+				204AE3C52CEC7C030086B42D /* NewCommandView.swift */,
+				204AE3BE2CEB57270086B42D /* Command */,
+			);
+			path = "Inline Assistant";
+			sourceTree = "<group>";
+		};
+		204AE3BE2CEB57270086B42D /* Command */ = {
+			isa = PBXGroup;
+			children = (
+				204AE3BF2CEB57330086B42D /* CommandButton.swift */,
+			);
+			path = Command;
 			sourceTree = "<group>";
 		};
 		204C79542CB765C100EED58E /* Profile */ = {
@@ -629,6 +681,7 @@
 			children = (
 				2086E1AB2CB03CD200FFCF57 /* Dialogs.swift */,
 				20571F802CBD6A6D004F3344 /* SoundEffects.swift */,
+				2031B9972CEAE78F00627D53 /* ShortcutController.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -765,6 +818,7 @@
 				20571F702CBCEDC1004F3344 /* LengthyTasks */,
 				204C79542CB765C100EED58E /* Profile */,
 				201A1A942CDB99B6001E9BA9 /* Markdown */,
+				204AE3B72CEAF4D30086B42D /* Inline Assistant */,
 				20B9E6122CB1457200BA0AD2 /* Setup */,
 				20571F752CBD5FF4004F3344 /* Settings */,
 				20B9E6132CB1458500BA0AD2 /* Misc */,
@@ -782,6 +836,7 @@
 				20AA5A502CC87026003E5519 /* Tips */,
 				208388E32CBF525A00C2A9F8 /* Settings */,
 				20571F822CBD6A95004F3344 /* Utilities */,
+				2031B9962CEAE77F00627D53 /* Inline Assistant */,
 				200FBFD62CB627B100A92A74 /* llama.cpp */,
 				20B9E6152CB1465900BA0AD2 /* Data Models */,
 				20B9E60F2CB1429E00BA0AD2 /* Commands */,
@@ -801,6 +856,7 @@
 				20FB0D882CBA8327006D062A /* Extension+SimilarityIndex.swift */,
 				20B97CE62CB0066A009A0A5D /* Extension+String.swift */,
 				20B97CEA2CB00912009A0A5D /* Extension+URL.swift */,
+				2031B9992CEAE7A900627D53 /* Extension+KeyboardShortcut.swift */,
 				200C3E2B2CD8B0A40033909F /* UI */,
 				200C3E2C2CD8B1380033909F /* AppKit */,
 			);
@@ -818,6 +874,7 @@
 				208388EC2CBF825400C2A9F8 /* Tavily.swift */,
 				202801F72CC94938005C1F7D /* Conversation */,
 				202801F82CC94962005C1F7D /* Profile */,
+				204AE3BA2CEAF5AC0086B42D /* Command.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -862,8 +919,9 @@
 				208AA3F02CC9E42F00A0891F /* ScrollMask.swift */,
 				204592162CD32DEF00DEAA96 /* TypedTextView.swift */,
 				20B9B1202CDF91CD00B66D4D /* PerformanceGaugeView.swift */,
-				20B9B11F2CDF91A900B66D4D /* Buttons */,
 				20CEA7582CE3084E0070579B /* MathView.swift */,
+				204AE3BC2CEB56750086B42D /* WrappingHStack.swift */,
+				20B9B11F2CDF91A900B66D4D /* Buttons */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -885,6 +943,7 @@
 				20A8B65C2CB2829500B756FD /* ProfileManager.swift */,
 				20C221052CC4B15600A99796 /* SourcesManager.swift */,
 				208388D92CBF4DF500C2A9F8 /* TavilySearch.swift */,
+				204AE3B82CEAF57E0086B42D /* CommandManager.swift */,
 			);
 			path = "Data Models";
 			sourceTree = "<group>";
@@ -949,6 +1008,7 @@
 				208388DC2CBF4E8A00C2A9F8 /* SecureDefaults */,
 				20CC0C2E2CE2401600A3BC40 /* ExtractKit-macOS */,
 				20CEA7562CE3082F0070579B /* SwiftMath */,
+				2031B9942CEAE66400627D53 /* KeyboardShortcuts */,
 			);
 			productName = Sidekick;
 			productReference = 200549732CAFA67B00A3DCF2 /* Sidekick.app */;
@@ -1059,6 +1119,7 @@
 				208388DB2CBF4E8A00C2A9F8 /* XCRemoteSwiftPackageReference "SecureDefaults" */,
 				20CC0C2D2CE2401600A3BC40 /* XCRemoteSwiftPackageReference "ExtractKit-macOS" */,
 				20CEA7552CE3082F0070579B /* XCRemoteSwiftPackageReference "SwiftMath" */,
+				2031B9932CEAE66400627D53 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 200549742CAFA67B00A3DCF2 /* Products */;
@@ -1127,6 +1188,7 @@
 				200FBFF52CB66C0000A92A74 /* LlamaServerError.swift in Sources */,
 				20A96F3C2CDDA9D400E31D53 /* ModelManager.swift in Sources */,
 				20B97CE32CB00585009A0A5D /* Profile.swift in Sources */,
+				204AE3BD2CEB56750086B42D /* WrappingHStack.swift in Sources */,
 				208388E52CBF526E00C2A9F8 /* RetrievalSettings.swift in Sources */,
 				20573F212CB527DB004C19FE /* MessageView.swift in Sources */,
 				201A1A962CDB99C6001E9BA9 /* MarkdownTableView.swift in Sources */,
@@ -1144,12 +1206,17 @@
 				20AC3CE52CDA700700947FDA /* AppState.swift in Sources */,
 				2099BD9F2CB7E9CE00E02732 /* QuickPrompt.swift in Sources */,
 				20AF0A0A2CDC6339007780FE /* MarkdownCodeBlockView.swift in Sources */,
+				204AE3C02CEB57330086B42D /* CommandButton.swift in Sources */,
 				202ED9522CD781A000D96030 /* LLaMa3.swift in Sources */,
+				204AE3B62CEAF4C20086B42D /* InlineAssistantView.swift in Sources */,
 				207A9F5D2CB8FD0900E727DE /* ResourceSectionView.swift in Sources */,
 				20D9A9732CD2769300171FDE /* MessageShareMenu.swift in Sources */,
 				20573F322CB53172004C19FE /* InferenceSettings.swift in Sources */,
+				2031B9902CEAE33900627D53 /* InlineAssistantController.swift in Sources */,
+				2031B9982CEAE78F00627D53 /* ShortcutController.swift in Sources */,
 				2099BDA92CB81A1300E02732 /* ProfileListView.swift in Sources */,
 				201A1A9C2CDBB5B1001E9BA9 /* MarkdownScatterPlotView.swift in Sources */,
+				204AE3C62CEC7C030086B42D /* NewCommandView.swift in Sources */,
 				204C795C2CB79AB900EED58E /* ProfileManagerView.swift in Sources */,
 				20DEABED2CC4D68A0046447C /* Extension+CGImage.swift in Sources */,
 				20B97CE52CB00605009A0A5D /* Extension+Color.swift in Sources */,
@@ -1160,6 +1227,7 @@
 				20C221022CC4A9E800A99796 /* Source.swift in Sources */,
 				207A9F622CB94B0000E727DE /* WindowCommands.swift in Sources */,
 				205B50D12CD3025A0057769F /* SourceRowView.swift in Sources */,
+				2031B98E2CEAE1A700627D53 /* Accessibility.swift in Sources */,
 				20B9B1252CDF99CC00B66D4D /* GPU.swift in Sources */,
 				2099BD9B2CB7B8C800E02732 /* Extension+RawRepresentable.swift in Sources */,
 				2086E1AC2CB03CD200FFCF57 /* Dialogs.swift in Sources */,
@@ -1187,6 +1255,7 @@
 				201A1A932CDB8109001E9BA9 /* Extension+Collection.swift in Sources */,
 				20571F772CBD6005004F3344 /* SettingsView.swift in Sources */,
 				20573F142CB50550004C19FE /* ConversationManagerView.swift in Sources */,
+				2031B99A2CEAE7A900627D53 /* Extension+KeyboardShortcut.swift in Sources */,
 				20B97CB62CAFE86C009A0A5D /* SidekickApp.swift in Sources */,
 				208388DA2CBF4DF500C2A9F8 /* TavilySearch.swift in Sources */,
 				2099BDA52CB8069800E02732 /* ConversationNameEditor.swift in Sources */,
@@ -1208,11 +1277,13 @@
 				20B97CE92CB007DF009A0A5D /* Resource.swift in Sources */,
 				20573F302CB5302C004C19FE /* TextOutputFormat.swift in Sources */,
 				20FB0D8B2CBA8828006D062A /* SearchResult.swift in Sources */,
+				2031B9922CEAE3CC00627D53 /* Extension+NSWindow.swift in Sources */,
 				20FE94DA2CB96DE8006E9F06 /* ExitButton.swift in Sources */,
 				20573F1B2CB5099B004C19FE /* ConversationCommands.swift in Sources */,
 				20B9E60C2CB140A000BA0AD2 /* AppDelegate.swift in Sources */,
 				208388ED2CBF825400C2A9F8 /* Tavily.swift in Sources */,
 				204C79532CB7500800EED58E /* EndDetectionScrollView.swift in Sources */,
+				204AE3BB2CEAF5AC0086B42D /* Command.swift in Sources */,
 				2038CCF32CB6CBC6005AA315 /* PendingMessageView.swift in Sources */,
 				20E48C2B2CB560E30085E7D6 /* Extension+CGKeyCode.swift in Sources */,
 				208844312CDDE33F003BCB6F /* ModelListView.swift in Sources */,
@@ -1229,6 +1300,7 @@
 				20CEA75B2CE308AD0070579B /* MessageContentView.swift in Sources */,
 				202801FC2CC9C5C2005C1F7D /* TemporaryResourceView.swift in Sources */,
 				20573F182CB50743004C19FE /* ConversationView.swift in Sources */,
+				204AE3B92CEAF57E0086B42D /* CommandManager.swift in Sources */,
 				201A1A9E2CDBBA25001E9BA9 /* MarkdownLineChartView.swift in Sources */,
 				200FBFF32CB66B8300A92A74 /* ServerHealth.swift in Sources */,
 				202ED94A2CD7791600D96030 /* HuggingFaceModel.swift in Sources */,
@@ -1453,7 +1525,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.0.8;
+				MARKETING_VERSION = 0.0.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pattonium.Sidekick;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1488,7 +1560,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.0.8;
+				MARKETING_VERSION = 0.0.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pattonium.Sidekick;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1656,6 +1728,14 @@
 				version = 0.0.5;
 			};
 		};
+		2031B9932CEAE66400627D53 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/KeyboardShortcuts/";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.2.2;
+			};
+		};
 		20573F262CB52F84004C19FE /* XCRemoteSwiftPackageReference "Splash" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/JohnSundell/Splash";
@@ -1727,6 +1807,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 200FBFEF2CB64CB400A92A74 /* XCRemoteSwiftPackageReference "EventSource" */;
 			productName = EventSource;
+		};
+		2031B9942CEAE66400627D53 /* KeyboardShortcuts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2031B9932CEAE66400627D53 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
+			productName = KeyboardShortcuts;
 		};
 		20573F272CB52F84004C19FE /* Splash */ = {
 			isa = XCSwiftPackageProductDependency;

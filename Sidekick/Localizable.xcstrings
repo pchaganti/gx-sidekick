@@ -44,6 +44,9 @@
         }
       }
     },
+    "Add Command" : {
+
+    },
     "Add Model" : {
       "localizations" : {
         "zh-Hans" : {
@@ -90,6 +93,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "您确定要清除所有设置吗？这将删除所有设置并退出 Sidekick。"
+          }
+        }
+      }
+    },
+    "Are you sure you want to delete all commands?" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您确实要删除所有指令吗？"
           }
         }
       }
@@ -240,6 +253,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "颜色："
+          }
+        }
+      }
+    },
+    "Commands" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "指令"
           }
         }
       }
@@ -410,6 +433,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "删除"
+          }
+        }
+      }
+    },
+    "Delete All Commands" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除所有指令"
           }
         }
       }
@@ -824,6 +857,9 @@
         }
       }
     },
+    "Inline Assistant" : {
+
+    },
     "Keep resources between sessions" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1081,6 +1117,17 @@
         }
       }
     },
+    "Output:" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "输出："
+          }
+        }
+      }
+    },
     "Parameters" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1180,6 +1227,9 @@
           }
         }
       }
+    },
+    "Prompt" : {
+
     },
     "References:" : {
       "localizations" : {
@@ -1471,6 +1521,9 @@
         }
       }
     },
+    "Shortcut" : {
+
+    },
     "Show App Support Folder in Finder" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1680,6 +1733,15 @@
           }
         }
       }
+    },
+    "The shortcut used to trigger and dismiss the inline writing assistant." : {
+
+    },
+    "This command's name" : {
+
+    },
+    "This command's prompt" : {
+
     },
     "This icon's color" : {
       "localizations" : {

@@ -20,6 +20,7 @@ struct SidekickApp: App {
 	@StateObject private var downloadManager: DownloadManager = .shared
 	@StateObject private var conversationManager: ConversationManager = .shared
 	@StateObject private var profileManager: ProfileManager = .shared
+	@StateObject private var commandManager: CommandManager = .shared
 	
 	@StateObject private var lengthyTasksController: LengthyTasksController = .shared
 	
@@ -45,6 +46,7 @@ struct SidekickApp: App {
 		SwiftUI.Settings {
 			SettingsView()
 				.applyWindowMaterial()
+				.environmentObject(commandManager)
 		}
 		
 	}

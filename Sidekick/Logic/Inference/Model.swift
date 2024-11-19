@@ -34,6 +34,11 @@ public class Model: ObservableObject {
 		)
 	}
 	
+	/// Static constant for the global ``Model`` object
+	static public let shared: Model = .init(
+		systemPrompt: InferenceSettings.systemPrompt
+	)
+	
 	var id: UUID = UUID()
 	
 	/// Property for the system prompt
@@ -88,9 +93,17 @@ public class Model: ObservableObject {
 	// we respond before updating to avoid a long delay after user input
 	func listenThinkRespond(
 		messages: [Message],
-		similarityIndex: SimilarityIndex?,
-		useWebSearch: Bool,
-		temporaryResources: [TemporaryResource]
+		similarityIndex: SimilarityIndex? = nil,
+		useWebSearch: Bool = false,
+		temporaryResources: [TemporaryResource] = [],
+		handleResponseUpdate: @escaping (
+			String, // Full message
+			String // Delta
+		) -> Void = { _, _ in },
+		handleResponseFinish: @escaping (
+			String, // Pending message
+			String // Final message
+		) -> Void = { _, _ in }
 	) async throws -> LlamaServer.CompleteResponse {
 		// Set flag
 		let preQueryStatus: Status = self.status
@@ -128,22 +141,38 @@ public class Model: ObservableObject {
 				let displayedCount = self.pendingMessage.count
 				if updateCount >= increment || displayedCount < increment {
 					self.handleCompletionProgress(
-						partialResponse: updateResponse
+						partialResponse: updateResponse,
+						handleResponseUpdate: handleResponseUpdate
 					)
 					updateResponse = ""
 				}
 			}
 		}
 		// When prompt finishes...
-		pendingMessage = response.text
-		status = .ready
+		handleResponseFinish(
+			response.text,
+			self.pendingMessage
+		)
+		self.pendingMessage = response.text
+		self.status = .ready
 		self.sentConversationId = nil
 		return response
 	}
 	
 	/// Function to handle response update
-	func handleCompletionProgress(partialResponse: String) {
-		self.pendingMessage += partialResponse
+	func handleCompletionProgress(
+		partialResponse: String,
+		handleResponseUpdate: @escaping (
+			String, // Full message
+			String // Delta
+		) -> Void
+	) {
+		let fullMessage = self.pendingMessage + partialResponse
+		handleResponseUpdate(
+			fullMessage,
+			partialResponse
+		)
+		self.pendingMessage = fullMessage
 	}
 	
 	/// Function to interrupt `llama-server` generation
