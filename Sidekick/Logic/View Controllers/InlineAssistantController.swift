@@ -37,6 +37,11 @@ public class InlineAssistantController: ObservableObject {
 	private func showInlineAssistant() {
 		// Get selected text
 		guard let selectedText: String = Accessibility.shared.getSelectedText() else {
+			// If no text is selected, exit
+			return
+		}
+		// If no model is chosed, exit
+		if Settings.showSetup {
 			return
 		}
 		// Set window view

@@ -9,19 +9,13 @@ import SwiftUI
 
 struct CommandButton: View {
 	
-	init(
-		command: Command,
-		action: @escaping () -> Void
-	) {
-		self.command = command
-		self.action = action
-	}
-	
 	@EnvironmentObject private var model: Model
 	@EnvironmentObject private var commandManager: CommandManager
 	@EnvironmentObject private var inlineAssistantController: InlineAssistantController
 	
-	var command: Command
+	@State private var isEditingCommand: Bool = false
+	
+	@Binding var command: Command
 	var action: () -> Void
 	
     var body: some View {
@@ -32,11 +26,14 @@ struct CommandButton: View {
 		}
 		.buttonStyle(.plain)
 		.contextMenu {
-			Button {
-				self.commandManager.delete(self.command)
-			} label: {
-				Text("Delete")
-			}
+			contextMenu
+		}
+		.sheet(isPresented: $isEditingCommand) {
+			CommandEditorView(
+				command: $command,
+				isEditingCommand: $isEditingCommand
+			)
+			.frame(minWidth: 350, minHeight: 300)
 		}
     }
 	
@@ -51,6 +48,21 @@ struct CommandButton: View {
 				.fill(Color.textBackground)
 			}
 			.font(.body)
+	}
+	
+	var contextMenu: some View {
+		Group {
+			Button {
+				self.isEditingCommand.toggle()
+			} label: {
+				Text("Edit")
+			}
+			Button {
+				self.commandManager.delete(self.command)
+			} label: {
+				Text("Delete")
+			}
+		}
 	}
 	
 }

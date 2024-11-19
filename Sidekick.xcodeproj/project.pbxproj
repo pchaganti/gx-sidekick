@@ -36,6 +36,7 @@
 		202ED9582CD7841100D96030 /* DefaultModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202ED9572CD7841100D96030 /* DefaultModels.swift */; };
 		202ED95C2CD7878700D96030 /* AppleGPUInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202ED95B2CD7878700D96030 /* AppleGPUInfo.swift */; };
 		202ED95E2CD787A600D96030 /* CAppleGPUInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202ED95D2CD787A600D96030 /* CAppleGPUInfo.swift */; };
+		2030A10F2CECAE1500F2E235 /* CommandEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2030A10E2CECAE1500F2E235 /* CommandEditorView.swift */; };
 		2031B98E2CEAE1A700627D53 /* Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2031B98D2CEAE1A700627D53 /* Accessibility.swift */; };
 		2031B9902CEAE33900627D53 /* InlineAssistantController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2031B98F2CEAE33900627D53 /* InlineAssistantController.swift */; };
 		2031B9922CEAE3CC00627D53 /* Extension+NSWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2031B9912CEAE3CC00627D53 /* Extension+NSWindow.swift */; };
@@ -249,6 +250,7 @@
 		202ED95A2CD7876A00D96030 /* AppleGPUInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppleGPUInfo.h; sourceTree = "<group>"; };
 		202ED95B2CD7878700D96030 /* AppleGPUInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleGPUInfo.swift; sourceTree = "<group>"; };
 		202ED95D2CD787A600D96030 /* CAppleGPUInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAppleGPUInfo.swift; sourceTree = "<group>"; };
+		2030A10E2CECAE1500F2E235 /* CommandEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandEditorView.swift; sourceTree = "<group>"; };
 		2031B98D2CEAE1A700627D53 /* Accessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accessibility.swift; sourceTree = "<group>"; };
 		2031B98F2CEAE33900627D53 /* InlineAssistantController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InlineAssistantController.swift; sourceTree = "<group>"; };
 		2031B9912CEAE3CC00627D53 /* Extension+NSWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+NSWindow.swift"; sourceTree = "<group>"; };
@@ -626,7 +628,6 @@
 			isa = PBXGroup;
 			children = (
 				204AE3B52CEAF4C20086B42D /* InlineAssistantView.swift */,
-				204AE3C52CEC7C030086B42D /* NewCommandView.swift */,
 				204AE3BE2CEB57270086B42D /* Command */,
 			);
 			path = "Inline Assistant";
@@ -636,6 +637,8 @@
 			isa = PBXGroup;
 			children = (
 				204AE3BF2CEB57330086B42D /* CommandButton.swift */,
+				204AE3C52CEC7C030086B42D /* NewCommandView.swift */,
+				2030A10E2CECAE1500F2E235 /* CommandEditorView.swift */,
 			);
 			path = Command;
 			sourceTree = "<group>";
@@ -871,10 +874,10 @@
 				2099BD9E2CB7E9CE00E02732 /* QuickPrompt.swift */,
 				202E3EDC2CBB8F7B00AF86C8 /* ReferencedURL.swift */,
 				20FB0D8A2CBA8828006D062A /* SearchResult.swift */,
+				204AE3BA2CEAF5AC0086B42D /* Command.swift */,
 				208388EC2CBF825400C2A9F8 /* Tavily.swift */,
 				202801F72CC94938005C1F7D /* Conversation */,
 				202801F82CC94962005C1F7D /* Profile */,
-				204AE3BA2CEAF5AC0086B42D /* Command.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -1262,6 +1265,7 @@
 				208AA3F12CC9E42F00A0891F /* ScrollMask.swift in Sources */,
 				20571F722CBCEDD8004F3344 /* LengthyTasksList.swift in Sources */,
 				20AA5A542CC89AAA003E5519 /* MessageBackgroundView.swift in Sources */,
+				2030A10F2CECAE1500F2E235 /* CommandEditorView.swift in Sources */,
 				204C79582CB769A400EED58E /* Extension+View.swift in Sources */,
 				2099BDAD2CB8222A00E02732 /* ProfileEditorView.swift in Sources */,
 				20571F812CBD6A6D004F3344 /* SoundEffects.swift in Sources */,

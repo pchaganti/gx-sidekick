@@ -32,12 +32,16 @@ struct InlineAssistantView: View {
 					self.inlineAssistantController.toggleInlineAssistant()
 				}
 			}
+			.padding(.bottom, 8)
 			self.commands
-			if self.didSelectCommand {
-				self.progressIndicator
-			} else {
-				self.newCommandButton
+			Group {
+				if self.didSelectCommand {
+					self.progressIndicator
+				} else {
+					self.newCommandButton
+				}
 			}
+			.padding(.top, 12)
 		}
 		.frame(minWidth: 500, maxWidth: 800)
 		.padding(12)
@@ -63,12 +67,12 @@ struct InlineAssistantView: View {
 			horizontalSpacing: 20
 		) {
 			ForEach(
-				commandManager.commands
+				$commandManager.commands
 			) { command in
 				CommandButton(
 					command: command
 				) {
-					self.executeCommand(command: command)
+					self.executeCommand(command: command.wrappedValue)
 				}
 				.disabled(didSelectCommand)
 			}
