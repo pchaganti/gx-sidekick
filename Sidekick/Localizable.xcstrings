@@ -45,7 +45,14 @@
       }
     },
     "Add Command" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加指令"
+          }
+        }
+      }
     },
     "Add Model" : {
       "localizations" : {
@@ -73,6 +80,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "允许模型在网络上搜索与用户问题相关的信息"
+          }
+        }
+      }
+    },
+    "Answer Question" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "回答问题"
+          }
+        }
+      }
+    },
+    "Answer the question below with a short response. Answer in the same language as the question below." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用简短的回答来回答下面的问题。使用与以下问题相同的语言来回答。"
           }
         }
       }
@@ -267,6 +294,16 @@
         }
       }
     },
+    "Concise" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "精简"
+          }
+        }
+      }
+    },
     "Context Length" : {
       "localizations" : {
         "zh-Hans" : {
@@ -373,6 +410,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "复制到剪切板"
+          }
+        }
+      }
+    },
+    "Correct Grammar" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "修改语法"
+          }
+        }
+      }
+    },
+    "Correct grammar for the text below. Ensure all spelling, punctuation, and grammar are correct. Respond in the same language as the original text." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "纠正以下文本的语法。确保所有拼写、标点和语法均正确。使用与原文相同的语言进行回复。"
           }
         }
       }
@@ -543,6 +600,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "编辑"
+          }
+        }
+      }
+    },
+    "Elaborate" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "细说"
+          }
+        }
+      }
+    },
+    "Elaborate on the following content, providing additional insights, examples, detailed explanations, and related concepts. Dive deeper into the topic to offer a comprehensive understanding and explore various dimensions not covered in the original text. Respond in the same language as the original text." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "详细阐述以下内容，提供额外的见解、示例、详细解释和相关概念。深入探讨主题，提供全面的理解，并探索原文未涉及的各个维度。使用与原文相同的语言进行回复。"
           }
         }
       }
@@ -858,7 +935,14 @@
       }
     },
     "Inline Assistant" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "写作助手"
+          }
+        }
+      }
     },
     "Keep resources between sessions" : {
       "localizations" : {
@@ -927,6 +1011,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "列出要点"
+          }
+        }
+      }
+    },
+    "Make this paragraph shorter while retaining the most important information, removing some details when needed. Respond in the same language as the original text." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "缩短此段落，同时保留最重要的信息，并在必要时删除一些细节。使用与原文相同的语言进行回复。"
           }
         }
       }
@@ -1117,17 +1211,6 @@
         }
       }
     },
-    "Output:" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "输出："
-          }
-        }
-      }
-    },
     "Parameters" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1229,7 +1312,14 @@
       }
     },
     "Prompt" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "提示"
+          }
+        }
+      }
     },
     "References:" : {
       "localizations" : {
@@ -1331,12 +1421,32 @@
         }
       }
     },
+    "Rewrite" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重写"
+          }
+        }
+      }
+    },
     "Rewrite the text below into bullet points:\n\n\"\"" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "请将这段文字重写为要点：\n\n“”"
+          }
+        }
+      }
+    },
+    "Rewrite the text below. Respond in the same language as the original text." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重写下面的文字。使用与原文相同的语言进行回复。"
           }
         }
       }
@@ -1522,7 +1632,14 @@
       }
     },
     "Shortcut" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "快捷键"
+          }
+        }
+      }
     },
     "Show App Support Folder in Finder" : {
       "localizations" : {
@@ -1550,6 +1667,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "在访达中显示"
+          }
+        }
+      }
+    },
+    "Simplify" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "简化"
+          }
+        }
+      }
+    },
+    "Simplify the text below for a general audience, removing techinical jargon and hard-to-grasp ideas. Respond in the same language as the original text." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "为普通读者简化以下文本，删除技术术语和难以理解的想法。使用与原文相同的语言进行回复。"
           }
         }
       }
@@ -1735,13 +1872,34 @@
       }
     },
     "The shortcut used to trigger and dismiss the inline writing assistant." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用于触发和关闭内联写作助手的快捷键。"
+          }
+        }
+      }
     },
     "This command's name" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这项指令的名称"
+          }
+        }
+      }
     },
     "This command's prompt" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这项指令的提示"
+          }
+        }
+      }
     },
     "This icon's color" : {
       "localizations" : {

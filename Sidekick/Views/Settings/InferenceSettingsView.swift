@@ -79,7 +79,7 @@ struct InferenceSettingsView: View {
 			ModelListView(
 				isPresented: $isSelectingModel
 			)
-			.frame(maxHeight: 600)
+			.frame(minWidth: 450, maxHeight: 600)
 		}
 	}
 	

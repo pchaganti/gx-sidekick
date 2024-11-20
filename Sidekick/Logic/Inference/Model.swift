@@ -105,6 +105,8 @@ public class Model: ObservableObject {
 			String // Final message
 		) -> Void = { _, _ in }
 	) async throws -> LlamaServer.CompleteResponse {
+		// Reset pending message
+		self.pendingMessage = ""
 		// Set flag
 		let preQueryStatus: Status = self.status
 		self.status = .querying

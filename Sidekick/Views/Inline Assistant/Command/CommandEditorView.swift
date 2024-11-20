@@ -57,6 +57,9 @@ struct CommandEditorView: View {
 					.textFieldStyle(.plain)
 			}
 		}
+		.onChange(of: command.name) {
+			self.commandManager.commands = self.commandManager.commands.sorted(by: \.name)
+		}
 	}
 	
 	var promptEditor: some View {

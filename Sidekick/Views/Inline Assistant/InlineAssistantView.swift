@@ -150,9 +150,12 @@ struct InlineAssistantView: View {
 		pendingMessage: String
 	) {
 		// Type it out
-		let delta: String = String(fullMessage.dropPrefixIfPresent(pendingMessage))
+		let delta: String = fullMessage.replacingOccurrences(
+			of: pendingMessage,
+			with: ""
+		)
 		// If delta is reasonable
-		if delta.count < 20 {
+		if delta.count < 40 {
 			Accessibility.shared.simulateTyping(for: delta)
 		}
 	}
