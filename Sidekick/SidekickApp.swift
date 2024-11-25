@@ -45,7 +45,6 @@ struct SidekickApp: App {
 		
 		SwiftUI.Settings {
 			SettingsView()
-				.applyWindowMaterial()
 				.environmentObject(commandManager)
 		}
 		

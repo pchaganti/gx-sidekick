@@ -8,6 +8,7 @@
 import Foundation
 import os.log
 import SwiftUI
+import UniformTypeIdentifiers
 
 public class ModelManager: ObservableObject {
 	
@@ -19,9 +20,36 @@ public class ModelManager: ObservableObject {
 	/// Static constant for the global ``ModelManager`` object
 	static public let shared: ModelManager = .init()
 	
+	/// Static constant for the `gguf` UniformTypeIdentifier
+	static private let ggufType: UTType = UTType("com.npc-pet.Chats.gguf") ?? .data
+	
 	@Published var models: [ModelFile] = [] {
 		didSet {
 			self.save()
+		}
+	}
+	
+	/// Function to add a model
+	@MainActor
+	public func addModel() -> Bool {
+		if let modelUrls = try? FileManager.selectFile(
+			dialogTitle: String(
+				localized: "Select a Model"
+			),
+			canSelectDirectories: false,
+			allowedContentTypes: [Self.ggufType],
+			allowMultipleSelection: false,
+			persistPermissions: true
+		) {
+			guard let modelUrl = modelUrls.first else {
+				return false
+			}
+			// Add to model list
+			ModelManager.shared.add(modelUrl)
+			return true
+		} else {
+			// Signal failure
+			return false
 		}
 	}
 	

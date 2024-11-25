@@ -9,10 +9,10 @@ import Foundation
 
 public extension URL {
 	
-	/// Computed property returning if URL is a web URL
+	/// A `Bool` representing iif the URL is a web URL
 	var isWebURL: Bool {
-		return self.absoluteString.hasPrefix("http") ||
-		self.absoluteString.hasPrefix("https") ||
+		return self.absoluteString.hasPrefix("http://") ||
+		self.absoluteString.hasPrefix("https://") ||
 		self.absoluteString.hasPrefix("www")
 	}
 	

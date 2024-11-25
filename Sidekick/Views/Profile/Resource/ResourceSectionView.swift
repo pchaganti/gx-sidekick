@@ -130,7 +130,9 @@ struct ResourceSectionView: View {
 		
 		var isValidUrl: Bool {
 			// Check if init possible
-			if URL(string: websiteUrl) == nil { return false }
+			guard let url = URL(string: websiteUrl) else { return false }
+			// Check if web url
+			if !url.isWebURL { return false }
 			// Check format
 			if NSURL(string: websiteUrl) == nil { return false }
 			let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)

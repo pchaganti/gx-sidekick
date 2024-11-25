@@ -72,12 +72,49 @@ The user's request might be followed by reference information, organized by sour
 		}
 	}
 	
+	/// A `Bool` representing whether speculative decoding is used
+	public static var useSpeculativeDecoding: Bool {
+		get {
+			// Set default
+			if !UserDefaults.standard.exists(
+				key: "useSpeculativeDecoding"
+			) {
+				// Default to false
+				Self.useSpeculativeDecoding = false
+			}
+			return UserDefaults.standard.bool(
+				forKey: "useSpeculativeDecoding"
+			)
+		}
+		set {
+			UserDefaults.standard.set(
+				newValue,
+				forKey: "useSpeculativeDecoding"
+			)
+		}
+	}
+	
+	/// Computed property for the location of the LLM used for speculative decoding
+	static var speculativeDecodingModelUrl: URL? {
+		get {
+			return UserDefaults.standard.url(
+				forKey: "specularDecodingModelUrl"
+			)
+		}
+		set {
+			UserDefaults.standard.set(
+				newValue,
+				forKey: "specularDecodingModelUrl"
+			)
+		}
+	}
+	
 	/// A `Bool` representing whether a server is used
 	public static var useServer: Bool {
 		get {
 			// Set default
 			if !UserDefaults.standard.exists(key: "useServer") {
-				// Default to true
+				// Default to false
 				Self.useServer = false
 			}
 			return UserDefaults.standard.bool(

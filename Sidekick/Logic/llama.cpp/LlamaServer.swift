@@ -70,7 +70,15 @@ public actor LlamaServer {
 			string: "\(InferenceSettings.endpoint)/health"
 		)!
 		do {
-			let response: (data: Data, URLResponse) = try await URLSession.shared.data(
+			// Set timeout
+			let config: URLSessionConfiguration = URLSessionConfiguration.default
+			config.timeoutIntervalForRequest = 3
+			config.timeoutIntervalForResource = 3
+			let session: URLSession = URLSession(
+				configuration: config
+			)
+			// Check server health
+			let response: (data: Data, URLResponse) = try await session.data(
 				from: endpointUrl
 			)
 			let decoder: JSONDecoder = JSONDecoder()
@@ -124,15 +132,36 @@ public actor LlamaServer {
 		let threadsToUseIfGPU: Int = max(1, Int(ceil(Double(processors) / 3.0 * 2.0)))
 		let threadsToUseIfCPU: Int = processors
 		let threadsToUse: Int = InferenceSettings.useGPUAcceleration ? threadsToUseIfGPU : threadsToUseIfCPU
+		let gpuLayersToUse: String = InferenceSettings.useGPUAcceleration ? "\(gpuLayers)" : "0"
 		
-		process.arguments = [
+		var arguments: [String] = [
 			"--model", modelPath,
 			"--threads", "\(threadsToUse)",
 			"--threads-batch", "\(threadsToUse)",
 			"--ctx-size", "\(contextLength)",
 			"--port", port,
-			"--n-gpu-layers", InferenceSettings.useGPUAcceleration ? "\(gpuLayers)" : "0"
+			"--flash-attn", 
+			"--n-gpu-layers", gpuLayersToUse
 		]
+		
+		// If speculative decoding is used
+		if let speculationModelUrl = InferenceSettings.speculativeDecodingModelUrl {
+			if InferenceSettings.useSpeculativeDecoding {
+				// Formulate arguments
+				let draft: Int =  15
+				let draftMin: Int =  3
+				let speculativeDecodingArguments: [String] = [
+					"-md", speculationModelUrl.posixPath,
+					"-ngld", "\(gpuLayersToUse)",
+					"--draft", "\(draft)",
+					"--draft-min", "\(draftMin)"
+				]
+				// Append
+				arguments += speculativeDecodingArguments
+			}
+		}
+		
+		process.arguments = arguments
 		
 		print("Starting llama.cpp server \(process.arguments!.joined(separator: " "))")
 		
@@ -179,6 +208,7 @@ public actor LlamaServer {
 		interrupted = true
 	}
 	
+	/// Function to chat with the LLM
 	/// Function to chat with the LLM
 	func chat(
 		messages: [Message.MessageSubset],
@@ -320,7 +350,6 @@ public actor LlamaServer {
 	struct HealthResponse: Codable {
 		
 		var status: String
-		
 		var isHealthy: Bool { self.status == "ok" }
 		
 	}
@@ -350,12 +379,21 @@ public actor LlamaServer {
 	}
 	
 	struct CompleteResponse {
+		
 		var text: String
 		var responseStartSeconds: Double
 		var predictedPerSecond: Double?
 		var modelName: String?
 		var nPredicted: Int?
 		var usedServer: Bool
+		
+	}
+	
+	struct Fragment {
+		
+		var text: String
+		var date: Date = .now
+		
 	}
 	
 }

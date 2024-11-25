@@ -204,6 +204,16 @@
         }
       }
     },
+    "Beta" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "公测"
+          }
+        }
+      }
+    },
     "Brainstorm" : {
       "localizations" : {
         "zh-Hans" : {
@@ -914,6 +924,16 @@
         }
       }
     },
+    "Improve inference speed by running a second model in parallel with the main model. This may use more memory." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通过与主模型并行运行第二个模型来提高推理速度。这可能会使用更多内存。"
+          }
+        }
+      }
+    },
     "Indexing in Progress" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1055,16 +1075,6 @@
         }
       }
     },
-    "Model" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "模型"
-          }
-        }
-      }
-    },
     "Model could not be found" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1097,6 +1107,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "模型：%1$@\n每秒令牌数：%2$@"
+          }
+        }
+      }
+    },
+    "Models" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模型"
           }
         }
       }
@@ -1167,6 +1187,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "取消"
+          }
+        }
+      }
+    },
+    "No Model Selected" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请选择模型"
           }
         }
       }
@@ -1711,6 +1741,16 @@
         }
       }
     },
+    "Speculative Decoding Model: %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "推测解码模型：%@"
+          }
+        }
+      }
+    },
     "Stats for Nerds" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1931,6 +1971,16 @@
         }
       }
     },
+    "This is the model used for speculative decoding. It should be smaller than the main model." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这是用于推测解码的模型。它应该比主模型小。"
+          }
+        }
+      }
+    },
     "This profile's icon" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2077,6 +2127,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "使用服务器"
+          }
+        }
+      }
+    },
+    "Use Speculative Decoding" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用推测解码"
           }
         }
       }

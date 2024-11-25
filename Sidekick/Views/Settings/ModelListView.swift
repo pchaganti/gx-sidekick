@@ -9,10 +9,20 @@ import SwiftUI
 
 struct ModelListView: View {
 	
+	init(
+		isPresented: Binding<Bool>,
+		forSpeculativeDecoding: Bool = false
+	) {
+		self._isPresented = isPresented
+		self.forSpeculativeDecoding = forSpeculativeDecoding
+	}
+	
+	var forSpeculativeDecoding: Bool = false
+	
 	@Binding var isPresented: Bool
 	@StateObject private var modelManager: ModelManager = .shared
 	
-	@State private var modelUrl: URL? = Settings.modelUrl
+	@State private var modelUrl: URL? = nil
 	
 	@State private var modelDownloadUrl: String = "https://huggingface.co/models?sort=trending&search=GGUF"
 	
@@ -34,9 +44,22 @@ struct ModelListView: View {
 		.onChange(
 			of: self.modelManager.models
 		) {
-			self.modelUrl = Settings.modelUrl
+			self.modelUrl = {
+				if !self.forSpeculativeDecoding {
+					return Settings.modelUrl
+				}
+				return InferenceSettings.speculativeDecodingModelUrl
+			}()
 		}
 		.onAppear(perform: checkModelUrl)
+		.onAppear {
+			self.modelUrl = {
+				if !self.forSpeculativeDecoding {
+					return Settings.modelUrl
+				}
+				return InferenceSettings.speculativeDecodingModelUrl
+			}()
+		}
 		.environmentObject(modelManager)
     }
 	
@@ -47,7 +70,8 @@ struct ModelListView: View {
 		) { model in
 			ModelRowView(
 				modelFile: model,
-				modelUrl: $modelUrl
+				modelUrl: $modelUrl,
+				forSpeculativeDecoding: forSpeculativeDecoding
 			)
 		}
 		.listRowSeparator(.visible)
@@ -55,8 +79,12 @@ struct ModelListView: View {
 	
 	var addButton: some View {
 		Button {
-			let _ = Settings.selectModel()
-			self.modelUrl = Settings.modelUrl
+			if !self.forSpeculativeDecoding {
+				let _ = Settings.selectModel()
+				self.modelUrl = Settings.modelUrl
+			} else {
+				let _ = modelManager.addModel()
+			}
 		} label: {
 			Label(
 				"Add Model",

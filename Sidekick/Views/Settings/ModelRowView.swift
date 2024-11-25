@@ -16,6 +16,8 @@ struct ModelRowView: View {
 	@Binding var modelUrl: URL?
 	@State var isHovering: Bool = false
 	
+	var forSpeculativeDecoding: Bool
+	
 	var isSelected: Bool {
 		return modelFile.url == modelUrl
 	}
@@ -58,17 +60,12 @@ struct ModelRowView: View {
 	var state: some View {
 		Group {
 			if !modelFile.url.fileExists {
-				Text("Missing")
-					.font(.caption)
-					.bold()
-					.padding(2)
-					.padding(.horizontal, 2)
-					.overlay {
-						RoundedRectangle(cornerRadius: 3)
-							.fill(Color.yellow.opacity(0.2))
-							.strokeBorder(Color.yellow, lineWidth: 1)
-					}
-					.help("Model could not be found")
+				StatusLabelView(
+					text: String(localized: "Missing"),
+					textColor: .primary,
+					fill: .yellow
+				)
+				.help("Model could not be found")
 			}
 		}
 	}
@@ -94,9 +91,14 @@ struct ModelRowView: View {
 	/// Function to select model
 	private func select() {
 		// Update variables
-		Settings.modelUrl = self.modelFile.url
-		self.modelUrl = Settings.modelUrl
-		// Send notification
+		if !self.forSpeculativeDecoding {
+			Settings.modelUrl = self.modelFile.url
+			self.modelUrl = Settings.modelUrl
+		} else {
+			InferenceSettings.speculativeDecodingModelUrl = self.modelFile.url
+			self.modelUrl = InferenceSettings.speculativeDecodingModelUrl
+		}
+		// Send notification to reload model
 		NotificationCenter.default.post(
 			name: Notifications.didSelectModel.name,
 			object: nil
