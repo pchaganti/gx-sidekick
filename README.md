@@ -1,8 +1,8 @@
 <h1 align="center">Sidekick</h1>
 
-Chat with an local LLM with context of your files, folders and websites on your Mac without installing any other software. All conversations happen offline, and your data is saved locally.
+Chat with an local LLM that can respond with information from your files, folders and websites on your Mac without installing any other software. All conversations happen offline, and your data is saved locally.
 
-![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/Sidekick/Assets.xcassets/demoScreenshot.imageset/demoScreenshot.png)
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/demoScreenshot.png)
 
 - Try any llama.cpp compatible GGUF model
 - Customize model behaviour by setting up profiles with a custom system prompt
@@ -13,13 +13,73 @@ Chat with an local LLM with context of your files, folders and websites on your 
 
 Let’s say you're collecting evidence for a History paper about interactions between Aztecs and Spanish troops, and you’re looking for text about whether the Aztecs used captured Spanish weapons.
 
-![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/Sidekick/Assets.xcassets/demoHistoryScreenshot.imageset/demoHistoryScreenshot.png)
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/demoHistoryScreenshot.png)
 
 Here, you can ask Sidekick, “Did the Aztecs use captured Spanish weapons?”, and it responds with direct quotes with page numbers and a brief analysis.
 
-![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/Sidekick/Assets.xcassets/demoHistorySource.imageset/demoHistorySource.png)
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/demoHistorySource.png)
 
 To verify Sidekick’s answer, just click on the references displayed below Sidekick’s answer, and the academic paper referenced by Sidekick immediately opens in your viewer.
+
+## Capabilities
+
+### Resource Use
+
+Sidekick accesses files, folders, and websites from your profiles, which can be individually configured to contain resources related to specific areas of interest. Activating a profile allows Sidekick to access the relevant information.
+
+For example, a student might create the profiles `English Literature`, `Mathematics`, `Geography`, `Computer Science` and `Physics`. In the image below, he has activated the profile `Computer Science`, allowing Sidekick to reply with information from that profile.
+
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/demoProfileUse.png)
+
+Users can also give Sidekick access to files just by dragging them into the input field.
+
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/demoTemporaryResource.png)
+
+Sidekick can even respond with the latest information using **web search**, speeding up research.
+
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/webSearch.png)
+
+### Inline Writing Assistant
+
+Press `Command + Control + I` to access Sidekick's inline writing assistant. For example, use the `Answer Question` command to do your homework without leaving Microsoft Word!
+
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/inlineWritingAssistant.png)
+
+### Advanced Markdown Rendering
+
+Markdown in rendered beautifully in Sidekick.
+
+#### LaTeX
+
+Sidekick offers native LaTeX rendering for mathematical equations.
+
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/latexRendering1.png)
+
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/latexRendering2.png)
+
+#### Data Visualization
+
+Visualizations are automatically provided for tables when appropriate, with a variety of charts availible, including bar charts, line charts and pie charts.
+
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/dataVisualization1.png)
+
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/dataVisualization2.png)
+
+#### Code
+
+Code is beautifully rendered with syntax highlighting, and can be exported or copied at the click of a button.
+
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/codeExport.png)
+
+### Fast Generation
+
+Sidekick uses `llama.cpp` as its inference backend, which is optimized to deliver lightning fast generation speeds on Apple Silicon. Sidekick also supports speculative decoding, which can increase performance by up to 51%.
+
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/speculativeDecodingSupport.png)
+
+Optionally, offload generation to your desktop to speed up generation while extending the battery life of your MacBook.
+
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/serverUse.png)
 
 ## Installation
 
