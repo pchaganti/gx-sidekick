@@ -56,8 +56,9 @@
 		204C79582CB769A400EED58E /* Extension+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204C79572CB769A400EED58E /* Extension+View.swift */; };
 		204C795C2CB79AB900EED58E /* ProfileManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204C795B2CB79AB900EED58E /* ProfileManagerView.swift */; };
 		204D9CBF2CF4ABCF0052B6F4 /* StatusLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204D9CBE2CF4ABCF0052B6F4 /* StatusLabelView.swift */; };
-		204D9CC12CF4C5790052B6F4 /* llama-server in Resources */ = {isa = PBXBuildFile; fileRef = 204D9CC02CF4C5790052B6F4 /* llama-server */; };
 		204FC5CA2CC9C8B400CA1DB4 /* TemporaryResourcesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204FC5C92CC9C8B400CA1DB4 /* TemporaryResourcesView.swift */; };
+		20508BE12CF556F4003BC867 /* llama-server in Resources */ = {isa = PBXBuildFile; fileRef = 20508BE02CF556F4003BC867 /* llama-server */; };
+		20508BE32CF586CD003BC867 /* PendingMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20508BE22CF586CD003BC867 /* PendingMessage.swift */; };
 		20571F6F2CBCE8F7004F3344 /* LengthyTasksController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20571F6E2CBCE8F7004F3344 /* LengthyTasksController.swift */; };
 		20571F722CBCEDD8004F3344 /* LengthyTasksList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20571F712CBCEDD8004F3344 /* LengthyTasksList.swift */; };
 		20571F742CBCEE90004F3344 /* LengthyTasksToolbarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20571F732CBCEE90004F3344 /* LengthyTasksToolbarButton.swift */; };
@@ -270,8 +271,9 @@
 		204C79572CB769A400EED58E /* Extension+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+View.swift"; sourceTree = "<group>"; };
 		204C795B2CB79AB900EED58E /* ProfileManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManagerView.swift; sourceTree = "<group>"; };
 		204D9CBE2CF4ABCF0052B6F4 /* StatusLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusLabelView.swift; sourceTree = "<group>"; };
-		204D9CC02CF4C5790052B6F4 /* llama-server */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llama-server"; sourceTree = "<group>"; };
 		204FC5C92CC9C8B400CA1DB4 /* TemporaryResourcesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryResourcesView.swift; sourceTree = "<group>"; };
+		20508BE02CF556F4003BC867 /* llama-server */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llama-server"; sourceTree = "<group>"; };
+		20508BE22CF586CD003BC867 /* PendingMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingMessage.swift; sourceTree = "<group>"; };
 		20571F6E2CBCE8F7004F3344 /* LengthyTasksController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LengthyTasksController.swift; sourceTree = "<group>"; };
 		20571F712CBCEDD8004F3344 /* LengthyTasksList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LengthyTasksList.swift; sourceTree = "<group>"; };
 		20571F732CBCEE90004F3344 /* LengthyTasksToolbarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LengthyTasksToolbarButton.swift; sourceTree = "<group>"; };
@@ -468,7 +470,7 @@
 		200FBFD62CB627B100A92A74 /* llama.cpp */ = {
 			isa = PBXGroup;
 			children = (
-				204D9CC02CF4C5790052B6F4 /* llama-server */,
+				20508BE02CF556F4003BC867 /* llama-server */,
 				200FBFED2CB6477400A92A74 /* LlamaServer.swift */,
 				200FBFF22CB66B8300A92A74 /* ServerHealth.swift */,
 				200FBFE62CB6384400A92A74 /* llama-server-watchdog */,
@@ -549,6 +551,7 @@
 				20B97CDE2CAFFE6A009A0A5D /* Sender.swift */,
 				20C221012CC4A9E800A99796 /* Source.swift */,
 				202801F92CC949F2005C1F7D /* TemporaryResource.swift */,
+				20508BE22CF586CD003BC867 /* PendingMessage.swift */,
 			);
 			path = Conversation;
 			sourceTree = "<group>";
@@ -1148,7 +1151,7 @@
 				20B97CB32CAFE86C009A0A5D /* Preview Assets.xcassets in Resources */,
 				20F2D5122CC1F33B004CE730 /* Localizable.xcstrings in Resources */,
 				20B97CB42CAFE86C009A0A5D /* Assets.xcassets in Resources */,
-				204D9CC12CF4C5790052B6F4 /* llama-server in Resources */,
+				20508BE12CF556F4003BC867 /* llama-server in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1292,6 +1295,7 @@
 				204C79532CB7500800EED58E /* EndDetectionScrollView.swift in Sources */,
 				204AE3BB2CEAF5AC0086B42D /* Command.swift in Sources */,
 				2038CCF32CB6CBC6005AA315 /* PendingMessageView.swift in Sources */,
+				20508BE32CF586CD003BC867 /* PendingMessage.swift in Sources */,
 				20E48C2B2CB560E30085E7D6 /* Extension+CGKeyCode.swift in Sources */,
 				208844312CDDE33F003BCB6F /* ModelListView.swift in Sources */,
 				2099BD9D2CB7B8E700E02732 /* Notifications.swift in Sources */,
@@ -1733,7 +1737,7 @@
 			repositoryURL = "https://github.com/Recouse/EventSource.git";
 			requirement = {
 				kind = exactVersion;
-				version = 0.0.5;
+				version = 0.1.1;
 			};
 		};
 		2031B9932CEAE66400627D53 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {

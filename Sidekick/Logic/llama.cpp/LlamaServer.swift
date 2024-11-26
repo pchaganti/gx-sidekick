@@ -12,7 +12,10 @@ import SimilaritySearchKit
 
 public actor LlamaServer {
 	
-	init(modelPath: String, systemPrompt: String) {
+	init(
+		modelPath: String,
+		systemPrompt: String
+	) {
 		self.modelPath = modelPath
 		self.systemPrompt = systemPrompt
 		self.contextLength = InferenceSettings.contextLength
@@ -24,8 +27,9 @@ public actor LlamaServer {
 	
 	private var serverUp = false
 	private var serverErrorMessage = ""
+	
 	private var eventSource: EventSource?
-	private var interrupted = false
+	private var dataTask: EventSource.DataTask?
 	
 	var modelPath: String?
 	var modelName: String {
@@ -201,11 +205,11 @@ public actor LlamaServer {
 	}
 	
 	/// Function showing if connection was interrupted
+	@EventSourceActor
 	public func interrupt() async {
-		if let eventSource, eventSource.readyState != .closed {
-			await eventSource.close()
+		if let dataTask = await self.dataTask, dataTask.readyState != .closed {
+			dataTask.cancel()
 		}
-		interrupted = true
 	}
 	
 	/// Function to chat with the LLM
@@ -229,6 +233,8 @@ public actor LlamaServer {
 			systemPrompt: systemPrompt,
 			similarityIndex: similarityIndex
 		)
+		
+		// Formulate request
 		var request = URLRequest(
 			url: rawUrl.url
 		)
@@ -240,21 +246,26 @@ public actor LlamaServer {
 			request.setValue("nil", forHTTPHeaderField: "ngrok-skip-browser-warning")
 		}
 		request.httpBody = await params.toJSON().data(using: .utf8)
+		
 		// Use EventSource to receive server sent events
-		eventSource = EventSource(request: request)
-		eventSource!.connect()
+		self.eventSource = EventSource(
+			timeoutInterval: 60
+		)
+		self.dataTask = await eventSource!.dataTask(
+			for: request
+		)
 		
-		var response: String = ""
+		var pendingMessage: String = ""
 		var responseDiff: Double = 0.0
-		var stopResponse: StopResponse?
+		var stopResponse: StopResponse? = nil
 		
-		listenLoop: for await event in eventSource!.events {
+		listenLoop: for await event in await dataTask!.events() {
 			switch event {
 				case .open:
 					continue listenLoop
 				case .error(let error):
 					print("llama.cpp EventSource server error:", error.localizedDescription)
-				case .message(let message):
+				case .event(let message):
 					// Parse json in message.data string
 					// Then, print the data.content value and append it to response
 					if let data = message.data?.data(using: .utf8) {
@@ -267,7 +278,7 @@ public actor LlamaServer {
 							let fragment: String = responseObj.choices.map({
 								$0.delta.content ?? ""
 							}).joined()
-							response.append(fragment)
+							pendingMessage.append(fragment)
 							progressHandler?(fragment)
 							if responseDiff == 0 {
 								responseDiff = CFAbsoluteTimeGetCurrent() - start
@@ -292,13 +303,13 @@ public actor LlamaServer {
 		}
 		
 		// Adding a trailing quote or space is a common mistake with the smaller model output
-		let cleanText: String = response
+		let cleanText: String = pendingMessage
 			.removeUnmatchedTrailingQuote()
 		
 		// Indicate response finished
 		if responseDiff > 0 {
 			// Call onFinish
-			onFinish(text: response)
+			onFinish(text: cleanText)
 		}
 		
 		// Return info
@@ -321,7 +332,6 @@ public actor LlamaServer {
 	private func waitForServer() async throws {
 		// Check health
 		guard process.isRunning else { return }
-		interrupted = false
 		serverErrorMessage = ""
 		
 		let serverHealth = ServerHealth()
@@ -355,27 +365,37 @@ public actor LlamaServer {
 	}
 	
 	struct StreamMessage: Codable {
+		
 		let content: String?
+		
 	}
 	
 	struct StreamChoice: Codable {
+		
 		let delta: StreamMessage
 		let finish_reason: String?
+		
 	}
 	
 	struct StreamResponse: Codable {
+		
 		let choices: [StreamChoice]
+		let created: Double
+		
 	}
 	
 	struct Usage: Codable {
+		
 		let completion_tokens: Int?
 		let prompt_tokens: Int?
 		let total_tokens: Int?
+		
 	}
 	
 	struct StopResponse: Codable {
-		let choices: [StreamChoice]
+		
 		let usage: Usage
+		
 	}
 	
 	struct CompleteResponse {
@@ -389,11 +409,6 @@ public actor LlamaServer {
 		
 	}
 	
-	struct Fragment {
-		
-		var text: String
-		var date: Date = .now
-		
-	}
-	
 }
+
+extension EventSource.DataTask: @unchecked Sendable {  }
