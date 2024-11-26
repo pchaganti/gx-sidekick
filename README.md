@@ -18,8 +18,8 @@ Chat with an local LLM that can respond with information from your files, folder
 - [Contact](#contact)
 - [Credits](#credits)  
 
-...snip...
 <a name="example_use"/>
+
 ## Example Use
 
 Let’s say you're collecting evidence for a History paper about interactions between Aztecs and Spanish troops, and you’re looking for text about whether the Aztecs used captured Spanish weapons.
