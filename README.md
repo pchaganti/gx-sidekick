@@ -10,15 +10,15 @@ Chat with an local LLM that can respond with information from your files, folder
 - Optionally use [Tavily](https://tavily.com/) to allow up to date responses with information from web search
 
 ## Table of Contents  
-[Example Use](#exampleUse)  
-[Features](#features)
-[Installation](#installation)
-[Goals](#goals)
-[Contributing](#contributing)
-[Contact](#contact)
-[Credits](#credits)  
+- [Example Use](#example_use)  
+- [Features](#features)
+- [Installation](#installation)
+- [Goals](#goals)
+- [Contributing](#contributing)
+- [Contact](#contact)
+- [Credits](#credits)  
 
-<a name="exampleUse"/>
+<a name="example_use"/>
 ## Example Use
 
 Let’s say you're collecting evidence for a History paper about interactions between Aztecs and Spanish troops, and you’re looking for text about whether the Aztecs used captured Spanish weapons.
