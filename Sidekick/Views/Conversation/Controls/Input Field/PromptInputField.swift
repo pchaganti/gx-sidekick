@@ -86,6 +86,9 @@ struct PromptInputField: View {
 				isRecording: $promptController.isRecording
 			)
 		)
+		.overlay(alignment: .leading) {
+			AttachmentSelectionButton()
+		}
 		.overlay(alignment: .trailing) {
 			DictationButton()
 		}

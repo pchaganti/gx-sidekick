@@ -82,6 +82,7 @@
 		20573F322CB53172004C19FE /* InferenceSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20573F312CB53172004C19FE /* InferenceSettings.swift */; };
 		20573F362CB53878004C19FE /* CircleMenuStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20573F352CB53878004C19FE /* CircleMenuStyle.swift */; };
 		205B50D12CD3025A0057769F /* SourceRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205B50D02CD3025A0057769F /* SourceRowView.swift */; };
+		206AB6122CF5F8390010B09A /* AttachmentSelectionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206AB6112CF5F8390010B09A /* AttachmentSelectionButton.swift */; };
 		207A9F532CB82D9600E727DE /* SymbolPicker in Frameworks */ = {isa = PBXBuildFile; productRef = 207A9F522CB82D9600E727DE /* SymbolPicker */; };
 		207A9F552CB8A96F00E727DE /* ProfileNavigationRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207A9F542CB8A96F00E727DE /* ProfileNavigationRowView.swift */; };
 		207A9F592CB8F4AF00E727DE /* ResourceSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207A9F582CB8F4AF00E727DE /* ResourceSelectionView.swift */; };
@@ -295,6 +296,7 @@
 		20573F312CB53172004C19FE /* InferenceSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InferenceSettings.swift; sourceTree = "<group>"; };
 		20573F352CB53878004C19FE /* CircleMenuStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleMenuStyle.swift; sourceTree = "<group>"; };
 		205B50D02CD3025A0057769F /* SourceRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceRowView.swift; sourceTree = "<group>"; };
+		206AB6112CF5F8390010B09A /* AttachmentSelectionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentSelectionButton.swift; sourceTree = "<group>"; };
 		207A9F542CB8A96F00E727DE /* ProfileNavigationRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNavigationRowView.swift; sourceTree = "<group>"; };
 		207A9F582CB8F4AF00E727DE /* ResourceSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceSelectionView.swift; sourceTree = "<group>"; };
 		207A9F5C2CB8FD0900E727DE /* ResourceSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceSectionView.swift; sourceTree = "<group>"; };
@@ -771,6 +773,7 @@
 			children = (
 				202801F52CC93CD5005C1F7D /* PromptInputField.swift */,
 				202801F32CC93C80005C1F7D /* DictationButton.swift */,
+				206AB6112CF5F8390010B09A /* AttachmentSelectionButton.swift */,
 			);
 			path = "Input Field";
 			sourceTree = "<group>";
@@ -1177,6 +1180,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				20CEA75E2CE309F10070579B /* MessageOptionsView.swift in Sources */,
+				206AB6122CF5F8390010B09A /* AttachmentSelectionButton.swift in Sources */,
 				20573F362CB53878004C19FE /* CircleMenuStyle.swift in Sources */,
 				204592172CD32DEF00DEAA96 /* TypedTextView.swift in Sources */,
 				202ED9562CD7827400D96030 /* Gemma2.swift in Sources */,

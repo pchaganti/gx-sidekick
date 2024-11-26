@@ -107,7 +107,6 @@ struct InferenceSettingsView: View {
 					Text("Use Speculative Decoding")
 						.font(.title3)
 						.bold()
-					StatusLabelView.beta
 				}
 				Text("Improve inference speed by running a second model in parallel with the main model. This may use more memory.")
 					.font(.caption)

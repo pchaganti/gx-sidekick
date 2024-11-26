@@ -32,8 +32,8 @@ struct ChatStyle: TextFieldStyle {
 		configuration
 			.textFieldStyle(.plain)
 			.frame(maxWidth: .infinity)
-			.padding(EdgeInsets(top: 0, leading: 6, bottom: 0, trailing: 6))
-			.padding(.trailing, 15)
+			.padding(.leading, 24)
+			.padding(.trailing, 21)
 			.padding(8)
 			.cornerRadius(cornerRadius)
 			.background(

@@ -230,4 +230,21 @@ public class PromptController: ObservableObject, DropDelegate {
 			}
 		}
 	}
+	
+	public func addFile(_ url: URL) async {
+		// Add temp resource if needed
+		if self.tempResources.map(
+			\.url
+		).contains(url) {
+			return
+		}
+		withAnimation(.linear) {
+			self.tempResources.append(
+				TemporaryResource(
+					url: url
+				)
+			)
+		}
+	}
+	
 }
