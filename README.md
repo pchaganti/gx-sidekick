@@ -59,11 +59,13 @@ Sidekick offers native LaTeX rendering for mathematical equations.
 
 #### Data Visualization
 
-Visualizations are automatically provided for tables when appropriate, with a variety of charts availible, including bar charts, line charts and pie charts.
+Visualizations are automatically generated for tables when appropriate, with a variety of charts available, including bar charts, line charts and pie charts.
 
 ![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/dataVisualization1.png)
 
 ![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/dataVisualization2.png)
+
+Charts can be dragged and dropped into third party apps.
 
 #### Code
 
