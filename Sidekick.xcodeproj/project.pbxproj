@@ -243,6 +243,9 @@
 		202801F52CC93CD5005C1F7D /* PromptInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptInputField.swift; sourceTree = "<group>"; };
 		202801F92CC949F2005C1F7D /* TemporaryResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryResource.swift; sourceTree = "<group>"; };
 		202801FB2CC9C5C2005C1F7D /* TemporaryResourceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryResourceView.swift; sourceTree = "<group>"; };
+		202B4DB52CF5FDE900D0CC1B /* demoHistoryScreenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = demoHistoryScreenshot.png; sourceTree = "<group>"; };
+		202B4DB62CF5FDE900D0CC1B /* demoHistorySource.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = demoHistorySource.png; sourceTree = "<group>"; };
+		202B4DB72CF5FDE900D0CC1B /* demoScreenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = demoScreenshot.png; sourceTree = "<group>"; };
 		202E3EDC2CBB8F7B00AF86C8 /* ReferencedURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferencedURL.swift; sourceTree = "<group>"; };
 		202ED9492CD7791600D96030 /* HuggingFaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HuggingFaceModel.swift; sourceTree = "<group>"; };
 		202ED94C2CD7815D00D96030 /* ModelSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelSet.swift; sourceTree = "<group>"; };
@@ -429,6 +432,7 @@
 			isa = PBXGroup;
 			children = (
 				20D65DD22CC0B8A20052D826 /* README.md */,
+				202B4DB42CF5FDCA00D0CC1B /* README Images */,
 				20B97CB22CAFE86C009A0A5D /* Sidekick */,
 				20B97CB82CAFE870009A0A5D /* SidekickTests */,
 				20B97CBC2CAFE872009A0A5D /* SidekickUITests */,
@@ -566,6 +570,16 @@
 				20B97CE82CB007DF009A0A5D /* Resource.swift */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		202B4DB42CF5FDCA00D0CC1B /* README Images */ = {
+			isa = PBXGroup;
+			children = (
+				202B4DB52CF5FDE900D0CC1B /* demoHistoryScreenshot.png */,
+				202B4DB62CF5FDE900D0CC1B /* demoHistorySource.png */,
+				202B4DB72CF5FDE900D0CC1B /* demoScreenshot.png */,
+			);
+			path = "README Images";
 			sourceTree = "<group>";
 		};
 		202ED94B2CD780BE00D96030 /* Default Models */ = {

@@ -18,6 +18,8 @@ struct ConversationControlsView: View {
 	
 	@State private var didFinishTyping: Bool = false
 	
+	@Namespace private var textFieldMoveAnimation
+	
 	var selectedConversation: Conversation? {
 		guard let selectedConversationId = conversationState.selectedConversationId else {
 			return nil
@@ -63,6 +65,13 @@ struct ConversationControlsView: View {
 	
 	var controls: some View {
 		VStack {
+			if promptController.hasResources && !self.promptController.prompt.isEmpty {
+				resources
+					.matchedGeometryEffect(
+						id: "resources",
+						in: textFieldMoveAnimation
+					)
+			}
 			if messages.isEmpty {
 				Group {
 					if promptController.prompt.isEmpty {
@@ -90,10 +99,11 @@ struct ConversationControlsView: View {
 					.combined(with: .opacity)
 				)
 			}
-			if promptController.hasResources {
-				TemporaryResourcesView()
-					.transition(
-						.opacity
+			if promptController.hasResources && self.promptController.prompt.isEmpty {
+				resources
+					.matchedGeometryEffect(
+						id: "resources",
+						in: textFieldMoveAnimation
 					)
 			}
 			if !messages.isEmpty {
@@ -105,6 +115,13 @@ struct ConversationControlsView: View {
 			of: ["public.file-url"],
 			delegate: promptController
 		)
+	}
+	
+	var resources: some View {
+		TemporaryResourcesView()
+			.transition(
+				.opacity
+			)
 	}
 	
 	var typedText: some View {
