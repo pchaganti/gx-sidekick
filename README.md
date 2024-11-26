@@ -9,6 +9,16 @@ Chat with an local LLM that can respond with information from your files, folder
 - Associate resources (files, folders and websites) to a profile to allow RAG (Retrieval Augmentented Generation)
 - Optionally use [Tavily](https://tavily.com/) to allow up to date responses with information from web search
 
+## Table of Contents  
+[Example Use](#exampleUse)  
+[Features](#features)
+[Installation](#installation)
+[Goals](#goals)
+[Contributing](#contributing)
+[Contact](#contact)
+[Credits](#credits)  
+
+<a name="exampleUse"/>
 ## Example Use
 
 Let’s say you're collecting evidence for a History paper about interactions between Aztecs and Spanish troops, and you’re looking for text about whether the Aztecs used captured Spanish weapons.
@@ -21,7 +31,8 @@ Here, you can ask Sidekick, “Did the Aztecs use captured Spanish weapons?”, 
 
 To verify Sidekick’s answer, just click on the references displayed below Sidekick’s answer, and the academic paper referenced by Sidekick immediately opens in your viewer.
 
-## Capabilities
+<a name="features"/>
+## Features
 
 ### Resource Use
 
@@ -81,6 +92,7 @@ Optionally, offload generation to your desktop to speed up generation while exte
 
 ![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/serverUse.png)
 
+<a name="installation"/>
 ## Installation
 
 **Requirements**
@@ -93,6 +105,7 @@ Optionally, offload generation to your desktop to speed up generation while exte
 **Build it yourself**
 - Download, open in Xcode, and build it.
 
+<a name="goals"/>
 ## Goals
 
 The main goal of Sidekick is to make open, local, private models accessible to more people, and allow a local model to gain context of select files, folders and websites.
@@ -106,14 +119,17 @@ Sidekick is a native LLM application for macOS that runs completely locally. Dow
 - Open source. What's the point of running local AI if you can't audit that it's actually running locally?
 - Context aware. Aware of your files, folders and content on the web. 
 
+<a name="contributing"/>
 ## Contributing
 
 Contributions are very welcome. Let's make Sidekick simple and powerful.
 
+<a name="contact"/>
 ## Contact
 
 Contact this repository's owner at johnbean393@gmail.com, or file an issue.
 
+<a name="credits"/>
 ## Credits
 
 This project would not be possible without the hard work of:
