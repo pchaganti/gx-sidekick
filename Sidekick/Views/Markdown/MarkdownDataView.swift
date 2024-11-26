@@ -78,12 +78,16 @@ struct MarkdownDataView: View {
 					MarkdownTableView(configuration: configuration)
 				case .pieChart:
 					MarkdownPieChartView()
+						.frame(minWidth: 350, minHeight: 350)
 				case .barChart:
 					MarkdownBarChartView()
+						.frame(minWidth: 350, minHeight: 350)
 				case .scatterPlot:
 					MarkdownScatterPlotView()
+						.frame(minWidth: 350, minHeight: 350)
 				case .lineChart:
 					MarkdownLineChartView()
+						.frame(minWidth: 350, minHeight: 350)
 			}
 		}
 		.transition(

@@ -145,18 +145,18 @@ public actor LlamaServer {
 			"--ctx-size", "\(contextLength)",
 			"--port", port,
 			"--flash-attn", 
-			"--n-gpu-layers", gpuLayersToUse
+			"--gpu-layers", gpuLayersToUse
 		]
 		
 		// If speculative decoding is used
 		if let speculationModelUrl = InferenceSettings.speculativeDecodingModelUrl {
 			if InferenceSettings.useSpeculativeDecoding {
 				// Formulate arguments
-				let draft: Int =  15
-				let draftMin: Int =  3
+				let draft: Int =  16
+				let draftMin: Int = 5
 				let speculativeDecodingArguments: [String] = [
-					"-md", speculationModelUrl.posixPath,
-					"-ngld", "\(gpuLayersToUse)",
+					"--model-draft", speculationModelUrl.posixPath,
+					"--gpu-layers-draft", "\(gpuLayersToUse)",
 					"--draft", "\(draft)",
 					"--draft-min", "\(draftMin)"
 				]
