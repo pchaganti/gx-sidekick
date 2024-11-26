@@ -27,6 +27,8 @@ To verify Sidekick’s answer, just click on the references displayed below Side
 
 Sidekick accesses files, folders, and websites from your profiles, which can be individually configured to contain resources related to specific areas of interest. Activating a profile allows Sidekick to access the relevant information.
 
+Because Sidekick uses RAG (Retrival Augmented Generation), you can theoretically put unlimited resources into each profile, and Sidekick will still find information relavant to your request to aid its response. This is in sharp contrast to most services, including OpenAI's [ChatGPT](https://chatgpt.com), which can only ingest ~45 pages of text.
+
 For example, a student might create the profiles `English Literature`, `Mathematics`, `Geography`, `Computer Science` and `Physics`. In the image below, he has activated the profile `Computer Science`, allowing Sidekick to reply with information from that profile.
 
 ![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/demoProfileUse.png)
