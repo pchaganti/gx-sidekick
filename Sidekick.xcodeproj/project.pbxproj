@@ -333,7 +333,6 @@
 		2099BDA82CB81A1300E02732 /* ProfileListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileListView.swift; sourceTree = "<group>"; };
 		2099BDAC2CB8222A00E02732 /* ProfileEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditorView.swift; sourceTree = "<group>"; };
 		2099BDB12CB828A500E02732 /* PopoverButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverButton.swift; sourceTree = "<group>"; };
-		20A608FC2CF6B1B7002C1551 /* demoHistoryScreenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = demoHistoryScreenshot.png; sourceTree = "<group>"; };
 		20A608FD2CF6B1B7002C1551 /* demoScreenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = demoScreenshot.png; sourceTree = "<group>"; };
 		20A8B65A2CB2709100B756FD /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		20A8B65C2CB2829500B756FD /* ProfileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManager.swift; sourceTree = "<group>"; };
@@ -589,7 +588,6 @@
 				202B4DBF2CF606A600D0CC1B /* codeExport.png */,
 				202B4DBD2CF6064000D0CC1B /* dataVisualization1.png */,
 				202B4DBE2CF6064000D0CC1B /* dataVisualization2.png */,
-				20A608FC2CF6B1B7002C1551 /* demoHistoryScreenshot.png */,
 				203BB6E12CF6B2220057AF3A /* demoHistorySource.png */,
 				202B4DB92CF602EC00D0CC1B /* demoProfileUse.png */,
 				20A608FD2CF6B1B7002C1551 /* demoScreenshot.png */,
