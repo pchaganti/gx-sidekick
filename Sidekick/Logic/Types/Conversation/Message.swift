@@ -234,6 +234,20 @@ DO NOT reference sources outside of those provided below. If you did not referen
 		) {
 			return .references
 		}
+		do {
+			let urls: [URL] = try (JSONSerialization.jsonObject(
+				with: data
+			) as! [String]).map({ string in
+				return URL(string: string)
+			}).compactMap({ $0 })
+			if urls.allSatisfy({ url in
+				return url.fileExists || url.isWebURL
+			}) {
+				return .references
+			}
+		} catch {
+			print(error)
+		}
 		// Return unknown state
 		return .unknown
 	}
@@ -267,11 +281,24 @@ DO NOT reference sources outside of those provided below. If you did not referen
 		guard let data: Data = try? jsonString.data() else {
 			return []
 		}
-		guard var urls: [ReferencedURL] = try? JSONDecoder().decode(
+		var urls: [ReferencedURL] = []
+		if let references: [ReferencedURL] = try? JSONDecoder().decode(
 			[ReferencedURL].self,
 			from: data
-		) else {
-			return []
+		) {
+			urls = references
+		} else {
+			if let references: [ReferencedURL] = try? (JSONSerialization.jsonObject(
+				with: data
+			) as! [String]).map({ string in
+				return URL(string: string)
+			}).compactMap({
+				$0
+			}).map({ url in
+				return ReferencedURL(url: url)
+			}) {
+				urls = references
+			}
 		}
 		let filterUrls: [String] = [
 			"tavily.com",
