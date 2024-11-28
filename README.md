@@ -4,11 +4,6 @@ Chat with an local LLM that can respond with information from your files, folder
 
 ![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/demoScreenshot.png)
 
-- Try any llama.cpp compatible GGUF model
-- Customize model behaviour by setting up profiles with a custom system prompt
-- Associate resources (files, folders and websites) to a profile to allow RAG (Retrieval Augmentented Generation)
-- Optionally use [Tavily](https://tavily.com/) to allow up to date responses with information from web search
-
 ## Example Use
 
 Let’s say you're collecting evidence for a History paper about interactions between Aztecs and Spanish troops, and you’re looking for text about whether the Aztecs used captured Spanish weapons.
@@ -124,5 +119,6 @@ This project would not be possible without the hard work of:
 
 - psugihara and contributors who built [FreeChat](https://github.com/psugihara/FreeChat), which this project took heavy inspiration from
 - Georgi Gerganov for [llama.cpp](https://github.com/ggerganov/llama.cpp)
+- Alibaba for training Qwen 2.5
 - Meta for training Llama 3.1
 - Google for training Gemma 2

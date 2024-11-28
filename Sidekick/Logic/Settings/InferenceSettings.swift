@@ -42,8 +42,10 @@ The user's request might be followed by reference information, organized by sour
 	private static var defaultContextLength: Int {
 		if self.unifiedMemorySize < 16 {
 			return 8_192
-		} else {
+		} else if (16...32).contains(self.unifiedMemorySize) {
 			return 16_384
+		} else {
+			return 24_576
 		}
 	}
 	

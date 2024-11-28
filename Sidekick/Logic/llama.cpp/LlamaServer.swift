@@ -249,7 +249,7 @@ public actor LlamaServer {
 		
 		// Use EventSource to receive server sent events
 		self.eventSource = EventSource(
-			timeoutInterval: 60
+			timeoutInterval: 6000
 		)
 		self.dataTask = await eventSource!.dataTask(
 			for: request

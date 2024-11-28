@@ -78,7 +78,7 @@ public struct Message: Identifiable, Codable, Hashable {
 		// Search in profile resources
 		// If no resources, return blank array
 		let hasResources: Bool = similarityIndex != nil && !(similarityIndex?.indexItems.isEmpty ?? true)
-		let searchResultsMultiplier: Int = RetrievalSettings.searchResultsMultiplier * (RetrievalSettings.useSearchResultContext ? 1 : 2)
+		let searchResultsMultiplier: Int = RetrievalSettings.searchResultsMultiplier * 2
 		let resourcesSearchResults: [SearchResult] = await similarityIndex?.search(
 			query: text,
 			maxResults: searchResultsMultiplier

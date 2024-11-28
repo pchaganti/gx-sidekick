@@ -374,12 +374,12 @@
         }
       }
     },
-    "Controls whether context of a search result is given to the chatbot. Turning this on will reduce the number of search results, but will increase the length of each search result." : {
+    "Controls whether context of a search result is given to the chatbot. Turning this on will decrease generation speed, but will increase the length of each search result." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "控制是否向聊天机器人提供搜索结果的上下文。启用此功能将使搜索结果数量减少，但每个搜索结果的长度将增加。"
+            "value" : "控制是否向聊天机器人提供搜索结果的上下文。启用此功能将减慢文字生成速度，但每个搜索结果的长度将增加。"
           }
         }
       }

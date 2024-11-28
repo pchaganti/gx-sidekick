@@ -155,7 +155,7 @@ struct RetrievalSettingsView: View {
 				Text("Search Result Context")
 					.font(.title3)
 					.bold()
-				Text("Controls whether context of a search result is given to the chatbot. Turning this on will reduce the number of search results, but will increase the length of each search result.")
+				Text("Controls whether context of a search result is given to the chatbot. Turning this on will decrease generation speed, but will increase the length of each search result.")
 					.font(.caption)
 			}
 			.frame(minWidth: 250)
