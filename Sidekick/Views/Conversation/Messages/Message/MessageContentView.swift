@@ -13,6 +13,8 @@ struct MessageContentView: View {
 	
 	@Environment(\.colorScheme) private var colorScheme
 	
+	@State private var renderLatex: Bool = true
+	
 	var message: Message
 	var viewReferenceTip: ViewReferenceTip = .init()
 	
@@ -30,7 +32,7 @@ struct MessageContentView: View {
 		return message.displayedText.splitByLatex()
 	}
 	
-    var body: some View {
+	var body: some View {
 		VStack(alignment: .leading) {
 			content
 				.textSelection(.enabled)
@@ -38,9 +40,29 @@ struct MessageContentView: View {
 				messageReferences
 			}
 		}
-    }
+		.if(self.message.hasLatex) { view in
+			view
+				.overlay(alignment: .bottomTrailing) {
+					ToggleLaTeXButton(renderLatex: $renderLatex)
+				}
+		}
+	}
 	
 	var content: some View {
+		Group {
+			if self.renderLatex {
+				contentWithLaTeX
+			} else {
+				Markdown(message.displayedText)
+					.markdownTheme(.gitHub)
+					.markdownCodeSyntaxHighlighter(
+						.splash(theme: self.theme)
+					)
+			}
+		}
+	}
+	
+	var contentWithLaTeX: some View {
 		ForEach(self.message.chunks) { chunk in
 			Group {
 				if chunk.isLatex {

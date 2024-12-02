@@ -43,6 +43,7 @@
 		2031B9952CEAE66400627D53 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 2031B9942CEAE66400627D53 /* KeyboardShortcuts */; };
 		2031B9982CEAE78F00627D53 /* ShortcutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2031B9972CEAE78F00627D53 /* ShortcutController.swift */; };
 		2031B99A2CEAE7A900627D53 /* Extension+KeyboardShortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2031B9992CEAE7A900627D53 /* Extension+KeyboardShortcut.swift */; };
+		20353FF12CF84546002BC78E /* ToggleLaTeXButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20353FF02CF84546002BC78E /* ToggleLaTeXButton.swift */; };
 		2038CCF32CB6CBC6005AA315 /* PendingMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2038CCF22CB6CBC6005AA315 /* PendingMessageView.swift */; };
 		204592172CD32DEF00DEAA96 /* TypedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204592162CD32DEF00DEAA96 /* TypedTextView.swift */; };
 		204AE3B62CEAF4C20086B42D /* InlineAssistantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204AE3B52CEAF4C20086B42D /* InlineAssistantView.swift */; };
@@ -270,6 +271,7 @@
 		2031B9912CEAE3CC00627D53 /* Extension+NSWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+NSWindow.swift"; sourceTree = "<group>"; };
 		2031B9972CEAE78F00627D53 /* ShortcutController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutController.swift; sourceTree = "<group>"; };
 		2031B9992CEAE7A900627D53 /* Extension+KeyboardShortcut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+KeyboardShortcut.swift"; sourceTree = "<group>"; };
+		20353FF02CF84546002BC78E /* ToggleLaTeXButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleLaTeXButton.swift; sourceTree = "<group>"; };
 		2038CCF22CB6CBC6005AA315 /* PendingMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingMessageView.swift; sourceTree = "<group>"; };
 		203BB6E12CF6B2220057AF3A /* demoHistorySource.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = demoHistorySource.png; sourceTree = "<group>"; };
 		203BB6E22CF6B43A0057AF3A /* demoHistoryScreenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = demoHistoryScreenshot.png; sourceTree = "<group>"; };
@@ -933,6 +935,7 @@
 				20B22E242CD9BC8B0030A8D3 /* ExportButton.swift */,
 				2099BDB12CB828A500E02732 /* PopoverButton.swift */,
 				20FE94D92CB96DE8006E9F06 /* ExitButton.swift */,
+				20353FF02CF84546002BC78E /* ToggleLaTeXButton.swift */,
 			);
 			path = Buttons;
 			sourceTree = "<group>";
@@ -1229,6 +1232,7 @@
 				20B97CB52CAFE86C009A0A5D /* ContentView.swift in Sources */,
 				202ED9542CD7826E00D96030 /* Qwen2.swift in Sources */,
 				208844332CDDE394003BCB6F /* ModelRowView.swift in Sources */,
+				20353FF12CF84546002BC78E /* ToggleLaTeXButton.swift in Sources */,
 				202ED9582CD7841100D96030 /* DefaultModels.swift in Sources */,
 				20B97CCE2CAFEC37009A0A5D /* Settings.swift in Sources */,
 				20AA5A522CC87032003E5519 /* Tips.swift in Sources */,

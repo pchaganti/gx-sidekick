@@ -623,7 +623,7 @@ public class GPUInfoDevice {
 	/// Log hardware information to the console.
 	private func logHardwareSpecifications() {
 		// Print out some information about the device using its properties
-		//      print("GPU device name: \(device.mtlDevice.name)")
+//		      print("GPU device name: \(device.mtlDevice.name)")
 		
 		// EDIT: Above is the only source of a compiler error that required
 		// modification. `mtlDevice` is internal and can't be accessed this way.

@@ -252,6 +252,11 @@ DO NOT reference sources outside of those provided below. If you did not referen
 		return .unknown
 	}
 	
+	/// A `Bool` representing if the message contains LaTeX
+	public var hasLatex: Bool {
+		return self.chunks.contains(where: \.isLatex)
+	}
+	
 	/// Computed property for chunks in the message
 	public var chunks: [Chunk] {
 		return self
@@ -301,7 +306,6 @@ DO NOT reference sources outside of those provided below. If you did not referen
 			}
 		}
 		let filterUrls: [String] = [
-			"tavily.com",
 			"/path/to/referenced/file.pdf",
 			"referencedurl.com"
 		]
