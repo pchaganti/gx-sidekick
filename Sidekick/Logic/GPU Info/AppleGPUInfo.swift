@@ -371,8 +371,9 @@ public class GPUInfoDevice {
 							case .unknown: _clockFrequency = 1.296e9
 						}
 					case 2: _clockFrequency = 1.398e9
-					case 3: _clockFrequency = 1.380e9
-					default: _clockFrequency = 1.380e9
+					case 3: _clockFrequency = 1.340e9
+					case 4: _clockFrequency = 1.470e9
+					default: _clockFrequency = 1.470e9
 				}
 			}
 		}
@@ -450,6 +451,22 @@ public class GPUInfoDevice {
 							case .phone: throw GPUInfoError(description: """
 			Unrecognized GPU: \(name)
 			""")
+							case .base: _bandwidth = dataRate(clock: 3.200e9, bits: 128)
+							case .pro: _bandwidth = dataRate(clock: 3.200e9, bits: 192)
+							case .max:
+								if _coreCount < 40 {
+									_bandwidth = dataRate(clock: 3.200e9, bits: 384)
+								} else {
+									_bandwidth = dataRate(clock: 3.200e9, bits: 512)
+								}
+							case .ultra: _bandwidth = dataRate(clock: 3.200e9, bits: 1024)
+							case .unknown: _bandwidth = dataRate(clock: 3.200e9, bits: 1024)
+						}
+					case 4:
+						switch tier {
+							case .phone: throw GPUInfoError(description: """
+   Unrecognized GPU: \(name)
+   """)
 							case .base: _bandwidth = dataRate(clock: 3.200e9, bits: 128)
 							case .pro: _bandwidth = dataRate(clock: 3.200e9, bits: 192)
 							case .max:
