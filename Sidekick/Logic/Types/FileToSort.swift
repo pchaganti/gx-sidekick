@@ -58,8 +58,11 @@ public struct FileToSort: Identifiable {
 public extension FileToSort {
 	
 	/// Function to generate a summary of the file's content
-	mutating func generateSummary() async {
+	private mutating func generateSummary() async {
 		// Check content
+		if self.content == nil {
+			await self.scrapeContent()
+		}
 		guard let content else {
 			return
 		}
@@ -76,7 +79,7 @@ In the first bullet point, explain what the document is, perhaps a book report, 
 		// Generate summary
 		do {
 			// Generate summary
-			let summary: String = try await self.generate(
+			let summary: String = try await Self.generate(
 				prompt: generationPrompt
 			)
 			// Save filename
@@ -85,7 +88,7 @@ In the first bullet point, explain what the document is, perhaps a book report, 
 	}
 	
 	/// Function to start text generation
-	private func generate(
+	static func generate(
 		prompt: String
 	) async throws -> String {
 		// Formulate messages
@@ -103,8 +106,33 @@ In the first bullet point, explain what the document is, perhaps a book report, 
 		]
 		// Generate
 		return try await Model.shared.listenThinkRespond(
-			messages: messages
+			messages: messages,
+			mode: .default
 		).text
+	}
+	
+	/// Function to get file summary
+	mutating func getFileSummary() async -> FileSummary {
+		// Generate summary if needed
+		if self.contentSummary == nil {
+			await self.generateSummary()
+		}
+		// Convert to `FileSummary`
+		let summary: FileSummary = FileSummary(file: self)
+		return summary
+	}
+	
+	/// ``FileSummary`` struct to easily pass file summary to bot as text
+	struct FileSummary: Codable, Sendable {
+		
+		init(file: FileToSort) {
+			self.filename = file.url.lastPathComponent
+			self.contentSummary = file.contentSummary
+		}
+		
+		public var filename: String
+		public var contentSummary: String?
+		
 	}
 	
 }

@@ -145,7 +145,7 @@ public actor LlamaServer {
 			"--ctx-size", "\(contextLength)",
 			"--port", port,
 			"--flash-attn", 
-			"--gpu-layers", gpuLayersToUse
+			"--gpu-layers", gpuLayersToUse,
 		]
 		
 		// If speculative decoding is used
@@ -214,11 +214,11 @@ public actor LlamaServer {
 		}
 	}
 	
-	/// Function to chat with the LLM
-	/// Function to chat with the LLM
-	func chat(
+	/// Function to get completion from the LLM
+	func getCompletion(
+		mode: Model.Mode,
 		messages: [Message.MessageSubset],
-		similarityIndex: SimilarityIndex?,
+		similarityIndex: SimilarityIndex? = nil,
 		progressHandler: (@Sendable (String) -> Void)? = nil
 	) async throws -> CompleteResponse {
 		
@@ -230,11 +230,21 @@ public actor LlamaServer {
 		}
 		
 		// Hit localhost for completion
-		async let params = ChatParameters(
-			messages: messages,
-			systemPrompt: systemPrompt,
-			similarityIndex: similarityIndex
-		)
+		async let params = {
+			switch mode {
+				case .chat:
+					return await ChatParameters(
+						messages: messages,
+						systemPrompt: self.systemPrompt,
+						similarityIndex: similarityIndex
+					)
+				case .default:
+					return await ChatParameters(
+						messages: messages,
+						systemPrompt: self.systemPrompt
+					)
+			}
+		}()
 		
 		// Formulate request
 		var request = URLRequest(
@@ -400,7 +410,7 @@ public actor LlamaServer {
 		
 	}
 	
-	struct CompleteResponse {
+	public struct CompleteResponse {
 		
 		var text: String
 		var responseStartSeconds: Double

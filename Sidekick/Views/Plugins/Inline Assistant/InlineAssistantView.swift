@@ -119,6 +119,7 @@ struct InlineAssistantView: View {
 					systemPromptMessage,
 					commandMessage
 				],
+				mode: .default,
 				handleResponseUpdate: { pendingMessage, partialResponse in
 					self.handleResponseUpdate(
 						pendingMessage: pendingMessage,

@@ -95,7 +95,7 @@ Tokens per second: \(tokensPerSecondStr)
 	
 	/// Function to copy message text to clipboard
 	private func copy() {
-		self.message.displayedText.copy()
+		self.message.text.copy()
 	}
 	
 }

@@ -21,6 +21,8 @@ public class Model: ObservableObject {
 		self.systemPrompt = """
 \(systemPrompt)
 
+\(InferenceSettings.useJsonSchemaPrompt)
+
 \(InferenceSettings.useSourcesPrompt)
 """
 		// Get model and context length
@@ -52,6 +54,8 @@ public class Model: ObservableObject {
 	public func refreshModel(_ systemPrompt: String) async {
 		self.systemPrompt = """
 \(systemPrompt)
+
+\(InferenceSettings.useJsonSchemaPrompt)
 
 \(InferenceSettings.useSourcesPrompt)
 """
@@ -93,6 +97,7 @@ public class Model: ObservableObject {
 	// we respond before updating to avoid a long delay after user input
 	func listenThinkRespond(
 		messages: [Message],
+		mode: Model.Mode,
 		similarityIndex: SimilarityIndex? = nil,
 		useWebSearch: Bool = false,
 		temporaryResources: [TemporaryResource] = [],
@@ -131,34 +136,61 @@ public class Model: ObservableObject {
 		// Declare variables for incremental update
 		var updateResponse: String = ""
 		let increment: Int = 3
-		let response = try await llama.chat(
-			messages: messagesWithSources,
-			similarityIndex: similarityIndex
-		) { partialResponse in
-			DispatchQueue.main.async {
-				// Update response
-				updateResponse += partialResponse
-				// Display if large update
-				let updateCount: Int = updateResponse.count
-				let displayedCount = self.pendingMessage.count
-				if updateCount >= increment || displayedCount < increment {
-					self.handleCompletionProgress(
-						partialResponse: updateResponse,
-						handleResponseUpdate: handleResponseUpdate
-					)
-					updateResponse = ""
+		// Send different response based on mode
+		var response: LlamaServer.CompleteResponse? = nil
+		switch mode {
+			case .chat:
+				response = try await llama.getCompletion(
+					mode: mode,
+					messages: messagesWithSources,
+					similarityIndex: similarityIndex
+				) { partialResponse in
+					DispatchQueue.main.async {
+						// Update response
+						updateResponse += partialResponse
+						// Display if large update
+						let updateCount: Int = updateResponse.count
+						let displayedCount = self.pendingMessage.count
+						if updateCount >= increment || displayedCount < increment {
+							self.handleCompletionProgress(
+								partialResponse: updateResponse,
+								handleResponseUpdate: handleResponseUpdate
+							)
+							updateResponse = ""
+						}
+					}
 				}
-			}
+			case .default:
+				response = try await llama.getCompletion(
+					mode: mode,
+					messages: messagesWithSources
+				) { partialResponse in
+					DispatchQueue.main.async {
+						// Update response
+						updateResponse += partialResponse
+						// Display if large update
+						let updateCount: Int = updateResponse.count
+						let displayedCount = self.pendingMessage.count
+						if updateCount >= increment || displayedCount < increment {
+							self.handleCompletionProgress(
+								partialResponse: updateResponse,
+								handleResponseUpdate: handleResponseUpdate
+							)
+							updateResponse = ""
+						}
+					}
+				}
 		}
-		// When prompt finishes...
+		// Handle response finish
 		handleResponseFinish(
-			response.text,
+			response!.text,
 			self.pendingMessage
 		)
-		self.pendingMessage = response.text
+		// Update display
+		self.pendingMessage = response!.text
 		self.status = .ready
 		self.sentConversationId = nil
-		return response
+		return response!
 	}
 	
 	/// Function to handle response update
@@ -169,7 +201,9 @@ public class Model: ObservableObject {
 			String // Delta
 		) -> Void
 	) {
-		let fullMessage = self.pendingMessage + partialResponse
+		let fullMessage: String = (self.pendingMessage + partialResponse)
+			.replaceUnicodeEscapes()
+			.dropPrecedingSubstring("\"text\": \"")
 		handleResponseUpdate(
 			fullMessage,
 			partialResponse
@@ -179,16 +213,27 @@ public class Model: ObservableObject {
 	
 	/// Function to interrupt `llama-server` generation
 	func interrupt() async {
-		if status != .processing, status != .coldProcessing { return }
-		await llama.interrupt()
+		if self.status != .processing, self.status != .coldProcessing {
+			return
+		}
+		await self.llama.interrupt()
 	}
 	
 	public enum Status: String {
+		
 		case cold
 		case coldProcessing
 		case querying
 		case ready  // Ready
 		case processing
+		
+	}
+	
+	public enum Mode: String {
+		
+		case chat
+		case `default`
+		
 	}
 	
 }

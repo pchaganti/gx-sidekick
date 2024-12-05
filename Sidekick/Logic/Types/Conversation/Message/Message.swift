@@ -49,17 +49,7 @@ public struct Message: Identifiable, Codable, Hashable {
 	public var displayedText: String {
 		// Return original text if sender is not assistant
 		if self.sender != .assistant { return self.text }
-		// Remove urls if needed
-		guard let jsonRange = text.range(of: "[", options: .backwards) else {
-			return text // If no JSON found, return the whole text
-		}
-		// If JSON is not references, do not remove
-		if ![.references, .empty].contains(self.trailingJSONType) {
-			return text
-		}
-		// Extract the text up to the start of the JSON string
-		let extractedText = text[..<jsonRange.lowerBound].trimmingCharacters(in: .whitespacesAndNewlines)
-		return extractedText
+		return text
 	}
 	
 	/// Function returning the message text that is submitted to the LLM
@@ -166,15 +156,15 @@ public struct Message: Identifiable, Codable, Hashable {
 		let messageText: String = """
 \(self.text)
 
-
 Below is information that may or may not be relevant to my request in JSON format. 
 
 When multiple sources provide correct, but conflicting information (e.g. different definitions), prioritize the use of sources from local files, not websites. 
 
-If your response uses information from one or more sources, your response MUST be followed with a single exaustive LIST OF FILEPATHS AND URLS of ALL referenced sources, in the format [{"url": "/path/to/referenced/file.pdf"}, {"url": "/path/to/another/referenced/file.docx"}, {"url": "https://referencedwebsite.com"}, "https://anotherreferencedwebsite.com"}], with no duplicates.
+If your response uses information from one or more sources, your response MUST contain a single exaustive ARRAY OF FILEPATHS AND URLS of ALL referenced sources, with no duplicates. This corresponds to the "references" property of the response JSON schema. 
+
+If no provided sources were used, an empty array should be returned for the "references" property of the response JSON schema.
 
 DO NOT reference sources outside of those provided below. If you did not reference provided sources, do not mention sources in your response. NO headers, labels, numbering or comments are needed in this list of referenced sources.
-
 
 \(resultsText)
 """
@@ -190,70 +180,6 @@ DO NOT reference sources outside of those provided below. If you did not referen
 	/// Stored property for the sender of the message (either `user` or `system`)
 	private var sender: Sender
 	
-	/// Computed property for trailing JSON string
-	private var trailingJSONString: String? {
-		// Get string with JSON
-		guard let jsonStartRange = text.range(of: "[", options: .backwards) else {
-			return nil
-		}
-		guard let jsonEndRange = text.range(of: "]", options: .backwards) else {
-			return nil
-		}
-		let rawJsonString: String = {
-			if jsonStartRange.lowerBound >= jsonEndRange.upperBound {
-				return String(text[jsonStartRange.lowerBound...])
-			}
-			return String(
-				text[jsonStartRange.lowerBound..<jsonEndRange.upperBound]
-			)
-		}()
-		guard let jsonString: NSString = rawJsonString.trimmingCharacters(
-			in: .whitespacesAndNewlines
-		) as NSString? else {
-			return nil
-		}
-		return String(jsonString)
-	}
-	
-	private var trailingJSONType: JSONType {
-		let jsonString: String? = self.trailingJSONString
-		// Check if is blank array
-		if jsonString == "[]" {
-			return .empty
-		}
-		// Decode string to data
-		guard let data: Data = try? jsonString.data(
-			using: .init(encoding: .utf8, allowLossyConversion: false)
-		) else {
-			return .unknown
-		}
-		// Check if is references
-		if let _: [ReferencedURL] = try? JSONDecoder().decode(
-			[ReferencedURL].self,
-			from: data
-		) {
-			return .references
-		}
-		do {
-			if let urlStrings: [String] = try (JSONSerialization.jsonObject(
-				with: data
-			) as? [String]) {
-				let urls: [URL] = urlStrings.map({ string in
-					return URL(string: string)
-				}).compactMap({ $0 })
-				if urls.allSatisfy({ url in
-					return url.fileExists || url.isWebURL
-				}) {
-					return .references
-				}
-			}
-		} catch {
-			print(error)
-		}
-		// Return unknown state
-		return .unknown
-	}
-	
 	/// A `Bool` representing if the message contains LaTeX
 	public var hasLatex: Bool {
 		return self.chunks.contains(where: \.isLatex)
@@ -262,7 +188,7 @@ DO NOT reference sources outside of those provided below. If you did not referen
 	/// Computed property for chunks in the message
 	public var chunks: [Chunk] {
 		return self
-			.displayedText
+			.text
 			.replacingOccurrences(
 				of: "\\(",
 				with: ""
@@ -278,48 +204,8 @@ DO NOT reference sources outside of those provided below. If you did not referen
 	}
 		
 	
-	/// Computed property for URLs of sources referenced in a response
-	public var referencedURLs: [ReferencedURL] {
-		// Get string with JSON
-		guard let jsonString = self.trailingJSONString else {
-			return []
-		}
-		// Decode string
-		guard let data: Data = try? jsonString.data() else {
-			return []
-		}
-		var urls: [ReferencedURL] = []
-		if let references: [ReferencedURL] = try? JSONDecoder().decode(
-			[ReferencedURL].self,
-			from: data
-		) {
-			urls = references
-		} else {
-			if let referencesStrings: [String] = try? (JSONSerialization.jsonObject(
-				with: data
-			) as? [String]) {
-				let references = referencesStrings.map({ string in
-					return URL(string: string)
-				}).compactMap({
-					$0
-				}).map({ url in
-					return ReferencedURL(url: url)
-				})
-				urls = references
-			}
-		}
-		let filterUrls: [String] = [
-			"/path/to/referenced/file.pdf",
-			"referencedurl.com"
-		]
-		urls = urls.filter({ url in
-			return !filterUrls.map({ filterUrl in
-				return url.url.absoluteString.contains(filterUrl)
-			}).contains(true)
-		})
-		// Return sorted, unique urls
-		return Array(Set(urls)).sorted(by: \.displayName)
-	}
+	/// An array for URLs of sources referenced in a response
+	public var referencedURLs: [ReferencedURL] = []
 	
 	/// Function to get the sender
 	public func getSender() -> Sender {
@@ -345,14 +231,34 @@ DO NOT reference sources outside of those provided below. If you did not referen
 	/// Function to update message
 	@MainActor
 	public mutating func update(
-		newText: String,
-		tokensPerSecond: Double?,
-		responseStartSeconds: Double
+		response: LlamaServer.CompleteResponse
 	) {
-		self.text = newText
-		self.tokensPerSecond = tokensPerSecond
-		self.responseStartSeconds = responseStartSeconds
+		// Set variables
+		self.tokensPerSecond = response.predictedPerSecond
+		self.responseStartSeconds = response.responseStartSeconds
 		self.lastUpdated = .now
+		// Decode text for extract text and references
+		let jsonText: String = response.text
+		// Get as data
+		if let data: Data = try? jsonText.data() {
+			// Decode data
+			let decoder: JSONDecoder = JSONDecoder()
+			if let responseText = try? decoder.decode(
+				Message.ResponseText.self,
+				from: data
+			) {
+				self.text = responseText.text
+				let uniqueReferences: [ReferencedURL] = Array(Set(responseText.references))
+				self.referencedURLs = uniqueReferences.sorted(
+					by: \.displayName
+				)
+				return
+			}
+		} else {
+			self.text = jsonText
+			self.referencedURLs = []
+			return
+		}
 	}
 	
 	/// Function to end a message
@@ -365,10 +271,10 @@ DO NOT reference sources outside of those provided below. If you did not referen
 		
 		init(
 			message: Message,
-			similarityIndex: SimilarityIndex?,
-			shouldAddSources: Bool,
-			useWebSearch: Bool,
-			temporaryResources: [TemporaryResource]
+			similarityIndex: SimilarityIndex? = nil,
+			shouldAddSources: Bool = false,
+			useWebSearch: Bool = false,
+			temporaryResources: [TemporaryResource] = []
 		) async {
 			self.role = message.sender
 			if shouldAddSources {
@@ -378,7 +284,7 @@ DO NOT reference sources outside of those provided below. If you did not referen
 					temporaryResources: temporaryResources
 				).text
 			} else {
-				self.content = message.displayedText
+				self.content = message.text
 			}
 		}
 		
@@ -408,6 +314,13 @@ DO NOT reference sources outside of those provided below. If you did not referen
 		public var content: String
 		public var isLatex: Bool
 	
+	}
+	
+	private struct ResponseText: Codable {
+		
+		var text: String
+		var references: [ReferencedURL]
+		
 	}
 	
 	private enum JSONType: String {

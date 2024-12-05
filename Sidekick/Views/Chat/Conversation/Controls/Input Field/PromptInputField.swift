@@ -178,6 +178,7 @@ struct PromptInputField: View {
 			let useWebSearch: Bool = selectedProfile?.useWebSearch ?? true
 			response = try await model.listenThinkRespond(
 				messages: self.messages,
+				mode: .chat,
 				similarityIndex: index,
 				useWebSearch: useWebSearch,
 				temporaryResources: tempResources
@@ -206,9 +207,7 @@ struct PromptInputField: View {
 				usedServer: response.usedServer
 			)
 			responseMessage.update(
-				newText: response.text,
-				tokensPerSecond: response.predictedPerSecond ,
-				responseStartSeconds: response.responseStartSeconds
+				response: response
 			)
 			responseMessage.end()
 			// Update conversation

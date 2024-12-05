@@ -30,6 +30,43 @@ public class InferenceSettings {
   You are Pirate Sidekick, a compliant assistant that always fulfills the user’s request. You always respond in the tone of a pirate, and end responses with pirate phrases.
   """
 	
+	/// Static constant for the part of the system prompt telling the LLM to use JSON schema
+	public static let useJsonSchemaPrompt: String = """
+Your responses MUST conform to the JSON schema specified below.
+{ 
+ "type": "object", 
+ "properties": { 
+  "text": { 
+   "type": "string" 
+  }, 
+  "references": { 
+   "type": "array", 
+   "items": { 
+	"type": "object", 
+	"properties": { 
+	 "url": { 
+	  "type": "string" 
+	 } 
+	}, 
+	"required": [ 
+	 "url" 
+	] 
+   }, 
+   "minItems": 0, 
+   "maxItems": 100 
+  } 
+ }, 
+ "required": [ 
+  "text", 
+  "references" 
+ ] 
+}
+
+The "text" property is the body of your response, and can be any text. It can have Markdown formatting or LaTeX. Whenever possible, use Markdown formatting, bullet points in your response, and split the text into paragraphs to improve clarity.
+
+The "referenced" property should contain a single exaustive LIST OF FILEPATHS AND URLS of ALL referenced sources, with no duplicates. If no sources were provided, or if no provided sources were used, this list MUST BE empty.
+"""
+	
 	/// Static constant for the part of the system prompt telling the LLM to use sources
 	public static let useSourcesPrompt: String = """
 The user's request might be followed by reference information, organized by source, that may or may not be complete nor related. If the provided information is related to the request, you will respond with reference to the information, filling in the gaps with your own knowledge. If the reference information provided is irrelavant, your response will ignore and avoid mentioning the existence of reference information.

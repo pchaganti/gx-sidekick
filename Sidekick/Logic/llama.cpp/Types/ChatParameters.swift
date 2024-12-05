@@ -10,13 +10,32 @@ import SimilaritySearchKit
 
 struct ChatParameters: Codable {
 	
+	/// Init for non-chat
+	init(
+		messages: [Message.MessageSubset],
+		systemPrompt: String
+	) async {
+		let systemPromptMsg: Message = Message(
+			text: systemPrompt,
+			sender: .system
+		)
+		let systemPromptMsgSubset: Message.MessageSubset = await Message.MessageSubset(
+			message: systemPromptMsg
+		)
+		self.messages = [systemPromptMsgSubset] + messages
+	}
+	
+	/// Init for chat
 	init(
 		messages: [Message.MessageSubset],
 		systemPrompt: String,
 		similarityIndex: SimilarityIndex?
 	) async {
+		// Formulate messages
 		let fullSystemPrompt: String = """
 \(systemPrompt)
+
+\(InferenceSettings.useJsonSchemaPrompt)
 
 \(InferenceSettings.useSourcesPrompt)
 """
@@ -33,12 +52,22 @@ struct ChatParameters: Codable {
 		)
 		let messagesWithSystemPrompt: [Message.MessageSubset] = [systemPromptMsgSubset] + messages
 		self.messages = messagesWithSystemPrompt
+		// Set grammar
+		let schemaUrl: URL = Bundle.main.url(
+			forResource: "chatResponse",
+			withExtension: "gbnf"
+		)!
+		let grammar: String = (try? String(
+			contentsOf: schemaUrl
+		)) ?? ""
+		self.grammar = grammar
 	}
 	
 	var messages: [Message.MessageSubset]
 	
-	var stream = true
+	var stream: Bool = true
 	var temperature = InferenceSettings.temperature
+	var grammar: String? = nil
 	
 	/// Function to convert chat parameters to JSON
 	public func toJSON() -> String {

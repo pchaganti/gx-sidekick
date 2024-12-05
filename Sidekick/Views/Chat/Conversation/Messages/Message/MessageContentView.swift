@@ -29,7 +29,7 @@ struct MessageContentView: View {
 	}
 	
 	private var messageChunks: [(string: String, isLatex: Bool)] {
-		return message.displayedText.splitByLatex()
+		return message.text.splitByLatex()
 	}
 	
 	var body: some View {
@@ -53,7 +53,7 @@ struct MessageContentView: View {
 			if self.renderLatex {
 				contentWithLaTeX
 			} else {
-				Markdown(message.displayedText)
+				Markdown(message.text)
 					.markdownTheme(.gitHub)
 					.markdownCodeSyntaxHighlighter(
 						.splash(theme: self.theme)

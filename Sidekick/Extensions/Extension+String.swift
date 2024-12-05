@@ -212,4 +212,61 @@ public extension String {
 		return self
 	}
 	
+	/// Function to replace escaping unicode characters
+	func replaceUnicodeEscapes() -> String {
+		var result: String = self
+		// Replace `\n`, `\t`, etc.
+		let escapeSequences: [String: String] = [
+			"\\n": "\n",
+			"\\t": "\t",
+			"\\r": "\r",
+			"\\\"": "\"",
+			"\\'": "'",
+			"\\\\": "\\"
+		]
+		for (escape, character) in escapeSequences {
+			result = result.replacingOccurrences(of: escape, with: character)
+		}
+		// Replace `\u{...}` sequences
+		let regexPattern = #"\\u\{([0-9A-Fa-f]+)\}"#
+		let regex = try? NSRegularExpression(pattern: regexPattern)
+		
+		let matches = regex?.matches(in: result, range: NSRange(result.startIndex..., in: result)) ?? []
+		
+		for match in matches.reversed() {
+			if let range = Range(match.range(at: 1), in: result) {
+				let unicodeValue = String(result[range])
+				if let unicodeScalar = UnicodeScalar(Int(unicodeValue, radix: 16)!) {
+					let unicodeCharacter = String(unicodeScalar)
+					if let fullRange = Range(match.range, in: result) {
+						result.replaceSubrange(fullRange, with: unicodeCharacter)
+					}
+				}
+			}
+		}
+		return result
+	}
+	
+	/// Function to drop all characters preceding a substring
+	func dropPrecedingSubstring(_ substring: String) -> String {
+		// Find the range of the substring
+		guard let range = self.range(of: substring) else {
+			return self
+		}
+		// Drop everything up to and including the substring
+		let result = self[range.upperBound...]
+		return String(result)
+	}
+	
+	/// Function to drop all characters following a substring
+	func dropFollowingSubstring(_ substring: String) -> String {
+		// Find the range of the substring
+		guard let range = self.range(of: substring) else {
+			return self // Return the original string if the substring is not found
+		}
+		// Remove everything from the start of the substring to the end of the string
+		let result = self[..<range.lowerBound]
+		return String(result)
+	}
+	
 }
