@@ -23,6 +23,7 @@
 		201A1A9A2CDBA802001E9BA9 /* MarkdownBarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201A1A992CDBA802001E9BA9 /* MarkdownBarChartView.swift */; };
 		201A1A9C2CDBB5B1001E9BA9 /* MarkdownScatterPlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201A1A9B2CDBB5B1001E9BA9 /* MarkdownScatterPlotView.swift */; };
 		201A1A9E2CDBBA25001E9BA9 /* MarkdownLineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201A1A9D2CDBBA25001E9BA9 /* MarkdownLineChartView.swift */; };
+		201F20BB2D0439A30037B3E7 /* llama-server in Resources */ = {isa = PBXBuildFile; fileRef = 201F20BA2D0439A30037B3E7 /* llama-server */; };
 		202801F42CC93C80005C1F7D /* DictationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202801F32CC93C80005C1F7D /* DictationButton.swift */; };
 		202801F62CC93CD5005C1F7D /* PromptInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202801F52CC93CD5005C1F7D /* PromptInputField.swift */; };
 		202801FA2CC949F2005C1F7D /* TemporaryResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202801F92CC949F2005C1F7D /* TemporaryResource.swift */; };
@@ -58,7 +59,6 @@
 		204C795C2CB79AB900EED58E /* ProfileManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204C795B2CB79AB900EED58E /* ProfileManagerView.swift */; };
 		204D9CBF2CF4ABCF0052B6F4 /* StatusLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204D9CBE2CF4ABCF0052B6F4 /* StatusLabelView.swift */; };
 		204FC5CA2CC9C8B400CA1DB4 /* TemporaryResourcesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204FC5C92CC9C8B400CA1DB4 /* TemporaryResourcesView.swift */; };
-		20508BE12CF556F4003BC867 /* llama-server in Resources */ = {isa = PBXBuildFile; fileRef = 20508BE02CF556F4003BC867 /* llama-server */; };
 		20508BE32CF586CD003BC867 /* PendingMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20508BE22CF586CD003BC867 /* PendingMessage.swift */; };
 		2053EF982D00A11B007BF5CA /* chatResponse.gbnf in Resources */ = {isa = PBXBuildFile; fileRef = 2053EF952D00A11B007BF5CA /* chatResponse.gbnf */; };
 		20571F6F2CBCE8F7004F3344 /* LengthyTasksController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20571F6E2CBCE8F7004F3344 /* LengthyTasksController.swift */; };
@@ -243,6 +243,7 @@
 		201A1A992CDBA802001E9BA9 /* MarkdownBarChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownBarChartView.swift; sourceTree = "<group>"; };
 		201A1A9B2CDBB5B1001E9BA9 /* MarkdownScatterPlotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownScatterPlotView.swift; sourceTree = "<group>"; };
 		201A1A9D2CDBBA25001E9BA9 /* MarkdownLineChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownLineChartView.swift; sourceTree = "<group>"; };
+		201F20BA2D0439A30037B3E7 /* llama-server */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llama-server"; sourceTree = "<group>"; };
 		202801F32CC93C80005C1F7D /* DictationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictationButton.swift; sourceTree = "<group>"; };
 		202801F52CC93CD5005C1F7D /* PromptInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptInputField.swift; sourceTree = "<group>"; };
 		202801F92CC949F2005C1F7D /* TemporaryResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryResource.swift; sourceTree = "<group>"; };
@@ -291,7 +292,6 @@
 		204C795B2CB79AB900EED58E /* ProfileManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManagerView.swift; sourceTree = "<group>"; };
 		204D9CBE2CF4ABCF0052B6F4 /* StatusLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusLabelView.swift; sourceTree = "<group>"; };
 		204FC5C92CC9C8B400CA1DB4 /* TemporaryResourcesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryResourcesView.swift; sourceTree = "<group>"; };
-		20508BE02CF556F4003BC867 /* llama-server */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llama-server"; sourceTree = "<group>"; };
 		20508BE22CF586CD003BC867 /* PendingMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingMessage.swift; sourceTree = "<group>"; };
 		2053EF952D00A11B007BF5CA /* chatResponse.gbnf */ = {isa = PBXFileReference; lastKnownFileType = text; path = chatResponse.gbnf; sourceTree = "<group>"; };
 		20571F6E2CBCE8F7004F3344 /* LengthyTasksController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LengthyTasksController.swift; sourceTree = "<group>"; };
@@ -495,7 +495,7 @@
 		200FBFD62CB627B100A92A74 /* llama.cpp */ = {
 			isa = PBXGroup;
 			children = (
-				20508BE02CF556F4003BC867 /* llama-server */,
+				201F20BA2D0439A30037B3E7 /* llama-server */,
 				200FBFED2CB6477400A92A74 /* LlamaServer.swift */,
 				200FBFF22CB66B8300A92A74 /* ServerHealth.swift */,
 				2053EF942D00A10E007BF5CA /* Grammar */,
@@ -937,7 +937,6 @@
 				208388E32CBF525A00C2A9F8 /* Settings */,
 				20571F822CBD6A95004F3344 /* Utilities */,
 				2031B9962CEAE77F00627D53 /* Inline Assistant */,
-				200FBFD62CB627B100A92A74 /* llama.cpp */,
 				20B9E6152CB1465900BA0AD2 /* Data Models */,
 				20B9E60F2CB1429E00BA0AD2 /* Commands */,
 				202ED94B2CD780BE00D96030 /* Default Models */,
@@ -1030,6 +1029,7 @@
 			isa = PBXGroup;
 			children = (
 				20B97CCC2CAFEC37009A0A5D /* Model.swift */,
+				200FBFD62CB627B100A92A74 /* llama.cpp */,
 			);
 			path = Inference;
 			sourceTree = "<group>";
@@ -1242,8 +1242,8 @@
 				2053EF982D00A11B007BF5CA /* chatResponse.gbnf in Resources */,
 				20B97CB32CAFE86C009A0A5D /* Preview Assets.xcassets in Resources */,
 				20F2D5122CC1F33B004CE730 /* Localizable.xcstrings in Resources */,
+				201F20BB2D0439A30037B3E7 /* llama-server in Resources */,
 				20B97CB42CAFE86C009A0A5D /* Assets.xcassets in Resources */,
-				20508BE12CF556F4003BC867 /* llama-server in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

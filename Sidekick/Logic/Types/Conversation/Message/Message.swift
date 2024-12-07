@@ -160,7 +160,7 @@ Below is information that may or may not be relevant to my request in JSON forma
 
 When multiple sources provide correct, but conflicting information (e.g. different definitions), prioritize the use of sources from local files, not websites. 
 
-If your response uses information from one or more sources, your response MUST contain a single exaustive ARRAY OF FILEPATHS AND URLS of ALL referenced sources, with no duplicates. This corresponds to the "references" property of the response JSON schema. 
+If your response uses information from one or more sources, your response's "references" property MUST contain a single exaustive ARRAY OF FILEPATHS AND URLS of ALL referenced sources, with no duplicates. 
 
 If no provided sources were used, an empty array should be returned for the "references" property of the response JSON schema.
 

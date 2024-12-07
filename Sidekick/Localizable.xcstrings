@@ -684,6 +684,16 @@
         }
       }
     },
+    "Error Loading Model" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模型加载错误"
+          }
+        }
+      }
+    },
     "Explain how" : {
       "localizations" : {
         "zh-Hans" : {
@@ -960,6 +970,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "推理"
+          }
+        }
+      }
+    },
+    "Inference Server Error" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "推理服务错误"
           }
         }
       }
@@ -1451,6 +1471,16 @@
         }
       }
     },
+    "Restart Sidekick" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重启 Sidekick"
+          }
+        }
+      }
+    },
     "Retrieval" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1766,7 +1796,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "推测解码模型：%@"
+            "value" : "推测性解码模型：%@"
           }
         }
       }
@@ -1996,7 +2026,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "这是用于推测解码的模型。它应该比主模型小。"
+            "value" : "这是用于推测性解码的模型。它应该比主模型小。"
           }
         }
       }
@@ -2057,6 +2087,20 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "LaTeX 渲染开/关"
+          }
+        }
+      }
+    },
+    "Try reselecting the model in Settings. If speculative decoding is enabled, also try reselecting the model used for speculative decoding." : {
+
+    },
+    "Try selecting another model in Settings. If speculative decoding is enabled, also try reloading the model used for speculative decoding." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请尝试在设置中选择另一个模型。如果启用了推测性解码，请尝试重新加载用于推测性解码的模型。"
           }
         }
       }
@@ -2166,7 +2210,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "使用推测解码"
+            "value" : "使用推测性解码"
           }
         }
       }

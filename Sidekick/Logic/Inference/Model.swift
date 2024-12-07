@@ -191,7 +191,7 @@ public class Model: ObservableObject {
 		self.status = .ready
 		self.sentConversationId = nil
 		return response!
-	}
+	} 
 	
 	/// Function to handle response update
 	func handleCompletionProgress(

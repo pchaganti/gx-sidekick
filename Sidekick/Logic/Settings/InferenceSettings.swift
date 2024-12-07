@@ -10,14 +10,14 @@ import Combine
 
 public class InferenceSettings {
 	
-	/// Static computed property returning unified memory size in GB
+	/// A `Double` representing unified memory size in GB
 	static var unifiedMemorySize: Int {
 		let memory: Double = Double(ProcessInfo.processInfo.physicalMemory)
 		let memoryGb: Int = Int(memory / pow(2,30))
 		return memoryGb
 	}
 	
-	/// Static computed property returning if the system has low unified memory
+	/// A `Bool` representing whether the system has low unified memory
 	static var lowUnifiedMemory: Bool {
 		return Self.unifiedMemorySize <= 12
 	}
@@ -34,37 +34,44 @@ public class InferenceSettings {
 	public static let useJsonSchemaPrompt: String = """
 Your responses MUST conform to the JSON schema specified below.
 { 
- "type": "object", 
- "properties": { 
-  "text": { 
-   "type": "string" 
-  }, 
-  "references": { 
-   "type": "array", 
-   "items": { 
 	"type": "object", 
 	"properties": { 
-	 "url": { 
-	  "type": "string" 
-	 } 
+		"text": { 
+			"type": "string" 
+		}, 
+		"references": { 
+			"type": "array", 
+			"items": { 
+				"type": "object", 
+				"properties": { 
+					"url": { 
+						"type": "string" 
+					} 
+				}, 
+				"required": [ 
+					"url" 
+				] 
+			}, 
+			"minItems": 0, 
+			"maxItems": 100 
+		}
 	}, 
 	"required": [ 
-	 "url" 
-	] 
-   }, 
-   "minItems": 0, 
-   "maxItems": 100 
-  } 
- }, 
- "required": [ 
-  "text", 
-  "references" 
- ] 
+		"text", 
+		"references" 
+	]
 }
 
-The "text" property is the body of your response, and can be any text. It can have Markdown formatting or LaTeX. Whenever possible, use Markdown formatting, bullet points in your response, and split the text into paragraphs to improve clarity.
+The "text" property is the body of your response, and can be any text. It can have Markdown formatting or LaTeX. 
 
-The "referenced" property should contain a single exaustive LIST OF FILEPATHS AND URLS of ALL referenced sources, with no duplicates. If no sources were provided, or if no provided sources were used, this list MUST BE empty.
+In the text under the "text" property, you MUST make aggressive use of:
+- Markdown formatting
+- Bullet points
+- Multiple paragraphs
+
+USE MULTIPLE PARAGRAPHS!
+
+The "references" property should contain a single exaustive LIST OF FILEPATHS AND URLS of ALL referenced sources, with no duplicates. If no sources were provided, or if no provided sources were used, this list MUST BE empty. The "references" property should be the only place where references and sources are addressed.
 """
 	
 	/// Static constant for the part of the system prompt telling the LLM to use sources
