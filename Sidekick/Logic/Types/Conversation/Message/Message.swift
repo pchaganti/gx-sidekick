@@ -143,7 +143,14 @@ public struct Message: Identifiable, Codable, Hashable {
 		)
 		SourcesManager.shared.add(sources)
 		// Skip if no results
-		if results.isEmpty { return (self.text, 0) }
+		if results.isEmpty {
+			let messageText: String = """
+\(self.text)
+
+Give an empty array for the "references" property of the response JSON schema.
+"""
+			return (messageText, 0)
+		}
 		let resultsTexts: [String] = results.enumerated().map { index, result in
 			return """
 {
@@ -160,11 +167,11 @@ Below is information that may or may not be relevant to my request in JSON forma
 
 When multiple sources provide correct, but conflicting information (e.g. different definitions), prioritize the use of sources from local files, not websites. 
 
-If your response uses information from one or more sources, your response's "references" property MUST contain a single exaustive ARRAY OF FILEPATHS AND URLS of ALL referenced sources, with no duplicates. 
+If your response uses information from one or more sources, your response's "references" property MUST contain a single exaustive ARRAY OF FILEPATHS AND URLS of ALL referenced sources, with no duplicates. DO NOT ADD THIS LIST TO THE "text" property. 
 
-If no provided sources were used, an empty array should be returned for the "references" property of the response JSON schema.
+If no provided sources were used, or if no sources were given, an empty array should be given for the "references" property of the response JSON schema.
 
-DO NOT reference sources outside of those provided below. If you did not reference provided sources, do not mention sources in your response. NO headers, labels, numbering or comments are needed in this list of referenced sources.
+DO NOT reference sources outside of those provided below. If you did not reference provided sources, do not mention sources in your response.
 
 \(resultsText)
 """

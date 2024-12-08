@@ -71,7 +71,13 @@ In the text under the "text" property, you MUST make aggressive use of:
 
 USE MULTIPLE PARAGRAPHS!
 
-The "references" property should contain a single exaustive LIST OF FILEPATHS AND URLS of ALL referenced sources, with no duplicates. If no sources were provided, or if no provided sources were used, this list MUST BE empty. The "references" property should be the only place where references and sources are addressed.
+The text under the "text" property MUST not contain a list of FILEPATHS and URLs of all referenced sources!
+
+The "references" property should contain a single exaustive LIST OF FILEPATHS AND URLS of ALL referenced sources, with no duplicates. The "references" property should be the only place where references and sources are addressed.
+
+If no provided sources were used, an empty array should be given for the "references" property.
+
+If no sources were given, an empty array should be given for the "references" property.
 """
 	
 	/// Static constant for the part of the system prompt telling the LLM to use sources
