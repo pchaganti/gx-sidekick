@@ -2092,10 +2092,6 @@
       }
     },
     "Try reselecting the model in Settings. If speculative decoding is enabled, also try reselecting the model used for speculative decoding." : {
-
-    },
-    "Try selecting another model in Settings. If speculative decoding is enabled, also try reloading the model used for speculative decoding." : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {

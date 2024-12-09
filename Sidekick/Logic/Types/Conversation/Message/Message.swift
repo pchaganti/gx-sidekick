@@ -144,12 +144,7 @@ public struct Message: Identifiable, Codable, Hashable {
 		SourcesManager.shared.add(sources)
 		// Skip if no results
 		if results.isEmpty {
-			let messageText: String = """
-\(self.text)
-
-Give an empty array for the "references" property of the response JSON schema.
-"""
-			return (messageText, 0)
+			return (self.text, 0)
 		}
 		let resultsTexts: [String] = results.enumerated().map { index, result in
 			return """
