@@ -125,4 +125,10 @@ This project would not be possible without the hard work of:
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=johnbean393/Sidekick&type=Date)](https://star-history.com/#johnbean393/Sidekick&Date)
+<a href="https://star-history.com/#johnbean393/Sidekick&Date">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=johnbean393/Sidekick&type=Date&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=johnbean393/Sidekick&type=Date" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=johnbean393/Sidekick&type=Date" />
+ </picture>
+</a>
