@@ -122,3 +122,7 @@ This project would not be possible without the hard work of:
 - Alibaba for training Qwen 2.5
 - Meta for training Llama 3.1
 - Google for training Gemma 2
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=johnbean393/Sidekick&type=Date)](https://star-history.com/#johnbean393/Sidekick&Date)
