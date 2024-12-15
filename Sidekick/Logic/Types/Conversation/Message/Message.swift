@@ -162,9 +162,13 @@ Below is information that may or may not be relevant to my request in JSON forma
 
 When multiple sources provide correct, but conflicting information (e.g. different definitions), ALWAYS use sources from files, not websites. 
 
-If your response uses information from one or more sources, your response MUST be followed with a single exaustive LIST OF FILEPATHS AND URLS of ALL referenced sources, in the format [{"url": "/path/to/referenced/file.pdf"}, {"url": "/path/to/another/referenced/file.docx"}, {"url": "https://referencedwebsite.com"}, "https://anotherreferencedwebsite.com"}] 
+If your response uses information from one or more provided sources I provided, your response MUST be directly followed with a single exaustive LIST OF FILEPATHS AND URLS of ALL referenced sources, in the format [{"url": "/path/to/referenced/file.pdf"}, {"url": "/path/to/another/referenced/file.docx"}, {"url": "https://referencedwebsite.com"}, "https://anotherreferencedwebsite.com"}]
 
-If no provided sources were used, or if no sources were given, your response should NOT be followed by a list of filepaths and URLs.
+This list should be the only place where references and sources are addressed, and MUST not be preceded by a header or a divider.
+
+If I did not provide sources, YOU MUST NOT end your response with a list of filepaths and URLs. If no sources were provided, DO NOT mention the lack of sources.
+
+If you did not use the information I provided, YOU MUST NOT end your response with a list of filepaths and URLs. 
 
 DO NOT reference sources outside of those provided below. If you did not reference provided sources, do not mention sources in your response.
 
@@ -240,12 +244,8 @@ DO NOT reference sources outside of those provided below. If you did not referen
 		self.tokensPerSecond = response.predictedPerSecond
 		self.responseStartSeconds = response.responseStartSeconds
 		self.lastUpdated = .now
+//		print("response.text: \(response.text)")
 		let text: String = response.text.dropSuffixIfPresent("[]")
-		// If no references are needed
-		if !includeReferences {
-			self.text = text
-			return
-		}
 		// Decode text for extract text and references
 		let messageText: String = text.dropFollowingSubstring(
 			"[",
@@ -256,15 +256,15 @@ DO NOT reference sources outside of those provided below. If you did not referen
 			options: .backwards,
 			includeCharacter: true
 		)
-		// Decode references
-		if let data: Data = try? jsonText.data() {
+		// Save message text
+		self.text = messageText
+		// Decode references if needed
+		if includeReferences, let data: Data = try? jsonText.data() {
 			// Decode data
 			if let references = ReferencedURL.fromData(
 				data: data
 			) {
 				self.referencedURLs = references
-				self.text = messageText
-				return
 			}
 		}
 	}

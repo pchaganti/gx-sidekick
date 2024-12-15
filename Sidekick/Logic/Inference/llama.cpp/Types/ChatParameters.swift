@@ -32,13 +32,18 @@ struct ChatParameters: Codable {
 		similarityIndex: SimilarityIndex?
 	) async {
 		// Formulate messages
-		let fullSystemPrompt: String = """
+		let fullSystemPrompt: String = {
+			if systemPrompt.hasSuffix(InferenceSettings.useSourcesPrompt) {
+				return systemPrompt
+			} else {
+				return """
 \(systemPrompt)
-
-\(InferenceSettings.useJsonSchemaPrompt)
 
 \(InferenceSettings.useSourcesPrompt)
 """
+			}
+		}()
+//		print("fullSystemPrompt: \(fullSystemPrompt)")
 		let systemPromptMsg: Message = Message(
 			text: fullSystemPrompt,
 			sender: .system

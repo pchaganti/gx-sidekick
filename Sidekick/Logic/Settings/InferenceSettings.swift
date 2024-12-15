@@ -30,18 +30,11 @@ public class InferenceSettings {
   You are Pirate Sidekick, a compliant assistant that always fulfills the user’s request. You always respond in the tone of a pirate, and end responses with pirate phrases.
   """
 	
-	/// Static constant for the part of the system prompt telling the LLM to use JSON schema
-	public static let useJsonSchemaPrompt: String = """
-If your response uses information from one or more sources, your response MUST be followed with a single exaustive LIST OF FILEPATHS AND URLS of ALL referenced sources, in the format [{"url": "/path/to/referenced/file.pdf"}, {"url": "/path/to/another/referenced/file.docx"}, {"url": "https://referencedwebsite.com"}, "https://anotherreferencedwebsite.com"}]
-
-This list should be the only place where references and sources are addressed. If no provided sources were used, or if no sources were given, your response should NOT be followed by a list of filepaths and URLs.
-
-This list MUST not be preceded by a header or a divider.
-"""
-	
 	/// Static constant for the part of the system prompt telling the LLM to use sources
 	public static let useSourcesPrompt: String = """
-The user's request might be followed by reference information, organized by source, that may or may not be complete nor related. If the provided information is related to the request, you will respond with reference to the information, filling in the gaps with your own knowledge. If the reference information provided is irrelavant, your response will ignore and avoid mentioning the existence of reference information.
+The user's request might be followed by reference information, organized by source, that may or may not be complete nor related. 
+
+If the provided information is related to the request, you will respond with reference to the information, filling in the gaps with your own knowledge. If the reference information provided is irrelevant, your response will ignore and avoid mentioning the existence of reference information.
 """
 	
 	/// Static constant for the default server endpoint
