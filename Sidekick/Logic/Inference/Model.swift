@@ -34,6 +34,10 @@ public class Model: ObservableObject {
 			modelPath: modelPath,
 			systemPrompt: systemPrompt
 		)
+		// Load model
+		Task {
+			try? await self.llama.startServer()
+		}
 	}
 	
 	/// Static constant for the global ``Model`` object
@@ -68,6 +72,8 @@ public class Model: ObservableObject {
 			modelPath: modelPath,
 			systemPrompt: self.systemPrompt
 		)
+		// Load model
+		try? await self.llama.startServer()
 	}
 	
 	// Dialogue is the dialogue from prompt without system prompt / internal thoughts

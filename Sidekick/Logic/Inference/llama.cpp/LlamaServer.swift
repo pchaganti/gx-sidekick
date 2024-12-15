@@ -121,7 +121,7 @@ public actor LlamaServer {
 	}
 	
 	/// Function to start the `llama-server` process
-	private func startServer() async throws {
+	public func startServer() async throws {
 		// If server is running, exit
 		guard !process.isRunning, let modelPath = self.modelPath else { return }
 		await stopServer()

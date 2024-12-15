@@ -54,13 +54,7 @@ public class ConversationCommands {
 		
 		public var body: some View {
 			Button {
-				AppState.setCommandSelectedProfileId(
-					profile.id
-				)
-				NotificationCenter.default.post(
-					name: Notifications.didCommandSelectProfile.name,
-					object: nil
-				)
+				self.selectProfile()
 			} label: {
 				Text(profile.name)
 			}
@@ -77,6 +71,16 @@ public class ConversationCommands {
 						modifiers: .command
 					)
 			}
+		}
+		
+		private func selectProfile() {
+			AppState.setCommandSelectedProfileId(
+				profile.id
+			)
+			NotificationCenter.default.post(
+				name: Notifications.didCommandSelectProfile.name,
+				object: nil
+			)
 		}
 		
 	}
