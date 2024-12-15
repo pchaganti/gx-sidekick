@@ -160,11 +160,11 @@ public struct Message: Identifiable, Codable, Hashable {
 
 Below is information that may or may not be relevant to my request in JSON format. 
 
-When multiple sources provide correct, but conflicting information (e.g. different definitions), prioritize the use of sources from local files, not websites. 
+When multiple sources provide correct, but conflicting information (e.g. different definitions), ALWAYS use sources from files, not websites. 
 
-If your response uses information from one or more sources, your response's "references" property MUST contain a single exaustive ARRAY OF FILEPATHS AND URLS of ALL referenced sources, with no duplicates. DO NOT ADD THIS LIST TO THE "text" property. 
+If your response uses information from one or more sources, your response MUST be followed with a single exaustive LIST OF FILEPATHS AND URLS of ALL referenced sources, in the format [{"url": "/path/to/referenced/file.pdf"}, {"url": "/path/to/another/referenced/file.docx"}, {"url": "https://referencedwebsite.com"}, "https://anotherreferencedwebsite.com"}] 
 
-If no provided sources were used, or if no sources were given, an empty array should be given for the "references" property of the response JSON schema.
+If no provided sources were used, or if no sources were given, your response should NOT be followed by a list of filepaths and URLs.
 
 DO NOT reference sources outside of those provided below. If you did not reference provided sources, do not mention sources in your response.
 
@@ -233,33 +233,39 @@ DO NOT reference sources outside of those provided below. If you did not referen
 	/// Function to update message
 	@MainActor
 	public mutating func update(
-		response: LlamaServer.CompleteResponse
+		response: LlamaServer.CompleteResponse,
+		includeReferences: Bool
 	) {
 		// Set variables
 		self.tokensPerSecond = response.predictedPerSecond
 		self.responseStartSeconds = response.responseStartSeconds
 		self.lastUpdated = .now
+		let text: String = response.text.dropSuffixIfPresent("[]")
+		// If no references are needed
+		if !includeReferences {
+			self.text = text
+			return
+		}
 		// Decode text for extract text and references
-		let jsonText: String = response.text
-		// Get as data
+		let messageText: String = text.dropFollowingSubstring(
+			"[",
+			options: .backwards
+		).trimmingWhitespaceAndNewlines()
+		let jsonText: String = text.dropPrecedingSubstring(
+			"[",
+			options: .backwards,
+			includeCharacter: true
+		)
+		// Decode references
 		if let data: Data = try? jsonText.data() {
 			// Decode data
-			let decoder: JSONDecoder = JSONDecoder()
-			if let responseText = try? decoder.decode(
-				Message.ResponseText.self,
-				from: data
+			if let references = ReferencedURL.fromData(
+				data: data
 			) {
-				self.text = responseText.text
-				let uniqueReferences: [ReferencedURL] = Array(Set(responseText.references))
-				self.referencedURLs = uniqueReferences.sorted(
-					by: \.displayName
-				)
+				self.referencedURLs = references
+				self.text = messageText
 				return
 			}
-		} else {
-			self.text = jsonText
-			self.referencedURLs = []
-			return
 		}
 	}
 	
@@ -315,13 +321,6 @@ DO NOT reference sources outside of those provided below. If you did not referen
 		
 		public var content: String
 		public var isLatex: Bool
-	
-	}
-	
-	private struct ResponseText: Codable {
-		
-		var text: String
-		var references: [ReferencedURL]
 		
 	}
 	

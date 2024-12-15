@@ -165,6 +165,7 @@ struct PromptInputField: View {
 		guard var conversation = sentConversation else { return }
 		// Get response
 		var response: LlamaServer.CompleteResponse
+		var didUseSources: Bool = false
 		do {
 			self.model.indicateStartedQuerying(
 				sentConversationId: conversation.id
@@ -176,6 +177,11 @@ struct PromptInputField: View {
 				index = await selectedProfile?.resources.loadIndex()
 			}
 			let useWebSearch: Bool = selectedProfile?.useWebSearch ?? true
+			// Set if sources were used
+			let hasIndexItems: Bool = !((
+				index?.indexItems.isEmpty
+			) ?? true)
+			didUseSources = useWebSearch || hasIndexItems
 			response = try await model.listenThinkRespond(
 				messages: self.messages,
 				mode: .chat,
@@ -207,7 +213,8 @@ struct PromptInputField: View {
 				usedServer: response.usedServer
 			)
 			responseMessage.update(
-				response: response
+				response: response,
+				includeReferences: didUseSources
 			)
 			responseMessage.end()
 			// Update conversation

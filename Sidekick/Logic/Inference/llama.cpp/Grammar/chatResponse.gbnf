@@ -1,9 +1,0 @@
-char ::= [^"\\\x7F\x00-\x1F] | [\\] (["\\bfnrt] | "u" [0-9a-fA-F]{4})
-references ::= "[" space (references-item ("," space references-item){0,99})? "]" space
-references-item ::= "{" space references-item-url-kv "}" space
-references-item-url-kv ::= "\"url\"" space ":" space string
-references-kv ::= "\"references\"" space ":" space references
-root ::= "{" space text-kv "," space references-kv "}" space
-space ::= | " " | "\n" [ \t]{0,20}
-string ::= "\"" char* "\"" space
-text-kv ::= "\"text\"" space ":" space string

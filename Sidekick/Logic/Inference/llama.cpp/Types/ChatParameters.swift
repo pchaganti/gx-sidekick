@@ -52,22 +52,12 @@ struct ChatParameters: Codable {
 		)
 		let messagesWithSystemPrompt: [Message.MessageSubset] = [systemPromptMsgSubset] + messages
 		self.messages = messagesWithSystemPrompt
-		// Set grammar
-		let schemaUrl: URL = Bundle.main.url(
-			forResource: "chatResponse",
-			withExtension: "gbnf"
-		)!
-		let grammar: String = (try? String(
-			contentsOf: schemaUrl
-		)) ?? ""
-		self.grammar = grammar
 	}
 	
 	var messages: [Message.MessageSubset]
 	
 	var stream: Bool = true
 	var temperature = InferenceSettings.temperature
-	var grammar: String? = nil
 	
 	/// Function to convert chat parameters to JSON
 	public func toJSON() -> String {

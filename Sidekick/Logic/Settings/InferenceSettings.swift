@@ -32,52 +32,11 @@ public class InferenceSettings {
 	
 	/// Static constant for the part of the system prompt telling the LLM to use JSON schema
 	public static let useJsonSchemaPrompt: String = """
-Your responses MUST conform to the JSON schema specified below.
-{ 
-	"type": "object", 
-	"properties": { 
-		"text": { 
-			"type": "string" 
-		}, 
-		"references": { 
-			"type": "array", 
-			"items": { 
-				"type": "object", 
-				"properties": { 
-					"url": { 
-						"type": "string" 
-					} 
-				}, 
-				"required": [ 
-					"url" 
-				] 
-			}, 
-			"minItems": 0, 
-			"maxItems": 100 
-		}
-	}, 
-	"required": [ 
-		"text", 
-		"references" 
-	]
-}
+If your response uses information from one or more sources, your response MUST be followed with a single exaustive LIST OF FILEPATHS AND URLS of ALL referenced sources, in the format [{"url": "/path/to/referenced/file.pdf"}, {"url": "/path/to/another/referenced/file.docx"}, {"url": "https://referencedwebsite.com"}, "https://anotherreferencedwebsite.com"}]
 
-The "text" property is the body of your response, and can be any text. It can have Markdown formatting or LaTeX. 
+This list should be the only place where references and sources are addressed. If no provided sources were used, or if no sources were given, your response should NOT be followed by a list of filepaths and URLs.
 
-In the text under the "text" property, you MUST make aggressive use of:
-- Markdown formatting
-- Bullet points
-- Multiple paragraphs
-
-USE MULTIPLE PARAGRAPHS!
-
-The text under the "text" property MUST not contain a list of FILEPATHS and URLs of all referenced sources!
-
-The "references" property should contain a single exaustive LIST OF FILEPATHS AND URLS of ALL referenced sources, with no duplicates. The "references" property should be the only place where references and sources are addressed.
-
-If no provided sources were used, an empty array should be given for the "references" property.
-
-If no sources were given, an empty array should be given for the "references" property.
+This list MUST not be preceded by a header or a divider.
 """
 	
 	/// Static constant for the part of the system prompt telling the LLM to use sources

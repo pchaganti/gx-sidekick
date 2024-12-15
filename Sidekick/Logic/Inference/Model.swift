@@ -202,8 +202,6 @@ public class Model: ObservableObject {
 		) -> Void
 	) {
 		let fullMessage: String = (self.pendingMessage + partialResponse)
-			.replaceUnicodeEscapes()
-			.dropPrecedingSubstring("\"text\": \"")
 		handleResponseUpdate(
 			fullMessage,
 			partialResponse

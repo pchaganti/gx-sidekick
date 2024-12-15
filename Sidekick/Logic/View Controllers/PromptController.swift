@@ -71,6 +71,9 @@ public class PromptController: ObservableObject, DropDelegate {
 	}
 	
 	public func stopRecording() {
+		// Exit if not recording
+		if !self.isRecording { return }
+		// Stop recording
 		audioEngine.stop()
 		audioEngine.inputNode.removeTap(onBus: 0)
 		recognitionRequest?.endAudio()

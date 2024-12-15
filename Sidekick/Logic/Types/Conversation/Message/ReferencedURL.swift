@@ -88,3 +88,42 @@ public struct ReferencedURL: Codable, Equatable, Hashable {
 	}
 	
 }
+
+public extension ReferencedURL {
+	
+	// Initialize
+	static func fromData (
+		data: Data
+	) -> [ReferencedURL]? {
+		// Decode data
+		let decoder: JSONDecoder = JSONDecoder()
+		if let references = try? decoder.decode(
+			[ReferencedURL].self,
+			from: data
+		) {
+			// Decode JSON
+			let uniqueReferences: [ReferencedURL] = Array(Set(references))
+			return uniqueReferences.sorted(
+				by: \.displayName
+			)
+		} else if let referencesString = try? decoder.decode(
+			[String].self,
+			from: data
+		) {
+			// Decode String instead
+			let uniqueReferences: [ReferencedURL] = referencesString.map { reference in
+				if let url = URL(string: reference) {
+					return ReferencedURL(url: url)
+				} else {
+					return nil
+				}
+			}.compactMap({ $0 })
+			return uniqueReferences.sorted(
+				by: \.displayName
+			)
+		}
+		// If failed to decode, return nil
+		return nil
+	}
+	
+}

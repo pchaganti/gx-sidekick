@@ -60,7 +60,6 @@
 		204D9CBF2CF4ABCF0052B6F4 /* StatusLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204D9CBE2CF4ABCF0052B6F4 /* StatusLabelView.swift */; };
 		204FC5CA2CC9C8B400CA1DB4 /* TemporaryResourcesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204FC5C92CC9C8B400CA1DB4 /* TemporaryResourcesView.swift */; };
 		20508BE32CF586CD003BC867 /* PendingMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20508BE22CF586CD003BC867 /* PendingMessage.swift */; };
-		2053EF982D00A11B007BF5CA /* chatResponse.gbnf in Resources */ = {isa = PBXBuildFile; fileRef = 2053EF952D00A11B007BF5CA /* chatResponse.gbnf */; };
 		20571F6F2CBCE8F7004F3344 /* LengthyTasksController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20571F6E2CBCE8F7004F3344 /* LengthyTasksController.swift */; };
 		20571F722CBCEDD8004F3344 /* LengthyTasksList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20571F712CBCEDD8004F3344 /* LengthyTasksList.swift */; };
 		20571F742CBCEE90004F3344 /* LengthyTasksToolbarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20571F732CBCEE90004F3344 /* LengthyTasksToolbarButton.swift */; };
@@ -293,7 +292,6 @@
 		204D9CBE2CF4ABCF0052B6F4 /* StatusLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusLabelView.swift; sourceTree = "<group>"; };
 		204FC5C92CC9C8B400CA1DB4 /* TemporaryResourcesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryResourcesView.swift; sourceTree = "<group>"; };
 		20508BE22CF586CD003BC867 /* PendingMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingMessage.swift; sourceTree = "<group>"; };
-		2053EF952D00A11B007BF5CA /* chatResponse.gbnf */ = {isa = PBXFileReference; lastKnownFileType = text; path = chatResponse.gbnf; sourceTree = "<group>"; };
 		20571F6E2CBCE8F7004F3344 /* LengthyTasksController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LengthyTasksController.swift; sourceTree = "<group>"; };
 		20571F712CBCEDD8004F3344 /* LengthyTasksList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LengthyTasksList.swift; sourceTree = "<group>"; };
 		20571F732CBCEE90004F3344 /* LengthyTasksToolbarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LengthyTasksToolbarButton.swift; sourceTree = "<group>"; };
@@ -498,7 +496,6 @@
 				201F20BC2D0522E10037B3E7 /* llama-server */,
 				200FBFED2CB6477400A92A74 /* LlamaServer.swift */,
 				200FBFF22CB66B8300A92A74 /* ServerHealth.swift */,
-				2053EF942D00A10E007BF5CA /* Grammar */,
 				200FBFE62CB6384400A92A74 /* llama-server-watchdog */,
 				200FBFF82CB68CFC00A92A74 /* Types */,
 			);
@@ -730,14 +727,6 @@
 				207A9F602CB9482600E727DE /* Resource */,
 			);
 			path = Profile;
-			sourceTree = "<group>";
-		};
-		2053EF942D00A10E007BF5CA /* Grammar */ = {
-			isa = PBXGroup;
-			children = (
-				2053EF952D00A11B007BF5CA /* chatResponse.gbnf */,
-			);
-			path = Grammar;
 			sourceTree = "<group>";
 		};
 		20571F702CBCEDC1004F3344 /* LengthyTasks */ = {
@@ -1239,7 +1228,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2053EF982D00A11B007BF5CA /* chatResponse.gbnf in Resources */,
 				20B97CB32CAFE86C009A0A5D /* Preview Assets.xcassets in Resources */,
 				20F2D5122CC1F33B004CE730 /* Localizable.xcstrings in Resources */,
 				201F20BD2D0522E10037B3E7 /* llama-server in Resources */,
