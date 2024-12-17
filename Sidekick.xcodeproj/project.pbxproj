@@ -45,6 +45,7 @@
 		2031B99A2CEAE7A900627D53 /* Extension+KeyboardShortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2031B9992CEAE7A900627D53 /* Extension+KeyboardShortcut.swift */; };
 		20353FF12CF84546002BC78E /* ToggleLaTeXButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20353FF02CF84546002BC78E /* ToggleLaTeXButton.swift */; };
 		2038CCF32CB6CBC6005AA315 /* PendingMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2038CCF22CB6CBC6005AA315 /* PendingMessageView.swift */; };
+		203ECDC62D11CFDE00ED0460 /* llama-server in Resources */ = {isa = PBXBuildFile; fileRef = 203ECDC52D11CFDE00ED0460 /* llama-server */; };
 		204592172CD32DEF00DEAA96 /* TypedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204592162CD32DEF00DEAA96 /* TypedTextView.swift */; };
 		204AE3B62CEAF4C20086B42D /* InlineAssistantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204AE3B52CEAF4C20086B42D /* InlineAssistantView.swift */; };
 		204AE3B92CEAF57E0086B42D /* CommandManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204AE3B82CEAF57E0086B42D /* CommandManager.swift */; };
@@ -164,7 +165,6 @@
 		20CEA75B2CE308AD0070579B /* MessageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CEA75A2CE308AD0070579B /* MessageContentView.swift */; };
 		20CEA75E2CE309F10070579B /* MessageOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CEA75D2CE309F10070579B /* MessageOptionsView.swift */; };
 		20D65DD52CC0CC6C0052D826 /* StopGenerationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D65DD42CC0CC6C0052D826 /* StopGenerationButton.swift */; };
-		20D79B642D0EACED00495982 /* llama-server in Resources */ = {isa = PBXBuildFile; fileRef = 20D79B632D0EACED00495982 /* llama-server */; };
 		20D9A9732CD2769300171FDE /* MessageShareMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D9A9722CD2769300171FDE /* MessageShareMenu.swift */; };
 		20DEABED2CC4D68A0046447C /* Extension+CGImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DEABEC2CC4D68A0046447C /* Extension+CGImage.swift */; };
 		20E48C262CB560730085E7D6 /* ChatStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E48C252CB560730085E7D6 /* ChatStyle.swift */; };
@@ -280,6 +280,7 @@
 		2038CCF22CB6CBC6005AA315 /* PendingMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingMessageView.swift; sourceTree = "<group>"; };
 		203BB6E12CF6B2220057AF3A /* demoHistorySource.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = demoHistorySource.png; sourceTree = "<group>"; };
 		203BB6E22CF6B43A0057AF3A /* demoHistoryScreenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = demoHistoryScreenshot.png; sourceTree = "<group>"; };
+		203ECDC52D11CFDE00ED0460 /* llama-server */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llama-server"; sourceTree = "<group>"; };
 		204592162CD32DEF00DEAA96 /* TypedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypedTextView.swift; sourceTree = "<group>"; };
 		204AE3B52CEAF4C20086B42D /* InlineAssistantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InlineAssistantView.swift; sourceTree = "<group>"; };
 		204AE3B82CEAF57E0086B42D /* CommandManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandManager.swift; sourceTree = "<group>"; };
@@ -392,7 +393,6 @@
 		20CEA75D2CE309F10070579B /* MessageOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageOptionsView.swift; sourceTree = "<group>"; };
 		20D65DD22CC0B8A20052D826 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		20D65DD42CC0CC6C0052D826 /* StopGenerationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopGenerationButton.swift; sourceTree = "<group>"; };
-		20D79B632D0EACED00495982 /* llama-server */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llama-server"; sourceTree = "<group>"; };
 		20D9A9722CD2769300171FDE /* MessageShareMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageShareMenu.swift; sourceTree = "<group>"; };
 		20DEABEC2CC4D68A0046447C /* Extension+CGImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+CGImage.swift"; sourceTree = "<group>"; };
 		20E48C252CB560730085E7D6 /* ChatStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatStyle.swift; sourceTree = "<group>"; };
@@ -499,7 +499,7 @@
 		200FBFD62CB627B100A92A74 /* llama.cpp */ = {
 			isa = PBXGroup;
 			children = (
-				20D79B632D0EACED00495982 /* llama-server */,
+				203ECDC52D11CFDE00ED0460 /* llama-server */,
 				200FBFED2CB6477400A92A74 /* LlamaServer.swift */,
 				200FBFF22CB66B8300A92A74 /* ServerHealth.swift */,
 				200FBFE62CB6384400A92A74 /* llama-server-watchdog */,
@@ -1248,7 +1248,7 @@
 				20B97CB32CAFE86C009A0A5D /* Preview Assets.xcassets in Resources */,
 				20F2D5122CC1F33B004CE730 /* Localizable.xcstrings in Resources */,
 				20B97CB42CAFE86C009A0A5D /* Assets.xcassets in Resources */,
-				20D79B642D0EACED00495982 /* llama-server in Resources */,
+				203ECDC62D11CFDE00ED0460 /* llama-server in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
