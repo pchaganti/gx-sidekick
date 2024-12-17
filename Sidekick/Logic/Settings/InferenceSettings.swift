@@ -37,6 +37,12 @@ The user's request might be followed by reference information, organized by sour
 If the provided information is related to the request, you will respond with reference to the information, filling in the gaps with your own knowledge. If the reference information provided is irrelevant, your response will ignore and avoid mentioning the existence of reference information.
 """
 	
+	/// Computed property for the part of the system prompt where metadata is fed to the LLM
+	public static let metadataPrompt: String = """
+The user's name: \(NSFullUserName())
+Current date & time: \(Date.now.ISO8601Format())
+"""
+	
 	/// Static constant for the default server endpoint
 	public static let defaultEndpoint: String = ""
 	

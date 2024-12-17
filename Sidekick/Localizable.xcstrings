@@ -4,7 +4,7 @@
     "" : {
       "shouldTranslate" : false
     },
-    "**Success!**" : {
+    "**Setup Complete**" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -464,6 +464,16 @@
         }
       }
     },
+    "Create and use profiles to allow the chatbot to reply with **domain specific** information from your own files and folders." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "创建专家，让聊天机器人使用文件，网页资源中的资料回答你的问题。"
+          }
+        }
+      }
+    },
     "Create profiles that **customise** chatbot behaviour, making it **reply with context from your files**." : {
       "localizations" : {
         "zh-Hans" : {
@@ -480,6 +490,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "编辑"
+          }
+        }
+      }
+    },
+    "Data Visualization" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "数据可视化"
           }
         }
       }
@@ -874,6 +894,16 @@
         }
       }
     },
+    "Give the chatbot temporary access to a file by dropping it into the prompt field." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "将文件拖放至聊天框，即可授予聊天机器人对文件的临时访问权限。"
+          }
+        }
+      }
+    },
     "GPU poor" : {
       "localizations" : {
         "zh-Hans" : {
@@ -985,6 +1015,16 @@
       }
     },
     "Inline Assistant" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "写作助手"
+          }
+        }
+      }
+    },
+    "Inline Writing Assistant" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1337,6 +1377,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "在文字生成开始和结束时播放声效"
+          }
+        }
+      }
+    },
+    "Press 'Command + Control + I' to access Sidekick's inline writing assistant. For example, use the 'Answer Question' command to do your homework without leaving Microsoft Word!" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按“Command + Control + I”访问 Sidekick 的写作助手。使用“回答问题”命令，无需离开 Microsoft Word 即可完成作业！"
           }
         }
       }
@@ -1751,6 +1801,16 @@
         }
       }
     },
+    "Sidekick is ready to use." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sidekick 已可供使用。"
+          }
+        }
+      }
+    },
     "Simplify" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1921,6 +1981,16 @@
         }
       }
     },
+    "Temporary Resources" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加文件"
+          }
+        }
+      }
+    },
     "Temporary Resources:" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1937,16 +2007,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "用于推理的服务器上的端点。此端点必须可从此设备访问，并提供与 OpenAI 兼容的 API。 （例如 http://localhost:8000，其中 http://localhost:8000/v1/chat/completions 可被访问）\n\n为保障隐私和数据安全，我们建议你托管您自己的服务器。"
-          }
-        }
-      }
-    },
-    "The model was installed." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已安装模型"
           }
         }
       }
@@ -2231,6 +2291,16 @@
         }
       }
     },
+    "Use Web Search to find up to date information about a topic." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启用网络搜索，让聊天机器人使用最新信息。"
+          }
+        }
+      }
+    },
     "Used to access the Tavily API if the main API key fails." : {
       "localizations" : {
         "zh-Hans" : {
@@ -2267,6 +2337,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "查看资源"
+          }
+        }
+      }
+    },
+    "Visualizations are automatically generated for tables when appropriate, with a variety of charts available, including bar charts, line charts and pie charts." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sidekick 可自动根据表格生成图表，并提供各种图表，包括条形图、折线图和饼图。"
           }
         }
       }

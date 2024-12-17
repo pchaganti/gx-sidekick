@@ -74,7 +74,6 @@ public class TavilySearch {
 		let (data, _): (Data, URLResponse) = try await URLSession.shared.data(
 			for: request
 		)
-//		print(String(data: data, encoding: .utf8) ?? "")
 		print("Tavily returned results in \(Date.now.timeIntervalSince(startTime)) secs")
 		let decoder: JSONDecoder = JSONDecoder()
 		let response: Tavily.Response = try decoder.decode(

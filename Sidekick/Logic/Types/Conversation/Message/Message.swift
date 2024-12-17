@@ -256,8 +256,6 @@ DO NOT reference sources outside of those provided below. If you did not referen
 			options: .backwards,
 			includeCharacter: true
 		)
-		// Save message text
-		self.text = messageText
 		// Decode references if needed
 		if includeReferences, let data: Data = try? jsonText.data() {
 			// Decode data
@@ -265,7 +263,12 @@ DO NOT reference sources outside of those provided below. If you did not referen
 				data: data
 			) {
 				self.referencedURLs = references
+				self.text = messageText
+			} else {
+				self.text = text
 			}
+		} else {
+			self.text = text
 		}
 	}
 	

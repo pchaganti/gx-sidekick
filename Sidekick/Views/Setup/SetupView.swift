@@ -21,7 +21,7 @@ struct SetupView: View {
 				ModelSelectionView(selectedModel: $selectedModel)
 			} else {
 				// Else, show setup complete screen
-				SetupCompleteView(showSetup: $showSetup)
+				IntroductionView(showSetup: $showSetup)
 			}
 		}
 		.padding()
