@@ -48,6 +48,12 @@ public actor LlamaServer {
 	/// Property for `llama-server` process
 	private var process: Process = Process()
 	
+	/// Function to set system prompt
+	/// - Parameter systemPrompt: The system prompt, of type `String`
+	public func setSystemPrompt(_ systemPrompt: String) {
+		self.systemPrompt = systemPrompt
+	}
+	
 	/// Function to get path to llama-server
 	private func url(_ path: String) async -> (
 		url: URL,

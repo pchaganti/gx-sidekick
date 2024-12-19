@@ -95,21 +95,21 @@ struct ConversationManagerView: View {
 				)
 		}
 		.onChange(of: selectedProfile) {
-			refreshModel()
+			self.refreshSystemPrompt()
 		}
 		.onReceive(
 			NotificationCenter.default.publisher(
 				for: Notifications.systemPromptChanged.name
 			)
 		) { output in
-			refreshModel()
+			self.refreshSystemPrompt()
 		}
 		.onReceive(
 			NotificationCenter.default.publisher(
-				for: Notifications.didSelectModel.name
+				for: Notifications.changedInferenceConfig.name
 			)
 		) { output in
-			refreshModel()
+			self.refreshModel()
 		}
 		.onReceive(
 			NotificationCenter.default.publisher(
@@ -214,13 +214,20 @@ struct ConversationManagerView: View {
 	}
 	
 	private func refreshModel() {
+		// Refresh model
+		Task {
+			await self.model.refreshModel()
+		}
+	}
+	
+	private func refreshSystemPrompt() {
 		// Set new prompt
 		var prompt: String = InferenceSettings.systemPrompt
 		if let systemPrompt = self.selectedProfile?.systemPrompt {
 			prompt = systemPrompt
 		}
 		Task {
-			await self.model.refreshModel(prompt)
+			await self.model.setSystemPrompt(prompt)
 		}
 	}
 	

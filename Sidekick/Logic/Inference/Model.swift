@@ -48,9 +48,14 @@ public class Model: ObservableObject {
 		systemPrompt
 	}
 	
-	/// Function to refresh `llama-server` with the newly selected model / system prompt
-	public func refreshModel(_ systemPrompt: String) async {
+	/// Function to set new system prompt
+	public func setSystemPrompt(_ systemPrompt: String) async {
 		self.systemPrompt = systemPrompt
+		await self.llama.setSystemPrompt(systemPrompt)
+	}
+	
+	/// Function to refresh `llama-server` with the newly selected model
+	public func refreshModel() async {
 		// Get model path
 		guard let modelPath: String = Settings.modelUrl?.posixPath else {
 			fatalError("Could not find modelUrl")

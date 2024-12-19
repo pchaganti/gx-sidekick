@@ -26,7 +26,7 @@ struct ModelListView: View {
 	
 	@State private var modelDownloadUrl: String = "https://huggingface.co/models?sort=trending&search=GGUF"
 	
-    var body: some View {
+	var body: some View {
 		VStack(
 			alignment: .center
 		) {
@@ -61,7 +61,7 @@ struct ModelListView: View {
 			}()
 		}
 		.environmentObject(modelManager)
-    }
+	}
 	
 	var list: some View {
 		List(
@@ -79,12 +79,7 @@ struct ModelListView: View {
 	
 	var addButton: some View {
 		Button {
-			if !self.forSpeculativeDecoding {
-				let _ = Settings.selectModel()
-				self.modelUrl = Settings.modelUrl
-			} else {
-				let _ = modelManager.addModel()
-			}
+			self.addModel()
 		} label: {
 			Label(
 				"Add Model",
@@ -130,6 +125,21 @@ struct ModelListView: View {
 				)
 			}
 		}
+	}
+	
+	/// Function to add model
+	private func addModel() {
+		if !self.forSpeculativeDecoding {
+			let _ = Settings.selectModel()
+			self.modelUrl = Settings.modelUrl
+		} else {
+			let _ = modelManager.addModel()
+		}
+		// Send notification to reload model
+		NotificationCenter.default.post(
+			name: Notifications.changedInferenceConfig.name,
+			object: nil
+		)
 	}
 
 }

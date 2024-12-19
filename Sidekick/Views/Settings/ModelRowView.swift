@@ -100,7 +100,7 @@ struct ModelRowView: View {
 		}
 		// Send notification to reload model
 		NotificationCenter.default.post(
-			name: Notifications.didSelectModel.name,
+			name: Notifications.changedInferenceConfig.name,
 			object: nil
 		)
 	}

@@ -223,6 +223,16 @@
 			name = "Embed Helper Tools";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		20228A182D126ED70050FA90 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -1095,6 +1105,7 @@
 				200549702CAFA67B00A3DCF2 /* Frameworks */,
 				200549712CAFA67B00A3DCF2 /* Resources */,
 				200FBFEB2CB63B9400A92A74 /* Embed Helper Tools */,
+				20228A182D126ED70050FA90 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);

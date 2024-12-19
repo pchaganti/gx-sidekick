@@ -119,6 +119,11 @@ struct InferenceSettingsView: View {
 		}
 		.onChange(of: useSpeculativeDecoding) {
 			InferenceSettings.useSpeculativeDecoding = self.useSpeculativeDecoding
+			// Send notification to reload model
+			NotificationCenter.default.post(
+				name: Notifications.changedInferenceConfig.name,
+				object: nil
+			)
 		}
 		.onAppear {
 			self.useSpeculativeDecoding = InferenceSettings.useSpeculativeDecoding
