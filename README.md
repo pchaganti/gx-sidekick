@@ -36,6 +36,16 @@ Sidekick can even respond with the latest information using **web search**, spee
 
 ![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/webSearch.png)
 
+### Image Generation
+
+Sidekick can generate images from text, allowing you to create visual aids for your work. 
+
+There are no buttons, no switches to flick, no `Image Generation` mode. Instead, a built-in CoreML model **automatically determines** image generation prompts, and generates an image when necessary.
+
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/imageGeneration.png)
+
+Image generation is availible on macOS 15.2 or above, and requires Apple Intelligence.
+
 ### Inline Writing Assistant
 
 Press `Command + Control + I` to access Sidekick's inline writing assistant. For example, use the `Answer Question` command to do your homework without leaving Microsoft Word!

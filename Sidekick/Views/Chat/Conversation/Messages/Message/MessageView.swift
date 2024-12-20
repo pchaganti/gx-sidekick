@@ -103,6 +103,28 @@ struct MessageView: View {
 	
 	var content: some View {
 		Group {
+			switch message.contentType {
+				case .text:
+					textContent
+				case .image:
+					imageContent
+			}
+		}
+		.background {
+			MessageBackgroundView()
+				.contextMenu {
+					copyButton
+				}
+		}
+	}
+	
+	var imageContent: some View {
+		message.image
+			.padding(0.5)
+	}
+	
+	var textContent: some View {
+		Group {
 			if isEditing {
 				contentEditor
 			} else {
@@ -110,12 +132,6 @@ struct MessageView: View {
 			}
 		}
 		.padding(11)
-		.background {
-			MessageBackgroundView()
-				.contextMenu {
-					copyButton
-				}
-		}
 	}
 	
 	var contentEditor: some View {

@@ -39,8 +39,30 @@ public struct Message: Identifiable, Codable, Hashable {
 		self.model = modelName
 	}
 	
-	/// Stored property for `Identifiable` conformance
+	init(
+		imageUrl: URL,
+		prompt: String
+	) {
+		self.id = UUID()
+		self.text = "Generated an image with the prompt \"\(prompt)\"."
+		self.sender = .system
+		self.startTime = .now
+		self.lastUpdated = .now
+		self.outputEnded = true
+		self.model = "Image Playground Model"
+		self.imageUrl = imageUrl
+	}
+	
+	/// A `UUID` for `Identifiable` conformance
 	public var id: UUID = UUID()
+	
+	/// A `ContentType` for the message
+	public var contentType: Self.ContentType {
+		if self.imageUrl != nil {
+			return .image
+		}
+		return .text
+	}
 	
 	/// Stored property for the message text
 	public var text: String
@@ -186,6 +208,55 @@ DO NOT reference sources outside of those provided below. If you did not referen
 	/// Stored property for the sender of the message (either `user` or `system`)
 	private var sender: Sender
 	
+	/// A `URL` for an image generated, if any
+	public var imageUrl: URL?
+	/// An `Image` loaded from the `imageUrl`, if any
+	public var image: some View {
+		Group {
+			if let url = imageUrl {
+				AsyncImage(
+					url: url,
+					content: { image in
+						image
+							.resizable()
+							.aspectRatio(contentMode: .fit)
+							.frame(
+								maxWidth: 250,
+								maxHeight: 250
+							)
+							.clipShape(
+								UnevenRoundedRectangle(
+									topLeadingRadius: 0,
+									bottomLeadingRadius: 13,
+									bottomTrailingRadius: 13,
+									topTrailingRadius: 13
+								)
+							)
+							.draggable(
+								Image(
+									nsImage: NSImage(
+										contentsOf: url
+									)!
+								)
+							)
+							.contextMenu {
+								Button {
+									NSWorkspace.shared.open(url)
+								} label: {
+									Text("Open")
+								}
+							}
+					},
+					placeholder: {
+						ProgressView()
+					}
+				)
+			} else {
+				EmptyView()
+			}
+		}
+	}
+	
 	/// A `Bool` representing if the message contains LaTeX
 	public var hasLatex: Bool {
 		return self.chunks.contains(where: \.isLatex)
@@ -327,10 +398,15 @@ DO NOT reference sources outside of those provided below. If you did not referen
 		
 	}
 	
-	private enum JSONType: String {
+	private enum JSONType: String, CaseIterable {
 		case unknown
 		case empty
 		case references
+	}
+	
+	public enum ContentType: String, CaseIterable {
+		case text
+		case image
 	}
 	
 }

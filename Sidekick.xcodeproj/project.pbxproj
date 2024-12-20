@@ -159,6 +159,8 @@
 		20C221062CC4B15600A99796 /* SourcesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C221052CC4B15600A99796 /* SourcesManager.swift */; };
 		20C221092CC4B5A800A99796 /* SourcesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C221082CC4B5A800A99796 /* SourcesView.swift */; };
 		20C2210B2CC4B88F00A99796 /* SourcesButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C2210A2CC4B88F00A99796 /* SourcesButton.swift */; };
+		20CB7AC02D1457B10013E30C /* PromptAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CB7ABF2D1457B10013E30C /* PromptAnalyzer.swift */; };
+		20CB7AC82D145E320013E30C /* UserRequestClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 20CB7AC72D145E320013E30C /* UserRequestClassifier.mlmodel */; };
 		20CC0C2F2CE2401600A3BC40 /* ExtractKit-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = 20CC0C2E2CE2401600A3BC40 /* ExtractKit-macOS */; };
 		20CEA7572CE3082F0070579B /* SwiftMath in Frameworks */ = {isa = PBXBuildFile; productRef = 20CEA7562CE3082F0070579B /* SwiftMath */; };
 		20CEA7592CE3084E0070579B /* MathView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CEA7582CE3084E0070579B /* MathView.swift */; };
@@ -247,6 +249,7 @@
 		200FBFF22CB66B8300A92A74 /* ServerHealth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerHealth.swift; sourceTree = "<group>"; };
 		200FBFF42CB66C0000A92A74 /* LlamaServerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LlamaServerError.swift; sourceTree = "<group>"; };
 		200FBFF62CB68ABF00A92A74 /* ChatParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatParameters.swift; sourceTree = "<group>"; };
+		201615FF2D15AE0500DE2C97 /* imageGeneration.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imageGeneration.png; sourceTree = "<group>"; };
 		201A1A8D2CDB7C1C001E9BA9 /* MarkdownDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownDataView.swift; sourceTree = "<group>"; };
 		201A1A902CDB7D8E001E9BA9 /* MarkdownDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownDataViewController.swift; sourceTree = "<group>"; };
 		201A1A922CDB8109001E9BA9 /* Extension+Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Collection.swift"; sourceTree = "<group>"; };
@@ -398,6 +401,8 @@
 		20C221052CC4B15600A99796 /* SourcesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesManager.swift; sourceTree = "<group>"; };
 		20C221082CC4B5A800A99796 /* SourcesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesView.swift; sourceTree = "<group>"; };
 		20C2210A2CC4B88F00A99796 /* SourcesButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesButton.swift; sourceTree = "<group>"; };
+		20CB7ABF2D1457B10013E30C /* PromptAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptAnalyzer.swift; sourceTree = "<group>"; };
+		20CB7AC72D145E320013E30C /* UserRequestClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = UserRequestClassifier.mlmodel; sourceTree = "<group>"; };
 		20CEA7582CE3084E0070579B /* MathView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathView.swift; sourceTree = "<group>"; };
 		20CEA75A2CE308AD0070579B /* MessageContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageContentView.swift; sourceTree = "<group>"; };
 		20CEA75D2CE309F10070579B /* MessageOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageOptionsView.swift; sourceTree = "<group>"; };
@@ -608,6 +613,7 @@
 		202B4DB42CF5FDCA00D0CC1B /* README Images */ = {
 			isa = PBXGroup;
 			children = (
+				201615FF2D15AE0500DE2C97 /* imageGeneration.png */,
 				202B4DBF2CF606A600D0CC1B /* codeExport.png */,
 				202B4DBD2CF6064000D0CC1B /* dataVisualization1.png */,
 				202B4DBE2CF6064000D0CC1B /* dataVisualization2.png */,
@@ -1045,6 +1051,7 @@
 			isa = PBXGroup;
 			children = (
 				20B97CCC2CAFEC37009A0A5D /* Model.swift */,
+				20CB7ABE2D14579C0013E30C /* Router */,
 				200FBFD62CB627B100A92A74 /* llama.cpp */,
 			);
 			path = Inference;
@@ -1071,6 +1078,15 @@
 				205B50D02CD3025A0057769F /* SourceRowView.swift */,
 			);
 			path = Sources;
+			sourceTree = "<group>";
+		};
+		20CB7ABE2D14579C0013E30C /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				20CB7AC72D145E320013E30C /* UserRequestClassifier.mlmodel */,
+				20CB7ABF2D1457B10013E30C /* PromptAnalyzer.swift */,
+			);
+			path = Router;
 			sourceTree = "<group>";
 		};
 		20CEA75C2CE308B50070579B /* Message */ = {
@@ -1290,6 +1306,7 @@
 				204592172CD32DEF00DEAA96 /* TypedTextView.swift in Sources */,
 				202ED9562CD7827400D96030 /* Gemma2.swift in Sources */,
 				20571F842CBD71C9004F3344 /* SystemPromptEditor.swift in Sources */,
+				20CB7AC02D1457B10013E30C /* PromptAnalyzer.swift in Sources */,
 				20C221062CC4B15600A99796 /* SourcesManager.swift in Sources */,
 				20B4D6B12CC3D72700817E15 /* Extension+IndexItem.swift in Sources */,
 				20573F1F2CB5274E004C19FE /* MessagesView.swift in Sources */,
@@ -1361,6 +1378,7 @@
 				204D09872D1182EC0066B060 /* IntroductionPageView.swift in Sources */,
 				202E3EDD2CBB8F7B00AF86C8 /* ReferencedURL.swift in Sources */,
 				202801F42CC93C80005C1F7D /* DictationButton.swift in Sources */,
+				20CB7AC82D145E320013E30C /* UserRequestClassifier.mlmodel in Sources */,
 				20CEA7592CE3084E0070579B /* MathView.swift in Sources */,
 				2004D7642CBC9DA2009F294E /* ConversationState.swift in Sources */,
 				2086E1712CB036BB00FFCF57 /* ConversationManager.swift in Sources */,

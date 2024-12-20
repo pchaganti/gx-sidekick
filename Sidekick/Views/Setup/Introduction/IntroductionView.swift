@@ -29,6 +29,7 @@ struct IntroductionView: View {
 			}
 			introductionViewController.nextPage
 		}
+		.frame(maxHeight: 500)
     }
 	
 	var page: some View {

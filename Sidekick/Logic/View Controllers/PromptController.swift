@@ -9,9 +9,13 @@ import Foundation
 import AVFoundation
 import Speech
 import SwiftUI
+import ImagePlayground
 
 @MainActor
 public class PromptController: ObservableObject, DropDelegate {
+	
+	@Published var isGeneratingImage: Bool = false
+	@Published var imageConcept: String? = nil
 	
 	@Published var isRecording: Bool = false
 	@Published var prompt: String = ""

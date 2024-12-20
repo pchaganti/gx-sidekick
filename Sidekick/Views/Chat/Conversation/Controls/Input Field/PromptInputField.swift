@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SimilaritySearchKit
+import ImagePlayground
 
 struct PromptInputField: View {
 	
@@ -46,7 +47,7 @@ struct PromptInputField: View {
 	
 	var addFilesTip: AddFilesTip = .init()
 	
-    var body: some View {
+	var body: some View {
 		textField
 			.onExitCommand {
 				self.isFocused = false
@@ -68,7 +69,7 @@ struct PromptInputField: View {
 				self.isFocused = true
 			}
 			.popoverTip(addFilesTip)
-    }
+	}
 	
 	var textField: some View {
 		TextField(
@@ -117,6 +118,10 @@ struct PromptInputField: View {
 		}
 		// Get previous content
 		guard var conversation = selectedConversation else { return }
+		// Get prompt expected result type
+		let resultType: PromptAnalyzer.ResultType = PromptAnalyzer.analyzePrompt(
+			promptController.prompt
+		)
 		// Make request message
 		let newUserMessage: Message = Message(
 			text: promptController.prompt,
@@ -128,16 +133,48 @@ struct PromptInputField: View {
 		self.sentConversation = conversation
 		// Capture temp resources
 		let tempResources: [TemporaryResource] = self.promptController.tempResources
+		// If result type is text, send message
+		switch resultType {
+			case .text:
+				self.startTextGeneration(
+					tempResources: tempResources
+				)
+			case .image:
+				// If image generation is available, start generating image
+				if PromptAnalyzer.ResultType.image.isAvailable {
+					self.startImageGeneration()
+				} else {
+					// Else, fall back to text
+					self.startTextGeneration(
+						tempResources: tempResources
+					)
+				}
+		}
 		// Clear prompt
 		self.clearInputs()
 		DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
 			self.clearInputs()
 		}
+	}
+	
+	private func startTextGeneration(
+		tempResources: [TemporaryResource]
+	) {
 		// Get response
 		Task {
-			await self.getResponse(
+			await self.generateChatResponse(
 				tempResources: tempResources
 			)
+		}
+	}
+	
+	private func startImageGeneration() {
+		if #available(macOS 15.2, *) {
+			// Start generation
+			self.promptController.imageConcept = self.promptController.prompt
+			self.promptController.isGeneratingImage = true
+			// Reset sentConversation
+			self.sentConversation = nil
 		}
 	}
 	
@@ -145,7 +182,7 @@ struct PromptInputField: View {
 		self.promptController.prompt.removeAll()
 	}
 	
-	private func getResponse(
+	private func generateChatResponse(
 		tempResources: [TemporaryResource]
 	) async {
 		// If processing, use recursion to update
@@ -154,7 +191,7 @@ struct PromptInputField: View {
 				await model.interrupt()
 				Task.detached(priority: .userInitiated) {
 					try? await Task.sleep(for: .seconds(1))
-					await getResponse(
+					await generateChatResponse(
 						tempResources: tempResources
 					)
 				}
@@ -218,15 +255,16 @@ struct PromptInputField: View {
 			)
 			responseMessage.end()
 			// Update conversation
+			print("messages: \(conversation.messages.map(\.text))")
 			let _ = conversation.addMessage(
 				responseMessage
 			)
-			conversationManager.update(conversation)
+			self.conversationManager.update(conversation)
 			// Make sound
 			if Settings.playSoundEffects {
 				SoundEffects.ping.play()
 			}
-			// Reset sendConversation
+			// Reset sentConversation
 			self.sentConversation = nil
 		}
 	}

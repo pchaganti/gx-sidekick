@@ -79,6 +79,11 @@ public struct Conversation: Identifiable, Codable, Hashable {
 		}
 	}
 	
+	/// Function to drop last message
+	public mutating func dropLastMessage() {
+		self.messages.removeLast()
+	}
+	
 	/// Static function for equatable conformance
 	public static func == (lhs: Conversation, rhs: Conversation) -> Bool {
 		return lhs.id == rhs.id

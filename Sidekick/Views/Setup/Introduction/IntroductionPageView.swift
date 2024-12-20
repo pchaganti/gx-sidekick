@@ -25,6 +25,7 @@ struct IntroductionPageView: View {
 			Markdown(content.description)
 				.font(.title2)
 		}
+		.frame(maxHeight: 400)
     }
 	
 }

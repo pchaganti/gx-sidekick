@@ -7,11 +7,11 @@
 
 import MarkdownUI
 import SwiftUI
+import ImagePlayground
 
 struct ConversationControlsView: View {
 	
-	@StateObject private var promptController: PromptController = .init()
-	
+	@EnvironmentObject private var promptController: PromptController
 	@EnvironmentObject private var conversationManager: ConversationManager
 	@EnvironmentObject private var profileManager: ProfileManager
 	@EnvironmentObject private var conversationState: ConversationState
@@ -60,7 +60,6 @@ struct ConversationControlsView: View {
 			Spacer()
 				.frame(maxHeight: maxHeight)
 		}
-		.environmentObject(promptController)
 	}
 	
 	var controls: some View {

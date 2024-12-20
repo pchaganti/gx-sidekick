@@ -9,12 +9,19 @@ import SwiftUI
 
 struct PopoverButton<Label: View, Content: View>: View {
 	
-	init(@ViewBuilder label: @escaping () -> Label, @ViewBuilder content: @escaping () -> Content) {
+	init(
+		@ViewBuilder label: @escaping () -> Label,
+		@ViewBuilder content: @escaping () -> Content
+	) {
 		self.label = label
 		self.content = content
 	}
 	
-	init(arrowEdge: Edge, @ViewBuilder label: @escaping () -> Label, @ViewBuilder content: @escaping () -> Content) {
+	init(
+		arrowEdge: Edge,
+		@ViewBuilder label: @escaping () -> Label,
+		@ViewBuilder content: @escaping () -> Content
+	) {
 		self.label = label
 		self.content = content
 		self.arrowEdge = arrowEdge
