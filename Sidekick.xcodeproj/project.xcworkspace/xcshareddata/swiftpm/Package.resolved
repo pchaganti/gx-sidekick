@@ -1,5 +1,5 @@
 {
-  "originHash" : "3c7f36d10162d04267ff06fb1e8fdf515929c4fb27fefcaabc6fc292bda64a58",
+  "originHash" : "2106fb38752523eca24d3487e60c92144087d60e494ff41ec3ff741c84517c02",
   "pins" : [
     {
       "identity" : "browserkit",
@@ -25,6 +25,15 @@
       "state" : {
         "revision" : "1391f3832ea2eeee5186ea8abb81ea49ed0609cc",
         "version" : "0.14.2"
+      }
+    },
+    {
+      "identity" : "default-models",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/johnbean393/Default-Models",
+      "state" : {
+        "branch" : "main",
+        "revision" : "88011561d976bc09b323bea45d9f930d5b44a956"
       }
     },
     {

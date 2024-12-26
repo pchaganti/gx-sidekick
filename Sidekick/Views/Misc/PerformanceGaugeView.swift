@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import DefaultModels
 
 struct PerformanceGaugeView: View {
 	

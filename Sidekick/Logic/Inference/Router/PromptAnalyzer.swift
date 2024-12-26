@@ -5,14 +5,15 @@
 //  Created by John Bean on 12/19/24.
 //
 
+import CoreML
 import Foundation
 import ImagePlayground
-import CoreML
 import NaturalLanguage
 
 public class PromptAnalyzer {
 	
 	/// Function to detect what results are expected by the prompt
+	@MainActor
 	public static func analyzePrompt(
 		_ prompt: String
 	) -> ResultType {
@@ -23,7 +24,7 @@ public class PromptAnalyzer {
 			return resultTypes.first!
 		}
 		// Else, init classifier model
-		let mlModelConfig: MLModelConfiguration = MLModelConfiguration()
+		let mlModelConfig = MLModelConfiguration()
 		mlModelConfig.computeUnits = .all
 		guard let promptClassifier: NLModel = try? NLModel(
 			mlModel: MLModel(
@@ -41,19 +42,43 @@ public class PromptAnalyzer {
 		).lowercased()
 		print("processedPrompt: \(processedPrompt)")
 		// Run classifier
-		guard let label: String = promptClassifier.predictedLabel(
-			for: processedPrompt
-		) else {
-			return .text
+		let hypotheses: [String: Double] = promptClassifier.predictedLabelHypotheses(
+			for: processedPrompt,
+			maximumCount: 2
+		)
+		let textGenScore: Double = hypotheses[ResultType.text.rawValue] ?? 1.0
+		let imageGenScore: Double = hypotheses[ResultType.image.rawValue] ?? 1.0
+		// Get most likely result type
+		let mostLikelyResultType: ResultType = {
+			if textGenScore > imageGenScore {
+				return .text
+			}
+			return .image
+		}()
+		// If score is similar, prompt user
+		var wantedResultType: ResultType?
+		let similarThreshold = 0.3
+		if abs(textGenScore - imageGenScore) < similarThreshold {
+			// Prompt user
+			let _ = Dialogs.dichotomy(
+				title: String(localized: "Response"),
+				message: String(localized: "What do you want Sidekick to respond with?"),
+				option1: String(localized: "Text"),
+				option2: String(localized: "Image")
+			) {
+				wantedResultType = .text
+			} ifOption2: {
+				wantedResultType = .image
+			}
+			return wantedResultType!
+		} else {
+			// Return most likely type
+			return mostLikelyResultType
 		}
-		// Return result type
-		print("label: \(label)")
-		return ResultType(label) ?? .text
 	}
 	
 	/// The expected result type of a prompt
 	public enum ResultType: String, CaseIterable {
-		
 		init?(
 			_ rawValue: String
 		) {
@@ -83,7 +108,5 @@ public class PromptAnalyzer {
 					}
 			}
 		}
-		
 	}
-	
 }

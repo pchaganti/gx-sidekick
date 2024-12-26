@@ -255,7 +255,6 @@ struct PromptInputField: View {
 			)
 			responseMessage.end()
 			// Update conversation
-			print("messages: \(conversation.messages.map(\.text))")
 			let _ = conversation.addMessage(
 				responseMessage
 			)

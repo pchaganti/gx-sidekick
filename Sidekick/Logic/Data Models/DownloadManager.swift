@@ -8,6 +8,7 @@
 import Foundation
 import OSLog
 import SwiftUI
+import DefaultModels
 
 @MainActor
 /// Controls the download of LLMs

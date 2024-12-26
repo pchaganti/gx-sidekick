@@ -221,8 +221,8 @@ DO NOT reference sources outside of those provided below. If you did not referen
 							.resizable()
 							.aspectRatio(contentMode: .fit)
 							.frame(
-								maxWidth: 250,
-								maxHeight: 250
+								maxWidth: 300,
+								maxHeight: 300
 							)
 							.clipShape(
 								UnevenRoundedRectangle(
@@ -239,6 +239,9 @@ DO NOT reference sources outside of those provided below. If you did not referen
 									)!
 								)
 							)
+							.onTapGesture(count: 2) {
+								NSWorkspace.shared.open(url)
+							}
 							.contextMenu {
 								Button {
 									NSWorkspace.shared.open(url)
@@ -321,7 +324,22 @@ DO NOT reference sources outside of those provided below. If you did not referen
 		let messageText: String = text.dropFollowingSubstring(
 			"[",
 			options: .backwards
-		).trimmingWhitespaceAndNewlines()
+		)
+		.trimmingWhitespaceAndNewlines()
+		.dropSuffixIfPresent(
+			"Sources:"
+		).dropSuffixIfPresent(
+			"References:"
+		).dropSuffixIfPresent(
+			"**Sources:**"
+		).dropSuffixIfPresent(
+			"**References:**"
+		).dropSuffixIfPresent(
+			"**Sources**:"
+		).dropSuffixIfPresent(
+			"**References**:"
+		)
+		.trimmingWhitespaceAndNewlines()
 		let jsonText: String = text.dropPrecedingSubstring(
 			"[",
 			options: .backwards,

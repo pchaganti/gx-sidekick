@@ -974,6 +974,16 @@
         }
       }
     },
+    "Image" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "生成图片"
+          }
+        }
+      }
+    },
     "Improve inference speed by running a second model in parallel with the main model. This may use more memory." : {
       "localizations" : {
         "zh-Hans" : {
@@ -1521,6 +1531,16 @@
         }
       }
     },
+    "Response" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "回复形式"
+          }
+        }
+      }
+    },
     "Restart Sidekick" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2001,6 +2021,16 @@
         }
       }
     },
+    "Text" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "生成文字"
+          }
+        }
+      }
+    },
     "The endpoint on the server used for inference. This endpoint must be accessible from this device, and provide an OpenAI compatible API. (e.g. http://localhost:8000, where http://localhost:8000/v1/chat/completions is accessible)\n\nTo ensure privacy and security of your data, host your own server." : {
       "localizations" : {
         "zh-Hans" : {
@@ -2377,6 +2407,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "欢迎使用 Sidekick"
+          }
+        }
+      }
+    },
+    "What do you want Sidekick to respond with?" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你需要 Sidekick 以什么形式回复？"
           }
         }
       }
