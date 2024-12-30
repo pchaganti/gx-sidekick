@@ -44,6 +44,13 @@ struct ConversationManagerView: View {
 		)
 	}
 	
+	var contextIsFull: Bool {
+		// Get token count
+		guard let tokenCount = selectedConversation?.tokenCount else { return false }
+		// Return whether context length is full
+		return tokenCount > InferenceSettings.contextLength
+	}
+	
 	var navTitle: String {
 		return self.selectedConversation?.title ?? String(
 			localized: "Conversations"
@@ -81,6 +88,9 @@ struct ConversationManagerView: View {
 				Spacer()
 				if InferenceSettings.lowUnifiedMemory {
 					lowMemoryWarning
+				}
+				if self.contextIsFull {
+					contextFullWarning
 				}
 				if #available(macOS 15, *) {
 					LengthyTasksToolbarButton()
@@ -201,7 +211,17 @@ struct ConversationManagerView: View {
 			Label("Low Memory", systemImage: "exclamationmark.triangle.fill")
 				.foregroundStyle(.yellow)
 		} content: {
-			Text("Your system has only \(InferenceSettings.unifiedMemorySize) GB of RAM, which may not be sufficient for running an LLM. \nPlease save progress in all open apps, and close memory hogging applications **in case a system crash occurs.**")
+			Text("Your system has only \(InferenceSettings.unifiedMemorySize) GB of RAM, which may not be sufficient for running an AI model. \nPlease save progress in all open apps, and close memory hogging applications **in case a system crash occurs.**")
+				.padding()
+		}
+	}
+	
+	var contextFullWarning: some View {
+		PopoverButton {
+			Label("Context Full", systemImage: "brain.fill")
+				.foregroundStyle(.red)
+		} content: {
+			Text("The AI model's context is full and may forget earlier chat history. Start a new conversation to clear context.")
 				.padding()
 		}
 	}

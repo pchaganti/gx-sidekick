@@ -46,6 +46,9 @@ public struct Conversation: Identifiable, Codable, Hashable {
 		}
 	}
 	
+	/// The length of the conversation in tokens, of type `Int`
+	public var tokenCount: Int?
+	
 	/// Function to add a new message, returns `true` if successful
 	public mutating func addMessage(_ message: Message) -> Bool {
 		// Check if different sender

@@ -126,7 +126,7 @@ struct InlineAssistantView: View {
 						partialResponse: partialResponse
 					)
 				},
-				handleResponseFinish: { fullMessage, pendingMessage in
+				handleResponseFinish: { fullMessage, pendingMessage, _ in
 					self.handleResponseFinish(
 						fullMessage: fullMessage,
 						pendingMessage: pendingMessage

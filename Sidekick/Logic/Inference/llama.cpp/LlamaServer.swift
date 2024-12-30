@@ -338,7 +338,7 @@ public actor LlamaServer {
 			responseStartSeconds: responseDiff,
 			predictedPerSecond: Double(tokens) / generationTime,
 			modelName: modelName,
-			nPredicted: tokens,
+			usage: stopResponse?.usage,
 			usedServer: rawUrl.usingRemoteServer
 		)
 	}
@@ -422,7 +422,7 @@ public actor LlamaServer {
 		var responseStartSeconds: Double
 		var predictedPerSecond: Double?
 		var modelName: String?
-		var nPredicted: Int?
+		var usage: Usage?
 		var usedServer: Bool
 		
 	}

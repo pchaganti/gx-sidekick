@@ -258,6 +258,7 @@ struct PromptInputField: View {
 			let _ = conversation.addMessage(
 				responseMessage
 			)
+			conversation.tokenCount = response.usage?.total_tokens
 			self.conversationManager.update(conversation)
 			// Make sound
 			if Settings.playSoundEffects {

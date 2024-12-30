@@ -324,6 +324,16 @@
         }
       }
     },
+    "Context Full" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上下文已满"
+          }
+        }
+      }
+    },
     "Context Length" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2031,6 +2041,16 @@
         }
       }
     },
+    "The AI model's context is full and may forget earlier chat history. Start a new conversation to clear context." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AI模型的上下文已满，可能会忘记之前的聊天记录。请创建新的对话，以清空上下文。"
+          }
+        }
+      }
+    },
     "The endpoint on the server used for inference. This endpoint must be accessible from this device, and provide an OpenAI compatible API. (e.g. http://localhost:8000, where http://localhost:8000/v1/chat/completions is accessible)\n\nTo ensure privacy and security of your data, host your own server." : {
       "localizations" : {
         "zh-Hans" : {
@@ -2481,12 +2501,12 @@
         }
       }
     },
-    "Your system has only %lld GB of RAM, which may not be sufficient for running an LLM. \nPlease save progress in all open apps, and close memory hogging applications **in case a system crash occurs.**" : {
+    "Your system has only %lld GB of RAM, which may not be sufficient for running an AI model. \nPlease save progress in all open apps, and close memory hogging applications **in case a system crash occurs.**" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "由于你的电脑只有 %lld GB 的内存，运行大模型时可能会捉襟见肘。请保存其他应用程序的进度，并关闭占用大量内存的应用程序，**以防系统崩溃。**"
+            "value" : "由于你的电脑只有 %lld GB 的内存，运行AI大模型时可能会捉襟见肘。请保存其他应用程序的进度，并关闭占用大量内存的应用程序，**以防系统崩溃。**"
           }
         }
       }

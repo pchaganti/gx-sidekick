@@ -144,6 +144,11 @@ struct InferenceSettingsView: View {
 			Spacer()
 			Button {
 				self.isSelectingSpeculativeDecodingModel.toggle()
+				// Send notification to reload model
+				NotificationCenter.default.post(
+					name: Notifications.changedInferenceConfig.name,
+					object: nil
+				)
 			} label: {
 				Text("Manage")
 			}
@@ -240,6 +245,11 @@ struct InferenceSettingsView: View {
 		}
 		.onChange(of: temperature) {
 			InferenceSettings.temperature = self.temperature
+			// Send notification to reload model
+			NotificationCenter.default.post(
+				name: Notifications.changedInferenceConfig.name,
+				object: nil
+			)
 		}
 	}
 	
@@ -262,6 +272,11 @@ struct InferenceSettingsView: View {
 			}
 			.onChange(of: useGPUAcceleration) {
 				InferenceSettings.useGPUAcceleration = self.useGPUAcceleration
+				// Send notification to reload model
+				NotificationCenter.default.post(
+					name: Notifications.changedInferenceConfig.name,
+					object: nil
+				)
 			}
 			PerformanceGaugeView()
 		}

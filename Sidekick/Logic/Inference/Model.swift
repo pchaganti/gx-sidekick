@@ -106,8 +106,9 @@ public class Model: ObservableObject {
 		) -> Void = { _, _ in },
 		handleResponseFinish: @escaping (
 			String, // Pending message
-			String // Final message
-		) -> Void = { _, _ in }
+			String,  // Final message
+			Int? // Tokens used
+		) -> Void = { _, _, _ in }
 	) async throws -> LlamaServer.CompleteResponse {
 		// Reset pending message
 		self.pendingMessage = ""
@@ -183,7 +184,8 @@ public class Model: ObservableObject {
 		// Handle response finish
 		handleResponseFinish(
 			response!.text,
-			self.pendingMessage
+			self.pendingMessage,
+			response!.usage?.total_tokens
 		)
 		// Update display
 		self.pendingMessage = response!.text
