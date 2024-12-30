@@ -43,9 +43,10 @@ public class DownloadManager: NSObject, ObservableObject {
 	}
 	
 	/// Function to download the default large language model
-	func downloadDefaultModel() {
+	func downloadDefaultModel() async {
 		// Get default model
-		let model: HuggingFaceModel = DefaultModels.recommendedModel
+		let model: HuggingFaceModel = await DefaultModels.recommendedModel
+//		await print(DefaultModels.models)
 		print("Trying to download \(model.name)")
 		// Check if accessible
 		URL.verifyURL(

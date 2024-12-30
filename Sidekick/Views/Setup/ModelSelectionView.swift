@@ -58,7 +58,9 @@ struct ModelSelectionView: View {
 	var downloadButton: some View {
 		Button {
 			// Start download of the default model
-			self.downloadManager.downloadDefaultModel()
+			Task.detached { @MainActor in
+				await self.downloadManager.downloadDefaultModel()
+			}
 		} label: {
 			HStack {
 				Text("Download Default Model")

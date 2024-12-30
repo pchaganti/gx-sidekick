@@ -221,8 +221,8 @@ DO NOT reference sources outside of those provided below. If you did not referen
 							.resizable()
 							.aspectRatio(contentMode: .fit)
 							.frame(
-								maxWidth: 300,
-								maxHeight: 300
+								maxWidth: 350,
+								maxHeight: 350
 							)
 							.clipShape(
 								UnevenRoundedRectangle(

@@ -40,7 +40,7 @@ public class PromptAnalyzer {
 		let processedPrompt: String = prompt.trimmingCharacters(
 			in: .punctuationCharacters
 		).lowercased()
-		print("processedPrompt: \(processedPrompt)")
+//		print("processedPrompt: \(processedPrompt)")
 		// Run classifier
 		let hypotheses: [String: Double] = promptClassifier.predictedLabelHypotheses(
 			for: processedPrompt,

@@ -37,7 +37,9 @@ struct EndDetectionScrollView<Content: View>: View {
 				.overlay(content:  {
 					GeometryReader(content: { geometry in
 						Color.clear.onAppear {
-							self.totalContentHeight = geometry.frame(in: .global).height
+							self.totalContentHeight = geometry.frame(
+								in: .global
+							).height
 						}
 					})
 				})
@@ -51,7 +53,8 @@ struct EndDetectionScrollView<Content: View>: View {
 			})
 		})
 		.coordinateSpace(name: "frameLayer")
-		.onPreferenceChange(OffsetPreferenceKey.self, perform: { offset in
+		.onPreferenceChange(OffsetPreferenceKey.self) { offset in
+			print("totalContentHeight: \(totalContentHeight), visibleContentHeight: \(visibleContentHeight), offset: \(offset)")
 			if totalContentHeight < visibleContentHeight {
 				hasScrolledNearEnd = true
 				return
@@ -65,7 +68,7 @@ struct EndDetectionScrollView<Content: View>: View {
 			} else {
 				hasScrolledNearEnd = false
 			}
-		})
+		}
 	}
 	
 	var offsetReader: some View {
@@ -82,6 +85,8 @@ struct EndDetectionScrollView<Content: View>: View {
 }
 
 struct OffsetPreferenceKey: PreferenceKey {
+	
 	@MainActor static var defaultValue: CGFloat = .zero
 	static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {}
+	
 }
