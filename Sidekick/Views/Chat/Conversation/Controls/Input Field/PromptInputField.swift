@@ -218,7 +218,7 @@ struct PromptInputField: View {
 			let hasIndexItems: Bool = !((
 				index?.indexItems.isEmpty
 			) ?? true)
-			didUseSources = useWebSearch || hasIndexItems
+			didUseSources = useWebSearch || hasIndexItems || !tempResources.isEmpty
 			response = try await model.listenThinkRespond(
 				messages: self.messages,
 				mode: .chat,
