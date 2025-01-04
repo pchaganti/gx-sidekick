@@ -338,6 +338,8 @@ DO NOT reference sources outside of those provided below. If you did not referen
 			"**Sources**:"
 		).dropSuffixIfPresent(
 			"**References**:"
+		).dropSuffixIfPresent(
+			"List of Filepaths and URLs:"
 		)
 		.trimmingWhitespaceAndNewlines()
 		let jsonText: String = text.dropPrecedingSubstring(
