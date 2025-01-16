@@ -97,7 +97,7 @@ Optionally, offload generation to your desktop to speed up generation while exte
 - RAM ≥ 8 GB
 
 **Prebuilt Package**
-- Download the packages from [Releases](https://github.com/johnbean393/Sidekick/releases/), and open it. Note that since the package is not notarized, you will need to enable it in System Settings. 
+- Download the disk image from [Releases](https://github.com/johnbean393/Sidekick/releases/), and open it.
 
 **Build it yourself**
 - Download, open in Xcode, and build it.

@@ -112,19 +112,30 @@ public class Accessibility {
 	public func simulateTyping(for string: String) {
 		let source = CGEventSource(stateID: .combinedSessionState)
 		let utf16Chars = Array(string.utf16)
-		
+		// Type characters one by one
 		utf16Chars.forEach { uniChar in
 			var uniChar = uniChar
 			if uniChar == 0x000A {
 				
-				if let shiftDown = CGEvent(keyboardEventSource: source, virtualKey: CGKeyCode(0x38), keyDown: true) {
+				if let shiftDown = CGEvent(
+					keyboardEventSource: source,
+					virtualKey: CGKeyCode(0x38),
+					keyDown: true
+				) {
 					shiftDown.post(tap: .cghidEventTap)
 				}
 				
 				// Simulate pressing and releasing the Return key
-				if let eventDown = CGEvent(keyboardEventSource: source, virtualKey: CGKeyCode(0x24), keyDown: true),
-				   let eventUp = CGEvent(keyboardEventSource: source, virtualKey: CGKeyCode(0x24), keyDown: false) {
-					
+				if let eventDown = CGEvent(
+					keyboardEventSource: source,
+					virtualKey: CGKeyCode(0x24),
+					keyDown: true
+				),
+				   let eventUp = CGEvent(
+					keyboardEventSource: source,
+					virtualKey: CGKeyCode(0x24),
+					keyDown: false
+				   ) {
 					eventDown.post(tap: .cghidEventTap)
 					Thread.sleep(forTimeInterval: 0.005)
 					eventUp.post(tap: .cghidEventTap)
@@ -137,12 +148,24 @@ public class Accessibility {
 				
 			} else {
 				// Handle other characters as before
-				if let eventDown = CGEvent(keyboardEventSource: source, virtualKey: 0, keyDown: true),
-				   let eventUp = CGEvent(keyboardEventSource: source, virtualKey: 0, keyDown: false) {
-					
-					eventDown.keyboardSetUnicodeString(stringLength: 1, unicodeString: &uniChar)
-					eventUp.keyboardSetUnicodeString(stringLength: 1, unicodeString: &uniChar)
-					
+				if let eventDown = CGEvent(
+					keyboardEventSource: source,
+					virtualKey: 0,
+					keyDown: true
+				),
+				   let eventUp = CGEvent(
+					keyboardEventSource: source,
+					virtualKey: 0,
+					keyDown: false
+				   ) {
+					eventDown.keyboardSetUnicodeString(
+						stringLength: 1,
+						unicodeString: &uniChar
+					)
+					eventUp.keyboardSetUnicodeString(
+						stringLength: 1,
+						unicodeString: &uniChar
+					)
 					eventDown.post(tap: .cghidEventTap)
 					Thread.sleep(forTimeInterval: 0.005)
 					eventUp.post(tap: .cghidEventTap)
@@ -157,15 +180,25 @@ public class Accessibility {
 		let commandKey = CGEventFlags.maskCommand.rawValue
 		let vKeyCode = 0x09
 		let source = CGEventSource(stateID: .hidSystemState)
-		if let commandVDown = CGEvent(keyboardEventSource: source, virtualKey: CGKeyCode(vKeyCode), keyDown: true) {
+		if let commandVDown = CGEvent(
+			keyboardEventSource: source,
+			virtualKey: CGKeyCode(vKeyCode),
+			keyDown: true
+		) {
 			commandVDown.flags = CGEventFlags(rawValue: commandKey)
 			commandVDown.post(tap: .cghidEventTap)
 		}
 		// Wait for app to respond
 		usleep(50000)
 		// Send key up event
-		if let commandVUp = CGEvent(keyboardEventSource: source, virtualKey: CGKeyCode(vKeyCode), keyDown: false) {
-			commandVUp.flags = CGEventFlags(rawValue: commandKey)
+		if let commandVUp = CGEvent(
+			keyboardEventSource: source,
+			virtualKey: CGKeyCode(vKeyCode),
+			keyDown: false
+		) {
+			commandVUp.flags = CGEventFlags(
+				rawValue: commandKey
+			)
 			commandVUp.post(tap: .cghidEventTap)
 		}
 	}

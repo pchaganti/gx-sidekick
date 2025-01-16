@@ -252,6 +252,7 @@ DO NOT reference sources outside of those provided below. If you did not referen
 					},
 					placeholder: {
 						ProgressView()
+							.padding(11)
 					}
 				)
 			} else {
