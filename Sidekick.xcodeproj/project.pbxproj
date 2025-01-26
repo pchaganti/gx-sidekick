@@ -1712,6 +1712,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KM2C4ZAVPJ;
 				ENABLE_HARDENED_RUNTIME = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				OTHER_CODE_SIGN_FLAGS = "$(inherited) -i $(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pattonium.Sidekick.llama-server-watchdog";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1728,6 +1729,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KM2C4ZAVPJ;
 				ENABLE_HARDENED_RUNTIME = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				OTHER_CODE_SIGN_FLAGS = "$(inherited) -i $(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pattonium.Sidekick.llama-server-watchdog";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1800,7 +1802,7 @@
 			repositoryURL = "https://github.com/sindresorhus/KeyboardShortcuts/";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.2.2;
+				minimumVersion = 2.2.4;
 			};
 		};
 		2053EC8C2D38B8D600953DDE /* XCRemoteSwiftPackageReference "Sparkle" */ = {

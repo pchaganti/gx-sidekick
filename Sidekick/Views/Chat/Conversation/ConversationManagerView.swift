@@ -129,9 +129,9 @@ struct ConversationManagerView: View {
 			withAnimation(.linear) {
 				self.conversationState.selectedProfileId = profileManager.default?.id
 			}
-			if let firstConversationId = conversationManager.firstConversation?.id {
+			if let recentConversationId = conversationManager.recentConversation?.id {
 				withAnimation(.linear) {
-					self.conversationState.selectedConversationId = firstConversationId
+					self.conversationState.selectedConversationId = recentConversationId
 				}
 			}
 		}
@@ -227,9 +227,17 @@ struct ConversationManagerView: View {
 	}
 	
 	private func newConversation() {
+		// Create new conversation
 		ConversationManager.shared.newConversation()
+		// Reset selected profile
 		withAnimation(.linear) {
 			conversationState.selectedProfileId = profileManager.default?.id
+		}
+		// Select newly created conversation
+		if let recentConversationId = conversationManager.recentConversation?.id {
+			withAnimation(.linear) {
+				self.conversationState.selectedConversationId = recentConversationId
+			}
 		}
 	}
 	
