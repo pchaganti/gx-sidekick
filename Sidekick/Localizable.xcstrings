@@ -1452,7 +1452,14 @@
       }
     },
     "Reasoning Process" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "思考过程"
+          }
+        }
+      }
     },
     "References:" : {
       "localizations" : {
@@ -2063,9 +2070,6 @@
           }
         }
       }
-    },
-    "The prompt given to the chatbot." : {
-
     },
     "The resources %@ were removed because they could not be located." : {
       "localizations" : {
