@@ -53,7 +53,6 @@
 		204D9CBF2CF4ABCF0052B6F4 /* StatusLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204D9CBE2CF4ABCF0052B6F4 /* StatusLabelView.swift */; };
 		204FC5CA2CC9C8B400CA1DB4 /* TemporaryResourcesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204FC5C92CC9C8B400CA1DB4 /* TemporaryResourcesView.swift */; };
 		20508BE32CF586CD003BC867 /* PendingMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20508BE22CF586CD003BC867 /* PendingMessage.swift */; };
-		2053EC8E2D38B8D600953DDE /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 2053EC8D2D38B8D600953DDE /* Sparkle */; };
 		20571F6F2CBCE8F7004F3344 /* LengthyTasksController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20571F6E2CBCE8F7004F3344 /* LengthyTasksController.swift */; };
 		20571F722CBCEDD8004F3344 /* LengthyTasksList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20571F712CBCEDD8004F3344 /* LengthyTasksList.swift */; };
 		20571F742CBCEE90004F3344 /* LengthyTasksToolbarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20571F732CBCEE90004F3344 /* LengthyTasksToolbarButton.swift */; };
@@ -435,7 +434,6 @@
 				20A8B6572CB26E4800B756FD /* SimilaritySearchKit in Frameworks */,
 				207A9F532CB82D9600E727DE /* SymbolPicker in Frameworks */,
 				2031B9952CEAE66400627D53 /* KeyboardShortcuts in Frameworks */,
-				2053EC8E2D38B8D600953DDE /* Sparkle in Frameworks */,
 				208388DD2CBF4E8A00C2A9F8 /* SecureDefaults in Frameworks */,
 				20CC0C2F2CE2401600A3BC40 /* ExtractKit-macOS in Frameworks */,
 				20573F282CB52F84004C19FE /* Splash in Frameworks */,
@@ -1113,7 +1111,6 @@
 				20CEA7562CE3082F0070579B /* SwiftMath */,
 				2031B9942CEAE66400627D53 /* KeyboardShortcuts */,
 				20F84B982D1CFED400F44990 /* DefaultModels */,
-				2053EC8D2D38B8D600953DDE /* Sparkle */,
 			);
 			productName = Sidekick;
 			productReference = 200549732CAFA67B00A3DCF2 /* Sidekick.app */;
@@ -1226,7 +1223,6 @@
 				20CEA7552CE3082F0070579B /* XCRemoteSwiftPackageReference "SwiftMath" */,
 				2031B9932CEAE66400627D53 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
 				20F84B972D1CFED400F44990 /* XCRemoteSwiftPackageReference "Default-Models" */,
-				2053EC8C2D38B8D600953DDE /* XCRemoteSwiftPackageReference "Sparkle" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 200549742CAFA67B00A3DCF2 /* Products */;
@@ -1865,14 +1861,6 @@
 				minimumVersion = 2.2.4;
 			};
 		};
-		2053EC8C2D38B8D600953DDE /* XCRemoteSwiftPackageReference "Sparkle" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/sparkle-project/Sparkle";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.6.4;
-			};
-		};
 		20573F262CB52F84004C19FE /* XCRemoteSwiftPackageReference "Splash" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/JohnSundell/Splash";
@@ -1957,11 +1945,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2031B9932CEAE66400627D53 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
 			productName = KeyboardShortcuts;
-		};
-		2053EC8D2D38B8D600953DDE /* Sparkle */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 2053EC8C2D38B8D600953DDE /* XCRemoteSwiftPackageReference "Sparkle" */;
-			productName = Sparkle;
 		};
 		20573F272CB52F84004C19FE /* Splash */ = {
 			isa = XCSwiftPackageProductDependency;
