@@ -67,11 +67,76 @@ public struct Message: Identifiable, Codable, Hashable {
 	/// Stored property for the message text
 	public var text: String
 	
-	/// Computed property returning the displayed text
-	public var displayedText: String {
-		// Return original text if sender is not assistant
-		if self.sender != .assistant { return self.text }
-		return text
+	/// Computed property returning the response text
+	public var responseText: String {
+		// List special reasoning tokens
+		let specialTokenSets: [[String]] = [
+			["<think>", "</think>"]
+		]
+		// Init variable for stripped text
+		var processedResponse: String = self.text
+		// Extract text
+		for tokenSet in specialTokenSets {
+			// If only the first token is found, return empty response
+			if self.text.contains(tokenSet.first!) && !self.text.contains(tokenSet.last!) {
+				return ""
+			}
+			// Extract text between tokens
+			if let startRange = processedResponse.range(of: tokenSet.first!),
+				  let endRange = processedResponse.range(
+					of: tokenSet.last!,
+					range: startRange.upperBound..<processedResponse.endIndex
+				  ) {
+				// Remove reasoning tokens and the text inside them
+				processedResponse.removeSubrange(startRange.lowerBound..<endRange.upperBound)
+			}
+		}
+		// Return clean result
+		return processedResponse.trimmingCharacters(in: .whitespacesAndNewlines)
+	}
+	
+	/// A `String` containing the message's reasoning process
+	public var reasoningText: String? {
+		// Return nil if sender is not assistant
+		if self.sender != .assistant { return nil }
+		// List special reasoning tokens
+		let specialTokenSets: [[String]] = [
+			["<think>", "</think>"]
+		]
+		// Extract text between tokens
+		// For each set of tokens
+		for specialTokenSet in specialTokenSets {
+			// Get range of start token
+			if let startRange = self.text.range(
+				of: specialTokenSet.first!
+			) {
+				// Get range of end token
+				if let endRange = self.text.range(
+					of: specialTokenSet.last!,
+					range: startRange.upperBound..<text.endIndex
+				) {
+					// Return text
+					return String(
+						self.text[startRange.upperBound..<endRange.lowerBound]
+					).trimmingCharacters(in: .whitespacesAndNewlines)
+				} else if !self.outputEnded {
+					// If still outputting, show unfinished reasoning text
+					return String(
+						self.text[startRange.upperBound..<text.endIndex]
+					).trimmingCharacters(in: .whitespacesAndNewlines)
+				}
+			}
+		}
+		// If failed to locate reasoning text, return nil
+		return nil
+	}
+	
+	/// A `Bool` representing if the message is contains a reasoning process
+	public var hasReasoning: Bool {
+		// Return true if...
+		// a.) There are reasoning tokens
+		// b.) The message does come from a model
+		return (self.reasoningText != nil) && (self.sender == .assistant)
 	}
 	
 	/// Function returning the message text that is submitted to the LLM
@@ -261,15 +326,10 @@ DO NOT reference sources outside of those provided below. If you did not referen
 		}
 	}
 	
-	/// A `Bool` representing if the message contains LaTeX
-	public var hasLatex: Bool {
-		return self.chunks.contains(where: \.isLatex)
-	}
-	
-	/// Computed property for chunks in the message
-	public var chunks: [Chunk] {
+	/// Computed property for chunks in the message's reasoning text
+	public var reasoningChunks: [Chunk]? {
 		return self
-			.text
+			.reasoningText?
 			.replacingOccurrences(
 				of: "\\(",
 				with: ""
@@ -280,10 +340,27 @@ DO NOT reference sources outside of those provided below. If you did not referen
 			)
 			.splitByLatex()
 			.map { chunk in
-			return Chunk(content: chunk.string, isLatex: chunk.isLatex)
-		}
+				return Chunk(content: chunk.string, isLatex: chunk.isLatex)
+			}
 	}
-		
+	
+	/// Computed property for chunks in the message's response text
+	public var responseChunks: [Chunk] {
+		return self
+			.responseText
+			.replacingOccurrences(
+				of: "\\(",
+				with: ""
+			)
+			.replacingOccurrences(
+				of: "\\)",
+				with: ""
+			)
+			.splitByLatex()
+			.map { chunk in
+				return Chunk(content: chunk.string, isLatex: chunk.isLatex)
+			}
+	}
 	
 	/// An array for URLs of sources referenced in a response
 	public var referencedURLs: [ReferencedURL] = []
@@ -430,4 +507,11 @@ DO NOT reference sources outside of those provided below. If you did not referen
 		case image
 	}
 	
+}
+
+public extension Sequence where Iterator.Element == Message.Chunk {
+	/// A `Bool` representing if the message contains LaTeX
+	var hasLatex: Bool {
+		return self.contains(where: \.isLatex)
+	}
 }

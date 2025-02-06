@@ -15,8 +15,33 @@ struct MessageContentView: View {
 	
 	@State private var renderLatex: Bool = true
 	
-	var message: Message
-	var viewReferenceTip: ViewReferenceTip = .init()
+	var text: String
+	
+	/// An array of type ``Chunk`` indicating chunks in the text
+	private var chunks: [Message.Chunk] {
+		return self
+			.text
+			.replacingOccurrences(
+				of: "\\(",
+				with: ""
+			)
+			.replacingOccurrences(
+				of: "\\)",
+				with: ""
+			)
+			.splitByLatex()
+			.map { chunk in
+				return Message.Chunk(
+					content: chunk.string,
+					isLatex: chunk.isLatex
+				)
+			}
+	}
+	
+	/// A `Bool` indicating whether the text contains LaTeX
+	private var hasLatex: Bool {
+		return self.chunks.contains(where: \.isLatex)
+	}
 	
 	private var theme: Splash.Theme {
 		// NOTE: We are ignoring the Splash theme font
@@ -28,19 +53,11 @@ struct MessageContentView: View {
 		}
 	}
 	
-	private var messageChunks: [(string: String, isLatex: Bool)] {
-		return message.text.splitByLatex()
-	}
-	
 	var body: some View {
 		VStack(alignment: .leading) {
 			content
-				.textSelection(.enabled)
-			if !message.referencedURLs.isEmpty {
-				messageReferences
-			}
 		}
-		.if(self.message.hasLatex) { view in
+		.if(self.hasLatex) { view in
 			view
 				.overlay(alignment: .bottomTrailing) {
 					ToggleLaTeXButton(renderLatex: $renderLatex)
@@ -53,17 +70,18 @@ struct MessageContentView: View {
 			if self.renderLatex {
 				contentWithLaTeX
 			} else {
-				Markdown(message.text)
+				Markdown(self.text)
 					.markdownTheme(.gitHub)
 					.markdownCodeSyntaxHighlighter(
 						.splash(theme: self.theme)
 					)
 			}
 		}
+		.textSelection(.enabled)
 	}
 	
 	var contentWithLaTeX: some View {
-		ForEach(self.message.chunks) { chunk in
+		ForEach(self.chunks) { chunk in
 			Group {
 				if chunk.isLatex {
 					MathView(
@@ -84,29 +102,5 @@ struct MessageContentView: View {
 			}
 		}
 	}
-	
-	var messageReferences: some View {
-		VStack(
-			alignment: .leading
-		) {
-			Text("References:")
-				.bold()
-				.font(.body)
-				.foregroundStyle(Color.secondary)
-			ForEach(
-				message.referencedURLs.indices,
-				id: \.self
-			) { index in
-				message.referencedURLs[index].openButton
-					.if(index == 0) { view in
-						view.popoverTip(viewReferenceTip)
-					}
-			}
-		}
-		.padding(.top, 8)
-		.onAppear {
-			ViewReferenceTip.hasReference = true
-		}
-	}
-	
+
 }

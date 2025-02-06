@@ -27,6 +27,8 @@ struct MessageView: View {
 	@State private var messageText: String
 	@State private var isShowingSources: Bool = false
 	
+	var viewReferenceTip: ViewReferenceTip = .init()
+	
 	var selectedConversation: Conversation? {
 		guard let selectedConversationId = conversationState.selectedConversationId else {
 			return nil
@@ -128,7 +130,24 @@ struct MessageView: View {
 			if isEditing {
 				contentEditor
 			} else {
-				MessageContentView(message: message)
+				VStack(
+					alignment: .leading,
+					spacing: 4
+				) {
+					// Show reasoning process if availible
+					if self.message.hasReasoning {
+						MessageReasoningProcessView(message: self.message)
+							.if(!self.message.responseText.isEmpty) { view in
+								view.padding(.bottom, 6)
+							}
+					}
+					// Show message response
+					MessageContentView(text: self.message.responseText)
+					// Show references if needed
+					if !self.message.referencedURLs.isEmpty {
+						messageReferences
+					}
+				}
 			}
 		}
 		.padding(11)
@@ -183,6 +202,30 @@ struct MessageView: View {
 			self.copy()
 		} label: {
 			Text("Copy to Clipboard")
+		}
+	}
+	
+	var messageReferences: some View {
+		VStack(
+			alignment: .leading
+		) {
+			Text("References:")
+				.bold()
+				.font(.body)
+				.foregroundStyle(Color.secondary)
+			ForEach(
+				self.message.referencedURLs.indices,
+				id: \.self
+			) { index in
+				self.message.referencedURLs[index].openButton
+					.if(index == 0) { view in
+						view.popoverTip(viewReferenceTip)
+					}
+			}
+		}
+		.padding(.top, 8)
+		.onAppear {
+			ViewReferenceTip.hasReference = true
 		}
 	}
 	

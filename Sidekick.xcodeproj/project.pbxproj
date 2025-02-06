@@ -54,7 +54,6 @@
 		204FC5CA2CC9C8B400CA1DB4 /* TemporaryResourcesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204FC5C92CC9C8B400CA1DB4 /* TemporaryResourcesView.swift */; };
 		20508BE32CF586CD003BC867 /* PendingMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20508BE22CF586CD003BC867 /* PendingMessage.swift */; };
 		2053EC8E2D38B8D600953DDE /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 2053EC8D2D38B8D600953DDE /* Sparkle */; };
-		2053EC982D3A115400953DDE /* llama-server in Resources */ = {isa = PBXBuildFile; fileRef = 2053EC972D3A115400953DDE /* llama-server */; };
 		20571F6F2CBCE8F7004F3344 /* LengthyTasksController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20571F6E2CBCE8F7004F3344 /* LengthyTasksController.swift */; };
 		20571F722CBCEDD8004F3344 /* LengthyTasksList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20571F712CBCEDD8004F3344 /* LengthyTasksList.swift */; };
 		20571F742CBCEE90004F3344 /* LengthyTasksToolbarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20571F732CBCEE90004F3344 /* LengthyTasksToolbarButton.swift */; };
@@ -79,6 +78,7 @@
 		20573F362CB53878004C19FE /* CircleMenuStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20573F352CB53878004C19FE /* CircleMenuStyle.swift */; };
 		205B50D12CD3025A0057769F /* SourceRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205B50D02CD3025A0057769F /* SourceRowView.swift */; };
 		206AB6122CF5F8390010B09A /* AttachmentSelectionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206AB6112CF5F8390010B09A /* AttachmentSelectionButton.swift */; };
+		206FBB212D54B40700A045FF /* MessageReasoningProcessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206FBB202D54B40700A045FF /* MessageReasoningProcessView.swift */; };
 		207A9F532CB82D9600E727DE /* SymbolPicker in Frameworks */ = {isa = PBXBuildFile; productRef = 207A9F522CB82D9600E727DE /* SymbolPicker */; };
 		207A9F552CB8A96F00E727DE /* ProfileNavigationRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207A9F542CB8A96F00E727DE /* ProfileNavigationRowView.swift */; };
 		207A9F592CB8F4AF00E727DE /* ResourceSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207A9F582CB8F4AF00E727DE /* ResourceSelectionView.swift */; };
@@ -95,6 +95,15 @@
 		2086E1AC2CB03CD200FFCF57 /* Dialogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2086E1AB2CB03CD200FFCF57 /* Dialogs.swift */; };
 		208844312CDDE33F003BCB6F /* ModelListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208844302CDDE33F003BCB6F /* ModelListView.swift */; };
 		208844332CDDE394003BCB6F /* ModelRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208844322CDDE394003BCB6F /* ModelRowView.swift */; };
+		20896B372D54B0F0006F9368 /* llama-server in Resources */ = {isa = PBXBuildFile; fileRef = 20896B342D54B0F0006F9368 /* llama-server */; };
+		20896B402D54B163006F9368 /* libggml.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 20896B2C2D54B0F0006F9368 /* libggml.dylib */; };
+		20896B412D54B163006F9368 /* libggml-base.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 20896B2D2D54B0F0006F9368 /* libggml-base.dylib */; };
+		20896B422D54B163006F9368 /* libggml-blas.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 20896B2E2D54B0F0006F9368 /* libggml-blas.dylib */; };
+		20896B432D54B163006F9368 /* libggml-cpu.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 20896B2F2D54B0F0006F9368 /* libggml-cpu.dylib */; };
+		20896B442D54B163006F9368 /* libggml-metal.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 20896B302D54B0F0006F9368 /* libggml-metal.dylib */; };
+		20896B452D54B163006F9368 /* libggml-rpc.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 20896B312D54B0F0006F9368 /* libggml-rpc.dylib */; };
+		20896B462D54B163006F9368 /* libllama.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 20896B322D54B0F0006F9368 /* libllama.dylib */; };
+		20896B472D54B163006F9368 /* libllava_shared.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 20896B332D54B0F0006F9368 /* libllava_shared.dylib */; };
 		208AA3F12CC9E42F00A0891F /* ScrollMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208AA3F02CC9E42F00A0891F /* ScrollMask.swift */; };
 		2099BD9B2CB7B8C800E02732 /* Extension+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2099BD9A2CB7B8C800E02732 /* Extension+RawRepresentable.swift */; };
 		2099BD9D2CB7B8E700E02732 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2099BD9C2CB7B8E700E02732 /* Notifications.swift */; };
@@ -293,7 +302,6 @@
 		204D9CBE2CF4ABCF0052B6F4 /* StatusLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusLabelView.swift; sourceTree = "<group>"; };
 		204FC5C92CC9C8B400CA1DB4 /* TemporaryResourcesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryResourcesView.swift; sourceTree = "<group>"; };
 		20508BE22CF586CD003BC867 /* PendingMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingMessage.swift; sourceTree = "<group>"; };
-		2053EC972D3A115400953DDE /* llama-server */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llama-server"; sourceTree = "<group>"; };
 		20571F6E2CBCE8F7004F3344 /* LengthyTasksController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LengthyTasksController.swift; sourceTree = "<group>"; };
 		20571F712CBCEDD8004F3344 /* LengthyTasksList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LengthyTasksList.swift; sourceTree = "<group>"; };
 		20571F732CBCEE90004F3344 /* LengthyTasksToolbarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LengthyTasksToolbarButton.swift; sourceTree = "<group>"; };
@@ -316,6 +324,7 @@
 		20573F352CB53878004C19FE /* CircleMenuStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleMenuStyle.swift; sourceTree = "<group>"; };
 		205B50D02CD3025A0057769F /* SourceRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceRowView.swift; sourceTree = "<group>"; };
 		206AB6112CF5F8390010B09A /* AttachmentSelectionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentSelectionButton.swift; sourceTree = "<group>"; };
+		206FBB202D54B40700A045FF /* MessageReasoningProcessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageReasoningProcessView.swift; sourceTree = "<group>"; };
 		207A9F542CB8A96F00E727DE /* ProfileNavigationRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNavigationRowView.swift; sourceTree = "<group>"; };
 		207A9F582CB8F4AF00E727DE /* ResourceSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceSelectionView.swift; sourceTree = "<group>"; };
 		207A9F5C2CB8FD0900E727DE /* ResourceSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceSectionView.swift; sourceTree = "<group>"; };
@@ -330,6 +339,15 @@
 		2086E1AB2CB03CD200FFCF57 /* Dialogs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dialogs.swift; sourceTree = "<group>"; };
 		208844302CDDE33F003BCB6F /* ModelListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelListView.swift; sourceTree = "<group>"; };
 		208844322CDDE394003BCB6F /* ModelRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelRowView.swift; sourceTree = "<group>"; };
+		20896B2C2D54B0F0006F9368 /* libggml.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libggml.dylib; sourceTree = "<group>"; };
+		20896B2D2D54B0F0006F9368 /* libggml-base.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-base.dylib"; sourceTree = "<group>"; };
+		20896B2E2D54B0F0006F9368 /* libggml-blas.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-blas.dylib"; sourceTree = "<group>"; };
+		20896B2F2D54B0F0006F9368 /* libggml-cpu.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-cpu.dylib"; sourceTree = "<group>"; };
+		20896B302D54B0F0006F9368 /* libggml-metal.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-metal.dylib"; sourceTree = "<group>"; };
+		20896B312D54B0F0006F9368 /* libggml-rpc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-rpc.dylib"; sourceTree = "<group>"; };
+		20896B322D54B0F0006F9368 /* libllama.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libllama.dylib; sourceTree = "<group>"; };
+		20896B332D54B0F0006F9368 /* libllava_shared.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libllava_shared.dylib; sourceTree = "<group>"; };
+		20896B342D54B0F0006F9368 /* llama-server */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llama-server"; sourceTree = "<group>"; };
 		208AA3F02CC9E42F00A0891F /* ScrollMask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollMask.swift; sourceTree = "<group>"; };
 		2099BD9A2CB7B8C800E02732 /* Extension+RawRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+RawRepresentable.swift"; sourceTree = "<group>"; };
 		2099BD9C2CB7B8E700E02732 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
@@ -499,7 +517,7 @@
 		200FBFD62CB627B100A92A74 /* llama.cpp */ = {
 			isa = PBXGroup;
 			children = (
-				2053EC972D3A115400953DDE /* llama-server */,
+				20896B362D54B0F0006F9368 /* build */,
 				200FBFED2CB6477400A92A74 /* LlamaServer.swift */,
 				200FBFF22CB66B8300A92A74 /* ServerHealth.swift */,
 				200FBFE62CB6384400A92A74 /* llama-server-watchdog */,
@@ -791,6 +809,30 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		20896B352D54B0F0006F9368 /* bin */ = {
+			isa = PBXGroup;
+			children = (
+				20896B2C2D54B0F0006F9368 /* libggml.dylib */,
+				20896B2D2D54B0F0006F9368 /* libggml-base.dylib */,
+				20896B2E2D54B0F0006F9368 /* libggml-blas.dylib */,
+				20896B2F2D54B0F0006F9368 /* libggml-cpu.dylib */,
+				20896B302D54B0F0006F9368 /* libggml-metal.dylib */,
+				20896B312D54B0F0006F9368 /* libggml-rpc.dylib */,
+				20896B322D54B0F0006F9368 /* libllama.dylib */,
+				20896B332D54B0F0006F9368 /* libllava_shared.dylib */,
+				20896B342D54B0F0006F9368 /* llama-server */,
+			);
+			path = bin;
+			sourceTree = "<group>";
+		};
+		20896B362D54B0F0006F9368 /* build */ = {
+			isa = PBXGroup;
+			children = (
+				20896B352D54B0F0006F9368 /* bin */,
+			);
+			path = build;
+			sourceTree = "<group>";
+		};
 		20AA5A502CC87026003E5519 /* Tips */ = {
 			isa = PBXGroup;
 			children = (
@@ -1023,6 +1065,7 @@
 				20CEA75A2CE308AD0070579B /* MessageContentView.swift */,
 				20AA5A532CC89AAA003E5519 /* MessageBackgroundView.swift */,
 				20CEA75D2CE309F10070579B /* MessageOptionsView.swift */,
+				206FBB202D54B40700A045FF /* MessageReasoningProcessView.swift */,
 			);
 			path = Message;
 			sourceTree = "<group>";
@@ -1203,10 +1246,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20896B402D54B163006F9368 /* libggml.dylib in Resources */,
+				20896B412D54B163006F9368 /* libggml-base.dylib in Resources */,
+				20896B422D54B163006F9368 /* libggml-blas.dylib in Resources */,
+				20896B432D54B163006F9368 /* libggml-cpu.dylib in Resources */,
+				20896B442D54B163006F9368 /* libggml-metal.dylib in Resources */,
+				20896B452D54B163006F9368 /* libggml-rpc.dylib in Resources */,
+				20896B462D54B163006F9368 /* libllama.dylib in Resources */,
+				20896B472D54B163006F9368 /* libllava_shared.dylib in Resources */,
 				20B97CB32CAFE86C009A0A5D /* Preview Assets.xcassets in Resources */,
 				20F2D5122CC1F33B004CE730 /* Localizable.xcstrings in Resources */,
 				20B97CB42CAFE86C009A0A5D /* Assets.xcassets in Resources */,
-				2053EC982D3A115400953DDE /* llama-server in Resources */,
+				20896B372D54B0F0006F9368 /* llama-server in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1322,6 +1373,7 @@
 				20B97CB62CAFE86C009A0A5D /* SidekickApp.swift in Sources */,
 				208388DA2CBF4DF500C2A9F8 /* TavilySearch.swift in Sources */,
 				2099BDA52CB8069800E02732 /* ConversationNameEditor.swift in Sources */,
+				206FBB212D54B40700A045FF /* MessageReasoningProcessView.swift in Sources */,
 				208AA3F12CC9E42F00A0891F /* ScrollMask.swift in Sources */,
 				20F825CC2CFEA9D500909B4B /* FileToSort.swift in Sources */,
 				20571F722CBCEDD8004F3344 /* LengthyTasksList.swift in Sources */,
@@ -1591,8 +1643,12 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Sidekick/Logic/Inference/llama.cpp/build/bin",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.0.11;
+				MARKETING_VERSION = 0.0.12;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pattonium.Sidekick;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1626,8 +1682,12 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Sidekick/Logic/Inference/llama.cpp/build/bin",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.0.11;
+				MARKETING_VERSION = 0.0.12;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pattonium.Sidekick;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

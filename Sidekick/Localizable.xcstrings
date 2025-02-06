@@ -1451,6 +1451,9 @@
         }
       }
     },
+    "Reasoning Process" : {
+
+    },
     "References:" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2060,6 +2063,9 @@
           }
         }
       }
+    },
+    "The prompt given to the chatbot." : {
+
     },
     "The resources %@ were removed because they could not be located." : {
       "localizations" : {
