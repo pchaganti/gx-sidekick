@@ -1,4 +1,13 @@
-<h1 align="center">Sidekick</h1>
+<h1 align="center">
+  <img src="https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/appIcon.png" width = "200" height = "200">
+  <br />
+  Sidekick
+</h1>
+
+<p align="center">
+<img alt="Downloads" src="https://img.shields.io/github/downloads/LinkScapeOfficial/Ollmao/total?label=Downloads" height=22.5>
+<img alt="License" src="https://img.shields.io/github/license/LinkScapeOfficial/Ollmao?label=License" height=22.5>
+</p>
 
 Chat with an local LLM that can respond with information from your files, folders and websites on your Mac without installing any other software. All conversations happen offline, and your data is saved locally.
 

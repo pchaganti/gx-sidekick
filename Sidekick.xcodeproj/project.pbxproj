@@ -282,6 +282,7 @@
 		2031B9972CEAE78F00627D53 /* ShortcutController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutController.swift; sourceTree = "<group>"; };
 		2031B9992CEAE7A900627D53 /* Extension+KeyboardShortcut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+KeyboardShortcut.swift"; sourceTree = "<group>"; };
 		20353FF02CF84546002BC78E /* ToggleLaTeXButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleLaTeXButton.swift; sourceTree = "<group>"; };
+		2037C8F32D55FE0F00073246 /* appIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon.png; sourceTree = "<group>"; };
 		2038CCF22CB6CBC6005AA315 /* PendingMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingMessageView.swift; sourceTree = "<group>"; };
 		203BB6E12CF6B2220057AF3A /* demoHistorySource.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = demoHistorySource.png; sourceTree = "<group>"; };
 		203BB6E22CF6B43A0057AF3A /* demoHistoryScreenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = demoHistoryScreenshot.png; sourceTree = "<group>"; };
@@ -614,6 +615,7 @@
 		202B4DB42CF5FDCA00D0CC1B /* README Images */ = {
 			isa = PBXGroup;
 			children = (
+				2037C8F32D55FE0F00073246 /* appIcon.png */,
 				201615FF2D15AE0500DE2C97 /* imageGeneration.png */,
 				202B4DBF2CF606A600D0CC1B /* codeExport.png */,
 				202B4DBD2CF6064000D0CC1B /* dataVisualization1.png */,
