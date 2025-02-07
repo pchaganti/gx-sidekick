@@ -59,6 +59,27 @@ struct ChatParameters: Codable {
 	var stream: Bool = true
 	var temperature = InferenceSettings.temperature
 	
+	// TODO: Add tool calling support
+//	var tools: [Tool] = [
+//		Tool(
+//			type: "function",
+//			function: ToolFunction(
+//				name: "python",
+//				description: "Runs code in an ipython interpreter and returns the result of the execution after 60 seconds.",
+//				parameters: ToolParameters(
+//					type: "object",
+//					properties: [
+//						"code" : ToolProperty(
+//							type: "string",
+//							description: "The code to run in the ipython interpreter"
+//						)
+//					],
+//					required: ["code"]
+//				)
+//			)
+//		)
+//	]
+	
 	/// Function to convert chat parameters to JSON
 	public func toJSON() -> String {
 		let encoder = JSONEncoder()
@@ -90,6 +111,28 @@ struct ChatParameters: Codable {
 			}
 			
 		}
+	}
+	
+	struct Tool: Codable {
+		let type: String
+		let function: ToolFunction
+	}
+	
+	struct ToolFunction: Codable {
+		let name: String
+		let description: String
+		let parameters: ToolParameters
+	}
+	
+	struct ToolParameters: Codable {
+		let type: String
+		let properties: [String: ToolProperty]
+		let required: [String]
+	}
+	
+	struct ToolProperty: Codable {
+		let type: String
+		let description: String
 	}
 	
 }

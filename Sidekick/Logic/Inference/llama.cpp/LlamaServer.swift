@@ -152,6 +152,7 @@ public actor LlamaServer {
 			"--port", port,
 			"--flash-attn", 
 			"--gpu-layers", gpuLayersToUse,
+			"--jinja",
 		]
 		
 		// If speculative decoding is used
@@ -263,11 +264,12 @@ public actor LlamaServer {
 		if rawUrl.usingRemoteServer {
 			request.setValue("nil", forHTTPHeaderField: "ngrok-skip-browser-warning")
 		}
-		request.httpBody = await params.toJSON().data(using: .utf8)
+		let requestJson: String = await params.toJSON()
+		request.httpBody = requestJson.data(using: .utf8)
 		
 		// Use EventSource to receive server sent events
 		self.eventSource = EventSource(
-			timeoutInterval: 6000
+			timeoutInterval: 6000 // Timeout after 100 minutes, enough for even reasoning models
 		)
 		self.dataTask = await eventSource!.dataTask(
 			for: request
@@ -385,6 +387,23 @@ public actor LlamaServer {
 	struct StreamMessage: Codable {
 		
 		let content: String?
+		// TODO: Add tool calling support
+//		let tool_calls: [ToolCall]?
+		
+	}
+	
+	struct ToolCall: Codable {
+		
+		let id: String?
+		let type: String
+		let function: ToolFunction
+		
+	}
+	
+	struct ToolFunction: Codable {
+		
+		let name: String
+		let arguments: String
 		
 	}
 	

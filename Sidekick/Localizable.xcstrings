@@ -2071,6 +2071,16 @@
         }
       }
     },
+    "The prompt given to the chatbot." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "发送给聊天机器人的信息。"
+          }
+        }
+      }
+    },
     "The resources %@ were removed because they could not be located." : {
       "localizations" : {
         "zh-Hans" : {
