@@ -45,6 +45,12 @@ Sidekick can even respond with the latest information using **web search**, spee
 
 ![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/webSearch.png)
 
+### Reasoning Model Support
+
+Sidekick supports a variety of reasoning models, including Alibaba's QwQ-32B-Preview and DeepSeek's DeepSeek-R1.
+
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/reasoningModelSupport.png)
+
 ### Image Generation
 
 Sidekick can generate images from text, allowing you to create visual aids for your work. 
