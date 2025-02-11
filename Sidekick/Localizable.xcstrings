@@ -2072,6 +2072,7 @@
       }
     },
     "The prompt given to the chatbot." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -2202,7 +2203,14 @@
       }
     },
     "To properly load your content, please restart Sidekick." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "内容加载错误，请重启 Sidekick。"
+          }
+        }
+      }
     },
     "to start a conversation." : {
       "localizations" : {
