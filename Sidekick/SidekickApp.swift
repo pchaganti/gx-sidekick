@@ -9,6 +9,7 @@ import AppKit
 import Foundation
 import FSKit_macOS
 import SwiftUI
+import Sparkle
 
 @main
 struct SidekickApp: App {
@@ -23,6 +24,12 @@ struct SidekickApp: App {
 	@StateObject private var commandManager: CommandManager = .shared
 	
 	@StateObject private var lengthyTasksController: LengthyTasksController = .shared
+	
+	private let updaterController: SPUStandardUpdaterController = .init(
+		startingUpdater: true,
+		updaterDelegate: nil,
+		userDriverDelegate: nil
+	)
 	
 	var body: some Scene {
 		
@@ -41,6 +48,9 @@ struct SidekickApp: App {
 			ConversationCommands.profileCommands
 			WindowCommands.commands
 			DebugCommands.commands
+			CommandGroup(after: .appInfo) {
+				CheckForUpdatesView(updater: updaterController.updater)
+			}
 		}
 		
 		SwiftUI.Settings {

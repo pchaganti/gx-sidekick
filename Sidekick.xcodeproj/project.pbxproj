@@ -125,6 +125,8 @@
 		20B22E252CD9BC8B0030A8D3 /* ExportButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B22E242CD9BC8B0030A8D3 /* ExportButton.swift */; };
 		20B4D6AF2CC3C12C00817E15 /* PromptController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B4D6AE2CC3C12C00817E15 /* PromptController.swift */; };
 		20B4D6B12CC3D72700817E15 /* Extension+IndexItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B4D6B02CC3D72700817E15 /* Extension+IndexItem.swift */; };
+		20B53D072D5B03B900D1AE79 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 20B53D062D5B03B900D1AE79 /* Sparkle */; };
+		20B53D0C2D5B053E00D1AE79 /* CheckForUpdatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B53D0B2D5B053E00D1AE79 /* CheckForUpdatesView.swift */; };
 		20B97CA82CAFE830009A0A5D /* FSKit-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = 20B97CA72CAFE830009A0A5D /* FSKit-macOS */; };
 		20B97CB32CAFE86C009A0A5D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20B97CAC2CAFE86C009A0A5D /* Preview Assets.xcassets */; };
 		20B97CB42CAFE86C009A0A5D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20B97CAE2CAFE86C009A0A5D /* Assets.xcassets */; };
@@ -369,6 +371,8 @@
 		20B22E242CD9BC8B0030A8D3 /* ExportButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportButton.swift; sourceTree = "<group>"; };
 		20B4D6AE2CC3C12C00817E15 /* PromptController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptController.swift; sourceTree = "<group>"; };
 		20B4D6B02CC3D72700817E15 /* Extension+IndexItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+IndexItem.swift"; sourceTree = "<group>"; };
+		20B53D0B2D5B053E00D1AE79 /* CheckForUpdatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckForUpdatesView.swift; sourceTree = "<group>"; };
+		20B53D0E2D5B1EE500D1AE79 /* appcast.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = appcast.xml; sourceTree = "<group>"; };
 		20B97CAC2CAFE86C009A0A5D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		20B97CAE2CAFE86C009A0A5D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		20B97CAF2CAFE86C009A0A5D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -436,6 +440,7 @@
 				20A8B6572CB26E4800B756FD /* SimilaritySearchKit in Frameworks */,
 				207A9F532CB82D9600E727DE /* SymbolPicker in Frameworks */,
 				2031B9952CEAE66400627D53 /* KeyboardShortcuts in Frameworks */,
+				20B53D072D5B03B900D1AE79 /* Sparkle in Frameworks */,
 				208388DD2CBF4E8A00C2A9F8 /* SecureDefaults in Frameworks */,
 				20CC0C2F2CE2401600A3BC40 /* ExtractKit-macOS in Frameworks */,
 				20573F282CB52F84004C19FE /* Splash in Frameworks */,
@@ -473,10 +478,12 @@
 			isa = PBXGroup;
 			children = (
 				20D65DD22CC0B8A20052D826 /* README.md */,
+				20B53D0E2D5B1EE500D1AE79 /* appcast.xml */,
 				202B4DB42CF5FDCA00D0CC1B /* README Images */,
 				20B97CB22CAFE86C009A0A5D /* Sidekick */,
 				20B97CB82CAFE870009A0A5D /* SidekickTests */,
 				20B97CBC2CAFE872009A0A5D /* SidekickUITests */,
+				20B53D0D2D5B0E2600D1AE79 /* docs */,
 				200549742CAFA67B00A3DCF2 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -843,6 +850,21 @@
 			path = Tips;
 			sourceTree = "<group>";
 		};
+		20B53D082D5B042000D1AE79 /* Update */ = {
+			isa = PBXGroup;
+			children = (
+				20B53D0B2D5B053E00D1AE79 /* CheckForUpdatesView.swift */,
+			);
+			path = Update;
+			sourceTree = "<group>";
+		};
+		20B53D0D2D5B0E2600D1AE79 /* docs */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = docs;
+			sourceTree = "<group>";
+		};
 		20B8294B2CD37C76004E5E9B /* Temporary Resource */ = {
 			isa = PBXGroup;
 			children = (
@@ -915,6 +937,7 @@
 				202E02202CFD916500149220 /* Plugins */,
 				20B9E6122CB1457200BA0AD2 /* Setup */,
 				20571F752CBD5FF4004F3344 /* Settings */,
+				20B53D082D5B042000D1AE79 /* Update */,
 				20B9E6132CB1458500BA0AD2 /* Misc */,
 				20E48C272CB560A30085E7D6 /* Styles */,
 				2048941B2CE76ABD00473107 /* View Modifiers */,
@@ -1115,6 +1138,7 @@
 				20CEA7562CE3082F0070579B /* SwiftMath */,
 				2031B9942CEAE66400627D53 /* KeyboardShortcuts */,
 				20F84B982D1CFED400F44990 /* DefaultModels */,
+				20B53D062D5B03B900D1AE79 /* Sparkle */,
 			);
 			productName = Sidekick;
 			productReference = 200549732CAFA67B00A3DCF2 /* Sidekick.app */;
@@ -1227,6 +1251,7 @@
 				20CEA7552CE3082F0070579B /* XCRemoteSwiftPackageReference "SwiftMath" */,
 				2031B9932CEAE66400627D53 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
 				20F84B972D1CFED400F44990 /* XCRemoteSwiftPackageReference "Default-Models" */,
+				20B53D052D5B03B900D1AE79 /* XCRemoteSwiftPackageReference "Sparkle" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 200549742CAFA67B00A3DCF2 /* Products */;
@@ -1324,6 +1349,7 @@
 				204AE3B62CEAF4C20086B42D /* InlineAssistantView.swift in Sources */,
 				207A9F5D2CB8FD0900E727DE /* ResourceSectionView.swift in Sources */,
 				20D9A9732CD2769300171FDE /* MessageShareMenu.swift in Sources */,
+				20B53D0C2D5B053E00D1AE79 /* CheckForUpdatesView.swift in Sources */,
 				20573F322CB53172004C19FE /* InferenceSettings.swift in Sources */,
 				2031B9902CEAE33900627D53 /* InlineAssistantController.swift in Sources */,
 				2031B9982CEAE78F00627D53 /* ShortcutController.swift in Sources */,
@@ -1897,6 +1923,14 @@
 				minimumVersion = 0.0.15;
 			};
 		};
+		20B53D052D5B03B900D1AE79 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.6.4;
+			};
+		};
 		20B97CA62CAFE830009A0A5D /* XCRemoteSwiftPackageReference "FSKit-macOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/johnbean393/FSKit-macOS";
@@ -1979,6 +2013,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 20A8B6552CB26E4800B756FD /* XCRemoteSwiftPackageReference "similarity-search-kit" */;
 			productName = SimilaritySearchKitDistilbert;
+		};
+		20B53D062D5B03B900D1AE79 /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 20B53D052D5B03B900D1AE79 /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
 		};
 		20B97CA72CAFE830009A0A5D /* FSKit-macOS */ = {
 			isa = XCSwiftPackageProductDependency;
