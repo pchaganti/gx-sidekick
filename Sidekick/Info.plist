@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>SUFeedURL</key>
-	<string>https://johnbean393.github.io/sidekick/appcast.xml</string>
+	<string>https://johnbean393.github.io/Sidekick/appcast.xml</string>
 	<key>SUPublicEDKey</key>
 	<string>jrJEixL9VTAptOmKf2JJ8aLoiMVV0bNcSNA1covfmtw=</string>
 	<key>NSAccessibilityUsageDescription</key>

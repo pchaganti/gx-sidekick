@@ -483,7 +483,6 @@
 				20B97CB22CAFE86C009A0A5D /* Sidekick */,
 				20B97CB82CAFE870009A0A5D /* SidekickTests */,
 				20B97CBC2CAFE872009A0A5D /* SidekickUITests */,
-				20B53D0D2D5B0E2600D1AE79 /* docs */,
 				200549742CAFA67B00A3DCF2 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -856,13 +855,6 @@
 				20B53D0B2D5B053E00D1AE79 /* CheckForUpdatesView.swift */,
 			);
 			path = Update;
-			sourceTree = "<group>";
-		};
-		20B53D0D2D5B0E2600D1AE79 /* docs */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = docs;
 			sourceTree = "<group>";
 		};
 		20B8294B2CD37C76004E5E9B /* Temporary Resource */ = {
@@ -1674,7 +1666,7 @@
 					"$(PROJECT_DIR)/Sidekick/Logic/Inference/llama.cpp/build/bin",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.0.13;
+				MARKETING_VERSION = 0.0.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pattonium.Sidekick;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1713,7 +1705,7 @@
 					"$(PROJECT_DIR)/Sidekick/Logic/Inference/llama.cpp/build/bin",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.0.13;
+				MARKETING_VERSION = 0.0.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pattonium.Sidekick;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
