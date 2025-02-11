@@ -92,9 +92,7 @@ struct ConversationManagerView: View {
 				if self.contextIsFull {
 					contextFullWarning
 				}
-				if #available(macOS 15, *) {
-					LengthyTasksToolbarButton()
-				}
+				LengthyTasksToolbarButton()
 			}
 		}
 		.if(selectedProfile != nil) { view in

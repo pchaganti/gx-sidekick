@@ -18,14 +18,19 @@ public class Accessibility {
 	public func checkAccessibility() -> Bool {
 		let checkOptionPrompt: String = kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String
 		let options = [checkOptionPrompt: false]
-		return AXIsProcessTrustedWithOptions(options as CFDictionary)
+		let isTrusted: Bool = AXIsProcessTrustedWithOptions(
+			options as CFDictionary
+		)
+		return isTrusted
 	}
 	
 	public func showAccessibilityInstructionsWindow() {
-		if checkAccessibility() {
+		if self.checkAccessibility() {
 			return
 		}
-		if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility") {
+		if let url = URL(
+			string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"
+		) {
 			NSWorkspace.shared.open(url)
 		}
 	}
