@@ -824,6 +824,9 @@
         }
       }
     },
+    "Failed to save messages." : {
+
+    },
     "File Extension:" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1621,7 +1624,11 @@
         }
       }
     },
+    "Save as HTML" : {
+
+    },
     "Save as Image" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1630,6 +1637,9 @@
           }
         }
       }
+    },
+    "Save as Text" : {
+
     },
     "Say hi" : {
       "localizations" : {

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+				<title>Chat History</title>
+				<style>
+					body {
+						font-family: Arial, sans-serif;
+						padding: 20px;
+						background-color: #f5f5f5;
+						color: #000;
+						transition: background-color 0.3s, color 0.3s;
+					}
+					.message-container { max-width: 600px; margin: auto; }
+					.chat { display: flex; flex-direction: column; gap: 10px; }
+					.message {
+						padding: 12px;
+						margin: 5px 0;
+						border-radius: 10px;
+						width: fit-content;
+						max-width: 80%;
+						word-wrap: break-word;
+					}
+					.user {
+						background-color: #007bff;
+						color: white;
+						align-self: flex-end;
+					}
+					.assistant {
+						background-color: #e0e0e0;
+						color: black;
+						align-self: flex-start;
+					}
+					
+					/* Dark mode styles */
+					@media (prefers-color-scheme: dark) {
+						body {
+							background-color: #121212;
+							color: #fff;
+						}
+						.user { background-color: #1e88e5; }
+						.assistant { background-color: #333; color: white; }
+					}
+				</style>
+	</head>
+	<body>
+		<div class="message-container">
+			<div class="chat">
+				{{messages}}
+			</div>
+		</div>
+	</body>
+</html>

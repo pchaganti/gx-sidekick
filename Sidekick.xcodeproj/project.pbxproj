@@ -76,6 +76,8 @@
 		20573F322CB53172004C19FE /* InferenceSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20573F312CB53172004C19FE /* InferenceSettings.swift */; };
 		20573F362CB53878004C19FE /* CircleMenuStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20573F352CB53878004C19FE /* CircleMenuStyle.swift */; };
 		205B50D12CD3025A0057769F /* SourceRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205B50D02CD3025A0057769F /* SourceRowView.swift */; };
+		206934902D5CC87E006619FD /* Credits.html in Resources */ = {isa = PBXBuildFile; fileRef = 2069348E2D5CC7FE006619FD /* Credits.html */; };
+		206934932D5CCDF1006619FD /* conversationExportTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 206934922D5CCDF1006619FD /* conversationExportTemplate.html */; };
 		206AB6122CF5F8390010B09A /* AttachmentSelectionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206AB6112CF5F8390010B09A /* AttachmentSelectionButton.swift */; };
 		206FBB212D54B40700A045FF /* MessageReasoningProcessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206FBB202D54B40700A045FF /* MessageReasoningProcessView.swift */; };
 		207A9F532CB82D9600E727DE /* SymbolPicker in Frameworks */ = {isa = PBXBuildFile; productRef = 207A9F522CB82D9600E727DE /* SymbolPicker */; };
@@ -327,6 +329,8 @@
 		20573F312CB53172004C19FE /* InferenceSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InferenceSettings.swift; sourceTree = "<group>"; };
 		20573F352CB53878004C19FE /* CircleMenuStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleMenuStyle.swift; sourceTree = "<group>"; };
 		205B50D02CD3025A0057769F /* SourceRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceRowView.swift; sourceTree = "<group>"; };
+		2069348E2D5CC7FE006619FD /* Credits.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = Credits.html; sourceTree = "<group>"; };
+		206934922D5CCDF1006619FD /* conversationExportTemplate.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = conversationExportTemplate.html; sourceTree = "<group>"; };
 		206AB6112CF5F8390010B09A /* AttachmentSelectionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentSelectionButton.swift; sourceTree = "<group>"; };
 		206FBB202D54B40700A045FF /* MessageReasoningProcessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageReasoningProcessView.swift; sourceTree = "<group>"; };
 		207A9F542CB8A96F00E727DE /* ProfileNavigationRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNavigationRowView.swift; sourceTree = "<group>"; };
@@ -790,6 +794,14 @@
 			path = Markdown;
 			sourceTree = "<group>";
 		};
+		206934912D5CCDD1006619FD /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				206934922D5CCDF1006619FD /* conversationExportTemplate.html */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		206E9DD22CFFDCB0005E8B91 /* Message */ = {
 			isa = PBXGroup;
 			children = (
@@ -900,9 +912,11 @@
 				20B97CBF2CAFE87D009A0A5D /* Views */,
 				20B97CC02CAFE883009A0A5D /* Logic */,
 				20B97CD22CAFEC90009A0A5D /* Extensions */,
+				206934912D5CCDD1006619FD /* Resources */,
 				20B97CAD2CAFE86C009A0A5D /* Preview Content */,
 				20B97CAE2CAFE86C009A0A5D /* Assets.xcassets */,
 				20B97CB02CAFE86C009A0A5D /* Sidekick.entitlements */,
+				2069348E2D5CC7FE006619FD /* Credits.html */,
 			);
 			path = Sidekick;
 			sourceTree = "<group>";
@@ -1277,6 +1291,8 @@
 				20896B452D54B163006F9368 /* libggml-rpc.dylib in Resources */,
 				20896B462D54B163006F9368 /* libllama.dylib in Resources */,
 				20896B472D54B163006F9368 /* libllava_shared.dylib in Resources */,
+				206934902D5CC87E006619FD /* Credits.html in Resources */,
+				206934932D5CCDF1006619FD /* conversationExportTemplate.html in Resources */,
 				20B97CB32CAFE86C009A0A5D /* Preview Assets.xcassets in Resources */,
 				20F2D5122CC1F33B004CE730 /* Localizable.xcstrings in Resources */,
 				20B97CB42CAFE86C009A0A5D /* Assets.xcassets in Resources */,

@@ -5,6 +5,7 @@
 //  Created by Bean John on 10/30/24.
 //
 
+import FSKit_macOS
 import SwiftUI
 
 struct MessageShareMenu<MessagesView: View>: View {
@@ -20,6 +21,10 @@ struct MessageShareMenu<MessagesView: View>: View {
 	
 	var messages: [Message] {
 		return self.selectedConversation?.messages ?? []
+	}
+	
+	var conversationName: String {
+		return self.selectedConversation?.title ?? "conversation"
 	}
 	
 	var selectedProfile: Profile? {
@@ -53,7 +58,8 @@ struct MessageShareMenu<MessagesView: View>: View {
 	
 	var body: some View {
 		Menu {
-			pngButton
+			self.saveTextButton
+			self.saveHTMLButton
 		} label: {
 			Label("Export", systemImage: "square.and.arrow.up")
 		}
@@ -63,21 +69,97 @@ struct MessageShareMenu<MessagesView: View>: View {
 		}
 	}
 	
-	var pngButton: some View {
+	var saveTextButton: some View {
 		Button {
-			VStack(
-				alignment: .leading,
-				spacing: 15
-			) {
-				messagesView
-			}
-			.padding()
-			.background(Color.gray)
-			.frame(width: 1000)
-			.generatePng()
+			self.saveText()
 		} label: {
-			Text("Save as Image")
+			Text("Save as Text")
 		}
+	}
+	
+	var saveHTMLButton: some View {
+		Button {
+			self.saveHTML()
+		} label: {
+			Text("Save as HTML")
+		}
+	}
+	
+	/// Function to export messages as text
+	private func saveText() {
+		// Convert messages to text
+		let text: String = self.messages.map({ message in
+			return """
+\(message.getSender().rawValue.capitalized):
+\(message.text)
+"""
+		}).joined(separator: "\n\n")
+		// Save text to file
+		self.saveToFile(
+			string: text,
+			fileName: "\(self.conversationName).txt"
+		)
+	}
+	
+	/// Function to export messages as HTML
+	private func saveHTML() {
+		// Load the HTML template
+		guard let templatePath = Bundle.main.path(
+			forResource: "conversationExportTemplate",
+			ofType: "html"
+		),
+			  var htmlTemplate = try? String(
+				contentsOfFile: templatePath,
+				encoding: .utf8
+			  ) else {
+			// If failed to load the template, show error and exit
+			self.showSaveErrorDialog()
+			return
+		}
+		// Generate the message HTML
+		let messagesHTML = messages.map { message in
+			let senderClass = message.getSender().rawValue
+			return "<div class=\"message \(senderClass)\">\(message.text)</div>"
+		}.joined(separator: "\n")
+		// Replace the placeholder in the HTML
+		htmlTemplate = htmlTemplate.replacingOccurrences(of: "{{messages}}", with: messagesHTML)
+		// Save the HTML to a file
+		self.saveToFile(
+			string: htmlTemplate,
+			fileName: "\(self.conversationName).html"
+		)
+	}
+	
+	/// Function to save text to file
+	private func saveToFile(
+		string: String,
+		fileName: String
+	) {
+		// Get save location
+		if let url = try? FileManager.selectFile(
+			dialogTitle: String(localized: "Select a Save Location"),
+			canSelectFiles: false
+		).first {
+			// Save text to file
+			do {
+				let fileUrl: URL = url.appendingPathComponent(fileName)
+				try string.write(
+					to: fileUrl,
+					atomically: true,
+					encoding: .utf8
+				)
+			} catch {
+				self.showSaveErrorDialog()
+			}
+		}
+	}
+	
+	/// Function to show save error dialog
+	private func showSaveErrorDialog() {
+		Dialogs.showAlert(
+			title: String(localized: "Error"),
+			message: String(localized: "Failed to save messages.")
+		)
 	}
 	
 }

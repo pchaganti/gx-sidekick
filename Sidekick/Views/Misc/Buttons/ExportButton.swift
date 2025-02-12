@@ -5,6 +5,7 @@
 //  Created by Bean John on 11/5/24.
 //
 
+import FSKit_macOS
 import SwiftUI
 
 struct ExportButton: View {
