@@ -21,6 +21,8 @@ struct ConversationManagerView: View {
 	
 	@EnvironmentObject private var conversationState: ConversationState
 	
+	@EnvironmentObject private var lengthyTasksController: LengthyTasksController
+	
 	var selectedProfile: Profile? {
 		guard let selectedProfileId = conversationState.selectedProfileId else {
 			return nil
@@ -159,26 +161,23 @@ struct ConversationManagerView: View {
     }
 	
 	var conversationList: some View {
-		VStack(alignment: .leading) {
+		VStack(
+			alignment: .leading,
+			spacing: 3
+		) {
 			ConversationNavigationListView()
 			Spacer()
-			HStack {
-				Button {
-					self.newConversation()
-				} label: {
-					Label("New Conversation", systemImage: "plus")
-						.labelStyle(.iconOnly)
-						.foregroundStyle(.secondary)
-				}
-				Divider()
-					.frame(maxHeight: 18)
-				LengthyTasksToolbarButton()
-					.labelStyle(.iconOnly)
+			if self.lengthyTasksController.hasTasks {
+				LengthyTasksNavigationButton()
+					.buttonStyle(.plain)
 					.foregroundStyle(.secondary)
-				Spacer()
+					.padding(.horizontal, 5)
 			}
-			.buttonStyle(.plain)
-			.padding([.leading, .bottom], 10)
+			NewConversationButton {
+				self.newConversation()
+			}
+			.padding(.horizontal, 5)
+			.padding(.bottom, 7)
 		}
 		.padding(.top, 7)
 	}

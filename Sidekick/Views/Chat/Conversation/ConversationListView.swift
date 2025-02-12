@@ -24,8 +24,8 @@ struct ConversationNavigationListView: View {
 			}
 		}
 		.navigationSplitViewColumnWidth(
-			min: 90,
-			ideal: 150,
+			min: 125,
+			ideal: 175,
 			max: 225
 		)
 	}

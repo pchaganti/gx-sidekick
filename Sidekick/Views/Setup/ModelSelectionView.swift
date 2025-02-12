@@ -5,6 +5,7 @@
 //  Created by Bean John on 9/23/24.
 //
 
+import DefaultModels
 import SwiftUI
 
 struct ModelSelectionView: View {
@@ -29,17 +30,28 @@ struct ModelSelectionView: View {
 	
 	var welcome: some View {
 		Group {
-			Image(.appIcon)
-				.resizable()
-				.foregroundStyle(.secondary)
-				.frame(width: 100, height: 100)
+			ZStack {
+				self.appIconImage
+					.scaleEffect(1.2)
+					.blur(radius: 7, opaque: false)
+					.opacity(0.7)
+				self.appIconImage
+			}
 			Text("Welcome to Sidekick")
 				.foregroundStyle(.primary)
 				.font(.largeTitle)
+				.fontWeight(.heavy)
 			Text("Download or Select a Model to get started")
 				.foregroundStyle(.secondary)
 				.font(.title3)
 		}
+	}
+	
+	var appIconImage: some View {
+		Image(.appIcon)
+			.resizable()
+			.foregroundStyle(.secondary)
+			.frame(width: 100, height: 100)
 	}
 	
 	var downloadProgress: some View {
@@ -62,10 +74,8 @@ struct ModelSelectionView: View {
 				await self.downloadManager.downloadDefaultModel()
 			}
 		} label: {
-			HStack {
-				Text("Download Default Model")
-			}
-			.padding(.horizontal, 20)
+			Text("Download Default Model")
+				.padding(.horizontal, 20)
 		}
 		.keyboardShortcut(.defaultAction)
 		.controlSize(.large)

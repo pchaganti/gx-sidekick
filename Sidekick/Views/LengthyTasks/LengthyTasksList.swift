@@ -20,6 +20,7 @@ struct LengthyTasksList: View {
 			}
 		}
 		.padding()
+		.foregroundStyle(.primary)
     }
 	
 	var noTasks: some View {

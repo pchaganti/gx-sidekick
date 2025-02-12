@@ -164,6 +164,8 @@
 		20CB7AC02D1457B10013E30C /* PromptAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CB7ABF2D1457B10013E30C /* PromptAnalyzer.swift */; };
 		20CB7AC82D145E320013E30C /* UserRequestClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 20CB7AC72D145E320013E30C /* UserRequestClassifier.mlmodel */; };
 		20CC0C2F2CE2401600A3BC40 /* ExtractKit-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = 20CC0C2E2CE2401600A3BC40 /* ExtractKit-macOS */; };
+		20CE5E3B2D5C6C8B0000A2EC /* NewConversationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CE5E3A2D5C6C8B0000A2EC /* NewConversationButton.swift */; };
+		20CE5E582D5C85D10000A2EC /* LengthyTasksNavigationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CE5E572D5C85D10000A2EC /* LengthyTasksNavigationButton.swift */; };
 		20CEA7572CE3082F0070579B /* SwiftMath in Frameworks */ = {isa = PBXBuildFile; productRef = 20CEA7562CE3082F0070579B /* SwiftMath */; };
 		20CEA7592CE3084E0070579B /* MathView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CEA7582CE3084E0070579B /* MathView.swift */; };
 		20CEA75B2CE308AD0070579B /* MessageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CEA75A2CE308AD0070579B /* MessageContentView.swift */; };
@@ -408,6 +410,8 @@
 		20C2210A2CC4B88F00A99796 /* SourcesButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesButton.swift; sourceTree = "<group>"; };
 		20CB7ABF2D1457B10013E30C /* PromptAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptAnalyzer.swift; sourceTree = "<group>"; };
 		20CB7AC72D145E320013E30C /* UserRequestClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = UserRequestClassifier.mlmodel; sourceTree = "<group>"; };
+		20CE5E3A2D5C6C8B0000A2EC /* NewConversationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationButton.swift; sourceTree = "<group>"; };
+		20CE5E572D5C85D10000A2EC /* LengthyTasksNavigationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LengthyTasksNavigationButton.swift; sourceTree = "<group>"; };
 		20CEA7582CE3084E0070579B /* MathView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathView.swift; sourceTree = "<group>"; };
 		20CEA75A2CE308AD0070579B /* MessageContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageContentView.swift; sourceTree = "<group>"; };
 		20CEA75D2CE309F10070579B /* MessageOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageOptionsView.swift; sourceTree = "<group>"; };
@@ -720,6 +724,7 @@
 			isa = PBXGroup;
 			children = (
 				20571F732CBCEE90004F3344 /* LengthyTasksToolbarButton.swift */,
+				20CE5E572D5C85D10000A2EC /* LengthyTasksNavigationButton.swift */,
 				20571F712CBCEDD8004F3344 /* LengthyTasksList.swift */,
 			);
 			path = LengthyTasks;
@@ -992,6 +997,7 @@
 				2099BDB12CB828A500E02732 /* PopoverButton.swift */,
 				20FE94D92CB96DE8006E9F06 /* ExitButton.swift */,
 				20353FF02CF84546002BC78E /* ToggleLaTeXButton.swift */,
+				20CE5E3A2D5C6C8B0000A2EC /* NewConversationButton.swift */,
 			);
 			path = Buttons;
 			sourceTree = "<group>";
@@ -1306,6 +1312,7 @@
 				20571F842CBD71C9004F3344 /* SystemPromptEditor.swift in Sources */,
 				20CB7AC02D1457B10013E30C /* PromptAnalyzer.swift in Sources */,
 				20C221062CC4B15600A99796 /* SourcesManager.swift in Sources */,
+				20CE5E3B2D5C6C8B0000A2EC /* NewConversationButton.swift in Sources */,
 				20B4D6B12CC3D72700817E15 /* Extension+IndexItem.swift in Sources */,
 				20573F1F2CB5274E004C19FE /* MessagesView.swift in Sources */,
 				20B97CE72CB0066A009A0A5D /* Extension+String.swift in Sources */,
@@ -1382,6 +1389,7 @@
 				20A8B65D2CB2829500B756FD /* ProfileManager.swift in Sources */,
 				20B97CD62CAFF2E0009A0A5D /* SetupView.swift in Sources */,
 				20B97CED2CB00A28009A0A5D /* Favicon.swift in Sources */,
+				20CE5E582D5C85D10000A2EC /* LengthyTasksNavigationButton.swift in Sources */,
 				202801F62CC93CD5005C1F7D /* PromptInputField.swift in Sources */,
 				204D09832D1166810066B060 /* IntroductionPage.swift in Sources */,
 				201A1A932CDB8109001E9BA9 /* Extension+Collection.swift in Sources */,

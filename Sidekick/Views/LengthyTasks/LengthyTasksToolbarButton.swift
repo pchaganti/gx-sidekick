@@ -44,9 +44,23 @@ struct LengthyTasksToolbarButton: View {
 	var body: some View {
 		PopoverButton(arrowEdge: .bottom) {
 			Label(
-				"Tasks",
-				systemImage: self.iconName
-			)
+				"Tasks"
+			) {
+				Image(systemName: self.iconName)
+					.if(lengthyTasksController.hasTasks) { view in
+						view
+							.padding([.top, .trailing], 2)
+							.overlay(
+								alignment: .topTrailing
+							) {
+								Circle()
+									.fill(Color.red)
+									.frame(width: 8)
+							}
+					}
+			}
+			.font(.headline)
+			.fontWeight(.regular)
 			.if(usePadding) { view in
 				view
 					.foregroundStyle(Color.secondary)
@@ -56,17 +70,6 @@ struct LengthyTasksToolbarButton: View {
 			.if(isInverted) { view in
 				view.colorInvert()
 			}
-			.if(lengthyTasksController.hasTasks) { view in
-				view
-					.padding([.top, .trailing], 2)
-					.overlay(
-						alignment: .topTrailing
-					) {
-						Circle()
-							.fill(Color.red)
-							.frame(width: 8)
-					}
-			}
 		} content: {
 			LengthyTasksList()
 		}
@@ -75,7 +78,3 @@ struct LengthyTasksToolbarButton: View {
 	}
 	
 }
-
-//#Preview {
-//    LengthyTasksToolbarButton()
-//}

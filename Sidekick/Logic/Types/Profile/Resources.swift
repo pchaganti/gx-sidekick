@@ -9,6 +9,7 @@ import Foundation
 import FSKit_macOS
 import SimilaritySearchKit
 import SimilaritySearchKitDistilbert
+import SwiftUI
 
 /// An object that manages a profile's resources
 public struct Resources: Identifiable, Codable, Hashable, Sendable {
@@ -59,10 +60,12 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 		// Add to task list
 		let taskId: UUID = UUID()
 		let taskName: String = String(localized: "Updating resource index for profile \"\(profileName)\"")
-		LengthyTasksController.shared.addTask(
-			id: taskId, 
-			task: taskName
-		)
+		withAnimation(.linear(duration: 0.3)) {
+			LengthyTasksController.shared.addTask(
+				id: taskId,
+				task: taskName
+			)
+		}
 		// Update for each file
 		for index in self.resources.indices  {
 			await self.resources[index].updateIndex(
@@ -85,7 +88,11 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 		// Remove resources
 		resources = resources.filter({ !$0.wasMoved || $0.isWebResource })
 		// Remove from task list
-		LengthyTasksController.shared.finishTask(taskId: taskId)
+		withAnimation(.linear(duration: 0.3)) {
+			LengthyTasksController.shared.finishTask(
+				taskId: taskId
+			)
+		}
 	}
 
 	
