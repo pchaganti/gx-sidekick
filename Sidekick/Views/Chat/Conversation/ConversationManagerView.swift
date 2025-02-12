@@ -94,7 +94,6 @@ struct ConversationManagerView: View {
 				if self.contextIsFull {
 					contextFullWarning
 				}
-				LengthyTasksToolbarButton()
 			}
 		}
 		.if(selectedProfile != nil) { view in
