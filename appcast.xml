@@ -13,7 +13,7 @@
 		<item>
 			<title>0.0.14</title>
 			<pubDate>Tue, 11 Feb 2025 22:00:00 +0800</pubDate>
-			<sparkle:version>1</sparkle:version>
+			<sparkle:version>2</sparkle:version>
 			<sparkle:shortVersionString>0.0.14</sparkle:shortVersionString>
 			<sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
 			<enclosure url="https://github.com/johnbean393/Sidekick/releases/download/0.0.14/Sidekick-beta.0.0.14.2025-02-11.dmg"
@@ -24,7 +24,7 @@
 		<item>
 			<title>0.0.15</title>
 			<pubDate>Wed, 12 Feb 2025 22:00:00 +0800</pubDate>
-			<sparkle:version>1</sparkle:version>
+			<sparkle:version>3</sparkle:version>
 			<sparkle:shortVersionString>0.0.15</sparkle:shortVersionString>
 			<sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
 			<enclosure url="https://github.com/johnbean393/Sidekick/releases/download/0.0.15/Sidekick-beta.0.0.15.2025-02-12.dmg"
