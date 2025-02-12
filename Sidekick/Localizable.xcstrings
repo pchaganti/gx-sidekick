@@ -825,7 +825,14 @@
       }
     },
     "Failed to save messages." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "聊天保存失败"
+          }
+        }
+      }
     },
     "File Extension:" : {
       "localizations" : {
@@ -1625,21 +1632,24 @@
       }
     },
     "Save as HTML" : {
-
-    },
-    "Save as Image" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "导出图片"
+            "value" : "保存为网页"
           }
         }
       }
     },
     "Save as Text" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存为文字"
+          }
+        }
+      }
     },
     "Say hi" : {
       "localizations" : {
@@ -2083,7 +2093,6 @@
       }
     },
     "The prompt given to the chatbot." : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
