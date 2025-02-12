@@ -10,5 +10,25 @@
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
             <enclosure url="Sidekick-beta%200.0.13%202025-02-11.dmg" length="85643854" type="application/octet-stream"/>
         </item>
+		<item>
+			<title>0.0.14</title>
+			<pubDate>Tue, 11 Feb 2025 22:00:00 +0800</pubDate>
+			<sparkle:version>2.0</sparkle:version>
+			<sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+			<enclosure url="https://github.com/johnbean393/Sidekick/releases/download/0.0.14/Sidekick-beta.0.0.14.2025-02-11.dmg"
+			sparkle:edSignature="P1reo+ytCTMc+ibwJuao/8jmK3Mng6jw3QEMkoFBLzzoIMV8BlPefCw1rsxn0cgm3w+xYnSK6h0Q0OZU4LF2Cg=="
+			length="86460997"
+			type="application/octet-stream" />
+		</item>
+		<item>
+			<title>0.0.15</title>
+			<pubDate>Wed, 12 Feb 2025 22:00:00 +0800</pubDate>
+			<sparkle:version>2.0</sparkle:version>
+			<sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+			<enclosure url="https://github.com/johnbean393/Sidekick/releases/download/0.0.15/Sidekick-beta.0.0.15.2025-02-12.dmg"
+			sparkle:edSignature="F7+xAbpuc+FLd9iFzt90RPiDw9bTbboBloPa32zVKSfN43bcByPiTzbwUY+GigtyMHdmNg6TemZIyKyLGo1IDg=="
+			length="86464287"
+			type="application/octet-stream" />
+		</item>
     </channel>
 </rss>

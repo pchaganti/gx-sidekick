@@ -2083,6 +2083,7 @@
       }
     },
     "The prompt given to the chatbot." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
