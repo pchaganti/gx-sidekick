@@ -139,6 +139,9 @@ Current date & time: \(Date.now.ISO8601Format())
 	/// A `String` containing the endpoint's url
 	public static var endpoint: String {
 		get {
+			if !useServer {
+				return Self.defaultEndpoint
+			}
 			guard let systemPrompt = UserDefaults.standard.string(
 				forKey: "endpoint"
 			) else {

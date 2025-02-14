@@ -387,8 +387,6 @@ public actor LlamaServer {
 	struct StreamMessage: Codable {
 		
 		let content: String?
-		// TODO: Add tool calling support
-//		let tool_calls: [ToolCall]?
 		
 	}
 	

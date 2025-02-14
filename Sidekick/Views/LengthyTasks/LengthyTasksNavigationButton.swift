@@ -16,7 +16,7 @@ struct LengthyTasksNavigationButton: View {
 	}
 	
 	var body: some View {
-		LengthyTasksToolbarButton()
+		LengthyTasksButton()
 			.onHover { hovering in
 				withAnimation(.linear(duration: 0.3)) {
 					self.isHovering = hovering

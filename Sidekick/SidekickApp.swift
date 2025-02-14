@@ -25,6 +25,7 @@ struct SidekickApp: App {
 	
 	@StateObject private var lengthyTasksController: LengthyTasksController = .shared
 	
+	// Updater object for Sparkle
 	private let updaterController: SPUStandardUpdaterController = .init(
 		startingUpdater: true,
 		updaterDelegate: nil,

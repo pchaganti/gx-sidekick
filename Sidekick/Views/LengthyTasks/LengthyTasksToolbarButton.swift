@@ -1,5 +1,5 @@
 //
-//  LengthyTasksToolbarButton.swift
+//  LengthyTasksButton.swift
 //  Sidekick
 //
 //  Created by Bean John on 10/14/24.
@@ -8,7 +8,7 @@
 import SwiftUI
 import TipKit
 
-struct LengthyTasksToolbarButton: View {
+struct LengthyTasksButton: View {
 	
 	var usePadding: Bool = false
 	

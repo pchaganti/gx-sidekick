@@ -37,6 +37,15 @@
 		2031B99A2CEAE7A900627D53 /* Extension+KeyboardShortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2031B9992CEAE7A900627D53 /* Extension+KeyboardShortcut.swift */; };
 		20353FF12CF84546002BC78E /* ToggleLaTeXButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20353FF02CF84546002BC78E /* ToggleLaTeXButton.swift */; };
 		2038CCF32CB6CBC6005AA315 /* PendingMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2038CCF22CB6CBC6005AA315 /* PendingMessageView.swift */; };
+		203A2AE02D5ECFE10009C0AC /* llama-server in Resources */ = {isa = PBXBuildFile; fileRef = 203A2AD72D5ECFE10009C0AC /* llama-server */; };
+		203A2AE12D5ED2740009C0AC /* libggml.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 203A2ACF2D5ECFE10009C0AC /* libggml.dylib */; };
+		203A2AE22D5ED2740009C0AC /* libggml-base.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 203A2AD02D5ECFE10009C0AC /* libggml-base.dylib */; };
+		203A2AE32D5ED2740009C0AC /* libggml-blas.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 203A2AD12D5ECFE10009C0AC /* libggml-blas.dylib */; };
+		203A2AE42D5ED2740009C0AC /* libggml-cpu.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 203A2AD22D5ECFE10009C0AC /* libggml-cpu.dylib */; };
+		203A2AE52D5ED2740009C0AC /* libggml-metal.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 203A2AD32D5ECFE10009C0AC /* libggml-metal.dylib */; };
+		203A2AE62D5ED2740009C0AC /* libggml-rpc.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 203A2AD42D5ECFE10009C0AC /* libggml-rpc.dylib */; };
+		203A2AE72D5ED2740009C0AC /* libllama.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 203A2AD52D5ECFE10009C0AC /* libllama.dylib */; };
+		203A2AE82D5ED2740009C0AC /* libllava_shared.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 203A2AD62D5ECFE10009C0AC /* libllava_shared.dylib */; };
 		204592172CD32DEF00DEAA96 /* TypedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204592162CD32DEF00DEAA96 /* TypedTextView.swift */; };
 		204AE3B62CEAF4C20086B42D /* InlineAssistantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204AE3B52CEAF4C20086B42D /* InlineAssistantView.swift */; };
 		204AE3B92CEAF57E0086B42D /* CommandManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204AE3B82CEAF57E0086B42D /* CommandManager.swift */; };
@@ -96,15 +105,6 @@
 		2086E1AC2CB03CD200FFCF57 /* Dialogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2086E1AB2CB03CD200FFCF57 /* Dialogs.swift */; };
 		208844312CDDE33F003BCB6F /* ModelListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208844302CDDE33F003BCB6F /* ModelListView.swift */; };
 		208844332CDDE394003BCB6F /* ModelRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208844322CDDE394003BCB6F /* ModelRowView.swift */; };
-		20896B372D54B0F0006F9368 /* llama-server in Resources */ = {isa = PBXBuildFile; fileRef = 20896B342D54B0F0006F9368 /* llama-server */; };
-		20896B402D54B163006F9368 /* libggml.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 20896B2C2D54B0F0006F9368 /* libggml.dylib */; };
-		20896B412D54B163006F9368 /* libggml-base.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 20896B2D2D54B0F0006F9368 /* libggml-base.dylib */; };
-		20896B422D54B163006F9368 /* libggml-blas.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 20896B2E2D54B0F0006F9368 /* libggml-blas.dylib */; };
-		20896B432D54B163006F9368 /* libggml-cpu.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 20896B2F2D54B0F0006F9368 /* libggml-cpu.dylib */; };
-		20896B442D54B163006F9368 /* libggml-metal.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 20896B302D54B0F0006F9368 /* libggml-metal.dylib */; };
-		20896B452D54B163006F9368 /* libggml-rpc.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 20896B312D54B0F0006F9368 /* libggml-rpc.dylib */; };
-		20896B462D54B163006F9368 /* libllama.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 20896B322D54B0F0006F9368 /* libllama.dylib */; };
-		20896B472D54B163006F9368 /* libllava_shared.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 20896B332D54B0F0006F9368 /* libllava_shared.dylib */; };
 		208AA3F12CC9E42F00A0891F /* ScrollMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208AA3F02CC9E42F00A0891F /* ScrollMask.swift */; };
 		2099BD9B2CB7B8C800E02732 /* Extension+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2099BD9A2CB7B8C800E02732 /* Extension+RawRepresentable.swift */; };
 		2099BD9D2CB7B8E700E02732 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2099BD9C2CB7B8E700E02732 /* Notifications.swift */; };
@@ -290,6 +290,15 @@
 		20353FF02CF84546002BC78E /* ToggleLaTeXButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleLaTeXButton.swift; sourceTree = "<group>"; };
 		2037C8F32D55FE0F00073246 /* appIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon.png; sourceTree = "<group>"; };
 		2038CCF22CB6CBC6005AA315 /* PendingMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingMessageView.swift; sourceTree = "<group>"; };
+		203A2ACF2D5ECFE10009C0AC /* libggml.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libggml.dylib; sourceTree = "<group>"; };
+		203A2AD02D5ECFE10009C0AC /* libggml-base.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-base.dylib"; sourceTree = "<group>"; };
+		203A2AD12D5ECFE10009C0AC /* libggml-blas.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-blas.dylib"; sourceTree = "<group>"; };
+		203A2AD22D5ECFE10009C0AC /* libggml-cpu.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-cpu.dylib"; sourceTree = "<group>"; };
+		203A2AD32D5ECFE10009C0AC /* libggml-metal.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-metal.dylib"; sourceTree = "<group>"; };
+		203A2AD42D5ECFE10009C0AC /* libggml-rpc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-rpc.dylib"; sourceTree = "<group>"; };
+		203A2AD52D5ECFE10009C0AC /* libllama.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libllama.dylib; sourceTree = "<group>"; };
+		203A2AD62D5ECFE10009C0AC /* libllava_shared.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libllava_shared.dylib; sourceTree = "<group>"; };
+		203A2AD72D5ECFE10009C0AC /* llama-server */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llama-server"; sourceTree = "<group>"; };
 		203BB6E12CF6B2220057AF3A /* demoHistorySource.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = demoHistorySource.png; sourceTree = "<group>"; };
 		203BB6E22CF6B43A0057AF3A /* demoHistoryScreenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = demoHistoryScreenshot.png; sourceTree = "<group>"; };
 		204592162CD32DEF00DEAA96 /* TypedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypedTextView.swift; sourceTree = "<group>"; };
@@ -347,15 +356,6 @@
 		2086E1AB2CB03CD200FFCF57 /* Dialogs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dialogs.swift; sourceTree = "<group>"; };
 		208844302CDDE33F003BCB6F /* ModelListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelListView.swift; sourceTree = "<group>"; };
 		208844322CDDE394003BCB6F /* ModelRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelRowView.swift; sourceTree = "<group>"; };
-		20896B2C2D54B0F0006F9368 /* libggml.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libggml.dylib; sourceTree = "<group>"; };
-		20896B2D2D54B0F0006F9368 /* libggml-base.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-base.dylib"; sourceTree = "<group>"; };
-		20896B2E2D54B0F0006F9368 /* libggml-blas.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-blas.dylib"; sourceTree = "<group>"; };
-		20896B2F2D54B0F0006F9368 /* libggml-cpu.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-cpu.dylib"; sourceTree = "<group>"; };
-		20896B302D54B0F0006F9368 /* libggml-metal.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-metal.dylib"; sourceTree = "<group>"; };
-		20896B312D54B0F0006F9368 /* libggml-rpc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-rpc.dylib"; sourceTree = "<group>"; };
-		20896B322D54B0F0006F9368 /* libllama.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libllama.dylib; sourceTree = "<group>"; };
-		20896B332D54B0F0006F9368 /* libllava_shared.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libllava_shared.dylib; sourceTree = "<group>"; };
-		20896B342D54B0F0006F9368 /* llama-server */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llama-server"; sourceTree = "<group>"; };
 		208AA3F02CC9E42F00A0891F /* ScrollMask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollMask.swift; sourceTree = "<group>"; };
 		2099BD9A2CB7B8C800E02732 /* Extension+RawRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+RawRepresentable.swift"; sourceTree = "<group>"; };
 		2099BD9C2CB7B8E700E02732 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
@@ -837,15 +837,15 @@
 		20896B352D54B0F0006F9368 /* bin */ = {
 			isa = PBXGroup;
 			children = (
-				20896B2C2D54B0F0006F9368 /* libggml.dylib */,
-				20896B2D2D54B0F0006F9368 /* libggml-base.dylib */,
-				20896B2E2D54B0F0006F9368 /* libggml-blas.dylib */,
-				20896B2F2D54B0F0006F9368 /* libggml-cpu.dylib */,
-				20896B302D54B0F0006F9368 /* libggml-metal.dylib */,
-				20896B312D54B0F0006F9368 /* libggml-rpc.dylib */,
-				20896B322D54B0F0006F9368 /* libllama.dylib */,
-				20896B332D54B0F0006F9368 /* libllava_shared.dylib */,
-				20896B342D54B0F0006F9368 /* llama-server */,
+				203A2ACF2D5ECFE10009C0AC /* libggml.dylib */,
+				203A2AD02D5ECFE10009C0AC /* libggml-base.dylib */,
+				203A2AD12D5ECFE10009C0AC /* libggml-blas.dylib */,
+				203A2AD22D5ECFE10009C0AC /* libggml-cpu.dylib */,
+				203A2AD32D5ECFE10009C0AC /* libggml-metal.dylib */,
+				203A2AD42D5ECFE10009C0AC /* libggml-rpc.dylib */,
+				203A2AD52D5ECFE10009C0AC /* libllama.dylib */,
+				203A2AD62D5ECFE10009C0AC /* libllava_shared.dylib */,
+				203A2AD72D5ECFE10009C0AC /* llama-server */,
 			);
 			path = bin;
 			sourceTree = "<group>";
@@ -1283,20 +1283,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				20896B402D54B163006F9368 /* libggml.dylib in Resources */,
-				20896B412D54B163006F9368 /* libggml-base.dylib in Resources */,
-				20896B422D54B163006F9368 /* libggml-blas.dylib in Resources */,
-				20896B432D54B163006F9368 /* libggml-cpu.dylib in Resources */,
-				20896B442D54B163006F9368 /* libggml-metal.dylib in Resources */,
-				20896B452D54B163006F9368 /* libggml-rpc.dylib in Resources */,
-				20896B462D54B163006F9368 /* libllama.dylib in Resources */,
-				20896B472D54B163006F9368 /* libllava_shared.dylib in Resources */,
+				203A2AE12D5ED2740009C0AC /* libggml.dylib in Resources */,
+				203A2AE22D5ED2740009C0AC /* libggml-base.dylib in Resources */,
+				203A2AE32D5ED2740009C0AC /* libggml-blas.dylib in Resources */,
+				203A2AE42D5ED2740009C0AC /* libggml-cpu.dylib in Resources */,
+				203A2AE52D5ED2740009C0AC /* libggml-metal.dylib in Resources */,
+				203A2AE62D5ED2740009C0AC /* libggml-rpc.dylib in Resources */,
+				203A2AE72D5ED2740009C0AC /* libllama.dylib in Resources */,
+				203A2AE82D5ED2740009C0AC /* libllava_shared.dylib in Resources */,
 				206934902D5CC87E006619FD /* Credits.html in Resources */,
 				206934932D5CCDF1006619FD /* conversationExportTemplate.html in Resources */,
 				20B97CB32CAFE86C009A0A5D /* Preview Assets.xcassets in Resources */,
+				203A2AE02D5ECFE10009C0AC /* llama-server in Resources */,
 				20F2D5122CC1F33B004CE730 /* Localizable.xcstrings in Resources */,
 				20B97CB42CAFE86C009A0A5D /* Assets.xcassets in Resources */,
-				20896B372D54B0F0006F9368 /* llama-server in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
