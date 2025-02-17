@@ -151,8 +151,7 @@ public actor LlamaServer {
 			"--ctx-size", "\(contextLength)",
 			"--port", port,
 			"--flash-attn", 
-			"--gpu-layers", gpuLayersToUse,
-			"--jinja",
+			"--gpu-layers", gpuLayersToUse
 		]
 		
 		// If speculative decoding is used

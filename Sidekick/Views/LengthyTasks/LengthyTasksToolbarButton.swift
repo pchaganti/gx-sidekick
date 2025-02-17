@@ -44,7 +44,7 @@ struct LengthyTasksButton: View {
 	var body: some View {
 		PopoverButton(arrowEdge: .bottom) {
 			Label(
-				"Tasks"
+				String(localized: "Tasks")
 			) {
 				Image(systemName: self.iconName)
 					.if(lengthyTasksController.hasTasks) { view in

@@ -264,6 +264,16 @@
         }
       }
     },
+    "Check for Updates" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "检查更新"
+          }
+        }
+      }
+    },
     "Check progress of lengthy tasks, like updating your profile with new resources." : {
       "localizations" : {
         "zh-Hans" : {
@@ -1982,7 +1992,6 @@
       }
     },
     "Tasks" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
