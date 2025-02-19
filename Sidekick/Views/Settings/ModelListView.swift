@@ -22,9 +22,12 @@ struct ModelListView: View {
 	@Binding var isPresented: Bool
 	@StateObject private var modelManager: ModelManager = .shared
 	
+	@Environment(\.openWindow) var openWindow
+	
 	@State private var modelUrl: URL? = nil
 	
-	@State private var modelDownloadUrl: String = "https://huggingface.co/models?sort=trending&search=GGUF"
+	@State private var hoveringAdd: Bool = false
+	@State private var hoveringDownload: Bool = false
 	
 	var body: some View {
 		VStack(
@@ -36,9 +39,12 @@ struct ModelListView: View {
 					minHeight: 200,
 					maxHeight: 400
 				)
-			addButton
-				.padding(.trailing, 5)
-				.padding(.bottom, 3)
+			HStack {
+				addButton
+				downloadButton
+			}
+			.padding(.vertical, 3)
+			.padding(.bottom, 3)
 		}
 		.padding(7)
 		.onChange(
@@ -51,7 +57,6 @@ struct ModelListView: View {
 				return InferenceSettings.speculativeDecodingModelUrl
 			}()
 		}
-		.onAppear(perform: checkModelUrl)
 		.onAppear {
 			self.modelUrl = {
 				if !self.forSpeculativeDecoding {
@@ -87,7 +92,43 @@ struct ModelListView: View {
 			)
 		}
 		.buttonStyle(.plain)
-		.padding(.vertical, 3)
+		.padding(5)
+		.padding(.horizontal, 5)
+		.background {
+			RoundedRectangle(cornerRadius: 7)
+				.fill(
+					Color.secondary.opacity(self.hoveringAdd ? 0.15 : 0)
+				)
+				.frame(height: 30)
+		}
+		.onHover { hovering in
+			self.hoveringAdd = hovering
+		}
+	}
+	
+	var downloadButton: some View {
+		Button {
+			self.openWindow(id: "models")
+		} label: {
+			Label(
+				"Download Model",
+				systemImage: "square.and.arrow.down"
+			)
+		}
+		.buttonStyle(.plain)
+		.padding(.bottom, 6)
+		.padding(.top, 4)
+		.padding(.horizontal, 5)
+		.background {
+			RoundedRectangle(cornerRadius: 7)
+				.fill(
+					Color.secondary.opacity(self.hoveringDownload ? 0.15 : 0)
+				)
+				.frame(height: 30)
+		}
+		.onHover { hovering in
+			self.hoveringDownload = hovering
+		}
 	}
 	
 	var exitButton: some View {
@@ -96,35 +137,8 @@ struct ModelListView: View {
 				self.isPresented.toggle()
 			}
 			Spacer()
-			PopoverButton {
-				Image(systemName: "questionmark.circle.fill")
-			} content: {
-				Link(
-					destination: URL(string: modelDownloadUrl)!
-				) {
-					Text("Download More Models")
-				}
-				.padding(8)
-				.padding(.horizontal, 2)
-			}
-			.buttonStyle(.plain)
 		}
 		.padding([.horizontal, .top], 3)
-	}
-	
-	/// Check if Hugging Face is reachable
-	private func checkModelUrl() {
-		URL.verifyURL(
-			urlPath: self.modelDownloadUrl,
-			timeoutInterval: 1
-		) { isValid in
-			if !isValid {
-				self.modelDownloadUrl = self.modelDownloadUrl.replacingOccurrences(
-					of: "huggingface.co",
-					with: "hf-mirror.com"
-				)
-			}
-		}
 	}
 	
 	/// Function to add model

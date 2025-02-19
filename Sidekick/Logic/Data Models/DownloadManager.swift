@@ -42,15 +42,14 @@ public class DownloadManager: NSObject, ObservableObject {
 		self.updateTasks()
 	}
 	
-	/// Function to download the default large language model
-	func downloadDefaultModel() async {
-		// Get default model
-		let model: HuggingFaceModel = await DefaultModels.recommendedModel
-//		await print(DefaultModels.models)
-		print("Trying to download \(model.name)")
+	/// Function to download an LLM
+	@MainActor
+	public func downloadModel(
+		model: HuggingFaceModel
+	) async {
 		// Check if accessible
 		URL.verifyURL(
-			urlPath: model.urlString
+			url: model.url
 		) { isValid in
 			if isValid {
 				// If accessible
@@ -64,6 +63,23 @@ public class DownloadManager: NSObject, ObservableObject {
 				)
 			}
 		}
+		// Add lengthy task
+		LengthyTasksController.shared.addTask(
+			id: UUID(),
+			task: String(
+				localized: "Downloading model \(model.url.lastPathComponent)"
+			)
+		)
+	}
+	
+	/// Function to download the default large language model
+	@MainActor
+	public func downloadDefaultModel() async {
+		// Get default model
+		let model: HuggingFaceModel = await DefaultModels.recommendedModel
+		print("Trying to download \(model.name)")
+		// Download model
+		await self.downloadModel(model: model)
 	}
 	
 	private func startDownload(url: URL) {
@@ -81,6 +97,7 @@ public class DownloadManager: NSObject, ObservableObject {
 		task.resume()
 	}
 	
+	@MainActor
 	private func updateTasks() {
 		self.urlSession.getAllTasks { tasks in
 			DispatchQueue.main.async {
@@ -153,14 +170,21 @@ extension DownloadManager: URLSessionDelegate, URLSessionDownloadDelegate {
 			}
 			// Move the model to the directory
 			try fileManager.moveItem(at: location, to: destinationURL)
-			// Point to the model
-			Settings.modelUrl = destinationURL
+			// Point to the model if needed
+			if Settings.modelUrl == nil {
+				Settings.modelUrl = destinationURL
+			}
+			ModelManager.shared.add(destinationURL)
 			Task.detached { @MainActor in
 				self.didFinishDownloadingModel = true
 			}
 		} catch {
 			os_log("FileManager copy error at %@ to %@ error: %@", type: .error, location.absoluteString, destinationURL.absoluteString, error.localizedDescription)
 			return
+		}
+		// Remove lengthy task
+		LengthyTasksController.shared.tasks = LengthyTasksController.shared.tasks.filter {
+			$0.name != "Downloading model \(fileName)"
 		}
 	}
 		

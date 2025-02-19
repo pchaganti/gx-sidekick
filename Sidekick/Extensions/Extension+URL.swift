@@ -41,31 +41,27 @@ public extension URL {
 	
 	/// Function to verify if url is reachable
 	static func verifyURL(
-		urlPath: String,
+		url: URL,
 		timeoutInterval: Double = 3,
 		completion: @escaping (_ isValid: Bool) ->()
 	) {
-		if let url = URL(string: urlPath) {
-			var request = URLRequest(
-				url: url,
-				timeoutInterval: timeoutInterval
-			)
-			request.httpMethod = "HEAD"
-			let task = URLSession.shared.dataTask(
-				with: request
-			) { _, response, error in
-				if let httpResponse = response as? HTTPURLResponse {
-					if httpResponse.statusCode == 200 {
-						completion(true)
-					}
-				} else {
-					completion(false)
+		var request = URLRequest(
+			url: url,
+			timeoutInterval: timeoutInterval
+		)
+		request.httpMethod = "HEAD"
+		let task = URLSession.shared.dataTask(
+			with: request
+		) { _, response, error in
+			if let httpResponse = response as? HTTPURLResponse {
+				if httpResponse.statusCode == 200 {
+					completion(true)
 				}
+			} else {
+				completion(false)
 			}
-			task.resume()
-		} else {
-			completion(false)
 		}
+		task.resume()
 	}
 
 }

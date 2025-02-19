@@ -15,6 +15,23 @@ public class Settings {
 	/// Static constant for the `gguf` UniformTypeIdentifier
 	static let ggufType: UTType = UTType("com.npc-pet.Chats.gguf") ?? .data
 	
+	/// A `String` representing the user's name
+	public static var username: String {
+		get {
+			guard let username = UserDefaults.standard.string(
+				forKey: "username"
+			) else {
+				print("Failed to get username, using default")
+				return NSFullUserName()
+			}
+			return username
+		}
+		set {
+			// Save
+			UserDefaults.standard.set(newValue, forKey: "username")
+		}
+	}
+	
 	/// Computed property for whether the app's setup was completed
 	static var setupComplete: Bool {
 		get {
@@ -100,7 +117,8 @@ public class Settings {
 	}
 	
 	/// Function to select a model
-	@MainActor static func selectModel() -> Bool {
+	@MainActor
+	static func selectModel() -> Bool {
 		if let modelUrls = try? FileManager.selectFile(
 			dialogTitle: String(
 				localized: "Select a Model"
@@ -125,7 +143,8 @@ public class Settings {
 	}
 	
 	/// Function to clear user defaults (for debug uses)
-	@MainActor static func clearUserDefaults() {
+	@MainActor
+	static func clearUserDefaults() {
 		// Show dialog
 		let _ = Dialogs.showConfirmation(
 			title: String(

@@ -10,10 +10,17 @@ import KeyboardShortcuts
 
 struct GeneralSettingsView: View {
 	
+	@AppStorage("username") private var username: String = NSFullUserName()
+	
 	@State private var playSoundEffects: Bool = Settings.playSoundEffects
 	
     var body: some View {
 		Form {
+			Section {
+				usernameEditor
+			} header: {
+				Text("Username")
+			}
 			Section {
 				soundEffects
 			} header: {
@@ -27,6 +34,22 @@ struct GeneralSettingsView: View {
 		}
 		.formStyle(.grouped)
     }
+	
+	var usernameEditor: some View {
+		HStack(alignment: .center) {
+			VStack(alignment: .leading) {
+				Text("Username")
+					.font(.title3)
+					.bold()
+				Text("Sidekick will refer to you by this username.")
+					.font(.caption)
+			}
+			Spacer()
+			TextField("", text: $username)
+				.textFieldStyle(.roundedBorder)
+				.frame(width: 300)
+		}
+	}
 	
 	var soundEffects: some View {
 		HStack(alignment: .top) {

@@ -19,7 +19,7 @@ struct LengthyTasksList: View {
 				list
 			}
 		}
-		.padding()
+		.padding(7)
 		.foregroundStyle(.primary)
     }
 	
@@ -28,25 +28,22 @@ struct LengthyTasksList: View {
 	}
 	
 	var list: some View {
-		VStack {
-			Text("Ongoing Tasks")
-				.font(.title3)
-				.bold()
-			Divider()
-			ForEach(
-				lengthyTasksController.tasks.indices,
-				id: \.self
-			) { index in
-				HStack {
-					Text(lengthyTasksController.tasks[index].name)
-					Spacer()
-					SpinnerView()
-				}
-				if index != (lengthyTasksController.tasks.count - 1) {
-					Divider()
-				}
+		List(
+			lengthyTasksController.tasks.indices,
+			id: \.self
+		) { index in
+			HStack {
+				Text(lengthyTasksController.tasks[index].name)
+				Spacer()
+				SpinnerView()
 			}
 		}
+		.listStyle(.sidebar)
+		.frame(
+			minWidth: 400,
+			minHeight: 60,
+			maxHeight: 400
+		)
 	}
 	
 	private struct SpinnerView: View {

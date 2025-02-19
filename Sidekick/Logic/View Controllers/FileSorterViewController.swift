@@ -13,6 +13,4 @@ public class FileSorterViewController: ObservableObject {
 	
 	@Published var filesToSort: [FileToSort] = []
 	
-	
-	
 }

@@ -39,7 +39,7 @@ If the provided information is related to the request, you will respond with ref
 	
 	/// Computed property for the part of the system prompt where metadata is fed to the LLM
 	public static let metadataPrompt: String = """
-The user's name: \(NSFullUserName())
+The user's name: \(Settings.username)
 Current date & time: \(Date.now.ISO8601Format())
 """
 	
@@ -58,7 +58,7 @@ Current date & time: \(Date.now.ISO8601Format())
 	}
 	
 	/// Static constant for the default temperature
-	private static let defaultTemperature: Double = 0.7
+	private static let defaultTemperature: Double = 0.6
 	
 	/// A `String` representing the first instruction given to an LLM
 	public static var systemPrompt: String {

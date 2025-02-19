@@ -62,10 +62,13 @@ struct ResourceSectionView: View {
 				}
 				Spacer()
 				Button {
-					self.add()
+					Task.detached { @MainActor in
+						self.add()
+					}
 				} label: {
 					Text("Add")
 				}
+				.disabled(self.isUpdating)
 				Button {
 					Task.detached { @MainActor in
 						await $profile.update()
@@ -73,6 +76,7 @@ struct ResourceSectionView: View {
 				} label: {
 					Text("Update")
 				}
+				.disabled(self.isUpdating)
 			}
 			Divider()
 			ResourceSelectionView(profile: $profile)

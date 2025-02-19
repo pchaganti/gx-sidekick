@@ -68,7 +68,7 @@ struct RetrievalSettingsView: View {
 	}
 	
 	var apiKeyEditor: some View {
-		HStack(alignment: .top) {
+		HStack(alignment: .center) {
 			VStack(alignment: .leading) {
 				Text("API Key")
 					.font(.title3)
@@ -96,7 +96,7 @@ struct RetrievalSettingsView: View {
 	}
 	
 	var backupApiKeyEditor: some View {
-		HStack(alignment: .top) {
+		HStack(alignment: .center) {
 			VStack(alignment: .leading) {
 				Text("Backup API Key (Optional)")
 					.font(.title3)

@@ -134,6 +134,16 @@
         }
       }
     },
+    "Are you sure you want to continue?" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您确定要继续吗？"
+          }
+        }
+      }
+    },
     "Are you sure you want to delete all commands?" : {
       "localizations" : {
         "zh-Hans" : {
@@ -210,6 +220,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "条形图"
+          }
+        }
+      }
+    },
+    "Benchmark Score (MMLU): %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "基准测试分数（MMLU）：%@"
           }
         }
       }
@@ -624,6 +644,16 @@
         }
       }
     },
+    "Download" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下载"
+          }
+        }
+      }
+    },
     "Download Default Model" : {
       "localizations" : {
         "zh-Hans" : {
@@ -634,7 +664,7 @@
         }
       }
     },
-    "Download More Models" : {
+    "Download Model" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -650,6 +680,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "请下载或选择一个模型"
+          }
+        }
+      }
+    },
+    "Downloading" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下载中"
+          }
+        }
+      }
+    },
+    "Downloading %@. When complete, the model will be available for selection in `Settings -> Inference`." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在下载 %@。完成后，您可以在“设置 -> 推理”中选择该模型。"
+          }
+        }
+      }
+    },
+    "Downloading model %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在下载 %@"
+          }
+        }
+      }
+    },
+    "Due to limited hardware specifications, you may suffer from degraded performance when running this model." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "由于硬件性能有限，运行此模型时可能会遭遇较低性能。"
           }
         }
       }
@@ -1125,6 +1195,16 @@
         }
       }
     },
+    "Loading" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "加载中"
+          }
+        }
+      }
+    },
     "Low Memory" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1241,6 +1321,16 @@
         }
       }
     },
+    "More Models" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更多模型"
+          }
+        }
+      }
+    },
     "Most" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1331,16 +1421,6 @@
         }
       }
     },
-    "Ongoing Tasks" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "进行中的任务"
-          }
-        }
-      }
-    },
     "Open" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1357,6 +1437,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "运行参数"
+          }
+        }
+      }
+    },
+    "Parameters: %@B" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "参数量：%@B"
           }
         }
       }
@@ -1527,6 +1617,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "编辑命名"
+          }
+        }
+      }
+    },
+    "Requirements" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "硬件要求"
           }
         }
       }
@@ -1741,6 +1841,16 @@
         }
       }
     },
+    "Select a family of models from the sidebar" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "从侧边栏中选择一个系列"
+          }
+        }
+      }
+    },
     "Select a File" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1877,6 +1987,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sidekick 已可供使用。"
+          }
+        }
+      }
+    },
+    "Sidekick will refer to you by this username." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sidekick 將使用此使用者名稱來引用您"
           }
         }
       }
@@ -2417,6 +2537,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "如果主 API 密钥访问失败，会被用于访问 Tavily API。"
+          }
+        }
+      }
+    },
+    "Username" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用户名"
           }
         }
       }

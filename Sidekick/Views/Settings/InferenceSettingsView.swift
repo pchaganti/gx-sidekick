@@ -182,7 +182,7 @@ struct InferenceSettingsView: View {
 	}
 		
 	var systemPromptEditor: some View {
-		HStack(alignment: .top) {
+		HStack(alignment: .center) {
 			VStack(alignment: .leading) {
 				Text("System Prompt")
 					.font(.title3)
@@ -220,7 +220,7 @@ struct InferenceSettingsView: View {
 	}
 	
 	var temperatureEditor: some View {
-		HStack(alignment: .top) {
+		HStack(alignment: .center) {
 			VStack(alignment: .leading) {
 				Text("Temperature")
 					.font(.title3)
@@ -256,7 +256,7 @@ struct InferenceSettingsView: View {
 	var useGPUAccelerationToggle: some View {
 		VStack {
 			HStack(
-				alignment: .top
+				alignment: .center
 			) {
 				VStack(
 					alignment: .leading
@@ -319,7 +319,7 @@ struct InferenceSettingsView: View {
 	}
 	
 	var serverEndpointEditor: some View {
-		HStack(alignment: .top) {
+		HStack(alignment: .center) {
 			VStack(alignment: .leading) {
 				Text("Endpoint")
 					.font(.title3)

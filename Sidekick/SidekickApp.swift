@@ -54,6 +54,10 @@ struct SidekickApp: App {
 			}
 		}
 		
+		SwiftUI.Window("Models", id: "models") {
+			ModelExplorerView()
+		}
+		
 		SwiftUI.Settings {
 			SettingsView()
 				.environmentObject(commandManager)

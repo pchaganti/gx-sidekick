@@ -42,7 +42,7 @@ struct LengthyTasksButton: View {
 	var lengthyTasksProgressTip: LengthyTasksProgressTip = .init()
 	
 	var body: some View {
-		PopoverButton(arrowEdge: .bottom) {
+		PopoverButton(arrowEdge: .trailing) {
 			Label(
 				String(localized: "Tasks")
 			) {

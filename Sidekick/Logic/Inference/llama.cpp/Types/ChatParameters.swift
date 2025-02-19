@@ -56,7 +56,7 @@ struct ChatParameters: Codable {
 	
 	var messages: [Message.MessageSubset]
 	
-	var stream: Bool = false
+	var stream: Bool = true
 	var temperature = InferenceSettings.temperature
 	
 	/// Function to convert chat parameters to JSON
