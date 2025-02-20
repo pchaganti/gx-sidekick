@@ -32,21 +32,16 @@ struct LengthyTasksButton: View {
 		return colorScheme == .dark ? darkModeSetting : lightModeSetting
 	}
 	
-	var iconName: String {
-		if #unavailable(macOS 15) {
-			return "arrow.triangle.2.circlepath"
-		}
-		return "arrow.trianglehead.2.clockwise"
-	}
-	
 	var lengthyTasksProgressTip: LengthyTasksProgressTip = .init()
 	
 	var body: some View {
-		PopoverButton(arrowEdge: .trailing) {
+		PopoverButton(
+			arrowEdge: .trailing
+		) {
 			Label(
-				String(localized: "Tasks")
+				String(localized: "Notifications")
 			) {
-				Image(systemName: self.iconName)
+				Image(systemName: "bell.fill")
 					.if(lengthyTasksController.hasTasks) { view in
 						view
 							.padding([.top, .trailing], 2)
