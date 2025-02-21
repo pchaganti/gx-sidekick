@@ -25,6 +25,7 @@ aws.server
 server
 
 # using special shapes
+# only the 6 shapes listed are available
 my node: {shape: circle}
 hexagon: {shape: hexagon}
 package: {shape: package}

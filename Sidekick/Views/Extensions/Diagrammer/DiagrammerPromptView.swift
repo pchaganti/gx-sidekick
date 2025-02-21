@@ -20,6 +20,7 @@ struct DiagrammerPromptView: View {
 		) {
 			typedText
 			field
+			DiagrammerQuickPromptsView()
 		}
 		.padding()
 		.frame(minWidth: 500)

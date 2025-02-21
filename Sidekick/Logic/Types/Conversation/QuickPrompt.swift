@@ -8,13 +8,25 @@
 import Foundation
 import SwiftUI
 
-struct QuickPrompt: Identifiable {
+public struct QuickPrompt: Identifiable {
+	
+	public init(
+		text: String,
+		description: String,
+		icon: String,
+		color: Color
+	) {
+		self.text = text
+		self.description = description
+		self.icon = icon
+		self.color = color
+	}
 	
 	/// Conform to identifiable
-	let id: UUID = UUID()
+	public let id: UUID = UUID()
 	
 	/// String containing the text of the prompt
-	var text: String
+	public var text: String
 	
 	/// String containing a short description of the prompt
 	private var description: String
@@ -30,6 +42,7 @@ struct QuickPrompt: Identifiable {
 				.foregroundStyle(.secondary)
 		} icon: {
 			Image(systemName: icon)
+				.symbolRenderingMode(.multicolor)
 				.foregroundStyle(color)
 		}
 	}

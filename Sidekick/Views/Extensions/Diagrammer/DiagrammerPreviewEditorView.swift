@@ -53,6 +53,7 @@ struct DiagrammerPreviewEditorView: View {
 	var doneButton: some View {
 		Button {
 			// Reset
+			
 			self.diagrammerViewController.stopRender()
 			self.diagrammerViewController.stopPreview()
 			self.diagrammerViewController.d2Code = ""

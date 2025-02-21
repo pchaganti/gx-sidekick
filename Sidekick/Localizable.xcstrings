@@ -314,6 +314,9 @@
         }
       }
     },
+    "Circulatory System" : {
+
+    },
     "Clear All Settings" : {
       "localizations" : {
         "zh-Hans" : {
@@ -764,6 +767,15 @@
         }
       }
     },
+    "Draw a diagram of the eutrophication cycle and how it forms a positive feedback loop." : {
+
+    },
+    "Draw a diagram of the human circulatory system." : {
+
+    },
+    "Draw a diagram of the water cycle and its key components." : {
+
+    },
     "Due to limited hardware specifications, you may suffer from degraded performance when running this model." : {
       "localizations" : {
         "zh-Hans" : {
@@ -873,6 +885,9 @@
           }
         }
       }
+    },
+    "Eutrophication Cycle" : {
+
     },
     "Explain how" : {
       "localizations" : {
@@ -1054,6 +1069,9 @@
         }
       }
     },
+    "Florence's System" : {
+
+    },
     "General" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1063,6 +1081,27 @@
           }
         }
       }
+    },
+    "Generate a diagram illustrating how plastics are recycled." : {
+
+    },
+    "Generate a diagram illustrating the life cycle of salmon." : {
+
+    },
+    "Generate a diagram illustrating the process of photosynthesis." : {
+
+    },
+    "Generate a diagram illustrating the process of plate tectonics." : {
+
+    },
+    "Generate a diagram illustrating the stages of mitosis." : {
+
+    },
+    "Generate a diagram modelling Florence's political system in the 15th century." : {
+
+    },
+    "Generate a diagram showing the structure and functions of a neuron." : {
+
     },
     "Generate diagrams with AI" : {
       "localizations" : {
@@ -1385,6 +1424,9 @@
         }
       }
     },
+    "Mitosis Stages" : {
+
+    },
     "Model could not be found" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1480,6 +1522,9 @@
           }
         }
       }
+    },
+    "Neuron Structure" : {
+
     },
     "New Conversation" : {
       "localizations" : {
@@ -1611,6 +1656,9 @@
         }
       }
     },
+    "Photosynthesis" : {
+
+    },
     "Pie Chart" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1620,6 +1668,9 @@
           }
         }
       }
+    },
+    "Plate Tectonics" : {
+
     },
     "Play Sound Effects" : {
       "localizations" : {
@@ -1700,6 +1751,9 @@
           }
         }
       }
+    },
+    "Recycling" : {
+
     },
     "References:" : {
       "localizations" : {
@@ -1860,6 +1914,9 @@
           }
         }
       }
+    },
+    "Salmon Life Cycle" : {
+
     },
     "Save" : {
       "localizations" : {
@@ -2352,7 +2409,6 @@
       }
     },
     "The prompt given to the chatbot." : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -2721,6 +2777,9 @@
           }
         }
       }
+    },
+    "Water Cycle" : {
+
     },
     "Web Search" : {
       "localizations" : {

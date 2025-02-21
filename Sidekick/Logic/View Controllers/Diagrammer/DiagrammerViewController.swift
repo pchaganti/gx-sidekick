@@ -127,13 +127,19 @@ Cheatsheet:
 	
 	/// Function to stop the preview
 	public func stopPreview() {
+		// Exit if not running
+		if self.d2PreviewServerProcess.executableURL == nil { return }
+		// Else, terminate and reinit
 		self.d2PreviewServerProcess.terminate()
 		self.d2PreviewServerProcess = Process()
 	}
 	
 	/// Function to stop the render process
 	public func stopRender() {
+		// Exit if not running
+		if self.d2RenderProcess.executableURL == nil { return }
 		self.d2RenderProcess.terminate()
+		// Else, terminate and reinit
 		self.d2RenderProcess = Process()
 	}
 	

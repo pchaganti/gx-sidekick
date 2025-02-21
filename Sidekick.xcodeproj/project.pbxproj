@@ -120,6 +120,7 @@
 		208844312CDDE33F003BCB6F /* ModelListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208844302CDDE33F003BCB6F /* ModelListView.swift */; };
 		208844332CDDE394003BCB6F /* ModelRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208844322CDDE394003BCB6F /* ModelRowView.swift */; };
 		208AA3F12CC9E42F00A0891F /* ScrollMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208AA3F02CC9E42F00A0891F /* ScrollMask.swift */; };
+		208BA3572D680B1800E0C657 /* DiagrammerQuickPromptsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208BA3562D680B1800E0C657 /* DiagrammerQuickPromptsView.swift */; };
 		2099BD9B2CB7B8C800E02732 /* Extension+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2099BD9A2CB7B8C800E02732 /* Extension+RawRepresentable.swift */; };
 		2099BD9D2CB7B8E700E02732 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2099BD9C2CB7B8E700E02732 /* Notifications.swift */; };
 		2099BD9F2CB7E9CE00E02732 /* QuickPrompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2099BD9E2CB7E9CE00E02732 /* QuickPrompt.swift */; };
@@ -386,6 +387,7 @@
 		208844302CDDE33F003BCB6F /* ModelListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelListView.swift; sourceTree = "<group>"; };
 		208844322CDDE394003BCB6F /* ModelRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelRowView.swift; sourceTree = "<group>"; };
 		208AA3F02CC9E42F00A0891F /* ScrollMask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollMask.swift; sourceTree = "<group>"; };
+		208BA3562D680B1800E0C657 /* DiagrammerQuickPromptsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagrammerQuickPromptsView.swift; sourceTree = "<group>"; };
 		2099BD9A2CB7B8C800E02732 /* Extension+RawRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+RawRepresentable.swift"; sourceTree = "<group>"; };
 		2099BD9C2CB7B8E700E02732 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		2099BD9E2CB7E9CE00E02732 /* QuickPrompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickPrompt.swift; sourceTree = "<group>"; };
@@ -741,6 +743,7 @@
 				200619AE2D6766B1001949EF /* DiagrammerGeneratingView.swift */,
 				200619AC2D675DB9001949EF /* DiagrammerPromptView.swift */,
 				200619B32D676DCE001949EF /* DiagrammerPreviewEditorView.swift */,
+				208BA3562D680B1800E0C657 /* DiagrammerQuickPromptsView.swift */,
 			);
 			path = Diagrammer;
 			sourceTree = "<group>";
@@ -1439,6 +1442,7 @@
 				20B97CCE2CAFEC37009A0A5D /* Settings.swift in Sources */,
 				20AA5A522CC87032003E5519 /* Tips.swift in Sources */,
 				20573F232CB52E79004C19FE /* Extension+Theme.swift in Sources */,
+				208BA3572D680B1800E0C657 /* DiagrammerQuickPromptsView.swift in Sources */,
 				200FBFF52CB66C0000A92A74 /* LlamaServerError.swift in Sources */,
 				20A96F3C2CDDA9D400E31D53 /* ModelManager.swift in Sources */,
 				20B97CE32CB00585009A0A5D /* Profile.swift in Sources */,
