@@ -17,7 +17,6 @@ struct SidekickApp: App {
 	@NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 	
 	@StateObject private var appState: AppState = .shared
-	@StateObject private var model: Model = .shared
 	@StateObject private var downloadManager: DownloadManager = .shared
 	@StateObject private var conversationManager: ConversationManager = .shared
 	@StateObject private var profileManager: ProfileManager = .shared
@@ -37,7 +36,6 @@ struct SidekickApp: App {
 		WindowGroup {
 			ContentView()
 				.environmentObject(appState)
-				.environmentObject(model)
 				.environmentObject(downloadManager)
 				.environmentObject(conversationManager)
 				.environmentObject(profileManager)
@@ -57,7 +55,6 @@ struct SidekickApp: App {
 		
 		SwiftUI.Window("Models", id: "models") {
 			ModelExplorerView()
-				.environmentObject(model)
 		}
 		
 		SwiftUI.Window("Diagrammer", id: "diagrammer") {

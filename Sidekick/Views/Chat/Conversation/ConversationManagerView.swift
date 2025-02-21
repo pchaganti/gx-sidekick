@@ -12,7 +12,7 @@ struct ConversationManagerView: View {
 	
 	@Environment(\.appearsActive) var appearsActive
 	
-	@EnvironmentObject private var model: Model
+	@StateObject private var model: Model = .shared
 	
 	@EnvironmentObject private var appState: AppState
 	
