@@ -25,14 +25,6 @@ public class SourcesManager: ObservableObject {
 			self.save()
 		}
 	}
-	
-	/// Function to add a new sources
-	public func newSources(
-		sources: Sources
-	) async {
-		// Add to sources
-		self.sources.append(sources)
-	}
 
 	/// Function returning sources with the given message ID
 	public func getSources(
