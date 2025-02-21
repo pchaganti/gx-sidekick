@@ -315,7 +315,14 @@
       }
     },
     "Circulatory System" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "循环系统"
+          }
+        }
+      }
     },
     "Clear All Settings" : {
       "localizations" : {
@@ -768,13 +775,34 @@
       }
     },
     "Draw a diagram of the eutrophication cycle and how it forms a positive feedback loop." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "绘制富营养化循环图以及它如何形成正反馈回路。"
+          }
+        }
+      }
     },
     "Draw a diagram of the human circulatory system." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "绘制人体循环系统图。"
+          }
+        }
+      }
     },
     "Draw a diagram of the water cycle and its key components." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "绘制水循环及其主要组成部分的图表。"
+          }
+        }
+      }
     },
     "Due to limited hardware specifications, you may suffer from degraded performance when running this model." : {
       "localizations" : {
@@ -887,7 +915,14 @@
       }
     },
     "Eutrophication Cycle" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "富营养化循环"
+          }
+        }
+      }
     },
     "Explain how" : {
       "localizations" : {
@@ -1070,7 +1105,14 @@
       }
     },
     "Florence's System" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "佛罗伦萨的政制"
+          }
+        }
+      }
     },
     "General" : {
       "localizations" : {
@@ -1083,25 +1125,74 @@
       }
     },
     "Generate a diagram illustrating how plastics are recycled." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "生成一个图表来说明塑料如何被回收。"
+          }
+        }
+      }
     },
     "Generate a diagram illustrating the life cycle of salmon." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "生成一张图表来说明鲑鱼的生命周期。"
+          }
+        }
+      }
     },
     "Generate a diagram illustrating the process of photosynthesis." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "生成一个图表来说明光合作用的过程。"
+          }
+        }
+      }
     },
     "Generate a diagram illustrating the process of plate tectonics." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "生成一个说明板块构造过程的图表。"
+          }
+        }
+      }
     },
     "Generate a diagram illustrating the stages of mitosis." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "生成一个说明有丝分裂阶段的图表。"
+          }
+        }
+      }
     },
     "Generate a diagram modelling Florence's political system in the 15th century." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "生成一个模拟佛罗伦萨 15 世纪政治体系的图表。"
+          }
+        }
+      }
     },
     "Generate a diagram showing the structure and functions of a neuron." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "生成一个显示神经元结构和功能的图表。"
+          }
+        }
+      }
     },
     "Generate diagrams with AI" : {
       "localizations" : {
@@ -1425,7 +1516,14 @@
       }
     },
     "Mitosis Stages" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "有丝分裂"
+          }
+        }
+      }
     },
     "Model could not be found" : {
       "localizations" : {
@@ -1524,7 +1622,14 @@
       }
     },
     "Neuron Structure" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "神经元结构"
+          }
+        }
+      }
     },
     "New Conversation" : {
       "localizations" : {
@@ -1657,7 +1762,14 @@
       }
     },
     "Photosynthesis" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "光合作用"
+          }
+        }
+      }
     },
     "Pie Chart" : {
       "localizations" : {
@@ -1670,7 +1782,14 @@
       }
     },
     "Plate Tectonics" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "板块构造"
+          }
+        }
+      }
     },
     "Play Sound Effects" : {
       "localizations" : {
@@ -1753,7 +1872,14 @@
       }
     },
     "Recycling" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "回收"
+          }
+        }
+      }
     },
     "References:" : {
       "localizations" : {
@@ -1916,7 +2042,14 @@
       }
     },
     "Salmon Life Cycle" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "鲑鱼生命周期"
+          }
+        }
+      }
     },
     "Save" : {
       "localizations" : {
@@ -2780,7 +2913,14 @@
       }
     },
     "Water Cycle" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "水循环"
+          }
+        }
+      }
     },
     "Web Search" : {
       "localizations" : {

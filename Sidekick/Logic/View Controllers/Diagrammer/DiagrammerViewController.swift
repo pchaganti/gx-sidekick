@@ -156,9 +156,12 @@ Cheatsheet:
 			self.d2RenderProcess = Process()
 			self.d2RenderProcess.executableURL = Bundle.main.resourceURL?
 				.appendingPathComponent("d2")
+			let saveUrl: URL = url.appendingPathComponent(
+				"diagram \(Date.now.ISO8601Format()).svg"
+			)
 			self.d2RenderProcess.arguments = [
 				self.d2FileUrl.posixPath,
-				url.appendingPathComponent("diagram.svg").posixPath
+				saveUrl.posixPath
 			]
 			self.d2RenderProcess.standardInput = FileHandle.nullDevice
 			// To debug with server's output, comment these 2 lines to inherit stdout.

@@ -28,7 +28,6 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 			.appendingPathComponent(self.id.uuidString)
 	}
 	
-	
 	/// Function to load a similarity index of type `SimilarityIndex`, must cache after initial load to improve performance
 	/// - Returns: Returns a similarity index of type `SimilarityIndex`
 	public func loadIndex() async -> SimilarityIndex {
