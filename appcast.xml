@@ -8,7 +8,7 @@
 			<sparkle:version>5</sparkle:version>
 			<sparkle:shortVersionString>0.0.17</sparkle:shortVersionString>
 			<sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-			<enclosure url="https://github.com/johnbean393/Sidekick/releases/download/0.0.16/Sidekick-beta.0.0.17.2025-02-21.dmg"
+			<enclosure url="https://github.com/johnbean393/Sidekick/releases/download/0.0.17/Sidekick-beta.0.0.17.2025-02-21.dmg"
 			sparkle:edSignature="2CCt+u5XK2j+KHq3/N1/NHhJihpw4ieYarZOpPNiq55pqGIfaA0S7FNr3kPPemk/Snecqyb+Pg74oJ+rme7RDg=="
 			length="106287006"
 			type="application/octet-stream" />
