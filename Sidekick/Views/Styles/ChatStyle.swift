@@ -14,6 +14,8 @@ struct ChatStyle: TextFieldStyle {
 	@FocusState var isFocused: Bool
 	@Binding var isRecording: Bool
 	
+	var isChatPromptBar: Bool = true
+	
 	let cornerRadius = 16.0
 	var rect: RoundedRectangle {
 		RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
@@ -32,8 +34,15 @@ struct ChatStyle: TextFieldStyle {
 		configuration
 			.textFieldStyle(.plain)
 			.frame(maxWidth: .infinity)
-			.padding(.leading, 24)
-			.padding(.trailing, 21)
+			.if(isChatPromptBar) { view in
+				view
+					.padding(.leading, 24)
+					.padding(.trailing, 21)
+			}
+			.if(!isChatPromptBar) { view in
+				view
+					.padding(.horizontal, 4)
+			}
 			.padding(8)
 			.cornerRadius(cornerRadius)
 			.background(

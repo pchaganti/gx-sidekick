@@ -69,30 +69,7 @@ public struct Message: Identifiable, Codable, Hashable {
 	
 	/// Computed property returning the response text
 	public var responseText: String {
-		// List special reasoning tokens
-		let specialTokenSets: [[String]] = [
-			["<think>", "</think>"]
-		]
-		// Init variable for stripped text
-		var processedResponse: String = self.text
-		// Extract text
-		for tokenSet in specialTokenSets {
-			// If only the first token is found, return empty response
-			if self.text.contains(tokenSet.first!) && !self.text.contains(tokenSet.last!) {
-				return ""
-			}
-			// Extract text between tokens
-			if let startRange = processedResponse.range(of: tokenSet.first!),
-				  let endRange = processedResponse.range(
-					of: tokenSet.last!,
-					range: startRange.upperBound..<processedResponse.endIndex
-				  ) {
-				// Remove reasoning tokens and the text inside them
-				processedResponse.removeSubrange(startRange.lowerBound..<endRange.upperBound)
-			}
-		}
-		// Return clean result
-		return processedResponse.trimmingCharacters(in: .whitespacesAndNewlines)
+		return self.text.thinkingTagsRemoved
 	}
 	
 	/// A `String` containing the message's reasoning process

@@ -94,6 +94,16 @@
         }
       }
     },
+    "An error occurred while generating the diagram." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "图表生成出错…"
+          }
+        }
+      }
+    },
     "Answer Question" : {
       "localizations" : {
         "zh-Hans" : {
@@ -624,12 +634,52 @@
         }
       }
     },
+    "Describe a concept you'd like to see illustrated in a diagram" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "描述一个你希望用图表来说明的概念"
+          }
+        }
+      }
+    },
+    "Diagram saved successfully" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "图表保存成功"
+          }
+        }
+      }
+    },
+    "Diagrammer" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "图表制作"
+          }
+        }
+      }
+    },
     "Do you want to add files, folders or webpages?" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "您想添加文件或文件夹，还是网页？"
+          }
+        }
+      }
+    },
+    "Doing your job..." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在赶工…"
           }
         }
       }
@@ -724,12 +774,32 @@
         }
       }
     },
+    "e.g. Draw a diagram of the eutrophication cycle and how it forms a positive feedback loop." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "例：绘制富营养化循环图以及它如何形成正反馈回路"
+          }
+        }
+      }
+    },
     "Edit" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "编辑"
+          }
+        }
+      }
+    },
+    "Edit text with AI without leaving your editor" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无需离开编辑器即可使用 AI 编辑文本"
           }
         }
       }
@@ -844,6 +914,16 @@
         }
       }
     },
+    "Extensions" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "插件"
+          }
+        }
+      }
+    },
     "Extracting text..." : {
       "localizations" : {
         "zh-Hans" : {
@@ -890,6 +970,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "图片生成失败"
+          }
+        }
+      }
+    },
+    "Failed to save diagram" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "图表保存错误"
           }
         }
       }
@@ -970,6 +1060,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "通用"
+          }
+        }
+      }
+    },
+    "Generate diagrams with AI" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "利用 AI 生成图表"
+          }
+        }
+      }
+    },
+    "Generating diagram..." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在生成图表…"
           }
         }
       }
@@ -1140,6 +1250,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "写作助手"
+          }
+        }
+      }
+    },
+    "Just a moment..." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请稍等…"
           }
         }
       }
@@ -2007,6 +2127,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sidekick 將使用此使用者名稱來引用您"
+          }
+        }
+      }
+    },
+    "Sidekick's Inline Assistant is enabled by default.\n\nUse the default keyboard shortcut `Command 􀆔 + Control 􀆍 + I` to toggle the assistant. You can change this shortcut in `Settings -> General`." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已启用 Sidekick 的写作助手。\n\n使用默认键盘快捷键 Command 􀆔 + Control 􀆍 + I` 开启助手。快捷键可以在 `设置 -> 常规` 中被更改。"
           }
         }
       }

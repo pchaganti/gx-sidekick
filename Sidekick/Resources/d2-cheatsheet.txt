@@ -1,0 +1,67 @@
+# D2 Syntax
+
+# nodes and edges
+hello -> world
+
+# labels on nodes
+hello: hi
+
+# labels on connections
+hello -> world: bye
+
+# chained connections
+a -> b -> c
+
+# container
+## where "aws" is the container and "server" is a shape inside the container
+
+aws: {
+	server
+}
+
+# points to server inside "aws" container
+aws.server
+# create a new shape labeled "server" outside of aws
+server
+
+# using special shapes
+my node: {shape: circle}
+hexagon: {shape: hexagon}
+package: {shape: package}
+cylinder: {shape: cylinder}
+page: {shape: page}
+cloud: {shape: cloud}
+
+# comments start with a hash '#'
+
+
+# example: Florence's Political System in the 15th Century
+
+# Main Entities
+Florence: {shape: circle}
+Medici Family: {shape: circle}
+Signoria: {shape: circle}
+Great Council: {shape: circle}
+College of Eight: {shape: circle}
+Gonfalonier of Justice: {shape: circle}
+# Relationships
+
+# Medici Family's influence
+Florence -> Medici Family: Influential
+Medici Family -> Signoria: Control
+Medici Family -> Great Council: Influence
+Medici Family -> College of Eight: Influence
+Medici Family -> Gonfalonier of Justice: Influence
+
+# Signoria and its components
+Signoria: {
+    Gonfalonier of Justice
+    Priors
+}
+
+# Other political bodies
+Signoria -> Great Council: Oversees
+Signoria -> College of Eight: Oversees
+
+# Gonfalonier of Justice
+Gonfalonier of Justice: {shape: circle}

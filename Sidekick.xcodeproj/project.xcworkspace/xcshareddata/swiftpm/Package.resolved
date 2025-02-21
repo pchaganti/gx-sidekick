@@ -1,5 +1,5 @@
 {
-  "originHash" : "2c4e07a60dfba2967fc4b99cb3af7c9d737f4ca83349cbce3345495d2123dd16",
+  "originHash" : "b61e3a52629bdddc4e4ebbf0ace75f51817c86d7d34a3131af1ebec447b694f0",
   "pins" : [
     {
       "identity" : "browserkit",
@@ -190,6 +190,15 @@
       }
     },
     {
+      "identity" : "swiftfulloadingindicators",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SwiftfulThinking/SwiftfulLoadingIndicators",
+      "state" : {
+        "revision" : "85858c0246dcd781228301f9928519f75ce89758",
+        "version" : "0.0.4"
+      }
+    },
+    {
       "identity" : "swiftmath",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mgriebling/SwiftMath",
@@ -223,6 +232,15 @@
       "state" : {
         "revision" : "f82b64bcc3d761c9e63aaa10b1912bba72cbf6d8",
         "version" : "1.5.3"
+      }
+    },
+    {
+      "identity" : "webviewkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/danielsaidi/WebViewKit",
+      "state" : {
+        "revision" : "bae09cfa4bae29f22dcf9d98f197aba50b5dc4bb",
+        "version" : "0.5.0"
       }
     },
     {

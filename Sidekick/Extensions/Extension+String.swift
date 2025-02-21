@@ -256,4 +256,32 @@ public extension String {
 		}
 	}
 	
+	/// Computed property returning text with thinking tags removed
+	var thinkingTagsRemoved: String {
+		// List special reasoning tokens
+		let specialTokenSets: [[String]] = [
+			["<think>", "</think>"]
+		]
+		// Init variable for stripped text
+		var processedResponse: String = self
+		// Extract text
+		for tokenSet in specialTokenSets {
+			// If only the first token is found, return empty response
+			if self.contains(tokenSet.first!) && !self.contains(tokenSet.last!) {
+				return ""
+			}
+			// Extract text between tokens
+			if let startRange = processedResponse.range(of: tokenSet.first!),
+			   let endRange = processedResponse.range(
+				of: tokenSet.last!,
+				range: startRange.upperBound..<processedResponse.endIndex
+			   ) {
+				// Remove reasoning tokens and the text inside them
+				processedResponse.removeSubrange(startRange.lowerBound..<endRange.upperBound)
+			}
+		}
+		// Return clean result
+		return processedResponse.trimmingCharacters(in: .whitespacesAndNewlines)
+	}
+	
 }

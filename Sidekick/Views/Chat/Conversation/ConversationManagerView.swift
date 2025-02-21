@@ -12,7 +12,7 @@ struct ConversationManagerView: View {
 	
 	@Environment(\.appearsActive) var appearsActive
 	
-	@StateObject private var model: Model = .shared
+	@EnvironmentObject private var model: Model
 	
 	@EnvironmentObject private var appState: AppState
 	
@@ -22,6 +22,8 @@ struct ConversationManagerView: View {
 	@EnvironmentObject private var conversationState: ConversationState
 	
 	@EnvironmentObject private var lengthyTasksController: LengthyTasksController
+	
+	@State private var isViewingExtensions: Bool = false
 	
 	var selectedProfile: Profile? {
 		guard let selectedProfileId = conversationState.selectedProfileId else {
@@ -166,19 +168,9 @@ struct ConversationManagerView: View {
 		) {
 			ConversationNavigationListView()
 			Spacer()
-			if self.lengthyTasksController.hasTasks {
-				LengthyTasksNavigationButton()
-					.buttonStyle(.plain)
-					.foregroundStyle(.secondary)
-					.padding(.horizontal, 5)
-			}
-			NewConversationButton {
-				self.newConversation()
-			}
-			.padding(.horizontal, 5)
-			.padding(.bottom, 7)
+			sidebarButtons
 		}
-		.padding(.top, 7)
+		.padding(.vertical, 7)
 	}
 	
 	var conversationView: some View {
@@ -220,6 +212,35 @@ struct ConversationManagerView: View {
 			Text("The AI model's context is full and may forget earlier chat history. Start a new conversation to clear context.")
 				.padding()
 		}
+	}
+	
+	var sidebarButtons: some View {
+		Group {
+			if self.lengthyTasksController.hasTasks {
+				LengthyTasksNavigationButton()
+					.buttonStyle(.plain)
+					.foregroundStyle(.secondary)
+			}
+			SidebarButtonView(
+				title: String(localized: "Extensions"),
+				systemImage: "puzzlepiece.extension.fill"
+			) {
+				self.isViewingExtensions.toggle()
+			}
+			.keyboardShortcut("e", modifiers: [.command])
+			.sheet(isPresented: $isViewingExtensions) {
+				ExtensionsLibraryView(
+					isPresented: $isViewingExtensions
+				)
+			}
+			SidebarButtonView(
+				title: String(localized: "New Conversation"),
+				systemImage: "square.and.pencil"
+			) {
+				self.newConversation()
+			}
+		}
+		.padding(.horizontal, 5)
 	}
 	
 	private func newConversation() {
