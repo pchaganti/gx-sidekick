@@ -74,6 +74,10 @@ struct ExtensionsLibraryView: View {
 			AssistantInstructionView(
 				showAssistantInstructionSheet: $showAssistantInstructionSheet
 			)
+			.frame(
+				maxWidth: 450,
+				maxHeight: 400
+			)
 		}
 	}
 	

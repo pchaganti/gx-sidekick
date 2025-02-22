@@ -5,6 +5,7 @@
 //  Created by Bean John on 10/11/24.
 //
 
+import FSKit_macOS
 import SwiftUI
 
 struct ResourceSectionView: View {
