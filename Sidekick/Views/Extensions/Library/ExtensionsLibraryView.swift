@@ -1,5 +1,5 @@
 //
-//  ExtensionLibraryView.swift
+//  ExtensionsLibraryView.swift
 //  Sidekick
 //
 //  Created by John Bean on 2/20/25.
@@ -56,7 +56,7 @@ struct ExtensionsLibraryView: View {
 		) {
 			Image("mindmap")
 		} action: {
-			self.openWindow(id: "diagrammer")
+			self.openExtensionWindow(id: "diagrammer")
 		}
 	}
 	
@@ -79,6 +79,15 @@ struct ExtensionsLibraryView: View {
 				maxHeight: 400
 			)
 		}
+	}
+	
+	/// Function to open an extension's associated window
+	private func openExtensionWindow(
+		id: String
+	) {
+		// Open window & close sheet
+		self.openWindow(id: id)
+		self.isPresented.toggle()
 	}
 	
 }
