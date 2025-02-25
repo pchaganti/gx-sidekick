@@ -16,7 +16,7 @@ struct ExtensionsLibraryView: View {
 	
 	let columns: [GridItem] = Array(
 		repeating: GridItem(.fixed(180)),
-		count: 2
+		count: 3
 	)
 	
     var body: some View {
@@ -44,6 +44,7 @@ struct ExtensionsLibraryView: View {
 			) {
 				self.diagrammerCard
 				self.inlineAssistantCard
+				self.detectorCard
 			}
 		}
 	}
@@ -78,6 +79,17 @@ struct ExtensionsLibraryView: View {
 				maxWidth: 450,
 				maxHeight: 400
 			)
+		}
+	}
+	
+	var detectorCard: some View {
+		ExtensionCardButton(
+			name: String(localized: "Detector"),
+			description: String(localized: "Stay one step ahead of Turnitin")
+		) {
+			Image(systemName: "doc.text.magnifyingglass")
+		} action: {
+			self.openExtensionWindow(id: "detector")
 		}
 	}
 	

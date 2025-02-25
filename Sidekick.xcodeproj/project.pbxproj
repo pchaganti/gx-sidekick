@@ -37,6 +37,14 @@
 		202801FC2CC9C5C2005C1F7D /* TemporaryResourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202801FB2CC9C5C2005C1F7D /* TemporaryResourceView.swift */; };
 		202E3EDD2CBB8F7B00AF86C8 /* ReferencedURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202E3EDC2CBB8F7B00AF86C8 /* ReferencedURL.swift */; };
 		2030A10F2CECAE1500F2E235 /* CommandEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2030A10E2CECAE1500F2E235 /* CommandEditorView.swift */; };
+		2030D6182D6C4ED200F18BF4 /* DetectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2030D6172D6C4ED200F18BF4 /* DetectorView.swift */; };
+		2030D61A2D6C50A000F18BF4 /* DetectorInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2030D6192D6C50A000F18BF4 /* DetectorInputView.swift */; };
+		2030D61C2D6C522D00F18BF4 /* DetectorEvaluationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2030D61B2D6C522D00F18BF4 /* DetectorEvaluationView.swift */; };
+		2030D61E2D6C523600F18BF4 /* DetectorResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2030D61D2D6C523600F18BF4 /* DetectorResultView.swift */; };
+		2030D6202D6C74E400F18BF4 /* DetectorEvaluationResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2030D61F2D6C74E400F18BF4 /* DetectorEvaluationResultView.swift */; };
+		2030D6222D6C7F8C00F18BF4 /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2030D6212D6C7F8C00F18BF4 /* CircularProgressView.swift */; };
+		2030D6242D6D60FB00F18BF4 /* EvaluationDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2030D6232D6D60FB00F18BF4 /* EvaluationDetails.swift */; };
+		2030D6262D6D680800F18BF4 /* DetectorEntitySentencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2030D6252D6D680800F18BF4 /* DetectorEntitySentencesView.swift */; };
 		2031B98E2CEAE1A700627D53 /* Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2031B98D2CEAE1A700627D53 /* Accessibility.swift */; };
 		2031B9902CEAE33900627D53 /* InlineAssistantController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2031B98F2CEAE33900627D53 /* InlineAssistantController.swift */; };
 		2031B9922CEAE3CC00627D53 /* Extension+NSWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2031B9912CEAE3CC00627D53 /* Extension+NSWindow.swift */; };
@@ -50,15 +58,6 @@
 		203487712D672A8F00A88DA4 /* ExtensionsLibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203487702D672A8F00A88DA4 /* ExtensionsLibraryView.swift */; };
 		20353FF12CF84546002BC78E /* ToggleLaTeXButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20353FF02CF84546002BC78E /* ToggleLaTeXButton.swift */; };
 		2038CCF32CB6CBC6005AA315 /* PendingMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2038CCF22CB6CBC6005AA315 /* PendingMessageView.swift */; };
-		203A2AE02D5ECFE10009C0AC /* llama-server in Resources */ = {isa = PBXBuildFile; fileRef = 203A2AD72D5ECFE10009C0AC /* llama-server */; };
-		203A2AE12D5ED2740009C0AC /* libggml.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 203A2ACF2D5ECFE10009C0AC /* libggml.dylib */; };
-		203A2AE22D5ED2740009C0AC /* libggml-base.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 203A2AD02D5ECFE10009C0AC /* libggml-base.dylib */; };
-		203A2AE32D5ED2740009C0AC /* libggml-blas.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 203A2AD12D5ECFE10009C0AC /* libggml-blas.dylib */; };
-		203A2AE42D5ED2740009C0AC /* libggml-cpu.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 203A2AD22D5ECFE10009C0AC /* libggml-cpu.dylib */; };
-		203A2AE52D5ED2740009C0AC /* libggml-metal.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 203A2AD32D5ECFE10009C0AC /* libggml-metal.dylib */; };
-		203A2AE62D5ED2740009C0AC /* libggml-rpc.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 203A2AD42D5ECFE10009C0AC /* libggml-rpc.dylib */; };
-		203A2AE72D5ED2740009C0AC /* libllama.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 203A2AD52D5ECFE10009C0AC /* libllama.dylib */; };
-		203A2AE82D5ED2740009C0AC /* libllava_shared.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 203A2AD62D5ECFE10009C0AC /* libllava_shared.dylib */; };
 		204592172CD32DEF00DEAA96 /* TypedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204592162CD32DEF00DEAA96 /* TypedTextView.swift */; };
 		204735802D642BE5000740F9 /* ModelExplorerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2047357F2D642BE5000740F9 /* ModelExplorerView.swift */; };
 		204AE3B62CEAF4C20086B42D /* InlineAssistantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204AE3B52CEAF4C20086B42D /* InlineAssistantView.swift */; };
@@ -121,6 +120,36 @@
 		208844332CDDE394003BCB6F /* ModelRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208844322CDDE394003BCB6F /* ModelRowView.swift */; };
 		208AA3F12CC9E42F00A0891F /* ScrollMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208AA3F02CC9E42F00A0891F /* ScrollMask.swift */; };
 		208BA3572D680B1800E0C657 /* DiagrammerQuickPromptsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208BA3562D680B1800E0C657 /* DiagrammerQuickPromptsView.swift */; };
+		209370762D6AB36900E1AF73 /* ContainerRefactorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209370752D6AB36900E1AF73 /* ContainerRefactorer.swift */; };
+		209370812D6B588D00E1AF73 /* llama-server in Resources */ = {isa = PBXBuildFile; fileRef = 209370802D6B588D00E1AF73 /* llama-server */; };
+		209370822D6B588D00E1AF73 /* llama-perplexity in Resources */ = {isa = PBXBuildFile; fileRef = 2093707F2D6B588D00E1AF73 /* llama-perplexity */; };
+		209370832D6B588D00E1AF73 /* libllava_shared.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2093707E2D6B588D00E1AF73 /* libllava_shared.dylib */; };
+		209370842D6B588D00E1AF73 /* libggml.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 209370772D6B588D00E1AF73 /* libggml.dylib */; };
+		209370852D6B588D00E1AF73 /* libggml-metal.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2093707B2D6B588D00E1AF73 /* libggml-metal.dylib */; };
+		209370862D6B588D00E1AF73 /* libggml-rpc.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2093707C2D6B588D00E1AF73 /* libggml-rpc.dylib */; };
+		209370872D6B588D00E1AF73 /* libllama.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2093707D2D6B588D00E1AF73 /* libllama.dylib */; };
+		209370882D6B588D00E1AF73 /* libggml-base.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 209370782D6B588D00E1AF73 /* libggml-base.dylib */; };
+		209370892D6B588D00E1AF73 /* libggml-blas.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 209370792D6B588D00E1AF73 /* libggml-blas.dylib */; };
+		2093708A2D6B588D00E1AF73 /* libggml-cpu.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2093707A2D6B588D00E1AF73 /* libggml-cpu.dylib */; };
+		2093708B2D6B58A200E1AF73 /* libggml.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 209370772D6B588D00E1AF73 /* libggml.dylib */; };
+		2093708C2D6B58A200E1AF73 /* libggml-base.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 209370782D6B588D00E1AF73 /* libggml-base.dylib */; };
+		2093708D2D6B58A200E1AF73 /* libggml-blas.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 209370792D6B588D00E1AF73 /* libggml-blas.dylib */; };
+		2093708E2D6B58A200E1AF73 /* libggml-cpu.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2093707A2D6B588D00E1AF73 /* libggml-cpu.dylib */; };
+		2093708F2D6B58A200E1AF73 /* libggml-metal.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2093707B2D6B588D00E1AF73 /* libggml-metal.dylib */; };
+		209370902D6B58A200E1AF73 /* libggml-rpc.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2093707C2D6B588D00E1AF73 /* libggml-rpc.dylib */; };
+		209370912D6B58A200E1AF73 /* libllama.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2093707D2D6B588D00E1AF73 /* libllama.dylib */; };
+		209370942D6B598500E1AF73 /* Extension+CaseIterable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209370932D6B598500E1AF73 /* Extension+CaseIterable.swift */; };
+		209370972D6B5B8100E1AF73 /* DetectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209370962D6B5B8100E1AF73 /* DetectorViewController.swift */; };
+		209370982D6B712C00E1AF73 /* libllava_shared.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2093707E2D6B588D00E1AF73 /* libllava_shared.dylib */; };
+		209370992D6B71FB00E1AF73 /* libggml-base.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 209370782D6B588D00E1AF73 /* libggml-base.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		2093709B2D6B71FC00E1AF73 /* libggml-blas.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 209370792D6B588D00E1AF73 /* libggml-blas.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		2093709C2D6B71FC00E1AF73 /* libggml-cpu.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 2093707A2D6B588D00E1AF73 /* libggml-cpu.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		2093709D2D6B71FF00E1AF73 /* libggml-metal.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 2093707B2D6B588D00E1AF73 /* libggml-metal.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		2093709E2D6B720100E1AF73 /* libggml-rpc.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 2093707C2D6B588D00E1AF73 /* libggml-rpc.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		2093709F2D6B720200E1AF73 /* libggml.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 209370772D6B588D00E1AF73 /* libggml.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		209370A02D6B720300E1AF73 /* libllama.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 2093707D2D6B588D00E1AF73 /* libllama.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		209370A12D6B720400E1AF73 /* libllava_shared.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 2093707E2D6B588D00E1AF73 /* libllava_shared.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		209370A32D6C05B900E1AF73 /* Extension+Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209370A22D6C05B900E1AF73 /* Extension+Double.swift */; };
 		2099BD9B2CB7B8C800E02732 /* Extension+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2099BD9A2CB7B8C800E02732 /* Extension+RawRepresentable.swift */; };
 		2099BD9D2CB7B8E700E02732 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2099BD9C2CB7B8E700E02732 /* Notifications.swift */; };
 		2099BD9F2CB7E9CE00E02732 /* QuickPrompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2099BD9E2CB7E9CE00E02732 /* QuickPrompt.swift */; };
@@ -258,6 +287,24 @@
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2093709A2D6B71FB00E1AF73 /* Embed Libraries */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				2093709E2D6B720100E1AF73 /* libggml-rpc.dylib in Embed Libraries */,
+				209370992D6B71FB00E1AF73 /* libggml-base.dylib in Embed Libraries */,
+				209370A02D6B720300E1AF73 /* libllama.dylib in Embed Libraries */,
+				2093709B2D6B71FC00E1AF73 /* libggml-blas.dylib in Embed Libraries */,
+				209370A12D6B720400E1AF73 /* libllava_shared.dylib in Embed Libraries */,
+				2093709C2D6B71FC00E1AF73 /* libggml-cpu.dylib in Embed Libraries */,
+				2093709D2D6B71FF00E1AF73 /* libggml-metal.dylib in Embed Libraries */,
+				2093709F2D6B720200E1AF73 /* libggml.dylib in Embed Libraries */,
+			);
+			name = "Embed Libraries";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -308,6 +355,14 @@
 		202801FB2CC9C5C2005C1F7D /* TemporaryResourceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryResourceView.swift; sourceTree = "<group>"; };
 		202E3EDC2CBB8F7B00AF86C8 /* ReferencedURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferencedURL.swift; sourceTree = "<group>"; };
 		2030A10E2CECAE1500F2E235 /* CommandEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandEditorView.swift; sourceTree = "<group>"; };
+		2030D6172D6C4ED200F18BF4 /* DetectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectorView.swift; sourceTree = "<group>"; };
+		2030D6192D6C50A000F18BF4 /* DetectorInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectorInputView.swift; sourceTree = "<group>"; };
+		2030D61B2D6C522D00F18BF4 /* DetectorEvaluationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectorEvaluationView.swift; sourceTree = "<group>"; };
+		2030D61D2D6C523600F18BF4 /* DetectorResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectorResultView.swift; sourceTree = "<group>"; };
+		2030D61F2D6C74E400F18BF4 /* DetectorEvaluationResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectorEvaluationResultView.swift; sourceTree = "<group>"; };
+		2030D6212D6C7F8C00F18BF4 /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
+		2030D6232D6D60FB00F18BF4 /* EvaluationDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvaluationDetails.swift; sourceTree = "<group>"; };
+		2030D6252D6D680800F18BF4 /* DetectorEntitySentencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectorEntitySentencesView.swift; sourceTree = "<group>"; };
 		2031B98D2CEAE1A700627D53 /* Accessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accessibility.swift; sourceTree = "<group>"; };
 		2031B98F2CEAE33900627D53 /* InlineAssistantController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InlineAssistantController.swift; sourceTree = "<group>"; };
 		2031B9912CEAE3CC00627D53 /* Extension+NSWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+NSWindow.swift"; sourceTree = "<group>"; };
@@ -321,15 +376,6 @@
 		20353FF02CF84546002BC78E /* ToggleLaTeXButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleLaTeXButton.swift; sourceTree = "<group>"; };
 		2037C8F32D55FE0F00073246 /* appIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon.png; sourceTree = "<group>"; };
 		2038CCF22CB6CBC6005AA315 /* PendingMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingMessageView.swift; sourceTree = "<group>"; };
-		203A2ACF2D5ECFE10009C0AC /* libggml.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libggml.dylib; sourceTree = "<group>"; };
-		203A2AD02D5ECFE10009C0AC /* libggml-base.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-base.dylib"; sourceTree = "<group>"; };
-		203A2AD12D5ECFE10009C0AC /* libggml-blas.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-blas.dylib"; sourceTree = "<group>"; };
-		203A2AD22D5ECFE10009C0AC /* libggml-cpu.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-cpu.dylib"; sourceTree = "<group>"; };
-		203A2AD32D5ECFE10009C0AC /* libggml-metal.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-metal.dylib"; sourceTree = "<group>"; };
-		203A2AD42D5ECFE10009C0AC /* libggml-rpc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-rpc.dylib"; sourceTree = "<group>"; };
-		203A2AD52D5ECFE10009C0AC /* libllama.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libllama.dylib; sourceTree = "<group>"; };
-		203A2AD62D5ECFE10009C0AC /* libllava_shared.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libllava_shared.dylib; sourceTree = "<group>"; };
-		203A2AD72D5ECFE10009C0AC /* llama-server */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llama-server"; sourceTree = "<group>"; };
 		204592162CD32DEF00DEAA96 /* TypedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypedTextView.swift; sourceTree = "<group>"; };
 		2047357F2D642BE5000740F9 /* ModelExplorerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelExplorerView.swift; sourceTree = "<group>"; };
 		204AE3B52CEAF4C20086B42D /* InlineAssistantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InlineAssistantView.swift; sourceTree = "<group>"; };
@@ -388,6 +434,20 @@
 		208844322CDDE394003BCB6F /* ModelRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelRowView.swift; sourceTree = "<group>"; };
 		208AA3F02CC9E42F00A0891F /* ScrollMask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollMask.swift; sourceTree = "<group>"; };
 		208BA3562D680B1800E0C657 /* DiagrammerQuickPromptsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagrammerQuickPromptsView.swift; sourceTree = "<group>"; };
+		209370752D6AB36900E1AF73 /* ContainerRefactorer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerRefactorer.swift; sourceTree = "<group>"; };
+		209370772D6B588D00E1AF73 /* libggml.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libggml.dylib; sourceTree = "<group>"; };
+		209370782D6B588D00E1AF73 /* libggml-base.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-base.dylib"; sourceTree = "<group>"; };
+		209370792D6B588D00E1AF73 /* libggml-blas.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-blas.dylib"; sourceTree = "<group>"; };
+		2093707A2D6B588D00E1AF73 /* libggml-cpu.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-cpu.dylib"; sourceTree = "<group>"; };
+		2093707B2D6B588D00E1AF73 /* libggml-metal.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-metal.dylib"; sourceTree = "<group>"; };
+		2093707C2D6B588D00E1AF73 /* libggml-rpc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-rpc.dylib"; sourceTree = "<group>"; };
+		2093707D2D6B588D00E1AF73 /* libllama.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libllama.dylib; sourceTree = "<group>"; };
+		2093707E2D6B588D00E1AF73 /* libllava_shared.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libllava_shared.dylib; sourceTree = "<group>"; };
+		2093707F2D6B588D00E1AF73 /* llama-perplexity */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llama-perplexity"; sourceTree = "<group>"; };
+		209370802D6B588D00E1AF73 /* llama-server */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llama-server"; sourceTree = "<group>"; };
+		209370932D6B598500E1AF73 /* Extension+CaseIterable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+CaseIterable.swift"; sourceTree = "<group>"; };
+		209370962D6B5B8100E1AF73 /* DetectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectorViewController.swift; sourceTree = "<group>"; };
+		209370A22D6C05B900E1AF73 /* Extension+Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Double.swift"; sourceTree = "<group>"; };
 		2099BD9A2CB7B8C800E02732 /* Extension+RawRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+RawRepresentable.swift"; sourceTree = "<group>"; };
 		2099BD9C2CB7B8E700E02732 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		2099BD9E2CB7E9CE00E02732 /* QuickPrompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickPrompt.swift; sourceTree = "<group>"; };
@@ -471,6 +531,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				209370842D6B588D00E1AF73 /* libggml.dylib in Frameworks */,
+				209370852D6B588D00E1AF73 /* libggml-metal.dylib in Frameworks */,
+				209370862D6B588D00E1AF73 /* libggml-rpc.dylib in Frameworks */,
+				209370872D6B588D00E1AF73 /* libllama.dylib in Frameworks */,
+				209370882D6B588D00E1AF73 /* libggml-base.dylib in Frameworks */,
+				209370892D6B588D00E1AF73 /* libggml-blas.dylib in Frameworks */,
+				2093708A2D6B588D00E1AF73 /* libggml-cpu.dylib in Frameworks */,
+				209370832D6B588D00E1AF73 /* libllava_shared.dylib in Frameworks */,
 				200FBFF12CB64CB400A92A74 /* EventSource in Frameworks */,
 				20F84B992D1CFED400F44990 /* DefaultModels in Frameworks */,
 				20CEA7572CE3082F0070579B /* SwiftMath in Frameworks */,
@@ -619,13 +687,12 @@
 		201A1A8F2CDB7D7F001E9BA9 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				20B4D6AE2CC3C12C00817E15 /* PromptController.swift */,
-				20571F6E2CBCE8F7004F3344 /* LengthyTasksController.swift */,
-				2031B98F2CEAE33900627D53 /* InlineAssistantController.swift */,
 				20C16E1A2D0EBE500001B3C9 /* IntroductionViewController.swift */,
+				20571F6E2CBCE8F7004F3344 /* LengthyTasksController.swift */,
 				20BF49CC2D64A08200C329F8 /* ModelExplorerViewController.swift */,
+				20B4D6AE2CC3C12C00817E15 /* PromptController.swift */,
 				200619A42D6754AD001949EF /* Conversation */,
-				200619A52D6754B7001949EF /* Diagrammer */,
+				209370952D6B5B1700E1AF73 /* Extensions */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -724,8 +791,22 @@
 				203487692D671F9600A88DA4 /* Library */,
 				203487682D6702CC00A88DA4 /* Diagrammer */,
 				204AE3B72CEAF4D30086B42D /* Inline Assistant */,
+				2030D6162D6C4D9B00F18BF4 /* Detector */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		2030D6162D6C4D9B00F18BF4 /* Detector */ = {
+			isa = PBXGroup;
+			children = (
+				2030D6172D6C4ED200F18BF4 /* DetectorView.swift */,
+				2030D6192D6C50A000F18BF4 /* DetectorInputView.swift */,
+				2030D61B2D6C522D00F18BF4 /* DetectorEvaluationView.swift */,
+				2030D61D2D6C523600F18BF4 /* DetectorResultView.swift */,
+				2030D61F2D6C74E400F18BF4 /* DetectorEvaluationResultView.swift */,
+				2030D6252D6D680800F18BF4 /* DetectorEntitySentencesView.swift */,
+			);
+			path = Detector;
 			sourceTree = "<group>";
 		};
 		2031B9962CEAE77F00627D53 /* Inline Assistant */ = {
@@ -846,6 +927,7 @@
 				2086E1AB2CB03CD200FFCF57 /* Dialogs.swift */,
 				20571F802CBD6A6D004F3344 /* SoundEffects.swift */,
 				2031B9972CEAE78F00627D53 /* ShortcutController.swift */,
+				209370752D6AB36900E1AF73 /* ContainerRefactorer.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -930,15 +1012,16 @@
 		20896B352D54B0F0006F9368 /* bin */ = {
 			isa = PBXGroup;
 			children = (
-				203A2ACF2D5ECFE10009C0AC /* libggml.dylib */,
-				203A2AD02D5ECFE10009C0AC /* libggml-base.dylib */,
-				203A2AD12D5ECFE10009C0AC /* libggml-blas.dylib */,
-				203A2AD22D5ECFE10009C0AC /* libggml-cpu.dylib */,
-				203A2AD32D5ECFE10009C0AC /* libggml-metal.dylib */,
-				203A2AD42D5ECFE10009C0AC /* libggml-rpc.dylib */,
-				203A2AD52D5ECFE10009C0AC /* libllama.dylib */,
-				203A2AD62D5ECFE10009C0AC /* libllava_shared.dylib */,
-				203A2AD72D5ECFE10009C0AC /* llama-server */,
+				209370772D6B588D00E1AF73 /* libggml.dylib */,
+				209370782D6B588D00E1AF73 /* libggml-base.dylib */,
+				209370792D6B588D00E1AF73 /* libggml-blas.dylib */,
+				2093707A2D6B588D00E1AF73 /* libggml-cpu.dylib */,
+				2093707B2D6B588D00E1AF73 /* libggml-metal.dylib */,
+				2093707C2D6B588D00E1AF73 /* libggml-rpc.dylib */,
+				2093707D2D6B588D00E1AF73 /* libllama.dylib */,
+				2093707E2D6B588D00E1AF73 /* libllava_shared.dylib */,
+				2093707F2D6B588D00E1AF73 /* llama-perplexity */,
+				209370802D6B588D00E1AF73 /* llama-server */,
 			);
 			path = bin;
 			sourceTree = "<group>";
@@ -949,6 +1032,16 @@
 				20896B352D54B0F0006F9368 /* bin */,
 			);
 			path = build;
+			sourceTree = "<group>";
+		};
+		209370952D6B5B1700E1AF73 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				2031B98F2CEAE33900627D53 /* InlineAssistantController.swift */,
+				209370962D6B5B8100E1AF73 /* DetectorViewController.swift */,
+				200619A52D6754B7001949EF /* Diagrammer */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		20AA5A502CC87026003E5519 /* Tips */ = {
@@ -1000,8 +1093,8 @@
 				20F2D5112CC1F33B004CE730 /* Localizable.xcstrings */,
 				20FE94DB2CB96FCD006E9F06 /* Info.plist */,
 				20B97CB12CAFE86C009A0A5D /* SidekickApp.swift */,
-				20B9E60B2CB140A000BA0AD2 /* AppDelegate.swift */,
 				20AC3CE42CDA700700947FDA /* AppState.swift */,
+				20B9E60B2CB140A000BA0AD2 /* AppDelegate.swift */,
 				20B97CBF2CAFE87D009A0A5D /* Views */,
 				20B97CC02CAFE883009A0A5D /* Logic */,
 				20B97CD22CAFEC90009A0A5D /* Extensions */,
@@ -1069,15 +1162,17 @@
 		20B97CD22CAFEC90009A0A5D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				209370932D6B598500E1AF73 /* Extension+CaseIterable.swift */,
 				201A1A922CDB8109001E9BA9 /* Extension+Collection.swift */,
+				209370A22D6C05B900E1AF73 /* Extension+Double.swift */,
 				20B4D6B02CC3D72700817E15 /* Extension+IndexItem.swift */,
+				2031B9992CEAE7A900627D53 /* Extension+KeyboardShortcut.swift */,
 				2099BD9A2CB7B8C800E02732 /* Extension+RawRepresentable.swift */,
 				20FB0D882CBA8327006D062A /* Extension+SimilarityIndex.swift */,
 				20B97CE62CB0066A009A0A5D /* Extension+String.swift */,
 				20B97CEA2CB00912009A0A5D /* Extension+URL.swift */,
-				2031B9992CEAE7A900627D53 /* Extension+KeyboardShortcut.swift */,
-				200C3E2B2CD8B0A40033909F /* UI */,
 				200C3E2C2CD8B1380033909F /* AppKit */,
+				200C3E2B2CD8B0A40033909F /* UI */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1091,6 +1186,7 @@
 				208388EC2CBF825400C2A9F8 /* Tavily.swift */,
 				204D09822D1166810066B060 /* IntroductionPage.swift */,
 				20BF49CA2D649FD700C329F8 /* ModelFamily.swift */,
+				2030D6232D6D60FB00F18BF4 /* EvaluationDetails.swift */,
 				202801F72CC94938005C1F7D /* Conversation */,
 				202801F82CC94962005C1F7D /* Profile */,
 			);
@@ -1142,6 +1238,7 @@
 				20CEA7582CE3084E0070579B /* MathView.swift */,
 				204AE3BC2CEB56750086B42D /* WrappingHStack.swift */,
 				204D9CBE2CF4ABCF0052B6F4 /* StatusLabelView.swift */,
+				2030D6212D6C7F8C00F18BF4 /* CircularProgressView.swift */,
 				20B9B11F2CDF91A900B66D4D /* Buttons */,
 			);
 			path = Misc;
@@ -1223,6 +1320,7 @@
 				200549712CAFA67B00A3DCF2 /* Resources */,
 				200FBFEB2CB63B9400A92A74 /* Embed Helper Tools */,
 				20228A182D126ED70050FA90 /* Embed Foundation Extensions */,
+				2093709A2D6B71FB00E1AF73 /* Embed Libraries */,
 			);
 			buildRules = (
 			);
@@ -1381,20 +1479,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				206934932D5CCDF1006619FD /* conversationExportTemplate.html in Resources */,
+				206934902D5CC87E006619FD /* Credits.html in Resources */,
+				2093708B2D6B58A200E1AF73 /* libggml.dylib in Resources */,
+				2093708C2D6B58A200E1AF73 /* libggml-base.dylib in Resources */,
+				2093708D2D6B58A200E1AF73 /* libggml-blas.dylib in Resources */,
+				2093708E2D6B58A200E1AF73 /* libggml-cpu.dylib in Resources */,
+				2093708F2D6B58A200E1AF73 /* libggml-metal.dylib in Resources */,
+				209370902D6B58A200E1AF73 /* libggml-rpc.dylib in Resources */,
+				209370912D6B58A200E1AF73 /* libllama.dylib in Resources */,
+				209370982D6B712C00E1AF73 /* libllava_shared.dylib in Resources */,
+				209370812D6B588D00E1AF73 /* llama-server in Resources */,
+				209370822D6B588D00E1AF73 /* llama-perplexity in Resources */,
 				200619AA2D6759EF001949EF /* d2-cheatsheet.txt in Resources */,
 				200619A82D6756EB001949EF /* d2 in Resources */,
-				203A2AE12D5ED2740009C0AC /* libggml.dylib in Resources */,
-				203A2AE22D5ED2740009C0AC /* libggml-base.dylib in Resources */,
-				203A2AE32D5ED2740009C0AC /* libggml-blas.dylib in Resources */,
-				203A2AE42D5ED2740009C0AC /* libggml-cpu.dylib in Resources */,
-				203A2AE52D5ED2740009C0AC /* libggml-metal.dylib in Resources */,
-				203A2AE62D5ED2740009C0AC /* libggml-rpc.dylib in Resources */,
-				203A2AE72D5ED2740009C0AC /* libllama.dylib in Resources */,
-				203A2AE82D5ED2740009C0AC /* libllava_shared.dylib in Resources */,
-				206934902D5CC87E006619FD /* Credits.html in Resources */,
-				206934932D5CCDF1006619FD /* conversationExportTemplate.html in Resources */,
 				20B97CB32CAFE86C009A0A5D /* Preview Assets.xcassets in Resources */,
-				203A2AE02D5ECFE10009C0AC /* llama-server in Resources */,
 				20F2D5122CC1F33B004CE730 /* Localizable.xcstrings in Resources */,
 				20B97CB42CAFE86C009A0A5D /* Assets.xcassets in Resources */,
 			);
@@ -1425,6 +1524,7 @@
 				206AB6122CF5F8390010B09A /* AttachmentSelectionButton.swift in Sources */,
 				20BF49CB2D649FD700C329F8 /* ModelFamily.swift in Sources */,
 				20573F362CB53878004C19FE /* CircleMenuStyle.swift in Sources */,
+				2030D61C2D6C522D00F18BF4 /* DetectorEvaluationView.swift in Sources */,
 				204592172CD32DEF00DEAA96 /* TypedTextView.swift in Sources */,
 				20571F842CBD71C9004F3344 /* SystemPromptEditor.swift in Sources */,
 				20CB7AC02D1457B10013E30C /* PromptAnalyzer.swift in Sources */,
@@ -1437,8 +1537,10 @@
 				200FBFF72CB68ABF00A92A74 /* ChatParameters.swift in Sources */,
 				20B97CB52CAFE86C009A0A5D /* ContentView.swift in Sources */,
 				200619B42D676DCE001949EF /* DiagrammerPreviewEditorView.swift in Sources */,
+				209370972D6B5B8100E1AF73 /* DetectorViewController.swift in Sources */,
 				208844332CDDE394003BCB6F /* ModelRowView.swift in Sources */,
 				20353FF12CF84546002BC78E /* ToggleLaTeXButton.swift in Sources */,
+				2030D6222D6C7F8C00F18BF4 /* CircularProgressView.swift in Sources */,
 				20B97CCE2CAFEC37009A0A5D /* Settings.swift in Sources */,
 				20AA5A522CC87032003E5519 /* Tips.swift in Sources */,
 				20573F232CB52E79004C19FE /* Extension+Theme.swift in Sources */,
@@ -1455,6 +1557,7 @@
 				201A1A962CDB99C6001E9BA9 /* MarkdownTableView.swift in Sources */,
 				202801FA2CC949F2005C1F7D /* TemporaryResource.swift in Sources */,
 				20573F162CB505DC004C19FE /* ConversationListView.swift in Sources */,
+				2030D6242D6D60FB00F18BF4 /* EvaluationDetails.swift in Sources */,
 				20B97CCF2CAFEC37009A0A5D /* DownloadManager.swift in Sources */,
 				207A9F592CB8F4AF00E727DE /* ResourceSelectionView.swift in Sources */,
 				20FB0D892CBA8327006D062A /* Extension+SimilarityIndex.swift in Sources */,
@@ -1463,6 +1566,8 @@
 				208388E22CBF51F900C2A9F8 /* RetrievalSettingsView.swift in Sources */,
 				207A9F5F2CB903FD00E727DE /* Extension+Binding.swift in Sources */,
 				201A1A982CDB9DED001E9BA9 /* MarkdownPieChartView.swift in Sources */,
+				2030D6262D6D680800F18BF4 /* DetectorEntitySentencesView.swift in Sources */,
+				2030D61E2D6C523600F18BF4 /* DetectorResultView.swift in Sources */,
 				20AC3CE52CDA700700947FDA /* AppState.swift in Sources */,
 				2099BD9F2CB7E9CE00E02732 /* QuickPrompt.swift in Sources */,
 				20AF0A0A2CDC6339007780FE /* MarkdownCodeBlockView.swift in Sources */,
@@ -1501,12 +1606,14 @@
 				204D09872D1182EC0066B060 /* IntroductionPageView.swift in Sources */,
 				202E3EDD2CBB8F7B00AF86C8 /* ReferencedURL.swift in Sources */,
 				202801F42CC93C80005C1F7D /* DictationButton.swift in Sources */,
+				2030D61A2D6C50A000F18BF4 /* DetectorInputView.swift in Sources */,
 				20CB7AC82D145E320013E30C /* UserRequestClassifier.mlmodel in Sources */,
 				20CEA7592CE3084E0070579B /* MathView.swift in Sources */,
 				2004D7642CBC9DA2009F294E /* ConversationState.swift in Sources */,
 				2086E1712CB036BB00FFCF57 /* ConversationManager.swift in Sources */,
 				20C221092CC4B5A800A99796 /* SourcesView.swift in Sources */,
 				20571F6F2CBCE8F7004F3344 /* LengthyTasksController.swift in Sources */,
+				2030D6202D6C74E400F18BF4 /* DetectorEvaluationResultView.swift in Sources */,
 				201A1A9A2CDBA802001E9BA9 /* MarkdownBarChartView.swift in Sources */,
 				20571F742CBCEE90004F3344 /* LengthyTasksToolbarButton.swift in Sources */,
 				20B97CEB2CB00912009A0A5D /* Extension+URL.swift in Sources */,
@@ -1518,6 +1625,7 @@
 				204D09832D1166810066B060 /* IntroductionPage.swift in Sources */,
 				201A1A932CDB8109001E9BA9 /* Extension+Collection.swift in Sources */,
 				20571F772CBD6005004F3344 /* SettingsView.swift in Sources */,
+				209370A32D6C05B900E1AF73 /* Extension+Double.swift in Sources */,
 				20573F142CB50550004C19FE /* ConversationManagerView.swift in Sources */,
 				2031B99A2CEAE7A900627D53 /* Extension+KeyboardShortcut.swift in Sources */,
 				20B97CB62CAFE86C009A0A5D /* SidekickApp.swift in Sources */,
@@ -1547,6 +1655,7 @@
 				20FB0D8B2CBA8828006D062A /* SearchResult.swift in Sources */,
 				2031B9922CEAE3CC00627D53 /* Extension+NSWindow.swift in Sources */,
 				20FE94DA2CB96DE8006E9F06 /* ExitButton.swift in Sources */,
+				2030D6182D6C4ED200F18BF4 /* DetectorView.swift in Sources */,
 				20573F1B2CB5099B004C19FE /* ConversationCommands.swift in Sources */,
 				20B9E60C2CB140A000BA0AD2 /* AppDelegate.swift in Sources */,
 				208388ED2CBF825400C2A9F8 /* Tavily.swift in Sources */,
@@ -1567,6 +1676,8 @@
 				2099BDA32CB7EB0200E02732 /* CapsuleButtonStyle.swift in Sources */,
 				204C79562CB765D700EED58E /* ProfileSelectionMenu.swift in Sources */,
 				203487712D672A8F00A88DA4 /* ExtensionsLibraryView.swift in Sources */,
+				209370942D6B598500E1AF73 /* Extension+CaseIterable.swift in Sources */,
+				209370762D6AB36900E1AF73 /* ContainerRefactorer.swift in Sources */,
 				201A1A8E2CDB7C1C001E9BA9 /* MarkdownDataView.swift in Sources */,
 				20A8B65B2CB2709100B756FD /* Resources.swift in Sources */,
 				204D9CBF2CF4ABCF0052B6F4 /* StatusLabelView.swift in Sources */,

@@ -17,41 +17,6 @@ enum IntroductionPage: CaseIterable {
 	case inlineWritingAssistant
 	case done
 	
-	/// A `Bool` indicating if there is a previous page
-	public var hasPrevPage: Bool {
-		return self.progress > 0
-	}
-	
-	/// A `Bool` indicating if there is a next page
-	public var hasNextPage: Bool {
-		return self.progress < (Self.allCases.count - 1)
-	}
-	
-	/// An array of ``Page`` indicating a sequence of pages
-	private var pageSequence: [Self] {
-		return (Self.allCases + Self.allCases)
-	}
-	
-	/// An `Int` representing the page's number
-	public var progress: Int {
-		return self.pageSequence.firstIndex(of: self) ?? 0
-	}
-	
-	/// A function to switch to the next page
-	public mutating func nextPage() {
-		withAnimation(.linear) {
-			self = self.pageSequence[self.progress + 1]
-		}
-	}
-	
-	/// A function to switch to the previous page
-	public mutating func prevPage() {
-		let pageNumber: Int = self.pageSequence.lastIndex(of: self) ?? 0
-		withAnimation(.linear) {
-			self = self.pageSequence[pageNumber - 1]
-		}
-	}
-	
 	public var content: Content? {
 		switch self {
 			case .useProfiles:

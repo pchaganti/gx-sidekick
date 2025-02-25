@@ -61,6 +61,10 @@ struct SidekickApp: App {
 			DiagrammerView()
 		}
 		
+		SwiftUI.Window("Detector", id: "detector") {
+			DetectorView()
+		}
+		
 		SwiftUI.Settings {
 			SettingsView()
 				.environmentObject(commandManager)

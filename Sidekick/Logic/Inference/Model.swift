@@ -82,6 +82,13 @@ public class Model: ObservableObject {
 		return status == .processing || status == .coldProcessing
 	}
 	
+	/// Function to calculate the number of tokens in a piece of text
+	public func countTokens(
+		in text: String
+	) async -> Int? {
+		return try? await self.llama.tokenCount(in: text)
+	}
+	
 	/// Function to flag that querying has begun
 	func indicateStartedQuerying(
 		sentConversationId: UUID

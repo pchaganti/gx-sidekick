@@ -19,7 +19,7 @@ public class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
 	/// Function that runs after the app is initialized
 	public func applicationDidFinishLaunching(_ aNotification: Notification) {
 		// Relocate legacy resources
-		self.relocateLegacyResources()
+		ContainerRefactorer.refactor()
 		// Configure Tip's data container
 		try? Tips.configure(
 			[
@@ -43,60 +43,6 @@ public class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
 		// Remove non-persisted resources
 		ProfileManager.shared.removeUnpersistedResources()
 		return .terminateNow
-	}
-	
-	/// Function to relocate legacy resources
-	@MainActor
-	func relocateLegacyResources() {
-		let legacyResources: URL = URL
-			.libraryDirectory
-			.appendingPathComponent("Containers")
-			.appendingPathComponent("com.pattonium.Sidekick")
-			.appendingPathComponent("Data")
-			.appendingPathComponent("Library")
-			.appendingPathComponent("Application Support")
-		if let contents = legacyResources.contents,
-		   legacyResources.appendingPathComponent(
-			"Conversations"
-		   ).fileExists {
-			// Move all contents
-			for content in contents {
-				// Skip CrashReporter and symlinks
-				if content.lastPathComponent == "" || !content.hasDirectoryPath {
-					continue
-				}
-				// Move content
-				let newLocation: URL = URL
-					.applicationSupportDirectory
-					.appendingPathComponent(content.lastPathComponent)
-				if newLocation.fileExists {
-					FileManager.removeItem(at: newLocation)
-				}
-				FileManager.moveItem(from: content, to: newLocation)
-			}
-			// Move settings
-			let settingsLocation: URL = URL
-				.libraryDirectory
-				.appendingPathComponent("Containers")
-				.appendingPathComponent("com.pattonium.Sidekick")
-				.appendingPathComponent("Data")
-				.appendingPathComponent("Library")
-				.appendingPathComponent("Preferences")
-				.appendingPathComponent("com.pattonium.Sidekick.plist")
-			let newSettingsLocation: URL = URL
-				.libraryDirectory
-				.appendingPathComponent("Preferences")
-				.appendingPathComponent("com.pattonium.Sidekick.plist")
-			FileManager.moveItem(
-				from: settingsLocation,
-				to: newSettingsLocation
-			)
-			// Present dialog
-			Dialogs.showAlert(
-				title: String(localized: "Restart Sidekick"),
-				message: String(localized: "To properly load your content, please restart Sidekick.")
-			)
-		}
 	}
 	
 }

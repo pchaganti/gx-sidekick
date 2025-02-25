@@ -149,7 +149,7 @@ public class ModelManager: ObservableObject {
 	
 	/// Computed property returning the datastore's directory's url
 	public var datastoreDirUrl: URL {
-		return URL.applicationSupportDirectory.appendingPathComponent(
+		return Settings.containerUrl.appendingPathComponent(
 			"Models"
 		)
 	}

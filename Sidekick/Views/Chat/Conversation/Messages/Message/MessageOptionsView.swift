@@ -86,16 +86,28 @@ Tokens per second: \(tokensPerSecondStr)
 	}
 	
 	var copyButton: some View {
-		Button {
-			self.copy()
-		} label: {
-			Text("Copy to Clipboard")
+		Group {
+			// If message was produced by a reasoning model
+			if let reasoningText = self.message.reasoningText {
+				Button {
+					reasoningText.copy()
+				} label: {
+					Text("Copy Reasoning Process")
+				}
+				Button {
+					self.message.responseText.copy()
+				} label: {
+					Text("Copy Answer")
+				}
+			} else {
+				// Else, only allow copying of answer
+				Button {
+					self.message.text.copy()
+				} label: {
+					Text("Copy to Clipboard")
+				}
+			}
 		}
-	}
-	
-	/// Function to copy message text to clipboard
-	private func copy() {
-		self.message.text.copy()
 	}
 	
 }

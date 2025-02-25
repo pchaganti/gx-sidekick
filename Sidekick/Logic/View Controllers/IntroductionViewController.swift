@@ -14,7 +14,9 @@ public class IntroductionViewController: ObservableObject {
 	
 	public var progress: some View {
 		HStack {
-			ForEach(IntroductionPage.allCases.indices) { index in
+			ForEach(
+				IntroductionPage.allCases.indices
+			) { index in
 				Circle()
 					.frame(width: 7.5)
 					.foregroundColor({
@@ -29,7 +31,7 @@ public class IntroductionViewController: ObservableObject {
 	
 	public var prevPage: some View {
 		Button {
-			self.page.prevPage()
+			self.page.prevCase()
 		} label: {
 			Image(
 				systemName: "chevron.left"
@@ -38,12 +40,12 @@ public class IntroductionViewController: ObservableObject {
 		}
 		.buttonStyle(.plain)
 		.keyboardShortcut(.leftArrow)
-		.disabled(!page.hasPrevPage)
+		.disabled(!page.hasPrev)
 	}
 	
 	public var nextPage: some View {
 		Button {
-			self.page.nextPage()
+			self.page.nextCase()
 		} label: {
 			Image(
 				systemName: "chevron.right"
@@ -52,7 +54,7 @@ public class IntroductionViewController: ObservableObject {
 		}
 		.buttonStyle(.plain)
 		.keyboardShortcut(.rightArrow)
-		.disabled(!page.hasNextPage)
+		.disabled(!page.hasNext)
 	}
 	
 }

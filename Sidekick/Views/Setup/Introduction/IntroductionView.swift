@@ -23,7 +23,7 @@ struct IntroductionView: View {
 				page
 					.padding()
 				// Progress indicator
-				if introductionViewController.page.hasNextPage {
+				if introductionViewController.page.hasNext {
 					introductionViewController.progress
 				}
 			}

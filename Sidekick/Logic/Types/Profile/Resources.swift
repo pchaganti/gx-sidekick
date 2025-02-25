@@ -22,8 +22,8 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 	
 	/// A URL of the profile's index directory of type `URL`
 	public var indexUrl: URL {
-		return URL
-			.applicationSupportDirectory
+		return Settings
+			.containerUrl
 			.appendingPathComponent("Resources")
 			.appendingPathComponent(self.id.uuidString)
 	}

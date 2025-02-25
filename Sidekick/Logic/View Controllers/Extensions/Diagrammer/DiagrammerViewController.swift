@@ -65,7 +65,7 @@ Cheatsheet:
 	
 	/// The URL of the d2 code file, of type `URL`
 	private var d2FileUrl: URL {
-		let d2DirUrl: URL = URL.applicationSupportDirectory.appendingPathComponent(
+		let d2DirUrl: URL = Settings.containerUrl.appendingPathComponent(
 			"Cache"
 		)
 		let d2FileUrl: URL = d2DirUrl.appendingPathComponent(
@@ -92,7 +92,7 @@ Cheatsheet:
 	private func startPreview() {
 		// Save the code
 		self.saveD2Code()
-		// Start the D2 process
+		// Start the D2 child process
 		self.d2PreviewServerProcess = Process()
 		self.d2PreviewServerProcess.executableURL = Bundle.main.resourceURL?.appendingPathComponent("d2")
 		let arguments = [
@@ -185,7 +185,7 @@ Cheatsheet:
 		// Reset d2Code
 		self.d2Code = ""
 		// Set step to generating
-		self.currentStep.nextStep()
+		self.currentStep.nextCase()
 		// Formulate message
 		let systemPromptMessage: Message = Message(
 			text: InferenceSettings.systemPrompt,
@@ -223,7 +223,7 @@ Cheatsheet:
 						self.d2Code = d2Code
 						self.startPreview()
 						// Move to next step
-						self.currentStep.nextStep()
+						self.currentStep.nextCase()
 					})
 			} catch {
 				// If failed, show error
@@ -245,43 +245,6 @@ Cheatsheet:
 		case prompt
 		case generating
 		case editAndPreview
-
-		/// A `Bool` indicating if there is a previous step
-		public var hasPrevStep: Bool {
-			return self.progress > 0
-		}
-		
-		/// A `Bool` indicating if there is a next step
-		public var hasNextStep: Bool {
-			return self.progress < (Self.allCases.count - 1)
-		}
-		
-		/// An array of ``DiagrammerStep`` indicating a sequence of steps
-		private var stepSequence: [Self] {
-			return (Self.allCases + Self.allCases)
-		}
-		
-		/// An `Int` representing the step's number
-		public var progress: Int {
-			return self.stepSequence.firstIndex(of: self) ?? 0
-		}
-		
-		/// A function to switch to the next step
-		public mutating func nextStep() {
-			withAnimation(.linear) {
-				self = self.stepSequence[self.progress + 1]
-			}
-		}
-		
-		/// A function to switch to the previous step
-		public mutating func prevStep() {
-			let stepNumber: Int = self.stepSequence.lastIndex(
-				of: self
-			) ?? 0
-			withAnimation(.linear) {
-				self = self.stepSequence[stepNumber - 1]
-			}
-		}
 		
 	}
 	

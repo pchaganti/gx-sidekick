@@ -221,7 +221,7 @@ public actor LlamaServer {
 	}
 	
 	/// Function to get completion from the LLM
-	func getCompletion(
+	public func getCompletion(
 		mode: Model.Mode,
 		messages: [Message.MessageSubset],
 		similarityIndex: SimilarityIndex? = nil,
@@ -235,7 +235,7 @@ public actor LlamaServer {
 			try await startServer()
 		}
 		
-		// Hit localhost for completion
+		// Formulate parameters
 		async let params = {
 			switch mode {
 				case .chat:
@@ -347,6 +347,34 @@ public actor LlamaServer {
 	/// Function executed when output finishes
 	public func onFinish(text: String) {}
 	
+	/// Function to get number of tokens in a piece of text
+	public func tokenCount(in text: String) async throws -> Int {
+		// Get url of endpoint
+		let rawUrl = await self.url("/tokenize")
+		// Formulate request
+		var request = URLRequest(
+			url: rawUrl.url
+		)
+		request.httpMethod = "POST"
+		request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+		request.setValue("keep-alive", forHTTPHeaderField: "Connection")
+		if rawUrl.usingRemoteServer {
+			request.setValue("nil", forHTTPHeaderField: "ngrok-skip-browser-warning")
+		}
+		let requestParams: TokenizeParams = .init(content: text)
+		let requestJson: String = requestParams.toJSON()
+		request.httpBody = requestJson.data(using: .utf8)
+		// Send request
+		let (data, _) = try await URLSession.shared.data(
+			for: request
+		)
+		let response: TokenizeResponse = try JSONDecoder().decode(
+			TokenizeResponse.self,
+			from: data
+		)
+		return response.count
+	}
+	
 	/// Function run for waiting for the server
 	private func waitForServer() async throws {
 		// Check health
@@ -440,6 +468,29 @@ public actor LlamaServer {
 		var modelName: String?
 		var usage: Usage?
 		var usedServer: Bool
+		
+	}
+	
+	private struct TokenizeParams: Codable {
+		
+		let content: String
+		
+		/// Function to convert chat parameters to JSON
+		public func toJSON() -> String {
+			let encoder = JSONEncoder()
+			encoder.outputFormatting = .prettyPrinted
+			let jsonData = try? encoder.encode(self)
+			return String(data: jsonData!, encoding: .utf8)!
+		}
+		
+	}
+	
+	private struct TokenizeResponse: Codable {
+		
+		var tokens: [Int]?
+		var count: Int {
+			return self.tokens?.count ?? 0
+		}
 		
 	}
 	

@@ -66,3 +66,33 @@ Signoria -> College of Eight: Oversees
 
 # Gonfalonier of Justice
 Gonfalonier of Justice: {shape: circle}
+
+# example: Generate a diagram illustrating Kreb's Cycle.
+
+# Main Entities
+Citrate: {shape: circle}
+Cis-Aconitate: {shape: circle}
+Isocitrate: {shape: circle}
+α-Ketoglutarate: {shape: circle}
+Succinyl-CoA: {shape: circle}
+Succinate: {shape: circle}
+Fumarate: {shape: circle}
+Malate: {shape: circle}
+Oxaloacetate: {shape: circle}
+
+# Relationships
+Citrate -> Cis-Aconitate -> Isocitrate -> α-Ketoglutarate -> Succinyl-CoA -> Succinate -> Fumarate -> Malate -> Oxaloacetate -> Citrate
+
+# Enzymatic Reactions
+Citrate -> Cis-Aconitate: Aconitase
+Cis-Aconitate -> Isocitrate: Aconitase
+Isocitrate -> α-Ketoglutarate: Isocitrate Dehydrogenase
+α-Ketoglutarate -> Succinyl-CoA: α-Ketoglutarate Dehydrogenase Complex
+Succinyl-CoA -> Succinate: Succinyl-CoA Synthetase
+Succinate -> Fumarate: Succinate Dehydrogenase
+Fumarate -> Malate: Fumarase
+Malate -> Oxaloacetate: Malate Dehydrogenase
+Oxaloacetate -> Citrate: Citrate Synthase
+
+# Substrate Level Phosphorylation
+Succinyl-CoA -> Succinate: ATP Produced

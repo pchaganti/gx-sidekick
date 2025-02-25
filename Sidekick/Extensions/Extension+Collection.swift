@@ -24,3 +24,23 @@ extension Collection where Self.Iterator.Element: Collection {
 		return result
 	}
 }
+
+extension Array where Element == Double {
+	
+	/// Calculates the standard deviation of array elements
+	func standardDeviation() -> Double? {
+		guard count > 0 else { return nil }
+		let mean = reduce(0.0, +) / Double(count)
+		let variance = map { pow($0 - mean, 2) }.reduce(0.0, +) / Double(count)
+		return sqrt(variance)
+	}
+	
+	/// Calculates the variance of array elements
+	func variance() -> Double? {
+		guard count > 0 else { return nil }
+		let mean = reduce(0.0, +) / Double(count)
+		let variance = map { pow($0 - mean, 2) }.reduce(0.0, +) / Double(count)
+		return variance
+	}
+	
+}

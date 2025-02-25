@@ -44,9 +44,14 @@ public class Settings {
 		}
 	}
 	
-	/// Static constant for the LLM directory
-	static let dirUrl: URL = URL
+	/// Static contant for the application's container directory
+	static let containerUrl: URL = URL
 		.applicationSupportDirectory
+		.appendingPathComponent("com.pattonium.Sidekick")
+	
+	/// Static constant for the LLM directory
+	static let dirUrl: URL = Settings
+		.containerUrl
 		.appendingPathComponent("Models")
 	
 	/// Computed property for the LLM's location

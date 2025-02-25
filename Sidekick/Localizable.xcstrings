@@ -24,6 +24,9 @@
         }
       }
     },
+    "%lld%%" : {
+      "shouldTranslate" : false
+    },
     "Add" : {
       "localizations" : {
         "zh-Hans" : {
@@ -84,6 +87,16 @@
         }
       }
     },
+    "AI Probability" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AI 概率"
+          }
+        }
+      }
+    },
     "Allow the chatbot to search the web for information relevant to user prompts" : {
       "localizations" : {
         "zh-Hans" : {
@@ -100,6 +113,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "图表生成出错…"
+          }
+        }
+      }
+    },
+    "Analyze" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "分析"
           }
         }
       }
@@ -484,6 +507,26 @@
         }
       }
     },
+    "Copy Answer" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "复制最终答案"
+          }
+        }
+      }
+    },
+    "Copy Reasoning Process" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "复制思考过程"
+          }
+        }
+      }
+    },
     "Copy to Clipboard" : {
       "localizations" : {
         "zh-Hans" : {
@@ -510,6 +553,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "纠正以下文本的语法。确保所有拼写、标点和语法均正确。使用与原文相同的语言进行回复。"
+          }
+        }
+      }
+    },
+    "Could not locate model." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模型不见了！"
+          }
+        }
+      }
+    },
+    "Could not obtain perplexity score." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法获得困惑度分数。"
           }
         }
       }
@@ -650,6 +713,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "描述一个你希望用图表来说明的概念"
+          }
+        }
+      }
+    },
+    "Detector" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AI 检测仪"
           }
         }
       }
@@ -920,6 +993,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "富营养化循环"
+          }
+        }
+      }
+    },
+    "Evaluating your content..." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在评估内容…"
           }
         }
       }
@@ -1294,6 +1377,16 @@
         }
       }
     },
+    "human" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "人类"
+          }
+        }
+      }
+    },
     "Icon" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1310,6 +1403,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "图标："
+          }
+        }
+      }
+    },
+    "Identifying patterns..." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在识别..."
           }
         }
       }
@@ -2241,6 +2344,16 @@
         }
       }
     },
+    "Sentences driving %@ probability:" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导向%@概率的句子："
+          }
+        }
+      }
+    },
     "Server" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2277,16 +2390,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "在访达中显示 App Support 文件夹"
-          }
-        }
-      }
-    },
-    "Show Container in Finder" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在访达中显示容器"
           }
         }
       }
@@ -2387,6 +2490,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "数据"
+          }
+        }
+      }
+    },
+    "Stay one step ahead of Turnitin" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "知己知彼，百战百胜"
           }
         }
       }
@@ -2521,6 +2634,16 @@
         }
       }
     },
+    "Text is not long enough to evaluate." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "词条过短，无法评估。"
+          }
+        }
+      }
+    },
     "The AI model's context is full and may forget earlier chat history. Start a new conversation to clear context." : {
       "localizations" : {
         "zh-Hans" : {
@@ -2542,6 +2665,7 @@
       }
     },
     "The prompt given to the chatbot." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {

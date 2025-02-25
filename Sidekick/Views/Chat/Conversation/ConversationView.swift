@@ -56,7 +56,7 @@ struct ConversationView: View {
 		_ imageUrl: URL
 	) {
 		// Copy image
-		let copiedImageDir: URL = URL.applicationSupportDirectory.appendingPathComponent(
+		let copiedImageDir: URL = Settings.containerUrl.appendingPathComponent(
 			"Generated Images"
 		)
 		let copiedImageUrl: URL = copiedImageDir.appendingPathComponent(
