@@ -9,9 +9,12 @@ import Foundation
 import FSKit_macOS
 import SimilaritySearchKit
 
+/// An object which abstracts LLM inference
 @MainActor
 public class Model: ObservableObject {
 	
+	/// Initializes the ``Model`` object
+	/// - Parameter systemPrompt: The system prompt given to the model
 	init(
 		systemPrompt: String
 	) {
@@ -39,17 +42,14 @@ public class Model: ObservableObject {
 		systemPrompt: InferenceSettings.systemPrompt
 	)
 	
-	var id: UUID = UUID()
-	
-	/// Property for the system prompt
+	/// Property for the system prompt given to the LLM
 	private var systemPrompt: String
-	/// Function that returns the system prompt
-	func getSystemPrompt() -> String {
-		systemPrompt
-	}
 	
-	/// Function to set new system prompt
-	public func setSystemPrompt(_ systemPrompt: String) async {
+	/// Function to set new system prompt, which controls model behaviour
+	/// - Parameter systemPrompt: The system prompt to be set
+	public func setSystemPrompt(
+		_ systemPrompt: String
+	) async {
 		self.systemPrompt = systemPrompt
 		await self.llama.setSystemPrompt(systemPrompt)
 	}
@@ -69,15 +69,17 @@ public class Model: ObservableObject {
 		try? await self.llama.startServer()
 	}
 	
-	// Dialogue is the dialogue from prompt without system prompt / internal thoughts
-	@Published var pendingMessage = ""
+	/// The content of the message being generated, of type `String`
+	@Published var pendingMessage: String = ""
+	/// The status of `llama-server`, of type ``Model.Status``
 	@Published var status: Status = .cold
+	/// The id of the conversation where the message was sent, of type `UUID`
 	@Published var sentConversationId: UUID? = nil
 	
-	// Each `Model` object runs its own server
+	/// Each `Model` object runs its own server, of type ``LlamaServer``
 	var llama: LlamaServer
 	
-	/// Computed property returning if the model is processing
+	/// Computed property returning if the model is processing, of type `Bool`
 	var isProcessing: Bool {
 		return status == .processing || status == .coldProcessing
 	}
@@ -225,19 +227,28 @@ public class Model: ObservableObject {
 		await self.llama.interrupt()
 	}
 	
+	/// An enum indicating the status of the server
 	public enum Status: String {
 		
+		/// The inference server is inactive
 		case cold
+		/// The inference server is warming up
 		case coldProcessing
+		/// The system is searching in the selected profile's resources. This is only available when the ``Model.Mode`` is set to `chat`
 		case querying
-		case ready  // Ready
+		/// The inference server is awaiting a prompt
+		case ready
+		/// The inference server is currently processing a prompt
 		case processing
 		
 	}
 	
+	/// An enum indicating how the server is to be used
 	public enum Mode: String {
 		
+		/// Indicates the LLM is used as a chatbot, with extra features like resource lookup
 		case chat
+		/// Indicates the LLM is used for simple chat completion
 		case `default`
 		
 	}

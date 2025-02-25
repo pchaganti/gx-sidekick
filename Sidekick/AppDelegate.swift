@@ -11,13 +11,16 @@ import FSKit_macOS
 import SwiftUI
 import TipKit
 
+/// The app's delegate which handles life cycle events
 public class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
 	
 	/// A object of type  `InlineAssistantController` controller
 	let inlineAssistantController: InlineAssistantController = .shared
 	
 	/// Function that runs after the app is initialized
-	public func applicationDidFinishLaunching(_ aNotification: Notification) {
+	public func applicationDidFinishLaunching(
+		_ notification: Notification
+	) {
 		// Relocate legacy resources
 		ContainerRefactorer.refactor()
 		// Configure Tip's data container
@@ -37,7 +40,9 @@ public class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
 	}
 	
 	/// Function that runs before the app is terminated
-	public func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
+	public func applicationShouldTerminate(
+		_ sender: NSApplication
+	) -> NSApplication.TerminateReply {
 		// Remove stale sources
 		SourcesManager.shared.removeStaleSources()
 		// Remove non-persisted resources

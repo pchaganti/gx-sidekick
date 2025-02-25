@@ -10,8 +10,10 @@ import AppKit
 import ApplicationServices
 import CoreGraphics
 
+/// A class to abstract use of macOS's Accessibility API
 public class Accessibility {
 	
+	/// The shared singleton ``Accessibility`` object
 	@MainActor public static let shared = Accessibility()
 	
 	/// Check if Sidekick has the right permissions
@@ -24,17 +26,7 @@ public class Accessibility {
 		return isTrusted
 	}
 	
-	public func showAccessibilityInstructionsWindow() {
-		if self.checkAccessibility() {
-			return
-		}
-		if let url = URL(
-			string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"
-		) {
-			NSWorkspace.shared.open(url)
-		}
-	}
-	
+	/// Function to get the currently selected text
 	public func getSelectedText() -> String? {
 		// Try getting text via Accessibility API
 		if let text = getSelectedTextAX(), text.count > 1  {
@@ -64,6 +56,8 @@ public class Accessibility {
 	}
 	
 	/// Function to get the selected text via a key press
+	/// - Parameter retryAttempts: The number of copy attempts before abortion
+	/// - Returns: The selected text in the foreground app
 	private func getSelectedTextViaCopy(retryAttempts: Int = 3) -> String? {
 		// Reset variables
 		let pasteboard = NSPasteboard.general
@@ -95,7 +89,7 @@ public class Accessibility {
 		return newContent
 	}
 	
-	/// Function to send the Command + C key press
+	/// Function to send the `Command + C` key press
 	private func simulateCopyKeyPress() {
 		let source = CGEventSource(stateID: .hidSystemState)
 		// Define the virtual keycode for 'C' and the command modifier
@@ -114,7 +108,10 @@ public class Accessibility {
 	}
 	
 	/// Function to automatically type out text into an app
-	public func simulateTyping(for string: String) {
+	/// - Parameter string: The string typed into the app in the foreground
+	public func simulateTyping(
+		for string: String
+	) {
 		let source = CGEventSource(stateID: .combinedSessionState)
 		let utf16Chars = Array(string.utf16)
 		// Type characters one by one

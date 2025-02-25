@@ -64,7 +64,7 @@ struct ToolCardButton: View {
 		.padding()
 		.background {
 			RoundedRectangle(
-				cornerRadius: 12
+				cornerRadius: 14
 			)
 			.fill(Color.secondary.opacity(backgroundOpacity))
 		}

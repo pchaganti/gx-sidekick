@@ -10,12 +10,11 @@ import QuickLook
 import QuickLookThumbnailing
 
 public struct QLThumbnail: View {
-	/// The URL of the file for which you want to create a thumbnail.
+	
+	/// The URL of the file for which a thumbnail is created
 	public var url: URL
 	
-	/// The desired size of the thumbnails.
-	///
-	/// This is the actual size of the thumbnail image.
+	/// The actual size of the thumbnail image.
 	public var resolution: CGSize
 	
 	/// The pixel density of the display on the intended device.

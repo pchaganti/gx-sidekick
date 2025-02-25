@@ -274,10 +274,14 @@ public class DetectorViewController: ObservableObject {
 		}
 	}
 	
+	/// An enum representing the current state of the AI detector
 	public enum DetectorState: CaseIterable {
 		
+		/// The user is currently inputting or editing the text
 		case input
+		/// Sidekick is evaluating the text for AI use
 		case evaluating
+		/// Sidekick's evaluation results are displayed to the user
 		case result
 		
 	}
