@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ResourceSectionView: View {
 	
-	@Binding var profile: Profile
+	@Binding var expert: Expert
 	
 	@State private var isAddingWebsite: Bool = false
 	
@@ -18,7 +18,7 @@ struct ResourceSectionView: View {
 	
 	var isUpdating: Bool {
 		let taskName: String = String(
-			localized: "Updating resource index for profile \"\(self.profile.name)\""
+			localized: "Updating resource index for expert \"\(self.expert.name)\""
 		)
 		return lengthyTasksController.tasks
 			.map(\.name)
@@ -40,7 +40,7 @@ struct ResourceSectionView: View {
 		}
 		.sheet(isPresented: $isAddingWebsite) {
 			WebsiteSelectionView(
-				profile: $profile,
+				expert: $expert,
 				isAddingWebsite: $isAddingWebsite
 			)
 		}
@@ -50,7 +50,7 @@ struct ResourceSectionView: View {
 		VStack(alignment: .leading) {
 			HStack {
 				VStack(alignment: .leading) {
-					Text("Resources: \(profile.resources.resources.count)")
+					Text("Resources: \(expert.resources.resources.count)")
 						.font(.title3)
 						.bold()
 					Text("Files, folders or websites stored in the chatbot's \"conscience\"")
@@ -72,7 +72,7 @@ struct ResourceSectionView: View {
 				.disabled(self.isUpdating)
 				Button {
 					Task.detached { @MainActor in
-						await $profile.update()
+						await $expert.update()
 					}
 				} label: {
 					Text("Update")
@@ -80,7 +80,7 @@ struct ResourceSectionView: View {
 				.disabled(self.isUpdating)
 			}
 			Divider()
-			ResourceSelectionView(profile: $profile)
+			ResourceSelectionView(expert: $expert)
 		}
 	}
 	
@@ -94,7 +94,7 @@ struct ResourceSectionView: View {
 					.font(.caption)
 			}
 			Spacer()
-			Toggle("", isOn: $profile.persistResources)
+			Toggle("", isOn: $expert.persistResources)
 				.toggleStyle(.switch)
 		}
 	}
@@ -122,13 +122,13 @@ struct ResourceSectionView: View {
 			Resource(url: $0)
 		})
 		Task.detached { @MainActor in
-			await $profile.addResources(resources)
+			await $expert.addResources(resources)
 		}
 	}
 	
 	struct WebsiteSelectionView: View {
 		
-		@Binding var profile: Profile
+		@Binding var expert: Expert
 		@Binding var isAddingWebsite: Bool
 		
 		@State private var websiteUrl: String = ""
@@ -192,7 +192,7 @@ struct ResourceSectionView: View {
 				url: url
 			)
 			isAddingWebsite = false
-			await $profile.addResource(newResource)
+			await $expert.addResource(newResource)
 		}
 		
 	}

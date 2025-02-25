@@ -16,7 +16,7 @@ struct MessageShareMenu<MessagesView: View>: View {
 	
 	@EnvironmentObject private var model: Model
 	@EnvironmentObject private var conversationManager: ConversationManager
-	@EnvironmentObject private var profileManager: ProfileManager
+	@EnvironmentObject private var expertManager: ExpertManager
 	@EnvironmentObject private var conversationState: ConversationState
 	
 	var messages: [Message] {
@@ -27,11 +27,11 @@ struct MessageShareMenu<MessagesView: View>: View {
 		return self.selectedConversation?.title ?? "conversation"
 	}
 	
-	var selectedProfile: Profile? {
-		guard let selectedProfileId = conversationState.selectedProfileId else {
+	var selectedExpert: Expert? {
+		guard let selectedExpertId = conversationState.selectedExpertId else {
 			return nil
 		}
-		return profileManager.getProfile(id: selectedProfileId)
+		return expertManager.getExpert(id: selectedExpertId)
 	}
 	
 	var selectedConversation: Conversation? {
@@ -44,7 +44,7 @@ struct MessageShareMenu<MessagesView: View>: View {
 	}
 	
 	var isInverted: Bool {
-		guard let luminance = selectedProfile?.color.luminance else { return false }
+		guard let luminance = selectedExpert?.color.luminance else { return false }
 		let darkModeResult: Bool = luminance > 0.5
 		let lightModeResult: Bool = !(luminance > 0.5)
 		return colorScheme == .dark ? darkModeResult : lightModeResult

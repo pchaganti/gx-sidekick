@@ -11,7 +11,7 @@ import SwiftUI
 @MainActor
 public class ConversationState: ObservableObject {
 	
-	@Published var isManagingProfiles: Bool = false
+	@Published var isManagingExperts: Bool = false
 
 	@Published var selectedConversationId: UUID? = topmostConversation?.id
 	
@@ -19,6 +19,6 @@ public class ConversationState: ObservableObject {
 		return ConversationManager.shared.conversations.first
 	}
 	
-	@Published var selectedProfileId: UUID? = ProfileManager.shared.default?.id
+	@Published var selectedExpertId: UUID? = ExpertManager.shared.default?.id
 	
 }

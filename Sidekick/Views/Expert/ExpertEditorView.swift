@@ -1,5 +1,5 @@
 //
-//  ProfileEditorView.swift
+//  ExpertEditorView.swift
 //  Sidekick
 //
 //  Created by Bean John on 10/10/24.
@@ -8,11 +8,11 @@
 import SwiftUI
 import SymbolPicker
 
-struct ProfileEditorView: View {
+struct ExpertEditorView: View {
 	
-	@EnvironmentObject private var profileManager: ProfileManager
+	@EnvironmentObject private var expertManager: ExpertManager
 	
-	@Binding var profile: Profile
+	@Binding var expert: Expert
 	
 	@State private var isSelectingSymbol: Bool = false
 	@State private var systemPrompt: String = ""
@@ -37,11 +37,11 @@ struct ProfileEditorView: View {
 			.padding([.trailing, .bottom])
 		}
 		.onAppear {
-			systemPrompt = profile.systemPrompt ?? InferenceSettings.systemPrompt
+			systemPrompt = expert.systemPrompt ?? InferenceSettings.systemPrompt
 		}
 		.sheet(isPresented: $isSelectingSymbol) {
 			SymbolPicker(
-				symbol: $profile.symbolName
+				symbol: $expert.symbolName
 			)
 			.frame(maxWidth: 600, maxHeight: 800)
 		}
@@ -59,7 +59,7 @@ struct ProfileEditorView: View {
 			} header: {
 				Text("Icon")
 			}
-			ResourceSectionView(profile: $profile)
+			ResourceSectionView(expert: $expert)
 			Section {
 				webSearch
 			} header: {
@@ -82,11 +82,11 @@ struct ProfileEditorView: View {
 						Text("Name")
 							.font(.title3)
 							.bold()
-						Text("This profile's name")
+						Text("This expert's name")
 							.font(.caption)
 					}
 					Spacer()
-					TextField("", text: $profile.name)
+					TextField("", text: $expert.name)
 						.textFieldStyle(.plain)
 				}
 			}
@@ -102,11 +102,11 @@ struct ProfileEditorView: View {
 						Text("Icon:")
 							.font(.title3)
 							.bold()
-						Text("This profile's icon")
+						Text("This expert's icon")
 							.font(.caption)
 					}
 					Spacer()
-					profile.label
+					expert.label
 				}
 				symbol
 				HStack {
@@ -120,7 +120,7 @@ struct ProfileEditorView: View {
 					Spacer()
 					ColorPicker(
 						"",
-						selection: $profile.color,
+						selection: $expert.color,
 						supportsOpacity: false
 					)
 				}
@@ -142,7 +142,7 @@ struct ProfileEditorView: View {
 			Button {
 				isSelectingSymbol.toggle()
 			} label: {
-				Label("Change", systemImage: profile.symbolName)
+				Label("Change", systemImage: expert.symbolName)
 					.labelStyle(.titleAndIcon)
 			}
 		}
@@ -156,11 +156,11 @@ struct ProfileEditorView: View {
 						Text("Use Web Search")
 							.font(.title3)
 							.bold()
-						Text("Controls whether this profile searches the web before answering. Note that when enabled, this feature may lead to slower responses.")
+						Text("Controls whether this expert searches the web before answering. Note that when enabled, this feature may lead to slower responses.")
 							.font(.caption)
 					}
 					Spacer()
-					Toggle("", isOn: $profile.useWebSearch)
+					Toggle("", isOn: $expert.useWebSearch)
 				}
 				.padding(.horizontal, 5)
 			} else {
@@ -179,7 +179,7 @@ struct ProfileEditorView: View {
 					Text("System Prompt")
 						.font(.title3)
 						.bold()
-					Text("This profile's system prompt")
+					Text("This expert's system prompt")
 						.font(.caption)
 					Button {
 						systemPrompt = InferenceSettings.systemPrompt
@@ -204,15 +204,15 @@ struct ProfileEditorView: View {
 		// Save system prompt changes
 		if !systemPrompt.isEmpty {
 			if systemPrompt == InferenceSettings.systemPrompt {
-				profile.systemPrompt = nil
+				expert.systemPrompt = nil
 				return
 			}
-			profile.systemPrompt = systemPrompt
+			expert.systemPrompt = systemPrompt
 		}
 	}
 	
 }
 
 //#Preview {
-//    ProfileEditorView()
+//    ExpertEditorView()
 //}

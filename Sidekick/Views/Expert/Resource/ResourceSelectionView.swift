@@ -10,16 +10,16 @@ import SwiftUI
 
 struct ResourceSelectionView: View {
 	
-	@Binding var profile: Profile
+	@Binding var expert: Expert
 	@EnvironmentObject private var lengthyTasksController: LengthyTasksController
 	
 	var hasResources: Bool {
-		return !profile.resources.resources.isEmpty
+		return !expert.resources.resources.isEmpty
 	}
 	
 	var isUpdating: Bool {
 		let taskName: String = String(
-			localized: "Updating resource index for profile \"\(self.profile.name)\""
+			localized: "Updating resource index for expert \"\(self.expert.name)\""
 		)
 		return lengthyTasksController.tasks
 			.map(\.name)
@@ -42,11 +42,11 @@ struct ResourceSelectionView: View {
 	
 	var list: some View {
 		List(
-			$profile.resources.resources,
+			$expert.resources.resources,
 			editActions: .move
 		) { resource in
 			ResourceRowView(
-				profile: $profile,
+				expert: $expert,
 				resource: resource
 			)
 			.transition(
@@ -78,7 +78,7 @@ struct ResourceSelectionView: View {
 
 struct ResourceRowView: View {
 	
-	@Binding var profile: Profile
+	@Binding var expert: Expert
 	@Binding var resource: Resource
 	
 	@State private var isHovering: Bool = false
@@ -149,7 +149,7 @@ struct ResourceRowView: View {
 	
 	@MainActor
 	func remove() async {
-		await $profile.removeResource(resource)
+		await $expert.removeResource(resource)
 	}
 	
 }

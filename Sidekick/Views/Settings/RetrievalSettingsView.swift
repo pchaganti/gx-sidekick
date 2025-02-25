@@ -127,7 +127,7 @@ struct RetrievalSettingsView: View {
 				Text("Search Results")
 					.font(.title3)
 					.bold()
-				Text("Controls the number of search results from profile resources fed to the chatbot. The more results, the slower the chatbot will respond.")
+				Text("Controls the number of search results from expert resources fed to the chatbot. The more results, the slower the chatbot will respond.")
 					.font(.caption)
 			}
 			.frame(minWidth: 250)

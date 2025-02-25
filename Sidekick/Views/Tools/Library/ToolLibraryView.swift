@@ -1,5 +1,5 @@
 //
-//  ExtensionsLibraryView.swift
+//  ToolboxLibraryView.swift
 //  Sidekick
 //
 //  Created by John Bean on 2/20/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ExtensionsLibraryView: View {
+struct ToolboxLibraryView: View {
 	
 	@Environment(\.openWindow) var openWindow
 	
@@ -29,14 +29,14 @@ struct ExtensionsLibraryView: View {
 				}
 				Spacer()
 			}
-			extensions
+			tools
 				.padding(.horizontal, 5)
 		}
 		.padding(8)
 		.padding(.bottom, 8)
     }
 	
-	var extensions: some View {
+	var tools: some View {
 		ScrollView {
 			LazyVGrid(
 				columns: columns,
@@ -50,19 +50,19 @@ struct ExtensionsLibraryView: View {
 	}
 	
 	var diagrammerCard: some View {
-		ExtensionCardButton(
+		ToolCardButton(
 			name: String(localized: "Diagrammer"),
 			description: String(localized: "Generate diagrams with AI"),
 			isSvg: true
 		) {
 			Image("mindmap")
 		} action: {
-			self.openExtensionWindow(id: "diagrammer")
+			self.openToolWindow(id: "diagrammer")
 		}
 	}
 	
 	var inlineAssistantCard: some View {
-		ExtensionCardButton(
+		ToolCardButton(
 			name: String(localized: "Inline Assistant"),
 			description: String(localized: "Edit text with AI without leaving your editor"),
 			isSvg: false
@@ -83,18 +83,18 @@ struct ExtensionsLibraryView: View {
 	}
 	
 	var detectorCard: some View {
-		ExtensionCardButton(
+		ToolCardButton(
 			name: String(localized: "Detector"),
 			description: String(localized: "Stay one step ahead of Turnitin")
 		) {
 			Image(systemName: "doc.text.magnifyingglass")
 		} action: {
-			self.openExtensionWindow(id: "detector")
+			self.openToolWindow(id: "detector")
 		}
 	}
 	
-	/// Function to open an extension's associated window
-	private func openExtensionWindow(
+	/// Function to open an tool's associated window
+	private func openToolWindow(
 		id: String
 	) {
 		// Open window & close sheet

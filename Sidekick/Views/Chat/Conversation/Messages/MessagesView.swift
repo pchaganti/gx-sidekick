@@ -13,7 +13,7 @@ struct MessagesView: View {
 	
 	@EnvironmentObject private var model: Model
 	@EnvironmentObject private var conversationManager: ConversationManager
-	@EnvironmentObject private var profileManager: ProfileManager
+	@EnvironmentObject private var expertManager: ExpertManager
 	@EnvironmentObject private var conversationState: ConversationState
 	
 	var selectedConversation: Conversation? {

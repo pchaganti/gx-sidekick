@@ -47,6 +47,7 @@ struct DetectorEvaluationResultView: View {
 			}.reduce(+)
 		}
 		.font(.title3)
+		.textSelection(.enabled)
 	}
 	
 	var editButton: some View {

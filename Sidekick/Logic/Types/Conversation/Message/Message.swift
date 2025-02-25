@@ -129,7 +129,7 @@ public struct Message: Identifiable, Codable, Hashable {
 		if self.sender != .user {
 			return (self.text, 0)
 		}
-		// Search in profile resources
+		// Search in expert resources
 		// If no resources, return blank array
 		let hasResources: Bool = similarityIndex != nil && !(similarityIndex?.indexItems.isEmpty ?? true)
 		let searchResultsMultiplier: Int = RetrievalSettings.searchResultsMultiplier * 2

@@ -12,10 +12,10 @@ public class AppState: ObservableObject {
 	
 	static let shared: AppState = AppState()
 	
-	@Published var commandSelectedProfileId: UUID? = nil
+	@Published var commandSelectedExpertId: UUID? = nil
 	
-	static func setCommandSelectedProfileId(_ id: UUID) {
-		Self.shared.commandSelectedProfileId = id
+	static func setCommandSelectedExpertId(_ id: UUID) {
+		Self.shared.commandSelectedExpertId = id
 	}
 	
 }

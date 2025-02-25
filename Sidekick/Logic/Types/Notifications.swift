@@ -11,7 +11,7 @@ public enum Notifications: String, NotificationName {
 	
 	case systemPromptChanged
 	case changedInferenceConfig
-	case didCommandSelectProfile
+	case didCommandSelectExpert
 	case newConversation
 	
 }

@@ -31,9 +31,9 @@ public class DebugCommands {
 					Text("Delete All Conversations")
 				}
 				Button(
-					action: ProfileManager.shared.resetDatastore
+					action: ExpertManager.shared.resetDatastore
 				) {
-					Text("Delete All Profiles")
+					Text("Delete All Experts")
 				}
 				Button {
 					FileManager.showItemInFinder(

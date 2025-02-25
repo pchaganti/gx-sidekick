@@ -17,23 +17,23 @@ struct ConversationManagerView: View {
 	@EnvironmentObject private var appState: AppState
 	
 	@EnvironmentObject private var conversationManager: ConversationManager
-	@EnvironmentObject private var profileManager: ProfileManager
+	@EnvironmentObject private var expertManager: ExpertManager
 	
 	@EnvironmentObject private var conversationState: ConversationState
 	
 	@EnvironmentObject private var lengthyTasksController: LengthyTasksController
 	
-	@State private var isViewingExtensions: Bool = false
+	@State private var isViewingToolbox: Bool = false
 	
-	var selectedProfile: Profile? {
-		guard let selectedProfileId = conversationState.selectedProfileId else {
+	var selectedExpert: Expert? {
+		guard let selectedExpertId = conversationState.selectedExpertId else {
 			return nil
 		}
-		return profileManager.getProfile(id: selectedProfileId)
+		return expertManager.getExpert(id: selectedExpertId)
 	}
 	
 	var toolbarTextColor: Color {
-		guard let luminance = selectedProfile?.color.luminance else {
+		guard let luminance = selectedExpert?.color.luminance else {
 			return .accentColor
 		}
 		return (luminance > 0.5) ? .toolbarText : .white
@@ -77,14 +77,14 @@ struct ConversationManagerView: View {
 					.opacity(0.9)
 			}
 			ToolbarItemGroup(placement: .principal) {
-				ProfileSelectionMenu()
+				ExpertSelectionMenu()
 					.onChange(
-						of: conversationState.selectedProfileId
+						of: conversationState.selectedExpertId
 					) {
 						guard var selectedConversation = self.selectedConversation else {
 							return
 						}
-						selectedConversation.profileId = self.conversationState.selectedProfileId
+						selectedConversation.expertId = self.conversationState.selectedExpertId
 						self.conversationManager.update(selectedConversation)
 					}
 			}
@@ -98,14 +98,14 @@ struct ConversationManagerView: View {
 				}
 			}
 		}
-		.if(selectedProfile != nil) { view in
+		.if(selectedExpert != nil) { view in
 			return view
 				.toolbarBackground(
-					selectedProfile!.color,
+					selectedExpert!.color,
 					for: .windowToolbar
 				)
 		}
-		.onChange(of: selectedProfile) {
+		.onChange(of: selectedExpert) {
 			self.refreshSystemPrompt()
 		}
 		.onReceive(
@@ -128,7 +128,7 @@ struct ConversationManagerView: View {
 			)
 		) { output in
 			withAnimation(.linear) {
-				self.conversationState.selectedProfileId = profileManager.default?.id
+				self.conversationState.selectedExpertId = expertManager.default?.id
 			}
 			if let recentConversationId = conversationManager.recentConversation?.id {
 				withAnimation(.linear) {
@@ -138,13 +138,13 @@ struct ConversationManagerView: View {
 		}
 		.onReceive(
 			NotificationCenter.default.publisher(
-				for: Notifications.didCommandSelectProfile.name
+				for: Notifications.didCommandSelectExpert.name
 			)
 		) { output in
-			// Update profile if needed
+			// Update expert if needed
 			if self.appearsActive {
 				withAnimation(.linear) {
-					self.conversationState.selectedProfileId = self.appState.commandSelectedProfileId
+					self.conversationState.selectedExpertId = self.appState.commandSelectedExpertId
 				}
 			}
 		}
@@ -222,15 +222,15 @@ struct ConversationManagerView: View {
 					.foregroundStyle(.secondary)
 			}
 			SidebarButtonView(
-				title: String(localized: "Extensions"),
-				systemImage: "puzzlepiece.extension.fill"
+				title: String(localized: "Toolbox"),
+				systemImage: "wrench.adjustable"
 			) {
-				self.isViewingExtensions.toggle()
+				self.isViewingToolbox.toggle()
 			}
-			.keyboardShortcut("e", modifiers: [.command])
-			.sheet(isPresented: $isViewingExtensions) {
-				ExtensionsLibraryView(
-					isPresented: $isViewingExtensions
+			.keyboardShortcut("t", modifiers: [.command])
+			.sheet(isPresented: $isViewingToolbox) {
+				ToolboxLibraryView(
+					isPresented: $isViewingToolbox
 				)
 			}
 			SidebarButtonView(
@@ -246,9 +246,9 @@ struct ConversationManagerView: View {
 	private func newConversation() {
 		// Create new conversation
 		ConversationManager.shared.newConversation()
-		// Reset selected profile
+		// Reset selected expert
 		withAnimation(.linear) {
-			conversationState.selectedProfileId = profileManager.default?.id
+			conversationState.selectedExpertId = expertManager.default?.id
 		}
 		// Select newly created conversation
 		if let recentConversationId = conversationManager.recentConversation?.id {
@@ -268,7 +268,7 @@ struct ConversationManagerView: View {
 	private func refreshSystemPrompt() {
 		// Set new prompt
 		var prompt: String = InferenceSettings.systemPrompt
-		if let systemPrompt = self.selectedProfile?.systemPrompt {
+		if let systemPrompt = self.selectedExpert?.systemPrompt {
 			prompt = systemPrompt
 		}
 		Task {

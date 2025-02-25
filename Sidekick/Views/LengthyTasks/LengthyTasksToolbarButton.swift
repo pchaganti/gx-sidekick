@@ -16,17 +16,17 @@ struct LengthyTasksButton: View {
 	
 	@EnvironmentObject private var lengthyTasksController: LengthyTasksController
 	@EnvironmentObject private var conversationState: ConversationState
-	@EnvironmentObject private var profileManager: ProfileManager
+	@EnvironmentObject private var expertManager: ExpertManager
 	
-	var selectedProfile: Profile? {
-		guard let selectedProfileId = conversationState.selectedProfileId else {
+	var selectedExpert: Expert? {
+		guard let selectedExpertId = conversationState.selectedExpertId else {
 			return nil
 		}
-		return profileManager.getProfile(id: selectedProfileId)
+		return expertManager.getExpert(id: selectedExpertId)
 	}
 	
 	var isInverted: Bool {
-		guard let luminance = selectedProfile?.color.luminance else { return false }
+		guard let luminance = selectedExpert?.color.luminance else { return false }
 		let darkModeSetting: Bool = luminance > 0.5 && !usePadding
 		let lightModeSetting: Bool = luminance < 0.5 && !usePadding
 		return colorScheme == .dark ? darkModeSetting : lightModeSetting

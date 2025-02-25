@@ -10,7 +10,7 @@ import SwiftUI
 
 enum IntroductionPage: CaseIterable {
 	
-	case useProfiles
+	case useExperts
 	case temporaryResources
 	case webSearch
 	case dataVisualization
@@ -19,11 +19,11 @@ enum IntroductionPage: CaseIterable {
 	
 	public var content: Content? {
 		switch self {
-			case .useProfiles:
+			case .useExperts:
 				return Content(
-					image: Image(.useProfiles),
-					title: String(localized: "Profiles"),
-					description: String(localized: "Create and use profiles to allow the chatbot to reply with **domain specific** information from your own files and folders.")
+					image: Image(.useExperts),
+					title: String(localized: "Experts"),
+					description: String(localized: "Create and use experts to allow the chatbot to reply with **domain specific** information from your own files and folders.")
 				)
 			case .temporaryResources:
 				return Content(

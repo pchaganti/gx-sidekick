@@ -57,6 +57,16 @@
         }
       }
     },
+    "Add Expert" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新建专家"
+          }
+        }
+      }
+    },
     "Add Files" : {
       "localizations" : {
         "zh-Hans" : {
@@ -73,16 +83,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "添加"
-          }
-        }
-      }
-    },
-    "Add Profile" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "新建专家"
           }
         }
       }
@@ -197,7 +197,7 @@
         }
       }
     },
-    "Are you sure you want to delete all profiles?" : {
+    "Are you sure you want to delete all experts?" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -227,7 +227,7 @@
         }
       }
     },
-    "Are you sure you want to delete this profile?" : {
+    "Are you sure you want to delete this expert?" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -327,7 +327,7 @@
         }
       }
     },
-    "Check progress of lengthy tasks, like updating your profile with new resources." : {
+    "Check progress of lengthy tasks, like updating your expert with new resources." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -437,7 +437,7 @@
         }
       }
     },
-    "Controls the number of search results from profile resources fed to the chatbot. The more results, the slower the chatbot will respond." : {
+    "Controls the number of search results from expert resources fed to the chatbot. The more results, the slower the chatbot will respond." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -477,7 +477,7 @@
         }
       }
     },
-    "Controls whether this profile searches the web before answering. Note that when enabled, this feature may lead to slower responses." : {
+    "Controls whether this expert searches the web before answering. Note that when enabled, this feature may lead to slower responses." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -577,7 +577,7 @@
         }
       }
     },
-    "Create a Profile" : {
+    "Create an Expert" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -587,7 +587,7 @@
         }
       }
     },
-    "Create and use profiles to allow the chatbot to reply with **domain specific** information from your own files and folders." : {
+    "Create and use experts to allow the chatbot to reply with **domain specific** information from your own files and folders." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -597,7 +597,7 @@
         }
       }
     },
-    "Create profiles that **customise** chatbot behaviour, making it **reply with context from your files**." : {
+    "Create experts that **customise** chatbot behaviour, making it **reply with context from your files**." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -677,12 +677,12 @@
         }
       }
     },
-    "Delete All Profiles" : {
+    "Delete All Experts" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "删除所有专家"
+            "value" : "Delete All Profiles"
           }
         }
       }
@@ -1007,6 +1007,26 @@
         }
       }
     },
+    "Exit" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "退出"
+          }
+        }
+      }
+    },
+    "Experts" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "专家"
+          }
+        }
+      }
+    },
     "Explain how" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1043,16 +1063,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "导出照片"
-          }
-        }
-      }
-    },
-    "Extensions" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "插件"
           }
         }
       }
@@ -1598,12 +1608,12 @@
         }
       }
     },
-    "Manage Profiles" : {
+    "Manage Experts" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "管理专家"
+            "value" : "编辑专家"
           }
         }
       }
@@ -1744,7 +1754,10 @@
         }
       }
     },
-    "Next Profile" : {
+    "New Diagram" : {
+
+    },
+    "Next Expert" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1924,7 +1937,7 @@
         }
       }
     },
-    "Previous Profile" : {
+    "Previous Expert" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1940,16 +1953,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "正在处理…"
-          }
-        }
-      }
-    },
-    "Profiles" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "专家"
           }
         }
       }
@@ -2304,22 +2307,22 @@
         }
       }
     },
-    "Select a Profile" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "选择专家"
-          }
-        }
-      }
-    },
     "Select a Save Location" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "请选择文件夹"
+          }
+        }
+      }
+    },
+    "Select an Expert" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择专家"
           }
         }
       }
@@ -2664,17 +2667,6 @@
         }
       }
     },
-    "The prompt given to the chatbot." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "发送给聊天机器人的信息。"
-          }
-        }
-      }
-    },
     "The resources %@ were removed because they could not be located." : {
       "localizations" : {
         "zh-Hans" : {
@@ -2711,6 +2703,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "这项指令的提示"
+          }
+        }
+      }
+    },
+    "This expert's icon" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此专家的图标"
+          }
+        }
+      }
+    },
+    "This expert's name" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此专家的名称"
+          }
+        }
+      }
+    },
+    "This expert's system prompt" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统提示是模型的初始或持续输入，指导交互的方向或向用户请求特定信息。"
           }
         }
       }
@@ -2755,36 +2777,6 @@
         }
       }
     },
-    "This profile's icon" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "此专家的图标"
-          }
-        }
-      }
-    },
-    "This profile's name" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "此专家的名称"
-          }
-        }
-      }
-    },
-    "This profile's system prompt" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "系统提示是模型的初始或持续输入，指导交互的方向或向用户请求特定信息。"
-          }
-        }
-      }
-    },
     "Title" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2821,6 +2813,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "LaTeX 渲染开/关"
+          }
+        }
+      }
+    },
+    "Toolbox" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "工具箱"
           }
         }
       }
@@ -2875,7 +2877,7 @@
         }
       }
     },
-    "Updating resource index for profile \"%@\"" : {
+    "Updating resource index for expert \"%@\"" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -2995,7 +2997,7 @@
         }
       }
     },
-    "View Profiles" : {
+    "View Experts" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {

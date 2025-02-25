@@ -9,6 +9,8 @@ import SwiftUI
 
 struct DiagrammerPreviewEditorView: View {
 	
+	@Environment(\.dismissWindow) private var dismissWindow
+	
 	@EnvironmentObject private var diagrammerViewController: DiagrammerViewController
 	
     var body: some View {
@@ -24,9 +26,12 @@ struct DiagrammerPreviewEditorView: View {
 			.frame(minWidth: 300)
 		}
 		.toolbar {
-			ToolbarItemGroup(placement: .primaryAction) {
+			ToolbarItemGroup(
+				placement: .primaryAction
+			) {
+				newButton
 				saveButton
-				doneButton
+				exitButton
 			}
 		}
     }
@@ -50,19 +55,33 @@ struct DiagrammerPreviewEditorView: View {
 		.controlSize(.large)
 	}
 	
-	var doneButton: some View {
+	var newButton: some View {
+		Button {
+			// Reset to exit to prompt view
+			self.resetDiagram()
+		} label: {
+			Text("New Diagram")
+		}
+	}
+	
+	var exitButton: some View {
 		Button {
 			// Reset
-			
-			self.diagrammerViewController.stopRender()
-			self.diagrammerViewController.stopPreview()
-			self.diagrammerViewController.d2Code = ""
-			self.diagrammerViewController.saveD2Code()
-			self.diagrammerViewController.currentStep = .prompt
+			self.resetDiagram()
+			// Close window
+			self.dismissWindow(id: "diagrammer")
 		} label: {
-			Text("Done")
+			Text("Exit")
 		}
 		.controlSize(.large)
+	}
+	
+	private func resetDiagram() {
+		self.diagrammerViewController.stopRender()
+		self.diagrammerViewController.stopPreview()
+		self.diagrammerViewController.d2Code = ""
+		self.diagrammerViewController.saveD2Code()
+		self.diagrammerViewController.currentStep = .prompt
 	}
 	
 	private func saveDiagram() {

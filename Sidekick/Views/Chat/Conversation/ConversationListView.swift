@@ -10,7 +10,7 @@ import SwiftUI
 struct ConversationNavigationListView: View {
 	
 	@EnvironmentObject private var conversationManager: ConversationManager
-	@EnvironmentObject private var profileManager: ProfileManager
+	@EnvironmentObject private var expertManager: ExpertManager
 	@EnvironmentObject private var conversationState: ConversationState
 	
 	var body: some View {

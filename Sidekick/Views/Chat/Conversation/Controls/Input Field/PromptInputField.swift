@@ -15,7 +15,7 @@ struct PromptInputField: View {
 	
 	@EnvironmentObject private var model: Model
 	@EnvironmentObject private var conversationManager: ConversationManager
-	@EnvironmentObject private var profileManager: ProfileManager
+	@EnvironmentObject private var expertManager: ExpertManager
 	@EnvironmentObject private var conversationState: ConversationState
 	@EnvironmentObject private var promptController: PromptController
 	
@@ -30,11 +30,11 @@ struct PromptInputField: View {
 		)
 	}
 	
-	var selectedProfile: Profile? {
-		guard let selectedProfileId = conversationState.selectedProfileId else {
+	var selectedExpert: Expert? {
+		guard let selectedExpertId = conversationState.selectedExpertId else {
 			return nil
 		}
-		return profileManager.getProfile(id: selectedProfileId)
+		return expertManager.getExpert(id: selectedExpertId)
 	}
 	
 	var messages: [Message] {
@@ -62,7 +62,7 @@ struct PromptInputField: View {
 			.onChange(of: conversationState.selectedConversationId) {
 				self.isFocused = true
 				withAnimation(.linear) {
-					self.conversationState.selectedProfileId = profileManager.default?.id
+					self.conversationState.selectedExpertId = expertManager.default?.id
 				}
 			}
 			.onAppear {
@@ -209,11 +209,11 @@ struct PromptInputField: View {
 			)
 			var index: SimilarityIndex? = nil
 			// If there are resources
-			if !((selectedProfile?.resources.resources.isEmpty) ?? true) {
+			if !((selectedExpert?.resources.resources.isEmpty) ?? true) {
 				// Load
-				index = await selectedProfile?.resources.loadIndex()
+				index = await selectedExpert?.resources.loadIndex()
 			}
-			let useWebSearch: Bool = selectedProfile?.useWebSearch ?? true
+			let useWebSearch: Bool = selectedExpert?.useWebSearch ?? true
 			// Set if sources were used
 			let hasIndexItems: Bool = !((
 				index?.indexItems.isEmpty

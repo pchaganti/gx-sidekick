@@ -11,17 +11,17 @@ struct PendingMessageView: View {
 	
 	@EnvironmentObject private var model: Model
 	@EnvironmentObject private var conversationState: ConversationState
-	@EnvironmentObject private var profileManager: ProfileManager
+	@EnvironmentObject private var expertManager: ExpertManager
 	
-	var selectedProfile: Profile? {
-		guard let selectedProfileId = conversationState.selectedProfileId else {
+	var selectedExpert: Expert? {
+		guard let selectedExpertId = conversationState.selectedExpertId else {
 			return nil
 		}
-		return profileManager.getProfile(id: selectedProfileId)
+		return expertManager.getExpert(id: selectedExpertId)
 	}
 	
 	var useWebSearch: Bool {
-		return selectedProfile?.useWebSearch ?? true
+		return selectedExpert?.useWebSearch ?? true
 	}
 	
 	var pendingMessage: Message {

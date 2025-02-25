@@ -1,5 +1,5 @@
 //
-//  ProfileNavigationRowView.swift
+//  ExpertNavigationRowView.swift
 //  Sidekick
 //
 //  Created by Bean John on 10/11/24.
@@ -7,19 +7,19 @@
 
 import SwiftUI
 
-struct ProfileNavigationRowView: View {
+struct ExpertNavigationRowView: View {
 	
-	@EnvironmentObject private var profileManager: ProfileManager
+	@EnvironmentObject private var expertManager: ExpertManager
 	
 	@State private var isEditing: Bool = false
 	@State private var isDeleting: Bool = false
 	
 	@State private var isHovering: Bool = false
 	
-	@Binding var profile: Profile
+	@Binding var expert: Expert
 	
 	var isDefault: Bool {
-		return profile.id == profileManager.default?.id
+		return expert.id == expertManager.default?.id
 	}
 	
 	var body: some View {
@@ -32,14 +32,14 @@ struct ProfileNavigationRowView: View {
 		.padding(.trailing)
 		.background {
 			RoundedRectangle(cornerRadius: 7)
-				.fill(self.profile.color)
+				.fill(self.expert.color)
 		}
 		.onHover { hovering in
 			self.isHovering = hovering
 		}
 		.sheet(isPresented: $isEditing) {
-			ProfileEditorView(
-				profile: $profile, isEditing: $isEditing
+			ExpertEditorView(
+				expert: $expert, isEditing: $isEditing
 			)
 			.frame(minWidth: 500, maxHeight: 800)
 		}
@@ -51,13 +51,13 @@ struct ProfileNavigationRowView: View {
 			isPresented: $isDeleting
 		) {
 			Button("Confirm") {
-				self.profileManager.delete(
-					self.profile
+				self.expertManager.delete(
+					self.expert
 				)
 				self.isDeleting = false
 			}
 		} message: {
-			Text("Are you sure you want to delete this profile?")
+			Text("Are you sure you want to delete this expert?")
 		}
 	}
 	
@@ -65,7 +65,7 @@ struct ProfileNavigationRowView: View {
 		Button {
 			self.isEditing.toggle()
 		} label: {
-			self.profile.label
+			self.expert.label
 		}
 		.buttonStyle(.plain)
 	}
@@ -79,7 +79,7 @@ struct ProfileNavigationRowView: View {
 					Image(systemName: "line.3.horizontal")
 						.foregroundStyle(.secondary)
 						.foregroundStyle(
-							self.profile.color.adaptedTextColor
+							self.expert.color.adaptedTextColor
 						)
 				}
 			}

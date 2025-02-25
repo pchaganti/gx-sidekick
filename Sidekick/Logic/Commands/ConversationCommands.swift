@@ -22,41 +22,41 @@ public class ConversationCommands {
 		}
 	}
 	
-	static private var profiles: [Profile] {
-		return ProfileManager.shared.profiles
+	static private var experts: [Expert] {
+		return ExpertManager.shared.experts
 	}
 	
-	static var profileCommands: some Commands {
+	static var expertCommands: some Commands {
 		CommandGroup(after: .newItem) {
 			Menu {
 				ForEach(
-					Self.profiles
-				) { profile in
-					ProfileSelectionButton(
-						profile: profile
+					Self.experts
+				) { expert in
+					ExpertSelectionButton(
+						expert: expert
 					)
 				}
 			} label: {
-				Text("Profiles")
+				Text("Experts")
 			}
 		}
 	}
 	
-	private struct ProfileSelectionButton: View {
+	private struct ExpertSelectionButton: View {
 		
-		public var profile: Profile
+		public var expert: Expert
 		
 		private var index: Int {
-			return ProfileManager.shared.getProfileIndex(
-				profile: profile
+			return ExpertManager.shared.getExpertIndex(
+				expert: expert
 			) + 1
 		}
 		
 		public var body: some View {
 			Button {
-				self.selectProfile()
+				self.selectExpert()
 			} label: {
-				Text(profile.name)
+				Text(expert.name)
 			}
 			.if(index <= 10) { view in
 				view
@@ -73,12 +73,12 @@ public class ConversationCommands {
 			}
 		}
 		
-		private func selectProfile() {
-			AppState.setCommandSelectedProfileId(
-				profile.id
+		private func selectExpert() {
+			AppState.setCommandSelectedExpertId(
+				expert.id
 			)
 			NotificationCenter.default.post(
-				name: Notifications.didCommandSelectProfile.name,
+				name: Notifications.didCommandSelectExpert.name,
 				object: nil
 			)
 		}

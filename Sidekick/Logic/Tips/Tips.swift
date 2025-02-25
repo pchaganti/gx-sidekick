@@ -8,14 +8,14 @@
 import Foundation
 import TipKit
 
-struct CreateProfilesTip: Tip {
+struct CreateExpertsTip: Tip {
 	
 	var title: Text {
-		Text("Create a Profile")
+		Text("Create an Expert")
 	}
 	
 	var message: Text? {
-		Text("Create profiles that **customise** chatbot behaviour, making it **reply with context from your files**.")
+		Text("Create experts that **customise** chatbot behaviour, making it **reply with context from your files**.")
 	}
 	
 	var image: Image? {
@@ -26,7 +26,7 @@ struct CreateProfilesTip: Tip {
 		[
 			Action(
 				id: "view",
-				title: String(localized: "View Profiles")
+				title: String(localized: "View Experts")
 			)
 		]
 	}
@@ -50,7 +50,7 @@ struct LengthyTasksProgressTip: Tip {
 	}
 	
 	var message: Text? {
-		Text("Check progress of lengthy tasks, like updating your profile with new resources.")
+		Text("Check progress of lengthy tasks, like updating your expert with new resources.")
 	}
 	
 	var rules: [Rule] {

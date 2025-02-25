@@ -11,16 +11,16 @@ import SimilaritySearchKit
 import SimilaritySearchKitDistilbert
 import SwiftUI
 
-/// An object that manages a profile's resources
+/// An object that manages a expert's resources
 public struct Resources: Identifiable, Codable, Hashable, Sendable {
 	
 	/// Stored property for `Identifiable` conformance
 	public var id: UUID = UUID()
 	
-	/// An array of all resources associated with this profile of type  ``Resource``
+	/// An array of all resources associated with this expert of type  ``Resource``
 	public var resources: [Resource] = []
 	
-	/// A URL of the profile's index directory of type `URL`
+	/// A URL of the expert's index directory of type `URL`
 	public var indexUrl: URL {
 		return Settings
 			.containerUrl
@@ -51,14 +51,14 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 	
 	
 	/// Function to update resources index
-	/// - Parameter profileName: The name of the profile whose resources is being updated
+	/// - Parameter expertName: The name of the expert whose resources is being updated
 	@MainActor
 	public mutating func updateResourcesIndex(
-		profileName: String
+		expertName: String
 	) async {
 		// Add to task list
 		let taskId: UUID = UUID()
-		let taskName: String = String(localized: "Updating resource index for profile \"\(profileName)\"")
+		let taskName: String = String(localized: "Updating resource index for expert \"\(expertName)\"")
 		withAnimation(.linear(duration: 0.3)) {
 			LengthyTasksController.shared.addTask(
 				id: taskId,
@@ -107,30 +107,30 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 	
 	/// Function to add a resource
 	/// - Parameters:
-	///   - resource: The resource that will be added to the profile
-	///   - profileName: The name of the profile containing the newly added resource
+	///   - resource: The resource that will be added to the expert
+	///   - expertName: The name of the expert containing the newly added resource
 	@MainActor
 	public mutating func addResource(
 		_ resource: Resource,
-		profileName: String
+		expertName: String
 	) async {
 		// Check if exists
 		if self.resources.map(\.url).contains(resource.url) { return }
 		// Add to resources list
 		self.resources.append(resource)
 		// Reindex
-		await self.updateResourcesIndex(profileName: profileName)
+		await self.updateResourcesIndex(expertName: expertName)
 	}
 	
 	
 	/// Function to add multiple resources
 	/// - Parameters:
-	///   - resources: The resources that will be added to the profile
-	///   - profileName: The name of the the profile containing the newly added resources
+	///   - resources: The resources that will be added to the expert
+	///   - expertName: The name of the the expert containing the newly added resources
 	@MainActor
 	public mutating func addResources(
 		_ resources: [Resource],
-		profileName: String
+		expertName: String
 	) async {
 		// Add to resources list
 		for resource in resources {
@@ -140,18 +140,18 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 			self.resources.append(resource)
 		}
 		// Reindex
-		await self.updateResourcesIndex(profileName: profileName)
+		await self.updateResourcesIndex(expertName: expertName)
 	}
 	
 	
 	/// Function to show index directory in Finder
 	/// - Parameters:
 	///   - resource: The resource to be removed
-	///   - profileName: The name of the the profile containing the resource
+	///   - expertName: The name of the the expert containing the resource
 	@MainActor
 	public mutating func removeResource(
 		_ resource: Resource,
-		profileName: String
+		expertName: String
 	) async {
 		// Find matching resource
 		for index in self.resources.indices  {
@@ -164,7 +164,7 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 				self.resources.remove(at: index)
 				// Reindex
 				await self.updateResourcesIndex(
-					profileName: profileName
+					expertName: expertName
 				)
 				break
 			}

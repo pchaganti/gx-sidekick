@@ -11,7 +11,7 @@ import SwiftUI
 struct ContentView: View {
 	
 	@EnvironmentObject private var downloadManager: DownloadManager
-	@EnvironmentObject private var profileManager: ProfileManager
+	@EnvironmentObject private var expertManager: ExpertManager
 	@EnvironmentObject private var conversationManager: ConversationManager
 	
 	@StateObject private var conversationState: ConversationState = ConversationState()
@@ -34,9 +34,9 @@ struct ContentView: View {
 			)
 		}
 		.sheet(
-			isPresented: $conversationState.isManagingProfiles
+			isPresented: $conversationState.isManagingExperts
 		) {
-			ProfileManagerView()
+			ExpertManagerView()
 				.frame(
 					minWidth: 250,
 					maxWidth: 300,

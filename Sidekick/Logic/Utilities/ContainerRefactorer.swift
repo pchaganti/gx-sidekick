@@ -93,7 +93,7 @@ public class ContainerRefactorer {
 			"Commands",
 			"Conversations",
 			"Models",
-			"Profiles",
+			"Experts",
 			"Sources",
 			"Generated Images",
 			"Resources"

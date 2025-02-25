@@ -41,7 +41,7 @@ public class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
 		// Remove stale sources
 		SourcesManager.shared.removeStaleSources()
 		// Remove non-persisted resources
-		ProfileManager.shared.removeUnpersistedResources()
+		ExpertManager.shared.removeUnpersistedResources()
 		return .terminateNow
 	}
 	

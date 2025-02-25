@@ -19,7 +19,7 @@ struct SidekickApp: App {
 	@StateObject private var appState: AppState = .shared
 	@StateObject private var downloadManager: DownloadManager = .shared
 	@StateObject private var conversationManager: ConversationManager = .shared
-	@StateObject private var profileManager: ProfileManager = .shared
+	@StateObject private var expertManager: ExpertManager = .shared
 	@StateObject private var commandManager: CommandManager = .shared
 	
 	@StateObject private var lengthyTasksController: LengthyTasksController = .shared
@@ -38,14 +38,14 @@ struct SidekickApp: App {
 				.environmentObject(appState)
 				.environmentObject(downloadManager)
 				.environmentObject(conversationManager)
-				.environmentObject(profileManager)
+				.environmentObject(expertManager)
 				.environmentObject(lengthyTasksController)
 				.applyWindowMaterial()
 		}
 		.windowToolbarStyle(.unified)
 		.commands {
 			ConversationCommands.commands
-			ConversationCommands.profileCommands
+			ConversationCommands.expertCommands
 			WindowCommands.commands
 			DebugCommands.commands
 			CommandGroup(after: .appInfo) {

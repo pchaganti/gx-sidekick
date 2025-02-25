@@ -13,7 +13,7 @@ struct ConversationControlsView: View {
 	
 	@EnvironmentObject private var promptController: PromptController
 	@EnvironmentObject private var conversationManager: ConversationManager
-	@EnvironmentObject private var profileManager: ProfileManager
+	@EnvironmentObject private var expertManager: ExpertManager
 	@EnvironmentObject private var conversationState: ConversationState
 	
 	@State private var didFinishTyping: Bool = false
@@ -29,11 +29,11 @@ struct ConversationControlsView: View {
 		)
 	}
 	
-	var selectedProfile: Profile? {
-		guard let selectedProfileId = conversationState.selectedProfileId else {
+	var selectedExpert: Expert? {
+		guard let selectedExpertId = conversationState.selectedExpertId else {
 			return nil
 		}
-		return profileManager.getProfile(id: selectedProfileId)
+		return expertManager.getExpert(id: selectedExpertId)
 	}
 	
 	var messages: [Message] {

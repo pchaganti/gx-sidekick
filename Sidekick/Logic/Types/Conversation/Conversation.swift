@@ -15,18 +15,18 @@ public struct Conversation: Identifiable, Codable, Hashable {
 	/// Stored property for conversation title
 	public var title: String
 	
-	/// Stored property for the selected profile's ID
-	public var profileId: UUID? = ProfileManager.shared.firstProfile?.id
+	/// Stored property for the selected expert's ID
+	public var expertId: UUID? = ExpertManager.shared.firstExpert?.id
 	
-	/// Computed property returning the selected profile
-	public var profile: Profile? {
-		guard let profileId else { return nil }
-		return ProfileManager.shared.getProfile(id: profileId)
+	/// Computed property returning the selected expert
+	public var expert: Expert? {
+		guard let expertId else { return nil }
+		return ExpertManager.shared.getExpert(id: expertId)
 	}
 	
 	/// Computed property returning the system prompt used
 	public var systemPrompt: String? {
-		return profile?.systemPrompt
+		return expert?.systemPrompt
 	}
 	
 	/// Stored property for creation date

@@ -43,17 +43,13 @@ public class DetectorViewController: ObservableObject {
 		// Calculate score
 		if let perplexity = self.perplexity,
 			let burstiness = self.burstiness {
-			print("Perplexity: \(perplexity)")
-			print("Burstiness: \(burstiness)")
 			// Normalize scores
 			let normalizedPerplexity: Double = 1 - (
 				1 / (1 + exp(-0.5 * (perplexity - 9)))
 			)
-			print("Normalized perplexity: \(normalizedPerplexity)")
 			let normalizedBurstiness: Double = 1 - (
 				1 / (1 + exp(-0.35 * (burstiness - 32)))
 			)
-			print("Normalized burstiness: \(normalizedBurstiness)")
 			// Apply weighting
 			let perplexityWeight: Double = 0.66
 			let weightedPerplexity: Double = normalizedPerplexity * perplexityWeight

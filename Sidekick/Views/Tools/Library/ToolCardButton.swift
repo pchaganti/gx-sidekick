@@ -1,5 +1,5 @@
 //
-//  ExtensionCardButton.swift
+//  ToolCardButton.swift
 //  Sidekick
 //
 //  Created by John Bean on 2/20/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ExtensionCardButton: View {
+struct ToolCardButton: View {
 	
 	@Environment(\.colorScheme) var colorScheme
 	@State private var isHovering: Bool = false

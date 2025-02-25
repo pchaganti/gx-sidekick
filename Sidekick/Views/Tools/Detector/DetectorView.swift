@@ -10,6 +10,7 @@ import SwiftUI
 struct DetectorView: View {
 	
 	@StateObject private var detectorViewController: DetectorViewController = .init()
+	@Environment(\.dismissWindow) private var dismissWindow
 	
 	var body: some View {
 		Group {
@@ -32,7 +33,7 @@ struct DetectorView: View {
 			ideal: 350,
 			max: 400
 		)
-		.interactiveDismissDisabled()
+		.interactiveDismissDisabled(true)
 		.toolbar {
 			ToolbarItemGroup(
 				placement: .primaryAction
@@ -48,6 +49,7 @@ struct DetectorView: View {
 			HStack {
 				Text(detectorViewController.text)
 					.font(.title3)
+					.textSelection(.enabled)
 				Spacer()
 			}
 			.padding()
@@ -57,8 +59,9 @@ struct DetectorView: View {
 	var exitButton: some View {
 		Button {
 			self.detectorViewController.reset()
+			self.dismissWindow(id: "detector")
 		} label: {
-			Text("Done")
+			Text("Exit")
 		}
 	}
 	

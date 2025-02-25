@@ -58,7 +58,7 @@ Cheatsheet:
 	public var preview: some View {
 		WebView(
 			url: URL(
-				string: "http://localhost:\(self.port)"
+				string: "http://127.0.0.1:\(self.port)"
 			)!
 		)
 	}

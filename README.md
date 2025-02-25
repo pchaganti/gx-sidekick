@@ -29,13 +29,13 @@ To verify Sidekick’s answer, just click on the references displayed below Side
 
 ### Resource Use
 
-Sidekick accesses files, folders, and websites from your profiles, which can be individually configured to contain resources related to specific areas of interest. Activating a profile allows Sidekick to access the relevant information.
+Sidekick accesses files, folders, and websites from your experts, which can be individually configured to contain resources related to specific areas of interest. Activating a expert allows Sidekick to access the relevant information.
 
-Because Sidekick uses RAG (Retrival Augmented Generation), you can theoretically put unlimited resources into each profile, and Sidekick will still find information relevant to your request to aid its response. This is in sharp contrast to most services, including OpenAI's [ChatGPT](https://chatgpt.com), which can only ingest ~45 pages of text.
+Because Sidekick uses RAG (Retrival Augmented Generation), you can theoretically put unlimited resources into each expert, and Sidekick will still find information relevant to your request to aid its response. This is in sharp contrast to most services, including OpenAI's [ChatGPT](https://chatgpt.com), which can only ingest ~45 pages of text.
 
-For example, a student might create the profiles `English Literature`, `Mathematics`, `Geography`, `Computer Science` and `Physics`. In the image below, he has activated the profile `Computer Science`, allowing Sidekick to reply with information from that profile.
+For example, a student might create the experts `English Literature`, `Mathematics`, `Geography`, `Computer Science` and `Physics`. In the image below, he has activated the expert `Computer Science`, allowing Sidekick to reply with information from that expert.
 
-![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/demoProfileUse.png)
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/demoExpertUse.png)
 
 Users can also give Sidekick access to files just by dragging them into the input field.
 

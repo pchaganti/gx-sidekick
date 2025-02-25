@@ -1,5 +1,5 @@
 //
-//  Profile.swift
+//  Expert.swift
 //  Sidekick
 //
 //  Created by Bean John on 10/4/24.
@@ -8,22 +8,22 @@
 import Foundation
 import SwiftUI
 
-/// An object that manages a chatbot profile
-public struct Profile: Identifiable, Codable, Hashable, Sendable {
+/// An object that manages a chatbot expert
+public struct Expert: Identifiable, Codable, Hashable, Sendable {
 	
 	/// Stored property for `Identifiable` conformance
 	public var id: UUID = UUID()
 	
-	/// The profile's name of type `String`
+	/// The expert's name of type `String`
 	public var name: String
 	
-	/// The profile's symbol name of type `String`
+	/// The expert's symbol name of type `String`
 	public var symbolName: String
 	
-	/// The profile's color of type `Color`
+	/// The expert's color of type `Color`
 	public var color: Color
 	
-	/// Computed property returning the profile's symbol of type `View`
+	/// Computed property returning the expert's symbol of type `View`
 	public var symbol: some View {
 		Image(systemName: symbolName)
 			.padding(5)
@@ -36,7 +36,7 @@ public struct Profile: Identifiable, Codable, Hashable, Sendable {
 			}
 	}
 	
-	/// Computed property returning the profile's label of type ``View``
+	/// Computed property returning the expert's label of type ``View``
 	public var label: some View {
 		Label(self.name, systemImage: symbolName)
 			.labelStyle(.titleAndIcon)
@@ -52,7 +52,7 @@ public struct Profile: Identifiable, Codable, Hashable, Sendable {
 			}
 	}
 	
-	/// Computed property returning the profile's image of type `View`
+	/// Computed property returning the expert's image of type `View`
 	public var image: some View {
 		Image(systemName: symbolName)
 			.resizable()
@@ -65,17 +65,17 @@ public struct Profile: Identifiable, Codable, Hashable, Sendable {
 	/// Whether web search is used of type `Bool`
 	public var useWebSearch: Bool = true
 	
-	/// The profile's associated resources of type `Resource`
+	/// The expert's associated resources of type `Resource`
 	public var resources: Resources = Resources()
 	
-	/// The profile's system prompt (if customised) of type `String?`
+	/// The expert's system prompt (if customised) of type `String?`
 	public var systemPrompt: String? = nil
 	
-	/// Stored property for whether the profile is persisted across sessions
+	/// Stored property for whether the expert is persisted across sessions
 	public var persistResources: Bool = true
 	
-	/// Static constant for the `default` profile of type ``Profile``
-	public static let `default`: Profile = Profile(
+	/// Static constant for the `default` expert of type ``Expert``
+	public static let `default`: Expert = Expert(
 		name: String(localized: "Default"),
 		symbolName: "person.fill",
 		color: Color.blue,
@@ -84,7 +84,7 @@ public struct Profile: Identifiable, Codable, Hashable, Sendable {
 		persistResources: false
 	)
 	
-	public static func == (lhs: Profile, rhs: Profile) -> Bool {
+	public static func == (lhs: Expert, rhs: Expert) -> Bool {
 		lhs.id == rhs.id
 	}
 	
