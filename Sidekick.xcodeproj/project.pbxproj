@@ -1097,6 +1097,7 @@
 				20B9E60B2CB140A000BA0AD2 /* AppDelegate.swift */,
 				20B97CBF2CAFE87D009A0A5D /* Views */,
 				20B97CC02CAFE883009A0A5D /* Logic */,
+				20B97CDB2CAFFDE5009A0A5D /* Types */,
 				20B97CD22CAFEC90009A0A5D /* Extensions */,
 				206934912D5CCDD1006619FD /* Resources */,
 				20B97CAD2CAFE86C009A0A5D /* Preview Content */,
@@ -1154,7 +1155,6 @@
 				2031B9962CEAE77F00627D53 /* Inline Assistant */,
 				20B9E6152CB1465900BA0AD2 /* Data Models */,
 				20B9E60F2CB1429E00BA0AD2 /* Commands */,
-				20B97CDB2CAFFDE5009A0A5D /* Types */,
 			);
 			path = Logic;
 			sourceTree = "<group>";
