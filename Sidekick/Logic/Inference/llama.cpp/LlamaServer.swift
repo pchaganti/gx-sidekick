@@ -144,13 +144,14 @@ public actor LlamaServer {
 	
 	/// Function to start the `llama-server` process
 	public func startServer() async throws {
+		// Signal beginning of server initialization
+		print("Preparing to start `llama-server`...")
 		// If server is running, exit
 		guard !process.isRunning, let modelPath = self.modelPath else { return }
 		await stopServer()
 		// Initialize `llama-server` process
 		process = Process()
 		let startTime: Date = Date.now
-		
 		process.executableURL = Bundle.main.resourceURL?.appendingPathComponent("llama-server")
 		
 		let gpuLayers: Int = 99

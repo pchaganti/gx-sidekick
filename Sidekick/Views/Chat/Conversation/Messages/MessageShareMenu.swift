@@ -8,9 +8,15 @@
 import FSKit_macOS
 import SwiftUI
 
-struct MessageShareMenu<MessagesView: View>: View {
+struct MessageShareMenu<Content: View>: View {
 	
-	var messagesView: MessagesView
+	init(
+		messagesView: Content
+	) {
+		self.messagesView = messagesView
+	}
+	
+	var messagesView: Content
 	
 	@Environment(\.colorScheme) var colorScheme
 	
@@ -73,7 +79,8 @@ struct MessageShareMenu<MessagesView: View>: View {
 		Button {
 			self.saveText()
 		} label: {
-			Text("Save as Text")
+			Label("Save as Text", systemImage: "square.and.arrow.up")
+				.labelStyle(.titleOnly)
 		}
 	}
 	
@@ -81,7 +88,8 @@ struct MessageShareMenu<MessagesView: View>: View {
 		Button {
 			self.saveHTML()
 		} label: {
-			Text("Save as HTML")
+			Label("Save as HTML", systemImage: "square.and.arrow.up")
+				.labelStyle(.titleOnly)
 		}
 	}
 	

@@ -26,16 +26,23 @@ public class Model: ObservableObject {
 		guard let modelPath: String = Settings.modelUrl?.posixPath else {
 			fatalError("Could not find modelUrl")
 		}
-		// Init `llama-server`
+		// Init LlamaServer object
 		self.llama = LlamaServer(
 			modelPath: modelPath,
 			systemPrompt: systemPrompt
 		)
 		// Load model
 		Task {
-			try? await self.llama.startServer()
+			do {
+				try await self.llama.startServer()
+			} catch {
+				print("Error starting `llama-server`: \(error)")
+			}
 		}
 	}
+	
+	/// Task where `llama-server` is launched
+	private var startupTask: Task<Void, Never>?
 	
 	/// Static constant for the global ``Model`` object
 	static public let shared: Model = .init(
