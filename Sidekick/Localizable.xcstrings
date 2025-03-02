@@ -4,6 +4,16 @@
     "" : {
       "shouldTranslate" : false
     },
+    " (Beta)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " （公测）"
+          }
+        }
+      }
+    },
     "**Setup Complete**" : {
       "localizations" : {
         "zh-Hans" : {
@@ -26,6 +36,16 @@
     },
     "%lld%%" : {
       "shouldTranslate" : false
+    },
+    "A file with the same name already exists. Do you want to overwrite it?" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "同名文件已存在。你确定要覆盖它吗？"
+          }
+        }
+      }
     },
     "Add" : {
       "localizations" : {
@@ -987,6 +1007,16 @@
         }
       }
     },
+    "Editable " : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "可编辑"
+          }
+        }
+      }
+    },
     "Elaborate" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1183,6 +1213,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "导出选项"
+          }
+        }
+      }
+    },
+    "Exporting..." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在导出…"
           }
         }
       }
@@ -1633,6 +1673,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "通过与主模型并行运行第二个模型来提高推理速度。这可能会使用更多内存。"
+          }
+        }
+      }
+    },
+    "In order to export to an editable PowerPoint, you must first install LibreOffice." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您必须首先安装 LibreOffice 才能导出可编辑的 PowerPoint。"
           }
         }
       }
@@ -2235,7 +2285,14 @@
       }
     },
     "Refresh" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "刷新"
+          }
+        }
+      }
     },
     "Remote Model: " : {
       "localizations" : {
@@ -3353,6 +3410,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "冯·诺依曼架构"
+          }
+        }
+      }
+    },
+    "Warning" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "警告"
           }
         }
       }

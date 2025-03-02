@@ -6,6 +6,7 @@
 //
 
 import FSKit_macOS
+import SwiftfulLoadingIndicators
 import SwiftUI
 
 struct SlideStudioExportOptionsView: View {
@@ -15,6 +16,13 @@ struct SlideStudioExportOptionsView: View {
 	@State private var config: SlideStudioViewController.SlideExportConfiguration = .default
 	
 	@EnvironmentObject private var slideStudioViewController: SlideStudioViewController
+	
+	@State private var timer: Timer? = nil
+	@State private var isExporting: Bool = false
+	
+	private var exportingButtonDescription: String {
+		return self.isExporting ? String(localized: "Exporting...") : String(localized: "Export")
+	}
 	
     var body: some View {
 		VStack {
@@ -55,6 +63,7 @@ struct SlideStudioExportOptionsView: View {
 			Spacer()
 			TextField("", text: $config.name)
 				.textFieldStyle(.plain)
+				.disabled(isExporting)
 		}
 		.padding(.horizontal, 5)
 	}
@@ -77,6 +86,10 @@ struct SlideStudioExportOptionsView: View {
 					Text(format.displayName)
 				}
 			}
+			.disabled(isExporting)
+			.onChange(of: self.config.format) {
+				self.checkFormat()
+			}
 		}
 		.padding(.horizontal, 5)
 	}
@@ -98,6 +111,7 @@ struct SlideStudioExportOptionsView: View {
 			}
 		}
 		.padding(.horizontal, 5)
+		.disabled(isExporting)
 	}
 	
 	var cancelButton: some View {
@@ -106,18 +120,46 @@ struct SlideStudioExportOptionsView: View {
 		} label: {
 			Text("Cancel")
 		}
+		.disabled(isExporting)
 	}
 	
 	var exportButton: some View {
 		Button {
+			// Start export
+			withAnimation(.linear) {
+				self.isExporting = true
+			}
+			// Check output url
+			if self.config.outputUrl.fileExists {
+				if !self.shouldOverwrite() {
+					return
+				} else {
+					FileManager.removeItem(at: self.config.outputUrl)
+				}
+			}
+			// Export
 			self.slideStudioViewController.exportSlides(
 				config: self.config
 			)
-			self.isPresented.toggle()
+			// Set to dismiss
+			self.dismissAfterExport()
 		} label: {
-			Text("Export")
+			Text(self.exportingButtonDescription)
 		}
 		.keyboardShortcut(.defaultAction)
+		.disabled(!self.config.isValid || self.isExporting)
+	}
+	
+	/// Function to check export format
+	private func checkFormat() {
+		// If invalid config selected, show alert
+		if self.config.format == .pptxEditable
+			&& !self.config.format.isAvailable {
+			return Dialogs.showAlert(
+				title: String(localized: "Error"),
+				message: String(localized: "In order to export to an editable PowerPoint, you must first install LibreOffice.")
+			)
+		}
 	}
 	
 	/// Function to select output directory
@@ -130,6 +172,51 @@ struct SlideStudioExportOptionsView: View {
 		).first {
 			// Set the output directory
 			self.config.outputDirUrl = directoryUrl
+		}
+	}
+	
+	/// Function to check output directory
+	private func shouldOverwrite() -> Bool {
+		// If file already exists
+		if self.config.outputUrl.fileExists {
+			// Get confirmation
+			return Dialogs.dichotomy(
+				title: String(localized: "Warning"),
+				message: String(localized: "A file with the same name already exists. Do you want to overwrite it?"),
+				option1: String(localized: "Yes"),
+				option2: String(localized: "No"),
+				ifOption1: {},
+				ifOption2: {}
+			)
+		}
+		return false
+	}
+	
+	/// Function to dismiss when export is complete
+	private func dismissAfterExport() {
+		// Save output url
+		let outputUrl: URL = self.config.outputUrl
+		// Set timer
+		self.timer = Timer.scheduledTimer(
+			withTimeInterval: 1.0,
+			repeats: true
+		) { _ in
+			// Check if export is complete
+			if outputUrl.fileExists {
+				self.finishExport()
+			}
+		}
+	}
+	
+	/// Function to finish export
+	private func finishExport() {
+		// Invalidate timer
+		self.timer?.invalidate()
+		self.timer = nil
+		// Exit
+		withAnimation(.linear) {
+			self.isExporting = false
+			self.isPresented = false
 		}
 	}
 	

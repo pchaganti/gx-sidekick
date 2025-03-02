@@ -94,19 +94,14 @@ struct SlideStudioPreviewEditor: View {
 		} label: {
 			Label("Refresh", systemImage: "arrow.trianglehead.counterclockwise")
 				.labelStyle(.iconOnly)
+				.foregroundStyle(Color.white)
 		}
 		.buttonStyle(.plain)
 		.padding([.horizontal, .bottom], 8)
 		.padding(.top, 7)
 		.background {
 			Circle()
-				.fill({
-					if self.colorScheme == .dark {
-						Color.secondary.opacity(0.4)
-					} else {
-						Color.white.opacity(0.4)
-					}
-				}())
+				.fill(Color(nsColor: .darkGray))
 		}
 	}
 	

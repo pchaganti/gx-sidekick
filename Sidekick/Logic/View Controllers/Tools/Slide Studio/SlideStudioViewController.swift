@@ -459,11 +459,16 @@ Respond with the Markdown ONLY. Do not include comments.
 			.main
 			.resourceURL?
 			.appendingPathComponent("marp")
-		let arguments = [
-			self.markdownPreviewFileUrl.posixPath,
-			"--output",
-			config.outputUrl.posixPath
+		var arguments = [
+			self.markdownPreviewFileUrl.posixPath
 		]
+		if config.format == .pptxEditable {
+			arguments.append("--pptx")
+			arguments.append("--pptx-editable")
+		}
+		arguments.append("--output")
+		arguments.append(config.outputUrl.posixPath)
+		print("output path: \(config.outputUrl.posixPath)")
 		self.marpExportProcess.arguments = arguments
 		self.marpExportProcess.standardInput = FileHandle.nullDevice
 		// To debug with server's output, comment these 2 lines to inherit stdout.
@@ -604,8 +609,15 @@ Respond with the Markdown ONLY. Do not include comments.
 		
 		/// The `URL` to the exported slides
 		public var outputUrl: URL {
-			let filename: String = "\(self.name).\(self.format.rawValue)"
+			let filename: String = "\(self.name).\(self.format.fileExtension)"
 			return self.outputDirUrl.appendingPathComponent(filename)
+		}
+		
+		/// A `Bool` representing if the export configuration is valid
+		public var isValid: Bool {
+			let hasName: Bool = !self.name.isEmpty
+			let hasValidFormat: Bool = self.format.isAvailable
+			return hasName && hasValidFormat
 		}
 		
 		/// The format of the exported Slides
@@ -613,16 +625,48 @@ Respond with the Markdown ONLY. Do not include comments.
 			
 			case pdf
 			case pptx
+			case pptxEditable
 			case html
 			
-			var displayName: String {
+			/// The file extension for the format, of type `String`
+			public var fileExtension: String {
+				switch self {
+					case .pptxEditable:
+						return "pptx"
+					default:
+						return self.rawValue
+				}
+			}
+			
+			/// The displayed name for the format, of type `String`
+			public var displayName: String {
 				switch self {
 					case .pdf:
 						return "PDF"
 					case .pptx:
 						return "PowerPoint"
+					case .pptxEditable:
+						return String(localized: "Editable ") + "PowerPoint" + String(
+							localized: " (Beta)"
+						)
 					case .html:
 						return String(localized: "Website")
+				}
+			}
+			
+			/// A `Bool` indicating if the export format can be selected
+			var isAvailable: Bool {
+				// If not editable ppt, return true
+				if self != .pptxEditable {
+					return true
+				} else {
+					// Else, check for LibreOffice
+					let url: URL? = NSWorkspace
+						.shared
+						.urlForApplication(
+							withBundleIdentifier: "org.libreoffice.script"
+						)
+					return url != nil
 				}
 			}
 			
