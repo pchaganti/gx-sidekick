@@ -169,6 +169,7 @@
 		20AA5A542CC89AAA003E5519 /* MessageBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20AA5A532CC89AAA003E5519 /* MessageBackgroundView.swift */; };
 		20AC3CE52CDA700700947FDA /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20AC3CE42CDA700700947FDA /* AppState.swift */; };
 		20AF0A0A2CDC6339007780FE /* MarkdownCodeBlockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20AF0A092CDC6339007780FE /* MarkdownCodeBlockView.swift */; };
+		20AF90F42D73DBDD00E23C68 /* marp in Resources */ = {isa = PBXBuildFile; fileRef = 20AF90F32D73DBDD00E23C68 /* marp */; };
 		20B22E252CD9BC8B0030A8D3 /* ExportButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B22E242CD9BC8B0030A8D3 /* ExportButton.swift */; };
 		20B4D6AF2CC3C12C00817E15 /* PromptController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B4D6AE2CC3C12C00817E15 /* PromptController.swift */; };
 		20B4D6B12CC3D72700817E15 /* Extension+IndexItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B4D6B02CC3D72700817E15 /* Extension+IndexItem.swift */; };
@@ -476,6 +477,7 @@
 		20AA5A532CC89AAA003E5519 /* MessageBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBackgroundView.swift; sourceTree = "<group>"; };
 		20AC3CE42CDA700700947FDA /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		20AF0A092CDC6339007780FE /* MarkdownCodeBlockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownCodeBlockView.swift; sourceTree = "<group>"; };
+		20AF90F32D73DBDD00E23C68 /* marp */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = marp; sourceTree = "<group>"; };
 		20B22E242CD9BC8B0030A8D3 /* ExportButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportButton.swift; sourceTree = "<group>"; };
 		20B4D6AE2CC3C12C00817E15 /* PromptController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptController.swift; sourceTree = "<group>"; };
 		20B4D6B02CC3D72700817E15 /* Extension+IndexItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+IndexItem.swift"; sourceTree = "<group>"; };
@@ -1366,6 +1368,7 @@
 		20C62EC82D717E2F00996566 /* bin */ = {
 			isa = PBXGroup;
 			children = (
+				20AF90F32D73DBDD00E23C68 /* marp */,
 			);
 			path = bin;
 			sourceTree = "<group>";
@@ -1578,6 +1581,7 @@
 				206934932D5CCDF1006619FD /* conversationExportTemplate.html in Resources */,
 				206934902D5CC87E006619FD /* Credits.html in Resources */,
 				20A40CC32D72BAB000A9D9A9 /* llama-perplexity in Resources */,
+				20AF90F42D73DBDD00E23C68 /* marp in Resources */,
 				20A40CC42D72BAB000A9D9A9 /* llama-server in Resources */,
 				200619AA2D6759EF001949EF /* d2-cheatsheet.txt in Resources */,
 				200619A82D6756EB001949EF /* d2 in Resources */,
