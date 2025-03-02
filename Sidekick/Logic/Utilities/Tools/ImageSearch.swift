@@ -44,7 +44,12 @@ public class ImageSearch {
 			throw URLError(.badURL)
 		}
 		// Send the request
-		let (data, _) = try await URLSession.shared.data(from: url)
+		let config: URLSessionConfiguration = URLSessionConfiguration.default
+		config.timeoutIntervalForRequest = 10
+		config.timeoutIntervalForResource = 10
+		let (data, _) = try await URLSession(configuration: config).data(
+			from: url
+		)
 		// Obtain results
 		do {
 			let result = try JSONDecoder().decode(QueryResult.self, from: data)

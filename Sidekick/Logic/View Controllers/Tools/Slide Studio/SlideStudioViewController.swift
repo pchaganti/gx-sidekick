@@ -9,6 +9,7 @@ import Foundation
 import SimilaritySearchKit
 import SwiftUI
 import WebViewKit
+import WebKit
 
 public class SlideStudioViewController: ObservableObject, DropDelegate {
 	
@@ -377,7 +378,7 @@ Respond with the Markdown ONLY. Do not include comments.
 	}
 	
 	/// Function to start `marp` preview server
-	private func startPreview() {
+	public func startPreview() {
 		// Save the code
 		self.saveMarkdownToFile()
 		// Start the marp child process

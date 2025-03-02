@@ -20,6 +20,8 @@ struct SlideStudioPreviewEditor: View {
 	
 	@State private var showExportOptions: Bool = false
 	
+	@State private var previewId: UUID = UUID()
+	
     var body: some View {
 		HSplitView {
 			editor
@@ -29,6 +31,11 @@ struct SlideStudioPreviewEditor: View {
 					.fill(Color.clear)
 					.frame(width: 1, height: .greedy)
 				self.slideStudioViewController.preview
+					.overlay(alignment: .topTrailing) {
+						refreshButton
+							.padding([.top, .trailing], 6)
+					}
+					.id(previewId)
 			}
 			.frame(minWidth: 300)
 		}
@@ -74,6 +81,32 @@ struct SlideStudioPreviewEditor: View {
 			self.slideStudioViewController.reset()
 		} label: {
 			Text("New Slides")
+		}
+	}
+	
+	var refreshButton: some View {
+		Button {
+			// Restart server
+			self.slideStudioViewController.stopPreview()
+			self.slideStudioViewController.startPreview()
+			// Reset id to redraw view
+			self.previewId = UUID()
+		} label: {
+			Label("Refresh", systemImage: "arrow.trianglehead.counterclockwise")
+				.labelStyle(.iconOnly)
+		}
+		.buttonStyle(.plain)
+		.padding([.horizontal, .bottom], 8)
+		.padding(.top, 7)
+		.background {
+			Circle()
+				.fill({
+					if self.colorScheme == .dark {
+						Color.secondary.opacity(0.4)
+					} else {
+						Color.white.opacity(0.4)
+					}
+				}())
 		}
 	}
 	

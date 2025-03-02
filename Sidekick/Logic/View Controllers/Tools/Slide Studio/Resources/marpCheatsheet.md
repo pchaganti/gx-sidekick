@@ -1,10 +1,3 @@
----
-theme: default
-_class: lead
-paginate: true
-backgroundColor: #fff
----
-
 // Images can be placed on the slide, either on the left or right
 ![bg left:30% 65%](https://marp.app/assets/marp.svg)
 
