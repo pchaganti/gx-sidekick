@@ -16,7 +16,7 @@ struct ToolboxLibraryView: View {
 	
 	let columns: [GridItem] = Array(
 		repeating: GridItem(.fixed(180)),
-		count: 3
+		count: 2
 	)
 	
     var body: some View {
@@ -40,9 +40,10 @@ struct ToolboxLibraryView: View {
 		ScrollView {
 			LazyVGrid(
 				columns: columns,
-				spacing: 5
+				spacing: 7.5
 			) {
 				self.diagrammerCard
+				self.slideStudioCard
 				self.inlineAssistantCard
 				self.detectorCard
 			}
@@ -58,6 +59,17 @@ struct ToolboxLibraryView: View {
 			Image("mindmap")
 		} action: {
 			self.openToolWindow(id: "diagrammer")
+		}
+	}
+	
+	var slideStudioCard: some View {
+		ToolCardButton(
+			name: String(localized: "Slide Studio"),
+			description: String(localized: "Create 10 minute presentations in 5 minutes")
+		) {
+			Image(systemName: "rectangle.on.rectangle.angled")
+		} action: {
+			self.openToolWindow(id: "slideStudio")
 		}
 	}
 	

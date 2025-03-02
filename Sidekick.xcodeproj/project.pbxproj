@@ -108,6 +108,9 @@
 		207A9F5D2CB8FD0900E727DE /* ResourceSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207A9F5C2CB8FD0900E727DE /* ResourceSectionView.swift */; };
 		207A9F5F2CB903FD00E727DE /* Extension+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207A9F5E2CB903FD00E727DE /* Extension+Binding.swift */; };
 		207A9F622CB94B0000E727DE /* WindowCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207A9F612CB94B0000E727DE /* WindowCommands.swift */; };
+		207E5EEF2D6F663B00A8F6FA /* SlideStudioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207E5EEE2D6F663B00A8F6FA /* SlideStudioViewController.swift */; };
+		207E5EF22D6FDEEF00A8F6FA /* ImageSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207E5EF12D6FDEEF00A8F6FA /* ImageSearch.swift */; };
+		207E5EF52D70584500A8F6FA /* marpCheatsheet.md in Resources */ = {isa = PBXBuildFile; fileRef = 207E5EF42D70584500A8F6FA /* marpCheatsheet.md */; };
 		208388DA2CBF4DF500C2A9F8 /* TavilySearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208388D92CBF4DF500C2A9F8 /* TavilySearch.swift */; };
 		208388DD2CBF4E8A00C2A9F8 /* SecureDefaults in Frameworks */ = {isa = PBXBuildFile; productRef = 208388DC2CBF4E8A00C2A9F8 /* SecureDefaults */; };
 		208388E22CBF51F900C2A9F8 /* RetrievalSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208388E12CBF51F900C2A9F8 /* RetrievalSettingsView.swift */; };
@@ -121,34 +124,8 @@
 		208AA3F12CC9E42F00A0891F /* ScrollMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208AA3F02CC9E42F00A0891F /* ScrollMask.swift */; };
 		208BA3572D680B1800E0C657 /* DiagrammerQuickPromptsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208BA3562D680B1800E0C657 /* DiagrammerQuickPromptsView.swift */; };
 		209370762D6AB36900E1AF73 /* ContainerRefactorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209370752D6AB36900E1AF73 /* ContainerRefactorer.swift */; };
-		209370812D6B588D00E1AF73 /* llama-server in Resources */ = {isa = PBXBuildFile; fileRef = 209370802D6B588D00E1AF73 /* llama-server */; };
-		209370822D6B588D00E1AF73 /* llama-perplexity in Resources */ = {isa = PBXBuildFile; fileRef = 2093707F2D6B588D00E1AF73 /* llama-perplexity */; };
-		209370832D6B588D00E1AF73 /* libllava_shared.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2093707E2D6B588D00E1AF73 /* libllava_shared.dylib */; };
-		209370842D6B588D00E1AF73 /* libggml.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 209370772D6B588D00E1AF73 /* libggml.dylib */; };
-		209370852D6B588D00E1AF73 /* libggml-metal.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2093707B2D6B588D00E1AF73 /* libggml-metal.dylib */; };
-		209370862D6B588D00E1AF73 /* libggml-rpc.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2093707C2D6B588D00E1AF73 /* libggml-rpc.dylib */; };
-		209370872D6B588D00E1AF73 /* libllama.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2093707D2D6B588D00E1AF73 /* libllama.dylib */; };
-		209370882D6B588D00E1AF73 /* libggml-base.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 209370782D6B588D00E1AF73 /* libggml-base.dylib */; };
-		209370892D6B588D00E1AF73 /* libggml-blas.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 209370792D6B588D00E1AF73 /* libggml-blas.dylib */; };
-		2093708A2D6B588D00E1AF73 /* libggml-cpu.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2093707A2D6B588D00E1AF73 /* libggml-cpu.dylib */; };
-		2093708B2D6B58A200E1AF73 /* libggml.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 209370772D6B588D00E1AF73 /* libggml.dylib */; };
-		2093708C2D6B58A200E1AF73 /* libggml-base.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 209370782D6B588D00E1AF73 /* libggml-base.dylib */; };
-		2093708D2D6B58A200E1AF73 /* libggml-blas.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 209370792D6B588D00E1AF73 /* libggml-blas.dylib */; };
-		2093708E2D6B58A200E1AF73 /* libggml-cpu.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2093707A2D6B588D00E1AF73 /* libggml-cpu.dylib */; };
-		2093708F2D6B58A200E1AF73 /* libggml-metal.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2093707B2D6B588D00E1AF73 /* libggml-metal.dylib */; };
-		209370902D6B58A200E1AF73 /* libggml-rpc.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2093707C2D6B588D00E1AF73 /* libggml-rpc.dylib */; };
-		209370912D6B58A200E1AF73 /* libllama.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2093707D2D6B588D00E1AF73 /* libllama.dylib */; };
 		209370942D6B598500E1AF73 /* Extension+CaseIterable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209370932D6B598500E1AF73 /* Extension+CaseIterable.swift */; };
 		209370972D6B5B8100E1AF73 /* DetectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209370962D6B5B8100E1AF73 /* DetectorViewController.swift */; };
-		209370982D6B712C00E1AF73 /* libllava_shared.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2093707E2D6B588D00E1AF73 /* libllava_shared.dylib */; };
-		209370992D6B71FB00E1AF73 /* libggml-base.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 209370782D6B588D00E1AF73 /* libggml-base.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		2093709B2D6B71FC00E1AF73 /* libggml-blas.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 209370792D6B588D00E1AF73 /* libggml-blas.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		2093709C2D6B71FC00E1AF73 /* libggml-cpu.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 2093707A2D6B588D00E1AF73 /* libggml-cpu.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		2093709D2D6B71FF00E1AF73 /* libggml-metal.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 2093707B2D6B588D00E1AF73 /* libggml-metal.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		2093709E2D6B720100E1AF73 /* libggml-rpc.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 2093707C2D6B588D00E1AF73 /* libggml-rpc.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		2093709F2D6B720200E1AF73 /* libggml.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 209370772D6B588D00E1AF73 /* libggml.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		209370A02D6B720300E1AF73 /* libllama.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 2093707D2D6B588D00E1AF73 /* libllama.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		209370A12D6B720400E1AF73 /* libllava_shared.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 2093707E2D6B588D00E1AF73 /* libllava_shared.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		209370A32D6C05B900E1AF73 /* Extension+Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209370A22D6C05B900E1AF73 /* Extension+Double.swift */; };
 		2099BD9B2CB7B8C800E02732 /* Extension+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2099BD9A2CB7B8C800E02732 /* Extension+RawRepresentable.swift */; };
 		2099BD9D2CB7B8E700E02732 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2099BD9C2CB7B8E700E02732 /* Notifications.swift */; };
@@ -159,6 +136,30 @@
 		2099BDA92CB81A1300E02732 /* ExpertListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2099BDA82CB81A1300E02732 /* ExpertListView.swift */; };
 		2099BDAD2CB8222A00E02732 /* ExpertEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2099BDAC2CB8222A00E02732 /* ExpertEditorView.swift */; };
 		2099BDB22CB828A500E02732 /* PopoverButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2099BDB12CB828A500E02732 /* PopoverButton.swift */; };
+		20A40C802D71872600A9D9A9 /* SlideStudioPreviewEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A40C7F2D71872600A9D9A9 /* SlideStudioPreviewEditor.swift */; };
+		20A40C832D718D4300A9D9A9 /* CodeEditorView in Frameworks */ = {isa = PBXBuildFile; productRef = 20A40C822D718D4300A9D9A9 /* CodeEditorView */; };
+		20A40C852D718D4300A9D9A9 /* LanguageSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 20A40C842D718D4300A9D9A9 /* LanguageSupport */; };
+		20A40C872D7190BA00A9D9A9 /* SlideStudioPromptOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A40C862D7190BA00A9D9A9 /* SlideStudioPromptOptionsView.swift */; };
+		20A40C892D72AEE600A9D9A9 /* SlideStudioExportOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A40C882D72AEE600A9D9A9 /* SlideStudioExportOptionsView.swift */; };
+		20A40CC32D72BAB000A9D9A9 /* llama-perplexity in Resources */ = {isa = PBXBuildFile; fileRef = 20A40CC12D72BAB000A9D9A9 /* llama-perplexity */; };
+		20A40CC42D72BAB000A9D9A9 /* llama-server in Resources */ = {isa = PBXBuildFile; fileRef = 20A40CC22D72BAB000A9D9A9 /* llama-server */; };
+		20A40CE72D734DEE00A9D9A9 /* libggml-base.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 20A40CBA2D72BAB000A9D9A9 /* libggml-base.dylib */; };
+		20A40CE82D734DEE00A9D9A9 /* libggml-blas.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 20A40CBB2D72BAB000A9D9A9 /* libggml-blas.dylib */; };
+		20A40CE92D734DEE00A9D9A9 /* libggml-cpu.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 20A40CBC2D72BAB000A9D9A9 /* libggml-cpu.dylib */; };
+		20A40CEA2D734DEE00A9D9A9 /* libggml-metal.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 20A40CBD2D72BAB000A9D9A9 /* libggml-metal.dylib */; };
+		20A40CEB2D734DEE00A9D9A9 /* libggml-rpc.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 20A40CBE2D72BAB000A9D9A9 /* libggml-rpc.dylib */; };
+		20A40CEC2D734DEE00A9D9A9 /* libggml.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 20A40CB92D72BAB000A9D9A9 /* libggml.dylib */; };
+		20A40CED2D734DEE00A9D9A9 /* libllama.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 20A40CBF2D72BAB000A9D9A9 /* libllama.dylib */; };
+		20A40CEE2D734DEE00A9D9A9 /* libllava_shared.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 20A40CC02D72BAB000A9D9A9 /* libllava_shared.dylib */; };
+		20A40CF02D734EBB00A9D9A9 /* libggml.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 20A40CB92D72BAB000A9D9A9 /* libggml.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		20A40CF12D734EBB00A9D9A9 /* libggml-base.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 20A40CBA2D72BAB000A9D9A9 /* libggml-base.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		20A40CF22D734EBB00A9D9A9 /* libggml-blas.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 20A40CBB2D72BAB000A9D9A9 /* libggml-blas.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		20A40CF32D734EBB00A9D9A9 /* libggml-cpu.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 20A40CBC2D72BAB000A9D9A9 /* libggml-cpu.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		20A40CF42D734EBB00A9D9A9 /* libggml-metal.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 20A40CBD2D72BAB000A9D9A9 /* libggml-metal.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		20A40CF52D734EBB00A9D9A9 /* libggml-rpc.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 20A40CBE2D72BAB000A9D9A9 /* libggml-rpc.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		20A40CF62D734EBB00A9D9A9 /* libllama.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 20A40CBF2D72BAB000A9D9A9 /* libllama.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		20A40CF72D734EBB00A9D9A9 /* libllava_shared.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 20A40CC02D72BAB000A9D9A9 /* libllava_shared.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		20A40CF92D73763500A9D9A9 /* Extension+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A40CF82D73763500A9D9A9 /* Extension+Date.swift */; };
 		20A8B6572CB26E4800B756FD /* SimilaritySearchKit in Frameworks */ = {isa = PBXBuildFile; productRef = 20A8B6562CB26E4800B756FD /* SimilaritySearchKit */; };
 		20A8B6592CB26E4800B756FD /* SimilaritySearchKitDistilbert in Frameworks */ = {isa = PBXBuildFile; productRef = 20A8B6582CB26E4800B756FD /* SimilaritySearchKitDistilbert */; };
 		20A8B65B2CB2709100B756FD /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A8B65A2CB2709100B756FD /* Resources.swift */; };
@@ -211,6 +212,10 @@
 		20C221062CC4B15600A99796 /* SourcesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C221052CC4B15600A99796 /* SourcesManager.swift */; };
 		20C221092CC4B5A800A99796 /* SourcesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C221082CC4B5A800A99796 /* SourcesView.swift */; };
 		20C2210B2CC4B88F00A99796 /* SourcesButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C2210A2CC4B88F00A99796 /* SourcesButton.swift */; };
+		20C62EBF2D71373500996566 /* SlideStudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C62EBE2D71373500996566 /* SlideStudioView.swift */; };
+		20C62EC12D713BC000996566 /* SlideStudioProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C62EC02D713BC000996566 /* SlideStudioProgressView.swift */; };
+		20C62EC32D713D5100996566 /* SlideStudioPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C62EC22D713D5100996566 /* SlideStudioPromptView.swift */; };
+		20C62EC72D71403A00996566 /* SlideStudioQuickPromptsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C62EC62D71403A00996566 /* SlideStudioQuickPromptsView.swift */; };
 		20CB7AC02D1457B10013E30C /* PromptAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CB7ABF2D1457B10013E30C /* PromptAnalyzer.swift */; };
 		20CB7AC82D145E320013E30C /* UserRequestClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 20CB7AC72D145E320013E30C /* UserRequestClassifier.mlmodel */; };
 		20CC0C2F2CE2401600A3BC40 /* ExtractKit-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = 20CC0C2E2CE2401600A3BC40 /* ExtractKit-macOS */; };
@@ -293,14 +298,14 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				2093709E2D6B720100E1AF73 /* libggml-rpc.dylib in Embed Libraries */,
-				209370992D6B71FB00E1AF73 /* libggml-base.dylib in Embed Libraries */,
-				209370A02D6B720300E1AF73 /* libllama.dylib in Embed Libraries */,
-				2093709B2D6B71FC00E1AF73 /* libggml-blas.dylib in Embed Libraries */,
-				209370A12D6B720400E1AF73 /* libllava_shared.dylib in Embed Libraries */,
-				2093709C2D6B71FC00E1AF73 /* libggml-cpu.dylib in Embed Libraries */,
-				2093709D2D6B71FF00E1AF73 /* libggml-metal.dylib in Embed Libraries */,
-				2093709F2D6B720200E1AF73 /* libggml.dylib in Embed Libraries */,
+				20A40CF02D734EBB00A9D9A9 /* libggml.dylib in Embed Libraries */,
+				20A40CF12D734EBB00A9D9A9 /* libggml-base.dylib in Embed Libraries */,
+				20A40CF22D734EBB00A9D9A9 /* libggml-blas.dylib in Embed Libraries */,
+				20A40CF32D734EBB00A9D9A9 /* libggml-cpu.dylib in Embed Libraries */,
+				20A40CF42D734EBB00A9D9A9 /* libggml-metal.dylib in Embed Libraries */,
+				20A40CF52D734EBB00A9D9A9 /* libggml-rpc.dylib in Embed Libraries */,
+				20A40CF62D734EBB00A9D9A9 /* libllama.dylib in Embed Libraries */,
+				20A40CF72D734EBB00A9D9A9 /* libllava_shared.dylib in Embed Libraries */,
 			);
 			name = "Embed Libraries";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -423,6 +428,9 @@
 		207A9F5C2CB8FD0900E727DE /* ResourceSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceSectionView.swift; sourceTree = "<group>"; };
 		207A9F5E2CB903FD00E727DE /* Extension+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Binding.swift"; sourceTree = "<group>"; };
 		207A9F612CB94B0000E727DE /* WindowCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowCommands.swift; sourceTree = "<group>"; };
+		207E5EEE2D6F663B00A8F6FA /* SlideStudioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideStudioViewController.swift; sourceTree = "<group>"; };
+		207E5EF12D6FDEEF00A8F6FA /* ImageSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSearch.swift; sourceTree = "<group>"; };
+		207E5EF42D70584500A8F6FA /* marpCheatsheet.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = marpCheatsheet.md; sourceTree = "<group>"; };
 		208388D92CBF4DF500C2A9F8 /* TavilySearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TavilySearch.swift; sourceTree = "<group>"; };
 		208388E12CBF51F900C2A9F8 /* RetrievalSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrievalSettingsView.swift; sourceTree = "<group>"; };
 		208388E42CBF526E00C2A9F8 /* RetrievalSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrievalSettings.swift; sourceTree = "<group>"; };
@@ -435,16 +443,6 @@
 		208AA3F02CC9E42F00A0891F /* ScrollMask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollMask.swift; sourceTree = "<group>"; };
 		208BA3562D680B1800E0C657 /* DiagrammerQuickPromptsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagrammerQuickPromptsView.swift; sourceTree = "<group>"; };
 		209370752D6AB36900E1AF73 /* ContainerRefactorer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerRefactorer.swift; sourceTree = "<group>"; };
-		209370772D6B588D00E1AF73 /* libggml.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libggml.dylib; sourceTree = "<group>"; };
-		209370782D6B588D00E1AF73 /* libggml-base.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-base.dylib"; sourceTree = "<group>"; };
-		209370792D6B588D00E1AF73 /* libggml-blas.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-blas.dylib"; sourceTree = "<group>"; };
-		2093707A2D6B588D00E1AF73 /* libggml-cpu.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-cpu.dylib"; sourceTree = "<group>"; };
-		2093707B2D6B588D00E1AF73 /* libggml-metal.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-metal.dylib"; sourceTree = "<group>"; };
-		2093707C2D6B588D00E1AF73 /* libggml-rpc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-rpc.dylib"; sourceTree = "<group>"; };
-		2093707D2D6B588D00E1AF73 /* libllama.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libllama.dylib; sourceTree = "<group>"; };
-		2093707E2D6B588D00E1AF73 /* libllava_shared.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libllava_shared.dylib; sourceTree = "<group>"; };
-		2093707F2D6B588D00E1AF73 /* llama-perplexity */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llama-perplexity"; sourceTree = "<group>"; };
-		209370802D6B588D00E1AF73 /* llama-server */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llama-server"; sourceTree = "<group>"; };
 		209370932D6B598500E1AF73 /* Extension+CaseIterable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+CaseIterable.swift"; sourceTree = "<group>"; };
 		209370962D6B5B8100E1AF73 /* DetectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectorViewController.swift; sourceTree = "<group>"; };
 		209370A22D6C05B900E1AF73 /* Extension+Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Double.swift"; sourceTree = "<group>"; };
@@ -457,6 +455,20 @@
 		2099BDA82CB81A1300E02732 /* ExpertListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertListView.swift; sourceTree = "<group>"; };
 		2099BDAC2CB8222A00E02732 /* ExpertEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertEditorView.swift; sourceTree = "<group>"; };
 		2099BDB12CB828A500E02732 /* PopoverButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverButton.swift; sourceTree = "<group>"; };
+		20A40C7F2D71872600A9D9A9 /* SlideStudioPreviewEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideStudioPreviewEditor.swift; sourceTree = "<group>"; };
+		20A40C862D7190BA00A9D9A9 /* SlideStudioPromptOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideStudioPromptOptionsView.swift; sourceTree = "<group>"; };
+		20A40C882D72AEE600A9D9A9 /* SlideStudioExportOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideStudioExportOptionsView.swift; sourceTree = "<group>"; };
+		20A40CB92D72BAB000A9D9A9 /* libggml.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libggml.dylib; sourceTree = "<group>"; };
+		20A40CBA2D72BAB000A9D9A9 /* libggml-base.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-base.dylib"; sourceTree = "<group>"; };
+		20A40CBB2D72BAB000A9D9A9 /* libggml-blas.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-blas.dylib"; sourceTree = "<group>"; };
+		20A40CBC2D72BAB000A9D9A9 /* libggml-cpu.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-cpu.dylib"; sourceTree = "<group>"; };
+		20A40CBD2D72BAB000A9D9A9 /* libggml-metal.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-metal.dylib"; sourceTree = "<group>"; };
+		20A40CBE2D72BAB000A9D9A9 /* libggml-rpc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-rpc.dylib"; sourceTree = "<group>"; };
+		20A40CBF2D72BAB000A9D9A9 /* libllama.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libllama.dylib; sourceTree = "<group>"; };
+		20A40CC02D72BAB000A9D9A9 /* libllava_shared.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libllava_shared.dylib; sourceTree = "<group>"; };
+		20A40CC12D72BAB000A9D9A9 /* llama-perplexity */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llama-perplexity"; sourceTree = "<group>"; };
+		20A40CC22D72BAB000A9D9A9 /* llama-server */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llama-server"; sourceTree = "<group>"; };
+		20A40CF82D73763500A9D9A9 /* Extension+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Date.swift"; sourceTree = "<group>"; };
 		20A8B65A2CB2709100B756FD /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		20A8B65C2CB2829500B756FD /* ExpertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertManager.swift; sourceTree = "<group>"; };
 		20A96F3B2CDDA9D400E31D53 /* ModelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
@@ -506,6 +518,10 @@
 		20C221052CC4B15600A99796 /* SourcesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesManager.swift; sourceTree = "<group>"; };
 		20C221082CC4B5A800A99796 /* SourcesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesView.swift; sourceTree = "<group>"; };
 		20C2210A2CC4B88F00A99796 /* SourcesButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesButton.swift; sourceTree = "<group>"; };
+		20C62EBE2D71373500996566 /* SlideStudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideStudioView.swift; sourceTree = "<group>"; };
+		20C62EC02D713BC000996566 /* SlideStudioProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideStudioProgressView.swift; sourceTree = "<group>"; };
+		20C62EC22D713D5100996566 /* SlideStudioPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideStudioPromptView.swift; sourceTree = "<group>"; };
+		20C62EC62D71403A00996566 /* SlideStudioQuickPromptsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideStudioQuickPromptsView.swift; sourceTree = "<group>"; };
 		20CB7ABF2D1457B10013E30C /* PromptAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptAnalyzer.swift; sourceTree = "<group>"; };
 		20CB7AC72D145E320013E30C /* UserRequestClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = UserRequestClassifier.mlmodel; sourceTree = "<group>"; };
 		20CE5E572D5C85D10000A2EC /* LengthyTasksNavigationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LengthyTasksNavigationButton.swift; sourceTree = "<group>"; };
@@ -531,14 +547,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				209370842D6B588D00E1AF73 /* libggml.dylib in Frameworks */,
-				209370852D6B588D00E1AF73 /* libggml-metal.dylib in Frameworks */,
-				209370862D6B588D00E1AF73 /* libggml-rpc.dylib in Frameworks */,
-				209370872D6B588D00E1AF73 /* libllama.dylib in Frameworks */,
-				209370882D6B588D00E1AF73 /* libggml-base.dylib in Frameworks */,
-				209370892D6B588D00E1AF73 /* libggml-blas.dylib in Frameworks */,
-				2093708A2D6B588D00E1AF73 /* libggml-cpu.dylib in Frameworks */,
-				209370832D6B588D00E1AF73 /* libllava_shared.dylib in Frameworks */,
+				20A40CE72D734DEE00A9D9A9 /* libggml-base.dylib in Frameworks */,
+				20A40CE82D734DEE00A9D9A9 /* libggml-blas.dylib in Frameworks */,
+				20A40CE92D734DEE00A9D9A9 /* libggml-cpu.dylib in Frameworks */,
+				20A40CEA2D734DEE00A9D9A9 /* libggml-metal.dylib in Frameworks */,
+				20A40CEB2D734DEE00A9D9A9 /* libggml-rpc.dylib in Frameworks */,
+				20A40CEC2D734DEE00A9D9A9 /* libggml.dylib in Frameworks */,
+				20A40CED2D734DEE00A9D9A9 /* libllama.dylib in Frameworks */,
+				20A40CEE2D734DEE00A9D9A9 /* libllava_shared.dylib in Frameworks */,
+				20A40C832D718D4300A9D9A9 /* CodeEditorView in Frameworks */,
 				200FBFF12CB64CB400A92A74 /* EventSource in Frameworks */,
 				20F84B992D1CFED400F44990 /* DefaultModels in Frameworks */,
 				20CEA7572CE3082F0070579B /* SwiftMath in Frameworks */,
@@ -546,6 +563,7 @@
 				20A8B6572CB26E4800B756FD /* SimilaritySearchKit in Frameworks */,
 				207A9F532CB82D9600E727DE /* SymbolPicker in Frameworks */,
 				2031B9952CEAE66400627D53 /* KeyboardShortcuts in Frameworks */,
+				20A40C852D718D4300A9D9A9 /* LanguageSupport in Frameworks */,
 				20B53D072D5B03B900D1AE79 /* Sparkle in Frameworks */,
 				208388DD2CBF4E8A00C2A9F8 /* SecureDefaults in Frameworks */,
 				20CC0C2F2CE2401600A3BC40 /* ExtractKit-macOS in Frameworks */,
@@ -591,6 +609,7 @@
 				20B97CB22CAFE86C009A0A5D /* Sidekick */,
 				20B97CB82CAFE870009A0A5D /* SidekickTests */,
 				20B97CBC2CAFE872009A0A5D /* SidekickUITests */,
+				20A40C9E2D72B92100A9D9A9 /* Frameworks */,
 				200549742CAFA67B00A3DCF2 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -619,7 +638,7 @@
 			isa = PBXGroup;
 			children = (
 				200619A12D6750D9001949EF /* DiagrammerViewController.swift */,
-				200619A62D6756DF001949EF /* bin */,
+				207E5EED2D6F636200A8F6FA /* Resources */,
 			);
 			path = Diagrammer;
 			sourceTree = "<group>";
@@ -790,6 +809,7 @@
 			children = (
 				203487692D671F9600A88DA4 /* Library */,
 				203487682D6702CC00A88DA4 /* Diagrammer */,
+				207E5EEC2D6F632200A8F6FA /* Slide Studio */,
 				204AE3B72CEAF4D30086B42D /* Inline Assistant */,
 				2030D6162D6C4D9B00F18BF4 /* Detector */,
 			);
@@ -809,22 +829,14 @@
 			path = Detector;
 			sourceTree = "<group>";
 		};
-		2031B9962CEAE77F00627D53 /* Inline Assistant */ = {
-			isa = PBXGroup;
-			children = (
-				2031B98D2CEAE1A700627D53 /* Accessibility.swift */,
-			);
-			path = "Inline Assistant";
-			sourceTree = "<group>";
-		};
 		203487682D6702CC00A88DA4 /* Diagrammer */ = {
 			isa = PBXGroup;
 			children = (
 				2034876C2D67236000A88DA4 /* DiagrammerView.swift */,
-				200619AE2D6766B1001949EF /* DiagrammerGeneratingView.swift */,
 				200619AC2D675DB9001949EF /* DiagrammerPromptView.swift */,
-				200619B32D676DCE001949EF /* DiagrammerPreviewEditorView.swift */,
 				208BA3562D680B1800E0C657 /* DiagrammerQuickPromptsView.swift */,
+				200619AE2D6766B1001949EF /* DiagrammerGeneratingView.swift */,
+				200619B32D676DCE001949EF /* DiagrammerPreviewEditorView.swift */,
 			);
 			path = Diagrammer;
 			sourceTree = "<group>";
@@ -928,6 +940,7 @@
 				20571F802CBD6A6D004F3344 /* SoundEffects.swift */,
 				2031B9972CEAE78F00627D53 /* ShortcutController.swift */,
 				209370752D6AB36900E1AF73 /* ContainerRefactorer.swift */,
+				207E5EF02D6FDEBE00A8F6FA /* Tools */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -972,7 +985,6 @@
 			isa = PBXGroup;
 			children = (
 				206934922D5CCDF1006619FD /* conversationExportTemplate.html */,
-				200619A92D6759EF001949EF /* d2-cheatsheet.txt */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -999,6 +1011,72 @@
 			path = Resource;
 			sourceTree = "<group>";
 		};
+		207E5EE92D6F62E300A8F6FA /* Inline Assistant */ = {
+			isa = PBXGroup;
+			children = (
+				2031B98F2CEAE33900627D53 /* InlineAssistantController.swift */,
+			);
+			path = "Inline Assistant";
+			sourceTree = "<group>";
+		};
+		207E5EEA2D6F62EC00A8F6FA /* Detector */ = {
+			isa = PBXGroup;
+			children = (
+				209370962D6B5B8100E1AF73 /* DetectorViewController.swift */,
+			);
+			path = Detector;
+			sourceTree = "<group>";
+		};
+		207E5EEB2D6F62F800A8F6FA /* Slide Studio */ = {
+			isa = PBXGroup;
+			children = (
+				207E5EEE2D6F663B00A8F6FA /* SlideStudioViewController.swift */,
+				207E5EF32D70582200A8F6FA /* Resources */,
+			);
+			path = "Slide Studio";
+			sourceTree = "<group>";
+		};
+		207E5EEC2D6F632200A8F6FA /* Slide Studio */ = {
+			isa = PBXGroup;
+			children = (
+				20C62EBE2D71373500996566 /* SlideStudioView.swift */,
+				20C62EC22D713D5100996566 /* SlideStudioPromptView.swift */,
+				20C62EC62D71403A00996566 /* SlideStudioQuickPromptsView.swift */,
+				20A40C862D7190BA00A9D9A9 /* SlideStudioPromptOptionsView.swift */,
+				20A40C7F2D71872600A9D9A9 /* SlideStudioPreviewEditor.swift */,
+				20C62EC02D713BC000996566 /* SlideStudioProgressView.swift */,
+				20A40C882D72AEE600A9D9A9 /* SlideStudioExportOptionsView.swift */,
+			);
+			path = "Slide Studio";
+			sourceTree = "<group>";
+		};
+		207E5EED2D6F636200A8F6FA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				200619A92D6759EF001949EF /* d2-cheatsheet.txt */,
+				200619A62D6756DF001949EF /* bin */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		207E5EF02D6FDEBE00A8F6FA /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				2031B98D2CEAE1A700627D53 /* Accessibility.swift */,
+				207E5EF12D6FDEEF00A8F6FA /* ImageSearch.swift */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
+		207E5EF32D70582200A8F6FA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				207E5EF42D70584500A8F6FA /* marpCheatsheet.md */,
+				20C62EC82D717E2F00996566 /* bin */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		208388E32CBF525A00C2A9F8 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -1012,16 +1090,16 @@
 		20896B352D54B0F0006F9368 /* bin */ = {
 			isa = PBXGroup;
 			children = (
-				209370772D6B588D00E1AF73 /* libggml.dylib */,
-				209370782D6B588D00E1AF73 /* libggml-base.dylib */,
-				209370792D6B588D00E1AF73 /* libggml-blas.dylib */,
-				2093707A2D6B588D00E1AF73 /* libggml-cpu.dylib */,
-				2093707B2D6B588D00E1AF73 /* libggml-metal.dylib */,
-				2093707C2D6B588D00E1AF73 /* libggml-rpc.dylib */,
-				2093707D2D6B588D00E1AF73 /* libllama.dylib */,
-				2093707E2D6B588D00E1AF73 /* libllava_shared.dylib */,
-				2093707F2D6B588D00E1AF73 /* llama-perplexity */,
-				209370802D6B588D00E1AF73 /* llama-server */,
+				20A40CB92D72BAB000A9D9A9 /* libggml.dylib */,
+				20A40CBA2D72BAB000A9D9A9 /* libggml-base.dylib */,
+				20A40CBB2D72BAB000A9D9A9 /* libggml-blas.dylib */,
+				20A40CBC2D72BAB000A9D9A9 /* libggml-cpu.dylib */,
+				20A40CBD2D72BAB000A9D9A9 /* libggml-metal.dylib */,
+				20A40CBE2D72BAB000A9D9A9 /* libggml-rpc.dylib */,
+				20A40CBF2D72BAB000A9D9A9 /* libllama.dylib */,
+				20A40CC02D72BAB000A9D9A9 /* libllava_shared.dylib */,
+				20A40CC12D72BAB000A9D9A9 /* llama-perplexity */,
+				20A40CC22D72BAB000A9D9A9 /* llama-server */,
 			);
 			path = bin;
 			sourceTree = "<group>";
@@ -1037,11 +1115,19 @@
 		209370952D6B5B1700E1AF73 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
-				2031B98F2CEAE33900627D53 /* InlineAssistantController.swift */,
-				209370962D6B5B8100E1AF73 /* DetectorViewController.swift */,
 				200619A52D6754B7001949EF /* Diagrammer */,
+				207E5EEB2D6F62F800A8F6FA /* Slide Studio */,
+				207E5EE92D6F62E300A8F6FA /* Inline Assistant */,
+				207E5EEA2D6F62EC00A8F6FA /* Detector */,
 			);
 			path = Tools;
+			sourceTree = "<group>";
+		};
+		20A40C9E2D72B92100A9D9A9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		20AA5A502CC87026003E5519 /* Tips */ = {
@@ -1152,7 +1238,6 @@
 				20AA5A502CC87026003E5519 /* Tips */,
 				208388E32CBF525A00C2A9F8 /* Settings */,
 				20571F822CBD6A95004F3344 /* Utilities */,
-				2031B9962CEAE77F00627D53 /* Inline Assistant */,
 				20B9E6152CB1465900BA0AD2 /* Data Models */,
 				20B9E60F2CB1429E00BA0AD2 /* Commands */,
 			);
@@ -1164,6 +1249,7 @@
 			children = (
 				209370932D6B598500E1AF73 /* Extension+CaseIterable.swift */,
 				201A1A922CDB8109001E9BA9 /* Extension+Collection.swift */,
+				20A40CF82D73763500A9D9A9 /* Extension+Date.swift */,
 				209370A22D6C05B900E1AF73 /* Extension+Double.swift */,
 				20B4D6B02CC3D72700817E15 /* Extension+IndexItem.swift */,
 				2031B9992CEAE7A900627D53 /* Extension+KeyboardShortcut.swift */,
@@ -1277,6 +1363,13 @@
 			path = Sources;
 			sourceTree = "<group>";
 		};
+		20C62EC82D717E2F00996566 /* bin */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = bin;
+			sourceTree = "<group>";
+		};
 		20CB7ABE2D14579C0013E30C /* Router */ = {
 			isa = PBXGroup;
 			children = (
@@ -1345,6 +1438,8 @@
 				20B53D062D5B03B900D1AE79 /* Sparkle */,
 				200619B12D6768F6001949EF /* SwiftfulLoadingIndicators */,
 				200619B92D678694001949EF /* WebViewKit */,
+				20A40C822D718D4300A9D9A9 /* CodeEditorView */,
+				20A40C842D718D4300A9D9A9 /* LanguageSupport */,
 			);
 			productName = Sidekick;
 			productReference = 200549732CAFA67B00A3DCF2 /* Sidekick.app */;
@@ -1460,6 +1555,7 @@
 				20B53D052D5B03B900D1AE79 /* XCRemoteSwiftPackageReference "Sparkle" */,
 				200619B02D6768F6001949EF /* XCRemoteSwiftPackageReference "SwiftfulLoadingIndicators" */,
 				200619B82D678694001949EF /* XCRemoteSwiftPackageReference "WebViewKit" */,
+				20A40C812D718D4300A9D9A9 /* XCRemoteSwiftPackageReference "CodeEditorView" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 200549742CAFA67B00A3DCF2 /* Products */;
@@ -1481,20 +1577,13 @@
 			files = (
 				206934932D5CCDF1006619FD /* conversationExportTemplate.html in Resources */,
 				206934902D5CC87E006619FD /* Credits.html in Resources */,
-				2093708B2D6B58A200E1AF73 /* libggml.dylib in Resources */,
-				2093708C2D6B58A200E1AF73 /* libggml-base.dylib in Resources */,
-				2093708D2D6B58A200E1AF73 /* libggml-blas.dylib in Resources */,
-				2093708E2D6B58A200E1AF73 /* libggml-cpu.dylib in Resources */,
-				2093708F2D6B58A200E1AF73 /* libggml-metal.dylib in Resources */,
-				209370902D6B58A200E1AF73 /* libggml-rpc.dylib in Resources */,
-				209370912D6B58A200E1AF73 /* libllama.dylib in Resources */,
-				209370982D6B712C00E1AF73 /* libllava_shared.dylib in Resources */,
-				209370812D6B588D00E1AF73 /* llama-server in Resources */,
-				209370822D6B588D00E1AF73 /* llama-perplexity in Resources */,
+				20A40CC32D72BAB000A9D9A9 /* llama-perplexity in Resources */,
+				20A40CC42D72BAB000A9D9A9 /* llama-server in Resources */,
 				200619AA2D6759EF001949EF /* d2-cheatsheet.txt in Resources */,
 				200619A82D6756EB001949EF /* d2 in Resources */,
 				20B97CB32CAFE86C009A0A5D /* Preview Assets.xcassets in Resources */,
 				20F2D5122CC1F33B004CE730 /* Localizable.xcstrings in Resources */,
+				207E5EF52D70584500A8F6FA /* marpCheatsheet.md in Resources */,
 				20B97CB42CAFE86C009A0A5D /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1555,6 +1644,7 @@
 				204735802D642BE5000740F9 /* ModelExplorerView.swift in Sources */,
 				20BF49CD2D64A08200C329F8 /* ModelExplorerViewController.swift in Sources */,
 				201A1A962CDB99C6001E9BA9 /* MarkdownTableView.swift in Sources */,
+				20A40C872D7190BA00A9D9A9 /* SlideStudioPromptOptionsView.swift in Sources */,
 				202801FA2CC949F2005C1F7D /* TemporaryResource.swift in Sources */,
 				20573F162CB505DC004C19FE /* ConversationListView.swift in Sources */,
 				2030D6242D6D60FB00F18BF4 /* EvaluationDetails.swift in Sources */,
@@ -1582,15 +1672,18 @@
 				2031B9982CEAE78F00627D53 /* ShortcutController.swift in Sources */,
 				2099BDA92CB81A1300E02732 /* ExpertListView.swift in Sources */,
 				201A1A9C2CDBB5B1001E9BA9 /* MarkdownScatterPlotView.swift in Sources */,
+				20C62EC32D713D5100996566 /* SlideStudioPromptView.swift in Sources */,
 				2034876F2D6723A200A88DA4 /* ToolCardButton.swift in Sources */,
 				204AE3C62CEC7C030086B42D /* NewCommandView.swift in Sources */,
 				204C795C2CB79AB900EED58E /* ExpertManagerView.swift in Sources */,
 				20DEABED2CC4D68A0046447C /* Extension+CGImage.swift in Sources */,
+				20C62EC12D713BC000996566 /* SlideStudioProgressView.swift in Sources */,
 				20B97CE52CB00605009A0A5D /* Extension+Color.swift in Sources */,
 				20B97CDD2CAFFE06009A0A5D /* Message.swift in Sources */,
 				20B97CD02CAFEC37009A0A5D /* Model.swift in Sources */,
 				20571F792CBD6019004F3344 /* GeneralSettingsView.swift in Sources */,
 				200FBFEE2CB6477400A92A74 /* LlamaServer.swift in Sources */,
+				207E5EEF2D6F663B00A8F6FA /* SlideStudioViewController.swift in Sources */,
 				20C221022CC4A9E800A99796 /* Source.swift in Sources */,
 				207A9F622CB94B0000E727DE /* WindowCommands.swift in Sources */,
 				205B50D12CD3025A0057769F /* SourceRowView.swift in Sources */,
@@ -1623,6 +1716,7 @@
 				20CE5E582D5C85D10000A2EC /* LengthyTasksNavigationButton.swift in Sources */,
 				202801F62CC93CD5005C1F7D /* PromptInputField.swift in Sources */,
 				204D09832D1166810066B060 /* IntroductionPage.swift in Sources */,
+				20A40C892D72AEE600A9D9A9 /* SlideStudioExportOptionsView.swift in Sources */,
 				201A1A932CDB8109001E9BA9 /* Extension+Collection.swift in Sources */,
 				20571F772CBD6005004F3344 /* SettingsView.swift in Sources */,
 				209370A32D6C05B900E1AF73 /* Extension+Double.swift in Sources */,
@@ -1661,7 +1755,9 @@
 				208388ED2CBF825400C2A9F8 /* Tavily.swift in Sources */,
 				204C79532CB7500800EED58E /* EndDetectionScrollView.swift in Sources */,
 				204AE3BB2CEAF5AC0086B42D /* Command.swift in Sources */,
+				20A40CF92D73763500A9D9A9 /* Extension+Date.swift in Sources */,
 				2038CCF32CB6CBC6005AA315 /* PendingMessageView.swift in Sources */,
+				20C62EC72D71403A00996566 /* SlideStudioQuickPromptsView.swift in Sources */,
 				20508BE32CF586CD003BC867 /* PendingMessage.swift in Sources */,
 				20E48C2B2CB560E30085E7D6 /* Extension+CGKeyCode.swift in Sources */,
 				208844312CDDE33F003BCB6F /* ModelListView.swift in Sources */,
@@ -1670,6 +1766,8 @@
 				20BF4A092D64C6ED00C329F8 /* SpecialtyView.swift in Sources */,
 				2099BDA12CB7EABC00E02732 /* ConversationQuickPromptsView.swift in Sources */,
 				20B9E60E2CB1414100BA0AD2 /* DockMenuCommands.swift in Sources */,
+				207E5EF22D6FDEEF00A8F6FA /* ImageSearch.swift in Sources */,
+				20A40C802D71872600A9D9A9 /* SlideStudioPreviewEditor.swift in Sources */,
 				20B9E6112CB142FD00BA0AD2 /* DebugCommands.swift in Sources */,
 				20573F252CB52EB6004C19FE /* CopyButton.swift in Sources */,
 				20B4D6AF2CC3C12C00817E15 /* PromptController.swift in Sources */,
@@ -1678,6 +1776,7 @@
 				203487712D672A8F00A88DA4 /* ToolLibraryView.swift in Sources */,
 				209370942D6B598500E1AF73 /* Extension+CaseIterable.swift in Sources */,
 				209370762D6AB36900E1AF73 /* ContainerRefactorer.swift in Sources */,
+				20C62EBF2D71373500996566 /* SlideStudioView.swift in Sources */,
 				201A1A8E2CDB7C1C001E9BA9 /* MarkdownDataView.swift in Sources */,
 				20A8B65B2CB2709100B756FD /* Resources.swift in Sources */,
 				204D9CBF2CF4ABCF0052B6F4 /* StatusLabelView.swift in Sources */,
@@ -2170,6 +2269,14 @@
 				minimumVersion = 1.2.2;
 			};
 		};
+		20A40C812D718D4300A9D9A9 /* XCRemoteSwiftPackageReference "CodeEditorView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mchakravarty/CodeEditorView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.15.3;
+			};
+		};
 		20A8B6552CB26E4800B756FD /* XCRemoteSwiftPackageReference "similarity-search-kit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ZachNagengast/similarity-search-kit";
@@ -2268,6 +2375,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 208388DB2CBF4E8A00C2A9F8 /* XCRemoteSwiftPackageReference "SecureDefaults" */;
 			productName = SecureDefaults;
+		};
+		20A40C822D718D4300A9D9A9 /* CodeEditorView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 20A40C812D718D4300A9D9A9 /* XCRemoteSwiftPackageReference "CodeEditorView" */;
+			productName = CodeEditorView;
+		};
+		20A40C842D718D4300A9D9A9 /* LanguageSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 20A40C812D718D4300A9D9A9 /* XCRemoteSwiftPackageReference "CodeEditorView" */;
+			productName = LanguageSupport;
 		};
 		20A8B6562CB26E4800B756FD /* SimilaritySearchKit */ = {
 			isa = XCSwiftPackageProductDependency;

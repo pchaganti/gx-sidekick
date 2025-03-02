@@ -43,8 +43,8 @@ struct MessagesView: View {
 					spacing: 13
 				) {
 					Group {
-						messagesView
-						if isGenerating {
+						self.messagesView
+						if self.isGenerating {
 							PendingMessageView()
 						}
 					}

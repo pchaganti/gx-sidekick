@@ -10,7 +10,7 @@ import SwiftUI
 
 struct AttachmentSelectionButton: View {
 	
-	@EnvironmentObject private var promptController: PromptController
+	var add: (URL) async -> Void = { _ in }
 	
     var body: some View {
 		Button {
@@ -21,7 +21,7 @@ struct AttachmentSelectionButton: View {
 			) else { return }
 			Task.detached { @MainActor in
 				for url in selectedUrls {
-					await self.promptController.addFile(url)
+					await self.add(url)
 				}
 			}
 		} label: {

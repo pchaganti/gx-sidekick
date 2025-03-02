@@ -33,6 +33,7 @@ struct SidekickApp: App {
 	
 	var body: some Scene {
 		
+		// Main window
 		WindowGroup {
 			ContentView()
 				.environmentObject(appState)
@@ -53,18 +54,27 @@ struct SidekickApp: App {
 			}
 		}
 		
+		// Window for Tool: Models
 		SwiftUI.Window("Models", id: "models") {
 			ModelExplorerView()
 		}
 		
+		// Window for Tool: Diagrammer
 		SwiftUI.Window("Diagrammer", id: "diagrammer") {
 			DiagrammerView()
 		}
 		
+		// Window for Tool: Detector
 		SwiftUI.Window("Detector", id: "detector") {
 			DetectorView()
 		}
 		
+		// Window for Tool: Slide Studio
+		SwiftUI.Window("Slide Studio", id: "slideStudio") {
+			SlideStudioView()
+		}
+		
+		// Settings window
 		SwiftUI.Settings {
 			SettingsView()
 				.environmentObject(commandManager)

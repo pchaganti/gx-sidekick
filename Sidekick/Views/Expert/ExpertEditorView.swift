@@ -76,22 +76,20 @@ struct ExpertEditorView: View {
 	
 	var name: some View {
 		Group {
-			Group {
-				HStack {
-					VStack(alignment: .leading) {
-						Text("Name")
-							.font(.title3)
-							.bold()
-						Text("This expert's name")
-							.font(.caption)
-					}
-					Spacer()
-					TextField("", text: $expert.name)
-						.textFieldStyle(.plain)
+			HStack {
+				VStack(alignment: .leading) {
+					Text("Name")
+						.font(.title3)
+						.bold()
+					Text("This expert's name")
+						.font(.caption)
 				}
+				Spacer()
+				TextField("", text: $expert.name)
+					.textFieldStyle(.plain)
 			}
-			.padding(.horizontal, 5)
 		}
+		.padding(.horizontal, 5)
 	}
 		
 	var icon: some View {

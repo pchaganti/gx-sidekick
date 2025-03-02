@@ -93,7 +93,7 @@ public class ContainerRefactorer {
 			"Commands",
 			"Conversations",
 			"Models",
-			"Experts",
+			"Profiles",
 			"Sources",
 			"Generated Images",
 			"Resources"
@@ -107,8 +107,9 @@ public class ContainerRefactorer {
 			let destinationURL: URL = Settings
 				.containerUrl
 				.appendingPathComponent(directoryName)
-			// Continue if source URL exists
-			if !sourceURL.fileExists { continue }
+			// Continue if destination URL exists
+			if destinationURL.fileExists { continue }
+			print(directoryName)
 			didRelocate = true
 			FileManager.moveItem(
 				from: sourceURL,

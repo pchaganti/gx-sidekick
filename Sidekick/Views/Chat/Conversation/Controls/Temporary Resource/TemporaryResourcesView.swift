@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TemporaryResourcesView: View {
 	
-	@EnvironmentObject private var promptController: PromptController
+	@Binding var tempResources: [TemporaryResource]
 	
 	var body: some View {
 		VStack(
@@ -42,9 +42,10 @@ struct TemporaryResourcesView: View {
 		) {
 			HStack {
 				ForEach(
-					self.$promptController.tempResources
+					self.$tempResources
 				) { tempResource in
 					TemporaryResourceView(
+						tempResources: $tempResources,
 						tempResource: tempResource
 					)
 					.transition(

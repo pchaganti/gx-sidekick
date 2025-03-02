@@ -9,8 +9,7 @@ import SwiftUI
 
 struct TemporaryResourceView: View {
 	
-	@EnvironmentObject private var promptController: PromptController
-	
+	@Binding var tempResources: [TemporaryResource]
 	@Binding var tempResource: TemporaryResource
 	@State private var isHovering: Bool = false
 	
@@ -48,8 +47,10 @@ struct TemporaryResourceView: View {
 	
 	var removeButton: some View {
 		Button {
-			withAnimation(.linear) {
-				self.promptController.tempResources = self.promptController.tempResources.filter {
+			withAnimation(
+				.linear
+			) {
+				self.tempResources = self.tempResources.filter {
 					$0.id != self.tempResource.id
 				}
 			}

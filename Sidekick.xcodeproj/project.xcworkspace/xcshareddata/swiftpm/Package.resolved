@@ -1,5 +1,5 @@
 {
-  "originHash" : "b61e3a52629bdddc4e4ebbf0ace75f51817c86d7d34a3131af1ebec447b694f0",
+  "originHash" : "3eb4bfc30b6607d66f84efac6f162dc59bec4aff994640fb8830f823eb523570",
   "pins" : [
     {
       "identity" : "browserkit",
@@ -8,6 +8,15 @@
       "state" : {
         "branch" : "main",
         "revision" : "db18e1fc169c4edb43fc7b9e249e9bb1078438ff"
+      }
+    },
+    {
+      "identity" : "codeeditorview",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mchakravarty/CodeEditorView",
+      "state" : {
+        "revision" : "2b532411ae79520b973f1647e7ed51a6678d1188",
+        "version" : "0.15.3"
       }
     },
     {
@@ -97,6 +106,15 @@
       "state" : {
         "branch" : "master",
         "revision" : "242bab612d08105783a8dad7d6afd699b09ee0c3"
+      }
+    },
+    {
+      "identity" : "rearrange",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ChimeHQ/Rearrange.git",
+      "state" : {
+        "revision" : "5ff7f3363f7a08f77e0d761e38e6add31c2136e1",
+        "version" : "1.8.1"
       }
     },
     {

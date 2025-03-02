@@ -107,12 +107,32 @@
         }
       }
     },
+    "An error occurred while exporting the slides." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "幻灯片导出出错。"
+          }
+        }
+      }
+    },
     "An error occurred while generating the diagram." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "图表生成出错…"
+          }
+        }
+      }
+    },
+    "An error occurred while generating the slides." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "幻灯片生成出错。"
           }
         }
       }
@@ -397,6 +417,16 @@
         }
       }
     },
+    "Configuring image layout..." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在调整布局..."
+          }
+        }
+      }
+    },
     "Context Full" : {
       "localizations" : {
         "zh-Hans" : {
@@ -573,6 +603,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "无法获得困惑度分数。"
+          }
+        }
+      }
+    },
+    "Create 10 minute presentations in 5 minutes" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "生成 5 分钟内，演讲 10 分钟"
+          }
+        }
+      }
+    },
+    "Create a presentation explaining the principles of supply and demand." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "创建一个演示文稿来解释经济中的供需原理。"
+          }
+        }
+      }
+    },
+    "Create a presentation explaining the Von Neumann architecture." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "创建一个演示文稿来解释冯·诺依曼架构。"
           }
         }
       }
@@ -887,6 +947,16 @@
         }
       }
     },
+    "e.g. Create a presentation explaining the Von Neumann architecture." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "e.g. 创建一个演示文稿来解释冯·诺依曼架构。"
+          }
+        }
+      }
+    },
     "e.g. Draw a diagram of the eutrophication cycle and how it forms a positive feedback loop." : {
       "localizations" : {
         "zh-Hans" : {
@@ -937,12 +1007,42 @@
         }
       }
     },
+    "End of the Ming Dynasty" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "明末清初"
+          }
+        }
+      }
+    },
     "Endpoint" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "端点"
+          }
+        }
+      }
+    },
+    "Enhancing your prompt..." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在优化提示词…"
+          }
+        }
+      }
+    },
+    "ENSO Cycle" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "厄尔尼诺-南方涛动循环"
           }
         }
       }
@@ -973,6 +1073,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "错误"
+          }
+        }
+      }
+    },
+    "Error generating presentation: %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "演示文稿生成出错：%@"
           }
         }
       }
@@ -1063,6 +1173,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "导出照片"
+          }
+        }
+      }
+    },
+    "Export Options" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导出选项"
           }
         }
       }
@@ -1187,6 +1307,16 @@
         }
       }
     },
+    "Finding images online..." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在线查找图片..."
+          }
+        }
+      }
+    },
     "Flip Axis" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1203,6 +1333,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "佛罗伦萨的政制"
+          }
+        }
+      }
+    },
+    "Format" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "输出格式"
           }
         }
       }
@@ -1287,6 +1427,36 @@
         }
       }
     },
+    "Generate a presentation about nucleic acids and how it carries our genetic code." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "生成有关核酸以及它如何承载我们的遗传密码的演示文稿。"
+          }
+        }
+      }
+    },
+    "Generate a presentation about the irregular inter-annual cycle, ENSO." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "制作有关不规则年际循环（ENSO）的演示文稿。"
+          }
+        }
+      }
+    },
+    "Generate a presentation introducing the Late Ming Dynasty and the transition to the Qing Dynasty." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "制作一个介绍明末清初的演示文稿。"
+          }
+        }
+      }
+    },
     "Generate diagrams with AI" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1303,6 +1473,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "正在生成图表…"
+          }
+        }
+      }
+    },
+    "Generating presentation..." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在生成演示文稿..."
+          }
+        }
+      }
+    },
+    "Generating slides..." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在生成幻灯片"
           }
         }
       }
@@ -1755,7 +1945,24 @@
       }
     },
     "New Diagram" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "创建图表"
+          }
+        }
+      }
+    },
+    "New Slides" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新建幻灯片"
+          }
+        }
+      }
     },
     "Next Expert" : {
       "localizations" : {
@@ -1817,12 +2024,42 @@
         }
       }
     },
+    "Nucleic Acids" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "核酸"
+          }
+        }
+      }
+    },
     "Open" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "打开"
+          }
+        }
+      }
+    },
+    "Outline the subject matter of your presentation" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请概述演示文稿的主题"
+          }
+        }
+      }
+    },
+    "Output Folder" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "输出文件夹"
           }
         }
       }
@@ -2117,6 +2354,16 @@
         }
       }
     },
+    "Retrieving knowledge..." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在检索知识..."
+          }
+        }
+      }
+    },
     "Rewrite" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2263,6 +2510,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "正在资源中搜索…"
+          }
+        }
+      }
+    },
+    "Select" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择"
           }
         }
       }
@@ -2457,6 +2714,26 @@
         }
       }
     },
+    "Slide Studio" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "演示文稿生成"
+          }
+        }
+      }
+    },
+    "Slides: %lld" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "页数：%lld"
+          }
+        }
+      }
+    },
     "Sound Effects" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2523,6 +2800,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "总结这段文字：\n\n“”"
+          }
+        }
+      }
+    },
+    "Supply and Demand" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "供需原理"
           }
         }
       }
@@ -2663,6 +2950,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "用于推理的服务器上的端点。此端点必须可从此设备访问，并提供与 OpenAI 兼容的 API。 （例如 http://localhost:8000，其中 http://localhost:8000/v1/chat/completions 可被访问）\n\n为保障隐私和数据安全，我们建议你托管您自己的服务器。"
+          }
+        }
+      }
+    },
+    "The file format of the exported slideshow" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导出幻灯片的文件格式"
+          }
+        }
+      }
+    },
+    "The name of the exported slideshow" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "幻灯片名称"
           }
         }
       }
@@ -3037,6 +3344,16 @@
         }
       }
     },
+    "Von Neumann Architecture" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "冯·诺依曼架构"
+          }
+        }
+      }
+    },
     "Water Cycle" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3058,6 +3375,16 @@
       }
     },
     "Webpage" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "网页"
+          }
+        }
+      }
+    },
+    "Website" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3143,6 +3470,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "你的 "
+          }
+        }
+      }
+    },
+    "Your slides will be saved to this folder" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您的幻灯片将被保存到此文件夹"
           }
         }
       }

@@ -54,12 +54,14 @@ struct DiagrammerPromptView: View {
 			axis: .vertical
 		)
 		.onSubmit(onSubmit)
+		.submitLabel(.send)
 		.focused($isFocused)
 		.textFieldStyle(
 			ChatStyle(
 				isFocused: _isFocused,
 				isRecording: .constant(false),
-				isChatPromptBar: false
+				useAttachments: false,
+				useDictation: false
 			)
 		)
 	}

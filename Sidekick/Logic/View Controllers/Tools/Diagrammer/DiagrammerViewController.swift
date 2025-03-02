@@ -84,7 +84,7 @@ Cheatsheet:
 				encoding: .utf8
 			)
 		} catch {
-			print("error: \(error)")
+			print("Error saving D2 code: \(error)")
 		}
 	}
 	
@@ -113,7 +113,7 @@ Cheatsheet:
 			try self.d2PreviewServerProcess.run()
 		} catch {
 			// Print error
-			print("error generating diagram: \(error)")
+			print("Error generating diagram: \(error)")
 			// Return to first step
 			Task.detached { @MainActor in
 				Dialogs.showAlert(
@@ -157,7 +157,7 @@ Cheatsheet:
 			self.d2RenderProcess.executableURL = Bundle.main.resourceURL?
 				.appendingPathComponent("d2")
 			let saveUrl: URL = url.appendingPathComponent(
-				"diagram \(Date.now.ISO8601Format()).svg"
+				"diagram-\(Date.now.dateString).svg"
 			)
 			self.d2RenderProcess.arguments = [
 				self.d2FileUrl.posixPath,
@@ -218,7 +218,7 @@ Cheatsheet:
 						).replacingOccurrences(
 							of: "_",
 							with: " "
-						)
+						).trimmingWhitespaceAndNewlines()
 						// Set the D2 code
 						self.d2Code = d2Code
 						self.startPreview()

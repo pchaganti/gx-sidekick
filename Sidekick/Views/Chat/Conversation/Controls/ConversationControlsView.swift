@@ -117,10 +117,12 @@ struct ConversationControlsView: View {
 	}
 	
 	var resources: some View {
-		TemporaryResourcesView()
-			.transition(
-				.opacity
-			)
+		TemporaryResourcesView(
+			tempResources: self.$promptController.tempResources
+		)
+		.transition(
+			.opacity
+		)
 	}
 	
 	var typedText: some View {

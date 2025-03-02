@@ -88,7 +88,9 @@ struct PromptInputField: View {
 			)
 		)
 		.overlay(alignment: .leading) {
-			AttachmentSelectionButton()
+			AttachmentSelectionButton { url in
+				await self.promptController.addFile(url)
+			}
 		}
 		.overlay(alignment: .trailing) {
 			DictationButton()

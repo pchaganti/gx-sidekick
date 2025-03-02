@@ -21,8 +21,11 @@ public class PromptController: ObservableObject, DropDelegate {
 	@Published var prompt: String = ""
 	@Published var audioLevel: Float = 0.0
 	@Published var audioSamples: [Float] = []
+	
+	/// A list of resources temporarily passed to the chatbot, of type ``[TemporaryResource]``
 	@Published var tempResources: [TemporaryResource] = []
 	
+	/// A `Bool` representing whether resources will be passed to the chatbot
 	public var hasResources: Bool {
 		!tempResources.isEmpty
 	}
@@ -217,27 +220,17 @@ public class PromptController: ObservableObject, DropDelegate {
 		return true
 	}
 	
+	/// Function to add a file from decoded URL
 	public func addFile(_ data: Data) async {
 		if let url = URL(
 			dataRepresentation: data,
 			relativeTo: nil
 		) {
-			// Add temp resource if needed
-			if self.tempResources.map(
-				\.url
-			).contains(url) {
-				return
-			}
-			withAnimation(.linear) {
-				self.tempResources.append(
-					TemporaryResource(
-						url: url
-					)
-				)
-			}
+			await self.addFile(url)
 		}
 	}
 	
+	/// Function to add a file from URL
 	public func addFile(_ url: URL) async {
 		// Add temp resource if needed
 		if self.tempResources.map(

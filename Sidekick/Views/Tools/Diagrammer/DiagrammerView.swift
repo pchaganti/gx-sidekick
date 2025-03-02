@@ -31,6 +31,7 @@ struct DiagrammerView: View {
 		) { output in
 			// Stop server before app is quit
 			self.diagrammerViewController.stopPreview()
+			self.diagrammerViewController.stopRender()
 		}
     }
 	

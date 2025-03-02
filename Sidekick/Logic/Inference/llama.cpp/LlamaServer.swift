@@ -27,11 +27,11 @@ public actor LlamaServer {
 	}
 	
 	/// The IP address of the inference server's host
-	private let host: String = "127.0.0.1"
+	private static let host: String = "127.0.0.1"
 	/// The port where the inference server is accessible
-	private let port: String = "4579"
+	private static let port: String = "4579"
 	/// The scheme through which the inference server is accessible
-	private let scheme: String = "http"
+	private static let scheme: String = "http"
 	
 	/// An `EventSource` instance opening a persistent connection to an HTTP server, which sends stream events
 	private var eventSource: EventSource?
@@ -74,9 +74,11 @@ public actor LlamaServer {
 		// Check endpoint
 		let endpoint: String = InferenceSettings.endpoint
 		let urlString: String
-		let notUsingServer: Bool = await !Self.remoteServerIsReachable() || !InferenceSettings.useServer
+		let notUsingServer: Bool = await !Self.serverIsReachable(
+			isLocal: false
+		) || !InferenceSettings.useServer
 		if notUsingServer {
-			 urlString = "\(scheme)://\(host):\(port)\(path)"
+			urlString = "\(Self.scheme)://\(Self.host):\(Self.port)\(path)"
 		} else {
 			urlString = "\(endpoint)\(path)"
 		}
@@ -85,13 +87,21 @@ public actor LlamaServer {
 	
 	/// Function to check if the remote server is reachable
 	/// - Returns: A `Bool` indicating if the server can be reached
-	public static func remoteServerIsReachable() async -> Bool {
+	public static func serverIsReachable(
+		isLocal: Bool
+	) async -> Bool {
 		// Return false if server is unused
 		if !InferenceSettings.useServer { return false }
 		// Check endpoint
-		let endpointUrl: URL = URL(
-			string: "\(InferenceSettings.endpoint)/health"
-		)!
+		let endpointUrl: URL = {
+			if !isLocal {
+				return URL(
+					string: "\(InferenceSettings.endpoint)/health"
+				)!
+			} else {
+				return URL(string: "http://\(Self.host):\(Self.port)/health")!
+			}
+		}()
 		do {
 			// Set timeout
 			let config: URLSessionConfiguration = URLSessionConfiguration.default
@@ -145,7 +155,6 @@ public actor LlamaServer {
 	/// Function to start the `llama-server` process
 	public func startServer() async throws {
 		// Signal beginning of server initialization
-		print("Preparing to start `llama-server`...")
 		// If server is running, exit
 		guard !process.isRunning, let modelPath = self.modelPath else { return }
 		await stopServer()
@@ -166,8 +175,8 @@ public actor LlamaServer {
 			"--threads", "\(threadsToUse)",
 			"--threads-batch", "\(threadsToUse)",
 			"--ctx-size", "\(contextLength)",
-			"--port", port,
-			"--flash-attn", 
+			"--port", Self.port,
+			"--flash-attn",
 			"--gpu-layers", gpuLayersToUse
 		]
 		
@@ -217,15 +226,17 @@ public actor LlamaServer {
 	/// Function to stop the `llama-server` process
 	public func stopServer() async {
 		// If a server is used, exit
-		if await Self.remoteServerIsReachable() && InferenceSettings.useServer {
+		if await Self.serverIsReachable(
+			isLocal: false
+		) && InferenceSettings.useServer {
 			return
 		}
 		// Terminate processes
-		if process.isRunning {
-			process.terminate()
+		if self.process.isRunning {
+			self.process.terminate()
 		}
-		if monitor.isRunning {
-			monitor.terminate()
+		if self.monitor.isRunning {
+			self.monitor.terminate()
 		}
 	}
 	
@@ -254,7 +265,12 @@ public actor LlamaServer {
 		let rawUrl = await self.url("/v1/chat/completions")
 		
 		let start: CFAbsoluteTime = CFAbsoluteTimeGetCurrent()
-		if !rawUrl.usingRemoteServer {
+		
+		// Start server if remote server is not used & local server is inactive
+		let serverIsReachable: Bool = await Self.serverIsReachable(
+			isLocal: true
+		)
+		if !rawUrl.usingRemoteServer && !serverIsReachable {
 			try await startServer()
 		}
 		

@@ -6,12 +6,17 @@
 //
 
 import SwiftUI
+import CodeEditorView
+import LanguageSupport
 
 struct DiagrammerPreviewEditorView: View {
 	
 	@Environment(\.dismissWindow) private var dismissWindow
-	
+	@Environment(\.colorScheme) private var colorScheme: ColorScheme
 	@EnvironmentObject private var diagrammerViewController: DiagrammerViewController
+	
+	@State private var position: CodeEditor.Position = CodeEditor.Position()
+	@State private var messages: Set<TextLocated<LanguageSupport.Message>> = Set()
 	
     var body: some View {
 		HSplitView {
@@ -37,12 +42,17 @@ struct DiagrammerPreviewEditorView: View {
     }
 	
 	var editor: some View {
-		TextEditor(text: $diagrammerViewController.d2Code)
-			.textEditorStyle(.plain)
-			.font(.title3)
-			.onChange(of: diagrammerViewController.d2Code) {
-				self.diagrammerViewController.saveD2Code()
-			}
+		CodeEditor(
+			text: self.$diagrammerViewController.d2Code,
+			position: self.$position,
+			messages: self.$messages
+		)
+		.environment(
+			\.codeEditorTheme, colorScheme == .dark ? Theme.defaultDark : Theme.defaultLight
+		)
+		.onChange(of: diagrammerViewController.d2Code) {
+			self.diagrammerViewController.saveD2Code()
+		}
 	}
 	
 	var saveButton: some View {

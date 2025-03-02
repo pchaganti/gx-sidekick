@@ -14,9 +14,13 @@ struct ChatStyle: TextFieldStyle {
 	@FocusState var isFocused: Bool
 	@Binding var isRecording: Bool
 	
-	var isChatPromptBar: Bool = true
+	var useAttachments: Bool = true
+	var useDictation: Bool = true
 	
-	let cornerRadius = 16.0
+	/// A `Bool` controlling whether space is reserved for options below the text field
+	var bottomOptions: Bool = false
+	
+	var cornerRadius = 16.0
 	var rect: RoundedRectangle {
 		RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
 	}
@@ -34,14 +38,25 @@ struct ChatStyle: TextFieldStyle {
 		configuration
 			.textFieldStyle(.plain)
 			.frame(maxWidth: .infinity)
-			.if(isChatPromptBar) { view in
+			.if(self.useAttachments) { view in
 				view
 					.padding(.leading, 24)
+			}
+			.if(self.useDictation) { view in
+				view
 					.padding(.trailing, 21)
 			}
-			.if(!isChatPromptBar) { view in
+			.if(!self.useAttachments) { view in
 				view
-					.padding(.horizontal, 4)
+					.padding(.leading, 4)
+			}
+			.if(!self.useDictation) { view in
+				view
+					.padding(.trailing, 4)
+			}
+			.if(self.bottomOptions) { view in
+				view
+					.padding(.bottom, 30)
 			}
 			.padding(8)
 			.cornerRadius(cornerRadius)
