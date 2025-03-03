@@ -44,10 +44,27 @@ public class Settings {
 		}
 	}
 	
-	/// Static contant for the application's container directory
+	/// Static constant for the application's container directory
 	static let containerUrl: URL = URL
 		.applicationSupportDirectory
 		.appendingPathComponent("com.pattonium.Sidekick")
+	
+	/// Static constant for the application's cache directory
+	static var cacheUrl: URL {
+		// Check existence
+		let url: URL = URL
+			.applicationSupportDirectory
+			.appendingPathComponent("com.pattonium.Sidekick")
+			.appendingPathComponent("Cache")
+		if !url.fileExists {
+			// Create directory if missing
+			try? FileManager.default.createDirectory(
+				at: url,
+				withIntermediateDirectories: true
+			)
+		}
+		return url
+	}
 	
 	/// Static constant for the LLM directory
 	static let dirUrl: URL = Settings

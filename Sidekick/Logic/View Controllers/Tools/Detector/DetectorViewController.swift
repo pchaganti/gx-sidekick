@@ -72,8 +72,7 @@ public class DetectorViewController: ObservableObject {
 	
 	/// The`URL` of the text file where the text to evaluate is cached
 	private let textFileUrl: URL = Settings
-		.containerUrl
-		.appendingPathComponent("Cache")
+		.cacheUrl
 		.appendingPathComponent("textToEvaluate.txt")
 	
 	/// Function to check the AI percentage of the text

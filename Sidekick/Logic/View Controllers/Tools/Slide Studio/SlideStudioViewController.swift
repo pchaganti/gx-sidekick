@@ -52,16 +52,14 @@ public class SlideStudioViewController: ObservableObject, DropDelegate {
 	/// The URL pointing to the Markdown file
 	private var markdownPreviewFileUrl: URL {
 		return Settings
-			.containerUrl
-			.appendingPathComponent("Cache")
+			.cacheUrl
 			.appendingPathComponent("slideStudioPreview.md")
 	}
 	
 	/// The URL pointing to the HTML file
 	private var markdownPreviewUrl: URL {
 		return Settings
-			.containerUrl
-			.appendingPathComponent("Cache")
+			.cacheUrl
 			.appendingPathComponent("slideStudioPreview.html")
 	}
 	

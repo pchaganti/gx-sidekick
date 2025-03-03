@@ -65,12 +65,11 @@ Cheatsheet:
 	
 	/// The URL of the d2 code file, of type `URL`
 	private var d2FileUrl: URL {
-		let d2DirUrl: URL = Settings.containerUrl.appendingPathComponent(
-			"Cache"
-		)
-		let d2FileUrl: URL = d2DirUrl.appendingPathComponent(
-			"newDiagram.d2"
-		)
+		let d2FileUrl: URL = Settings
+			.cacheUrl
+			.appendingPathComponent(
+				"newDiagram.d2"
+			)
 		return d2FileUrl
 	}
 	

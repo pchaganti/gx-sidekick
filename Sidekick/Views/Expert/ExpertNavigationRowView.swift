@@ -50,11 +50,13 @@ struct ExpertNavigationRowView: View {
 			"Delete",
 			isPresented: $isDeleting
 		) {
-			Button("Confirm") {
+			Button {
 				self.expertManager.delete(
 					self.expert
 				)
 				self.isDeleting = false
+			} label: {
+				Text("Confirm")
 			}
 		} message: {
 			Text("Are you sure you want to delete this expert?")

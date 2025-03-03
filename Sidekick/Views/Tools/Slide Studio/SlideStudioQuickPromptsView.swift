@@ -42,6 +42,12 @@ struct SlideStudioQuickPromptsView: View {
 			icon: "figure.and.child.holdinghands",
 			color: Color.pink
 		),
+		QuickPrompt(
+			text: String(localized: "Generate a presentation about the causes of the Renaissance."),
+			description: String(localized: "Causes of the Renaissance"),
+			icon: "music.note.list",
+			color: Color.indigo
+		)
 	]
 	
     var body: some View {

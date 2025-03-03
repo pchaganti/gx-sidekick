@@ -347,6 +347,16 @@
         }
       }
     },
+    "Causes of the Renaissance" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文艺复兴的起因"
+          }
+        }
+      }
+    },
     "Change" : {
       "localizations" : {
         "zh-Hans" : {
@@ -443,6 +453,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "正在调整布局..."
+          }
+        }
+      }
+    },
+    "Confirm" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "确认"
           }
         }
       }
@@ -632,7 +652,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "生成 5 分钟内，演讲 10 分钟"
+            "value" : "生成 5 分钟，演讲 10 分钟"
           }
         }
       }
@@ -1473,6 +1493,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "生成有关核酸以及它如何承载我们的遗传密码的演示文稿。"
+          }
+        }
+      }
+    },
+    "Generate a presentation about the causes of the Renaissance." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "制作一个关于文艺复兴起因的演示文稿。"
           }
         }
       }
@@ -2739,7 +2769,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sidekick 將使用此使用者名稱來引用您"
+            "value" : "Sidekick 将使用此名称称呼你"
           }
         }
       }

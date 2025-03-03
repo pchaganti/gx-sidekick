@@ -11,9 +11,11 @@ public extension Date {
 	
 	/// A `String` representing the current date
 	var dateString: String {
-		return String(
-			self.description.split(separator: " ").first ?? Substring(self.description)
-		)
+		let subString: Substring = self.description
+			.split(separator: " ").first ?? Substring(
+				self.description
+			)
+		return String(subString).replacingOccurrences(of: "-", with: " ")
 	}
 	
 }

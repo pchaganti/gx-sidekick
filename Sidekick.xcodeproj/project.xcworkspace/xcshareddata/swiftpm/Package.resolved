@@ -1,5 +1,5 @@
 {
-  "originHash" : "3eb4bfc30b6607d66f84efac6f162dc59bec4aff994640fb8830f823eb523570",
+  "originHash" : "3a98e46863d288b4c0d00bfe55ed7889cafb6dbd17c2f786d333807f5a5995b9",
   "pins" : [
     {
       "identity" : "browserkit",
@@ -69,7 +69,7 @@
       "location" : "https://github.com/johnbean393/FSKit-macOS",
       "state" : {
         "branch" : "main",
-        "revision" : "9764d82a5e0e2fa2e287d40301b23fd0d83c404c"
+        "revision" : "cd972e0fc4b3413b08438ac1af7ca68cef5c50d1"
       }
     },
     {
