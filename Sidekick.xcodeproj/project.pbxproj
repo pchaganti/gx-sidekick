@@ -407,6 +407,12 @@
 		204D9CBE2CF4ABCF0052B6F4 /* StatusLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusLabelView.swift; sourceTree = "<group>"; };
 		204FC5C92CC9C8B400CA1DB4 /* TemporaryResourcesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryResourcesView.swift; sourceTree = "<group>"; };
 		20508BE22CF586CD003BC867 /* PendingMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingMessage.swift; sourceTree = "<group>"; };
+		2053E6A32D75651E00E1EF84 /* detectorEvaluationResults.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = detectorEvaluationResults.png; sourceTree = "<group>"; };
+		2053E6A42D75651E00E1EF84 /* diagrammerPreviewEditor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = diagrammerPreviewEditor.png; sourceTree = "<group>"; };
+		2053E6A52D75651E00E1EF84 /* diagrammerPrompt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = diagrammerPrompt.png; sourceTree = "<group>"; };
+		2053E6A62D75651E00E1EF84 /* slideStudioPreviewEditor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slideStudioPreviewEditor.png; sourceTree = "<group>"; };
+		2053E6A72D75651E00E1EF84 /* slideStudioPrompt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slideStudioPrompt.png; sourceTree = "<group>"; };
+		2053E6A82D7565B400E1EF84 /* slideStudioExport.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slideStudioExport.png; sourceTree = "<group>"; };
 		20571F6E2CBCE8F7004F3344 /* LengthyTasksController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LengthyTasksController.swift; sourceTree = "<group>"; };
 		20571F712CBCEDD8004F3344 /* LengthyTasksList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LengthyTasksList.swift; sourceTree = "<group>"; };
 		20571F732CBCEE90004F3344 /* LengthyTasksToolbarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LengthyTasksToolbarButton.swift; sourceTree = "<group>"; };
@@ -801,6 +807,12 @@
 				2009DEA12D62E66F0094BBB3 /* serverUse.png */,
 				2009DEA22D62E66F0094BBB3 /* speculativeDecodingSupport.png */,
 				2009DEA32D62E66F0094BBB3 /* webSearch.png */,
+				2053E6A32D75651E00E1EF84 /* detectorEvaluationResults.png */,
+				2053E6A52D75651E00E1EF84 /* diagrammerPrompt.png */,
+				2053E6A42D75651E00E1EF84 /* diagrammerPreviewEditor.png */,
+				2053E6A72D75651E00E1EF84 /* slideStudioPrompt.png */,
+				2053E6A62D75651E00E1EF84 /* slideStudioPreviewEditor.png */,
+				2053E6A82D7565B400E1EF84 /* slideStudioExport.png */,
 			);
 			path = "README Images";
 			sourceTree = "<group>";

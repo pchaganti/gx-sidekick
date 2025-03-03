@@ -88,7 +88,7 @@ Cheatsheet:
 	}
 	
 	/// Function to start the preview from the D2 code
-	private func startPreview() {
+	public func startPreview() {
 		// Save the code
 		self.saveD2Code()
 		// Start the D2 child process
@@ -156,7 +156,7 @@ Cheatsheet:
 			self.d2RenderProcess.executableURL = Bundle.main.resourceURL?
 				.appendingPathComponent("d2")
 			let saveUrl: URL = url.appendingPathComponent(
-				"diagram-\(Date.now.dateString).svg"
+				"diagram \(Date.now.dateString).svg"
 			)
 			self.d2RenderProcess.arguments = [
 				self.d2FileUrl.posixPath,

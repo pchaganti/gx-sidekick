@@ -95,6 +95,36 @@ Code is beautifully rendered with syntax highlighting, and can be exported or co
 
 ![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/codeExport.png)
 
+### Toolbox
+
+Use **Tools** in Sidekick to supercharge your workflow.
+
+#### Detector
+
+Use detector to evaluate the AI percentage of text, and use provided suggestions to rewrite AI content.
+
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/detectorEvaluationResults.png)
+
+#### Diagrammer
+
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/diagrammerPrompt.png)
+
+Diagrammer allows you to swiftly generate intricate relational diagrams all from a prompt. Take advantage of the integrated preview and editor for quick edits.
+
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/diagrammerPreviewEditor.png)
+
+#### Slide Studio
+
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/slideStudioPrompt.png)
+
+Instead of making a PowerPoint, just write a prompt. Use AI to craft 10 minute presentations in just 5 minutes.
+
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/slideStudioPreviewEditor.png)
+
+Export to common formats like PDF and PowerPoint.
+
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/slideStudioExport.png)
+
 ### Fast Generation
 
 Sidekick uses `llama.cpp` as its inference backend, which is optimized to deliver lightning fast generation speeds on Apple Silicon. Sidekick also supports speculative decoding, which can increase performance by up to 51%.

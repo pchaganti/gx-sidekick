@@ -18,6 +18,8 @@ struct DiagrammerPreviewEditorView: View {
 	@State private var position: CodeEditor.Position = CodeEditor.Position()
 	@State private var messages: Set<TextLocated<LanguageSupport.Message>> = Set()
 	
+	@State private var previewId: UUID = UUID()
+	
     var body: some View {
 		HSplitView {
 			editor
@@ -27,6 +29,11 @@ struct DiagrammerPreviewEditorView: View {
 					.fill(Color.clear)
 					.frame(width: 1, height: .greedy)
 				self.diagrammerViewController.preview
+					.overlay(alignment: .topTrailing) {
+						refreshButton
+							.padding([.top, .trailing], 6)
+					}
+					.id(previewId)
 			}
 			.frame(minWidth: 300)
 		}
@@ -84,6 +91,27 @@ struct DiagrammerPreviewEditorView: View {
 			Text("Exit")
 		}
 		.controlSize(.large)
+	}
+	
+	var refreshButton: some View {
+		Button {
+			// Restart server
+			self.diagrammerViewController.stopPreview()
+			self.diagrammerViewController.startPreview()
+			// Reset id to redraw view
+			self.previewId = UUID()
+		} label: {
+			Label("Refresh", systemImage: "arrow.trianglehead.counterclockwise")
+				.labelStyle(.iconOnly)
+				.foregroundStyle(Color.white)
+		}
+		.buttonStyle(.plain)
+		.padding([.horizontal, .bottom], 8)
+		.padding(.top, 7)
+		.background {
+			Circle()
+				.fill(Color(nsColor: .darkGray))
+		}
 	}
 	
 	private func resetDiagram() {

@@ -439,6 +439,7 @@ Respond with the Markdown ONLY. Do not include comments.
 		// Reset variables
 		self.markdown = ""
 		self.prompt = ""
+		self.pageCount = 10
 		self.useWebSearch = false
 		// Reset step
 		self.currentStep = .prompt
@@ -598,7 +599,7 @@ Respond with the Markdown ONLY. Do not include comments.
 	public struct SlideExportConfiguration {
 		
 		/// The name of the slides file
-		public var name: String = "slides-\(Date.now.dateString)"
+		public var name: String = "slides \(Date.now.dateString)"
 		
 		/// The format of the exported slides, of type `Format`
 		public var format: Format
