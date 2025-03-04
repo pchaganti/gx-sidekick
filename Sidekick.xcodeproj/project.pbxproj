@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		200363292D769AC700770391 /* JavaScriptRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200363282D769AC700770391 /* JavaScriptRunner.swift */; };
 		2004D7642CBC9DA2009F294E /* ConversationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2004D7632CBC9DA2009F294E /* ConversationState.swift */; };
 		200619A22D6750D9001949EF /* DiagrammerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200619A12D6750D9001949EF /* DiagrammerViewController.swift */; };
 		200619A82D6756EB001949EF /* d2 in Resources */ = {isa = PBXBuildFile; fileRef = 200619A72D6756EB001949EF /* d2 */; };
@@ -322,6 +323,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		200363282D769AC700770391 /* JavaScriptRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptRunner.swift; sourceTree = "<group>"; };
 		2004D7632CBC9DA2009F294E /* ConversationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationState.swift; sourceTree = "<group>"; };
 		200549732CAFA67B00A3DCF2 /* Sidekick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sidekick.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		200549842CAFA67D00A3DCF2 /* SidekickTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SidekickTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -962,6 +964,7 @@
 				20571F802CBD6A6D004F3344 /* SoundEffects.swift */,
 				2031B9972CEAE78F00627D53 /* ShortcutController.swift */,
 				209370752D6AB36900E1AF73 /* ContainerRefactorer.swift */,
+				200363282D769AC700770391 /* JavaScriptRunner.swift */,
 				207E5EF02D6FDEBE00A8F6FA /* Tools */,
 			);
 			path = Utilities;
@@ -1755,6 +1758,7 @@
 				20573F142CB50550004C19FE /* ConversationManagerView.swift in Sources */,
 				2031B99A2CEAE7A900627D53 /* Extension+KeyboardShortcut.swift in Sources */,
 				20B97CB62CAFE86C009A0A5D /* SidekickApp.swift in Sources */,
+				200363292D769AC700770391 /* JavaScriptRunner.swift in Sources */,
 				208388DA2CBF4DF500C2A9F8 /* TavilySearch.swift in Sources */,
 				2099BDA52CB8069800E02732 /* ConversationNameEditor.swift in Sources */,
 				206FBB212D54B40700A045FF /* MessageReasoningProcessView.swift in Sources */,

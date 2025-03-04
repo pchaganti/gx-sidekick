@@ -256,6 +256,17 @@ public extension String {
 		}
 	}
 	
+	/// Function to remove enclosing characters
+	func removeEnclosingCharacters(
+		character: Character
+	) -> String {
+		guard self.hasPrefix(String(character)) && self
+			.hasSuffix(String(character)) else {
+			return self
+		}
+		return String(self.dropFirst().dropLast())
+	}
+	
 	/// Computed property returning text with thinking tags removed
 	var thinkingTagsRemoved: String {
 		// List special reasoning tokens

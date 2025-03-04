@@ -37,21 +37,21 @@ struct MessagesView: View {
 	
 	var body: some View {
 		ScrollView {
-			HStack(alignment: .top) {
-				LazyVStack(
-					alignment: .leading,
-					spacing: 13
-				) {
-					Group {
-						self.messagesView
-						if self.isGenerating {
-							PendingMessageView()
+			ScrollViewReader { proxy in
+				HStack(alignment: .top) {
+					LazyVStack(alignment: .leading, spacing: 13) {
+						Group {
+							self.messagesView
+							if self.isGenerating {
+								PendingMessageView()
+									.id("pending")
+							}
 						}
 					}
+					.padding(.vertical)
+					.padding(.bottom, 150)
+					Spacer()
 				}
-				.padding(.vertical)
-				.padding(.bottom, 150)
-				Spacer()
 			}
 		}
 		.toolbar {
@@ -71,13 +71,9 @@ struct MessagesView: View {
 	}
 	
 	var messagesView: some View {
-		ForEach(
-			self.messages
-		) { message in
-			MessageView(
-				message: message
-			)
-			.id(message.id)
+		ForEach(self.messages) { message in
+			MessageView(message: message)
+				.id(message.id)
 		}
 	}
 	

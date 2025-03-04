@@ -55,7 +55,7 @@ Sidekick supports a variety of reasoning models, including Alibaba's QwQ-32B-Pre
 
 Sidekick can generate images from text, allowing you to create visual aids for your work. 
 
-There are no buttons, no switches to flick, no `Image Generation` mode. Instead, a built-in CoreML model **automatically determines** image generation prompts, and generates an image when necessary.
+There are no buttons, no switches to flick, no `Image Generation` mode. Instead, a built-in CoreML model **automatically identifies** image generation prompts, and generates an image when necessary.
 
 ![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/imageGeneration.png)
 

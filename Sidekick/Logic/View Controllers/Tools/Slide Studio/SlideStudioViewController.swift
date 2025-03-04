@@ -440,6 +440,7 @@ Respond with the Markdown ONLY. Do not include comments.
 		self.markdown = ""
 		self.prompt = ""
 		self.pageCount = 10
+		self.tempResources.removeAll()
 		self.useWebSearch = false
 		// Reset step
 		self.currentStep = .prompt
