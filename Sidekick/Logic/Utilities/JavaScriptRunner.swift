@@ -20,12 +20,21 @@ public class JavaScriptRunner {
 		// Create a JavaScript context
 		let context = JSContext()
 		// Check for errors
+		var exceptionMsg: String? = nil
 		context?.exceptionHandler = { context, exception in
-			print("JavaScript Error: \(exception?.toString() ?? "Unknown error")")
+			exceptionMsg = exception?.toString()
+		}
+		// Throw error if JS string failed to evaluate
+		if exceptionMsg != nil {
+			throw JSError.exception(error: exceptionMsg!)
 		}
 		// Evaluate the JavaScript code
 		if let result = context?.evaluateScript(code) {
 			if let resultStr = result.toString() {
+				// Throw error if empty
+				if resultStr.isEmpty {
+					throw JSError.exception(error: "undefined")
+				}
 				return resultStr
 			}
 			throw JSError.couldNotObtainResult
@@ -36,6 +45,7 @@ public class JavaScriptRunner {
 	
 	/// Enum for possible errors during JavaScript execution
 	public enum JSError: Error {
+		case exception(error: String)
 		case executionFailed
 		case couldNotObtainResult
 	}

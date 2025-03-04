@@ -9,7 +9,9 @@ import SwiftUI
 
 struct MessageReasoningProcessView: View {
 	
-	init(message: Message) {
+	init(
+		message: Message
+	) {
 		let outputDidEnd: Bool = message.outputEnded
 		let reasoningOutputDidEnd: Bool = message.reasoningText != nil && !message.responseText.isEmpty
 		self._showReasoning = State(

@@ -15,7 +15,9 @@ public struct Message: Identifiable, Codable, Hashable {
 		text: String,
 		sender: Sender,
 		model: String? = nil,
-		usedServer: Bool = false
+		usedServer: Bool = false,
+		usedCodeInterpreter: Bool? = false,
+		jsCode: String? = nil
 	) {
 		self.id = UUID()
 		self.text = text.replacingOccurrences(
@@ -37,6 +39,8 @@ public struct Message: Identifiable, Codable, Hashable {
 			modelName = String(localized: "Remote Model: ") + modelName
 		}
 		self.model = modelName
+		self.usedCodeInterpreter = usedCodeInterpreter
+		self.jsCode = jsCode
 	}
 	
 	init(
@@ -115,6 +119,11 @@ public struct Message: Identifiable, Codable, Hashable {
 		// b.) The message does come from a model
 		return (self.reasoningText != nil) && (self.sender == .assistant)
 	}
+	
+	/// A `Bool` representing whether the message was generated with the help of a code interpreter
+	public var usedCodeInterpreter: Bool?
+	/// A `String` containing the JavaScript code that was executed, if any
+	public var jsCode: String?
 	
 	/// Function returning the message text that is submitted to the LLM
 	public func submittedText(

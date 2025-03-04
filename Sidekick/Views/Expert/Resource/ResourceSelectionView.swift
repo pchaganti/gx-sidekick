@@ -124,7 +124,7 @@ struct ResourceRowView: View {
 			}
 			.buttonStyle(PlainButtonStyle())
 			Button {
-				Task.detached { @MainActor in
+				Task { @MainActor in
 					await remove()
 				}
 			} label: {

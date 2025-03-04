@@ -63,7 +63,7 @@ struct ResourceSectionView: View {
 				}
 				Spacer()
 				Button {
-					Task.detached { @MainActor in
+					Task { @MainActor in
 						self.add()
 					}
 				} label: {
@@ -71,7 +71,7 @@ struct ResourceSectionView: View {
 				}
 				.disabled(self.isUpdating)
 				Button {
-					Task.detached { @MainActor in
+					Task { @MainActor in
 						await $expert.update()
 					}
 				} label: {
@@ -121,7 +121,7 @@ struct ResourceSectionView: View {
 		let resources: [Resource] = selectedUrls.map({
 			Resource(url: $0)
 		})
-		Task.detached { @MainActor in
+		Task { @MainActor in
 			await $expert.addResources(resources)
 		}
 	}
@@ -170,7 +170,7 @@ struct ResourceSectionView: View {
 						Text("Cancel")
 					}
 					Button {
-						Task.detached { @MainActor in
+						Task { @MainActor in
 							await add()
 						}
 					} label: {

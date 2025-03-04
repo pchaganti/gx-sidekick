@@ -30,7 +30,7 @@ struct MessagesView: View {
 	}
 	
 	var isGenerating: Bool {
-		let statusPass: Bool = self.model.status == .coldProcessing || self.model.status == .processing || self.model.status == .querying
+		let statusPass: Bool = self.model.status.isWorking
 		let conversationPass: Bool = self.selectedConversation?.id == self.model.sentConversationId
 		return statusPass && conversationPass
 	}
@@ -42,7 +42,7 @@ struct MessagesView: View {
 					LazyVStack(alignment: .leading, spacing: 13) {
 						Group {
 							self.messagesView
-							if self.isGenerating {
+						if self.isGenerating {
 								PendingMessageView()
 									.id("pending")
 							}

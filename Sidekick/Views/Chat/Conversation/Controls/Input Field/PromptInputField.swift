@@ -249,7 +249,9 @@ struct PromptInputField: View {
 				text: "",
 				sender: .assistant,
 				model: response.modelName,
-				usedServer: response.usedServer
+				usedServer: response.usedServer,
+				usedCodeInterpreter: response.usedCodeInterpreter,
+				jsCode: response.jsCode
 			)
 			responseMessage.update(
 				response: response,

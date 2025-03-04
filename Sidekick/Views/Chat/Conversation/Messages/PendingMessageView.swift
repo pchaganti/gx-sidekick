@@ -42,6 +42,8 @@ struct PendingMessageView: View {
 			} else {
 				text = String(localized: "Searching in resources...")
 			}
+		} else if self.model.status == .usingInterpreter {
+			text = String(localized: "Using code interpreter...")
 		}
 		return Message(
 			text: text,

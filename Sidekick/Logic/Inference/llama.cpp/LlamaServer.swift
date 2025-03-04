@@ -281,6 +281,13 @@ public actor LlamaServer {
 					return await ChatParameters(
 						messages: messages,
 						systemPrompt: self.systemPrompt,
+						useInterpreter: true,
+						similarityIndex: similarityIndex
+					)
+				case .contextAwareAgent:
+					return await ChatParameters(
+						messages: messages,
+						systemPrompt: self.systemPrompt,
 						similarityIndex: similarityIndex
 					)
 				case .default:
@@ -503,8 +510,42 @@ public actor LlamaServer {
 		var responseStartSeconds: Double
 		var predictedPerSecond: Double?
 		var modelName: String?
+		/// A `Usage` object containing the number of tokens used, among other stats
 		var usage: Usage?
+		/// A `Bool` indicating whether a remote server was used
 		var usedServer: Bool
+		
+		/// A `Bool` representing whether a JavaScript code interpreter was used
+		var usedCodeInterpreter: Bool = false
+		/// A `String` containing the JavaScript code that was executed, if any
+		var jsCode: String?
+		
+		/// A `Bool` representing if code interpreter was used
+		var containsInterpreterCall: Bool {
+			return self.javascriptCodeRange != nil
+		}
+		
+		/// The `Range<String.Index>` where the JavaScript code is located
+		var javascriptCodeRange: Range<String.Index>? {
+			// Get range of last instance of `run_javascript(code: "`
+			guard let startOfCallRange = self.text.range(
+				of: "run_javascript(code: \"",
+				options: .backwards
+			) else {
+				return nil
+			}
+			// Ensure searching within valid bounds
+			let searchRange = startOfCallRange.upperBound..<self.text.endIndex
+			// Get range of last instance of `")`
+			guard let endOfCallRange = self.text.range(
+				of: "\")",
+				options: .backwards,
+				range: searchRange
+			) else {
+				return nil
+			}
+			return startOfCallRange.upperBound..<endOfCallRange.lowerBound
+		}
 		
 	}
 	

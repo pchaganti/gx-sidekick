@@ -25,20 +25,24 @@ struct ChatParameters: Codable {
 		self.messages = [systemPromptMsgSubset] + messages
 	}
 	
-	/// Init for chat
+	/// Init for chat & context aware agent
 	init(
 		messages: [Message.MessageSubset],
 		systemPrompt: String,
+		useInterpreter: Bool = false,
 		similarityIndex: SimilarityIndex?
 	) async {
 		// Formulate messages
-		let fullSystemPrompt: String = """
-\(systemPrompt)
-
-\(InferenceSettings.useSourcesPrompt)
-
-\(InferenceSettings.metadataPrompt)
-"""
+		// Formulate system prompt
+		var fullSystemPromptComponents: [String] = []
+		fullSystemPromptComponents.append(systemPrompt)
+		fullSystemPromptComponents.append(InferenceSettings.useSourcesPrompt)
+		if useInterpreter {
+			fullSystemPromptComponents.append(InferenceSettings.useInterpreterPrompt)
+		}
+		fullSystemPromptComponents.append(InferenceSettings.metadataPrompt)
+		let fullSystemPrompt: String = fullSystemPromptComponents.joined(separator: "\n\n")
+		// Formulate system prompt message
 		let systemPromptMsg: Message = Message(
 			text: fullSystemPrompt,
 			sender: .system

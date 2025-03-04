@@ -19,7 +19,7 @@ struct AttachmentSelectionButton: View {
 				canSelectDirectories: false,
 				allowMultipleSelection: true
 			) else { return }
-			Task.detached { @MainActor in
+			Task { @MainActor in
 				for url in selectedUrls {
 					await self.add(url)
 				}
