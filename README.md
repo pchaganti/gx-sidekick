@@ -51,6 +51,12 @@ Sidekick supports a variety of reasoning models, including Alibaba's QwQ-32B-Pre
 
 ![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/reasoningModelSupport.png)
 
+### Code Interpreter
+
+Sidekick uses a code interpreter to boost the mathematical and logical capabilities of models. 
+
+Since small models are much better at writing code than doing Math, having write the code, execute it, and present the results dramatically increases trustworthiness of answers.
+
 ### Image Generation
 
 Sidekick can generate images from text, allowing you to create visual aids for your work. 
@@ -141,11 +147,8 @@ Optionally, offload generation to your desktop to speed up generation while exte
 - A Mac with Apple Silicon
 - RAM ≥ 8 GB
 
-**Prebuilt Package**
+**Download**
 - Download the disk image from [Releases](https://github.com/johnbean393/Sidekick/releases/), and open it.
-
-**Build it yourself**
-- Download, open in Xcode, and build it.
 
 ## Goals
 
