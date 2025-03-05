@@ -94,7 +94,7 @@ Tokens per second: \(tokensPerSecondStr)
 				}
 			}
 			// Show code used in code interpreter
-			if message.usedCodeInterpreter ?? false {
+			if message.usedCodeInterpreter ?? false && message.jsCode != nil {
 				Button {
 					showInterpreterCode.toggle()
 				} label: {
