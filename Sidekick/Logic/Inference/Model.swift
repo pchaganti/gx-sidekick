@@ -294,16 +294,26 @@ public class Model: ObservableObject {
 			originalMessages: messages,
 			similarityIndex: similarityIndex
 		)
-		// Return rephrased result
-		var rephrasedResponse = try await rephraseResult(
-			increment: increment,
-			jsResult: jsResult,
-			messages: messages,
-			handleResponseUpdate: handleResponseUpdate
-		)
-		rephrasedResponse.jsCode = jsCode
-		rephrasedResponse.usedCodeInterpreter = true
-		return rephrasedResponse
+		// If the JavaScript was valid, return rephrased result
+		if jsCode != nil && jsResult != nil {
+			var rephrasedResponse = try await rephraseResult(
+				increment: increment,
+				jsResult: jsResult,
+				messages: messages,
+				handleResponseUpdate: handleResponseUpdate
+			)
+			rephrasedResponse.jsCode = jsCode
+			rephrasedResponse.usedCodeInterpreter = true
+			return rephrasedResponse
+		} else {
+			// Else, fall back on one-shot answer
+			let response: LlamaServer.CompleteResponse = try await self.llama.getCompletion(
+				mode: .contextAwareAgent,
+				messages: messages,
+				similarityIndex: similarityIndex
+			)
+			return response
+		}
 	}
 	
 	/// Function to try running JavaScript code for code interpreter, and retry with fixes
