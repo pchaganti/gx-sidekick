@@ -24,21 +24,25 @@ public class JavaScriptRunner {
 		context?.exceptionHandler = { context, exception in
 			exceptionMsg = exception?.toString()
 		}
-		// Throw error if JS string failed to evaluate
-		if exceptionMsg != nil {
-			throw JSError.exception(error: exceptionMsg!)
-		}
 		// Evaluate the JavaScript code
 		if let result = context?.evaluateScript(code) {
+			// Throw error if JS string failed to evaluate
+			if exceptionMsg != nil {
+				throw JSError.exception(error: exceptionMsg!)
+			}
 			if let resultStr = result.toString() {
 				// Throw error if empty
 				if resultStr.isEmpty {
-					throw JSError.exception(error: "undefined")
+					throw JSError.exception(error: "Unknown error")
 				}
 				return resultStr
 			}
 			throw JSError.couldNotObtainResult
 		} else {
+			// Throw error if JS string failed to evaluate
+			if exceptionMsg != nil {
+				throw JSError.exception(error: exceptionMsg!)
+			}
 			throw JSError.executionFailed
 		}
 	}

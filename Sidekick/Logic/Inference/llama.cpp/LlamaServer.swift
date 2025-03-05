@@ -539,7 +539,6 @@ public actor LlamaServer {
 			// Get range of last instance of `")`
 			guard let endOfCallRange = self.text.range(
 				of: "\")",
-				options: .backwards,
 				range: searchRange
 			) else {
 				return nil

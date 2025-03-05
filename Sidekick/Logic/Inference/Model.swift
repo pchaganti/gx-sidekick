@@ -328,9 +328,7 @@ public class Model: ObservableObject {
 				jsResult = try JavaScriptRunner.executeJavaScript(jsCode)
 				break
 			} catch let error as JavaScriptRunner.JSError {
-				// If error is not from syntax, exit
-				guard case .exception = error else { break }
-				// Else, try to get the model to fix the code
+				// Try to get the model to fix the code
 				let errorMessage = Message(
 					text: "The JavaScript code failed with an error of \"\(error)\"",
 					sender: .user
