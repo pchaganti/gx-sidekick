@@ -164,7 +164,7 @@ public class Model: ObservableObject {
 						// Update response
 						updateResponse += partialResponse
 						self.handleCompletionProgress(
-							partialResponse: updateResponse,
+							partialResponse: partialResponse,
 							handleResponseUpdate: handleResponseUpdate
 						)
 					}
@@ -191,7 +191,7 @@ public class Model: ObservableObject {
 						let displayedCount = self.pendingMessage.count
 						if updateCount >= increment || displayedCount < increment {
 							self.handleCompletionProgress(
-								partialResponse: updateResponse,
+								partialResponse: partialResponse,
 								handleResponseUpdate: handleResponseUpdate
 							)
 							updateResponse = ""
@@ -228,6 +228,10 @@ public class Model: ObservableObject {
 			handleResponseUpdate: handleResponseUpdate,
 			increment: increment
 		)
+		// Return if code interpreter is disabled
+		if !Settings.useCodeInterpreter {
+			return initialResponse
+		}
 		// Return if code interpreter wasn't used
 		guard initialResponse.containsInterpreterCall,
 			  let jsCodeRange = initialResponse.javascriptCodeRange else {

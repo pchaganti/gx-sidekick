@@ -37,7 +37,7 @@ struct ChatParameters: Codable {
 		var fullSystemPromptComponents: [String] = []
 		fullSystemPromptComponents.append(systemPrompt)
 		fullSystemPromptComponents.append(InferenceSettings.useSourcesPrompt)
-		if useInterpreter {
+		if useInterpreter && Settings.useCodeInterpreter {
 			fullSystemPromptComponents.append(InferenceSettings.useInterpreterPrompt)
 		}
 		fullSystemPromptComponents.append(InferenceSettings.metadataPrompt)

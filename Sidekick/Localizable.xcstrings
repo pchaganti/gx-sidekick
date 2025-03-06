@@ -417,6 +417,16 @@
         }
       }
     },
+    "Code Interpreter" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "代码执行器"
+          }
+        }
+      }
+    },
     "Color:" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1053,6 +1063,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "详细阐述以下内容，提供额外的见解、示例、详细解释和相关概念。深入探讨主题，提供全面的理解，并探索原文未涉及的各个维度。使用与原文相同的语言进行回复。"
+          }
+        }
+      }
+    },
+    "Encourage models to generate code, which is evaluated to produce a more accurate answer." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "鼓励模型生成代码，并运行代码，以得出更准确的答案。"
           }
         }
       }
@@ -3300,6 +3320,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "正在扫描新添加到“%@”的资源"
+          }
+        }
+      }
+    },
+    "Use Code Interpreter" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启用代码执行器"
           }
         }
       }

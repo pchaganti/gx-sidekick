@@ -32,7 +32,7 @@ public class Settings {
 		}
 	}
 	
-	/// Computed property for whether the app's setup was completed
+	/// A `Bool` representing whether the app's setup was completed
 	static var setupComplete: Bool {
 		get {
 			return UserDefaults.standard.bool(
@@ -108,8 +108,24 @@ public class Settings {
 		}
 	}
 	
+	/// A `Bool` representing whether code interpreter is enabled
+	static var useCodeInterpreter: Bool {
+		get {
+			// Set default
+			if !UserDefaults.standard.exists(key: "useCodeInterpreter") {
+				// Default to true
+				Self.useCodeInterpreter = true
+			}
+			return UserDefaults.standard.bool(
+				forKey: "useCodeInterpreter"
+			)
+		}
+		set {
+			UserDefaults.standard.set(newValue, forKey: "useCodeInterpreter")
+		}
+	}
 	
-	/// Computed property for whether the app is in debug mode
+	/// A `Bool` representing whether the app is in debug mode
 	static var isDebugMode: Bool {
 		get {
 			// Set default

@@ -11,6 +11,7 @@ import KeyboardShortcuts
 struct GeneralSettingsView: View {
 	
 	@AppStorage("username") private var username: String = NSFullUserName()
+	@AppStorage("useCodeInterpreter") private var useCodeInterpreter: Bool = true
 	
 	@State private var playSoundEffects: Bool = Settings.playSoundEffects
 	
@@ -25,6 +26,11 @@ struct GeneralSettingsView: View {
 				soundEffects
 			} header: {
 				Text("Sound Effects")
+			}
+			Section {
+				codeInterpreter
+			} header: {
+				Text("Code Interpreter")
 			}
 			Section {
 				inlineAssistantShortcut
@@ -66,6 +72,21 @@ struct GeneralSettingsView: View {
 		}
 		.onChange(of: playSoundEffects) {
 			Settings.playSoundEffects = self.playSoundEffects
+		}
+	}
+	
+	var codeInterpreter: some View {
+		HStack(alignment: .top) {
+			VStack(alignment: .leading) {
+				Text("Use Code Interpreter")
+					.font(.title3)
+					.bold()
+				Text("Encourage models to generate code, which is evaluated to produce a more accurate answer.")
+					.font(.caption)
+			}
+			Spacer()
+			Toggle("", isOn: $useCodeInterpreter)
+				.toggleStyle(.switch)
 		}
 	}
 	

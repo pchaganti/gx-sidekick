@@ -127,7 +127,10 @@ struct DiagrammerPreviewEditorView: View {
 		let saveSuccess: Bool = self.diagrammerViewController.saveImage()
 		let message: String = saveSuccess ? String(localized: "Diagram saved successfully") : String(localized: "Failed to save diagram")
 		// Show dialog
-		Dialogs.showAlert(title: "Save", message: message)
+		Dialogs.showAlert(
+			title: String(localized: "Save"),
+			message: message
+		)
 	}
 	
 }
