@@ -67,7 +67,6 @@
 		204AE3BD2CEB56750086B42D /* WrappingHStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204AE3BC2CEB56750086B42D /* WrappingHStack.swift */; };
 		204AE3C02CEB57330086B42D /* CommandButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204AE3BF2CEB57330086B42D /* CommandButton.swift */; };
 		204AE3C62CEC7C030086B42D /* NewCommandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204AE3C52CEC7C030086B42D /* NewCommandView.swift */; };
-		204C79532CB7500800EED58E /* EndDetectionScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204C79522CB7500800EED58E /* EndDetectionScrollView.swift */; };
 		204C79562CB765D700EED58E /* ExpertSelectionMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204C79552CB765D700EED58E /* ExpertSelectionMenu.swift */; };
 		204C79582CB769A400EED58E /* Extension+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204C79572CB769A400EED58E /* Extension+View.swift */; };
 		204C795C2CB79AB900EED58E /* ExpertManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204C795B2CB79AB900EED58E /* ExpertManagerView.swift */; };
@@ -132,6 +131,10 @@
 		208844332CDDE394003BCB6F /* ModelRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208844322CDDE394003BCB6F /* ModelRowView.swift */; };
 		208AA3F12CC9E42F00A0891F /* ScrollMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208AA3F02CC9E42F00A0891F /* ScrollMask.swift */; };
 		208BA3572D680B1800E0C657 /* DiagrammerQuickPromptsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208BA3562D680B1800E0C657 /* DiagrammerQuickPromptsView.swift */; };
+		208C5FD12D79CA3E00D82AA6 /* BubbleAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208C5FD02D79CA3E00D82AA6 /* BubbleAnimationView.swift */; };
+		208C5FD42D79CA5900D82AA6 /* Bubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208C5FD32D79CA5900D82AA6 /* Bubble.swift */; };
+		208C5FD62D79CB8E00D82AA6 /* LiquidView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208C5FD52D79CB8E00D82AA6 /* LiquidView.swift */; };
+		208C5FD82D79CBA200D82AA6 /* OrbView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208C5FD72D79CBA200D82AA6 /* OrbView.swift */; };
 		209370762D6AB36900E1AF73 /* ContainerRefactorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209370752D6AB36900E1AF73 /* ContainerRefactorer.swift */; };
 		209370942D6B598500E1AF73 /* Extension+CaseIterable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209370932D6B598500E1AF73 /* Extension+CaseIterable.swift */; };
 		209370972D6B5B8100E1AF73 /* DetectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209370962D6B5B8100E1AF73 /* DetectorViewController.swift */; };
@@ -400,7 +403,6 @@
 		204AE3BC2CEB56750086B42D /* WrappingHStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappingHStack.swift; sourceTree = "<group>"; };
 		204AE3BF2CEB57330086B42D /* CommandButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandButton.swift; sourceTree = "<group>"; };
 		204AE3C52CEC7C030086B42D /* NewCommandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCommandView.swift; sourceTree = "<group>"; };
-		204C79522CB7500800EED58E /* EndDetectionScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndDetectionScrollView.swift; sourceTree = "<group>"; };
 		204C79552CB765D700EED58E /* ExpertSelectionMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertSelectionMenu.swift; sourceTree = "<group>"; };
 		204C79572CB769A400EED58E /* Extension+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+View.swift"; sourceTree = "<group>"; };
 		204C795B2CB79AB900EED58E /* ExpertManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertManagerView.swift; sourceTree = "<group>"; };
@@ -459,6 +461,10 @@
 		208844322CDDE394003BCB6F /* ModelRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelRowView.swift; sourceTree = "<group>"; };
 		208AA3F02CC9E42F00A0891F /* ScrollMask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollMask.swift; sourceTree = "<group>"; };
 		208BA3562D680B1800E0C657 /* DiagrammerQuickPromptsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagrammerQuickPromptsView.swift; sourceTree = "<group>"; };
+		208C5FD02D79CA3E00D82AA6 /* BubbleAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleAnimationView.swift; sourceTree = "<group>"; };
+		208C5FD32D79CA5900D82AA6 /* Bubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bubble.swift; sourceTree = "<group>"; };
+		208C5FD52D79CB8E00D82AA6 /* LiquidView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiquidView.swift; sourceTree = "<group>"; };
+		208C5FD72D79CBA200D82AA6 /* OrbView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrbView.swift; sourceTree = "<group>"; };
 		209370752D6AB36900E1AF73 /* ContainerRefactorer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerRefactorer.swift; sourceTree = "<group>"; };
 		209370932D6B598500E1AF73 /* Extension+CaseIterable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+CaseIterable.swift"; sourceTree = "<group>"; };
 		209370962D6B5B8100E1AF73 /* DetectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectorViewController.swift; sourceTree = "<group>"; };
@@ -1139,6 +1145,17 @@
 			path = build;
 			sourceTree = "<group>";
 		};
+		208C5FD22D79CA4400D82AA6 /* Orb */ = {
+			isa = PBXGroup;
+			children = (
+				208C5FD02D79CA3E00D82AA6 /* BubbleAnimationView.swift */,
+				208C5FD52D79CB8E00D82AA6 /* LiquidView.swift */,
+				208C5FD32D79CA5900D82AA6 /* Bubble.swift */,
+				208C5FD72D79CBA200D82AA6 /* OrbView.swift */,
+			);
+			path = Orb;
+			sourceTree = "<group>";
+		};
 		209370952D6B5B1700E1AF73 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
@@ -1343,15 +1360,15 @@
 		20B9E6132CB1458500BA0AD2 /* Misc */ = {
 			isa = PBXGroup;
 			children = (
+				20B9B1202CDF91CD00B66D4D /* PerformanceGaugeView.swift */,
 				20B97CEE2CB010AD009A0A5D /* ThumbnailView.swift */,
-				204C79522CB7500800EED58E /* EndDetectionScrollView.swift */,
 				208AA3F02CC9E42F00A0891F /* ScrollMask.swift */,
 				204592162CD32DEF00DEAA96 /* TypedTextView.swift */,
-				20B9B1202CDF91CD00B66D4D /* PerformanceGaugeView.swift */,
 				20CEA7582CE3084E0070579B /* MathView.swift */,
 				204AE3BC2CEB56750086B42D /* WrappingHStack.swift */,
 				204D9CBE2CF4ABCF0052B6F4 /* StatusLabelView.swift */,
 				2030D6212D6C7F8C00F18BF4 /* CircularProgressView.swift */,
+				208C5FD22D79CA4400D82AA6 /* Orb */,
 				20B9B11F2CDF91A900B66D4D /* Buttons */,
 			);
 			path = Misc;
@@ -1648,7 +1665,9 @@
 			files = (
 				20CEA75E2CE309F10070579B /* MessageOptionsView.swift in Sources */,
 				206AB6122CF5F8390010B09A /* AttachmentSelectionButton.swift in Sources */,
+				208C5FD82D79CBA200D82AA6 /* OrbView.swift in Sources */,
 				20BF49CB2D649FD700C329F8 /* ModelFamily.swift in Sources */,
+				208C5FD12D79CA3E00D82AA6 /* BubbleAnimationView.swift in Sources */,
 				20573F362CB53878004C19FE /* CircleMenuStyle.swift in Sources */,
 				2030D61C2D6C522D00F18BF4 /* DetectorEvaluationView.swift in Sources */,
 				204592172CD32DEF00DEAA96 /* TypedTextView.swift in Sources */,
@@ -1665,6 +1684,7 @@
 				200619B42D676DCE001949EF /* DiagrammerPreviewEditorView.swift in Sources */,
 				209370972D6B5B8100E1AF73 /* DetectorViewController.swift in Sources */,
 				208844332CDDE394003BCB6F /* ModelRowView.swift in Sources */,
+				208C5FD62D79CB8E00D82AA6 /* LiquidView.swift in Sources */,
 				20353FF12CF84546002BC78E /* ToggleLaTeXButton.swift in Sources */,
 				2030D6222D6C7F8C00F18BF4 /* CircularProgressView.swift in Sources */,
 				20B97CCE2CAFEC37009A0A5D /* Settings.swift in Sources */,
@@ -1743,6 +1763,7 @@
 				2086E1712CB036BB00FFCF57 /* ConversationManager.swift in Sources */,
 				20C221092CC4B5A800A99796 /* SourcesView.swift in Sources */,
 				20571F6F2CBCE8F7004F3344 /* LengthyTasksController.swift in Sources */,
+				208C5FD42D79CA5900D82AA6 /* Bubble.swift in Sources */,
 				2030D6202D6C74E400F18BF4 /* DetectorEvaluationResultView.swift in Sources */,
 				201A1A9A2CDBA802001E9BA9 /* MarkdownBarChartView.swift in Sources */,
 				20571F742CBCEE90004F3344 /* LengthyTasksToolbarButton.swift in Sources */,
@@ -1791,7 +1812,6 @@
 				20573F1B2CB5099B004C19FE /* ConversationCommands.swift in Sources */,
 				20B9E60C2CB140A000BA0AD2 /* AppDelegate.swift in Sources */,
 				208388ED2CBF825400C2A9F8 /* Tavily.swift in Sources */,
-				204C79532CB7500800EED58E /* EndDetectionScrollView.swift in Sources */,
 				204AE3BB2CEAF5AC0086B42D /* Command.swift in Sources */,
 				20A40CF92D73763500A9D9A9 /* Extension+Date.swift in Sources */,
 				2038CCF32CB6CBC6005AA315 /* PendingMessageView.swift in Sources */,

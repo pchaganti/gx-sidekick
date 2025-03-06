@@ -7,10 +7,17 @@
 
 import Foundation
 import FSKit_macOS
+import OSLog
 import SwiftUI
 import WebViewKit
 
 public class DiagrammerViewController: ObservableObject {
+	
+	/// A `Logger` object for the `DiagrammerViewController` object
+	private static let logger: Logger = .init(
+		subsystem: Bundle.main.bundleIdentifier!,
+		category: String(describing: DiagrammerViewController.self)
+	)
 	
 	/// The current step in the diagram generation process, of type `DiagrammerStep`
 	@Published public var currentStep: DiagrammerStep = .prompt
@@ -83,7 +90,7 @@ Cheatsheet:
 				encoding: .utf8
 			)
 		} catch {
-			print("Error saving D2 code: \(error)")
+			Self.logger.error("Error saving D2 code: \(error)")
 		}
 	}
 	
@@ -110,6 +117,7 @@ Cheatsheet:
 		// Run the process
 		do {
 			try self.d2PreviewServerProcess.run()
+			Self.logger.notice("Started diagrammer preview server")
 		} catch {
 			// Print error
 			print("Error generating diagram: \(error)")
@@ -129,6 +137,7 @@ Cheatsheet:
 		// Exit if not running
 		if self.d2PreviewServerProcess.executableURL == nil { return }
 		// Else, terminate and reinit
+		Self.logger.notice("Stopping diagrammer preview server")
 		self.d2PreviewServerProcess.terminate()
 		self.d2PreviewServerProcess = Process()
 	}
@@ -168,9 +177,11 @@ Cheatsheet:
 			self.d2RenderProcess.standardError =  FileHandle.nullDevice
 			do {
 				try self.d2RenderProcess.run()
+				Self.logger.notice("Started diagrammer render process")
 				// Return success
 				return true
 			} catch {
+				Self.logger.error("Failed to start diagrammer render process: \(error)")
 				// Return fail
 				return false
 			}
@@ -195,7 +206,7 @@ Cheatsheet:
 			sender: .user
 		)
 		// Generate the D2 code
-		Task.detached { @MainActor in
+		Task { @MainActor in
 			do {
 				let _ = try await Model.shared.listenThinkRespond(
 					messages: [

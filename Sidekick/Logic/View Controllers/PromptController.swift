@@ -5,14 +5,21 @@
 //  Created by Bean John on 10/19/24.
 //
 
-import Foundation
 import AVFoundation
+import Foundation
+import OSLog
 import Speech
 import SwiftUI
 import ImagePlayground
 
 @MainActor
 public class PromptController: ObservableObject, DropDelegate {
+	
+	/// A `Logger` object for the `PromptController` object
+	private static let logger: Logger = .init(
+		subsystem: Bundle.main.bundleIdentifier!,
+		category: String(describing: PromptController.self)
+	)
 	
 	@Published var isGeneratingImage: Bool = false
 	@Published var imageConcept: String? = nil
@@ -53,11 +60,11 @@ public class PromptController: ObservableObject, DropDelegate {
 						if granted {
 							self.startRecording()
 						} else {
-							print("Microphone access denied")
+							Self.logger.warning("Microphone access denied")
 						}
 					}
 				default:
-					print("Speech recognition not authorized")
+					Self.logger.warning("Speech recognition not authorized")
 			}
 		}
 	}
@@ -101,17 +108,14 @@ public class PromptController: ObservableObject, DropDelegate {
 	
 	private func createRecognitionRequest() {
 		recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
-		
 		guard let recognitionRequest = recognitionRequest else {
 			fatalError("Unable to create recognition request")
 		}
-		
 		recognitionRequest.shouldReportPartialResults = true
 	}
 	
 	private func setupRecognitionTask() {
 		guard let recognitionRequest = recognitionRequest else { return }
-		
 		recognitionTask = speechRecognizer?.recognitionTask(with: recognitionRequest) { result, error in
 			if let result = result {
 				DispatchQueue.main.async {
@@ -121,7 +125,6 @@ public class PromptController: ObservableObject, DropDelegate {
 					}
 				}
 			}
-			
 			if error != nil || result?.isFinal == true {
 				self.stopAudioEngine()
 			}
@@ -142,6 +145,7 @@ public class PromptController: ObservableObject, DropDelegate {
 		
 		do {
 			try audioEngine.start()
+			Self.logger.notice("Started audio engine")
 		} catch {
 			audioEngine.stop()
 			audioEngine.reset()
@@ -150,6 +154,7 @@ public class PromptController: ObservableObject, DropDelegate {
 	
 	
 	private func stopAudioEngine() {
+		Self.logger.notice("Stopping audio engine")
 		audioEngine.stop()
 		audioEngine.inputNode.removeTap(onBus: 0)
 		recognitionRequest = nil
@@ -179,7 +184,7 @@ public class PromptController: ObservableObject, DropDelegate {
 		SFSpeechRecognizer.requestAuthorization { authStatus in
 			switch authStatus {
 				case .authorized:
-					print("Speech recognition access granted.")
+					Self.logger.info("Speech recognition access granted.")
 				case .denied, .restricted, .notDetermined:
 					self.stopAudioEngine()
 				@unknown default:
@@ -191,7 +196,7 @@ public class PromptController: ObservableObject, DropDelegate {
 	fileprivate func requestMicrophoneAccess() {
 		AVCaptureDevice.requestAccess(for: .audio) { granted in
 			if granted {
-				print("Microphone access granted.")
+				Self.logger.notice("Microphone access granted.")
 			} else {
 				self.stopRecording()
 			}
@@ -211,7 +216,7 @@ public class PromptController: ObservableObject, DropDelegate {
 				options: nil
 			) { (item, error) in
 				if let data = item as? Data {
-					Task.detached { @MainActor in
+					Task { @MainActor in
 						await self.addFile(data)
 					}
 				}
@@ -244,6 +249,7 @@ public class PromptController: ObservableObject, DropDelegate {
 					url: url
 				)
 			)
+			Self.logger.notice("Added temporary resource: \(url)")
 		}
 	}
 	

@@ -7,11 +7,18 @@
 
 import Foundation
 import FSKit_macOS
+import OSLog
 import SimilaritySearchKit
 
 /// An object which abstracts LLM inference
 @MainActor
 public class Model: ObservableObject {
+	
+	/// A `Logger` object for the `Model` object
+	private static let logger: Logger = .init(
+		subsystem: Bundle.main.bundleIdentifier!,
+		category: String(describing: Model.self)
+	)
 	
 	/// Initializes the ``Model`` object
 	/// - Parameter systemPrompt: The system prompt given to the model
@@ -209,6 +216,7 @@ public class Model: ObservableObject {
 		self.pendingMessage = response!.text
 		self.status = .ready
 		self.sentConversationId = nil
+		Self.logger.notice("Finished responding to prompt")
 		return response!
 	}
 	
@@ -238,7 +246,7 @@ public class Model: ObservableObject {
 			return initialResponse
 		}
 		// Handle code interpreter response
-		return try await handleCodeInterpreterResponse(
+		return try await self.handleCodeInterpreterResponse(
 			initialResponse: initialResponse,
 			jsCodeRange: jsCodeRange,
 			messages: messagesWithSources,

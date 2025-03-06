@@ -9,7 +9,7 @@ import SwiftUI
 import QuickLook
 import QuickLookThumbnailing
 
-public struct QLThumbnail: View {
+public struct ThumbnailView: View {
 	
 	/// The URL of the file for which a thumbnail is created
 	public var url: URL
@@ -103,7 +103,7 @@ public struct QLThumbnail: View {
 	}
 }
 
-extension QLThumbnail {
+extension ThumbnailView {
 	/// Creates a thumbnail view of the file at the provided URL.
 	/// - Parameters:
 	///   - url: The URL of the file for which you want to create a thumbnail.

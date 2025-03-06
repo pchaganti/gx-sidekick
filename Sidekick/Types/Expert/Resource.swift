@@ -7,12 +7,19 @@
 
 import ExtractKit_macOS
 import Foundation
+import OSLog
 import SimilaritySearchKit
 import SimilaritySearchKitDistilbert
 import SwiftUI
 
 /// An object that manages a single resource
 public struct Resource: Identifiable, Codable, Hashable, Sendable {
+	
+	/// A `Logger` object for ``Resource`` objects
+	private static let logger: Logger = .init(
+		subsystem: Bundle.main.bundleIdentifier!,
+		category: String(describing: Resource.self)
+	)
 	
 	/// Initializes a resource from a `URL`
 	/// - Parameter url: The url of the resource (could point to a website or an item in the file system)
@@ -110,10 +117,16 @@ public struct Resource: Identifiable, Codable, Hashable, Sendable {
 	public func createDirectory(
 		resourcesDirUrl url: URL
 	) {
-		try! FileManager.default.createDirectory(
-			at: getIndexDirUrl(resourcesDirUrl: url),
-			withIntermediateDirectories: true
-		)
+		// Get directory url
+		let dirUrl: URL = self.getIndexDirUrl(resourcesDirUrl: url)
+		do {
+			try FileManager.default.createDirectory(
+				at: dirUrl,
+				withIntermediateDirectories: true
+			)
+		} catch {
+			Self.logger.error("Failed to create directory for resource at \"\(dirUrl)\": \(error)")
+		}
 	}
 	
 	
@@ -177,12 +190,16 @@ public struct Resource: Identifiable, Codable, Hashable, Sendable {
 	///   - resourcesDirUrl: The URL of the resources's index directory
 	///   - similarityIndex: The similarity index of indexed items of type ``SimilarityIndex``
 	private func saveIndex(resourcesDirUrl: URL, similarityIndex: SimilarityIndex) {
-		let _ = try! similarityIndex.saveIndex(
-			toDirectory: self.getIndexDirUrl(
-				resourcesDirUrl: resourcesDirUrl
-			),
-			name: self.filename
-		)
+		do {
+			let _ = try similarityIndex.saveIndex(
+				toDirectory: self.getIndexDirUrl(
+					resourcesDirUrl: resourcesDirUrl
+				),
+				name: self.filename
+			)
+		} catch {
+			Self.logger.error("Error saving index for resource \(self.url): \(error)")
+		}
 	}
 	
 	/// Function that re-scans the file, then saves the updated similarity index
@@ -246,7 +263,8 @@ public struct Resource: Identifiable, Codable, Hashable, Sendable {
 		// Switch flag
 		self.indexState.finishIndex()
 		// Show file updated
-		print("Updated index for item \"\(self.url)\"")
+		let loggerMsg: String = "Updated index for item \"\(self.url)\""
+		Self.logger.notice("\(loggerMsg)")
 		// Record last index date
 		self.prevIndexDate = Date.now
 	}

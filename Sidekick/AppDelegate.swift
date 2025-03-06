@@ -8,6 +8,7 @@
 import AppKit
 import Foundation
 import FSKit_macOS
+import OSLog
 import SwiftUI
 import TipKit
 

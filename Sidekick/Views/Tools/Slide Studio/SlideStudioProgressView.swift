@@ -16,10 +16,7 @@ struct SlideStudioProgressView: View {
 		VStack(
 			spacing: 35
 		) {
-			LoadingIndicator(
-				animation: .fiveLinesWave,
-				size: .large
-			)
+			OrbView(size: .large)
 			stallingPhrase
 		}
     }

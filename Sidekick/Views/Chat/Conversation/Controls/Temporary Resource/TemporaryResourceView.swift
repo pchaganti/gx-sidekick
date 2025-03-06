@@ -78,7 +78,7 @@ struct TemporaryResourceView: View {
 	
 	var label: some View {
 		HStack(spacing: 10) {
-			QLThumbnail(
+			ThumbnailView(
 				url: tempResource.url,
 				resolution: CGSize(
 					width: 128,

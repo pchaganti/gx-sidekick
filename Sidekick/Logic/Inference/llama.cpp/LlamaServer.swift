@@ -8,10 +8,17 @@
 import EventSource
 import Foundation
 import FSKit_macOS
+import OSLog
 import SimilaritySearchKit
 
 /// The inference server where LLM inference happens
 public actor LlamaServer {
+	
+	/// A `Logger` object for the `LlamaServer` object
+	private static let logger: Logger = .init(
+		subsystem: Bundle.main.bundleIdentifier!,
+		category: String(describing: LlamaServer.self)
+	)
 	
 	/// Initializes the inference server object
 	/// - Parameters:
@@ -149,7 +156,9 @@ public actor LlamaServer {
 		monitor.standardInput = heartbeat
 		// Start monitor
 		try monitor.run()
-		print("Started monitor for server with PID \(serverPID)")
+		Self.logger.notice(
+			"Started monitor for server with PID \(serverPID)"
+		)
 	}
 	
 	/// Function to start the `llama-server` process
@@ -201,7 +210,9 @@ public actor LlamaServer {
 		
 		process.arguments = arguments
 		
-		print("Starting llama.cpp server \(process.arguments!.joined(separator: " "))")
+		Self.logger.notice(
+			"Starting llama.cpp server \(self.process.arguments!.joined(separator: " "))"
+		)
 		
 		process.standardInput = FileHandle.nullDevice
 		
@@ -357,26 +368,23 @@ public actor LlamaServer {
 								}
 							}
 						} catch {
-							print("Error decoding responseObj", error as Any)
-							print("responseObj: \(String(decoding: data, as: UTF8.self))")
+							Self.logger.error("Error decoding response object \(error as Any)")
+							Self.logger.error("responseObj: \(String(decoding: data, as: UTF8.self))")
 						}
 					}
 				case .closed:
-					print("llama.cpp EventSource closed")
+					Self.logger.notice("llama.cpp EventSource closed")
 					break listenLoop
 			}
 		}
-		
 		// Adding a trailing quote or space is a common mistake with the smaller model output
 		let cleanText: String = pendingMessage
 			.removeUnmatchedTrailingQuote()
-		
 		// Indicate response finished
 		if responseDiff > 0 {
 			// Call onFinish
 			onFinish(text: cleanText)
 		}
-		
 		// Return info
 		let tokens = stopResponse?.usage.completion_tokens ?? 0
 		let generationTime: CFTimeInterval = CFAbsoluteTimeGetCurrent() - start - responseDiff
@@ -430,11 +438,11 @@ public actor LlamaServer {
 	private func waitForServer() async throws {
 		// Check health
 		guard process.isRunning else { return }
-		
+		// Init server health project
 		let serverHealth = ServerHealth()
 		await serverHealth.updateURL(url("/health").url)
 		await serverHealth.check()
-		
+		// Set check parameters
 		var timeout = 30
 		let tick = 1
 		while true {
@@ -443,12 +451,13 @@ public actor LlamaServer {
 			if score >= 0.25 { break }
 			await serverHealth.check()
 			if !process.isRunning {
+				Self.logger.error("llama-server is not running")
 				throw LlamaServerError.modelError
 			}
-			
 			try await Task.sleep(for: .seconds(tick))
 			timeout -= tick
 			if timeout <= 0 {
+				Self.logger.error("llama-server did not respond in reasonable time")
 				throw LlamaServerError.modelError
 			}
 		}

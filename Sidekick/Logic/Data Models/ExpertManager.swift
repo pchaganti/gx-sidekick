@@ -19,6 +19,12 @@ public class ExpertManager: ObservableObject {
 	/// Static constant for the global ``ExpertManager`` object
 	static public let shared: ExpertManager = .init()
 	
+	/// A `Logger` object for the ``ExpertManager`` object
+	private static let logger: Logger = .init(
+		subsystem: Bundle.main.bundleIdentifier!,
+		category: String(describing: ExpertManager.self)
+	)
+	
 	/// Published property for all experts
 	@Published public var experts: [Expert] = [] {
 		didSet {
@@ -222,10 +228,14 @@ public class ExpertManager: ObservableObject {
 	public func patchFileIntegrity() {
 		// Setup directory if needed
 		if !self.datastoreDirExists {
-			try! FileManager.default.createDirectory(
-				at: datastoreDirUrl,
-				withIntermediateDirectories: true
-			)
+			do {
+				try FileManager.default.createDirectory(
+					at: datastoreDirUrl,
+					withIntermediateDirectories: true
+				)
+			} catch {
+				Self.logger.error("Failed to create directory for datastore: \(error)")
+			}
 		}
 	}
 	

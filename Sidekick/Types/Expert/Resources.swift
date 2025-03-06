@@ -7,12 +7,19 @@
 
 import Foundation
 import FSKit_macOS
+import OSLog
 import SimilaritySearchKit
 import SimilaritySearchKitDistilbert
 import SwiftUI
 
 /// An object that manages a expert's resources
 public struct Resources: Identifiable, Codable, Hashable, Sendable {
+	
+	/// A `Logger` object for ``Resources`` objects
+	private static let logger: Logger = .init(
+		subsystem: Bundle.main.bundleIdentifier!,
+		category: String(describing: Resources.self)
+	)
 	
 	/// Stored property for `Identifiable` conformance
 	public var id: UUID = UUID()
@@ -65,6 +72,8 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 				task: taskName
 			)
 		}
+		// Log
+		Self.logger.notice("Updating resource index for expert \"\(expertName)\"")
 		// Update for each file
 		for index in self.resources.indices  {
 			await self.resources[index].updateIndex(
@@ -116,6 +125,8 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 	) async {
 		// Check if exists
 		if self.resources.map(\.url).contains(resource.url) { return }
+		// Log
+		Self.logger.notice("Adding resource \(resource.url)")
 		// Add to resources list
 		self.resources.append(resource)
 		// Reindex
@@ -137,6 +148,7 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 			if self.resources.map(\.url).contains(resource.url) {
 				continue
 			}
+			Self.logger.notice("Adding resource \(resource.url)")
 			self.resources.append(resource)
 		}
 		// Reindex
@@ -162,6 +174,8 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 				)
 				// Remove from list
 				self.resources.remove(at: index)
+				// Log
+				Self.logger.notice("Removing resource \(resource.url)")
 				// Reindex
 				await self.updateResourcesIndex(
 					expertName: expertName

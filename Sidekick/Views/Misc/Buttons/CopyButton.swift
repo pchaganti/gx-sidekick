@@ -37,11 +37,10 @@ struct CopyButton: View {
 		.frame(alignment: .center)
 	}
 	
-	func copyCode() {
+	private func copyCode() {
 		pasteboard.clearContents()
 		pasteboard.setString(text, forType: .string)
 		justCopied = true
-		
 		DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
 			justCopied = false
 		}
