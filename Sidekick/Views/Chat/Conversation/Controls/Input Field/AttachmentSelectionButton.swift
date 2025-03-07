@@ -30,6 +30,7 @@ struct AttachmentSelectionButton: View {
 				.foregroundStyle(.secondary)
 		}
 		.buttonStyle(.plain)
+		.keyboardShortcut("a", modifiers: [.command, .shift])
 		.padding(.leading, 10)
     }
 	

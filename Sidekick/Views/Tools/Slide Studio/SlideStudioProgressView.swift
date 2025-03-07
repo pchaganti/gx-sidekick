@@ -16,7 +16,7 @@ struct SlideStudioProgressView: View {
 		VStack(
 			spacing: 35
 		) {
-			OrbView(size: .large)
+			OrbView(size: .medium)
 			stallingPhrase
 		}
     }

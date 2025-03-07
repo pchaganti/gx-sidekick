@@ -64,14 +64,14 @@ struct SidekickApp: App {
 			DiagrammerView()
 		}
 		
-		// Window for Tool: Detector
-		SwiftUI.Window("Detector", id: "detector") {
-			DetectorView()
-		}
-		
 		// Window for Tool: Slide Studio
 		SwiftUI.Window("Slide Studio", id: "slideStudio") {
 			SlideStudioView()
+		}
+		
+		// Window for Tool: Detector
+		SwiftUI.Window("Detector", id: "detector") {
+			DetectorView()
 		}
 		
 		// Settings window

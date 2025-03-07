@@ -80,10 +80,11 @@ struct OrbView: View {
 	}
 	
 	public enum Size: CGFloat, CaseIterable {
-		case small = 1
-		case medium = 2.5
-		case large = 5
-		case extraLarge = 7.5
+		case extraSmall = 1
+		case small = 2
+		case medium = 4
+		case large = 6
+		case extraLarge = 8
 	}
 	
 }

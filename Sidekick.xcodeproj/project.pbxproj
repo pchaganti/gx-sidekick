@@ -135,6 +135,7 @@
 		208C5FD42D79CA5900D82AA6 /* Bubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208C5FD32D79CA5900D82AA6 /* Bubble.swift */; };
 		208C5FD62D79CB8E00D82AA6 /* LiquidView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208C5FD52D79CB8E00D82AA6 /* LiquidView.swift */; };
 		208C5FD82D79CBA200D82AA6 /* OrbView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208C5FD72D79CBA200D82AA6 /* OrbView.swift */; };
+		208C5FDA2D7A771F00D82AA6 /* RetryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208C5FD92D7A771F00D82AA6 /* RetryButton.swift */; };
 		209370762D6AB36900E1AF73 /* ContainerRefactorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209370752D6AB36900E1AF73 /* ContainerRefactorer.swift */; };
 		209370942D6B598500E1AF73 /* Extension+CaseIterable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209370932D6B598500E1AF73 /* Extension+CaseIterable.swift */; };
 		209370972D6B5B8100E1AF73 /* DetectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209370962D6B5B8100E1AF73 /* DetectorViewController.swift */; };
@@ -465,6 +466,7 @@
 		208C5FD32D79CA5900D82AA6 /* Bubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bubble.swift; sourceTree = "<group>"; };
 		208C5FD52D79CB8E00D82AA6 /* LiquidView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiquidView.swift; sourceTree = "<group>"; };
 		208C5FD72D79CBA200D82AA6 /* OrbView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrbView.swift; sourceTree = "<group>"; };
+		208C5FD92D7A771F00D82AA6 /* RetryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryButton.swift; sourceTree = "<group>"; };
 		209370752D6AB36900E1AF73 /* ContainerRefactorer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerRefactorer.swift; sourceTree = "<group>"; };
 		209370932D6B598500E1AF73 /* Extension+CaseIterable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+CaseIterable.swift"; sourceTree = "<group>"; };
 		209370962D6B5B8100E1AF73 /* DetectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectorViewController.swift; sourceTree = "<group>"; };
@@ -1332,6 +1334,7 @@
 				20FE94D92CB96DE8006E9F06 /* ExitButton.swift */,
 				20353FF02CF84546002BC78E /* ToggleLaTeXButton.swift */,
 				203487632D66FF6700A88DA4 /* SidebarButtonView.swift */,
+				208C5FD92D7A771F00D82AA6 /* RetryButton.swift */,
 			);
 			path = Buttons;
 			sourceTree = "<group>";
@@ -1837,6 +1840,7 @@
 				20C62EBF2D71373500996566 /* SlideStudioView.swift in Sources */,
 				201A1A8E2CDB7C1C001E9BA9 /* MarkdownDataView.swift in Sources */,
 				20A8B65B2CB2709100B756FD /* Resources.swift in Sources */,
+				208C5FDA2D7A771F00D82AA6 /* RetryButton.swift in Sources */,
 				204D9CBF2CF4ABCF0052B6F4 /* StatusLabelView.swift in Sources */,
 				20CEA75B2CE308AD0070579B /* MessageContentView.swift in Sources */,
 				202801FC2CC9C5C2005C1F7D /* TemporaryResourceView.swift in Sources */,

@@ -217,7 +217,8 @@ public struct Resource: Identifiable, Codable, Hashable, Sendable {
 		if await !self.shouldUpdateIndex(
 			resourcesDirUrl: resourcesDirUrl
 		) {
-			print("Skipping update for item \"\(self.url)\"")
+			let loggerMsg: String = "Skipping update for item \"\(self.url)\""
+			Self.logger.notice("\(loggerMsg)")
 			return
 		}
 		// Else, start index
@@ -316,7 +317,6 @@ public struct Resource: Identifiable, Codable, Hashable, Sendable {
 				if !self.children.map({
 					$0.url
 				}).contains(file) {
-					print("Child added: \(file.lastPathComponent)")
 					self.children
 						.append(
 							Resource(

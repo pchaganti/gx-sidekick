@@ -101,16 +101,22 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 				taskId: taskId
 			)
 		}
+		// Log
+		Self.logger.notice("Finished updating resource index for expert \"\(expertName)\"")
 	}
 
 	
 	/// Function to initialize directory for the resources's index
 	public mutating func setup() async {
 		// Make directory
-		try! FileManager.default.createDirectory(
-			at: self.indexUrl,
-			withIntermediateDirectories: true
-		)
+		do {
+			try FileManager.default.createDirectory(
+				at: self.indexUrl,
+				withIntermediateDirectories: true
+			)
+		} catch {
+			Self.logger.error("Failed to create directory for resources index: \(error)")
+		}
 	}
 	
 	

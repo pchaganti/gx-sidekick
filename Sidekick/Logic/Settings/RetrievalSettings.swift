@@ -65,8 +65,8 @@ public class RetrievalSettings {
 		get {
 			// Set default
 			if !UserDefaults.standard.exists(key: "useSearchResultContext") {
-				// Default to false for higher throughput and more sources
-				Self.useSearchResultContext = false
+				// Default to true for more content
+				Self.useSearchResultContext = true
 			}
 			return UserDefaults.standard.bool(
 				forKey: "useSearchResultContext"

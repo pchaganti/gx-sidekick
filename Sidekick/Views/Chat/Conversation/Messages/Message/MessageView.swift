@@ -22,6 +22,7 @@ struct MessageView: View {
 	
 	@EnvironmentObject private var conversationManager: ConversationManager
 	@EnvironmentObject private var conversationState: ConversationState
+	@EnvironmentObject private var promptController: PromptController
 	
 	@State private var isEditing: Bool = false
 	@State private var messageText: String
@@ -105,11 +106,20 @@ struct MessageView: View {
 	
 	var content: some View {
 		Group {
-			switch message.contentType {
-				case .text:
-					textContent
-				case .image:
-					imageContent
+			// Check for blank message
+			if message.text.isEmpty && message.imageUrl == nil && message
+				.getSender() == .assistant {
+				RetryButton {
+					self.retryGeneration()
+				}
+				.padding(11)
+			} else {
+				switch message.contentType {
+					case .text:
+						textContent
+					case .image:
+						imageContent
+				}
 			}
 		}
 		.background {
@@ -227,6 +237,17 @@ struct MessageView: View {
 		.onAppear {
 			ViewReferenceTip.hasReference = true
 		}
+	}
+	
+	private func retryGeneration() {
+		// Get conversation
+		guard var conversation = selectedConversation else { return }
+		guard let prevMessage = conversation.messages.dropLast().last else { return }
+		// Set prompt
+		self.promptController.prompt = prevMessage.text
+		// Delete messages
+		conversation.messages = conversation.messages.dropLast(2)
+		conversationManager.update(conversation)
 	}
 	
 	private func updateMessage() {

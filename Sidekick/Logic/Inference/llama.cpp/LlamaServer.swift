@@ -40,6 +40,9 @@ public actor LlamaServer {
 	/// The scheme through which the inference server is accessible
 	private static let scheme: String = "http"
 	
+	/// A `Bool` indicating if the server is being started
+	private var isStartingServer: Bool = false
+	
 	/// An `EventSource` instance opening a persistent connection to an HTTP server, which sends stream events
 	private var eventSource: EventSource?
 	///	An EventSource task handling connecting to the URLRequest and creating an event stream
@@ -164,6 +167,7 @@ public actor LlamaServer {
 	/// Function to start the `llama-server` process
 	public func startServer() async throws {
 		// Signal beginning of server initialization
+		self.isStartingServer = true
 		// If server is running, exit
 		guard !process.isRunning, let modelPath = self.modelPath else { return }
 		await stopServer()
@@ -232,6 +236,7 @@ public actor LlamaServer {
 #if DEBUG
 		print("Started server process in \(elapsedTime) secs")
 #endif
+		self.isStartingServer = false
 	}
 	
 	/// Function to stop the `llama-server` process
@@ -340,7 +345,12 @@ public actor LlamaServer {
 				case .open:
 					continue listenLoop
 				case .error(let error):
-					print("llama.cpp EventSource server error:", error.localizedDescription)
+					Self.logger.error(
+						"llama.cpp EventSource server error: \(error)"
+					)
+					if !isStartingServer {
+						try await self.startServer()
+					}
 				case .event(let message):
 					// Parse json in message.data string
 					// Then, print the data.content value and append it to response
@@ -452,12 +462,16 @@ public actor LlamaServer {
 			await serverHealth.check()
 			if !process.isRunning {
 				Self.logger.error("llama-server is not running")
+				// Attempt to revive server
+				try? await self.startServer()
 				throw LlamaServerError.modelError
 			}
 			try await Task.sleep(for: .seconds(tick))
 			timeout -= tick
 			if timeout <= 0 {
 				Self.logger.error("llama-server did not respond in reasonable time")
+				// Attempt to revive server
+				try? await self.startServer()
 				throw LlamaServerError.modelError
 			}
 		}

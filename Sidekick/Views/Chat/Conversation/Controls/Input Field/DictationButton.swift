@@ -32,6 +32,7 @@ struct DictationButton: View {
 				)
 		}
 		.buttonStyle(.plain)
+		.keyboardShortcut("d", modifiers: [.command])
 		.padding([.trailing, .bottom], 3)
 		.popoverTip(dictationTip)
     }

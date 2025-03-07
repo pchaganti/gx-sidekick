@@ -36,7 +36,7 @@ If the provided information is related to the request, you will respond with ref
 	
 	/// Static constant for the part of the system prompt telling the LLM to use code interpreter
 	public static let useInterpreterPrompt: String = """
-For applicable problems such as math and counting, you should run JavaScript code by calling the `run_javascript` tool as specified in the JSON schema below. To run the code, include `run_javascript(code: "codeString")` in your response.
+For applicable problems such as math and counting, you should run JavaScript code by calling the `run_javascript` tool as specified in the schema below. To run the code, include `run_javascript(code: "codeString")` in your response.
 
 [{"name":"run_javascript","description":"Runs JavaScript code and returns the result.","parameters":{"type":"object","properties":{"code":{"type":"string","description":"The JavaScript code to run."}},"required":["code"]}}]
 """

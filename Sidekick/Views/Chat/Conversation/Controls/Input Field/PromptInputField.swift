@@ -231,7 +231,7 @@ struct PromptInputField: View {
 		} catch let error as LlamaServerError {
 			print("Interupted response: \(error)")
 			await model.interrupt()
-			handleResponseError(error)
+			self.handleResponseError(error)
 			return
 		} catch {
 			print("Agent listen threw unexpected error", error as Any)
