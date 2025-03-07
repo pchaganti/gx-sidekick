@@ -550,23 +550,26 @@ public actor LlamaServer {
 		
 		/// The `Range<String.Index>` where the JavaScript code is located
 		var javascriptCodeRange: Range<String.Index>? {
-			// Get range of last instance of `run_javascript(code: "`
-			guard let startOfCallRange = self.text.range(
-				of: "run_javascript(code: \"",
-				options: .backwards
-			) else {
-				return nil
+			// Define the patterns to search for
+			let patterns = [
+				(start: "run_javascript(code: \"", end: "\")"),
+				(start: "run_javascript(code: `", end: "`)"),
+				(start: "run_javascript(code: `\"", end: "`\")"),
+				(start: "run_javascript(code: \"`", end: "\"`)")
+			]
+			// Iterate over each pattern to find a match
+			for pattern in patterns {
+				// Get range of last instance of the start pattern
+				if let startOfCallRange = self.text.range(of: pattern.start, options: .backwards) {
+					// Ensure searching within valid bounds
+					let searchRange = startOfCallRange.upperBound..<self.text.endIndex
+					// Get range of last instance of the end pattern
+					if let endOfCallRange = self.text.range(of: pattern.end, range: searchRange) {
+						return startOfCallRange.upperBound..<endOfCallRange.lowerBound
+					}
+				}
 			}
-			// Ensure searching within valid bounds
-			let searchRange = startOfCallRange.upperBound..<self.text.endIndex
-			// Get range of last instance of `")`
-			guard let endOfCallRange = self.text.range(
-				of: "\")",
-				range: searchRange
-			) else {
-				return nil
-			}
-			return startOfCallRange.upperBound..<endOfCallRange.lowerBound
+			return nil
 		}
 		
 	}

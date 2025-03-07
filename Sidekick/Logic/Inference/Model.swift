@@ -310,6 +310,7 @@ public class Model: ObservableObject {
 		if jsCode != nil && jsResult != nil {
 			var rephrasedResponse = try await rephraseResult(
 				increment: increment,
+				jsCode: jsCode,
 				jsResult: jsResult,
 				messages: messages,
 				handleResponseUpdate: handleResponseUpdate
@@ -372,6 +373,7 @@ public class Model: ObservableObject {
 	/// Function to rephrase code interpreter result
 	private func rephraseResult(
 		increment: Int,
+		jsCode: String?,
 		jsResult: String?,
 		messages: [Message.MessageSubset],
 		handleResponseUpdate: @escaping (
@@ -382,7 +384,7 @@ public class Model: ObservableObject {
 		// Formulate messages
 		let rephraseMessage = Message(
 			text: """
-  The JavaScript code you provided produced the result below:
+  The JavaScript code `\(jsCode ?? "Error")` produced the result below:
   \(jsResult ?? "Error")
   
   Write an answer to my question above using this result. Respond with the answer ONLY.
