@@ -385,6 +385,7 @@ public class Model: ObservableObject {
 		let rephraseMessage = Message(
 			text: """
   The JavaScript code `\(jsCode ?? "Error")` produced the result below:
+  
   \(jsResult ?? "Error")
   
   Write an answer to my question above using this result. Respond with the answer ONLY.

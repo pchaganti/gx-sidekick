@@ -198,7 +198,7 @@ public actor LlamaServer {
 			if InferenceSettings.useSpeculativeDecoding {
 				// Formulate arguments
 				let draft: Int =  16
-				let draftMin: Int = 6
+				let draftMin: Int = 7
 				let draftPMin: Double = 0.75
 				let speculativeDecodingArguments: [String] = [
 					"--model-draft", speculationModelUrl.posixPath,

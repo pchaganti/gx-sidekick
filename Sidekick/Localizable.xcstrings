@@ -987,7 +987,7 @@
         }
       }
     },
-    "Due to limited hardware specifications, you may suffer from degraded performance when running this model." : {
+    "Due to limited hardware specifications, you may suffer from degraded performance when running this model. " : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {

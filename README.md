@@ -47,7 +47,7 @@ Sidekick can even respond with the latest information using **web search**, spee
 
 ### Reasoning Model Support
 
-Sidekick supports a variety of reasoning models, including Alibaba's QwQ-32B-Preview and DeepSeek's DeepSeek-R1.
+Sidekick supports a variety of reasoning models, including Alibaba Cloud's QwQ-32B and DeepSeek's DeepSeek-R1.
 
 ![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/reasoningModelSupport.png)
 

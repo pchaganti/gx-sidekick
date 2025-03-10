@@ -58,14 +58,9 @@ struct MessagesView: View {
 			ToolbarItemGroup(
 				placement: .primaryAction
 			) {
-				if #available(macOS 15.4, *) {
-					// TODO: Menu causes crash on macOS 15.4 beta 1 –– chat export temporarily broken
-					EmptyView()
-				} else {
-					MessageShareMenu(
-						messagesView: self.messagesView
-					)
-				}
+				MessageShareMenu(
+					messagesView: self.messagesView
+				)
 			}
 		}
 	}

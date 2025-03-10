@@ -22,8 +22,10 @@ public class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
 	public func applicationDidFinishLaunching(
 		_ notification: Notification
 	) {
-		// Relocate legacy resources
-		ContainerRefactorer.refactor()
+		// Relocate legacy resources if setup finished
+		if Settings.setupComplete {
+			ContainerRefactorer.refactor()
+		}
 		// Configure Tip's data container
 		try? Tips.configure(
 			[

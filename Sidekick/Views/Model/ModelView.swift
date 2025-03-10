@@ -80,7 +80,7 @@ struct ModelView: View {
 		if !model.canRun() {
 			let didConfirm: Bool = Dialogs.dichotomy(
 				title: String(localized: "Requirements"),
-				message: String(localized: "Due to limited hardware specifications, you may suffer from degraded performance when running this model.") + String(localized: "Are you sure you want to continue?"),
+				message: String(localized: "Due to limited hardware specifications, you may suffer from degraded performance when running this model. ") + String(localized: "Are you sure you want to continue?"),
 				option1: String(localized: "Yes"),
 				option2: String(localized: "No"),
 				ifOption1: {},
