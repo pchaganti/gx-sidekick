@@ -353,7 +353,6 @@
 		2009DE9E2D62E66F0094BBB3 /* latexRendering1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = latexRendering1.png; sourceTree = "<group>"; };
 		2009DE9F2D62E66F0094BBB3 /* latexRendering2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = latexRendering2.png; sourceTree = "<group>"; };
 		2009DEA02D62E66F0094BBB3 /* reasoningModelSupport.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reasoningModelSupport.png; sourceTree = "<group>"; };
-		2009DEA12D62E66F0094BBB3 /* serverUse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = serverUse.png; sourceTree = "<group>"; };
 		2009DEA22D62E66F0094BBB3 /* speculativeDecodingSupport.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = speculativeDecodingSupport.png; sourceTree = "<group>"; };
 		2009DEA32D62E66F0094BBB3 /* webSearch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = webSearch.png; sourceTree = "<group>"; };
 		200FBFDD2CB6382F00A92A74 /* llama-server-watchdog */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "llama-server-watchdog"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -446,6 +445,7 @@
 		206AB6112CF5F8390010B09A /* AttachmentSelectionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentSelectionButton.swift; sourceTree = "<group>"; };
 		206FBB202D54B40700A045FF /* MessageReasoningProcessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageReasoningProcessView.swift; sourceTree = "<group>"; };
 		2075220A2D7FDF6C00A1CA60 /* Extension+SecureDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+SecureDefaults.swift"; sourceTree = "<group>"; };
+		2075220E2D801D3600A1CA60 /* serverUse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = serverUse.png; sourceTree = "<group>"; };
 		207A9F542CB8A96F00E727DE /* ExpertNavigationRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertNavigationRowView.swift; sourceTree = "<group>"; };
 		207A9F582CB8F4AF00E727DE /* ResourceSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceSelectionView.swift; sourceTree = "<group>"; };
 		207A9F5C2CB8FD0900E727DE /* ResourceSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceSectionView.swift; sourceTree = "<group>"; };
@@ -819,7 +819,7 @@
 				2009DE9E2D62E66F0094BBB3 /* latexRendering1.png */,
 				2009DE9F2D62E66F0094BBB3 /* latexRendering2.png */,
 				2009DEA02D62E66F0094BBB3 /* reasoningModelSupport.png */,
-				2009DEA12D62E66F0094BBB3 /* serverUse.png */,
+				2075220E2D801D3600A1CA60 /* serverUse.png */,
 				2009DEA22D62E66F0094BBB3 /* speculativeDecodingSupport.png */,
 				2009DEA32D62E66F0094BBB3 /* webSearch.png */,
 				2053E6A32D75651E00E1EF84 /* detectorEvaluationResults.png */,
@@ -2061,7 +2061,7 @@
 				CODE_SIGN_ENTITLEMENTS = Sidekick/Sidekick.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_ASSET_PATHS = "\"Sidekick/Preview Content\"";
 				DEVELOPMENT_TEAM = KM2C4ZAVPJ;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2082,7 +2082,7 @@
 					"$(PROJECT_DIR)/Sidekick/Logic/Inference/llama.cpp/build/bin",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.0.20;
+				MARKETING_VERSION = 0.0.21;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pattonium.Sidekick;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -2099,7 +2099,7 @@
 				CODE_SIGN_ENTITLEMENTS = Sidekick/Sidekick.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_ASSET_PATHS = "\"Sidekick/Preview Content\"";
 				DEVELOPMENT_TEAM = KM2C4ZAVPJ;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2121,7 +2121,7 @@
 					"$(PROJECT_DIR)/Sidekick/Logic/Inference/llama.cpp/build/bin",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.0.20;
+				MARKETING_VERSION = 0.0.21;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pattonium.Sidekick;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

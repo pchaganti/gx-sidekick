@@ -139,7 +139,7 @@ Sidekick uses `llama.cpp` as its inference backend, which is optimized to delive
 
 ![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/speculativeDecodingSupport.png)
 
-Optionally, offload generation to your desktop to speed up generation while extending the battery life of your MacBook.
+Optionally, offload generation to speed up generation while extending the battery life of your MacBook.
 
 ![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/serverUse.png)
 
