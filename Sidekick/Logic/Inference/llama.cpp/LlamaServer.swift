@@ -85,6 +85,9 @@ public actor LlamaServer {
 		let endpoint: String = InferenceSettings.endpoint.replacingSuffix(
 			"/",
 			with: ""
+		).replacingSuffix(
+			"/v1/chat/completions",
+			with: ""
 		)
 		let urlString: String
 		let notUsingServer: Bool = await !Self.serverIsReachable() || !InferenceSettings.useServer
@@ -105,13 +108,17 @@ public actor LlamaServer {
 		let endpoint: String = InferenceSettings.endpoint.replacingSuffix(
 			"/",
 			with: ""
+		).replacingSuffix(
+			"/v1/chat/completions",
+			with: ""
 		) + "/v1/chat/completions"
 		guard let endpointUrl: URL = URL(
 			string: endpoint
 		) else {
 			return false
 		}
-		return await endpointUrl.isAPIEndpointReachable()
+		let isReachable: Bool = await endpointUrl.isAPIEndpointReachable()
+		return isReachable
 	}
 	
 	/// Function to start a monitor process that will terminate the server when our app dies
@@ -250,6 +257,7 @@ public actor LlamaServer {
 	) async throws -> CompleteResponse {
 		// Get endpoint url & whether server is used
 		let rawUrl = await self.url("/v1/chat/completions")
+		print(rawUrl.url.absoluteString)
 		// Start server if remote server is not used & local server is inactive
 		if !rawUrl.usingRemoteServer {
 			try await startServer()
@@ -350,7 +358,7 @@ public actor LlamaServer {
 						}
 					}
 				case .closed:
-					Self.logger.notice("llama.cpp EventSource closed")
+					Self.logger.notice("EventSource closed")
 					break listenLoop
 			}
 		}
@@ -365,6 +373,7 @@ public actor LlamaServer {
 		// Return info
 		let tokens: Int = stopResponse?.usage?.completion_tokens ?? tokenCount
 		let generationTime: CFTimeInterval = CFAbsoluteTimeGetCurrent() - start - responseDiff
+		let modelName: String = rawUrl.usingRemoteServer ? InferenceSettings.remoteModelName : self.modelName
 		return CompleteResponse(
 			text: cleanText,
 			responseStartSeconds: responseDiff,
