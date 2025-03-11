@@ -9,9 +9,9 @@ import SwiftUI
 
 struct RetrievalSettingsView: View {
 	
-	@State private var useTavilySearch: Bool = RetrievalSettings.useTavilySearch
-	@State private var apiKey: String = RetrievalSettings.apiKey
-	@State private var backupApiKey: String = RetrievalSettings.backupApiKey
+	@AppStorage("useTavilySearch") private var useTavilySearch: Bool = RetrievalSettings.useTavilySearch
+	@State private var tavilyApiKey: String = RetrievalSettings.tavilyApiKey
+	@State private var tavilyBackupApiKey: String = RetrievalSettings.tavilyBackupApiKey
 	
 	@State private var searchResultMultiplier: Int = RetrievalSettings.searchResultsMultiplier
 	@State private var useSearchResultContext: Bool = RetrievalSettings.useSearchResultContext
@@ -36,16 +36,15 @@ struct RetrievalSettingsView: View {
 		Group {
 			useSearch
 			Group {
-				apiKeyEditor
-				backupApiKeyEditor
+				tavilyApiKeyEditor
+				tavilyBackupApiKeyEditor
 			}
 			.foregroundStyle(useTavilySearch ? .primary : .secondary)
-			.disabled(!useTavilySearch)
 		}
 		.onAppear {
 			self.useTavilySearch = RetrievalSettings.useTavilySearch
-			self.apiKey = RetrievalSettings.apiKey
-			self.backupApiKey = RetrievalSettings.backupApiKey
+			self.tavilyApiKey = RetrievalSettings.tavilyApiKey
+			self.tavilyBackupApiKey = RetrievalSettings.tavilyBackupApiKey
 		}
 	}
 	
@@ -61,13 +60,11 @@ struct RetrievalSettingsView: View {
 			Spacer()
 			Toggle("", isOn: $useTavilySearch.animation())
 				.toggleStyle(.switch)
-		}
-		.onChange(of: useTavilySearch) {
-			RetrievalSettings.useTavilySearch = self.useTavilySearch
+				.disabled(self.tavilyApiKey.isEmpty)
 		}
 	}
 	
-	var apiKeyEditor: some View {
+	var tavilyApiKeyEditor: some View {
 		HStack(alignment: .center) {
 			VStack(alignment: .leading) {
 				Text("API Key")
@@ -83,19 +80,19 @@ struct RetrievalSettingsView: View {
 				}
 			}
 			.foregroundStyle(
-				useTavilySearch && apiKey.isEmpty ? .red : .primary
+				useTavilySearch && tavilyApiKey.isEmpty ? .red : .primary
 			)
-			.onChange(of: apiKey) { oldValue, newValue in
-				RetrievalSettings.apiKey = newValue
-			}
 			Spacer()
-			SecureField("", text: $apiKey)
+			SecureField("", text: $tavilyApiKey)
 				.textFieldStyle(.roundedBorder)
 				.frame(width: 300)
+				.onChange(of: tavilyApiKey) { oldValue, newValue in
+					RetrievalSettings.tavilyApiKey = newValue
+				}
 		}
 	}
 	
-	var backupApiKeyEditor: some View {
+	var tavilyBackupApiKeyEditor: some View {
 		HStack(alignment: .center) {
 			VStack(alignment: .leading) {
 				Text("Backup API Key (Optional)")
@@ -105,11 +102,13 @@ struct RetrievalSettingsView: View {
 					.font(.caption)
 			}
 			Spacer()
-			SecureField("", text: $backupApiKey)
+			SecureField("", text: $tavilyBackupApiKey)
 				.textFieldStyle(.roundedBorder)
 				.frame(width: 300)
-				.onChange(of: backupApiKey) { oldValue, newValue in
-					RetrievalSettings.backupApiKey = newValue
+				.onChange(
+					of: tavilyBackupApiKey
+				) { oldValue, newValue in
+					RetrievalSettings.tavilyBackupApiKey = newValue
 				}
 		}
 	}

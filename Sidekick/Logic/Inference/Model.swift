@@ -38,10 +38,13 @@ public class Model: ObservableObject {
 			modelPath: modelPath,
 			systemPrompt: systemPrompt
 		)
-		// Load model
+		// Load model if not using server
 		Task {
+			let canReachServer: Bool = await LlamaServer.serverIsReachable()
 			do {
-				try await self.llama.startServer()
+				if !InferenceSettings.useServer || !canReachServer {
+					try await self.llama.startServer()
+				}
 			} catch {
 				print("Error starting `llama-server`: \(error)")
 			}
@@ -74,13 +77,19 @@ public class Model: ObservableObject {
 		guard let modelPath: String = Settings.modelUrl?.posixPath else {
 			fatalError("Could not find modelUrl")
 		}
-		await self.llama.stopServer()
+		// Restart server if needed
+		if !InferenceSettings.useServer {
+			await self.llama.stopServer()
+		}
 		self.llama = LlamaServer(
 			modelPath: modelPath,
 			systemPrompt: self.systemPrompt
 		)
-		// Load model
-		try? await self.llama.startServer()
+		// Load model if needed
+		let canReachServer: Bool = await LlamaServer.serverIsReachable()
+		if !InferenceSettings.useServer || !canReachServer {
+			try? await self.llama.startServer()
+		}
 	}
 	
 	/// The content of the message being generated, of type `String`

@@ -58,6 +58,7 @@ struct ChatParameters: Codable {
 		self.messages = messagesWithSystemPrompt
 	}
 	
+	var model: String = InferenceSettings.useServer ? InferenceSettings.remoteModelName : ""
 	var messages: [Message.MessageSubset]
 	
 	var stream: Bool = true

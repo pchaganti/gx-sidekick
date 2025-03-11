@@ -468,7 +468,6 @@ Respond with the Markdown ONLY. Do not include comments.
 		}
 		arguments.append("--output")
 		arguments.append(config.outputUrl.posixPath)
-		print("output path: \(config.outputUrl.posixPath)")
 		self.marpExportProcess.arguments = arguments
 		self.marpExportProcess.standardInput = FileHandle.nullDevice
 		// To debug with server's output, comment these 2 lines to inherit stdout.

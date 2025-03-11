@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import SecureDefaults
 
 public class InferenceSettings {
 	
@@ -157,6 +158,34 @@ Current date & time: \(Date.now.ISO8601Format())
 		set {
 			// Save
 			UserDefaults.standard.set(newValue, forKey: "endpoint")
+		}
+	}
+	
+	/// Computed property for inference API key
+	public static var inferenceApiKey: String {
+		set {
+			let defaults: SecureDefaults = SecureDefaults.defaults()
+			defaults.set(newValue, forKey: "inferenceApiKey")
+		}
+		get {
+			let defaults: SecureDefaults = SecureDefaults.defaults()
+			return defaults.string(forKey: "inferenceApiKey") ?? ""
+		}
+	}
+	
+	/// A `String` representing the name of the remote model
+	public static var remoteModelName: String {
+		get {
+			guard let remoteModelName = UserDefaults.standard.string(
+				forKey: "remoteModelName"
+			) else {
+				return "gpt-4o"
+			}
+			return remoteModelName
+		}
+		set {
+			// Save
+			UserDefaults.standard.set(newValue, forKey: "remoteModelName")
 		}
 	}
 	

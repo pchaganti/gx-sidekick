@@ -9,37 +9,27 @@ import Foundation
 import SecureDefaults
 
 public class RetrievalSettings {
-	
-	/// Function that returns secure defaults obkect
-	private static func secureDefaults() -> SecureDefaults {
-		// Init secure defaults object
-		let defaults: SecureDefaults = SecureDefaults.shared
-		if !defaults.isKeyCreated {
-			defaults.password = UUID().uuidString
-		}
-		return defaults
-	}
 
-	/// Computed property for API key
-	public static var apiKey: String {
+	/// Computed property for Tavily API key
+	public static var tavilyApiKey: String {
 		set {
-			let defaults: SecureDefaults = self.secureDefaults()
+			let defaults: SecureDefaults = SecureDefaults.defaults()
 			defaults.set(newValue, forKey: "apiKey")
 		}
 		get {
-			let defaults: SecureDefaults = self.secureDefaults()
+			let defaults: SecureDefaults = SecureDefaults.defaults()
 			return defaults.string(forKey: "apiKey") ?? ""
 		}
 	}
 	
-	/// Computed property for backup API key
-	public static var backupApiKey: String {
+	/// Computed property for backup Tavily API key
+	public static var tavilyBackupApiKey: String {
 		set {
-			let defaults: SecureDefaults = self.secureDefaults()
+			let defaults: SecureDefaults = SecureDefaults.defaults()
 			defaults.set(newValue, forKey: "backupApiKey")
 		}
 		get {
-			let defaults: SecureDefaults = self.secureDefaults()
+			let defaults: SecureDefaults = SecureDefaults.defaults()
 			return defaults.string(forKey: "backupApiKey") ?? ""
 		}
 	}

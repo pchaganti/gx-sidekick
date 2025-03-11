@@ -7,8 +7,15 @@
 
 import ExtractKit_macOS
 import Foundation
+import OSLog
 
 public class TavilySearch {
+	
+	/// A `Logger` object for the `TavilySearch` object
+	private static let logger: Logger = .init(
+		subsystem: Bundle.main.bundleIdentifier!,
+		category: String(describing: TavilySearch.self)
+	)
 	
 	/// Function to search tavily for sources
 	public static func search(
@@ -21,14 +28,15 @@ public class TavilySearch {
 			throw TavilySearchError.notActivated
 		}
 		// Get results from Tavily
-		let apiKey: String = !useBackupApi ? RetrievalSettings.apiKey : RetrievalSettings.backupApiKey
+		let apiKey: String = !useBackupApi ? RetrievalSettings.tavilyApiKey : RetrievalSettings.tavilyBackupApiKey
 		if apiKey.isEmpty {
+			self.logger.error("No API key provided for Tavily")
 			throw TavilySearchError.invalidApiKey
 		}
 		do {
 			let tavilyResults: [Tavily.Response.Result] = try await Self.hitTavilyApi(
 				query: query,
-				apiKey: RetrievalSettings.apiKey,
+				apiKey: apiKey,
 				resultCount: resultCount
 			)
 			// Get all site content
@@ -40,7 +48,7 @@ public class TavilySearch {
 			}
 			return websiteContent
 		} catch {
-			print("tavilyError: \(error)")
+			self.logger.error("Tavily Search Error: \(error)")
 			throw error
 		}
 	}

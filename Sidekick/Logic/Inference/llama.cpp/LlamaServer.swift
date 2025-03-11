@@ -57,7 +57,7 @@ public actor LlamaServer {
 	
 	/// The system prompt given to the chatbot
 	var systemPrompt: String
-
+	
 	/// The context length used in chat completion
 	var contextLength: Int
 	
@@ -82,11 +82,12 @@ public actor LlamaServer {
 		usingRemoteServer: Bool
 	) {
 		// Check endpoint
-		let endpoint: String = InferenceSettings.endpoint
+		let endpoint: String = InferenceSettings.endpoint.replacingSuffix(
+			"/",
+			with: ""
+		)
 		let urlString: String
-		let notUsingServer: Bool = await !Self.serverIsReachable(
-			isLocal: false
-		) || !InferenceSettings.useServer
+		let notUsingServer: Bool = await !Self.serverIsReachable() || !InferenceSettings.useServer
 		if notUsingServer {
 			urlString = "\(Self.scheme)://\(Self.host):\(Self.port)\(path)"
 		} else {
@@ -97,42 +98,20 @@ public actor LlamaServer {
 	
 	/// Function to check if the remote server is reachable
 	/// - Returns: A `Bool` indicating if the server can be reached
-	public static func serverIsReachable(
-		isLocal: Bool
-	) async -> Bool {
+	public static func serverIsReachable() async -> Bool {
 		// Return false if server is unused
 		if !InferenceSettings.useServer { return false }
-		// Check endpoint
-		let endpointUrl: URL = {
-			if !isLocal {
-				return URL(
-					string: "\(InferenceSettings.endpoint)/health"
-				)!
-			} else {
-				return URL(string: "http://\(Self.host):\(Self.port)/health")!
-			}
-		}()
-		do {
-			// Set timeout
-			let config: URLSessionConfiguration = URLSessionConfiguration.default
-			config.timeoutIntervalForRequest = 3
-			config.timeoutIntervalForResource = 3
-			let session: URLSession = URLSession(
-				configuration: config
-			)
-			// Check server health
-			let response: (data: Data, URLResponse) = try await session.data(
-				from: endpointUrl
-			)
-			let decoder: JSONDecoder = JSONDecoder()
-			let healthStatus: HealthResponse = try decoder.decode(
-				HealthResponse.self,
-				from: response.data
-			)
-			return healthStatus.isHealthy
-		} catch {
+		// If using server, check connection
+		let endpoint: String = InferenceSettings.endpoint.replacingSuffix(
+			"/",
+			with: ""
+		) + "/v1/chat/completions"
+		guard let endpointUrl: URL = URL(
+			string: endpoint
+		) else {
 			return false
 		}
+		return await endpointUrl.isAPIEndpointReachable()
 	}
 	
 	/// Function to start a monitor process that will terminate the server when our app dies
@@ -214,15 +193,13 @@ public actor LlamaServer {
 		
 		process.arguments = arguments
 		
-		Self.logger.notice(
-			"Starting llama.cpp server \(self.process.arguments!.joined(separator: " "))"
-		)
+		Self.logger.notice("Starting llama.cpp server \(self.process.arguments!.joined(separator: " "))")
 		
 		process.standardInput = FileHandle.nullDevice
 		
 		// To debug with server's output, comment these 2 lines to inherit stdout.
-		process.standardOutput =  FileHandle.nullDevice
-		process.standardError =  FileHandle.nullDevice
+		process.standardOutput = FileHandle.nullDevice
+		process.standardError = FileHandle.nullDevice
 		
 		try process.run()
 		
@@ -241,12 +218,6 @@ public actor LlamaServer {
 	
 	/// Function to stop the `llama-server` process
 	public func stopServer() async {
-		// If a server is used, exit
-		if await Self.serverIsReachable(
-			isLocal: false
-		) && InferenceSettings.useServer {
-			return
-		}
 		// Terminate processes
 		if self.process.isRunning {
 			self.process.terminate()
@@ -277,19 +248,14 @@ public actor LlamaServer {
 		similarityIndex: SimilarityIndex? = nil,
 		progressHandler: (@Sendable (String) -> Void)? = nil
 	) async throws -> CompleteResponse {
-		
+		// Get endpoint url & whether server is used
 		let rawUrl = await self.url("/v1/chat/completions")
-		
-		let start: CFAbsoluteTime = CFAbsoluteTimeGetCurrent()
-		
 		// Start server if remote server is not used & local server is inactive
-		let serverIsReachable: Bool = await Self.serverIsReachable(
-			isLocal: true
-		)
-		if !rawUrl.usingRemoteServer && !serverIsReachable {
+		if !rawUrl.usingRemoteServer {
 			try await startServer()
 		}
-		
+		// Get start time
+		let start: CFAbsoluteTime = CFAbsoluteTimeGetCurrent()
 		// Formulate parameters
 		async let params = {
 			switch mode {
@@ -313,7 +279,6 @@ public actor LlamaServer {
 					)
 			}
 		}()
-		
 		// Formulate request
 		var request = URLRequest(
 			url: rawUrl.url
@@ -323,6 +288,10 @@ public actor LlamaServer {
 		request.setValue("text/event-stream", forHTTPHeaderField: "Accept")
 		request.setValue("keep-alive", forHTTPHeaderField: "Connection")
 		if rawUrl.usingRemoteServer {
+			request.setValue(
+				"Bearer \(InferenceSettings.inferenceApiKey)",
+				forHTTPHeaderField: "Authorization"
+			)
 			request.setValue("nil", forHTTPHeaderField: "ngrok-skip-browser-warning")
 		}
 		let requestJson: String = await params.toJSON()
@@ -335,11 +304,11 @@ public actor LlamaServer {
 		self.dataTask = await eventSource!.dataTask(
 			for: request
 		)
-		
 		var pendingMessage: String = ""
 		var responseDiff: Double = 0.0
+		var tokenCount: Int = 0
 		var stopResponse: StopResponse? = nil
-		
+		// Start streaming completion events
 		listenLoop: for await event in await dataTask!.events() {
 			switch event {
 				case .open:
@@ -348,9 +317,6 @@ public actor LlamaServer {
 					Self.logger.error(
 						"llama.cpp EventSource server error: \(error)"
 					)
-					if !isStartingServer {
-						try await self.startServer()
-					}
 				case .event(let message):
 					// Parse json in message.data string
 					// Then, print the data.content value and append it to response
@@ -365,6 +331,7 @@ public actor LlamaServer {
 								$0.delta.content ?? ""
 							}).joined()
 							pendingMessage.append(fragment)
+							tokenCount += 1
 							progressHandler?(fragment)
 							if responseDiff == 0 {
 								responseDiff = CFAbsoluteTimeGetCurrent() - start
@@ -378,7 +345,7 @@ public actor LlamaServer {
 								}
 							}
 						} catch {
-							Self.logger.error("Error decoding response object \(error as Any)")
+							Self.logger.error("Error decoding response object \(error)")
 							Self.logger.error("responseObj: \(String(decoding: data, as: UTF8.self))")
 						}
 					}
@@ -396,7 +363,7 @@ public actor LlamaServer {
 			onFinish(text: cleanText)
 		}
 		// Return info
-		let tokens = stopResponse?.usage.completion_tokens ?? 0
+		let tokens: Int = stopResponse?.usage?.completion_tokens ?? tokenCount
 		let generationTime: CFTimeInterval = CFAbsoluteTimeGetCurrent() - start - responseDiff
 		return CompleteResponse(
 			text: cleanText,
@@ -428,6 +395,10 @@ public actor LlamaServer {
 		request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 		request.setValue("keep-alive", forHTTPHeaderField: "Connection")
 		if rawUrl.usingRemoteServer {
+			request.setValue(
+				"Bearer \(InferenceSettings.inferenceApiKey)",
+				forHTTPHeaderField: "Authorization"
+			)
 			request.setValue("nil", forHTTPHeaderField: "ngrok-skip-browser-warning")
 		}
 		let requestParams: TokenizeParams = .init(content: text)
@@ -523,7 +494,7 @@ public actor LlamaServer {
 	
 	struct StopResponse: Codable {
 		
-		let usage: Usage
+		let usage: Usage?
 		
 	}
 	

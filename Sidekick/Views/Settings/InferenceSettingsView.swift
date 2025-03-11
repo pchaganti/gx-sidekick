@@ -18,13 +18,16 @@ struct InferenceSettingsView: View {
 	@State private var isSelectingModel: Bool = false
 	@State private var isSelectingSpeculativeDecodingModel: Bool = false
 	
-	@State private var temperature: Double = InferenceSettings.temperature
-	@State private var useGPUAcceleration: Bool = InferenceSettings.useGPUAcceleration
-	@State private var useSpeculativeDecoding: Bool = InferenceSettings.useSpeculativeDecoding
-	@State private var contextLength: Int = InferenceSettings.contextLength
+	@AppStorage("temperature") private var temperature: Double = InferenceSettings.temperature
+	@AppStorage("useGPUAcceleration") private var useGPUAcceleration: Bool = InferenceSettings.useGPUAcceleration
+	@AppStorage("useSpeculativeDecoding") private var useSpeculativeDecoding: Bool = InferenceSettings.useSpeculativeDecoding
+	@AppStorage("contextLength") private var contextLength: Int = InferenceSettings.contextLength
 	
-	@State private var useServer: Bool = InferenceSettings.useServer
-	@State private var serverEndpoint: String = InferenceSettings.endpoint
+	@AppStorage("useServer") private var useServer: Bool = InferenceSettings.useServer
+	@AppStorage("endpoint") private var serverEndpoint: String = InferenceSettings.endpoint
+	@State private var inferenceApiKey: String = InferenceSettings.inferenceApiKey
+	
+	@AppStorage("remoteModelName") private var remoteModelName: String = InferenceSettings.remoteModelName
 	
     var body: some View {
 		Form {
@@ -118,15 +121,11 @@ struct InferenceSettingsView: View {
 			)
 		}
 		.onChange(of: useSpeculativeDecoding) {
-			InferenceSettings.useSpeculativeDecoding = self.useSpeculativeDecoding
 			// Send notification to reload model
 			NotificationCenter.default.post(
 				name: Notifications.changedInferenceConfig.name,
 				object: nil
 			)
-		}
-		.onAppear {
-			self.useSpeculativeDecoding = InferenceSettings.useSpeculativeDecoding
 		}
 	}
 	
@@ -144,11 +143,6 @@ struct InferenceSettingsView: View {
 			Spacer()
 			Button {
 				self.isSelectingSpeculativeDecodingModel.toggle()
-				// Send notification to reload model
-				NotificationCenter.default.post(
-					name: Notifications.changedInferenceConfig.name,
-					object: nil
-				)
 			} label: {
 				Text("Manage")
 			}
@@ -214,9 +208,6 @@ struct InferenceSettingsView: View {
 			)
 			.textFieldStyle(.plain)
 		}
-		.onChange(of: contextLength) {
-			InferenceSettings.contextLength = self.contextLength
-		}
 	}
 	
 	var temperatureEditor: some View {
@@ -243,14 +234,6 @@ struct InferenceSettingsView: View {
 					.padding(.leading, 100)
 			}
 		}
-		.onChange(of: temperature) {
-			InferenceSettings.temperature = self.temperature
-			// Send notification to reload model
-			NotificationCenter.default.post(
-				name: Notifications.changedInferenceConfig.name,
-				object: nil
-			)
-		}
 	}
 	
 	var useGPUAccelerationToggle: some View {
@@ -271,7 +254,6 @@ struct InferenceSettingsView: View {
 				Toggle("", isOn: $useGPUAcceleration)
 			}
 			.onChange(of: useGPUAcceleration) {
-				InferenceSettings.useGPUAcceleration = self.useGPUAcceleration
 				// Send notification to reload model
 				NotificationCenter.default.post(
 					name: Notifications.changedInferenceConfig.name,
@@ -280,18 +262,15 @@ struct InferenceSettingsView: View {
 			}
 			PerformanceGaugeView()
 		}
-		.onAppear {
-			self.useGPUAcceleration = InferenceSettings.useGPUAcceleration
-		}
 	}
 	
 	
 	var server: some View {
 		Group {
 			useServerToggle
-			if useServer {
-				serverEndpointEditor
-			}
+			serverEndpointEditor
+			inferenceApiKeyEditor
+			remoteModelNameEditor
 		}
 	}
 	
@@ -309,12 +288,14 @@ struct InferenceSettingsView: View {
 				"",
 				isOn: $useServer.animation(.linear)
 			)
+			.disabled(serverEndpoint.isEmpty)
 		}
 		.onChange(of: useServer) {
-			InferenceSettings.useServer = self.useServer
-		}
-		.onAppear {
-			self.useServer = InferenceSettings.useServer
+			// Send notification to reload model
+			NotificationCenter.default.post(
+				name: Notifications.changedInferenceConfig.name,
+				object: nil
+			)
 		}
 	}
 	
@@ -334,23 +315,47 @@ struct InferenceSettingsView: View {
 				TextField("", text: $serverEndpoint)
 					.textFieldStyle(.roundedBorder)
 					.frame(maxWidth: 250)
-				Button {
-					InferenceSettings.endpoint = self.serverEndpoint.replacingSuffix(
-						"/",
-						with: ""
-					)
-				} label: {
-					Text("Save")
-				}
 			}
-		}
-		.onAppear {
-			self.serverEndpoint = InferenceSettings.endpoint
 		}
 	}
 	
-}
-
-#Preview {
-    InferenceSettingsView()
+	var inferenceApiKeyEditor: some View {
+		HStack(alignment: .center) {
+			VStack(alignment: .leading) {
+				Text("API Key")
+					.font(.title3)
+					.bold()
+				Text("Needed to access an API for inference")
+					.font(.caption)
+			}
+			Spacer()
+			SecureField("", text: $inferenceApiKey)
+				.textFieldStyle(.roundedBorder)
+				.frame(width: 300)
+				.onChange(of: inferenceApiKey) { oldValue, newValue in
+					InferenceSettings.inferenceApiKey = newValue
+				}
+		}
+	}
+	
+	var remoteModelNameEditor: some View {
+		HStack(alignment: .center) {
+			VStack(alignment: .leading) {
+				Text("Remote Model Name")
+					.font(.title3)
+					.bold()
+				Text("The model name on the server used for inference. (e.g. gpt-4o)")
+					.font(.caption)
+			}
+			Spacer()
+			VStack(
+				alignment: .trailing
+			) {
+				TextField("", text: $remoteModelName)
+					.textFieldStyle(.roundedBorder)
+					.frame(maxWidth: 250)
+			}
+		}
+	}
+	
 }

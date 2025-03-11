@@ -63,5 +63,41 @@ public extension URL {
 		}
 		task.resume()
 	}
+	
+	/// Function to check if a url is reachable
+	func isReachable() async -> Bool {
+		do {
+			// Create a URL session with a data task
+			let (_, response) = try await URLSession.shared.data(from: self)
+			// Check if the response is an HTTPURLResponse and has a status code in the 200-299 range
+			if let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) {
+				return true
+			} else {
+				return false
+			}
+		} catch {
+			print("Error checking URL reachability: \(error)")
+			return false
+		}
+	}
+	
+	/// Function to check if an API endpoint is reachable
+	func isAPIEndpointReachable(
+		method: String = "GET",
+		timeout: TimeInterval = 3.0
+	) async -> Bool {
+		var request = URLRequest(url: self)
+		request.httpMethod = method
+		request.timeoutInterval = timeout
+		do {
+			let (_, response) = try await URLSession.shared.data(for: request)
+			guard let httpResponse = response as? HTTPURLResponse else {
+				return false
+			}
+			return (200...299).contains(httpResponse.statusCode) || httpResponse.statusCode == 400
+		} catch {
+			return false
+		}
+	}
 
 }

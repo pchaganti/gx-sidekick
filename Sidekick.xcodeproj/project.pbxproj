@@ -110,6 +110,8 @@
 		206934932D5CCDF1006619FD /* conversationExportTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 206934922D5CCDF1006619FD /* conversationExportTemplate.html */; };
 		206AB6122CF5F8390010B09A /* AttachmentSelectionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206AB6112CF5F8390010B09A /* AttachmentSelectionButton.swift */; };
 		206FBB212D54B40700A045FF /* MessageReasoningProcessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206FBB202D54B40700A045FF /* MessageReasoningProcessView.swift */; };
+		207522092D7FD88300A1CA60 /* OpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 207522082D7FD88300A1CA60 /* OpenAI */; };
+		2075220B2D7FDF6C00A1CA60 /* Extension+SecureDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2075220A2D7FDF6C00A1CA60 /* Extension+SecureDefaults.swift */; };
 		207A9F532CB82D9600E727DE /* SymbolPicker in Frameworks */ = {isa = PBXBuildFile; productRef = 207A9F522CB82D9600E727DE /* SymbolPicker */; };
 		207A9F552CB8A96F00E727DE /* ExpertNavigationRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207A9F542CB8A96F00E727DE /* ExpertNavigationRowView.swift */; };
 		207A9F592CB8F4AF00E727DE /* ResourceSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207A9F582CB8F4AF00E727DE /* ResourceSelectionView.swift */; };
@@ -443,6 +445,7 @@
 		206934922D5CCDF1006619FD /* conversationExportTemplate.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = conversationExportTemplate.html; sourceTree = "<group>"; };
 		206AB6112CF5F8390010B09A /* AttachmentSelectionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentSelectionButton.swift; sourceTree = "<group>"; };
 		206FBB202D54B40700A045FF /* MessageReasoningProcessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageReasoningProcessView.swift; sourceTree = "<group>"; };
+		2075220A2D7FDF6C00A1CA60 /* Extension+SecureDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+SecureDefaults.swift"; sourceTree = "<group>"; };
 		207A9F542CB8A96F00E727DE /* ExpertNavigationRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertNavigationRowView.swift; sourceTree = "<group>"; };
 		207A9F582CB8F4AF00E727DE /* ResourceSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceSelectionView.swift; sourceTree = "<group>"; };
 		207A9F5C2CB8FD0900E727DE /* ResourceSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceSectionView.swift; sourceTree = "<group>"; };
@@ -590,6 +593,7 @@
 				20A8B6572CB26E4800B756FD /* SimilaritySearchKit in Frameworks */,
 				207A9F532CB82D9600E727DE /* SymbolPicker in Frameworks */,
 				2031B9952CEAE66400627D53 /* KeyboardShortcuts in Frameworks */,
+				207522092D7FD88300A1CA60 /* OpenAI in Frameworks */,
 				20A40C852D718D4300A9D9A9 /* LanguageSupport in Frameworks */,
 				20B53D072D5B03B900D1AE79 /* Sparkle in Frameworks */,
 				208388DD2CBF4E8A00C2A9F8 /* SecureDefaults in Frameworks */,
@@ -1300,6 +1304,7 @@
 				20B4D6B02CC3D72700817E15 /* Extension+IndexItem.swift */,
 				2031B9992CEAE7A900627D53 /* Extension+KeyboardShortcut.swift */,
 				2099BD9A2CB7B8C800E02732 /* Extension+RawRepresentable.swift */,
+				2075220A2D7FDF6C00A1CA60 /* Extension+SecureDefaults.swift */,
 				20FB0D882CBA8327006D062A /* Extension+SimilarityIndex.swift */,
 				20B97CE62CB0066A009A0A5D /* Extension+String.swift */,
 				20B97CEA2CB00912009A0A5D /* Extension+URL.swift */,
@@ -1488,6 +1493,7 @@
 				200619B92D678694001949EF /* WebViewKit */,
 				20A40C822D718D4300A9D9A9 /* CodeEditorView */,
 				20A40C842D718D4300A9D9A9 /* LanguageSupport */,
+				207522082D7FD88300A1CA60 /* OpenAI */,
 			);
 			productName = Sidekick;
 			productReference = 200549732CAFA67B00A3DCF2 /* Sidekick.app */;
@@ -1604,6 +1610,7 @@
 				200619B02D6768F6001949EF /* XCRemoteSwiftPackageReference "SwiftfulLoadingIndicators" */,
 				200619B82D678694001949EF /* XCRemoteSwiftPackageReference "WebViewKit" */,
 				20A40C812D718D4300A9D9A9 /* XCRemoteSwiftPackageReference "CodeEditorView" */,
+				207522072D7FD88300A1CA60 /* XCRemoteSwiftPackageReference "OpenAI" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 200549742CAFA67B00A3DCF2 /* Products */;
@@ -1814,6 +1821,7 @@
 				2030D6182D6C4ED200F18BF4 /* DetectorView.swift in Sources */,
 				20573F1B2CB5099B004C19FE /* ConversationCommands.swift in Sources */,
 				20B9E60C2CB140A000BA0AD2 /* AppDelegate.swift in Sources */,
+				2075220B2D7FDF6C00A1CA60 /* Extension+SecureDefaults.swift in Sources */,
 				208388ED2CBF825400C2A9F8 /* Tavily.swift in Sources */,
 				204AE3BB2CEAF5AC0086B42D /* Command.swift in Sources */,
 				20A40CF92D73763500A9D9A9 /* Extension+Date.swift in Sources */,
@@ -2315,6 +2323,14 @@
 				minimumVersion = 0.16.0;
 			};
 		};
+		207522072D7FD88300A1CA60 /* XCRemoteSwiftPackageReference "OpenAI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MacPaw/OpenAI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.3.6;
+			};
+		};
 		207A9F512CB82D9600E727DE /* XCRemoteSwiftPackageReference "SymbolPicker" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/xnth97/SymbolPicker";
@@ -2427,6 +2443,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 20573F262CB52F84004C19FE /* XCRemoteSwiftPackageReference "Splash" */;
 			productName = SplashMarkdown;
+		};
+		207522082D7FD88300A1CA60 /* OpenAI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 207522072D7FD88300A1CA60 /* XCRemoteSwiftPackageReference "OpenAI" */;
+			productName = OpenAI;
 		};
 		207A9F522CB82D9600E727DE /* SymbolPicker */ = {
 			isa = XCSwiftPackageProductDependency;
