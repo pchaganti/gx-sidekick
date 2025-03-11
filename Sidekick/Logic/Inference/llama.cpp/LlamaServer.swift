@@ -76,7 +76,8 @@ public actor LlamaServer {
 	/// - Parameter path: The endpoint accessed via this `URL`
 	/// - Returns: The `URL` at which the inference server is accessible
 	private func url(
-		_ path: String
+		_ path: String,
+		mustUseLocalServer: Bool = false
 	) async -> (
 		url: URL,
 		usingRemoteServer: Bool
@@ -91,7 +92,7 @@ public actor LlamaServer {
 		)
 		let urlString: String
 		let notUsingServer: Bool = await !Self.serverIsReachable() || !InferenceSettings.useServer
-		if notUsingServer {
+		if notUsingServer || mustUseLocalServer {
 			urlString = "\(Self.scheme)://\(Self.host):\(Self.port)\(path)"
 		} else {
 			urlString = "\(endpoint)\(path)"
@@ -392,22 +393,20 @@ public actor LlamaServer {
 	public func tokenCount(
 		in text: String
 	) async throws -> Int {
+		// Start server if not active
+		if !self.process.isRunning && !self.isStartingServer {
+			try await startServer()
+		}
 		// Get url of endpoint
-		let rawUrl = await self.url("/tokenize")
+		// TODO: Use local model for tokenization
+		let rawUrl: URL = URL(string: "\(Self.scheme)://\(Self.host):\(Self.port)/tokenize")!
 		// Formulate request
 		var request = URLRequest(
-			url: rawUrl.url
+			url: rawUrl
 		)
 		request.httpMethod = "POST"
 		request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 		request.setValue("keep-alive", forHTTPHeaderField: "Connection")
-		if rawUrl.usingRemoteServer {
-			request.setValue(
-				"Bearer \(InferenceSettings.inferenceApiKey)",
-				forHTTPHeaderField: "Authorization"
-			)
-			request.setValue("nil", forHTTPHeaderField: "ngrok-skip-browser-warning")
-		}
 		let requestParams: TokenizeParams = .init(content: text)
 		let requestJson: String = requestParams.toJSON()
 		request.httpBody = requestJson.data(using: .utf8)
@@ -428,7 +427,9 @@ public actor LlamaServer {
 		guard process.isRunning else { return }
 		// Init server health project
 		let serverHealth = ServerHealth()
-		await serverHealth.updateURL(url("/health").url)
+		await serverHealth.updateURL(
+			self.url("/health", mustUseLocalServer: true).url
+		)
 		await serverHealth.check()
 		// Set check parameters
 		var timeout = 30
