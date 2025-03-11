@@ -22,6 +22,13 @@ struct SlideStudioPreviewEditor: View {
 	
 	@State private var previewId: UUID = UUID()
 	
+	var refreshButtonSymbolName: String {
+		if #available(macOS 15, *) {
+			return "arrow.trianglehead.counterclockwise"
+		}
+		return "gobackward"
+	}
+	
     var body: some View {
 		HSplitView {
 			editor
@@ -92,7 +99,7 @@ struct SlideStudioPreviewEditor: View {
 			// Reset id to redraw view
 			self.previewId = UUID()
 		} label: {
-			Label("Refresh", systemImage: "arrow.trianglehead.counterclockwise")
+			Label("Refresh", systemImage: refreshButtonSymbolName)
 				.labelStyle(.iconOnly)
 				.foregroundStyle(Color.white)
 		}

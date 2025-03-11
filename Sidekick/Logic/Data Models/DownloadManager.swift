@@ -175,7 +175,7 @@ extension DownloadManager: URLSessionDelegate, URLSessionDownloadDelegate {
 				Settings.modelUrl = destinationURL
 			}
 			ModelManager.shared.add(destinationURL)
-			Task.detached { @MainActor in
+			Task { @MainActor in
 				self.didFinishDownloadingModel = true
 			}
 		} catch {

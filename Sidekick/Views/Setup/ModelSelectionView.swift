@@ -70,7 +70,7 @@ struct ModelSelectionView: View {
 	var downloadButton: some View {
 		Button {
 			// Start download of the default model
-			Task.detached { @MainActor in
+			Task { @MainActor in
 				await self.downloadManager.downloadDefaultModel()
 			}
 		} label: {

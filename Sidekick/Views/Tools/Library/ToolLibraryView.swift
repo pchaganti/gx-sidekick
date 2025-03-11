@@ -89,7 +89,7 @@ struct ToolboxLibraryView: View {
 			)
 			.frame(
 				maxWidth: 450,
-				maxHeight: 400
+				maxHeight: 250
 			)
 		}
 	}
