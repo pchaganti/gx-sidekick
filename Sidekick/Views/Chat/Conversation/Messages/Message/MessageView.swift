@@ -100,7 +100,7 @@ struct MessageView: View {
 				isShowingSources: $isShowingSources,
 				sources: self.sources!
 			)
-			.frame(minWidth: 600, minHeight: 800)
+			.frame(minWidth: 600, minHeight: 650, maxHeight: 700)
 		}
     }
 	
