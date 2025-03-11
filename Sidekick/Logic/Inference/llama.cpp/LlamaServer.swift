@@ -257,7 +257,6 @@ public actor LlamaServer {
 	) async throws -> CompleteResponse {
 		// Get endpoint url & whether server is used
 		let rawUrl = await self.url("/v1/chat/completions")
-		print(rawUrl.url.absoluteString)
 		// Start server if remote server is not used & local server is inactive
 		if !rawUrl.usingRemoteServer {
 			try await startServer()
@@ -304,7 +303,6 @@ public actor LlamaServer {
 		}
 		let requestJson: String = await params.toJSON()
 		request.httpBody = requestJson.data(using: .utf8)
-		
 		// Use EventSource to receive server sent events
 		self.eventSource = EventSource(
 			timeoutInterval: 6000 // Timeout after 100 minutes, enough for even reasoning models
