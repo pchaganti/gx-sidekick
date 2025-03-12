@@ -29,10 +29,6 @@ public class Model: ObservableObject {
 		let _ = Bookmarks.shared
 		// Set system prompt
 		self.systemPrompt = systemPrompt
-		// Get model and context length
-		guard let modelPath: String = Settings.modelUrl?.posixPath else {
-			fatalError("Could not find modelUrl")
-		}
 		// Init LlamaServer object
 		self.llama = LlamaServer(
 			systemPrompt: systemPrompt
@@ -72,10 +68,6 @@ public class Model: ObservableObject {
 	
 	/// Function to refresh `llama-server` with the newly selected model
 	public func refreshModel() async {
-		// Get model path
-		guard let modelPath: String = Settings.modelUrl?.posixPath else {
-			fatalError("Could not find modelUrl")
-		}
 		// Restart server if needed
 		if !InferenceSettings.useServer {
 			await self.llama.stopServer()

@@ -128,7 +128,14 @@
       }
     },
     "Alternatively..." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "或者..."
+          }
+        }
+      }
     },
     "An error occurred while exporting the slides." : {
       "localizations" : {
@@ -1156,17 +1163,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "演示文稿生成出错：%@"
-          }
-        }
-      }
-    },
-    "Error Loading Model" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "模型加载错误"
           }
         }
       }
@@ -3099,7 +3095,14 @@
       }
     },
     "The AI is on strike!" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模型罢工了！"
+          }
+        }
+      }
     },
     "The AI model's context is full and may forget earlier chat history. Start a new conversation to clear context." : {
       "localizations" : {
@@ -3132,7 +3135,14 @@
       }
     },
     "The local AI model couldn’t be found, and Sidekick could not connect to a remote server. Please verify that the local and remote models are configured correctly in Settings." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sidekick 既找不到AI 模型，又无法连接到远程服务器。请在“设置”中验证本地和远程模型是否配置正确。"
+          }
+        }
+      }
     },
     "The model name on the server used for inference. (e.g. gpt-4o)" : {
       "localizations" : {
@@ -3314,17 +3324,6 @@
         }
       }
     },
-    "Try reselecting the model in Settings. If speculative decoding is enabled, also try reselecting the model used for speculative decoding." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "请尝试在设置中选择另一个模型。如果启用了推测性解码，请尝试重新加载用于推测性解码的模型。"
-          }
-        }
-      }
-    },
     "Unknown" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3416,7 +3415,14 @@
       }
     },
     "Use GGUF model" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用 GGUF 模型"
+          }
+        }
+      }
     },
     "Use GPU Acceleration" : {
       "localizations" : {
@@ -3429,7 +3435,14 @@
       }
     },
     "Use model API" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用模型 API"
+          }
+        }
+      }
     },
     "Use Server" : {
       "localizations" : {
