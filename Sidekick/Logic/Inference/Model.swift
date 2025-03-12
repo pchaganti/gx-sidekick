@@ -35,7 +35,7 @@ public class Model: ObservableObject {
 		)
 		// Load model if not using server
 		Task {
-			let canReachServer: Bool = await LlamaServer.serverIsReachable()
+			let canReachServer: Bool = await self.llama.remoteServerIsReachable()
 			do {
 				if !InferenceSettings.useServer || !canReachServer {
 					try await self.llama.startServer()
@@ -76,7 +76,7 @@ public class Model: ObservableObject {
 			systemPrompt: self.systemPrompt
 		)
 		// Load model if needed
-		let canReachServer: Bool = await LlamaServer.serverIsReachable()
+		let canReachServer: Bool = await self.llama.remoteServerIsReachable()
 		if !InferenceSettings.useServer || !canReachServer {
 			try? await self.llama.startServer()
 		}

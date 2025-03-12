@@ -85,6 +85,7 @@
 		204186892D81E32B002A5D1C /* libggml-rpc.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 2041866D2D81E304002A5D1C /* libggml-rpc.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		2041868A2D81E32B002A5D1C /* libllama.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 2041866E2D81E304002A5D1C /* libllama.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		2041868B2D81E32B002A5D1C /* libllava_shared.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 2041866F2D81E304002A5D1C /* libllava_shared.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		2041868D2D81E6B2002A5D1C /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2041868C2D81E6B2002A5D1C /* NetworkMonitor.swift */; };
 		204592172CD32DEF00DEAA96 /* TypedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204592162CD32DEF00DEAA96 /* TypedTextView.swift */; };
 		204735802D642BE5000740F9 /* ModelExplorerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2047357F2D642BE5000740F9 /* ModelExplorerView.swift */; };
 		204AE3B62CEAF4C20086B42D /* InlineAssistantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204AE3B52CEAF4C20086B42D /* InlineAssistantView.swift */; };
@@ -410,6 +411,7 @@
 		2041866F2D81E304002A5D1C /* libllava_shared.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libllava_shared.dylib; sourceTree = "<group>"; };
 		204186702D81E304002A5D1C /* llama-perplexity */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llama-perplexity"; sourceTree = "<group>"; };
 		204186712D81E304002A5D1C /* llama-server */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llama-server"; sourceTree = "<group>"; };
+		2041868C2D81E6B2002A5D1C /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		204592162CD32DEF00DEAA96 /* TypedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypedTextView.swift; sourceTree = "<group>"; };
 		2047357F2D642BE5000740F9 /* ModelExplorerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelExplorerView.swift; sourceTree = "<group>"; };
 		204AE3B52CEAF4C20086B42D /* InlineAssistantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InlineAssistantView.swift; sourceTree = "<group>"; };
@@ -1110,6 +1112,7 @@
 			isa = PBXGroup;
 			children = (
 				2031B98D2CEAE1A700627D53 /* Accessibility.swift */,
+				2041868C2D81E6B2002A5D1C /* NetworkMonitor.swift */,
 				207E5EF12D6FDEEF00A8F6FA /* ImageSearch.swift */,
 			);
 			path = Tools;
@@ -1716,6 +1719,7 @@
 				204AE3BD2CEB56750086B42D /* WrappingHStack.swift in Sources */,
 				203487642D66FF6700A88DA4 /* SidebarButtonView.swift in Sources */,
 				208388E52CBF526E00C2A9F8 /* RetrievalSettings.swift in Sources */,
+				2041868D2D81E6B2002A5D1C /* NetworkMonitor.swift in Sources */,
 				20573F212CB527DB004C19FE /* MessageView.swift in Sources */,
 				204735802D642BE5000740F9 /* ModelExplorerView.swift in Sources */,
 				20BF49CD2D64A08200C329F8 /* ModelExplorerViewController.swift in Sources */,

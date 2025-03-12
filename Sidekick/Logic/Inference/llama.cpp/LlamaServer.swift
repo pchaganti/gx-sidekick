@@ -62,6 +62,11 @@ public actor LlamaServer {
 	/// Property for `llama-server` process
 	private var process: Process = Process()
 	
+	/// A `Bool` representing whether the remote server is accessible
+	var wasRemoteServerAccessible: Bool = false
+	/// A `Date` representing when the remote server was less checked
+	var lastRemoteServerCheck: Date = .distantPast
+	
 	/// Function to set system prompt
 	/// - Parameter systemPrompt: The system prompt, of type `String`
 	public func setSystemPrompt(_ systemPrompt: String) {
@@ -84,7 +89,8 @@ public actor LlamaServer {
 			with: ""
 		)
 		let urlString: String
-		let notUsingServer: Bool = await !Self.serverIsReachable() || !InferenceSettings.useServer
+		async let isServerReachable = self.remoteServerIsReachable()
+		let notUsingServer: Bool = !(await isServerReachable) || !InferenceSettings.useServer
 		if notUsingServer || mustUseLocalServer {
 			urlString = "\(Self.scheme)://\(Self.host):\(Self.port)\(path)"
 		} else {
@@ -95,9 +101,15 @@ public actor LlamaServer {
 	
 	/// Function to check if the remote server is reachable
 	/// - Returns: A `Bool` indicating if the server can be reached
-	public static func serverIsReachable() async -> Bool {
+	public func remoteServerIsReachable() async -> Bool {
 		// Return false if server is unused
 		if !InferenceSettings.useServer { return false }
+		// Try to use cached result
+		let lastPathChangeDate: Date = NetworkMonitor.shared.lastPathChange
+		if self.lastRemoteServerCheck >= lastPathChangeDate {
+			return self.wasRemoteServerAccessible
+		}
+		// Get last path change time
 		// If using server, check connection on multiple endpoints
 		let testEndpoints: [String] = [
 			"/v1/chat/completions",
@@ -114,11 +126,16 @@ public actor LlamaServer {
 				continue
 			}
 			if await endpointUrl.isAPIEndpointReachable() {
+				// Cache result, then return
+				self.wasRemoteServerAccessible = true
+				self.lastRemoteServerCheck = Date.now
 				return true
 			}
 		}
-		// If fell through, return false
+		// If fell through, cache and return false
 		Self.logger.warning("Could not reach remote server at '\(InferenceSettings.endpoint)'")
+		self.wasRemoteServerAccessible = false
+		self.lastRemoteServerCheck = Date.now
 		return false
 	}
 	
