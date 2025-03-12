@@ -229,7 +229,6 @@ struct PromptInputField: View {
 				temporaryResources: tempResources
 			)
 		} catch let error as LlamaServerError {
-			print("Interupted response: \(error)")
 			await model.interrupt()
 			self.handleResponseError(error)
 			return
@@ -275,12 +274,27 @@ struct PromptInputField: View {
 	
 	@MainActor
 	private func handleResponseError(_ error: LlamaServerError) {
-		print("Handle response error:", error.localizedDescription)
+		// Display error message
 		let errorDescription: String = error.errorDescription ?? "Unknown Error"
 		let recoverySuggestion: String = error.recoverySuggestion
 		Dialogs.showAlert(
-			title: "\(errorDescription): \(recoverySuggestion)"
+			title: errorDescription,
+			message: recoverySuggestion
 		)
+		// Restore prompt
+		if let prompt: String = self.sentConversation?.messages.last?.text {
+			self.promptController.prompt = prompt
+		}
+		// Remove messages
+		if let messages: [Message] = self.sentConversation?.messages.dropLast(1),
+			var conversation = self.sentConversation {
+			// Drop message and update
+			conversation.messages = messages
+			self.conversationManager.update(conversation)
+		}
+		// Reset model status
+		self.model.status = .ready
+		self.model.sentConversationId = nil
 	}
 
 }

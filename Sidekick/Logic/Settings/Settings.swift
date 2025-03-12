@@ -37,7 +37,7 @@ public class Settings {
 		get {
 			return UserDefaults.standard.bool(
 				forKey: "setupComplete"
-			) && Self.hasModel
+			)
 		}
 		set {
 			UserDefaults.standard.set(newValue, forKey: "setupComplete")
@@ -97,15 +97,12 @@ public class Settings {
 		}
 	}
 	
-	/// Function to check if an LLM exists
+	/// A `Bool` representing  if an model exists for use, whether it is local or on a server
 	static var hasModel: Bool {
-		if let modelUrl = Self.modelUrl {
-			// Return if model was located
-			return modelUrl.fileExists
-		} else {
-			// No model
-			return false
-		}
+		// Check for local model & remote model
+		let hasLocalModel: Bool = Self.modelUrl?.fileExists ?? false
+		let hasRemoteModel: Bool = InferenceSettings.remoteModelSetupComplete && InferenceSettings.useServer
+		return hasLocalModel || hasRemoteModel
 	}
 	
 	/// A `Bool` representing whether code interpreter is enabled
@@ -202,6 +199,7 @@ public class Settings {
 	
 	/// Computed property that determines whether the setup screen should be shown
 	static var showSetup: Bool {
+		// Show if setup is marked as incomplete, or model is missing
 		return !Self.setupComplete || !Self.hasModel
 	}
 	

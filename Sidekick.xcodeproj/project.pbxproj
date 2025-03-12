@@ -68,6 +68,8 @@
 		204AE3C02CEB57330086B42D /* CommandButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204AE3BF2CEB57330086B42D /* CommandButton.swift */; };
 		204AE3C62CEC7C030086B42D /* NewCommandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204AE3C52CEC7C030086B42D /* NewCommandView.swift */; };
 		204AEDA92D8170D0004028FF /* RemoteModelNameEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204AEDA82D8170D0004028FF /* RemoteModelNameEditor.swift */; };
+		204AEDAB2D81A7B4004028FF /* RemoteModelSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204AEDAA2D81A7B4004028FF /* RemoteModelSettingsView.swift */; };
+		204AEDAD2D81AB86004028FF /* RemoteModelSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204AEDAC2D81AB86004028FF /* RemoteModelSetupView.swift */; };
 		204C79562CB765D700EED58E /* ExpertSelectionMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204C79552CB765D700EED58E /* ExpertSelectionMenu.swift */; };
 		204C79582CB769A400EED58E /* Extension+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204C79572CB769A400EED58E /* Extension+View.swift */; };
 		204C795C2CB79AB900EED58E /* ExpertManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204C795B2CB79AB900EED58E /* ExpertManagerView.swift */; };
@@ -407,6 +409,8 @@
 		204AE3BF2CEB57330086B42D /* CommandButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandButton.swift; sourceTree = "<group>"; };
 		204AE3C52CEC7C030086B42D /* NewCommandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCommandView.swift; sourceTree = "<group>"; };
 		204AEDA82D8170D0004028FF /* RemoteModelNameEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteModelNameEditor.swift; sourceTree = "<group>"; };
+		204AEDAA2D81A7B4004028FF /* RemoteModelSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteModelSettingsView.swift; sourceTree = "<group>"; };
+		204AEDAC2D81AB86004028FF /* RemoteModelSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteModelSetupView.swift; sourceTree = "<group>"; };
 		204C79552CB765D700EED58E /* ExpertSelectionMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertSelectionMenu.swift; sourceTree = "<group>"; };
 		204C79572CB769A400EED58E /* Extension+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+View.swift"; sourceTree = "<group>"; };
 		204C795B2CB79AB900EED58E /* ExpertManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertManagerView.swift; sourceTree = "<group>"; };
@@ -967,6 +971,7 @@
 				208388E12CBF51F900C2A9F8 /* RetrievalSettingsView.swift */,
 				20571F7A2CBD602B004F3344 /* InferenceSettingsView.swift */,
 				20571F832CBD71C9004F3344 /* SystemPromptEditor.swift */,
+				204AEDAA2D81A7B4004028FF /* RemoteModelSettingsView.swift */,
 				204AEDA82D8170D0004028FF /* RemoteModelNameEditor.swift */,
 				208844302CDDE33F003BCB6F /* ModelListView.swift */,
 				208844322CDDE394003BCB6F /* ModelRowView.swift */,
@@ -1363,6 +1368,7 @@
 			children = (
 				20B97CD52CAFF2E0009A0A5D /* SetupView.swift */,
 				20B97CD72CAFF2E7009A0A5D /* ModelSelectionView.swift */,
+				204AEDAC2D81AB86004028FF /* RemoteModelSetupView.swift */,
 				204D097D2D11611E0066B060 /* Introduction */,
 			);
 			path = Setup;
@@ -1750,6 +1756,7 @@
 				20C62EC12D713BC000996566 /* SlideStudioProgressView.swift in Sources */,
 				20B97CE52CB00605009A0A5D /* Extension+Color.swift in Sources */,
 				20B97CDD2CAFFE06009A0A5D /* Message.swift in Sources */,
+				204AEDAB2D81A7B4004028FF /* RemoteModelSettingsView.swift in Sources */,
 				20B97CD02CAFEC37009A0A5D /* Model.swift in Sources */,
 				20571F792CBD6019004F3344 /* GeneralSettingsView.swift in Sources */,
 				200FBFEE2CB6477400A92A74 /* LlamaServer.swift in Sources */,
@@ -1817,6 +1824,7 @@
 				20BF49D12D64A89300C329F8 /* ModelView.swift in Sources */,
 				20B97CE12CB001E0009A0A5D /* Conversation.swift in Sources */,
 				207A9F552CB8A96F00E727DE /* ExpertNavigationRowView.swift in Sources */,
+				204AEDAD2D81AB86004028FF /* RemoteModelSetupView.swift in Sources */,
 				20B97CE92CB007DF009A0A5D /* Resource.swift in Sources */,
 				20573F302CB5302C004C19FE /* TextOutputFormat.swift in Sources */,
 				20FB0D8B2CBA8828006D062A /* SearchResult.swift in Sources */,

@@ -35,7 +35,6 @@ public class Model: ObservableObject {
 		}
 		// Init LlamaServer object
 		self.llama = LlamaServer(
-			modelPath: modelPath,
 			systemPrompt: systemPrompt
 		)
 		// Load model if not using server
@@ -82,7 +81,6 @@ public class Model: ObservableObject {
 			await self.llama.stopServer()
 		}
 		self.llama = LlamaServer(
-			modelPath: modelPath,
 			systemPrompt: self.systemPrompt
 		)
 		// Load model if needed

@@ -12,7 +12,7 @@ enum LlamaServerError: LocalizedError {
 	var errorDescription: String? {
 		switch self {
 			case .modelError:
-				return String(localized: "Error Loading Model")
+				return String(localized: "The AI is on strike!")
 			default:
 				return String(localized: "Inference Server Error")
 		}
@@ -21,7 +21,7 @@ enum LlamaServerError: LocalizedError {
 	var recoverySuggestion: String {
 		switch self {
 			case .modelError:
-				return String(localized: "Try reselecting the model in Settings. If speculative decoding is enabled, also try reselecting the model used for speculative decoding.")
+				return String(localized: "The local AI model couldn’t be found, and Sidekick could not connect to a remote server. Please verify that the local and remote models are configured correctly in Settings.")
 			default:
 				return String(localized: "Restart Sidekick")
 		}

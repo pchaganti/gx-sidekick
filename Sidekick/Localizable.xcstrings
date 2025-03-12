@@ -127,6 +127,9 @@
         }
       }
     },
+    "Alternatively..." : {
+
+    },
     "An error occurred while exporting the slides." : {
       "localizations" : {
         "zh-Hans" : {
@@ -1158,6 +1161,7 @@
       }
     },
     "Error Loading Model" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3094,6 +3098,9 @@
         }
       }
     },
+    "The AI is on strike!" : {
+
+    },
     "The AI model's context is full and may forget earlier chat history. Start a new conversation to clear context." : {
       "localizations" : {
         "zh-Hans" : {
@@ -3123,6 +3130,9 @@
           }
         }
       }
+    },
+    "The local AI model couldn’t be found, and Sidekick could not connect to a remote server. Please verify that the local and remote models are configured correctly in Settings." : {
+
     },
     "The model name on the server used for inference. (e.g. gpt-4o)" : {
       "localizations" : {
@@ -3305,6 +3315,7 @@
       }
     },
     "Try reselecting the model in Settings. If speculative decoding is enabled, also try reselecting the model used for speculative decoding." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3404,6 +3415,9 @@
         }
       }
     },
+    "Use GGUF model" : {
+
+    },
     "Use GPU Acceleration" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3413,6 +3427,9 @@
           }
         }
       }
+    },
+    "Use model API" : {
+
     },
     "Use Server" : {
       "localizations" : {

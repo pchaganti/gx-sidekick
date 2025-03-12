@@ -25,10 +25,8 @@ public actor LlamaServer {
 	///   - modelPath: The POSIX path linking to the model
 	///   - systemPrompt: The system prompt passed to the model, which controls its behaviour
 	init(
-		modelPath: String,
 		systemPrompt: String
 	) {
-		self.modelPath = modelPath
 		self.systemPrompt = systemPrompt
 		self.contextLength = InferenceSettings.contextLength
 	}
@@ -48,11 +46,9 @@ public actor LlamaServer {
 	///	An EventSource task handling connecting to the URLRequest and creating an event stream
 	private var dataTask: EventSource.DataTask?
 	
-	/// The POSIX path to the LLM, of type `String`
-	var modelPath: String?
 	/// The name of the LLM, of type `String`
 	var modelName: String {
-		modelPath?.split(separator: "/").last?.map { String($0) }.joined() ?? "unknown"
+		return Settings.modelUrl?.deletingPathExtension().lastPathComponent ?? "Unknown Model"
 	}
 	
 	/// The system prompt given to the chatbot
@@ -137,8 +133,7 @@ public actor LlamaServer {
 		request.httpMethod = "GET"
 		let urlSession: URLSession = URLSession.shared
 		urlSession.configuration.waitsForConnectivity = false
-		urlSession.configuration.timeoutIntervalForRequest = 5
-		urlSession.configuration.timeoutIntervalForResource = 5
+		urlSession.configuration.timeoutIntervalForRequest = 1
 		// Get JSON response
 		guard let (data, _): (Data, URLResponse) = try? await URLSession.shared.data(
 			for: request
@@ -185,10 +180,21 @@ public actor LlamaServer {
 	
 	/// Function to start the `llama-server` process
 	public func startServer() async throws {
+		// If a model is missing, throw error
+		let hasModel: Bool = Settings.modelUrl?.fileExists ?? false
+		let usesSpeculativeModel: Bool = InferenceSettings.useSpeculativeDecoding
+		let hasSpeculativeModel: Bool = InferenceSettings.speculativeDecodingModelUrl?.fileExists ?? false
+		if !hasModel || (usesSpeculativeModel && !hasSpeculativeModel) {
+			Self.logger.error("Main model or draft model is missing")
+			throw LlamaServerError.modelError
+		}
+		// If server is running, exit
+		guard !process.isRunning, let modelPath = Settings.modelUrl?.posixPath else {
+			return
+		}
 		// Signal beginning of server initialization
 		self.isStartingServer = true
-		// If server is running, exit
-		guard !process.isRunning, let modelPath = self.modelPath else { return }
+		// Stop server if running
 		await stopServer()
 		// Initialize `llama-server` process
 		process = Process()
@@ -430,7 +436,6 @@ public actor LlamaServer {
 			try await startServer()
 		}
 		// Get url of endpoint
-		// TODO: Use local model for tokenization
 		let rawUrl: URL = URL(string: "\(Self.scheme)://\(Self.host):\(Self.port)/tokenize")!
 		// Formulate request
 		var request = URLRequest(
@@ -464,25 +469,18 @@ public actor LlamaServer {
 		)
 		await serverHealth.check()
 		// Set check parameters
-		var timeout = 30
-		let tick = 1
+		var timeout = 30 // Timeout after 30 seconds
+		let tick = 1 // Check every second
 		while true {
 			await serverHealth.check()
 			let score = await serverHealth.score
 			if score >= 0.25 { break }
 			await serverHealth.check()
-			if !process.isRunning {
-				Self.logger.error("llama-server is not running")
-				// Attempt to revive server
-				try? await self.startServer()
-				throw LlamaServerError.modelError
-			}
 			try await Task.sleep(for: .seconds(tick))
 			timeout -= tick
 			if timeout <= 0 {
 				Self.logger.error("llama-server did not respond in reasonable time")
-				// Attempt to revive server
-				try? await self.startServer()
+				// Display error
 				throw LlamaServerError.modelError
 			}
 		}

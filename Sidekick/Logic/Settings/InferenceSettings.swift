@@ -192,6 +192,11 @@ Current date & time: \(Date.now.ISO8601Format())
 		}
 	}
 	
+	/// A `Bool` representing if server setup is complete
+	public static var remoteModelSetupComplete: Bool {
+		return !Self.remoteModelName.isEmpty && !Self.endpoint.isEmpty
+	}
+	
 	/// Static constant which controls the amount of context an LLM can remember
 	public static var contextLength: Int {
 		get {

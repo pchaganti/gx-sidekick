@@ -13,17 +13,23 @@ struct ModelSelectionView: View {
 	@EnvironmentObject private var downloadManager: DownloadManager
 	@Binding var selectedModel: Bool
 	
+	@State private var showRemoteModelSetup: Bool = false
+	
     var body: some View {
 		VStack {
 			welcome
 			downloadButton
 				.padding(.top, 5)
-			selectButton
 			downloadProgress
+			advancedDivider
+			selectButton
+			connectButton
 		}
 		.padding(.horizontal)
 		.padding()
-		.onChange(of: downloadManager.didFinishDownloadingModel) {
+		.onChange(
+			of: downloadManager.didFinishDownloadingModel
+		) {
 			selectedModel = downloadManager.didFinishDownloadingModel
 		}
     }
@@ -52,6 +58,18 @@ struct ModelSelectionView: View {
 			.resizable()
 			.foregroundStyle(.secondary)
 			.frame(width: 100, height: 100)
+	}
+	
+	var advancedDivider: some View {
+		HStack {
+			Rectangle().fill(.secondary).frame(height: 1)
+			Text("Alternatively...")
+				.font(.body)
+				.foregroundStyle(.secondary)
+			Rectangle().fill(.secondary).frame(height: 1)
+		}
+		.frame(maxWidth: 500)
+		.padding(.vertical, 4)
 	}
 	
 	var downloadProgress: some View {
@@ -89,9 +107,24 @@ struct ModelSelectionView: View {
 			// After selection, move to next screen
 			selectedModel = didSelect
 		} label: {
-			Text("Select a Model")
+			Text("Use GGUF model")
 		}
 		.buttonStyle(.link)
+	}
+	
+	var connectButton: some View {
+		Button {
+			self.showRemoteModelSetup.toggle()
+		} label: {
+			Text("Use model API")
+		}
+		.buttonStyle(.link)
+		.sheet(isPresented: $showRemoteModelSetup) {
+			RemoteModelSetupView(
+				isPresented: $showRemoteModelSetup,
+				selectedModel: $selectedModel
+			)
+		}
 	}
 	
 }
