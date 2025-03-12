@@ -234,7 +234,7 @@ public class ExpertManager: ObservableObject {
 					withIntermediateDirectories: true
 				)
 			} catch {
-				Self.logger.error("Failed to create directory for datastore: \(error)")
+				Self.logger.error("Failed to create directory for datastore: \(error, privacy: .public)")
 			}
 		}
 	}

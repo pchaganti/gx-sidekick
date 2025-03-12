@@ -48,7 +48,7 @@ public class TavilySearch {
 			}
 			return websiteContent
 		} catch {
-			self.logger.error("Tavily Search Error: \(error)")
+			self.logger.error("Tavily Search Error: \(error, privacy: .public)")
 			throw error
 		}
 	}

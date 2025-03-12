@@ -73,7 +73,7 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 			)
 		}
 		// Log
-		Self.logger.notice("Updating resource index for expert \"\(expertName)\"")
+		Self.logger.notice("Updating resource index for expert \"\(expertName, privacy: .public)\"")
 		// Update for each file
 		for index in self.resources.indices  {
 			await self.resources[index].updateIndex(
@@ -102,7 +102,7 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 			)
 		}
 		// Log
-		Self.logger.notice("Finished updating resource index for expert \"\(expertName)\"")
+		Self.logger.notice("Finished updating resource index for expert \"\(expertName, privacy: .public)\"")
 	}
 
 	
@@ -115,7 +115,7 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 				withIntermediateDirectories: true
 			)
 		} catch {
-			Self.logger.error("Failed to create directory for resources index: \(error)")
+			Self.logger.error("Failed to create directory for resources index: \(error, privacy: .public)")
 		}
 	}
 	
@@ -132,7 +132,7 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 		// Check if exists
 		if self.resources.map(\.url).contains(resource.url) { return }
 		// Log
-		Self.logger.notice("Adding resource \(resource.url)")
+		Self.logger.notice("Adding resource \(resource.url, privacy: .public)")
 		// Add to resources list
 		self.resources.append(resource)
 		// Reindex
@@ -154,7 +154,7 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 			if self.resources.map(\.url).contains(resource.url) {
 				continue
 			}
-			Self.logger.notice("Adding resource \(resource.url)")
+			Self.logger.notice("Adding resource \(resource.url, privacy: .public)")
 			self.resources.append(resource)
 		}
 		// Reindex
@@ -181,7 +181,7 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 				// Remove from list
 				self.resources.remove(at: index)
 				// Log
-				Self.logger.notice("Removing resource \(resource.url)")
+				Self.logger.notice("Removing resource \(resource.url, privacy: .public)")
 				// Reindex
 				await self.updateResourcesIndex(
 					expertName: expertName

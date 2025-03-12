@@ -180,8 +180,8 @@ This project would not be possible without the hard work of:
 - psugihara and contributors who built [FreeChat](https://github.com/psugihara/FreeChat), which this project took heavy inspiration from
 - Georgi Gerganov for [llama.cpp](https://github.com/ggerganov/llama.cpp)
 - Alibaba for training Qwen 2.5
-- Meta for training Llama 3.1
-- Google for training Gemma 2
+- Meta for training Llama 3
+- Google for training Gemma 3
 
 ## Star History
 

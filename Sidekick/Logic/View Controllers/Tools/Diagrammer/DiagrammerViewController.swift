@@ -90,7 +90,7 @@ Cheatsheet:
 				encoding: .utf8
 			)
 		} catch {
-			Self.logger.error("Error saving D2 code: \(error)")
+			Self.logger.error("Error saving D2 code: \(error, privacy: .public)")
 		}
 	}
 	
@@ -181,7 +181,7 @@ Cheatsheet:
 				// Return success
 				return true
 			} catch {
-				Self.logger.error("Failed to start diagrammer render process: \(error)")
+				Self.logger.error("Failed to start diagrammer render process: \(error, privacy: .public)")
 				// Return fail
 				return false
 			}

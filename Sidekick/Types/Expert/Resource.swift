@@ -125,7 +125,7 @@ public struct Resource: Identifiable, Codable, Hashable, Sendable {
 				withIntermediateDirectories: true
 			)
 		} catch {
-			Self.logger.error("Failed to create directory for resource at \"\(dirUrl)\": \(error)")
+			Self.logger.error("Failed to create directory for resource at \"\(dirUrl, privacy: .public)\": \(error, privacy: .public)")
 		}
 	}
 	
@@ -198,7 +198,7 @@ public struct Resource: Identifiable, Codable, Hashable, Sendable {
 				name: self.filename
 			)
 		} catch {
-			Self.logger.error("Error saving index for resource \(self.url): \(error)")
+			Self.logger.error("Error saving index for resource \(self.url, privacy: .public): \(error, privacy: .public)")
 		}
 	}
 	
@@ -218,7 +218,7 @@ public struct Resource: Identifiable, Codable, Hashable, Sendable {
 			resourcesDirUrl: resourcesDirUrl
 		) {
 			let loggerMsg: String = "Skipping update for item \"\(self.url)\""
-			Self.logger.notice("\(loggerMsg)")
+			Self.logger.notice("\(loggerMsg, privacy: .public)")
 			return
 		}
 		// Else, start index
@@ -265,7 +265,7 @@ public struct Resource: Identifiable, Codable, Hashable, Sendable {
 		self.indexState.finishIndex()
 		// Show file updated
 		let loggerMsg: String = "Updated index for item \"\(self.url)\""
-		Self.logger.notice("\(loggerMsg)")
+		Self.logger.notice("\(loggerMsg, privacy: .public)")
 		// Record last index date
 		self.prevIndexDate = Date.now
 	}

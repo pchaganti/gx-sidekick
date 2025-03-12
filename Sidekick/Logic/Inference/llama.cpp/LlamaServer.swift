@@ -133,7 +133,7 @@ public actor LlamaServer {
 			}
 		}
 		// If fell through, cache and return false
-		Self.logger.warning("Could not reach remote server at '\(InferenceSettings.endpoint)'")
+		Self.logger.warning("Could not reach remote server at '\(InferenceSettings.endpoint, privacy: .public)'")
 		self.wasRemoteServerAccessible = false
 		self.lastRemoteServerCheck = Date.now
 		return false
@@ -157,7 +157,7 @@ public actor LlamaServer {
 		guard let (data, _): (Data, URLResponse) = try? await URLSession.shared.data(
 			for: request
 		) else {
-			Self.logger.error("Failed to fetch models from endpoint '\(modelsEndpoint.absoluteString)'")
+			Self.logger.error("Failed to fetch models from endpoint '\(modelsEndpoint.absoluteString, privacy: .public)'")
 			return []
 		}
 		// Decode and return
@@ -167,7 +167,7 @@ public actor LlamaServer {
 			from: data
 		)
 		let models: [String] = (response?.data ?? []).map({ $0.id })
-		Self.logger.info("Fetched \(models.count) models from endpoint '\(modelsEndpoint.absoluteString)'")
+		Self.logger.info("Fetched \(models.count, privacy: .public) models from endpoint '\(modelsEndpoint.absoluteString, privacy: .public)'")
 		return models
 	}
 	
@@ -261,7 +261,7 @@ public actor LlamaServer {
 		
 		process.arguments = arguments
 		
-		Self.logger.notice("Starting llama.cpp server \(self.process.arguments!.joined(separator: " "))")
+		Self.logger.notice("Starting llama.cpp server \(self.process.arguments!.joined(separator: " "), privacy: .public)")
 		
 		process.standardInput = FileHandle.nullDevice
 		
@@ -385,7 +385,7 @@ public actor LlamaServer {
 					continue listenLoop
 				case .error(let error):
 					Self.logger.error(
-						"llama.cpp EventSource server error: \(error)"
+						"llama.cpp EventSource server error: \(error, privacy: .public)"
 					)
 				case .event(let message):
 					// Parse json in message.data string
@@ -415,8 +415,8 @@ public actor LlamaServer {
 								}
 							}
 						} catch {
-							Self.logger.error("Error decoding response object \(error)")
-							Self.logger.error("responseObj: \(String(decoding: data, as: UTF8.self))")
+							Self.logger.error("Error decoding response object \(error, privacy: .public)")
+							Self.logger.error("responseObj: \(String(decoding: data, as: UTF8.self), privacy: .public)")
 						}
 					}
 				case .closed:

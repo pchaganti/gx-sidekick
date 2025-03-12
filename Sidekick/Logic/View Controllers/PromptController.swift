@@ -249,7 +249,7 @@ public class PromptController: ObservableObject, DropDelegate {
 					url: url
 				)
 			)
-			Self.logger.notice("Added temporary resource: \(url)")
+			Self.logger.notice("Added temporary resource: \(url, privacy: .public)")
 		}
 	}
 	
