@@ -118,6 +118,7 @@ public actor LlamaServer {
 			}
 		}
 		// If fell through, return false
+		Self.logger.warning("Could not reach remote server at '\(InferenceSettings.endpoint)'")
 		return false
 	}
 	
@@ -134,10 +135,12 @@ public actor LlamaServer {
 		let urlSession: URLSession = URLSession.shared
 		urlSession.configuration.waitsForConnectivity = false
 		urlSession.configuration.timeoutIntervalForRequest = 1
+		urlSession.configuration.timeoutIntervalForResource = 1
 		// Get JSON response
 		guard let (data, _): (Data, URLResponse) = try? await URLSession.shared.data(
 			for: request
 		) else {
+			Self.logger.error("Failed to fetch models from endpoint '\(modelsEndpoint.absoluteString)'")
 			return []
 		}
 		// Decode and return
@@ -146,7 +149,9 @@ public actor LlamaServer {
 			AvailableModelsResponse.self,
 			from: data
 		)
-		return (response?.data ?? []).map({ $0.id })
+		let models: [String] = (response?.data ?? []).map({ $0.id })
+		Self.logger.info("Fetched \(models.count) models from endpoint '\(modelsEndpoint.absoluteString)'")
+		return models
 	}
 	
 	/// Function to start a monitor process that will terminate the server when our app dies
@@ -298,7 +303,10 @@ public actor LlamaServer {
 		let rawUrl = await self.url("/v1/chat/completions")
 		// Start server if remote server is not used & local server is inactive
 		if !rawUrl.usingRemoteServer {
+			Self.logger.info("Using local model for inference...")
 			try await startServer()
+		} else {
+			Self.logger.info("Using remote model for inference...")
 		}
 		// Get start time
 		let start: CFAbsoluteTime = CFAbsoluteTimeGetCurrent()
@@ -410,7 +418,7 @@ public actor LlamaServer {
 		// Return info
 		let tokens: Int = stopResponse?.usage?.completion_tokens ?? tokenCount
 		let generationTime: CFTimeInterval = CFAbsoluteTimeGetCurrent() - start - responseDiff
-		let modelName: String = rawUrl.usingRemoteServer ? InferenceSettings.remoteModelName : self.modelName
+		let modelName: String = rawUrl.usingRemoteServer ? InferenceSettings.serverModelName : self.modelName
 		return CompleteResponse(
 			text: cleanText,
 			responseStartSeconds: responseDiff,

@@ -1,5 +1,5 @@
 //
-//  RemoteModelSettingsView.swift
+//  ServerModelSettingsView.swift
 //  Sidekick
 //
 //  Created by John Bean on 3/12/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RemoteModelSettingsView: View {
+struct ServerModelSettingsView: View {
     
 	@AppStorage("useServer") private var useServer: Bool = InferenceSettings.useServer
 	@AppStorage("endpoint") private var serverEndpoint: String = InferenceSettings.endpoint
@@ -18,7 +18,7 @@ struct RemoteModelSettingsView: View {
 			useServerToggle
 			serverEndpointEditor
 			inferenceApiKeyEditor
-			RemoteModelNameEditor()
+			ServerModelNameEditor()
 		} header: {
 			Text("Server")
 		}

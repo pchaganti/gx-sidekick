@@ -13,7 +13,7 @@ struct ModelSelectionView: View {
 	@EnvironmentObject private var downloadManager: DownloadManager
 	@Binding var selectedModel: Bool
 	
-	@State private var showRemoteModelSetup: Bool = false
+	@State private var showServerModelSetup: Bool = false
 	
     var body: some View {
 		VStack {
@@ -114,14 +114,14 @@ struct ModelSelectionView: View {
 	
 	var connectButton: some View {
 		Button {
-			self.showRemoteModelSetup.toggle()
+			self.showServerModelSetup.toggle()
 		} label: {
-			Text("Use model API")
+			Text("Use model server")
 		}
 		.buttonStyle(.link)
-		.sheet(isPresented: $showRemoteModelSetup) {
-			RemoteModelSetupView(
-				isPresented: $showRemoteModelSetup,
+		.sheet(isPresented: $showServerModelSetup) {
+			ServerModelSetupView(
+				isPresented: $showServerModelSetup,
 				selectedModel: $selectedModel
 			)
 		}

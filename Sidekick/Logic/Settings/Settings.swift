@@ -101,8 +101,8 @@ public class Settings {
 	static var hasModel: Bool {
 		// Check for local model & remote model
 		let hasLocalModel: Bool = Self.modelUrl?.fileExists ?? false
-		let hasRemoteModel: Bool = InferenceSettings.remoteModelSetupComplete && InferenceSettings.useServer
-		return hasLocalModel || hasRemoteModel
+		let hasServerModel: Bool = InferenceSettings.serverModelSetupComplete && InferenceSettings.useServer
+		return hasLocalModel || hasServerModel
 	}
 	
 	/// A `Bool` representing whether code interpreter is enabled

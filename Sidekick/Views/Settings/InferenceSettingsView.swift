@@ -36,7 +36,7 @@ struct InferenceSettingsView: View {
 			} header: {
 				Text("Parameters")
 			}
-			RemoteModelSettingsView()
+			ServerModelSettingsView()
 		}
 		.formStyle(.grouped)
 		.scrollIndicators(.never)

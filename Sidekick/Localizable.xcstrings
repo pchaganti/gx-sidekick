@@ -3134,12 +3134,12 @@
         }
       }
     },
-    "The local AI model couldn’t be found, and Sidekick could not connect to a remote server. Please verify that the local and remote models are configured correctly in Settings." : {
+    "The local AI model couldn’t be found, and Sidekick could not connect to a remote server. Please verify that the local and server models are configured correctly in Settings." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sidekick 既找不到AI 模型，又无法连接到远程服务器。请在“设置”中验证本地和远程模型是否配置正确。"
+            "value" : "Sidekick 既找不到AI 模型，又无法连接到服务器。请在“设置”中验证本地和远程模型是否配置正确。"
           }
         }
       }
@@ -3434,12 +3434,12 @@
         }
       }
     },
-    "Use model API" : {
+    "Use model server" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "使用模型 API"
+            "value" : "使用服务器上的模型"
           }
         }
       }

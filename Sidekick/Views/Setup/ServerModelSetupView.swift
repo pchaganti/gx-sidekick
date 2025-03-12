@@ -1,5 +1,5 @@
 //
-//  RemoteModelSetupView.swift
+//  ServerModelSetupView.swift
 //  Sidekick
 //
 //  Created by John Bean on 3/12/25.
@@ -7,18 +7,18 @@
 
 import SwiftUI
 
-struct RemoteModelSetupView: View {
+struct ServerModelSetupView: View {
 	
 	@Binding var isPresented: Bool
 	@Binding var selectedModel: Bool
 	
-	@AppStorage("remoteModelName") private var remoteModelName: String = ""
+	@AppStorage("remoteModelName") private var serverModelName: String = ""
 	@AppStorage("endpoint") private var endpoint: String = ""
 	@AppStorage("useServer") private var useServer: Bool = true
 	
 	var canContinue: Bool {
-		// Allow continue if any of local or remote model is setup
-		let serverIsSetup: Bool = !remoteModelName.isEmpty && !endpoint.isEmpty && useServer
+		// Allow continue if any of local or server model is setup
+		let serverIsSetup: Bool = !serverModelName.isEmpty && !endpoint.isEmpty && useServer
 		let localIsSetup: Bool = Settings.modelUrl?.fileExists ?? false
 		return serverIsSetup || localIsSetup
 	}
@@ -42,7 +42,7 @@ struct RemoteModelSetupView: View {
 	
 	var form: some View {
 		Form {
-			RemoteModelSettingsView()
+			ServerModelSettingsView()
 		}
 		.formStyle(.grouped)
 		.scrollIndicators(.never)

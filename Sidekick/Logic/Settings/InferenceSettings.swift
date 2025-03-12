@@ -177,14 +177,14 @@ Current date & time: \(Date.now.ISO8601Format())
 	}
 	
 	/// A `String` representing the name of the remote model
-	public static var remoteModelName: String {
+	public static var serverModelName: String {
 		get {
-			guard let remoteModelName = UserDefaults.standard.string(
+			guard let serverModelName = UserDefaults.standard.string(
 				forKey: "remoteModelName"
 			) else {
 				return "gpt-4o"
 			}
-			return remoteModelName
+			return serverModelName
 		}
 		set {
 			// Save
@@ -193,8 +193,8 @@ Current date & time: \(Date.now.ISO8601Format())
 	}
 	
 	/// A `Bool` representing if server setup is complete
-	public static var remoteModelSetupComplete: Bool {
-		return !Self.remoteModelName.isEmpty && !Self.endpoint.isEmpty
+	public static var serverModelSetupComplete: Bool {
+		return !Self.serverModelName.isEmpty && !Self.endpoint.isEmpty
 	}
 	
 	/// Static constant which controls the amount of context an LLM can remember

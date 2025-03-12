@@ -1,5 +1,5 @@
 //
-//  RemoteModelNameEditor.swift
+//  ServerModelNameEditor.swift
 //  Sidekick
 //
 //  Created by John Bean on 3/12/25.
@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct RemoteModelNameEditor: View {
+struct ServerModelNameEditor: View {
 	
 	@AppStorage("endpoint") private var serverEndpoint: String = InferenceSettings.endpoint
-	@AppStorage("remoteModelName") private var remoteModelName: String = InferenceSettings.remoteModelName
+	@AppStorage("remoteModelName") private var serverModelName: String = InferenceSettings.serverModelName
 	
 	var showModelList: Bool {
 		if !self.modelNames.isEmpty && !self.isFocused {
@@ -38,7 +38,7 @@ struct RemoteModelNameEditor: View {
 				alignment: .trailing
 			) {
 				if !showModelList {
-					TextField("", text: self.$remoteModelName)
+					TextField("", text: self.$serverModelName)
 						.focused(self.$isFocused)
 						.textFieldStyle(.roundedBorder)
 						.frame(maxWidth: 250)
@@ -69,7 +69,7 @@ struct RemoteModelNameEditor: View {
 	
 	var modelList: some View {
 		Picker(
-			selection: $remoteModelName
+			selection: $serverModelName
 		) {
 			ForEach(modelNames, id: \.self) { modelName in
 				Text(modelName)
