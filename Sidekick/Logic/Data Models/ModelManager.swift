@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FSKit_macOS
 import os.log
 import SwiftUI
 import UniformTypeIdentifiers
