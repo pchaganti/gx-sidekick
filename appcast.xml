@@ -8,9 +8,9 @@
 			<sparkle:version>10</sparkle:version>
 			<sparkle:shortVersionString>0.0.22</sparkle:shortVersionString>
 			<sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-			<enclosure url="https://github.com/johnbean393/Sidekick/releases/download/0.0.22/Sidekick-beta.0.0.22.2025-03-12.dmg"
-			sparkle:edSignature="gkk0iryRKtKi62zFEbGRhOuEIwriy0ar1tuU4zKzZQYTQqJjt0q2gpwD6+lZ0ckUOOmy4avzoTw5/DjQiFWaBA=="
-			length="171644861"
+			<enclosure url="https://github.com/johnbean393/Sidekick/releases/download/0.0.22/Sidekick-beta.0.0.22.2025-03-13.dmg"
+			sparkle:edSignature="Hublk4Pp9hOCuRVtm8ePIkBjZkKUvOA0+d4leoXfYDCa093fTrKYcGyaVAh0O2yzE5nTsmt0Tmty6LAAaytADw=="
+			length="171678946"
 			type="application/octet-stream" />
 		</item>
 		<item>
