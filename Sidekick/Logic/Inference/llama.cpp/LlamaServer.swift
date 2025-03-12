@@ -105,21 +105,30 @@ public actor LlamaServer {
 	public static func serverIsReachable() async -> Bool {
 		// Return false if server is unused
 		if !InferenceSettings.useServer { return false }
-		// If using server, check connection
-		let endpoint: String = InferenceSettings.endpoint.replacingSuffix(
-			"/",
-			with: ""
-		).replacingSuffix(
+		// If using server, check connection on multiple endpoints
+		let testEndpoints: [String] = [
 			"/v1/chat/completions",
-			with: ""
-		) + "/v1/chat/completions"
-		guard let endpointUrl: URL = URL(
-			string: endpoint
-		) else {
-			return false
+			"/v1/models"
+		]
+		for testEndpoint in testEndpoints {
+			let endpoint: String = InferenceSettings.endpoint.replacingSuffix(
+				"/",
+				with: ""
+			).replacingSuffix(
+				testEndpoint,
+				with: ""
+			) + testEndpoint
+			guard let endpointUrl: URL = URL(
+				string: endpoint
+			) else {
+				continue
+			}
+			if await endpointUrl.isAPIEndpointReachable() {
+				return true
+			}
 		}
-		let isReachable: Bool = await endpointUrl.isAPIEndpointReachable()
-		return isReachable
+		// If fell through, return false
+		return false
 	}
 	
 	/// Function to start a monitor process that will terminate the server when our app dies
