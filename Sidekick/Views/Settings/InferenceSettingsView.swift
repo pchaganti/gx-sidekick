@@ -27,8 +27,6 @@ struct InferenceSettingsView: View {
 	@AppStorage("endpoint") private var serverEndpoint: String = InferenceSettings.endpoint
 	@State private var inferenceApiKey: String = InferenceSettings.inferenceApiKey
 	
-	@AppStorage("remoteModelName") private var remoteModelName: String = InferenceSettings.remoteModelName
-	
     var body: some View {
 		Form {
 			Section {
@@ -270,7 +268,7 @@ struct InferenceSettingsView: View {
 			useServerToggle
 			serverEndpointEditor
 			inferenceApiKeyEditor
-			remoteModelNameEditor
+			RemoteModelNameEditor()
 		}
 	}
 	
@@ -335,26 +333,6 @@ struct InferenceSettingsView: View {
 				.onChange(of: inferenceApiKey) { oldValue, newValue in
 					InferenceSettings.inferenceApiKey = newValue
 				}
-		}
-	}
-	
-	var remoteModelNameEditor: some View {
-		HStack(alignment: .center) {
-			VStack(alignment: .leading) {
-				Text("Remote Model Name")
-					.font(.title3)
-					.bold()
-				Text("The model name on the server used for inference. (e.g. gpt-4o)")
-					.font(.caption)
-			}
-			Spacer()
-			VStack(
-				alignment: .trailing
-			) {
-				TextField("", text: $remoteModelName)
-					.textFieldStyle(.roundedBorder)
-					.frame(maxWidth: 250)
-			}
 		}
 	}
 	

@@ -147,13 +147,16 @@ Current date & time: \(Date.now.ISO8601Format())
 			if !useServer {
 				return Self.defaultEndpoint
 			}
-			guard let systemPrompt = UserDefaults.standard.string(
+			guard let endpoint = UserDefaults.standard.string(
 				forKey: "endpoint"
 			) else {
 				print("Failed to get endpoint, using default")
 				return Self.defaultEndpoint
 			}
-			return systemPrompt
+			return endpoint.replacingSuffix(
+				"/",
+				with: ""
+			)
 		}
 		set {
 			// Save

@@ -67,6 +67,7 @@
 		204AE3BD2CEB56750086B42D /* WrappingHStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204AE3BC2CEB56750086B42D /* WrappingHStack.swift */; };
 		204AE3C02CEB57330086B42D /* CommandButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204AE3BF2CEB57330086B42D /* CommandButton.swift */; };
 		204AE3C62CEC7C030086B42D /* NewCommandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204AE3C52CEC7C030086B42D /* NewCommandView.swift */; };
+		204AEDA92D8170D0004028FF /* RemoteModelNameEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204AEDA82D8170D0004028FF /* RemoteModelNameEditor.swift */; };
 		204C79562CB765D700EED58E /* ExpertSelectionMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204C79552CB765D700EED58E /* ExpertSelectionMenu.swift */; };
 		204C79582CB769A400EED58E /* Extension+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204C79572CB769A400EED58E /* Extension+View.swift */; };
 		204C795C2CB79AB900EED58E /* ExpertManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204C795B2CB79AB900EED58E /* ExpertManagerView.swift */; };
@@ -405,6 +406,7 @@
 		204AE3BC2CEB56750086B42D /* WrappingHStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappingHStack.swift; sourceTree = "<group>"; };
 		204AE3BF2CEB57330086B42D /* CommandButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandButton.swift; sourceTree = "<group>"; };
 		204AE3C52CEC7C030086B42D /* NewCommandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCommandView.swift; sourceTree = "<group>"; };
+		204AEDA82D8170D0004028FF /* RemoteModelNameEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteModelNameEditor.swift; sourceTree = "<group>"; };
 		204C79552CB765D700EED58E /* ExpertSelectionMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertSelectionMenu.swift; sourceTree = "<group>"; };
 		204C79572CB769A400EED58E /* Extension+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+View.swift"; sourceTree = "<group>"; };
 		204C795B2CB79AB900EED58E /* ExpertManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertManagerView.swift; sourceTree = "<group>"; };
@@ -965,6 +967,7 @@
 				208388E12CBF51F900C2A9F8 /* RetrievalSettingsView.swift */,
 				20571F7A2CBD602B004F3344 /* InferenceSettingsView.swift */,
 				20571F832CBD71C9004F3344 /* SystemPromptEditor.swift */,
+				204AEDA82D8170D0004028FF /* RemoteModelNameEditor.swift */,
 				208844302CDDE33F003BCB6F /* ModelListView.swift */,
 				208844322CDDE394003BCB6F /* ModelRowView.swift */,
 			);
@@ -1810,6 +1813,7 @@
 				20C2210B2CC4B88F00A99796 /* SourcesButton.swift in Sources */,
 				2034876B2D67202D00A88DA4 /* AssistantInstructionView.swift in Sources */,
 				20D65DD52CC0CC6C0052D826 /* StopGenerationButton.swift in Sources */,
+				204AEDA92D8170D0004028FF /* RemoteModelNameEditor.swift in Sources */,
 				20BF49D12D64A89300C329F8 /* ModelView.swift in Sources */,
 				20B97CE12CB001E0009A0A5D /* Conversation.swift in Sources */,
 				207A9F552CB8A96F00E727DE /* ExpertNavigationRowView.swift in Sources */,

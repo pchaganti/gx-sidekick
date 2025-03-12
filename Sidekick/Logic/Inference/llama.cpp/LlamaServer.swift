@@ -84,9 +84,6 @@ public actor LlamaServer {
 	) {
 		// Check endpoint
 		let endpoint: String = InferenceSettings.endpoint.replacingSuffix(
-			"/",
-			with: ""
-		).replacingSuffix(
 			"/v1/chat/completions",
 			with: ""
 		)
@@ -112,9 +109,6 @@ public actor LlamaServer {
 		]
 		for testEndpoint in testEndpoints {
 			let endpoint: String = InferenceSettings.endpoint.replacingSuffix(
-				"/",
-				with: ""
-			).replacingSuffix(
 				testEndpoint,
 				with: ""
 			) + testEndpoint
@@ -129,6 +123,35 @@ public actor LlamaServer {
 		}
 		// If fell through, return false
 		return false
+	}
+	
+	/// Function to get a list of available models on the server
+	public static func getAvailableModels() async -> [String] {
+		// Set up request
+		let modelsEndpoint: URL = URL(
+			string: InferenceSettings.endpoint + "/v1/models"
+		)!
+		var request: URLRequest = URLRequest(
+			url: modelsEndpoint
+		)
+		request.httpMethod = "GET"
+		let urlSession: URLSession = URLSession.shared
+		urlSession.configuration.waitsForConnectivity = false
+		urlSession.configuration.timeoutIntervalForRequest = 5
+		urlSession.configuration.timeoutIntervalForResource = 5
+		// Get JSON response
+		guard let (data, _): (Data, URLResponse) = try? await URLSession.shared.data(
+			for: request
+		) else {
+			return []
+		}
+		// Decode and return
+		let decoder: JSONDecoder = JSONDecoder()
+		let response: AvailableModelsResponse? = try? decoder.decode(
+			AvailableModelsResponse.self,
+			from: data
+		)
+		return (response?.data ?? []).map({ $0.id })
 	}
 	
 	/// Function to start a monitor process that will terminate the server when our app dies
@@ -465,6 +488,15 @@ public actor LlamaServer {
 		}
 	}
 	
+	/// A structure modelling the inference server's response to a query for models
+	struct AvailableModelsResponse: Codable {
+		var data: [AvailableModel]
+	}
+	
+	/// A structure modelling the models available on the inference server
+	struct AvailableModel: Codable {
+		var id: String
+	}
 	
 	/// A structure modelling the health status response from the inference server
 	struct HealthResponse: Codable {
