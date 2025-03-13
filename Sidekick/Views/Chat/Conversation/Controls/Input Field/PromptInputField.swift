@@ -245,7 +245,7 @@ struct PromptInputField: View {
 			// Output final output to debug console
 			// Make response message
 			var responseMessage: Message = Message(
-				text: "",
+				text: response.text,
 				sender: .assistant,
 				model: response.modelName,
 				usedServer: response.usedServer,

@@ -23,8 +23,7 @@ public struct Message: Identifiable, Codable, Hashable {
 		self.text = text.replacingOccurrences(
 			of: "\\[",
 			with: "$$"
-		)
-		.replacingOccurrences(
+		).replacingOccurrences(
 			of: "\\]",
 			with: "$$"
 		)
@@ -342,6 +341,14 @@ DO NOT reference sources outside of those provided below. If you did not referen
 				of: "\\)",
 				with: ""
 			)
+			.replacingOccurrences(
+				of: "\\[",
+				with: "$$"
+			)
+			.replacingOccurrences(
+				of: "\\]",
+				with: "$$"
+			)
 			.splitByLatex()
 			.map { chunk in
 				return Chunk(content: chunk.string, isLatex: chunk.isLatex)
@@ -465,14 +472,7 @@ DO NOT reference sources outside of those provided below. If you did not referen
 		
 		init(content: String, isLatex: Bool) {
 			self.isLatex = isLatex
-			if isLatex {
-				self.content = content.trim(
-					prefix: "\\[",
-					suffix: "\\]"
-				)
-			} else {
-				self.content = content
-			}
+			self.content = content
 		}
 		
 		public let id: UUID = UUID()

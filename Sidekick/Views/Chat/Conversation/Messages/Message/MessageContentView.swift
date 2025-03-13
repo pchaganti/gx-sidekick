@@ -5,6 +5,7 @@
 //  Created by Bean John on 11/12/24.
 //
 
+import LaTeXSwiftUI
 import MarkdownUI
 import Splash
 import SwiftUI
@@ -61,8 +62,9 @@ struct MessageContentView: View {
 		if self.renderLatex && self.hasLatex {
 			ForEach(self.chunks) { chunk in
 				if chunk.isLatex {
-					MathView(equation: chunk.content, font: .latinModernFont)
-						.frame(minWidth: 100, minHeight: NSFont.systemFontSize * 3)
+					LaTeX(chunk.content)
+						.errorMode(.original)
+						.padding(.vertical, 3)
 				} else {
 					self.markdownView(chunk.content)
 				}

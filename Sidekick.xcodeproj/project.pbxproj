@@ -57,6 +57,7 @@
 		2034876D2D67236000A88DA4 /* DiagrammerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2034876C2D67236000A88DA4 /* DiagrammerView.swift */; };
 		2034876F2D6723A200A88DA4 /* ToolCardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2034876E2D6723A200A88DA4 /* ToolCardButton.swift */; };
 		203487712D672A8F00A88DA4 /* ToolLibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203487702D672A8F00A88DA4 /* ToolLibraryView.swift */; };
+		2034DC212D8262D3007598A6 /* LaTeXSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2034DC202D8262D3007598A6 /* LaTeXSwiftUI */; };
 		20353FF12CF84546002BC78E /* ToggleLaTeXButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20353FF02CF84546002BC78E /* ToggleLaTeXButton.swift */; };
 		2038CCF32CB6CBC6005AA315 /* PendingMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2038CCF22CB6CBC6005AA315 /* PendingMessageView.swift */; };
 		204186722D81E304002A5D1C /* libggml-blas.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2041866A2D81E304002A5D1C /* libggml-blas.dylib */; };
@@ -132,7 +133,6 @@
 		206934932D5CCDF1006619FD /* conversationExportTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 206934922D5CCDF1006619FD /* conversationExportTemplate.html */; };
 		206AB6122CF5F8390010B09A /* AttachmentSelectionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206AB6112CF5F8390010B09A /* AttachmentSelectionButton.swift */; };
 		206FBB212D54B40700A045FF /* MessageReasoningProcessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206FBB202D54B40700A045FF /* MessageReasoningProcessView.swift */; };
-		207522092D7FD88300A1CA60 /* OpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 207522082D7FD88300A1CA60 /* OpenAI */; };
 		2075220B2D7FDF6C00A1CA60 /* Extension+SecureDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2075220A2D7FDF6C00A1CA60 /* Extension+SecureDefaults.swift */; };
 		207A9F532CB82D9600E727DE /* SymbolPicker in Frameworks */ = {isa = PBXBuildFile; productRef = 207A9F522CB82D9600E727DE /* SymbolPicker */; };
 		207A9F552CB8A96F00E727DE /* ExpertNavigationRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207A9F542CB8A96F00E727DE /* ExpertNavigationRowView.swift */; };
@@ -240,8 +240,6 @@
 		20CB7AC82D145E320013E30C /* UserRequestClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 20CB7AC72D145E320013E30C /* UserRequestClassifier.mlmodel */; };
 		20CC0C2F2CE2401600A3BC40 /* ExtractKit-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = 20CC0C2E2CE2401600A3BC40 /* ExtractKit-macOS */; };
 		20CE5E582D5C85D10000A2EC /* LengthyTasksNavigationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CE5E572D5C85D10000A2EC /* LengthyTasksNavigationButton.swift */; };
-		20CEA7572CE3082F0070579B /* SwiftMath in Frameworks */ = {isa = PBXBuildFile; productRef = 20CEA7562CE3082F0070579B /* SwiftMath */; };
-		20CEA7592CE3084E0070579B /* MathView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CEA7582CE3084E0070579B /* MathView.swift */; };
 		20CEA75B2CE308AD0070579B /* MessageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CEA75A2CE308AD0070579B /* MessageContentView.swift */; };
 		20CEA75E2CE309F10070579B /* MessageOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CEA75D2CE309F10070579B /* MessageOptionsView.swift */; };
 		20D65DD52CC0CC6C0052D826 /* StopGenerationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D65DD42CC0CC6C0052D826 /* StopGenerationButton.swift */; };
@@ -563,7 +561,6 @@
 		20CB7ABF2D1457B10013E30C /* PromptAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptAnalyzer.swift; sourceTree = "<group>"; };
 		20CB7AC72D145E320013E30C /* UserRequestClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = UserRequestClassifier.mlmodel; sourceTree = "<group>"; };
 		20CE5E572D5C85D10000A2EC /* LengthyTasksNavigationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LengthyTasksNavigationButton.swift; sourceTree = "<group>"; };
-		20CEA7582CE3084E0070579B /* MathView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathView.swift; sourceTree = "<group>"; };
 		20CEA75A2CE308AD0070579B /* MessageContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageContentView.swift; sourceTree = "<group>"; };
 		20CEA75D2CE309F10070579B /* MessageOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageOptionsView.swift; sourceTree = "<group>"; };
 		20D65DD22CC0B8A20052D826 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -590,18 +587,17 @@
 				204186772D81E304002A5D1C /* libggml-base.dylib in Frameworks */,
 				204186782D81E304002A5D1C /* libggml-rpc.dylib in Frameworks */,
 				204186732D81E304002A5D1C /* libggml-metal.dylib in Frameworks */,
+				2034DC212D8262D3007598A6 /* LaTeXSwiftUI in Frameworks */,
 				204186762D81E304002A5D1C /* libllava_shared.dylib in Frameworks */,
 				204186792D81E304002A5D1C /* libllama.dylib in Frameworks */,
 				204186752D81E304002A5D1C /* libggml-cpu.dylib in Frameworks */,
 				20A40C832D718D4300A9D9A9 /* CodeEditorView in Frameworks */,
 				200FBFF12CB64CB400A92A74 /* EventSource in Frameworks */,
 				20F84B992D1CFED400F44990 /* DefaultModels in Frameworks */,
-				20CEA7572CE3082F0070579B /* SwiftMath in Frameworks */,
 				20A8B6592CB26E4800B756FD /* SimilaritySearchKitDistilbert in Frameworks */,
 				20A8B6572CB26E4800B756FD /* SimilaritySearchKit in Frameworks */,
 				207A9F532CB82D9600E727DE /* SymbolPicker in Frameworks */,
 				2031B9952CEAE66400627D53 /* KeyboardShortcuts in Frameworks */,
-				207522092D7FD88300A1CA60 /* OpenAI in Frameworks */,
 				20A40C852D718D4300A9D9A9 /* LanguageSupport in Frameworks */,
 				20B53D072D5B03B900D1AE79 /* Sparkle in Frameworks */,
 				208388DD2CBF4E8A00C2A9F8 /* SecureDefaults in Frameworks */,
@@ -1384,7 +1380,6 @@
 				20B97CEE2CB010AD009A0A5D /* ThumbnailView.swift */,
 				208AA3F02CC9E42F00A0891F /* ScrollMask.swift */,
 				204592162CD32DEF00DEAA96 /* TypedTextView.swift */,
-				20CEA7582CE3084E0070579B /* MathView.swift */,
 				204AE3BC2CEB56750086B42D /* WrappingHStack.swift */,
 				204D9CBE2CF4ABCF0052B6F4 /* StatusLabelView.swift */,
 				2030D6212D6C7F8C00F18BF4 /* CircularProgressView.swift */,
@@ -1497,7 +1492,6 @@
 				207A9F522CB82D9600E727DE /* SymbolPicker */,
 				208388DC2CBF4E8A00C2A9F8 /* SecureDefaults */,
 				20CC0C2E2CE2401600A3BC40 /* ExtractKit-macOS */,
-				20CEA7562CE3082F0070579B /* SwiftMath */,
 				2031B9942CEAE66400627D53 /* KeyboardShortcuts */,
 				20F84B982D1CFED400F44990 /* DefaultModels */,
 				20B53D062D5B03B900D1AE79 /* Sparkle */,
@@ -1505,7 +1499,7 @@
 				200619B92D678694001949EF /* WebViewKit */,
 				20A40C822D718D4300A9D9A9 /* CodeEditorView */,
 				20A40C842D718D4300A9D9A9 /* LanguageSupport */,
-				207522082D7FD88300A1CA60 /* OpenAI */,
+				2034DC202D8262D3007598A6 /* LaTeXSwiftUI */,
 			);
 			productName = Sidekick;
 			productReference = 200549732CAFA67B00A3DCF2 /* Sidekick.app */;
@@ -1615,14 +1609,13 @@
 				207A9F512CB82D9600E727DE /* XCRemoteSwiftPackageReference "SymbolPicker" */,
 				208388DB2CBF4E8A00C2A9F8 /* XCRemoteSwiftPackageReference "SecureDefaults" */,
 				20CC0C2D2CE2401600A3BC40 /* XCRemoteSwiftPackageReference "ExtractKit-macOS" */,
-				20CEA7552CE3082F0070579B /* XCRemoteSwiftPackageReference "SwiftMath" */,
 				2031B9932CEAE66400627D53 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
 				20F84B972D1CFED400F44990 /* XCRemoteSwiftPackageReference "Default-Models" */,
 				20B53D052D5B03B900D1AE79 /* XCRemoteSwiftPackageReference "Sparkle" */,
 				200619B02D6768F6001949EF /* XCRemoteSwiftPackageReference "SwiftfulLoadingIndicators" */,
 				200619B82D678694001949EF /* XCRemoteSwiftPackageReference "WebViewKit" */,
 				20A40C812D718D4300A9D9A9 /* XCRemoteSwiftPackageReference "CodeEditorView" */,
-				207522072D7FD88300A1CA60 /* XCRemoteSwiftPackageReference "OpenAI" */,
+				2034DC1F2D8262D3007598A6 /* XCRemoteSwiftPackageReference "LaTeXSwiftUI" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 200549742CAFA67B00A3DCF2 /* Products */;
@@ -1782,7 +1775,6 @@
 				202801F42CC93C80005C1F7D /* DictationButton.swift in Sources */,
 				2030D61A2D6C50A000F18BF4 /* DetectorInputView.swift in Sources */,
 				20CB7AC82D145E320013E30C /* UserRequestClassifier.mlmodel in Sources */,
-				20CEA7592CE3084E0070579B /* MathView.swift in Sources */,
 				2004D7642CBC9DA2009F294E /* ConversationState.swift in Sources */,
 				2086E1712CB036BB00FFCF57 /* ConversationManager.swift in Sources */,
 				20C221092CC4B5A800A99796 /* SourcesView.swift in Sources */,
@@ -2331,20 +2323,20 @@
 				minimumVersion = 2.2.4;
 			};
 		};
+		2034DC1F2D8262D3007598A6 /* XCRemoteSwiftPackageReference "LaTeXSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/colinc86/LaTeXSwiftUI";
+			requirement = {
+				kind = exactVersion;
+				version = 1.4.0;
+			};
+		};
 		20573F262CB52F84004C19FE /* XCRemoteSwiftPackageReference "Splash" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/JohnSundell/Splash";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 0.16.0;
-			};
-		};
-		207522072D7FD88300A1CA60 /* XCRemoteSwiftPackageReference "OpenAI" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/MacPaw/OpenAI";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.3.6;
 			};
 		};
 		207A9F512CB82D9600E727DE /* XCRemoteSwiftPackageReference "SymbolPicker" */ = {
@@ -2411,14 +2403,6 @@
 				kind = branch;
 			};
 		};
-		20CEA7552CE3082F0070579B /* XCRemoteSwiftPackageReference "SwiftMath" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/mgriebling/SwiftMath";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.6.0;
-			};
-		};
 		20F84B972D1CFED400F44990 /* XCRemoteSwiftPackageReference "Default-Models" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/johnbean393/Default-Models";
@@ -2450,6 +2434,11 @@
 			package = 2031B9932CEAE66400627D53 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
 			productName = KeyboardShortcuts;
 		};
+		2034DC202D8262D3007598A6 /* LaTeXSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2034DC1F2D8262D3007598A6 /* XCRemoteSwiftPackageReference "LaTeXSwiftUI" */;
+			productName = LaTeXSwiftUI;
+		};
 		20573F272CB52F84004C19FE /* Splash */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 20573F262CB52F84004C19FE /* XCRemoteSwiftPackageReference "Splash" */;
@@ -2459,11 +2448,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 20573F262CB52F84004C19FE /* XCRemoteSwiftPackageReference "Splash" */;
 			productName = SplashMarkdown;
-		};
-		207522082D7FD88300A1CA60 /* OpenAI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 207522072D7FD88300A1CA60 /* XCRemoteSwiftPackageReference "OpenAI" */;
-			productName = OpenAI;
 		};
 		207A9F522CB82D9600E727DE /* SymbolPicker */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -2514,11 +2498,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 20CC0C2D2CE2401600A3BC40 /* XCRemoteSwiftPackageReference "ExtractKit-macOS" */;
 			productName = "ExtractKit-macOS";
-		};
-		20CEA7562CE3082F0070579B /* SwiftMath */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 20CEA7552CE3082F0070579B /* XCRemoteSwiftPackageReference "SwiftMath" */;
-			productName = SwiftMath;
 		};
 		20F84B982D1CFED400F44990 /* DefaultModels */ = {
 			isa = XCSwiftPackageProductDependency;

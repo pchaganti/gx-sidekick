@@ -9,7 +9,7 @@
 <img alt="License" src="https://img.shields.io/github/license/johnbean393/Sidekick?label=License" height=22.5>
 </p>
 
-Chat with an local LLM that can respond with information from your files, folders and websites on your Mac without installing any other software. All conversations happen offline, and your data is saved locally.
+Chat with a local LLM that can respond with information from your files, folders and websites on your Mac without installing any other software. All conversations happen offline, and your data stays secure. Sidekick is a <strong>local first</strong> application –– with a built in inference engine for local models, while accomodating OpenAI compatible APIs for additional model options.
 
 ![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/demoScreenshot.png)
 
@@ -29,11 +29,11 @@ To verify Sidekick’s answer, just click on the references displayed below Side
 
 ### Resource Use
 
-Sidekick accesses files, folders, and websites from your experts, which can be individually configured to contain resources related to specific areas of interest. Activating a expert allows Sidekick to access the relevant information.
+Sidekick accesses files, folders, and websites from your experts, which can be individually configured to contain resources related to specific areas of interest. Activating an expert allows Sidekick to fetch and reference materials as needed.
 
-Because Sidekick uses RAG (Retrival Augmented Generation), you can theoretically put unlimited resources into each expert, and Sidekick will still find information relevant to your request to aid its response. This is in sharp contrast to most services, including OpenAI's [ChatGPT](https://chatgpt.com), which can only ingest ~45 pages of text.
+Because Sidekick uses RAG (Retrieval Augmented Generation), you can theoretically put unlimited resources into each expert, and Sidekick will still find information relevant to your request to aid its analysis.
 
-For example, a student might create the experts `English Literature`, `Mathematics`, `Geography`, `Computer Science` and `Physics`. In the image below, he has activated the expert `Computer Science`, allowing Sidekick to reply with information from that expert.
+For example, a student might create the experts `English Literature`, `Mathematics`, `Geography`, `Computer Science` and `Physics`. In the image below, he has activated the expert `Computer Science`.
 
 ![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/demoExpertUse.png)
 
@@ -44,6 +44,10 @@ Users can also give Sidekick access to files just by dragging them into the inpu
 Sidekick can even respond with the latest information using **web search**, speeding up research.
 
 ![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/webSearch.png)
+
+### Bring Your Own API Key
+
+In addition to its core local-first capabilities, Sidekick now offers an option to bring your own key for OpenAI compatible APIs. This allows you to tap into additional remote models while still preserving a primarily local-first workflow.
 
 ### Reasoning Model Support
 
@@ -67,7 +71,7 @@ There are no buttons, no switches to flick, no `Image Generation` mode. Instead,
 
 ![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/imageGeneration.png)
 
-Image generation is availible on macOS 15.2 or above, and requires Apple Intelligence.
+Image generation is available on macOS 15.2 or above, and requires Apple Intelligence.
 
 ### Inline Writing Assistant
 
@@ -77,7 +81,7 @@ Press `Command + Control + I` to access Sidekick's inline writing assistant. For
 
 ### Advanced Markdown Rendering
 
-Markdown in rendered beautifully in Sidekick.
+Markdown is rendered beautifully in Sidekick.
 
 #### LaTeX
 
@@ -109,7 +113,7 @@ Use **Tools** in Sidekick to supercharge your workflow.
 
 #### Detector
 
-Use detector to evaluate the AI percentage of text, and use provided suggestions to rewrite AI content.
+Use Detector to evaluate the AI percentage of text, and use provided suggestions to rewrite AI content.
 
 ![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/detectorEvaluationResults.png)
 
@@ -125,7 +129,7 @@ Diagrammer allows you to swiftly generate intricate relational diagrams all from
 
 ![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/slideStudioPrompt.png)
 
-Instead of making a PowerPoint, just write a prompt. Use AI to craft 10 minute presentations in just 5 minutes.
+Instead of making a PowerPoint, just write a prompt. Use AI to craft 10-minute presentations in just 5 minutes.
 
 ![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/slideStudioPreviewEditor.png)
 
@@ -135,11 +139,11 @@ Export to common formats like PDF and PowerPoint.
 
 ### Fast Generation
 
-Sidekick uses `llama.cpp` as its inference backend, which is optimized to deliver lightning fast generation speeds on Apple Silicon. Sidekick also supports speculative decoding, which can increase performance by up to 51%.
+Sidekick uses `llama.cpp` as its inference backend, which is optimized to deliver lightning fast generation speeds on Apple Silicon. It also supports speculative decoding, which can further improve the generation speed.
+
+Optionally, you can offload generation to speed up processing while extending the battery life of your MacBook.
 
 ![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/speculativeDecodingSupport.png)
-
-Optionally, offload generation to speed up generation while extending the battery life of your MacBook.
 
 ![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/serverUse.png)
 
@@ -154,16 +158,16 @@ Optionally, offload generation to speed up generation while extending the batter
 
 ## Goals
 
-The main goal of Sidekick is to make open, local, private models accessible to more people, and allow a local model to gain context of select files, folders and websites.
+The main goal of Sidekick is to make open, local, private models accessible to more people, and allow a local model to gain context from select files, folders, and websites.
 
-Sidekick is a native LLM application for macOS that runs completely locally. Download it and ask your LLM a question without doing any configuration. Give the LLM access to your folders, files and websites with just 1 click, allowing them to reply with context.
+Sidekick is a local-first native LLM application for macOS. Download it and ask your LLM a question without doing any configuration. Give the LLM access to your folders, files and websites with just 1 click, allowing it to reply with context.
 
 - No config. Usable by people who haven't heard of models, prompts, or LLMs.
 - Performance and simplicity over developer experience or features. Notes not Word, Swift not Electron.
-- Local first. Core functionality should not require an internet connection.
+- Local first. Core functionality works without an internet connection, but you have the option to leverage online models.
 - No conversation tracking. Talk about whatever you want with Sidekick, just like Notes.
 - Open source. What's the point of running local AI if you can't audit that it's actually running locally?
-- Context aware. Aware of your files, folders and content on the web. 
+- Context aware. Understands and accesses your files, folders, and even content on the web.
 
 ## Contributing
 
