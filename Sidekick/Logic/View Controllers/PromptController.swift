@@ -21,6 +21,9 @@ public class PromptController: ObservableObject, DropDelegate {
 		category: String(describing: PromptController.self)
 	)
 	
+	@Published var sentConversation: Conversation? = nil
+	@Published var sentExpertId: UUID? = nil
+	
 	@Published var isGeneratingImage: Bool = false
 	@Published var imageConcept: String? = nil
 	

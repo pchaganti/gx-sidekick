@@ -14,20 +14,20 @@ public enum Sender: String, Codable {
 	case assistant = "assistant"
 	case system = "system"
 	
-	/// Computed property for the sender's icon
+	/// A `View` for the sender's icon
 	var icon: some View {
-		Image(systemName: self == .user ? "person.fill" : "cpu.fill")
-			.foregroundStyle(Color.white)
-			.font(.system(size: 17))
-			.shadow(
-				color: .secondary.opacity(0.3),
-				radius: 2, x: 0, y: 0.5
-			)
-			.padding(5)
-			.background(
-				Circle()
-					.fill(self == .user ? Color.purple : Color.green)
-			)
+		ZStack {
+			Circle()
+				.fill(self == .user ? Color.purple : Color.green)
+				.frame(width: 25)
+			Image(systemName: self == .user ? "person.fill" : "cpu.fill")
+				.foregroundStyle(Color.white)
+				.font(.system(size: 14))
+				.shadow(
+					color: .secondary.opacity(0.3),
+					radius: 2, x: 0, y: 0.5
+				)
+		}
 	}
 	
 }

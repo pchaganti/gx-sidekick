@@ -19,8 +19,6 @@ struct PromptInputField: View {
 	@EnvironmentObject private var conversationState: ConversationState
 	@EnvironmentObject private var promptController: PromptController
 	
-	@State private var sentConversation: Conversation? = nil
-	
 	var selectedConversation: Conversation? {
 		guard let selectedConversationId = conversationState.selectedConversationId else {
 			return nil
@@ -131,8 +129,9 @@ struct PromptInputField: View {
 		)
 		let _ = conversation.addMessage(newUserMessage)
 		conversationManager.update(conversation)
-		// Set sentConversation
-		self.sentConversation = conversation
+		// Store sent properties
+		self.promptController.sentConversation = conversation
+		self.promptController.sentExpertId = self.conversationState.selectedExpertId
 		// Capture temp resources
 		let tempResources: [TemporaryResource] = self.promptController.tempResources
 		// If result type is text, send message
@@ -175,8 +174,8 @@ struct PromptInputField: View {
 			// Start generation
 			self.promptController.imageConcept = self.promptController.prompt
 			self.promptController.isGeneratingImage = true
-			// Reset sentConversation
-			self.sentConversation = nil
+			// Reset sent properties
+			self.promptController.sentConversation = nil
 		}
 	}
 	
@@ -201,7 +200,7 @@ struct PromptInputField: View {
 			return
 		}
 		// Get conversation
-		guard var conversation = sentConversation else { return }
+		guard var conversation = self.promptController.sentConversation else { return }
 		// Get response
 		var response: LlamaServer.CompleteResponse
 		var didUseSources: Bool = false
@@ -250,7 +249,8 @@ struct PromptInputField: View {
 				model: response.modelName,
 				usedServer: response.usedServer,
 				usedCodeInterpreter: response.usedCodeInterpreter,
-				jsCode: response.jsCode
+				jsCode: response.jsCode,
+				expertId: promptController.sentExpertId
 			)
 			responseMessage.update(
 				response: response,
@@ -268,7 +268,7 @@ struct PromptInputField: View {
 				SoundEffects.ping.play()
 			}
 			// Reset sentConversation
-			self.sentConversation = nil
+			self.promptController.sentConversation = nil
 		}
 	}
 	
@@ -282,12 +282,12 @@ struct PromptInputField: View {
 			message: recoverySuggestion
 		)
 		// Restore prompt
-		if let prompt: String = self.sentConversation?.messages.last?.text {
+		if let prompt: String = self.promptController.sentConversation?.messages.last?.text {
 			self.promptController.prompt = prompt
 		}
 		// Remove messages
-		if let messages: [Message] = self.sentConversation?.messages.dropLast(1),
-			var conversation = self.sentConversation {
+		if let messages: [Message] = self.promptController.sentConversation?.messages.dropLast(1),
+		   var conversation = self.promptController.sentConversation {
 			// Drop message and update
 			conversation.messages = messages
 			self.conversationManager.update(conversation)

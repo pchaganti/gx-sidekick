@@ -70,7 +70,8 @@ struct ConversationView: View {
 		// Formulate message
 		let message: Message = Message(
 			imageUrl: copiedImageUrl,
-			prompt: self.promptController.imageConcept ?? ""
+			prompt: self.promptController.imageConcept ?? "",
+			expertId: promptController.sentExpertId
 		)
 		// Add message to conversation
 		guard let currentConversationId: UUID = conversationState

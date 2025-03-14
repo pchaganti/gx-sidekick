@@ -23,17 +23,21 @@ public struct Expert: Identifiable, Codable, Hashable, Sendable {
 	/// The expert's color of type `Color`
 	public var color: Color
 	
-	/// Computed property returning the expert's symbol, of type `View`
-	public var symbol: some View {
-		Image(systemName: symbolName)
-			.padding(5)
-			.foregroundStyle(
-				self.color.adaptedTextColor
-			)
-			.background {
-				Circle()
-					.fill(self.color)
-			}
+	/// Computed property returning the expert's icon, of type `View`
+	public var icon: some View {
+		ZStack {
+			Circle()
+				.fill(self.color)
+				.frame(width: 25)
+			Image(systemName: self.symbolName)
+				.foregroundStyle(self.color.adaptedTextColor)
+				.font(.system(size: 14))
+				.shadow(
+					color: .secondary.opacity(0.3),
+					radius: 2, x: 0, y: 0.5
+				)
+		}
+		.clipShape(Circle())
 	}
 	
 	/// Computed property returning the expert's label, of type `View`
@@ -50,16 +54,6 @@ public struct Expert: Identifiable, Codable, Hashable, Sendable {
 				RoundedRectangle(cornerRadius: 8)
 					.fill(self.color)
 			}
-	}
-	
-	/// Computed property returning the expert's image, of type `View`
-	public var image: some View {
-		Image(systemName: symbolName)
-			.resizable()
-			.aspectRatio(contentMode: .fit)
-			.foregroundStyle(
-				self.color
-			)
 	}
 	
 	/// Whether web search is used, of type `Bool`

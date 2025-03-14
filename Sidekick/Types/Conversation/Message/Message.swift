@@ -17,7 +17,8 @@ public struct Message: Identifiable, Codable, Hashable {
 		model: String? = nil,
 		usedServer: Bool = false,
 		usedCodeInterpreter: Bool? = false,
-		jsCode: String? = nil
+		jsCode: String? = nil,
+		expertId: UUID? = nil
 	) {
 		self.id = UUID()
 		self.text = text.replacingOccurrences(
@@ -40,11 +41,13 @@ public struct Message: Identifiable, Codable, Hashable {
 		self.model = modelName
 		self.usedCodeInterpreter = usedCodeInterpreter
 		self.jsCode = jsCode
+		self.expertId = expertId
 	}
 	
 	init(
 		imageUrl: URL,
-		prompt: String
+		prompt: String,
+		expertId: UUID? = nil
 	) {
 		self.id = UUID()
 		self.text = "Generated an image with the prompt \"\(prompt)\"."
@@ -54,6 +57,7 @@ public struct Message: Identifiable, Codable, Hashable {
 		self.outputEnded = true
 		self.model = "Image Playground Model"
 		self.imageUrl = imageUrl
+		self.expertId = expertId
 	}
 	
 	/// A `UUID` for `Identifiable` conformance
@@ -249,14 +253,17 @@ DO NOT reference sources outside of those provided below. If you did not referen
 		return (messageText, results.count)
 	}
 	
-	/// Computed property for the number of tokens outputted per second
+	/// A `Double` representing the number of tokens outputted per second
 	public var tokensPerSecond: Double?
 	
-	/// Stored property for the selected model
+	/// The model's name, of type `String`
 	public let model: String
 	
-	/// Stored property for the sender of the message (either `user` or `system`)
+	/// The ``Sender`` of the message (either `user` or `system`)
 	private var sender: Sender
+	
+	/// The `UUID` of the expert used
+	private var expertId: UUID?
 	
 	/// A `URL` for an image generated, if any
 	public var imageUrl: URL?
@@ -363,9 +370,17 @@ DO NOT reference sources outside of those provided below. If you did not referen
 		return self.sender
 	}
 	
-	/// Computed property for the sender's icon
+	/// A `View` for the sender's icon
 	var icon: some View {
-		sender.icon
+		Group {
+			if let expertId = self.expertId,
+			   let expert = ExpertManager.shared.getExpert(id: expertId)
+			{
+				expert.icon
+			} else {
+				sender.icon
+			}
+		}
 	}
 	
 	/// Stored property for the start time of interaction
