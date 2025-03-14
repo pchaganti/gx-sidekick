@@ -6,6 +6,12 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
+read -p "The Marp CLI binary will be downloaded and installed from https://github.com/marp-team/marp-cli/releases/download/v4.1.2/marp-cli-v4.1.2-mac.tar.gz. Do you want to proceed? (yes/no): " CONFIRM
+if [[ "$CONFIRM" != "yes" ]]; then
+    echo "Installation cancelled."
+    exit 0
+fi
+
 TEAM=$1
 
 # Download the Marp CLI version 4.1.2 for macOS from the official GitHub releases
