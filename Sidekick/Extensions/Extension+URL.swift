@@ -89,6 +89,9 @@ public extension URL {
 		var request = URLRequest(url: self)
 		request.httpMethod = method
 		request.timeoutInterval = timeout
+		let session = URLSession.shared
+		session.configuration.timeoutIntervalForRequest = timeout
+		session.configuration.timeoutIntervalForResource = timeout
 		do {
 			let (_, response) = try await URLSession.shared.data(for: request)
 			guard let httpResponse = response as? HTTPURLResponse else {

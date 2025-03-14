@@ -15,21 +15,8 @@ public class DebugCommands {
 	static var commands: some Commands {
 		CommandGroup(after: .help) {
 			Menu("Debug") {
-				Button(
-					action: Settings.clearUserDefaults
-				) {
-					Text("Clear All Settings")
-				}
-				Button(
-					action: InferenceSettings.setDefaults
-				) {
-					Text("Set Inference Settings to Defaults")
-				}
-				Button(
-					action: ConversationManager.shared.resetDatastore
-				) {
-					Text("Delete All Conversations")
-				}
+				Self.debugSettings
+				Self.debugConversations
 				Button(
 					action: ExpertManager.shared.resetDatastore
 				) {
@@ -40,13 +27,50 @@ public class DebugCommands {
 						url: Settings.containerUrl
 					)
 				} label: {
-					Text("Show App Support Folder in Finder")
+					Text("Show Container in Finder")
 				}
 				Button {
 					try? Tips.resetDatastore()
 				} label: {
 					Text("Reset Tips Datastore")
 				}
+			}
+		}
+	}
+	
+	private static var debugSettings: some View {
+		Menu("Settings") {
+			Button(
+				action: Settings.clearUserDefaults
+			) {
+				Text("Clear All Settings")
+			}
+			Button(
+				action: InferenceSettings.setDefaults
+			) {
+				Text("Set Inference Settings to Defaults")
+			}
+		}
+	}
+	
+	private static var debugConversations: some View {
+		Menu("Conversations") {
+			Button(
+				action: ConversationManager.shared.createBackup
+			) {
+				Text("Backup Conversations")
+			}
+			if ConversationManager.shared.backupExists {
+				Button(
+					action: ConversationManager.shared.retoreFromBackup
+				) {
+					Text("Restore Conversations from Backup")
+				}
+			}
+			Button(
+				action: ConversationManager.shared.resetDatastore
+			) {
+				Text("Delete All Conversations")
 			}
 		}
 	}

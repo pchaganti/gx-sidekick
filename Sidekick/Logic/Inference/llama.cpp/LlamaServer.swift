@@ -142,17 +142,19 @@ public actor LlamaServer {
 	/// Function to get a list of available models on the server
 	public static func getAvailableModels() async -> [String] {
 		// Set up request
-		let modelsEndpoint: URL = URL(
+		guard let modelsEndpoint: URL = URL(
 			string: InferenceSettings.endpoint + "/v1/models"
-		)!
+		) else {
+			return []
+		}
 		var request: URLRequest = URLRequest(
 			url: modelsEndpoint
 		)
 		request.httpMethod = "GET"
 		let urlSession: URLSession = URLSession.shared
 		urlSession.configuration.waitsForConnectivity = false
-		urlSession.configuration.timeoutIntervalForRequest = 1
-		urlSession.configuration.timeoutIntervalForResource = 1
+		urlSession.configuration.timeoutIntervalForRequest = 2
+		urlSession.configuration.timeoutIntervalForResource = 2
 		// Get JSON response
 		guard let (data, _): (Data, URLResponse) = try? await URLSession.shared.data(
 			for: request
@@ -598,7 +600,8 @@ public actor LlamaServer {
 				(start: "run_javascript(code: \"", end: "\")"),
 				(start: "run_javascript(code: `", end: "`)"),
 				(start: "run_javascript(code: `\"", end: "`\")"),
-				(start: "run_javascript(code: \"`", end: "\"`)")
+				(start: "run_javascript(code: \"`", end: "\"`)"),
+				(start: "run_javascript(code=\"", end: "\")"),
 			]
 			// Iterate over each pattern to find a match
 			for pattern in patterns {

@@ -287,12 +287,32 @@
         }
       }
     },
+    "Are you sure you want to restore conversations from a backup? All current conversations will be deleted." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您确定要从备份中恢复对话吗？所有当前的对话都将被删除。"
+          }
+        }
+      }
+    },
     "Backup API Key (Optional)" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "后备 API 密钥（可选）"
+          }
+        }
+      }
+    },
+    "Backup Conversations" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "备份对话"
           }
         }
       }
@@ -1106,6 +1126,9 @@
           }
         }
       }
+    },
+    "Endpoint is not valid" : {
+
     },
     "Enhancing your prompt..." : {
       "localizations" : {
@@ -2414,6 +2437,16 @@
         }
       }
     },
+    "Report an Issue" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "提交问题报告"
+          }
+        }
+      }
+    },
     "Requirements" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2480,6 +2513,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "重启 Sidekick"
+          }
+        }
+      }
+    },
+    "Restore" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复"
+          }
+        }
+      }
+    },
+    "Restore Conversations from Backup" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复对话备份"
           }
         }
       }
@@ -2784,6 +2837,16 @@
         }
       }
     },
+    "Settings" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设置"
+          }
+        }
+      }
+    },
     "Shortcut" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2794,22 +2857,22 @@
         }
       }
     },
-    "Show App Support Folder in Finder" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在访达中显示 App Support 文件夹"
-          }
-        }
-      }
-    },
     "Show Code Used" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "显示代码"
+          }
+        }
+      }
+    },
+    "Show Container in Finder" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在访达中显示容器"
           }
         }
       }

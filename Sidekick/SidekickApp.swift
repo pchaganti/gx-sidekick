@@ -49,6 +49,7 @@ struct SidekickApp: App {
 			ConversationCommands.expertCommands
 			WindowCommands.commands
 			DebugCommands.commands
+			HelpCommands.commands
 			CommandGroup(after: .appInfo) {
 				CheckForUpdatesView(updater: updaterController.updater)
 			}

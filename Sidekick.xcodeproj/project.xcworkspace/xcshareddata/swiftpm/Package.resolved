@@ -1,5 +1,5 @@
 {
-  "originHash" : "dd1e9d1c205c71de89bd843cf6d6b5749aaaad0389e0874c6f72987f658ecfb0",
+  "originHash" : "0ff10c3bad575550b9f1440ecb1a8f423563004513bc40123efeb2b58fb41e5a",
   "pins" : [
     {
       "identity" : "browserkit",
@@ -86,8 +86,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/colinc86/LaTeXSwiftUI",
       "state" : {
-        "revision" : "766be13e75a901cd0097122be189bac88b5b1963",
-        "version" : "1.3.2"
+        "branch" : "main",
+        "revision" : "442366e4d438b8034868221b41cb74176b7f6bd7"
       }
     },
     {
@@ -136,9 +136,9 @@
       }
     },
     {
-      "identity" : "securedefaults?tab=readme-ov-file#usage",
+      "identity" : "securedefaults",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/vpeschenkov/SecureDefaults?tab=readme-ov-file#usage",
+      "location" : "https://github.com/vpeschenkov/SecureDefaults",
       "state" : {
         "revision" : "3f9d5d19f7401250791840bff857ed5f6b8c8ddf",
         "version" : "1.2.2"
@@ -169,15 +169,6 @@
       "state" : {
         "revision" : "7f4df436eb78fe64fe2c32c58006e9949fa28ad8",
         "version" : "0.16.0"
-      }
-    },
-    {
-      "identity" : "svgview",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/exyte/SVGView",
-      "state" : {
-        "revision" : "6465962facdd25cb96eaebc35603afa2f15d2c0d",
-        "version" : "1.0.6"
       }
     },
     {
@@ -244,21 +235,21 @@
       }
     },
     {
+      "identity" : "swiftdraw",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/colinc86/SwiftDraw",
+      "state" : {
+        "branch" : "latexswiftui",
+        "revision" : "8789f44b5d32d75e80af635277ee637d61d5df5c"
+      }
+    },
+    {
       "identity" : "swiftfulloadingindicators",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SwiftfulThinking/SwiftfulLoadingIndicators",
       "state" : {
         "revision" : "85858c0246dcd781228301f9928519f75ce89758",
         "version" : "0.0.4"
-      }
-    },
-    {
-      "identity" : "swiftmath",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mgriebling/SwiftMath",
-      "state" : {
-        "revision" : "7799485428a3988c4104c4e366541f7725ced4e3",
-        "version" : "1.6.0"
       }
     },
     {

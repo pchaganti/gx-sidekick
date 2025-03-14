@@ -13,6 +13,15 @@ struct ServerModelSettingsView: View {
 	@AppStorage("endpoint") private var serverEndpoint: String = InferenceSettings.endpoint
 	@State private var inferenceApiKey: String = InferenceSettings.inferenceApiKey
 	
+	/// A `Bool` representing if the endpoint is valid
+	var endpointUrlIsValid: Bool {
+		let paths: [String] = ["", "/v1/models", "/v1/chat/completions"]
+		let pathsAreValid: [Bool] = paths.map { path in
+			return URL(string: self.serverEndpoint + path) != nil
+		}
+		return !pathsAreValid.contains(false)
+	}
+	
 	var body: some View {
 		Section {
 			useServerToggle
@@ -38,7 +47,7 @@ struct ServerModelSettingsView: View {
 				"",
 				isOn: $useServer.animation(.linear)
 			)
-			.disabled(serverEndpoint.isEmpty)
+			.disabled(serverEndpoint.isEmpty || !endpointUrlIsValid)
 		}
 		.onChange(of: useServer) {
 			// Send notification to reload model
@@ -62,9 +71,23 @@ struct ServerModelSettingsView: View {
 			VStack(
 				alignment: .trailing
 			) {
-				TextField("", text: $serverEndpoint)
+				TextField("", text: $serverEndpoint.animation(.linear))
 					.textFieldStyle(.roundedBorder)
 					.frame(maxWidth: 250)
+					.onChange(of: serverEndpoint) {
+						withAnimation(.linear) {
+							if !self.endpointUrlIsValid {
+								self.useServer = false
+							}
+						}
+					}
+				if !self.endpointUrlIsValid {
+					Text("Endpoint is not valid")
+						.font(.callout)
+						.fontWeight(.bold)
+						.foregroundStyle(.red)
+						.padding(.top, 4)
+				}
 			}
 		}
 	}

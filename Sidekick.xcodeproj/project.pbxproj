@@ -57,7 +57,6 @@
 		2034876D2D67236000A88DA4 /* DiagrammerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2034876C2D67236000A88DA4 /* DiagrammerView.swift */; };
 		2034876F2D6723A200A88DA4 /* ToolCardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2034876E2D6723A200A88DA4 /* ToolCardButton.swift */; };
 		203487712D672A8F00A88DA4 /* ToolLibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203487702D672A8F00A88DA4 /* ToolLibraryView.swift */; };
-		2034DC212D8262D3007598A6 /* LaTeXSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2034DC202D8262D3007598A6 /* LaTeXSwiftUI */; };
 		20353FF12CF84546002BC78E /* ToggleLaTeXButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20353FF02CF84546002BC78E /* ToggleLaTeXButton.swift */; };
 		2038CCF32CB6CBC6005AA315 /* PendingMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2038CCF22CB6CBC6005AA315 /* PendingMessageView.swift */; };
 		204186722D81E304002A5D1C /* libggml-blas.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2041866A2D81E304002A5D1C /* libggml-blas.dylib */; };
@@ -179,6 +178,7 @@
 		20A40C872D7190BA00A9D9A9 /* SlideStudioPromptOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A40C862D7190BA00A9D9A9 /* SlideStudioPromptOptionsView.swift */; };
 		20A40C892D72AEE600A9D9A9 /* SlideStudioExportOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A40C882D72AEE600A9D9A9 /* SlideStudioExportOptionsView.swift */; };
 		20A40CF92D73763500A9D9A9 /* Extension+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A40CF82D73763500A9D9A9 /* Extension+Date.swift */; };
+		20A7E8FC2D8304AB00223D47 /* HelpCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A7E8FB2D8304AB00223D47 /* HelpCommands.swift */; };
 		20A8B6572CB26E4800B756FD /* SimilaritySearchKit in Frameworks */ = {isa = PBXBuildFile; productRef = 20A8B6562CB26E4800B756FD /* SimilaritySearchKit */; };
 		20A8B6592CB26E4800B756FD /* SimilaritySearchKitDistilbert in Frameworks */ = {isa = PBXBuildFile; productRef = 20A8B6582CB26E4800B756FD /* SimilaritySearchKitDistilbert */; };
 		20A8B65B2CB2709100B756FD /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A8B65A2CB2709100B756FD /* Resources.swift */; };
@@ -236,6 +236,7 @@
 		20C62EC12D713BC000996566 /* SlideStudioProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C62EC02D713BC000996566 /* SlideStudioProgressView.swift */; };
 		20C62EC32D713D5100996566 /* SlideStudioPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C62EC22D713D5100996566 /* SlideStudioPromptView.swift */; };
 		20C62EC72D71403A00996566 /* SlideStudioQuickPromptsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C62EC62D71403A00996566 /* SlideStudioQuickPromptsView.swift */; };
+		20CB50382D828CB60064D460 /* LaTeXSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 20CB50372D828CB60064D460 /* LaTeXSwiftUI */; };
 		20CB7AC02D1457B10013E30C /* PromptAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CB7ABF2D1457B10013E30C /* PromptAnalyzer.swift */; };
 		20CB7AC82D145E320013E30C /* UserRequestClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 20CB7AC72D145E320013E30C /* UserRequestClassifier.mlmodel */; };
 		20CC0C2F2CE2401600A3BC40 /* ExtractKit-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = 20CC0C2E2CE2401600A3BC40 /* ExtractKit-macOS */; };
@@ -503,6 +504,7 @@
 		20A40C862D7190BA00A9D9A9 /* SlideStudioPromptOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideStudioPromptOptionsView.swift; sourceTree = "<group>"; };
 		20A40C882D72AEE600A9D9A9 /* SlideStudioExportOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideStudioExportOptionsView.swift; sourceTree = "<group>"; };
 		20A40CF82D73763500A9D9A9 /* Extension+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Date.swift"; sourceTree = "<group>"; };
+		20A7E8FB2D8304AB00223D47 /* HelpCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpCommands.swift; sourceTree = "<group>"; };
 		20A8B65A2CB2709100B756FD /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		20A8B65C2CB2829500B756FD /* ExpertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertManager.swift; sourceTree = "<group>"; };
 		20A96F3B2CDDA9D400E31D53 /* ModelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
@@ -587,7 +589,6 @@
 				204186772D81E304002A5D1C /* libggml-base.dylib in Frameworks */,
 				204186782D81E304002A5D1C /* libggml-rpc.dylib in Frameworks */,
 				204186732D81E304002A5D1C /* libggml-metal.dylib in Frameworks */,
-				2034DC212D8262D3007598A6 /* LaTeXSwiftUI in Frameworks */,
 				204186762D81E304002A5D1C /* libllava_shared.dylib in Frameworks */,
 				204186792D81E304002A5D1C /* libllama.dylib in Frameworks */,
 				204186752D81E304002A5D1C /* libggml-cpu.dylib in Frameworks */,
@@ -602,6 +603,7 @@
 				20B53D072D5B03B900D1AE79 /* Sparkle in Frameworks */,
 				208388DD2CBF4E8A00C2A9F8 /* SecureDefaults in Frameworks */,
 				20CC0C2F2CE2401600A3BC40 /* ExtractKit-macOS in Frameworks */,
+				20CB50382D828CB60064D460 /* LaTeXSwiftUI in Frameworks */,
 				20573F282CB52F84004C19FE /* Splash in Frameworks */,
 				200619BA2D678694001949EF /* WebViewKit in Frameworks */,
 				20573F2A2CB52F84004C19FE /* SplashMarkdown in Frameworks */,
@@ -1358,6 +1360,7 @@
 				20B9E6102CB142FD00BA0AD2 /* DebugCommands.swift */,
 				20573F1A2CB5099B004C19FE /* ConversationCommands.swift */,
 				207A9F612CB94B0000E727DE /* WindowCommands.swift */,
+				20A7E8FB2D8304AB00223D47 /* HelpCommands.swift */,
 			);
 			path = Commands;
 			sourceTree = "<group>";
@@ -1499,7 +1502,7 @@
 				200619B92D678694001949EF /* WebViewKit */,
 				20A40C822D718D4300A9D9A9 /* CodeEditorView */,
 				20A40C842D718D4300A9D9A9 /* LanguageSupport */,
-				2034DC202D8262D3007598A6 /* LaTeXSwiftUI */,
+				20CB50372D828CB60064D460 /* LaTeXSwiftUI */,
 			);
 			productName = Sidekick;
 			productReference = 200549732CAFA67B00A3DCF2 /* Sidekick.app */;
@@ -1615,7 +1618,7 @@
 				200619B02D6768F6001949EF /* XCRemoteSwiftPackageReference "SwiftfulLoadingIndicators" */,
 				200619B82D678694001949EF /* XCRemoteSwiftPackageReference "WebViewKit" */,
 				20A40C812D718D4300A9D9A9 /* XCRemoteSwiftPackageReference "CodeEditorView" */,
-				2034DC1F2D8262D3007598A6 /* XCRemoteSwiftPackageReference "LaTeXSwiftUI" */,
+				20CB50362D828CB60064D460 /* XCRemoteSwiftPackageReference "LaTeXSwiftUI" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 200549742CAFA67B00A3DCF2 /* Products */;
@@ -1771,6 +1774,7 @@
 				20571F7B2CBD602B004F3344 /* InferenceSettingsView.swift in Sources */,
 				20B97CDF2CAFFE6A009A0A5D /* Sender.swift in Sources */,
 				204D09872D1182EC0066B060 /* IntroductionPageView.swift in Sources */,
+				20A7E8FC2D8304AB00223D47 /* HelpCommands.swift in Sources */,
 				202E3EDD2CBB8F7B00AF86C8 /* ReferencedURL.swift in Sources */,
 				202801F42CC93C80005C1F7D /* DictationButton.swift in Sources */,
 				2030D61A2D6C50A000F18BF4 /* DetectorInputView.swift in Sources */,
@@ -2069,7 +2073,7 @@
 				CODE_SIGN_ENTITLEMENTS = Sidekick/Sidekick.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_ASSET_PATHS = "\"Sidekick/Preview Content\"";
 				DEVELOPMENT_TEAM = KM2C4ZAVPJ;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2090,7 +2094,7 @@
 					"$(PROJECT_DIR)/Sidekick/Logic/Inference/llama.cpp/build/bin",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.0.22;
+				MARKETING_VERSION = 0.0.23;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pattonium.Sidekick;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -2107,7 +2111,7 @@
 				CODE_SIGN_ENTITLEMENTS = Sidekick/Sidekick.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_ASSET_PATHS = "\"Sidekick/Preview Content\"";
 				DEVELOPMENT_TEAM = KM2C4ZAVPJ;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2129,7 +2133,7 @@
 					"$(PROJECT_DIR)/Sidekick/Logic/Inference/llama.cpp/build/bin",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.0.22;
+				MARKETING_VERSION = 0.0.23;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pattonium.Sidekick;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -2323,14 +2327,6 @@
 				minimumVersion = 2.2.4;
 			};
 		};
-		2034DC1F2D8262D3007598A6 /* XCRemoteSwiftPackageReference "LaTeXSwiftUI" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/colinc86/LaTeXSwiftUI";
-			requirement = {
-				kind = exactVersion;
-				version = 1.4.0;
-			};
-		};
 		20573F262CB52F84004C19FE /* XCRemoteSwiftPackageReference "Splash" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/JohnSundell/Splash";
@@ -2349,7 +2345,7 @@
 		};
 		208388DB2CBF4E8A00C2A9F8 /* XCRemoteSwiftPackageReference "SecureDefaults" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/vpeschenkov/SecureDefaults?tab=readme-ov-file#usage";
+			repositoryURL = "https://github.com/vpeschenkov/SecureDefaults";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.2.2;
@@ -2395,6 +2391,14 @@
 				version = 2.4.0;
 			};
 		};
+		20CB50362D828CB60064D460 /* XCRemoteSwiftPackageReference "LaTeXSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/colinc86/LaTeXSwiftUI";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		20CC0C2D2CE2401600A3BC40 /* XCRemoteSwiftPackageReference "ExtractKit-macOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/johnbean393/ExtractKit-macOS";
@@ -2433,11 +2437,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2031B9932CEAE66400627D53 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
 			productName = KeyboardShortcuts;
-		};
-		2034DC202D8262D3007598A6 /* LaTeXSwiftUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 2034DC1F2D8262D3007598A6 /* XCRemoteSwiftPackageReference "LaTeXSwiftUI" */;
-			productName = LaTeXSwiftUI;
 		};
 		20573F272CB52F84004C19FE /* Splash */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -2493,6 +2492,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 20B97CC72CAFEBEA009A0A5D /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
 			productName = MarkdownUI;
+		};
+		20CB50372D828CB60064D460 /* LaTeXSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 20CB50362D828CB60064D460 /* XCRemoteSwiftPackageReference "LaTeXSwiftUI" */;
+			productName = LaTeXSwiftUI;
 		};
 		20CC0C2E2CE2401600A3BC40 /* ExtractKit-macOS */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FSKit_macOS
 import os.log
 import SwiftUI
 
@@ -66,6 +67,11 @@ public class ConversationManager: ObservableObject {
 		).last
 	}
 	
+	/// A `Bool` representing whether a backup exists
+	var backupExists: Bool {
+		return self.backupDatastoreUrl.fileExists
+	}
+	
 	/// Function to create a new conversation
 	public func newConversation() {
 		let defaultTitle: String = Date.now.formatted(
@@ -108,11 +114,13 @@ public class ConversationManager: ObservableObject {
 	}
 	
 	/// Function to load conversations from disk
-	public func load() {
+	public func load(
+		fromBackup: Bool = false
+	) {
 		do {
 			// Load data
 			let rawData: Data = try Data(
-				contentsOf: self.datastoreUrl
+				contentsOf: fromBackup ? self.backupDatastoreUrl : self.datastoreUrl
 			)
 			let decoder: JSONDecoder = JSONDecoder()
 			let conversations: [Conversation] = try decoder.decode(
@@ -199,6 +207,32 @@ public class ConversationManager: ObservableObject {
 		}
 	}
 	
+	/// Function to create backup for datastore
+	public func createBackup() {
+		// Delete if exists
+		if self.backupDatastoreUrl.fileExists {
+			FileManager.removeItem(at: self.backupDatastoreUrl)
+		}
+		// Make a copy
+		FileManager.copyItem(
+			from: self.datastoreUrl,
+			to: self.backupDatastoreUrl
+		)
+	}
+	
+	/// Function to restore from backup
+	public func retoreFromBackup() {
+		// Present confirmation modal
+		let _ = Dialogs.showConfirmation(
+			title: String(localized: "Restore"),
+			message: String(localized: "Are you sure you want to restore conversations from a backup? All current conversations will be deleted.")
+		) {
+			// If yes, restore
+			self.load(fromBackup: true)
+			self.save()
+		}
+	}
+	
 	/// Function to patch file integrity
 	public func patchFileIntegrity() {
 		// Setup directory if needed
@@ -226,6 +260,13 @@ public class ConversationManager: ObservableObject {
 	public var datastoreUrl: URL {
 		return self.datastoreDirUrl.appendingPathComponent(
 			"conversations.json"
+		)
+	}
+	
+	/// Computed property returning the datastore's url
+	public var backupDatastoreUrl: URL {
+		return self.datastoreDirUrl.appendingPathComponent(
+			"conversationsBackup.json"
 		)
 	}
 	
