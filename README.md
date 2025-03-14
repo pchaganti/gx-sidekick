@@ -169,6 +169,17 @@ Sidekick is a local-first native LLM application for macOS. Download it and ask 
 - Open source. What's the point of running local AI if you can't audit that it's actually running locally?
 - Context aware. Understands and accesses your files, folders, and even content on the web.
 
+## Developer Setup
+
+**Requirements**
+- A Mac with Apple Silicon
+- RAM ≥ 8 GB
+
+1. Clone this repository.
+2. Run `./setup.sh` to change the team in the Xcode project and download and sign the `marp` binary.
+   - The `marp` binary is required for building and must be signed to create presentations.
+3. Open and run in Xcode.
+
 ## Contributing
 
 Contributions are very welcome. Let's make Sidekick simple and powerful.
