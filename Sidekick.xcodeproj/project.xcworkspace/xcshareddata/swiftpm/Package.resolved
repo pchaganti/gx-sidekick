@@ -1,5 +1,5 @@
 {
-  "originHash" : "0ff10c3bad575550b9f1440ecb1a8f423563004513bc40123efeb2b58fb41e5a",
+  "originHash" : "2d96cfa10710e817fc69365d2d47ea02e334c66ea7818196b632af4cfb38f09c",
   "pins" : [
     {
       "identity" : "browserkit",
@@ -42,7 +42,7 @@
       "location" : "https://github.com/johnbean393/Default-Models",
       "state" : {
         "branch" : "main",
-        "revision" : "5bf93cc62707930a52cf22b40c613d3e49f0ddbf"
+        "revision" : "ef7682d768dcb04cd8e9e20139ddf68b237c261d"
       }
     },
     {
