@@ -168,7 +168,6 @@ struct ConversationManagerView: View {
 		) {
 			ConversationNavigationListView()
 			Spacer()
-            Divider()
 			sidebarButtons
 		}
 		.padding(.vertical, 7)
