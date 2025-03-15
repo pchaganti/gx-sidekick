@@ -36,6 +36,13 @@ struct PendingMessageView: View {
 			.replacingOccurrences(
 				of: "\\]",
 				with: "$$"
+			).replacingOccurrences(
+				of: "\\(",
+				with: "$"
+			)
+			.replacingOccurrences(
+				of: "\\)",
+				with: "$"
 			)
 		} else if self.model.status == .querying {
 			if RetrievalSettings.useTavilySearch && useWebSearch {

@@ -102,5 +102,15 @@ public extension URL {
 			return false
 		}
 	}
+	
+	/// A  `String` without the schema (e.g., removes `https://` from `https://example.com`).
+	var withoutSchema: String {
+		guard let schemeEnd = self.absoluteString.range(of: "://")?.upperBound else {
+			// If no schema is found, return the entire string
+			return self.absoluteString
+		}
+		// Extract the substring starting after the "://"
+		return String(self.absoluteString[schemeEnd...])
+	}
 
 }

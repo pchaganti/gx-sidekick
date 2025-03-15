@@ -295,4 +295,50 @@ public extension String {
 		return processedResponse.trimmingCharacters(in: .whitespacesAndNewlines)
 	}
 	
+	/// Function to onvert LaTeX within a string into a Markdown image block containing a URL-encoded version.
+	/// Inline LaTeX (using \( ... \) and $ ... $) become `![](latex://encoded)` and block LaTeX (using \[ ... \] and $$ ... $$) get a new line before the Markdown image.
+	func convertLaTeX() -> String {
+		// The regex pattern matches full LaTeX expressions.
+		// It supports:
+		//   • Block LaTeX using \[ ... \] or $$ ... $$
+		//   • Inline LaTeX using \( ... \) or $ ... $
+		let pattern = "(\\\\\\[(?:.|\\s)*?\\\\\\])|(\\$\\$(?:.|\\s)*?\\$\\$)|(\\\\\\((?:.|\\s)*?\\\\\\))|(\\$(?!\\$)(?:.|\\s)*?\\$)"
+		
+		guard let regex = try? NSRegularExpression(pattern: pattern, options: []) else {
+			return self
+		}
+		
+		let mutableText = NSMutableString(string: self)
+		let matches = regex.matches(
+			in: self,
+			options: [],
+			range: NSRange(location: 0, length: mutableText.length)
+		)
+		// Iterate backwards so that range replacements don't affect upcoming ranges.
+		for match in matches.reversed() {
+			let fullRange = match.range(at: 0)
+			guard let range = Range(fullRange, in: self) else {
+				continue
+			}
+			// Capture the entire LaTeX string (including delimiters).
+			let rawLaTeX = String(self[range])
+			// Determine if this is a block LaTeX expression.
+			let isBlock = rawLaTeX.hasPrefix("\\[") || rawLaTeX.hasPrefix("$$")
+			// Remove newlines and extra spaces.
+			let stripped = rawLaTeX
+				.replacingOccurrences(of: "\n", with: " ")
+				.trimmingCharacters(in: .whitespacesAndNewlines)
+			// Percent-encode the full, stripped LaTeX expression.
+			var allowed = CharacterSet.alphanumerics
+			allowed.insert(charactersIn: ".-_~")
+			let encoded = stripped.addingPercentEncoding(
+				withAllowedCharacters: allowed
+			) ?? ""
+			// Compose the Markdown image. Block LaTeX gets a newline prefix.
+			let replacement = (isBlock ? "\n" : "") + "![](latex://\(encoded))"
+			regex.replaceMatches(in: mutableText, options: [], range: fullRange, withTemplate: replacement)
+		}
+		return mutableText as String
+	}
+	
 }

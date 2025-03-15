@@ -26,6 +26,13 @@ public struct Message: Identifiable, Codable, Hashable {
 		).replacingOccurrences(
 			of: "\\]",
 			with: "$$"
+		).replacingOccurrences(
+			of: "\\(",
+			with: "$"
+		)
+		.replacingOccurrences(
+			of: "\\)",
+			with: "$"
 		)
 		self.sender = sender
 		self.startTime = .now
@@ -314,50 +321,6 @@ DO NOT reference sources outside of those provided below. If you did not referen
 		}
 	}
 	
-	/// Computed property for chunks in the message's reasoning text
-	public var reasoningChunks: [Chunk]? {
-		return self
-			.reasoningText?
-			.replacingOccurrences(
-				of: "\\(",
-				with: ""
-			)
-			.replacingOccurrences(
-				of: "\\)",
-				with: ""
-			)
-			.splitByLatex()
-			.map { chunk in
-				return Chunk(content: chunk.string, isLatex: chunk.isLatex)
-			}
-	}
-	
-	/// Computed property for chunks in the message's response text
-	public var responseChunks: [Chunk] {
-		return self
-			.responseText
-			.replacingOccurrences(
-				of: "\\(",
-				with: ""
-			)
-			.replacingOccurrences(
-				of: "\\)",
-				with: ""
-			)
-			.replacingOccurrences(
-				of: "\\[",
-				with: "$$"
-			)
-			.replacingOccurrences(
-				of: "\\]",
-				with: "$$"
-			)
-			.splitByLatex()
-			.map { chunk in
-				return Chunk(content: chunk.string, isLatex: chunk.isLatex)
-			}
-	}
-	
 	/// An array for URLs of sources referenced in a response
 	public var referencedURLs: [ReferencedURL] = []
 	
@@ -479,20 +442,6 @@ DO NOT reference sources outside of those provided below. If you did not referen
 		
 	}
 	
-	public struct Chunk: Identifiable {
-		
-		init(content: String, isLatex: Bool) {
-			self.isLatex = isLatex
-			self.content = content
-		}
-		
-		public let id: UUID = UUID()
-		
-		public var content: String
-		public var isLatex: Bool
-		
-	}
-	
 	private enum JSONType: String, CaseIterable {
 		case unknown
 		case empty
@@ -504,11 +453,4 @@ DO NOT reference sources outside of those provided below. If you did not referen
 		case image
 	}
 	
-}
-
-public extension Sequence where Iterator.Element == Message.Chunk {
-	/// A `Bool` representing if the message contains LaTeX
-	var hasLatex: Bool {
-		return self.contains(where: \.isLatex)
-	}
 }

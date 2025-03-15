@@ -1197,6 +1197,16 @@
         }
       }
     },
+    "Error loading image" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "图片加载出错"
+          }
+        }
+      }
+    },
     "Eutrophication Cycle" : {
       "localizations" : {
         "zh-Hans" : {

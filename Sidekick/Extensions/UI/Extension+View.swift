@@ -52,12 +52,14 @@ extension View {
 	}
 	
 	/// Function to generate conversation as a SwiftUI `Image`
-	public func generateImage() -> Image? {
+	public func generateImage(
+		scale: CGFloat = 2.0
+	) -> Image? {
 		// Render and save
 		let renderer: ImageRenderer = ImageRenderer(
 			content: self
 		)
-		renderer.scale = 2.0
+		renderer.scale = scale
 		guard let cgImage: CGImage = renderer.cgImage else {
 			Dialogs.showAlert(
 				title: String(localized: "Error"),
