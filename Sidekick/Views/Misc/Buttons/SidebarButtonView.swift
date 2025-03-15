@@ -31,6 +31,7 @@ struct SidebarButtonView: View {
 			.foregroundStyle(.secondary)
 			.font(.headline)
 			.fontWeight(.regular)
+            .frame(maxWidth: .infinity, alignment: .leading)
 			.padding(.horizontal, 8)
 			.padding(.vertical, 7)
 			.background(
