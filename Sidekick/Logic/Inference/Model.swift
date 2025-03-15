@@ -407,11 +407,6 @@ public class Model: ObservableObject {
 			initialResponseMessageSubset,
 			rephraseMessageSubset
 		]
-		for updatedMessage in updatedMessages {
-			print(updatedMessage.role.rawValue + ":")
-			print(updatedMessage.content)
-			print("")
-		}
 		// Submit for completion
 		var updateResponse: String = ""
 		return try await llama.getCompletion(
