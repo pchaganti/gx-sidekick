@@ -240,7 +240,8 @@ struct ConversationManagerView: View {
 				self.newConversation()
 			}
 		}
-		.padding(.horizontal, 5)
+		.padding(.leading, 5)
+		.padding(.trailing, 4)
 	}
 	
 	private func newConversation() {

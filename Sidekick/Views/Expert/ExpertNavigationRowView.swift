@@ -54,7 +54,9 @@ struct ExpertNavigationRowView: View {
 				self.expertManager.delete(
 					self.expert
 				)
-				self.isDeleting = false
+				withAnimation(.linear) {
+					self.isDeleting = false
+				}
 			} label: {
 				Text("Confirm")
 			}
@@ -74,18 +76,21 @@ struct ExpertNavigationRowView: View {
 	
 	var controls: some View {
 		Group {
-			if !isDefault && isHovering {
-				Group {
-					deleteButton
-						.labelStyle(.iconOnly)
-					Image(systemName: "line.3.horizontal")
-						.foregroundStyle(.secondary)
-						.foregroundStyle(
-							self.expert.color.adaptedTextColor
-						)
+			if isHovering {
+				Button {
+					self.isEditing.toggle()
+				} label: {
+					Label("Edit", systemImage: "square.and.pencil")
+						.foregroundStyle(self.expert.color.adaptedTextColor)
 				}
+				.padding(.bottom, 2.5)
+			}
+			if !isDefault && isHovering {
+				deleteButton
 			}
 		}
+		.buttonStyle(.plain)
+		.labelStyle(.iconOnly)
 	}
 	
 	var deleteButton: some View {
@@ -94,9 +99,7 @@ struct ExpertNavigationRowView: View {
 		} label: {
 			Label("Delete", systemImage: "trash")
 				.foregroundStyle(.red)
-				.bold()
 		}
-		.buttonStyle(.plain)
 	}
-	
+
 }

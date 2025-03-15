@@ -158,11 +158,9 @@ struct ResourceSectionView: View {
 		
 		var body: some View {
 			VStack(alignment: .leading) {
-				Text("Enter a link or URL:")
-				TextField("Link or URL", text: $websiteUrl)
-					.textFieldStyle(.roundedBorder)
-				Divider()
 				HStack {
+					Text("Enter a link or URL:")
+						.font(.headline)
 					Spacer()
 					Button {
 						isAddingWebsite = false
@@ -179,8 +177,11 @@ struct ResourceSectionView: View {
 					.disabled(!isValidUrl)
 					.keyboardShortcut(.defaultAction)
 				}
+				TextField("Link or URL", text: $websiteUrl)
+					.textFieldStyle(.roundedBorder)
 			}
-			.padding()
+			.padding(11)
+			.padding([.horizontal, .top], 1)
 		}
 	
 		private func add() async {

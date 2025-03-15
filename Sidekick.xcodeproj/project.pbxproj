@@ -59,6 +59,7 @@
 		203487712D672A8F00A88DA4 /* ToolLibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203487702D672A8F00A88DA4 /* ToolLibraryView.swift */; };
 		20353FF12CF84546002BC78E /* ToggleLaTeXButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20353FF02CF84546002BC78E /* ToggleLaTeXButton.swift */; };
 		2038CCF32CB6CBC6005AA315 /* PendingMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2038CCF22CB6CBC6005AA315 /* PendingMessageView.swift */; };
+		2040DAD42D85BFD000A8F6BD /* QuickPromptButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2040DAD32D85BFD000A8F6BD /* QuickPromptButton.swift */; };
 		204186722D81E304002A5D1C /* libggml-blas.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2041866A2D81E304002A5D1C /* libggml-blas.dylib */; };
 		204186732D81E304002A5D1C /* libggml-metal.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2041866C2D81E304002A5D1C /* libggml-metal.dylib */; };
 		204186742D81E304002A5D1C /* libggml.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 204186682D81E304002A5D1C /* libggml.dylib */; };
@@ -400,6 +401,7 @@
 		20353FF02CF84546002BC78E /* ToggleLaTeXButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleLaTeXButton.swift; sourceTree = "<group>"; };
 		2037C8F32D55FE0F00073246 /* appIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon.png; sourceTree = "<group>"; };
 		2038CCF22CB6CBC6005AA315 /* PendingMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingMessageView.swift; sourceTree = "<group>"; };
+		2040DAD32D85BFD000A8F6BD /* QuickPromptButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickPromptButton.swift; sourceTree = "<group>"; };
 		204186682D81E304002A5D1C /* libggml.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libggml.dylib; sourceTree = "<group>"; };
 		204186692D81E304002A5D1C /* libggml-base.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-base.dylib"; sourceTree = "<group>"; };
 		2041866A2D81E304002A5D1C /* libggml-blas.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-blas.dylib"; sourceTree = "<group>"; };
@@ -1349,6 +1351,7 @@
 				20353FF02CF84546002BC78E /* ToggleLaTeXButton.swift */,
 				203487632D66FF6700A88DA4 /* SidebarButtonView.swift */,
 				208C5FD92D7A771F00D82AA6 /* RetryButton.swift */,
+				2040DAD32D85BFD000A8F6BD /* QuickPromptButton.swift */,
 			);
 			path = Buttons;
 			sourceTree = "<group>";
@@ -1846,6 +1849,7 @@
 				20C16E1B2D0EBE500001B3C9 /* IntroductionViewController.swift in Sources */,
 				20BF4A092D64C6ED00C329F8 /* SpecialtyView.swift in Sources */,
 				2099BDA12CB7EABC00E02732 /* ConversationQuickPromptsView.swift in Sources */,
+				2040DAD42D85BFD000A8F6BD /* QuickPromptButton.swift in Sources */,
 				20B9E60E2CB1414100BA0AD2 /* DockMenuCommands.swift in Sources */,
 				207E5EF22D6FDEEF00A8F6FA /* ImageSearch.swift in Sources */,
 				20A40C802D71872600A9D9A9 /* SlideStudioPreviewEditor.swift in Sources */,

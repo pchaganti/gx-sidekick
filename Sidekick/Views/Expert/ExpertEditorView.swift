@@ -33,8 +33,9 @@ struct ExpertEditorView: View {
 					Text("Done")
 				}
 				.keyboardShortcut(.defaultAction)
+				.controlSize(.large)
 			}
-			.padding([.trailing, .bottom])
+			.padding([.trailing, .bottom], 10)
 		}
 		.onAppear {
 			systemPrompt = expert.systemPrompt ?? InferenceSettings.systemPrompt

@@ -37,13 +37,14 @@ public struct QuickPrompt: Identifiable {
 	
 	/// This prompt's label
 	var label: some View {
-		Label {
-			Text(description)
-				.foregroundStyle(.secondary)
-		} icon: {
+		HStack(
+			alignment: .center
+		) {
 			Image(systemName: icon)
 				.symbolRenderingMode(.multicolor)
 				.foregroundStyle(color)
+			Text(description)
+				.foregroundStyle(.secondary)
 		}
 	}
 	

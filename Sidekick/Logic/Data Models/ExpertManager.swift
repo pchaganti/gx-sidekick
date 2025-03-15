@@ -152,7 +152,7 @@ public class ExpertManager: ObservableObject {
 	
 	/// Function to delete a expert
 	public func delete(_ expert: Binding<Expert>) {
-		withAnimation(.spring()) {
+		withAnimation(.linear) {
 			self.experts = self.experts.filter {
 				$0.id != expert.wrappedValue.id
 			}
@@ -161,7 +161,7 @@ public class ExpertManager: ObservableObject {
 	
 	/// Function to delete a expert
 	public func delete(_ expert: Expert) {
-		withAnimation(.spring()) {
+		withAnimation(.linear) {
 			self.experts = self.experts.filter {
 				$0.id != expert.id
 			}
@@ -177,7 +177,7 @@ public class ExpertManager: ObservableObject {
 	
 	/// Function to update a expert
 	public func update(_ expert: Expert) {
-		withAnimation(.spring()) {
+		withAnimation(.linear) {
 			for expertIndex in self.experts.indices {
 				if expert.id == self.experts[expertIndex].id {
 					self.experts[expertIndex] = expert

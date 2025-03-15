@@ -34,11 +34,13 @@ A well-crafted system prompt helps the LLM focus on the correct task and reduces
 			}
 			Divider()
 			TextEditor(text: $systemPrompt)
-				.frame(minHeight: 100, idealHeight: 200, maxHeight: 300)
+				.font(.title3)
+				.frame(maxHeight: 100)
 			Divider()
 			controls
 		}
-		.padding()
+		.padding(.top)
+		.padding([.bottom, .horizontal], 10)
 	}
 	
 	var controls: some View {
@@ -63,6 +65,7 @@ A well-crafted system prompt helps the LLM focus on the correct task and reduces
 			}
 			.keyboardShortcut("s", modifiers: .command)
 		}
+		.controlSize(.large)
 	}
 	
 }
