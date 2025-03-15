@@ -308,6 +308,7 @@ public class Model: ObservableObject {
 		// If the JavaScript was valid, return rephrased result
 		if jsCode != nil && jsResult != nil {
 			var rephrasedResponse = try await rephraseResult(
+				initialResponse: initialResponse,
 				increment: increment,
 				jsCode: jsCode,
 				jsResult: jsResult,
@@ -371,6 +372,7 @@ public class Model: ObservableObject {
 	
 	/// Function to rephrase code interpreter result
 	private func rephraseResult(
+		initialResponse: LlamaServer.CompleteResponse,
 		increment: Int,
 		jsCode: String?,
 		jsResult: String?,
@@ -381,20 +383,35 @@ public class Model: ObservableObject {
 		) -> Void
 	) async throws -> LlamaServer.CompleteResponse {
 		// Formulate messages
+		let initialResponseMessage = Message(
+			text: initialResponse.text,
+			sender: .user
+		)
+		let initialResponseMessageSubset: Message.MessageSubset = await Message.MessageSubset(
+			message: initialResponseMessage
+		)
 		let rephraseMessage = Message(
 			text: """
   The JavaScript code `\(jsCode ?? "Error")` produced the result below:
   
   \(jsResult ?? "Error")
   
-  Write an answer to my question above using this result. Respond with the answer ONLY.
+  Explain how the question above would be answered without code, then end with the answer calculated and verified by the JavaScript you wrote. 
   """,
 			sender: .user
 		)
 		let rephraseMessageSubset: Message.MessageSubset = await Message.MessageSubset(
 			message: rephraseMessage
 		)
-		let updatedMessages: [Message.MessageSubset] = messages + [rephraseMessageSubset]
+		let updatedMessages: [Message.MessageSubset] = messages + [
+			initialResponseMessageSubset,
+			rephraseMessageSubset
+		]
+		for updatedMessage in updatedMessages {
+			print(updatedMessage.role.rawValue + ":")
+			print(updatedMessage.content)
+			print("")
+		}
 		// Submit for completion
 		var updateResponse: String = ""
 		return try await llama.getCompletion(

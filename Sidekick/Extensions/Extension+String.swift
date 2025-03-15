@@ -334,8 +334,8 @@ public extension String {
 			let encoded = stripped.addingPercentEncoding(
 				withAllowedCharacters: allowed
 			) ?? ""
-			// Compose the Markdown image. Block LaTeX gets a newline prefix.
-			let replacement = (isBlock ? "\n" : "") + "![](latex://\(encoded))"
+			// Compose the Markdown image. Block LaTeX gets newlines before and after.
+			let replacement = (isBlock ? "\n" : "") + "![](latex://\(encoded))" + (isBlock ? "\n" : "")
 			regex.replaceMatches(in: mutableText, options: [], range: fullRange, withTemplate: replacement)
 		}
 		return mutableText as String

@@ -28,6 +28,7 @@ struct MarkdownImageProvider: ImageProvider {
 					// If url is LaTeX
 					LaTeX(latexStr)
 						.errorMode(.original)
+						.scrollIndicators(.never)
 				} else {
 					imageLoadError
 				}
