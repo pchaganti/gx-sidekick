@@ -175,10 +175,14 @@ Sidekick is a local-first native LLM application for macOS. Download it and ask 
 - A Mac with Apple Silicon
 - RAM ≥ 8 GB
 
+### Developer Setup Instructions
 1. Clone this repository.
-2. Run `./setup.sh` to change the team in the Xcode project and download and sign the `marp` binary.
+1. Run `security find-identity -p codesigning -v` to find your signing identity.
+   - You'll see something like
+   - `  1) <SIGNING IDENTITY> "Apple Development: Michael DiGovanni ( XXXXXXXXXX)"`
+1. Run `./setup.sh <TEAM_NAME> <SIGNING IDENTITY FROM STEP 2>` to change the team in the Xcode project and download and sign the `marp` binary.
    - The `marp` binary is required for building and must be signed to create presentations.
-3. Open and run in Xcode.
+1. Open and run in Xcode.
 
 ## Contributing
 
