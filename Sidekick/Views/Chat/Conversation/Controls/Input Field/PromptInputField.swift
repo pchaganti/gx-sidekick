@@ -247,7 +247,6 @@ struct PromptInputField: View {
 				text: response.text,
 				sender: .assistant,
 				model: response.modelName,
-				usedServer: response.usedServer,
 				usedCodeInterpreter: response.usedCodeInterpreter,
 				jsCode: response.jsCode,
 				expertId: promptController.sentExpertId

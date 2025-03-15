@@ -1128,7 +1128,14 @@
       }
     },
     "Endpoint is not valid" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "端点无效"
+          }
+        }
+      }
     },
     "Enhancing your prompt..." : {
       "localizations" : {
@@ -2393,16 +2400,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "远端模型名称"
-          }
-        }
-      }
-    },
-    "Remote Model: " : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "远端模型： "
           }
         }
       }

@@ -15,7 +15,6 @@ public struct Message: Identifiable, Codable, Hashable {
 		text: String,
 		sender: Sender,
 		model: String? = nil,
-		usedServer: Bool = false,
 		usedCodeInterpreter: Bool? = false,
 		jsCode: String? = nil,
 		expertId: UUID? = nil
@@ -32,12 +31,9 @@ public struct Message: Identifiable, Codable, Hashable {
 		self.startTime = .now
 		self.lastUpdated = .now
 		self.outputEnded = false
-		var modelName: String = model ?? String(
+		let modelName: String = model ?? String(
 			localized: "Unknown"
 		)
-		if usedServer == true {
-			modelName = String(localized: "Remote Model: ") + modelName
-		}
 		self.model = modelName
 		self.usedCodeInterpreter = usedCodeInterpreter
 		self.jsCode = jsCode
