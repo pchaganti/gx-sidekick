@@ -295,19 +295,17 @@ public extension String {
 		return processedResponse.trimmingCharacters(in: .whitespacesAndNewlines)
 	}
 	
-	/// Function to onvert LaTeX within a string into a Markdown image block containing a URL-encoded version.
-	/// Inline LaTeX (using \( ... \) and $ ... $) become `![](latex://encoded)` and block LaTeX (using \[ ... \] and $$ ... $$) get a new line before the Markdown image.
+	/// Function to convert LaTeX within a string into a Markdown image block containing a URL-encoded version.
+	/// Inline LaTeX (using \( ... \)) become `![](latex://encoded)` and block LaTeX (using \[ ... \] and $$ ... $$) get a new line before the Markdown image.
 	func convertLaTeX() -> String {
 		// The regex pattern matches full LaTeX expressions.
 		// It supports:
 		//   • Block LaTeX using \[ ... \] or $$ ... $$
-		//   • Inline LaTeX using \( ... \) or $ ... $
-		let pattern = "(\\\\\\[(?:.|\\s)*?\\\\\\])|(\\$\\$(?:.|\\s)*?\\$\\$)|(\\\\\\((?:.|\\s)*?\\\\\\))|(\\$(?!\\$)(?:.|\\s)*?\\$)"
-		
+		//   • Inline LaTeX using \( ... \)
+		let pattern = "(\\\\\\[(?:.|\\s)*?\\\\\\])|(\\$\\$(?:.|\\s)*?\\$\\$)|(\\\\\\((?:.|\\s)*?\\\\\\))"
 		guard let regex = try? NSRegularExpression(pattern: pattern, options: []) else {
 			return self
 		}
-		
 		let mutableText = NSMutableString(string: self)
 		let matches = regex.matches(
 			in: self,
@@ -323,6 +321,7 @@ public extension String {
 			// Capture the entire LaTeX string (including delimiters).
 			let rawLaTeX = String(self[range])
 			// Determine if this is a block LaTeX expression.
+			// Considering only block LaTeX using \[ and $$.
 			let isBlock = rawLaTeX.hasPrefix("\\[") || rawLaTeX.hasPrefix("$$")
 			// Remove newlines and extra spaces.
 			let stripped = rawLaTeX

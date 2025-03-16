@@ -29,21 +29,7 @@ struct PendingMessageView: View {
 		var text: String = String(localized: "Processing...")
 		if !self.model.pendingMessage.isEmpty {
 			// Show progress if availible
-			text = self.model.pendingMessage.replacingOccurrences(
-				of: "\\[",
-				with: "$$"
-			)
-			.replacingOccurrences(
-				of: "\\]",
-				with: "$$"
-			).replacingOccurrences(
-				of: "\\(",
-				with: "$"
-			)
-			.replacingOccurrences(
-				of: "\\)",
-				with: "$"
-			)
+			text = self.model.pendingMessage
 		} else if self.model.status == .querying {
 			if RetrievalSettings.useTavilySearch && useWebSearch {
 				text = String(localized: "Searching in resources and on the web...")

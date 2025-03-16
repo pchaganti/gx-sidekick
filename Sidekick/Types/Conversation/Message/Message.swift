@@ -20,20 +20,7 @@ public struct Message: Identifiable, Codable, Hashable {
 		expertId: UUID? = nil
 	) {
 		self.id = UUID()
-		self.text = text.replacingOccurrences(
-			of: "\\[",
-			with: "$$"
-		).replacingOccurrences(
-			of: "\\]",
-			with: "$$"
-		).replacingOccurrences(
-			of: "\\(",
-			with: "$"
-		)
-		.replacingOccurrences(
-			of: "\\)",
-			with: "$"
-		)
+		self.text = text
 		self.sender = sender
 		self.startTime = .now
 		self.lastUpdated = .now

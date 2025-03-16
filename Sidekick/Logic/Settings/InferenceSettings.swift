@@ -46,6 +46,8 @@ For applicable problems that require accuracy, but don't need to display solving
 	public static let metadataPrompt: String = """
 The user's name: \(Settings.username)
 Current date & time: \(Date.now.ISO8601Format())
+
+Refer to the user by their name, and use the date to answer time relevant questions. Inform the user if they are overdue on something.
 """
 	
 	/// Static constant for the default server endpoint
