@@ -5,8 +5,9 @@
 //  Created by Bean John on 10/4/24.
 //
 
-import Foundation
 import AppKit
+import Foundation
+import Highlightr
 
 public extension String {
 	
@@ -65,6 +66,35 @@ public extension String {
 		pasteboard.clearContents()
 		pasteboard.declareTypes([.string], owner: nil)
 		pasteboard.setString(self, forType: .string)
+	}
+	
+	/// Function to copy the string to the clipboard while preserving formatting
+	/// Copies the string to the clipboard while preserving formatting.
+	/// It converts the string to an attributed string using Highlightr,
+	/// then delegates Markdown processing (links, block codes, dividers, and symbols)
+	/// to extensions on NSMutableAttributedString.
+	func copyWithFormatting() {
+		if let highlightr: Highlightr = Highlightr() {
+			highlightr.setTheme(to: "purebasic.min")
+			// Convert the string to an attributed string with Markdown highlighting.
+			if let attributedString: NSAttributedString = highlightr.highlight(
+				self,
+				as: "markdown"
+			) {
+				// Create a mutable copy to perform modifications.
+				let mutableAttributedString = NSMutableAttributedString(attributedString: attributedString)
+				// Process markdown elements using dedicated NSAttributedString extensions.
+				mutableAttributedString.processMarkdownLinks()
+				mutableAttributedString.removeMarkdownBlockCodes()
+				mutableAttributedString.removeMarkdownDividers()
+				mutableAttributedString.stripMarkdownSymbols()
+				// Copy the processed attributed string to the pasteboard.
+				mutableAttributedString.copyToPasteboard()
+				return
+			}
+		}
+		// If failed, just copy plain text
+		self.copy()
 	}
 	
 	/// Function to add a trailing quote or space if needed

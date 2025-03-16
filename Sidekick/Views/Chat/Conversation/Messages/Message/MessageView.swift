@@ -209,7 +209,7 @@ struct MessageView: View {
 	
 	var copyButton: some View {
 		Button {
-			self.copy()
+			self.message.text.copyWithFormatting()
 		} label: {
 			Text("Copy to Clipboard")
 		}
@@ -256,11 +256,6 @@ struct MessageView: View {
 		message.text = messageText
 		conversation.updateMessage(message)
 		conversationManager.update(conversation)
-	}
-	
-	/// Function to copy message text to clipboard
-	private func copy() {
-		self.message.text.copy()
 	}
 	
 }

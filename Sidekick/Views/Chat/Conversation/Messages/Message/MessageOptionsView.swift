@@ -117,19 +117,19 @@ Tokens per second: \(tokensPerSecondStr)
 			// If message was produced by a reasoning model
 			if let reasoningText = self.message.reasoningText {
 				Button {
-					reasoningText.copy()
+					reasoningText.copyWithFormatting()
 				} label: {
 					Text("Copy Reasoning Process")
 				}
 				Button {
-					self.message.responseText.copy()
+					self.message.responseText.copyWithFormatting()
 				} label: {
 					Text("Copy Answer")
 				}
 			} else {
 				// Else, only allow copying of answer
 				Button {
-					self.message.text.copy()
+					self.message.text.copyWithFormatting()
 				} label: {
 					Text("Copy to Clipboard")
 				}

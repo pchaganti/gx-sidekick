@@ -130,6 +130,9 @@
 		20573F322CB53172004C19FE /* InferenceSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20573F312CB53172004C19FE /* InferenceSettings.swift */; };
 		20573F362CB53878004C19FE /* CircleMenuStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20573F352CB53878004C19FE /* CircleMenuStyle.swift */; };
 		205B50D12CD3025A0057769F /* SourceRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205B50D02CD3025A0057769F /* SourceRowView.swift */; };
+		205E3F282D8723AB00128D67 /* Highlightr in Frameworks */ = {isa = PBXBuildFile; productRef = 205E3F272D8723AB00128D67 /* Highlightr */; };
+		205E3F2A2D87288400128D67 /* Extension+NSAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205E3F292D87288400128D67 /* Extension+NSAttributedString.swift */; };
+		205E3F2C2D872E4200128D67 /* Extension+NSMutableAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205E3F2B2D872E4200128D67 /* Extension+NSMutableAttributedString.swift */; };
 		206934902D5CC87E006619FD /* Credits.html in Resources */ = {isa = PBXBuildFile; fileRef = 2069348E2D5CC7FE006619FD /* Credits.html */; };
 		206934932D5CCDF1006619FD /* conversationExportTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 206934922D5CCDF1006619FD /* conversationExportTemplate.html */; };
 		206AB6122CF5F8390010B09A /* AttachmentSelectionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206AB6112CF5F8390010B09A /* AttachmentSelectionButton.swift */; };
@@ -461,6 +464,8 @@
 		20573F312CB53172004C19FE /* InferenceSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InferenceSettings.swift; sourceTree = "<group>"; };
 		20573F352CB53878004C19FE /* CircleMenuStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleMenuStyle.swift; sourceTree = "<group>"; };
 		205B50D02CD3025A0057769F /* SourceRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceRowView.swift; sourceTree = "<group>"; };
+		205E3F292D87288400128D67 /* Extension+NSAttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+NSAttributedString.swift"; sourceTree = "<group>"; };
+		205E3F2B2D872E4200128D67 /* Extension+NSMutableAttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+NSMutableAttributedString.swift"; sourceTree = "<group>"; };
 		2069348E2D5CC7FE006619FD /* Credits.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = Credits.html; sourceTree = "<group>"; };
 		206934922D5CCDF1006619FD /* conversationExportTemplate.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = conversationExportTemplate.html; sourceTree = "<group>"; };
 		206AB6112CF5F8390010B09A /* AttachmentSelectionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentSelectionButton.swift; sourceTree = "<group>"; };
@@ -604,6 +609,7 @@
 				207A9F532CB82D9600E727DE /* SymbolPicker in Frameworks */,
 				2031B9952CEAE66400627D53 /* KeyboardShortcuts in Frameworks */,
 				20A40C852D718D4300A9D9A9 /* LanguageSupport in Frameworks */,
+				205E3F282D8723AB00128D67 /* Highlightr in Frameworks */,
 				20B53D072D5B03B900D1AE79 /* Sparkle in Frameworks */,
 				208388DD2CBF4E8A00C2A9F8 /* SecureDefaults in Frameworks */,
 				20CC0C2F2CE2401600A3BC40 /* ExtractKit-macOS in Frameworks */,
@@ -710,6 +716,8 @@
 				20E48C2A2CB560E30085E7D6 /* Extension+CGKeyCode.swift */,
 				208388EE2CBF86A100C2A9F8 /* Extension+UserDefaults.swift */,
 				2031B9912CEAE3CC00627D53 /* Extension+NSWindow.swift */,
+				205E3F292D87288400128D67 /* Extension+NSAttributedString.swift */,
+				205E3F2B2D872E4200128D67 /* Extension+NSMutableAttributedString.swift */,
 			);
 			path = AppKit;
 			sourceTree = "<group>";
@@ -1509,6 +1517,7 @@
 				20A40C822D718D4300A9D9A9 /* CodeEditorView */,
 				20A40C842D718D4300A9D9A9 /* LanguageSupport */,
 				20CB50372D828CB60064D460 /* LaTeXSwiftUI */,
+				205E3F272D8723AB00128D67 /* Highlightr */,
 			);
 			productName = Sidekick;
 			productReference = 200549732CAFA67B00A3DCF2 /* Sidekick.app */;
@@ -1625,6 +1634,7 @@
 				200619B82D678694001949EF /* XCRemoteSwiftPackageReference "WebViewKit" */,
 				20A40C812D718D4300A9D9A9 /* XCRemoteSwiftPackageReference "CodeEditorView" */,
 				20CB50362D828CB60064D460 /* XCRemoteSwiftPackageReference "LaTeXSwiftUI" */,
+				205E3F262D8723AB00128D67 /* XCRemoteSwiftPackageReference "Highlightr" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 200549742CAFA67B00A3DCF2 /* Products */;
@@ -1728,6 +1738,7 @@
 				201A1A962CDB99C6001E9BA9 /* MarkdownTableView.swift in Sources */,
 				20A40C872D7190BA00A9D9A9 /* SlideStudioPromptOptionsView.swift in Sources */,
 				202801FA2CC949F2005C1F7D /* TemporaryResource.swift in Sources */,
+				205E3F2A2D87288400128D67 /* Extension+NSAttributedString.swift in Sources */,
 				20573F162CB505DC004C19FE /* ConversationListView.swift in Sources */,
 				2030D6242D6D60FB00F18BF4 /* EvaluationDetails.swift in Sources */,
 				20B97CCF2CAFEC37009A0A5D /* DownloadManager.swift in Sources */,
@@ -1798,6 +1809,7 @@
 				20B97CD62CAFF2E0009A0A5D /* SetupView.swift in Sources */,
 				20B97CED2CB00A28009A0A5D /* Favicon.swift in Sources */,
 				20CE5E582D5C85D10000A2EC /* LengthyTasksNavigationButton.swift in Sources */,
+				205E3F2C2D872E4200128D67 /* Extension+NSMutableAttributedString.swift in Sources */,
 				202801F62CC93CD5005C1F7D /* PromptInputField.swift in Sources */,
 				204D09832D1166810066B060 /* IntroductionPage.swift in Sources */,
 				20A40C892D72AEE600A9D9A9 /* SlideStudioExportOptionsView.swift in Sources */,
@@ -2343,6 +2355,14 @@
 				minimumVersion = 0.16.0;
 			};
 		};
+		205E3F262D8723AB00128D67 /* XCRemoteSwiftPackageReference "Highlightr" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/raspu/Highlightr";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.2.1;
+			};
+		};
 		207A9F512CB82D9600E727DE /* XCRemoteSwiftPackageReference "SymbolPicker" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/xnth97/SymbolPicker";
@@ -2455,6 +2475,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 20573F262CB52F84004C19FE /* XCRemoteSwiftPackageReference "Splash" */;
 			productName = SplashMarkdown;
+		};
+		205E3F272D8723AB00128D67 /* Highlightr */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 205E3F262D8723AB00128D67 /* XCRemoteSwiftPackageReference "Highlightr" */;
+			productName = Highlightr;
 		};
 		207A9F522CB82D9600E727DE /* SymbolPicker */ = {
 			isa = XCSwiftPackageProductDependency;
