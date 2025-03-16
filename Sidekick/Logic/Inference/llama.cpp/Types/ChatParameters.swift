@@ -61,8 +61,10 @@ struct ChatParameters: Codable {
 	var model: String = InferenceSettings.useServer ? InferenceSettings.serverModelName : ""
 	var messages: [Message.MessageSubset]
 	
-	var stream: Bool = true
 	var temperature = InferenceSettings.temperature
+	
+	var stream: Bool = true
+	var stream_options: StreamOptions = .init()
 	
 	/// Function to convert chat parameters to JSON
 	public func toJSON() -> String {
@@ -95,6 +97,10 @@ struct ChatParameters: Codable {
 			}
 			
 		}
+	}
+	
+	struct StreamOptions: Codable {
+		var include_usage: Bool = true
 	}
 	
 }
