@@ -105,8 +105,15 @@ struct AddFilesTip: Tip {
 		Text("Give the chatbot temporary access to a file by dropping it here.")
 	}
 	
+	var imageName: String {
+		if #available(macOS 15, *) {
+			return "document.fill"
+		}
+		return "doc.fill"
+	}
+	
 	var image: Image? {
-		Image(systemName: "doc.fill")
+		Image(systemName: imageName)
 	}
 	
 	var rules: [Rule] {

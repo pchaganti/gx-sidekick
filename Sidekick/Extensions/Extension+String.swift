@@ -324,19 +324,18 @@ public extension String {
 		return processedResponse.trimmingCharacters(in: .whitespacesAndNewlines)
 	}
 	
-	/// Function to convert LaTeX within a string into a Markdown image block containing a URL-encoded version.
-	/// Inline LaTeX (using \( ... \)) become `![](latex://encoded)` and block LaTeX (using \[ ... \] and $$ ... $$) get a new line before the Markdown image.
+	/// Function to convert LaTeX within a string into a Markdown image block containing a URL-encoded version
 	func convertLaTeX() -> String {
-		// The regex pattern matches full LaTeX expressions.
-		// It supports:
+		// Updated regex pattern:
 		//   • Block LaTeX using \[ ... \] or $$ ... $$
-		//   • Inline LaTeX using \( ... \) or $ ... $
-		let pattern = "(\\\\\\[(?:.|\\s)*?\\\\\\])|(\\$\\$(?:.|\\s)*?\\$\\$)|(\\\\\\((?:.|\\s)*?\\\\\\))|(\\$(?!\\$)(?:.|\\s)*?\\$)"
+		//   • Inline LaTeX using \( ... \)
+		//   • Inline LaTeX using $...$, where the content is any character except '$'
+		let pattern: String = "(\\\\\\[(?:.|\\s)*?\\\\\\])|(\\$\\$(?:.|\\s)*?\\$\\$)|(\\\\\\((?:.|\\s)*?\\\\\\))|(\\$(?!\\$)([^$]|\\$(?=[^$]))+\\$)"
 		guard let regex = try? NSRegularExpression(pattern: pattern, options: []) else {
 			return self
 		}
-		let mutableText = NSMutableString(string: self)
-		let matches = regex.matches(
+		let mutableText: NSMutableString = NSMutableString(string: self)
+		let matches: [NSTextCheckingResult] = regex.matches(
 			in: self,
 			options: [],
 			range: NSRange(location: 0, length: mutableText.length)
@@ -344,14 +343,16 @@ public extension String {
 		// Iterate backwards so that range replacements don't affect upcoming ranges.
 		for match in matches.reversed() {
 			let fullRange = match.range(at: 0)
-			guard let range = Range(fullRange, in: self) else {
-				continue
-			}
+			guard let range = Range(fullRange, in: self) else { continue }
 			// Capture the entire LaTeX string (including delimiters).
 			let rawLaTeX = String(self[range])
 			// Determine if this is a block LaTeX expression.
 			// Considering only block LaTeX using \[ and $$.
 			let isBlock: Bool = rawLaTeX.hasPrefix("\\[") || rawLaTeX.hasPrefix("$$")
+			// Check for new lines in inline LaTeX, which is not allowed
+			if rawLaTeX.contains("\n") && !isBlock {
+				continue
+			}
 			// Remove newlines and extra spaces.
 			let stripped = rawLaTeX
 				.replacingOccurrences(of: "\n", with: " ")
@@ -359,9 +360,7 @@ public extension String {
 			// Percent-encode the full, stripped LaTeX expression.
 			var allowed = CharacterSet.alphanumerics
 			allowed.insert(charactersIn: ".-_~")
-			let encoded = stripped.addingPercentEncoding(
-				withAllowedCharacters: allowed
-			) ?? ""
+			let encoded = stripped.addingPercentEncoding(withAllowedCharacters: allowed) ?? ""
 			// Compose the Markdown image. Block LaTeX gets newlines before and after.
 			let replacement = (isBlock ? "\n" : "") + "![](latex://\(encoded))" + (isBlock ? "\n" : "")
 			regex.replaceMatches(in: mutableText, options: [], range: fullRange, withTemplate: replacement)

@@ -19,7 +19,7 @@ struct ExportButton: View {
 		if #available(macOS 15, *) {
 			return "document.badge.plus.fill"
 		}
-		return "doc.fill.badge.plus"
+			return "doc.fill.badge.plus"
 	}()
 	
     var body: some View {
