@@ -82,16 +82,23 @@ public extension NSMutableAttributedString {
 				  let textRange = Range(match.range(at: 1), in: self.string),
 				  let urlRange = Range(match.range(at: 2), in: self.string)
 			else { continue }
-			
+			// Extract url
 			let linkText = String(self.string[textRange])
 			let urlString = String(self.string[urlRange])
-			
 			// Create a replacement with the link text.
 			let replacement = NSMutableAttributedString(string: linkText)
 			if let url = URL(string: urlString) {
-				replacement.addAttribute(.link, value: url, range: NSRange(location: 0, length: replacement.length))
+				replacement.addAttribute(
+					.link,
+					value: url,
+					range: NSRange(location: 0, length: replacement.length)
+				)
+				replacement.addAttribute(
+					.foregroundColor,
+					value: NSColor.blue,
+					range: NSRange(location: 0, length: replacement.length)
+				)
 			}
-			
 			self.replaceCharacters(in: match.range, with: replacement)
 		}
 	}

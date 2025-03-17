@@ -80,13 +80,13 @@ public extension String {
 				let mutableAttributedString = NSMutableAttributedString(attributedString: attributedString)
 				// Process markdown elements using dedicated NSAttributedString extensions
 				mutableAttributedString.convertCourierFonts()
+				mutableAttributedString.removeTextColor()
 				mutableAttributedString.processMarkdownImages()
 				mutableAttributedString.processMarkdownLinks()
 				mutableAttributedString.processMarkdownHeadings()
 				mutableAttributedString.removeMarkdownBlockCodes()
 				mutableAttributedString.removeMarkdownDividers()
 				mutableAttributedString.stripMarkdownSymbols()
-				mutableAttributedString.removeTextColor()
 				// Copy the processed attributed string to the pasteboard
 				mutableAttributedString.copyToPasteboard()
 				return
