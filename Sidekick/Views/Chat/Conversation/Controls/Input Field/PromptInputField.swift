@@ -57,10 +57,14 @@ struct PromptInputField: View {
 					DictationTip.readyForDictation = true
 				}
 			}
-			.onChange(of: conversationState.selectedConversationId) {
+			.onChange(
+				of: conversationState.selectedConversationId
+			) {
 				self.isFocused = true
+				// Use most recently selected expert
+				let expertId: UUID? = selectedConversation?.messages.last?.expertId ?? expertManager.default?.id
 				withAnimation(.linear) {
-					self.conversationState.selectedExpertId = expertManager.default?.id
+					self.conversationState.selectedExpertId = expertId
 				}
 			}
 			.onAppear {

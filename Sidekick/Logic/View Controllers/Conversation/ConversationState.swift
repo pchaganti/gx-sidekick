@@ -19,6 +19,15 @@ public class ConversationState: ObservableObject {
 		return ConversationManager.shared.conversations.first
 	}
 	
-	@Published var selectedExpertId: UUID? = ExpertManager.shared.default?.id
+	private var selectedConversation: Conversation? {
+		guard let selectedConversationId = self.selectedConversationId else {
+			return nil
+		}
+		return ConversationManager.shared.getConversation(
+			id: selectedConversationId
+		)
+	}
+	
+	@Published var selectedExpertId: UUID? = ConversationManager.shared.conversations.first?.messages.last?.expertId ?? ExpertManager.shared.default?.id
 	
 }

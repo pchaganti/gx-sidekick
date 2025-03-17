@@ -253,7 +253,7 @@ DO NOT reference sources outside of those provided below. If you did not referen
 	private var sender: Sender
 	
 	/// The `UUID` of the expert used
-	private var expertId: UUID?
+	public var expertId: UUID?
 	
 	/// A `URL` for an image generated, if any
 	public var imageUrl: URL?
@@ -359,6 +359,16 @@ DO NOT reference sources outside of those provided below. If you did not referen
 		)
 		.trimmingWhitespaceAndNewlines()
 		.dropSuffixIfPresent(
+			"Sources"
+		).dropSuffixIfPresent(
+			"References"
+		)
+		.dropSuffixIfPresent(
+			"**Sources**"
+		).dropSuffixIfPresent(
+			"**References**"
+		)
+		.dropSuffixIfPresent(
 			"Sources:"
 		).dropSuffixIfPresent(
 			"References:"
@@ -379,7 +389,6 @@ DO NOT reference sources outside of those provided below. If you did not referen
 			options: .backwards,
 			includeCharacter: true
 		)
-		print(jsonText)
 		// Decode references if needed
 		if includeReferences, let data: Data = try? jsonText.data() {
 			// Decode data
