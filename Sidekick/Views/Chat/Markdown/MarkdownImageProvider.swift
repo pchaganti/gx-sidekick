@@ -41,22 +41,20 @@ struct MarkdownImageProvider: ImageProvider {
 	private func networkImage(
 		url: URL?
 	) -> some View {
-		NetworkImage(
+		AsyncImage(
 			url: url
-		) { state in
-			switch state {
-				case .failure, .empty:
+		) { phase in
+			switch phase {
+				case .empty, .failure:
 					imageLoadError
-				case let .success(image, idealSize):
+				case .success(let image):
 					image
 						.renderingMode(.template)
 						.resizable()
 						.aspectRatio(contentMode: .fit)
 						.padding(.leading, 1)
-						.frame(
-							idealWidth: idealSize.width * scaleFactor / 2,
-							idealHeight: idealSize.height * scaleFactor / 2
-						)
+				@unknown default:
+					imageLoadError
 			}
 		}
 	}

@@ -34,7 +34,6 @@ public extension String {
 	/// Splits a string into groups of `every` n characters, grouping from left-to-right by default. If `backwards` is true, right-to-left.
 	func split(every: Int, backwards: Bool = false) -> [String] {
 		var result = [String]()
-		
 		for i in stride(from: 0, to: self.count, by: every) {
 			switch backwards {
 				case true:
@@ -69,26 +68,26 @@ public extension String {
 	}
 	
 	/// Function to copy the string to the clipboard while preserving formatting
-	/// Copies the string to the clipboard while preserving formatting.
-	/// It converts the string to an attributed string using Highlightr,
-	/// then delegates Markdown processing (links, block codes, dividers, and symbols)
-	/// to extensions on NSMutableAttributedString.
 	func copyWithFormatting() {
 		if let highlightr: Highlightr = Highlightr() {
 			highlightr.setTheme(to: "purebasic.min")
-			// Convert the string to an attributed string with Markdown highlighting.
+			// Convert the string to an attributed string with Markdown highlighting
 			if let attributedString: NSAttributedString = highlightr.highlight(
 				self,
 				as: "markdown"
 			) {
-				// Create a mutable copy to perform modifications.
+				// Create a mutable copy to perform modifications
 				let mutableAttributedString = NSMutableAttributedString(attributedString: attributedString)
-				// Process markdown elements using dedicated NSAttributedString extensions.
+				// Process markdown elements using dedicated NSAttributedString extensions
+				mutableAttributedString.convertCourierFonts()
+				mutableAttributedString.processMarkdownImages()
 				mutableAttributedString.processMarkdownLinks()
+				mutableAttributedString.processMarkdownHeadings()
 				mutableAttributedString.removeMarkdownBlockCodes()
 				mutableAttributedString.removeMarkdownDividers()
 				mutableAttributedString.stripMarkdownSymbols()
-				// Copy the processed attributed string to the pasteboard.
+				mutableAttributedString.removeTextColor()
+				// Copy the processed attributed string to the pasteboard
 				mutableAttributedString.copyToPasteboard()
 				return
 			}
@@ -331,8 +330,8 @@ public extension String {
 		// The regex pattern matches full LaTeX expressions.
 		// It supports:
 		//   • Block LaTeX using \[ ... \] or $$ ... $$
-		//   • Inline LaTeX using \( ... \)
-		let pattern = "(\\\\\\[(?:.|\\s)*?\\\\\\])|(\\$\\$(?:.|\\s)*?\\$\\$)|(\\\\\\((?:.|\\s)*?\\\\\\))"
+		//   • Inline LaTeX using \( ... \) or $ ... $
+		let pattern = "(\\\\\\[(?:.|\\s)*?\\\\\\])|(\\$\\$(?:.|\\s)*?\\$\\$)|(\\\\\\((?:.|\\s)*?\\\\\\))|(\\$(?!\\$)(?:.|\\s)*?\\$)"
 		guard let regex = try? NSRegularExpression(pattern: pattern, options: []) else {
 			return self
 		}
@@ -352,7 +351,7 @@ public extension String {
 			let rawLaTeX = String(self[range])
 			// Determine if this is a block LaTeX expression.
 			// Considering only block LaTeX using \[ and $$.
-			let isBlock = rawLaTeX.hasPrefix("\\[") || rawLaTeX.hasPrefix("$$")
+			let isBlock: Bool = rawLaTeX.hasPrefix("\\[") || rawLaTeX.hasPrefix("$$")
 			// Remove newlines and extra spaces.
 			let stripped = rawLaTeX
 				.replacingOccurrences(of: "\n", with: " ")
