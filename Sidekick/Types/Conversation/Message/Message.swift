@@ -354,7 +354,7 @@ DO NOT reference sources outside of those provided below. If you did not referen
 		let text: String = response.text.dropSuffixIfPresent("[]")
 		// Decode text for extract text and references
 		let messageText: String = text.dropFollowingSubstring(
-			"[",
+			"\n[",
 			options: .backwards
 		)
 		.trimmingWhitespaceAndNewlines()
@@ -375,10 +375,11 @@ DO NOT reference sources outside of those provided below. If you did not referen
 		)
 		.trimmingWhitespaceAndNewlines()
 		let jsonText: String = text.dropPrecedingSubstring(
-			"[",
+			"\n[",
 			options: .backwards,
 			includeCharacter: true
 		)
+		print(jsonText)
 		// Decode references if needed
 		if includeReferences, let data: Data = try? jsonText.data() {
 			// Decode data
