@@ -32,6 +32,10 @@ public final class NetworkMonitor {
 			guard let self = self else { return }
 			// Update the timestamp when the path changes
 			self.lastPathChange = Date.now
+			// Cache network call result
+			Task {
+				let _ = await Model.shared.llama.remoteServerIsReachable()
+			}
 		}
 		// Start monitor
 		self.startMonitoring()

@@ -112,8 +112,8 @@
 			// Get last path change time
 			// If using server, check connection on multiple endpoints
 			let testEndpoints: [String] = [
-				"/v1/chat/completions",
-				"/v1/models"
+				"/v1/models",
+				"/v1/chat/completions"
 			]
 			for testEndpoint in testEndpoints {
 				let endpoint: String = InferenceSettings.endpoint.replacingSuffix(
@@ -125,10 +125,13 @@
 				) else {
 					continue
 				}
-				if await endpointUrl.isAPIEndpointReachable() {
+				if await endpointUrl.isAPIEndpointReachable(
+					timeout: 1
+				) {
 					// Cache result, then return
 					self.wasRemoteServerAccessible = true
 					self.lastRemoteServerCheck = Date.now
+					Self.logger.info("Reached remote server at '\(InferenceSettings.endpoint, privacy: .public)'")
 					return true
 				}
 			}
