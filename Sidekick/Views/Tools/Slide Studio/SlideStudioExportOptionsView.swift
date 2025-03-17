@@ -6,7 +6,6 @@
 //
 
 import FSKit_macOS
-import SwiftfulLoadingIndicators
 import SwiftUI
 
 struct SlideStudioExportOptionsView: View {

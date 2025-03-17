@@ -24,11 +24,12 @@ struct MarkdownImageProvider: ImageProvider {
 					// If network image
 					self.networkImage(url: url)
 				} else if url.absoluteString.hasPrefix("latex://"),
-					let latexStr = url.withoutSchema.removingPercentEncoding {
+						  let latexStr = url.withoutSchema.removingPercentEncoding {
 					// If url is LaTeX
 					LaTeX(latexStr)
+						.blockMode(.blockViews)
 						.errorMode(.original)
-						.scrollIndicators(.never)
+						.renderingStyle(.original)
 				} else {
 					imageLoadError
 				}
@@ -52,6 +53,9 @@ struct MarkdownImageProvider: ImageProvider {
 						.renderingMode(.template)
 						.resizable()
 						.aspectRatio(contentMode: .fit)
+						.draggable(
+							image
+						)
 						.padding(.leading, 1)
 				@unknown default:
 					imageLoadError
@@ -87,19 +91,18 @@ struct MarkdownInlineImageProvider: InlineImageProvider {
 		} else if url.absoluteString.hasPrefix("latex://"),
 			let latexStr = url.withoutSchema.removingPercentEncoding,
 				let latexImage: Image = await LaTeX(latexStr)
-			.blockMode(.alwaysInline)
-			.errorMode(.original)
-			.padding(.horizontal, 3)
-			.offset(y: 2.5)
-			.generateImage(
-				scale: scaleFactor
-			) {
+					.blockMode(.alwaysInline)
+					.errorMode(.original)
+					.padding(.horizontal, 3)
+					.offset(y: 2.75)
+					.generateImage(
+						scale: scaleFactor
+					) {
 			return latexImage
 				.renderingMode(.template)
 				.resizable()
-		} else {
-			return Image(systemName: "questionmark.square.fill")
 		}
+		return Image(systemName: "questionmark.square.fill")
 	}
 	
 }

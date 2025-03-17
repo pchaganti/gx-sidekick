@@ -887,16 +887,6 @@
         }
       }
     },
-    "Do you want to add files, folders or webpages?" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "您想添加文件或文件夹，还是网页？"
-          }
-        }
-      }
-    },
     "Doing your job..." : {
       "localizations" : {
         "zh-Hans" : {
@@ -1093,6 +1083,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "详细阐述以下内容，提供额外的见解、示例、详细解释和相关概念。深入探讨主题，提供全面的理解，并探索原文未涉及的各个维度。使用与原文相同的语言进行回复。"
+          }
+        }
+      }
+    },
+    "Email (Mail.app only)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "邮件（只支持“邮件.app”）"
           }
         }
       }
@@ -1387,22 +1387,22 @@
         }
       }
     },
+    "File / Folder" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文件 / 文件夹"
+          }
+        }
+      }
+    },
     "File Extension:" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "文件后缀："
-          }
-        }
-      }
-    },
-    "File/Folder" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "文件 / 文件夹"
           }
         }
       }
@@ -1673,6 +1673,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "算力较强"
+          }
+        }
+      }
+    },
+    "Grant Permission" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "授权"
+          }
+        }
+      }
+    },
+    "Guessing your email addresses..." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在寻找邮箱…"
           }
         }
       }
@@ -2474,6 +2494,16 @@
         }
       }
     },
+    "Resource Type" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "资源类型"
+          }
+        }
+      }
+    },
     "Resources" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2784,6 +2814,16 @@
         }
       }
     },
+    "Select an Email Address:" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择一个邮箱："
+          }
+        }
+      }
+    },
     "Select an Expert" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2900,6 +2940,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sidekick 已可供使用。"
+          }
+        }
+      }
+    },
+    "Sidekick needs permission to read your emails in Apple Mail. Please click the button below and press \"Open\"." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sidekick 需要权限才能阅读 Apple Mail 中的电子邮件。请点击下面的按钮并按“打开”。"
           }
         }
       }
@@ -3674,16 +3724,6 @@
         }
       }
     },
-    "Webpage" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "网页"
-          }
-        }
-      }
-    },
     "Website" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3710,6 +3750,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "你需要 Sidekick 以什么形式回复？"
+          }
+        }
+      }
+    },
+    "What type of resource do you want to add?" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你要添加的资源属于哪一类？"
           }
         }
       }

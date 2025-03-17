@@ -12,7 +12,9 @@ struct ResourceSectionView: View {
 	
 	@Binding var expert: Expert
 	
+	@State private var showAddOptions: Bool = false
 	@State private var isAddingWebsite: Bool = false
+	@State private var isAddingEmail: Bool = false
 	
 	@EnvironmentObject private var lengthyTasksController: LengthyTasksController
 	
@@ -38,10 +40,38 @@ struct ResourceSectionView: View {
 		} header: {
 			Text("Resources")
 		}
+		.confirmationDialog(
+			"Resource Type",
+			isPresented: $showAddOptions
+		) {
+			Button {
+				self.addFile()
+			} label: {
+				Text("File / Folder")
+			}
+			Button {
+				self.isAddingWebsite.toggle()
+			} label: {
+				Text("Website")
+			}
+			Button {
+				self.isAddingEmail.toggle()
+			} label: {
+				Text("Email (Mail.app only)")
+			}
+		} message: {
+			Text("What type of resource do you want to add?")
+		}
 		.sheet(isPresented: $isAddingWebsite) {
 			WebsiteSelectionView(
 				expert: $expert,
 				isAddingWebsite: $isAddingWebsite
+			)
+		}
+		.sheet(isPresented: $isAddingEmail) {
+			EmailSelectionView(
+				expert: $expert,
+				isAddingEmail: $isAddingEmail
 			)
 		}
     }
@@ -63,9 +93,7 @@ struct ResourceSectionView: View {
 				}
 				Spacer()
 				Button {
-					Task { @MainActor in
-						self.add()
-					}
+					self.showAddOptions.toggle()
 				} label: {
 					Text("Add")
 				}
@@ -100,19 +128,6 @@ struct ResourceSectionView: View {
 	}
 	
 	@MainActor
-	private func add() {
-		let _ = Dialogs.dichotomy(
-			title: String(localized: "Do you want to add files, folders or webpages?"),
-			option1: String(localized: "File/Folder"),
-			option2: String(localized: "Webpage")
-		) {
-			addFile()
-		} ifOption2: {
-			isAddingWebsite.toggle()
-		}
-	}
-	
-	@MainActor
 	private func addFile() {
 		guard let selectedUrls: [URL] = try? FileManager.selectFile(
 			dialogTitle: String(localized: "Select Files or Folders"),
@@ -126,81 +141,4 @@ struct ResourceSectionView: View {
 		}
 	}
 	
-	struct WebsiteSelectionView: View {
-		
-		@Binding var expert: Expert
-		@Binding var isAddingWebsite: Bool
-		
-		@State private var websiteUrl: String = ""
-		
-		var isValidUrl: Bool {
-			// Check if init possible
-			guard let url = URL(string: websiteUrl) else { return false }
-			// Check if web url
-			if !url.isWebURL { return false }
-			// Check format
-			if NSURL(string: websiteUrl) == nil { return false }
-			let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
-			if let match = detector.firstMatch(
-				in: websiteUrl,
-				options: [],
-				range: NSRange(
-					location: 0,
-					length: websiteUrl.utf16.count
-				)
-			) {
-				// it is a link, if the match covers the whole string
-				return match.range.length == websiteUrl.utf16.count
-			} else {
-				return false
-			}
-		}
-		
-		var body: some View {
-			VStack(alignment: .leading) {
-				HStack {
-					Text("Enter a link or URL:")
-						.font(.headline)
-					Spacer()
-					Button {
-						isAddingWebsite = false
-					} label: {
-						Text("Cancel")
-					}
-					Button {
-						Task { @MainActor in
-							await add()
-						}
-					} label: {
-						Text("Add")
-					}
-					.disabled(!isValidUrl)
-					.keyboardShortcut(.defaultAction)
-				}
-				TextField("Link or URL", text: $websiteUrl)
-					.textFieldStyle(.roundedBorder)
-			}
-			.padding(11)
-			.padding([.horizontal, .top], 1)
-		}
-	
-		private func add() async {
-			if websiteUrl.last == "/" {
-				websiteUrl = String(websiteUrl.dropLast())
-			}
-			guard let url = URL(string: websiteUrl) else { return }
-			let newResource: Resource = Resource(
-				url: url
-			)
-			isAddingWebsite = false
-			await $expert.addResource(newResource)
-		}
-		
-	}
-	
 }
-
-
-//#Preview {
-//    ResourceSectionView()
-//}

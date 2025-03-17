@@ -153,6 +153,9 @@
 		208388E52CBF526E00C2A9F8 /* RetrievalSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208388E42CBF526E00C2A9F8 /* RetrievalSettings.swift */; };
 		208388ED2CBF825400C2A9F8 /* Tavily.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208388EC2CBF825400C2A9F8 /* Tavily.swift */; };
 		208388EF2CBF86A100C2A9F8 /* Extension+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208388EE2CBF86A100C2A9F8 /* Extension+UserDefaults.swift */; };
+		2083AEA22D8853DD0049C139 /* WebsiteSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2083AEA12D8853DD0049C139 /* WebsiteSelectionView.swift */; };
+		2083AEA42D8853E40049C139 /* EmailSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2083AEA32D8853E40049C139 /* EmailSelectionView.swift */; };
+		2083AEA62D885BFE0049C139 /* Extension+Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2083AEA52D885BFE0049C139 /* Extension+Array.swift */; };
 		2086E1712CB036BB00FFCF57 /* ConversationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2086E1702CB036BB00FFCF57 /* ConversationManager.swift */; };
 		2086E1AC2CB03CD200FFCF57 /* Dialogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2086E1AB2CB03CD200FFCF57 /* Dialogs.swift */; };
 		208844312CDDE33F003BCB6F /* ModelListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208844302CDDE33F003BCB6F /* ModelListView.swift */; };
@@ -485,6 +488,9 @@
 		208388E42CBF526E00C2A9F8 /* RetrievalSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrievalSettings.swift; sourceTree = "<group>"; };
 		208388EC2CBF825400C2A9F8 /* Tavily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tavily.swift; sourceTree = "<group>"; };
 		208388EE2CBF86A100C2A9F8 /* Extension+UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UserDefaults.swift"; sourceTree = "<group>"; };
+		2083AEA12D8853DD0049C139 /* WebsiteSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteSelectionView.swift; sourceTree = "<group>"; };
+		2083AEA32D8853E40049C139 /* EmailSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSelectionView.swift; sourceTree = "<group>"; };
+		2083AEA52D885BFE0049C139 /* Extension+Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Array.swift"; sourceTree = "<group>"; };
 		2086E1702CB036BB00FFCF57 /* ConversationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationManager.swift; sourceTree = "<group>"; };
 		2086E1AB2CB03CD200FFCF57 /* Dialogs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dialogs.swift; sourceTree = "<group>"; };
 		208844302CDDE33F003BCB6F /* ModelListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelListView.swift; sourceTree = "<group>"; };
@@ -1067,6 +1073,8 @@
 			children = (
 				207A9F5C2CB8FD0900E727DE /* ResourceSectionView.swift */,
 				207A9F582CB8F4AF00E727DE /* ResourceSelectionView.swift */,
+				2083AEA12D8853DD0049C139 /* WebsiteSelectionView.swift */,
+				2083AEA32D8853E40049C139 /* EmailSelectionView.swift */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -1332,6 +1340,7 @@
 				20B97CEA2CB00912009A0A5D /* Extension+URL.swift */,
 				200C3E2C2CD8B1380033909F /* AppKit */,
 				200C3E2B2CD8B0A40033909F /* UI */,
+				2083AEA52D885BFE0049C139 /* Extension+Array.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1734,6 +1743,7 @@
 				2041868D2D81E6B2002A5D1C /* NetworkMonitor.swift in Sources */,
 				20573F212CB527DB004C19FE /* MessageView.swift in Sources */,
 				204735802D642BE5000740F9 /* ModelExplorerView.swift in Sources */,
+				2083AEA22D8853DD0049C139 /* WebsiteSelectionView.swift in Sources */,
 				20BF49CD2D64A08200C329F8 /* ModelExplorerViewController.swift in Sources */,
 				201A1A962CDB99C6001E9BA9 /* MarkdownTableView.swift in Sources */,
 				20A40C872D7190BA00A9D9A9 /* SlideStudioPromptOptionsView.swift in Sources */,
@@ -1779,6 +1789,7 @@
 				200FBFEE2CB6477400A92A74 /* LlamaServer.swift in Sources */,
 				207E5EEF2D6F663B00A8F6FA /* SlideStudioViewController.swift in Sources */,
 				20C221022CC4A9E800A99796 /* Source.swift in Sources */,
+				2083AEA62D885BFE0049C139 /* Extension+Array.swift in Sources */,
 				207A9F622CB94B0000E727DE /* WindowCommands.swift in Sources */,
 				205B50D12CD3025A0057769F /* SourceRowView.swift in Sources */,
 				2031B98E2CEAE1A700627D53 /* Accessibility.swift in Sources */,
@@ -1840,6 +1851,7 @@
 				2034876B2D67202D00A88DA4 /* AssistantInstructionView.swift in Sources */,
 				20D65DD52CC0CC6C0052D826 /* StopGenerationButton.swift in Sources */,
 				204AEDA92D8170D0004028FF /* ServerModelNameEditor.swift in Sources */,
+				2083AEA42D8853E40049C139 /* EmailSelectionView.swift in Sources */,
 				20BF49D12D64A89300C329F8 /* ModelView.swift in Sources */,
 				20B97CE12CB001E0009A0A5D /* Conversation.swift in Sources */,
 				207A9F552CB8A96F00E727DE /* ExpertNavigationRowView.swift in Sources */,

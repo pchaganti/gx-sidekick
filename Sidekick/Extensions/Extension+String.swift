@@ -368,4 +368,24 @@ public extension String {
 		return mutableText as String
 	}
 	
+	/// Functions to extract email addresses from a `String`
+	func extractEmailAddresses() -> [String] {
+		var results = [String]()
+		let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+		let nsText = self as NSString
+		do {
+			let regExp = try NSRegularExpression(pattern: emailRegex, options: .caseInsensitive)
+			let range = NSMakeRange(0, self.count)
+			let matches = regExp.matches(in: self, options: .reportProgress, range: range)
+			
+			for match in matches {
+				let matchRange = match.range
+				results.append(nsText.substring(with: matchRange))
+			}
+		} catch (let error) {
+			print(error)
+		}
+		return results
+	}
+	
 }
