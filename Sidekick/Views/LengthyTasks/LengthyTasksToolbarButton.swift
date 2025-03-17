@@ -32,6 +32,13 @@ struct LengthyTasksButton: View {
 		return colorScheme == .dark ? darkModeSetting : lightModeSetting
 	}
 	
+	var symbolName: String {
+		if lengthyTasksController.hasTasks {
+			return "bell.badge.fill"
+		}
+		return "bell.fill"
+	}
+	
 	var lengthyTasksProgressTip: LengthyTasksProgressTip = .init()
 	
 	var body: some View {
@@ -41,18 +48,8 @@ struct LengthyTasksButton: View {
 			Label(
 				String(localized: "Notifications")
 			) {
-				Image(systemName: "bell.fill")
-					.if(lengthyTasksController.hasTasks) { view in
-						view
-							.padding([.top, .trailing], 2)
-							.overlay(
-								alignment: .topTrailing
-							) {
-								Circle()
-									.fill(Color.red)
-									.frame(width: 8)
-							}
-					}
+				Image(systemName: symbolName)
+					.symbolRenderingMode(.multicolor)
 			}
 			.font(.headline)
 			.fontWeight(.regular)

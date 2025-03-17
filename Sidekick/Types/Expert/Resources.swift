@@ -75,31 +75,44 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 		// Log
 		Self.logger.notice("Updating resource index for expert \"\(expertName, privacy: .public)\"")
 		// Update for each file
-		for index in self.resources.indices  {
-			await self.resources[index].updateIndex(
-				resourcesDirUrl: self.indexUrl
-			)
+		var resources: [Resource] = self.resources
+		let indexUrl: URL = self.indexUrl
+		await withTaskGroup(
+			of: Void.self
+		) { group in
+			for index in resources.indices {
+				group.addTask {
+					await resources[index].updateIndex(
+						resourcesDirUrl: indexUrl
+					)
+				}
+			}
 		}
+		self.resources = resources
 		// Record removed resources
-		let removedResources: [Resource] = resources.filter({
+		let removedResources: [Resource] = self.resources.filter({
 			!(!$0.wasMoved || $0.isWebResource)
 		})
 		let removedResourcesDescription: String = removedResources.map({
 			return "\"\($0.name)\""
 		}).joined(separator: ", ")
 		if !removedResources.isEmpty {
-			Dialogs.showAlert(
-				title: String(localized: "Remove Resources"),
-				message: String(localized: "The resources \(removedResourcesDescription) were removed because they could not be located.")
-			)
+			Task { @MainActor in
+				Dialogs.showAlert(
+					title: String(localized: "Remove Resources"),
+					message: String(localized: "The resources \(removedResourcesDescription) were removed because they could not be located.")
+				)
+			}
 		}
 		// Remove resources
-		resources = resources.filter({ !$0.wasMoved || $0.isWebResource })
+		self.resources = self.resources.filter({ !$0.wasMoved || $0.isWebResource })
 		// Remove from task list
-		withAnimation(.linear(duration: 0.3)) {
-			LengthyTasksController.shared.finishTask(
-				taskId: taskId
-			)
+		Task { @MainActor in
+			withAnimation(.linear(duration: 0.3)) {
+				LengthyTasksController.shared.finishTask(
+					taskId: taskId
+				)
+			}
 		}
 		// Log
 		Self.logger.notice("Finished updating resource index for expert \"\(expertName, privacy: .public)\"")

@@ -1,5 +1,5 @@
 {
-  "originHash" : "78a5a13b1a338e292f5beab068341a4e3970ed5b30e616ba9135972c5e82c987",
+  "originHash" : "678c244f6fa6cbaa002d43c30ef9d383c43169d21c579fbb8b6e8ee28167b711",
   "pins" : [
     {
       "identity" : "browserkit",
@@ -60,7 +60,7 @@
       "location" : "https://github.com/johnbean393/ExtractKit-macOS",
       "state" : {
         "branch" : "main",
-        "revision" : "2977c13beb7cbee9912af343ae76c81a808e101f"
+        "revision" : "e52e3cfbc39e07485aa8f3d1004d91057c948872"
       }
     },
     {

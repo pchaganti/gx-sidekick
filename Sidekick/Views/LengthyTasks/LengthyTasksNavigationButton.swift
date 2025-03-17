@@ -22,8 +22,10 @@ struct LengthyTasksNavigationButton: View {
 					self.isHovering = hovering
 				}
 			}
+			.frame(maxWidth: .infinity, alignment: .leading)
 			.padding(.horizontal, 8)
-			.padding(.vertical, 7)
+			.padding(.top, 7)
+			.padding(.bottom, 9)
 			.background(
 				Color.gray.opacity(self.buttonOpacity)
 			)
