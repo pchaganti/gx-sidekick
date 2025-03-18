@@ -11,7 +11,11 @@ struct ServerModelSettingsView: View {
     
 	@AppStorage("useServer") private var useServer: Bool = InferenceSettings.useServer
 	@AppStorage("endpoint") private var serverEndpoint: String = InferenceSettings.endpoint
+
 	@State private var inferenceApiKey: String = InferenceSettings.inferenceApiKey
+	
+	@AppStorage("remoteModelName") private var serverModelName: String = InferenceSettings.serverModelName
+	@AppStorage("serverWorkerModelName") private var serverWorkerModelName: String = ""
 	
 	/// A `Bool` representing if the endpoint is valid
 	var endpointUrlIsValid: Bool {
@@ -27,7 +31,14 @@ struct ServerModelSettingsView: View {
 			useServerToggle
 			serverEndpointEditor
 			inferenceApiKeyEditor
-			ServerModelNameEditor()
+			ServerModelNameEditor(
+				serverModelName: $serverModelName,
+				modelType: .regular
+			)
+			ServerModelNameEditor(
+				serverModelName: $serverWorkerModelName,
+				modelType: .worker
+			)
 		} header: {
 			Text("Server")
 		}

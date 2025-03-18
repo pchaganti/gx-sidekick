@@ -29,11 +29,6 @@ public class DebugCommands {
 				} label: {
 					Text("Show Container in Finder")
 				}
-				Button {
-					try? Tips.resetDatastore()
-				} label: {
-					Text("Reset Tips Datastore")
-				}
 			}
 		}
 	}

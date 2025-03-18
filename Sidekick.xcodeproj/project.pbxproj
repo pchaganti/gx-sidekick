@@ -169,6 +169,7 @@
 		208C5FD62D79CB8E00D82AA6 /* LiquidView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208C5FD52D79CB8E00D82AA6 /* LiquidView.swift */; };
 		208C5FD82D79CBA200D82AA6 /* OrbView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208C5FD72D79CBA200D82AA6 /* OrbView.swift */; };
 		208C5FDA2D7A771F00D82AA6 /* RetryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208C5FD92D7A771F00D82AA6 /* RetryButton.swift */; };
+		2090A8A62D8995FA0060DC63 /* ModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2090A8A52D8995FA0060DC63 /* ModelType.swift */; };
 		209370762D6AB36900E1AF73 /* ContainerRefactorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209370752D6AB36900E1AF73 /* ContainerRefactorer.swift */; };
 		209370942D6B598500E1AF73 /* Extension+CaseIterable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209370932D6B598500E1AF73 /* Extension+CaseIterable.swift */; };
 		209370972D6B5B8100E1AF73 /* DetectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209370962D6B5B8100E1AF73 /* DetectorViewController.swift */; };
@@ -506,6 +507,7 @@
 		208C5FD52D79CB8E00D82AA6 /* LiquidView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiquidView.swift; sourceTree = "<group>"; };
 		208C5FD72D79CBA200D82AA6 /* OrbView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrbView.swift; sourceTree = "<group>"; };
 		208C5FD92D7A771F00D82AA6 /* RetryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryButton.swift; sourceTree = "<group>"; };
+		2090A8A52D8995FA0060DC63 /* ModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelType.swift; sourceTree = "<group>"; };
 		209370752D6AB36900E1AF73 /* ContainerRefactorer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerRefactorer.swift; sourceTree = "<group>"; };
 		209370932D6B598500E1AF73 /* Extension+CaseIterable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+CaseIterable.swift"; sourceTree = "<group>"; };
 		209370962D6B5B8100E1AF73 /* DetectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectorViewController.swift; sourceTree = "<group>"; };
@@ -1359,6 +1361,7 @@
 				208388EC2CBF825400C2A9F8 /* Tavily.swift */,
 				204D09822D1166810066B060 /* IntroductionPage.swift */,
 				20BF49CA2D649FD700C329F8 /* ModelFamily.swift */,
+				2090A8A52D8995FA0060DC63 /* ModelType.swift */,
 				2030D6232D6D60FB00F18BF4 /* EvaluationDetails.swift */,
 				202801F72CC94938005C1F7D /* Conversation */,
 				202801F82CC94962005C1F7D /* Expert */,
@@ -1893,6 +1896,7 @@
 				20573F252CB52EB6004C19FE /* CopyButton.swift in Sources */,
 				20B4D6AF2CC3C12C00817E15 /* PromptController.swift in Sources */,
 				2099BDA32CB7EB0200E02732 /* CapsuleButtonStyle.swift in Sources */,
+				2090A8A62D8995FA0060DC63 /* ModelType.swift in Sources */,
 				204C79562CB765D700EED58E /* ExpertSelectionMenu.swift in Sources */,
 				203487712D672A8F00A88DA4 /* ToolLibraryView.swift in Sources */,
 				209370942D6B598500E1AF73 /* Extension+CaseIterable.swift in Sources */,

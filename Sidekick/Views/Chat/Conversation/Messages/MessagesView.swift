@@ -42,7 +42,7 @@ struct MessagesView: View {
 					LazyVStack(alignment: .leading, spacing: 13) {
 						Group {
 							self.messagesView
-						if self.isGenerating {
+							if self.isGenerating {
 								PendingMessageView()
 									.id("pending")
 							}

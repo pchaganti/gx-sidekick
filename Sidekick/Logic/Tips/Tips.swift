@@ -63,33 +63,22 @@ struct LengthyTasksProgressTip: Tip {
 	
 }
 
-struct DictationTip: Tip {
-	
-	// Track whether the user is ready for dictation
-	@Parameter
-	static var readyForDictation: Bool = false
+struct TryToolsTip: Tip {
 	
 	var title: Text {
-		Text("Use Dictation")
+		Text("Try Tools")
 	}
 	
 	var message: Text? {
-		Text("Use dictation to instruct your chatbot, hands free.")
+		Text("Leverage Sidekick's built-in tools to quickly generate and check content.")
 	}
 	
 	var image: Image? {
-		Image(systemName: "microphone.fill")
-	}
-	
-	var rules: [Rule] {
-		[
-			#Rule(Self.$readyForDictation) {
-				$0 == true
-			}
-		]
+		Image(systemName: "wrench.adjustable")
 	}
 	
 }
+
 
 struct AddFilesTip: Tip {
 	
@@ -146,6 +135,31 @@ struct ViewReferenceTip: Tip {
 				$0 == true
 			}
 		]
+	}
+	
+	var actions: [Action] {
+		[
+			Action(
+				id: "try",
+				title: String(localized: "Open Reference")
+			)
+		]
+	}
+	
+}
+
+struct UseWebSearchTip: Tip {
+	
+	var title: Text {
+		Text("Use Web Search")
+	}
+	
+	var message: Text? {
+		Text("Use web search to allow the chatbot to respond with up-to-date information.")
+	}
+	
+	var image: Image? {
+		Image(systemName: "globe")
 	}
 	
 }

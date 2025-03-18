@@ -33,6 +33,7 @@ struct MessageCopyButton: View {
 		} label: {
 			Image(systemName: "square.on.square")
 				.foregroundStyle(.secondary)
+				.scaleEffect(x: -1)
 		}
 		.menuStyle(.circle)
 		.padding(0)

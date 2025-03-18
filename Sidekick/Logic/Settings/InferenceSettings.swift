@@ -192,6 +192,22 @@ Current date & time: \(Date.now.ISO8601Format())
 		}
 	}
 	
+	/// A `String` representing the name of the remote worker model
+	public static var serverWorkerModelName: String {
+		get {
+			guard let serverWorkerModelName = UserDefaults.standard.string(
+				forKey: "serverWorkerModelName"
+			) else {
+				return "gpt-4o-mini"
+			}
+			return serverWorkerModelName
+		}
+		set {
+			// Save
+			UserDefaults.standard.set(newValue, forKey: "serverWorkerModelName")
+		}
+	}
+	
 	/// A `Bool` representing if server setup is complete
 	public static var serverModelSetupComplete: Bool {
 		return !Self.serverModelName.isEmpty && !Self.endpoint.isEmpty

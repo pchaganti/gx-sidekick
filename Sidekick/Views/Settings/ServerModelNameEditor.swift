@@ -10,7 +10,9 @@ import SwiftUI
 struct ServerModelNameEditor: View {
 	
 	@AppStorage("endpoint") private var serverEndpoint: String = InferenceSettings.endpoint
-	@AppStorage("remoteModelName") private var serverModelName: String = InferenceSettings.serverModelName
+	@Binding var serverModelName: String
+	
+	var modelType: ModelType
 	
 	var showModelList: Bool {
 		if !self.modelNames.isEmpty && !self.isFocused {
@@ -25,6 +27,26 @@ struct ServerModelNameEditor: View {
 			return "Select from List"
 		}
 		return "Manual Entry"
+	}
+	
+	/// A localized `String` containing the title shown for the editor
+	var editorTitle: String {
+		switch self.modelType {
+			case .regular:
+				return String(localized: "Remote Model Name")
+			case .worker:
+				return String(localized: "Remote Worker Model Name")
+		}
+	}
+	
+	/// A localized `String` containing the description shown for the editor
+	var editorDescription: String {
+		switch self.modelType {
+			case .regular:
+				return String(localized: "The model's name. (e.g. gpt-4o)")
+			case .worker:
+				return String(localized: "The worker model's name. (e.g. gpt-4o-mini) The worker model is used for simpler tasks like generating chat titles.\n\nLeave this blank to use the main model for all tasks.")
+		}
 	}
 	
 	@FocusState var isFocused: Bool
@@ -59,10 +81,10 @@ struct ServerModelNameEditor: View {
 	
 	var description: some View {
 		VStack(alignment: .leading) {
-			Text("Remote Model Name")
+			Text(self.editorTitle)
 				.font(.title3)
 				.bold()
-			Text("The model name on the server used for inference. (e.g. gpt-4o)")
+			Text(self.editorDescription)
 				.font(.caption)
 		}
 	}

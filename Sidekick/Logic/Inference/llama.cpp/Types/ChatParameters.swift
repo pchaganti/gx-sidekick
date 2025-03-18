@@ -12,6 +12,7 @@ struct ChatParameters: Codable {
 	
 	/// Init for non-chat
 	init(
+		modelType: ModelType,
 		messages: [Message.MessageSubset],
 		systemPrompt: String
 	) async {
@@ -23,10 +24,12 @@ struct ChatParameters: Codable {
 			message: systemPromptMsg
 		)
 		self.messages = [systemPromptMsgSubset] + messages
+		self.model = Self.getModelName(modelType: modelType) ?? ""
 	}
 	
 	/// Init for chat & context aware agent
 	init(
+		modelType: ModelType,
 		messages: [Message.MessageSubset],
 		systemPrompt: String,
 		useInterpreter: Bool = false,
@@ -56,6 +59,7 @@ struct ChatParameters: Codable {
 		)
 		let messagesWithSystemPrompt: [Message.MessageSubset] = [systemPromptMsgSubset] + messages
 		self.messages = messagesWithSystemPrompt
+		self.model = Self.getModelName(modelType: modelType) ?? ""
 	}
 	
 	var model: String = InferenceSettings.useServer ? InferenceSettings.serverModelName : ""
@@ -72,6 +76,23 @@ struct ChatParameters: Codable {
 		encoder.outputFormatting = .prettyPrinted
 		let jsonData = try? encoder.encode(self)
 		return String(data: jsonData!, encoding: .utf8)!
+	}
+	
+	/// Function to get the name of the model that will be used
+	private static func getModelName(
+		modelType: ModelType
+	) -> String? {
+		// Return nil if server is unused
+		if !InferenceSettings.useServer {
+			return nil
+		}
+		// Else, get name
+		switch modelType {
+			case .regular:
+				return InferenceSettings.serverModelName
+			case .worker:
+				return InferenceSettings.serverWorkerModelName
+		}
 	}
 	
 	struct SystemPrompt: Codable {

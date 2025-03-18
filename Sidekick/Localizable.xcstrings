@@ -1627,6 +1627,16 @@
         }
       }
     },
+    "Generating title..." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在生成标题…"
+          }
+        }
+      }
+    },
     "Get an API Key" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1894,6 +1904,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "偏少"
+          }
+        }
+      }
+    },
+    "Leverage Sidekick's built-in tools to quickly generate and check content." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "利用 Sidekick 的内置工具快速生成和检查内容。"
           }
         }
       }
@@ -2224,6 +2244,16 @@
         }
       }
     },
+    "Open Reference" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开资源"
+          }
+        }
+      }
+    },
     "Outline the subject matter of your presentation" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2434,6 +2464,16 @@
         }
       }
     },
+    "Remote Worker Model Name" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "远端极速模型名称"
+          }
+        }
+      }
+    },
     "Remove" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2480,16 +2520,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "硬件要求"
-          }
-        }
-      }
-    },
-    "Reset Tips Datastore" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "重置教程进度"
           }
         }
       }
@@ -3274,12 +3304,12 @@
         }
       }
     },
-    "The model name on the server used for inference. (e.g. gpt-4o)" : {
+    "The model's name. (e.g. gpt-4o)" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "服务器上的模型名称。（如：gpt-4o）"
+            "value" : "模型名称（如：gpt-4o）"
           }
         }
       }
@@ -3310,6 +3340,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "用于触发和关闭内联写作助手的快捷键。"
+          }
+        }
+      }
+    },
+    "The worker model's name. (e.g. gpt-4o-mini) The worker model is used for simpler tasks like generating chat titles.\n\nLeave this blank to use the main model for all tasks." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "极速模型的名称。（如：gpt-4o-mini）极速模型用于生成聊天标题等较简单的任务。\n\n将此栏目留空，以使用主模型执行所有任务。"
           }
         }
       }
@@ -3454,6 +3494,16 @@
         }
       }
     },
+    "Try Tools" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "实用工具"
+          }
+        }
+      }
+    },
     "Unknown" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3524,26 +3574,6 @@
         }
       }
     },
-    "Use Dictation" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "语音输入"
-          }
-        }
-      }
-    },
-    "Use dictation to instruct your chatbot, hands free." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "使用语音输入指导您的聊天机器人，无需动手。"
-          }
-        }
-      }
-    },
     "Use GGUF model" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3610,6 +3640,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "启用网络搜索"
+          }
+        }
+      }
+    },
+    "Use web search to allow the chatbot to respond with up-to-date information." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启用网络搜索，让聊天机器人利用最新信息。"
           }
         }
       }

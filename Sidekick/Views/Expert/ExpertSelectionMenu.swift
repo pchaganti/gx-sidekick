@@ -36,14 +36,14 @@ struct ExpertSelectionMenu: View {
 		})
 	}
 	
-	var createExpertTip: CreateExpertsTip = .init()
+	var createExpertsTip: CreateExpertsTip = .init()
 	
 	var body: some View {
 		Group {
 			prevButton
 			menu
 				.popoverTip(
-					createExpertTip,
+					createExpertsTip,
 					arrowEdge: .top
 				) { action in
 					// Open expert editor

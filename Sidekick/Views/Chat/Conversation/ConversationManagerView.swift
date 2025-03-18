@@ -61,6 +61,8 @@ struct ConversationManagerView: View {
 		)
 	}
 	
+	var tryToolsTip: TryToolsTip = .init()
+	
     var body: some View {
 		NavigationSplitView {
 			conversationList
@@ -233,6 +235,7 @@ struct ConversationManagerView: View {
 					isPresented: $isViewingToolbox
 				)
 			}
+			.popoverTip(tryToolsTip)
 			SidebarButtonView(
 				title: String(localized: "New Conversation"),
 				systemImage: "square.and.pencil"

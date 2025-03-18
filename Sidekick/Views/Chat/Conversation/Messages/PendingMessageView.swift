@@ -27,7 +27,9 @@ struct PendingMessageView: View {
 	
 	var pendingMessage: Message {
 		var text: String = String(localized: "Processing...")
-		if !self.model.pendingMessage.isEmpty {
+		if self.model.status == .namingConversation {
+			text = String(localized: "Generating title...")
+		} else if !self.model.pendingMessage.isEmpty {
 			// Show progress if availible
 			text = self.model.pendingMessage
 		} else if self.model.status == .querying {

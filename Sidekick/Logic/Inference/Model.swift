@@ -104,13 +104,20 @@ public class Model: ObservableObject {
 		return try? await self.llama.tokenCount(in: text)
 	}
 	
-	/// Function to flag that querying has begun
-	func indicateStartedQuerying(
-		sentConversationId: UUID
-	) {
+	/// Function to set sent conversation ID
+	func setSentConversationId(_ id: UUID) {
+		self.sentConversationId = id
+	}
+	
+	/// Function to flag that conversaion naming has begun
+	func indicateStartedNamingConversation() {
 		self.pendingMessage = ""
+		self.status = .namingConversation
+	}
+	
+	/// Function to flag that querying has begun
+	func indicateStartedQuerying() {
 		self.status = .querying
-		self.sentConversationId = sentConversationId
 	}
 	
 	// This is the main loop of the agent
@@ -118,6 +125,7 @@ public class Model: ObservableObject {
 	// we respond before updating to avoid a long delay after user input
 	func listenThinkRespond(
 		messages: [Message],
+		modelType: ModelType = .regular,
 		mode: Model.Mode,
 		similarityIndex: SimilarityIndex? = nil,
 		useWebSearch: Bool = false,
@@ -164,6 +172,7 @@ public class Model: ObservableObject {
 			case .`default`:
 				response = try await llama.getCompletion(
 					mode: mode,
+					modelType: modelType,
 					messages: messagesWithSources
 				) { partialResponse in
 					DispatchQueue.main.async {
@@ -178,6 +187,7 @@ public class Model: ObservableObject {
 			case .chat:
 				response = try await self.getChatResponse(
 					mode: mode,
+					modelType: modelType,
 					messagesWithSources: messagesWithSources,
 					similarityIndex: similarityIndex,
 					handleResponseUpdate: handleResponseUpdate,
@@ -186,6 +196,7 @@ public class Model: ObservableObject {
 			case .contextAwareAgent:
 				response = try await llama.getCompletion(
 					mode: mode,
+					modelType: modelType,
 					messages: messagesWithSources,
 					similarityIndex: similarityIndex
 				) { partialResponse in
@@ -214,7 +225,6 @@ public class Model: ObservableObject {
 		// Update display
 		self.pendingMessage = response!.text
 		self.status = .ready
-		self.sentConversationId = nil
 		Self.logger.notice("Finished responding to prompt")
 		return response!
 	}
@@ -222,6 +232,7 @@ public class Model: ObservableObject {
 	/// Function to get response for chat
 	private func getChatResponse(
 		mode: Model.Mode,
+		modelType: ModelType,
 		messagesWithSources: [Message.MessageSubset],
 		similarityIndex: SimilarityIndex? = nil,
 		handleResponseUpdate: @escaping (String, String) -> Void,
@@ -463,6 +474,8 @@ public class Model: ObservableObject {
 		case coldProcessing
 		/// The system is searching in the selected profile's resources.
 		case querying
+		/// The system is creating a title for the conversation
+		case namingConversation
 		/// The system is using a code interpreter
 		case usingInterpreter
 		/// The inference server is awaiting a prompt

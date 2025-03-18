@@ -11,6 +11,8 @@ struct UseWebSearchButton: View {
 	
 	@Binding var useWebSearch: Bool
 	
+	var useWebSearchTip: UseWebSearchTip = .init()
+	
 	var webSearchTextColor: Color {
 		return self.useWebSearch ? .accentColor : .secondary
 	}
@@ -36,6 +38,7 @@ struct UseWebSearchButton: View {
 				}
 		}
 		.buttonStyle(.plain)
+		.popoverTip(self.useWebSearchTip)
     }
 	
 	var capsule: some View {
@@ -64,7 +67,9 @@ struct UseWebSearchButton: View {
 			)
 			return
 		}
-		withAnimation(.linear) {
+		withAnimation(
+			.linear(duration: 0.15)
+		) {
 			self.useWebSearch.toggle()
 		}
 	}

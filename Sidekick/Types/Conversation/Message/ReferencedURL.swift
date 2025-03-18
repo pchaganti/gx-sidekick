@@ -59,7 +59,7 @@ public struct ReferencedURL: Codable, Equatable, Hashable {
 	
 	/// Function to open the URL
 	@MainActor
-	private func open() {
+	public func open() {
 		// Correct url
 		var url: URL = self.url
 		if !url.isWebURL {

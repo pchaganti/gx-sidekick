@@ -56,7 +56,6 @@ struct PromptInputField: View {
 				// Show add files and dictation tips if needed
 				if self.isFocused {
 					AddFilesTip.readyForAddingFiles = true
-					DictationTip.readyForDictation = true
 				}
 			}
 			.onChange(
@@ -171,6 +170,7 @@ struct PromptInputField: View {
 		switch resultType {
 			case .text:
 				self.startTextGeneration(
+					prompt: promptController.prompt,
 					tempResources: tempResources
 				)
 			case .image:
@@ -180,6 +180,7 @@ struct PromptInputField: View {
 				} else {
 					// Else, fall back to text
 					self.startTextGeneration(
+						prompt: promptController.prompt,
 						tempResources: tempResources
 					)
 				}
@@ -192,11 +193,13 @@ struct PromptInputField: View {
 	}
 	
 	private func startTextGeneration(
+		prompt: String,
 		tempResources: [TemporaryResource]
 	) {
 		// Get response
 		Task {
 			await self.generateChatResponse(
+				prompt: prompt,
 				tempResources: tempResources
 			)
 		}
@@ -217,6 +220,7 @@ struct PromptInputField: View {
 	}
 	
 	private func generateChatResponse(
+		prompt: String,
 		tempResources: [TemporaryResource]
 	) async {
 		// If processing, use recursion to update
@@ -226,21 +230,29 @@ struct PromptInputField: View {
 				Task.detached(priority: .userInitiated) {
 					try? await Task.sleep(for: .seconds(1))
 					await generateChatResponse(
+						prompt: prompt,
 						tempResources: tempResources
 					)
 				}
 			}
 			return
 		}
-		// Get conversation
+		// Get and save conversation
 		guard var conversation = self.promptController.sentConversation else { return }
+		self.model.setSentConversationId(conversation.id)
+		// Generate title & update again
+		self.model.indicateStartedNamingConversation()
+		if let title = try? await self.generateConversationTitle(
+			prompt: prompt
+		) {
+			conversation.title = title
+		}
+		self.conversationManager.update(conversation)
 		// Get response
 		var response: LlamaServer.CompleteResponse
 		var didUseSources: Bool = false
 		do {
-			self.model.indicateStartedQuerying(
-				sentConversationId: conversation.id
-			)
+			self.model.indicateStartedQuerying()
 			var index: SimilarityIndex? = nil
 			// If there are resources
 			if !((selectedExpert?.resources.resources.isEmpty) ?? true) {
@@ -302,6 +314,37 @@ struct PromptInputField: View {
 			// Reset sentConversation
 			self.promptController.sentConversation = nil
 		}
+	}
+	
+	/// Function to generate a title for the conversation
+	private func generateConversationTitle(
+		prompt: String
+	) async throws -> String? {
+		// Formulate messages
+		let systemPromptMessage: Message = Message(
+			text: InferenceSettings.systemPrompt,
+			sender: .system
+		)
+		let generateTitleMessage: Message = Message(
+			text: """
+A user is chatting with an assistant and they have sent the message below. Generate an extremely short label for the chat session. Actively remove details from the user's message to make the label shorter than 4 words. Respond with the label ONLY.
+
+"\(prompt)"
+""",
+			sender: .user
+		)
+		let messages: [Message] = [
+			systemPromptMessage,
+			generateTitleMessage
+		]
+		// Generate
+		let title: String = try await model.listenThinkRespond(
+			messages: messages,
+			modelType: .worker,
+			mode: .default
+		).text
+		// Return
+		return title.thinkingTagsRemoved.trimmingWhitespaceAndNewlines().capitalized
 	}
 	
 	@MainActor

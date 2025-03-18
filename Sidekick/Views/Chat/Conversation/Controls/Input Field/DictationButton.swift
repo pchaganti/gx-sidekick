@@ -11,8 +11,6 @@ struct DictationButton: View {
 	
 	@EnvironmentObject private var promptController: PromptController
 	
-	var dictationTip: DictationTip = .init()
-	
 	var microphoneIcon: String {
 		if #unavailable(macOS 15) {
 			return "mic.fill"
@@ -34,7 +32,6 @@ struct DictationButton: View {
 		.buttonStyle(.plain)
 		.keyboardShortcut("d", modifiers: [.command])
 		.padding([.trailing, .bottom], 3)
-		.popoverTip(dictationTip)
     }
 }
 

@@ -232,7 +232,13 @@ struct MessageView: View {
 			) { index in
 				self.message.referencedURLs[index].openButton
 					.if(index == 0) { view in
-						view.popoverTip(viewReferenceTip)
+						view.popoverTip(
+							viewReferenceTip,
+							arrowEdge: .top
+						) { action in
+							// Open reference
+							self.message.referencedURLs[index].open()
+						}
 					}
 			}
 		}
