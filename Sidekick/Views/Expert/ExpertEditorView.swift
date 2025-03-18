@@ -50,15 +50,17 @@ struct ExpertEditorView: View {
 	
 	var form: some View {
 		Form {
-			Section {
-				name
-			} header: {
-				Text("Name")
-			}
-			Section {
-				icon
-			} header: {
-				Text("Icon")
+			if !self.expert.isDefault {
+				Section {
+					name
+				} header: {
+					Text("Name")
+				}
+				Section {
+					icon
+				} header: {
+					Text("Icon")
+				}
 			}
 			ResourceSectionView(expert: $expert)
 			Section {

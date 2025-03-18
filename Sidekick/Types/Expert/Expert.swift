@@ -68,6 +68,11 @@ public struct Expert: Identifiable, Codable, Hashable, Sendable {
 	/// Controls whether the expert's resources is persisted across sessions, of type `Bool`
 	public var persistResources: Bool = true
 	
+	/// A `Bool` representing whether the expert is the default expert
+	public var isDefault: Bool {
+		return self == ExpertManager.shared.default
+	}
+	
 	/// The `default` expert of type ``Expert``
 	public static let `default`: Expert = Expert(
 		name: String(localized: "Default"),
