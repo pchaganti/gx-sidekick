@@ -343,6 +343,8 @@ A user is chatting with an assistant and they have sent the message below. Gener
 			modelType: .worker,
 			mode: .default
 		).text
+		// Reset pending message text
+		self.model.pendingMessage = ""
 		// Return
 		return title.thinkingTagsRemoved.trimmingWhitespaceAndNewlines().capitalized
 	}
