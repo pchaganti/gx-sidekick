@@ -91,7 +91,11 @@ struct ChatParameters: Codable {
 			case .regular:
 				return InferenceSettings.serverModelName
 			case .worker:
-				return InferenceSettings.serverWorkerModelName
+				let workerModelName: String = InferenceSettings.serverWorkerModelName
+				if workerModelName.isEmpty {
+					return InferenceSettings.serverModelName
+				}
+				return workerModelName
 		}
 	}
 	
