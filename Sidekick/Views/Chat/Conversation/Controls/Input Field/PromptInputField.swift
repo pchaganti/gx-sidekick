@@ -246,7 +246,7 @@ struct PromptInputField: View {
 			self.model.indicateStartedNamingConversation()
 			if let title = try? await self.generateConversationTitle(
 				prompt: prompt
-			) {
+			), !title.isEmpty {
 				conversation.title = title
 			}
 			self.conversationManager.update(conversation)
@@ -349,7 +349,12 @@ A user is chatting with an assistant and they have sent the message below. Gener
 		// Reset pending message text
 		self.model.pendingMessage = ""
 		// Return
-		return title.thinkingTagsRemoved.trimmingWhitespaceAndNewlines().capitalized
+		return title
+			.thinkingTagsRemoved
+			.trimmingWhitespaceAndNewlines()
+			.capitalizeEachWord
+			.dropPrefixIfPresent("\"")
+			.dropSuffixIfPresent("\"")
 	}
 	
 	@MainActor

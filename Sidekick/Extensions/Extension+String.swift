@@ -388,4 +388,16 @@ public extension String {
 		return results
 	}
 	
+	/// Returns a string with each word capitalized
+	var capitalizeEachWord: String {
+		let words: [String] = self.split(separator: " ").map { String($0) }
+		let capitalizedWords: [String] = words.map { word in
+			if word.uppercased() != word {
+				return word.capitalized
+			}
+			return word
+		}
+		return capitalizedWords.joined(separator: " ")
+	}
+	
 }

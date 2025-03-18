@@ -350,59 +350,61 @@ DO NOT reference sources outside of those provided below. If you did not referen
 		self.tokensPerSecond = response.predictedPerSecond
 		self.responseStartSeconds = response.responseStartSeconds
 		self.lastUpdated = .now
-//		print("response.text: \(response.text)")
 		let text: String = response.text.dropSuffixIfPresent("[]")
 		// Decode text for extract text and references
-		let messageText: String = text.dropFollowingSubstring(
-			"\n[",
-			options: .backwards
-		)
-		.trimmingWhitespaceAndNewlines()
-		.dropSuffixIfPresent(
-			"Sources"
-		).dropSuffixIfPresent(
-			"References"
-		)
-		.dropSuffixIfPresent(
-			"**Sources**"
-		).dropSuffixIfPresent(
-			"**References**"
-		)
-		.dropSuffixIfPresent(
-			"Sources:"
-		).dropSuffixIfPresent(
-			"References:"
-		).dropSuffixIfPresent(
-			"**Sources:**"
-		).dropSuffixIfPresent(
-			"**References:**"
-		).dropSuffixIfPresent(
-			"**Sources**:"
-		).dropSuffixIfPresent(
-			"**References**:"
-		).dropSuffixIfPresent(
-			"List of Filepaths and URLs:"
-		)
-		.trimmingWhitespaceAndNewlines()
-		let jsonText: String = text.dropPrecedingSubstring(
-			"\n[",
-			options: .backwards,
-			includeCharacter: true
-		)
-		// Decode references if needed
-		if includeReferences, let data: Data = try? jsonText.data() {
-			// Decode data
-			if let references = ReferencedURL.fromData(
-				data: data
-			) {
-				self.referencedURLs = references
-				self.text = messageText
-			} else {
-				self.text = text
+		let delimiters: [String] = ["\n[", " ["]
+		// For each delimiter
+		for delimiter in delimiters {
+			let messageText: String = text.dropFollowingSubstring(
+				delimiter,
+				options: .backwards
+			)
+				.trimmingWhitespaceAndNewlines()
+				.dropSuffixIfPresent(
+					"Sources"
+				).dropSuffixIfPresent(
+					"References"
+				)
+				.dropSuffixIfPresent(
+					"**Sources**"
+				).dropSuffixIfPresent(
+					"**References**"
+				)
+				.dropSuffixIfPresent(
+					"Sources:"
+				).dropSuffixIfPresent(
+					"References:"
+				).dropSuffixIfPresent(
+					"**Sources:**"
+				).dropSuffixIfPresent(
+					"**References:**"
+				).dropSuffixIfPresent(
+					"**Sources**:"
+				).dropSuffixIfPresent(
+					"**References**:"
+				).dropSuffixIfPresent(
+					"List of Filepaths and URLs:"
+				)
+				.trimmingWhitespaceAndNewlines()
+			let jsonText: String = text.dropPrecedingSubstring(
+				delimiter,
+				options: .backwards,
+				includeCharacter: true
+			)
+			// Decode references if needed
+			if includeReferences, let data: Data = try? jsonText.data() {
+				// Decode data
+				if let references = ReferencedURL.fromData(
+					data: data
+				) {
+					self.referencedURLs = references
+					self.text = messageText
+					return
+				}
 			}
-		} else {
-			self.text = text
 		}
+		// If fell through, just return
+		self.text = text
 	}
 	
 	/// Function to end a message
