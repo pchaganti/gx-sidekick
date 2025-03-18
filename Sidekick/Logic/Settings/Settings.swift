@@ -139,6 +139,23 @@ public class Settings {
 		}
 	}
 	
+	/// A `Bool` representing whether the app generates conversation titles automatically
+	static var generateConversationTitles: Bool {
+		get {
+			// Set default
+			if !UserDefaults.standard.exists(key: "generateConversationTitles") {
+				// Default to true
+				Self.generateConversationTitles = true
+			}
+			return UserDefaults.standard.bool(
+				forKey: "generateConversationTitles"
+			)
+		}
+		set {
+			UserDefaults.standard.set(newValue, forKey: "generateConversationTitles")
+		}
+	}
+	
 	/// Computed property for whether sound effects are played
 	static var playSoundEffects: Bool {
 		get {

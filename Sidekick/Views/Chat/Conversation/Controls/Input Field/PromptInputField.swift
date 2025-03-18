@@ -241,13 +241,16 @@ struct PromptInputField: View {
 		guard var conversation = self.promptController.sentConversation else { return }
 		self.model.setSentConversationId(conversation.id)
 		// Generate title & update again
-		self.model.indicateStartedNamingConversation()
-		if let title = try? await self.generateConversationTitle(
-			prompt: prompt
-		) {
-			conversation.title = title
+		let isFirstMessage: Bool = conversation.messages.count <= 1
+		if Settings.generateConversationTitles && isFirstMessage {
+			self.model.indicateStartedNamingConversation()
+			if let title = try? await self.generateConversationTitle(
+				prompt: prompt
+			) {
+				conversation.title = title
+			}
+			self.conversationManager.update(conversation)
 		}
-		self.conversationManager.update(conversation)
 		// Get response
 		var response: LlamaServer.CompleteResponse
 		var didUseSources: Bool = false

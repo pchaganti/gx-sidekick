@@ -297,6 +297,16 @@
         }
       }
     },
+    "Automatically generate conversation titles based on the first message in each conversation." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "根据每次对话的第一条消息自动生成对话标题。"
+          }
+        }
+      }
+    },
     "Backup API Key (Optional)" : {
       "localizations" : {
         "zh-Hans" : {
@@ -397,6 +407,16 @@
         }
       }
     },
+    "Chat" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "聊天"
+          }
+        }
+      }
+    },
     "Check for Updates" : {
       "localizations" : {
         "zh-Hans" : {
@@ -443,16 +463,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "单击查看聊天机器人引用的资源。"
-          }
-        }
-      }
-    },
-    "Code Interpreter" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "代码执行器"
           }
         }
       }
@@ -1583,6 +1593,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "制作一个介绍明末清初的演示文稿。"
+          }
+        }
+      }
+    },
+    "Generate Conversation Titles" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "生成对话标题"
           }
         }
       }
@@ -3060,16 +3080,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "页数：%lld"
-          }
-        }
-      }
-    },
-    "Sound Effects" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "声效"
           }
         }
       }

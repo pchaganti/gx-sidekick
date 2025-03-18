@@ -144,7 +144,9 @@ public class Model: ObservableObject {
 		self.pendingMessage = ""
 		// Set flag
 		let preQueryStatus: Status = self.status
-		self.status = .querying
+		if self.status != .namingConversation {
+			self.status = .querying
+		}
 		let lastIndex: Int = messages.count - 1
 		let messagesWithSources: [Message.MessageSubset] = await messages
 			.enumerated()
@@ -158,10 +160,12 @@ public class Model: ObservableObject {
 				)
 			}
 		// Respond to prompt
-		if preQueryStatus == .cold {
-			status = .coldProcessing
-		} else {
-			status = .processing
+		if self.status != .namingConversation {
+			if preQueryStatus == .cold {
+				status = .coldProcessing
+			} else {
+				status = .processing
+			}
 		}
 		// Declare variables for incremental update
 		var updateResponse: String = ""
@@ -224,7 +228,9 @@ public class Model: ObservableObject {
 		)
 		// Update display
 		self.pendingMessage = response!.text
-		self.status = .ready
+		if self.status != .namingConversation {
+			self.status = .ready
+		}
 		Self.logger.notice("Finished responding to prompt")
 		return response!
 	}

@@ -12,8 +12,8 @@ struct GeneralSettingsView: View {
 	
 	@AppStorage("username") private var username: String = NSFullUserName()
 	@AppStorage("useCodeInterpreter") private var useCodeInterpreter: Bool = true
-	
-	@State private var playSoundEffects: Bool = Settings.playSoundEffects
+	@AppStorage("playSoundEffects") private var playSoundEffects: Bool = false
+	@AppStorage("generateConversationTitles") private var generateConversationTitles: Bool = true
 	
     var body: some View {
 		Form {
@@ -24,13 +24,10 @@ struct GeneralSettingsView: View {
 			}
 			Section {
 				soundEffects
-			} header: {
-				Text("Sound Effects")
-			}
-			Section {
+				generateConversationTitlesToggle
 				codeInterpreter
 			} header: {
-				Text("Code Interpreter")
+				Text("Chat")
 			}
 			Section {
 				inlineAssistantShortcut
@@ -70,8 +67,20 @@ struct GeneralSettingsView: View {
 			Toggle("", isOn: $playSoundEffects)
 				.toggleStyle(.switch)
 		}
-		.onChange(of: playSoundEffects) {
-			Settings.playSoundEffects = self.playSoundEffects
+	}
+	
+	var generateConversationTitlesToggle: some View {
+		HStack(alignment: .top) {
+			VStack(alignment: .leading) {
+				Text("Generate Conversation Titles")
+					.font(.title3)
+					.bold()
+				Text("Automatically generate conversation titles based on the first message in each conversation.")
+					.font(.caption)
+			}
+			Spacer()
+			Toggle("", isOn: $generateConversationTitles)
+				.toggleStyle(.switch)
 		}
 	}
 	
