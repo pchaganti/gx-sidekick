@@ -42,4 +42,17 @@ struct DetectorInputView: View {
 		.controlSize(.large)
 	}
 	
+	private func checkForLocalModel() -> Bool {
+		// Check if local model is available
+		let result: Bool = Settings.modelUrl?.fileExists ?? false
+		// If not available, show error
+		if !result {
+			Dialogs.showAlert(
+				title: String(localized: "No Local Model"),
+				message: String(localized: "Detector always uses a local model for maximum privacy. Please add a local model in \"Settings\" -> \"Inference\".")
+			)
+		}
+		return result
+	}
+	
 }
