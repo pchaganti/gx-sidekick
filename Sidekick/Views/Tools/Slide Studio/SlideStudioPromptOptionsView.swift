@@ -11,19 +11,13 @@ struct SlideStudioPromptOptionsView: View {
 	
 	@EnvironmentObject private var slideStudioViewController: SlideStudioViewController
 	
-	var webSearchTextColor: Color {
-		return self.slideStudioViewController.useWebSearch ? .accentColor : .secondary
-	}
-	
-	var webSearchBubbleColor: Color {
-		return self.slideStudioViewController.useWebSearch ? .accentColor.opacity(0.4) : .clear
-	}
-	
 	@State private var slideCount: Float = 10.0
 	
     var body: some View {
 		HStack {
-			webSearchButton
+			UseWebSearchButton(
+				useWebSearch: $slideStudioViewController.useWebSearch
+			)
 			Divider()
 			slideSlider
 		}
@@ -31,24 +25,6 @@ struct SlideStudioPromptOptionsView: View {
 		.padding(.bottom, 10)
 		.frame(height: 25)
     }
-	
-	var webSearchButton: some View {
-		Button {
-			withAnimation(.linear) {
-				self.slideStudioViewController.useWebSearch.toggle()
-			}
-		} label: {
-			Label("Web Search", systemImage: "globe")
-				.foregroundStyle(self.webSearchTextColor)
-				.font(.caption)
-				.padding(5)
-				.background {
-					Capsule()
-						.fill(webSearchBubbleColor)
-				}
-		}
-		.buttonStyle(.plain)
-	}
 	
 	var slideSlider: some View {
 		HStack {

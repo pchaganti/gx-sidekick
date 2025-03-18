@@ -26,6 +26,7 @@ struct ServerModelSetupView: View {
     var body: some View {
 		VStack {
 			form
+				.frame(minHeight: 450)
 			Divider()
 			HStack {
 				Spacer()

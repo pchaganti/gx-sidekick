@@ -12,30 +12,6 @@ struct TemporaryResourcesView: View {
 	@Binding var tempResources: [TemporaryResource]
 	
 	var body: some View {
-		VStack(
-			alignment: .leading,
-			spacing: 4
-		) {
-			label
-			resourcesCarousel
-		}
-	}
-	
-	var label: some View {
-		Text("Temporary Resources:")
-			.bold()
-			.font(.body)
-			.foregroundStyle(Color.secondary)
-			.padding(.horizontal, 7)
-			.padding(.vertical, 5)
-			.background {
-				Capsule()
-					.fill(Color.buttonBackground)
-			}
-			.padding(.leading, 13)
-	}
-	
-	var resourcesCarousel: some View {
 		ScrollView(
 			.horizontal,
 			showsIndicators: false
@@ -69,7 +45,3 @@ struct TemporaryResourcesView: View {
 	}
 	
 }
-
-//#Preview {
-//    TemporaryResourcesView()
-//}

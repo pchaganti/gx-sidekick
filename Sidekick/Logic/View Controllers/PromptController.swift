@@ -27,6 +27,8 @@ public class PromptController: ObservableObject, DropDelegate {
 	@Published var isGeneratingImage: Bool = false
 	@Published var imageConcept: String? = nil
 	
+	@Published var useWebSearch: Bool = false
+	
 	@Published var isRecording: Bool = false
 	@Published var prompt: String = ""
 	@Published var audioLevel: Float = 0.0
@@ -139,19 +141,18 @@ public class PromptController: ObservableObject, DropDelegate {
 	private func startAudioEngine() {
 		let inputNode = audioEngine.inputNode
 		let hwFormat = inputNode.inputFormat(forBus: 0)
-		
 		inputNode.removeTap(onBus: 0)
 		inputNode.installTap(onBus: 0, bufferSize: 1024, format: hwFormat) { buffer, when in
 			self.recognitionRequest?.append(buffer)
 			self.detectAudioLevel(buffer: buffer)
 		}
-		
 		do {
 			try audioEngine.start()
 			Self.logger.notice("Started audio engine")
 		} catch {
 			audioEngine.stop()
 			audioEngine.reset()
+			Self.logger.warning("Failed to start audio engine")
 		}
 	}
 	
@@ -189,6 +190,7 @@ public class PromptController: ObservableObject, DropDelegate {
 				case .authorized:
 					Self.logger.info("Speech recognition access granted.")
 				case .denied, .restricted, .notDetermined:
+					Self.logger.info("Speech recognition access is \(authStatus.rawValue,privacy: .public).")
 					self.stopAudioEngine()
 				@unknown default:
 					fatalError("Unknown authorization status")
@@ -197,7 +199,9 @@ public class PromptController: ObservableObject, DropDelegate {
 	}
 	
 	fileprivate func requestMicrophoneAccess() {
-		AVCaptureDevice.requestAccess(for: .audio) { granted in
+		AVCaptureDevice.requestAccess(
+			for: .audio
+		) { granted in
 			if granted {
 				Self.logger.notice("Microphone access granted.")
 			} else {

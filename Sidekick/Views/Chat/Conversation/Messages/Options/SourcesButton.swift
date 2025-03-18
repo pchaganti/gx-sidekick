@@ -16,7 +16,7 @@ struct SourcesButton: View {
 		Button {
 			showSources.toggle()
 		} label: {
-			Image(systemName: "book.circle")
+			Image(systemName: "book")
 				.imageScale(.medium)
 				.background(.clear)
 				.imageScale(.small)

@@ -50,7 +50,9 @@ struct PromptInputField: View {
 			.onExitCommand {
 				self.isFocused = false
 			}
-			.onChange(of: isFocused) {
+			.onChange(
+				of: isFocused
+			) {
 				// Show add files and dictation tips if needed
 				if self.isFocused {
 					AddFilesTip.readyForAddingFiles = true
@@ -65,6 +67,18 @@ struct PromptInputField: View {
 				let expertId: UUID? = selectedConversation?.messages.last?.expertId ?? expertManager.default?.id
 				withAnimation(.linear) {
 					self.conversationState.selectedExpertId = expertId
+				}
+			}
+			.onChange(
+				of: conversationState.selectedExpertId
+			) {
+				// If web search can be used
+				if RetrievalSettings.canUseWebSearch,
+				   let useWebSearch = self.selectedExpert?.useWebSearch {
+					// Sync web search settings
+					withAnimation(.linear) {
+						self.promptController.useWebSearch = useWebSearch
+					}
 				}
 			}
 			.onAppear {
@@ -86,7 +100,10 @@ struct PromptInputField: View {
 		.textFieldStyle(
 			ChatStyle(
 				isFocused: _isFocused,
-				isRecording: $promptController.isRecording
+				isRecording: $promptController.isRecording,
+				useAttachments: true,
+				bottomOptions: true,
+				cornerRadius: 22
 			)
 		)
 		.overlay(alignment: .leading) {
@@ -96,6 +113,14 @@ struct PromptInputField: View {
 		}
 		.overlay(alignment: .trailing) {
 			DictationButton()
+		}
+		.overlay(alignment: .bottomLeading) {
+			UseWebSearchButton(
+				useWebSearch: self.$promptController.useWebSearch
+			)
+			.padding(.leading, 32)
+			.padding(.bottom, 10)
+			.frame(height: 25)
 		}
 		.submitLabel(.send)
 		.padding([.vertical, .leading], 10)
@@ -126,6 +151,10 @@ struct PromptInputField: View {
 		let resultType: PromptAnalyzer.ResultType = PromptAnalyzer.analyzePrompt(
 			promptController.prompt
 		)
+		// Check web search
+		if !self.checkWebSearch() {
+			return
+		}
 		// Make request message
 		let newUserMessage: Message = Message(
 			text: promptController.prompt,
@@ -218,7 +247,7 @@ struct PromptInputField: View {
 				// Load
 				index = await selectedExpert?.resources.loadIndex()
 			}
-			let useWebSearch: Bool = selectedExpert?.useWebSearch ?? true
+			let useWebSearch: Bool = self.promptController.useWebSearch
 			// Set if sources were used
 			let hasIndexItems: Bool = !((
 				index?.indexItems.isEmpty
@@ -298,6 +327,21 @@ struct PromptInputField: View {
 		// Reset model status
 		self.model.status = .ready
 		self.model.sentConversationId = nil
+	}
+	
+	/// Function to check if web search can be used
+	private func checkWebSearch() -> Bool {
+		// If web search is on, but cannot be used
+		let success: Bool = !(!RetrievalSettings.canUseWebSearch && self.promptController.useWebSearch)
+		if !success {
+			// Show dialog
+			Dialogs.showAlert(
+				title: String(localized: "Search not configured"),
+				message: String(localized: "Search is not configured. Please configure it in \"Settings\" -> \"Retrieval\".")
+			)
+			self.promptController.useWebSearch = false
+		}
+		return success
 	}
 
 }

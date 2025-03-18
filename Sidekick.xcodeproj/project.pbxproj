@@ -32,6 +32,8 @@
 		201A1A9A2CDBA802001E9BA9 /* MarkdownBarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201A1A992CDBA802001E9BA9 /* MarkdownBarChartView.swift */; };
 		201A1A9C2CDBB5B1001E9BA9 /* MarkdownScatterPlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201A1A9B2CDBB5B1001E9BA9 /* MarkdownScatterPlotView.swift */; };
 		201A1A9E2CDBBA25001E9BA9 /* MarkdownLineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201A1A9D2CDBBA25001E9BA9 /* MarkdownLineChartView.swift */; };
+		2025E67D2D89197700289E3F /* UseWebSearchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2025E67C2D89197700289E3F /* UseWebSearchButton.swift */; };
+		2025E67F2D894DFC00289E3F /* MessageCopyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2025E67E2D894DFC00289E3F /* MessageCopyButton.swift */; };
 		202801F42CC93C80005C1F7D /* DictationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202801F32CC93C80005C1F7D /* DictationButton.swift */; };
 		202801F62CC93CD5005C1F7D /* PromptInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202801F52CC93CD5005C1F7D /* PromptInputField.swift */; };
 		202801FA2CC949F2005C1F7D /* TemporaryResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202801F92CC949F2005C1F7D /* TemporaryResource.swift */; };
@@ -381,6 +383,8 @@
 		201A1A992CDBA802001E9BA9 /* MarkdownBarChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownBarChartView.swift; sourceTree = "<group>"; };
 		201A1A9B2CDBB5B1001E9BA9 /* MarkdownScatterPlotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownScatterPlotView.swift; sourceTree = "<group>"; };
 		201A1A9D2CDBBA25001E9BA9 /* MarkdownLineChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownLineChartView.swift; sourceTree = "<group>"; };
+		2025E67C2D89197700289E3F /* UseWebSearchButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseWebSearchButton.swift; sourceTree = "<group>"; };
+		2025E67E2D894DFC00289E3F /* MessageCopyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCopyButton.swift; sourceTree = "<group>"; };
 		202801F32CC93C80005C1F7D /* DictationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictationButton.swift; sourceTree = "<group>"; };
 		202801F52CC93CD5005C1F7D /* PromptInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptInputField.swift; sourceTree = "<group>"; };
 		202801F92CC949F2005C1F7D /* TemporaryResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryResource.swift; sourceTree = "<group>"; };
@@ -1241,6 +1245,7 @@
 				202801F52CC93CD5005C1F7D /* PromptInputField.swift */,
 				202801F32CC93C80005C1F7D /* DictationButton.swift */,
 				206AB6112CF5F8390010B09A /* AttachmentSelectionButton.swift */,
+				2025E67C2D89197700289E3F /* UseWebSearchButton.swift */,
 			);
 			path = "Input Field";
 			sourceTree = "<group>";
@@ -1472,6 +1477,7 @@
 				20CEA75A2CE308AD0070579B /* MessageContentView.swift */,
 				20AA5A532CC89AAA003E5519 /* MessageBackgroundView.swift */,
 				20CEA75D2CE309F10070579B /* MessageOptionsView.swift */,
+				2025E67E2D894DFC00289E3F /* MessageCopyButton.swift */,
 				206FBB202D54B40700A045FF /* MessageReasoningProcessView.swift */,
 			);
 			path = Message;
@@ -1801,6 +1807,7 @@
 				20B9B1212CDF91CD00B66D4D /* PerformanceGaugeView.swift in Sources */,
 				20571F7B2CBD602B004F3344 /* InferenceSettingsView.swift in Sources */,
 				20B97CDF2CAFFE6A009A0A5D /* Sender.swift in Sources */,
+				2025E67D2D89197700289E3F /* UseWebSearchButton.swift in Sources */,
 				204D09872D1182EC0066B060 /* IntroductionPageView.swift in Sources */,
 				20A7E8FC2D8304AB00223D47 /* HelpCommands.swift in Sources */,
 				202E3EDD2CBB8F7B00AF86C8 /* ReferencedURL.swift in Sources */,
@@ -1829,6 +1836,7 @@
 				209370A32D6C05B900E1AF73 /* Extension+Double.swift in Sources */,
 				20573F142CB50550004C19FE /* ConversationManagerView.swift in Sources */,
 				2031B99A2CEAE7A900627D53 /* Extension+KeyboardShortcut.swift in Sources */,
+				2025E67F2D894DFC00289E3F /* MessageCopyButton.swift in Sources */,
 				20B97CB62CAFE86C009A0A5D /* SidekickApp.swift in Sources */,
 				2040DBA52D85CB2200A8F6BD /* MarkdownImageProvider.swift in Sources */,
 				200363292D769AC700770391 /* JavaScriptRunner.swift in Sources */,

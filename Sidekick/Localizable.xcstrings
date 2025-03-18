@@ -2704,12 +2704,32 @@
         }
       }
     },
+    "Search is not configured. Please configure it in \"Settings\" -> \"Retrieval\"." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未设置搜索。请在“设置”->“搜索”中进行配置。"
+          }
+        }
+      }
+    },
     "Search is not enabled in Settings" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "请在设置里启用网络搜索"
+          }
+        }
+      }
+    },
+    "Search not configured" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未设置搜索"
           }
         }
       }
@@ -3180,16 +3200,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "添加文件"
-          }
-        }
-      }
-    },
-    "Temporary Resources:" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "临时资源："
           }
         }
       }

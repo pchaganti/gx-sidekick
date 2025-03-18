@@ -50,6 +50,11 @@ public class RetrievalSettings {
 		}
 	}
 	
+	/// A `Bool` representing whether web search can be used
+	static var canUseWebSearch: Bool {
+		return Self.useTavilySearch && !Self.tavilyApiKey.isEmpty
+	}
+	
 	/// Computed property for whether the context of a search result is used
 	static var useSearchResultContext: Bool {
 		get {

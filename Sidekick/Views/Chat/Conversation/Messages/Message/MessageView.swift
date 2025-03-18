@@ -79,14 +79,17 @@ struct MessageView: View {
 				HStack {
 					Text(timeDescription)
 						.foregroundStyle(.secondary)
+					if showSources {
+						sourcesButton
+					}
+					MessageCopyButton(
+						message: message
+					)
 					MessageOptionsView(
 						isEditing: $isEditing,
 						message: message,
 						canEdit: canEdit
 					)
-					if showSources {
-						sourcesButton
-					}
 					if self.isGenerating {
 						stopButton
 					}

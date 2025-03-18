@@ -64,6 +64,8 @@ struct ChatStyle: TextFieldStyle {
 				LinearGradient(
 					colors: [
 						Color.textBackground,
+						Color.textBackground.opacity(0.9),
+						Color.textBackground.opacity(0.75),
 						Color.textBackground.opacity(0.5)
 					],
 					startPoint: .leading,

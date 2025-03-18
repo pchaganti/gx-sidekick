@@ -51,7 +51,7 @@ Tokens per second: \(tokensPerSecondStr)
 		Menu {
 			optionsMenu
 		} label: {
-			Image(systemName: "ellipsis.circle")
+			Image(systemName: "ellipsis")
 				.imageScale(.medium)
 				.background(.clear)
 				.imageScale(.small)
@@ -59,6 +59,7 @@ Tokens per second: \(tokensPerSecondStr)
 				.padding(.horizontal, 3)
 				.frame(width: 15, height: 15)
 				.scaleEffect(CGSize(width: 0.96, height: 0.96))
+				.foregroundStyle(.secondary)
 				.background(.primary.opacity(0.00001)) // Needs to be clickable
 		}
 		.menuStyle(.circle)
@@ -78,7 +79,6 @@ Tokens per second: \(tokensPerSecondStr)
 	
 	var optionsMenu: some View {
 		Group {
-			copyButton
 			// Edit button
 			if self.canEdit && !self.isEditing {
 				Button {
@@ -107,31 +107,6 @@ Tokens per second: \(tokensPerSecondStr)
 					showNerdInfo.toggle()
 				} label: {
 					Text("Stats for Nerds")
-				}
-			}
-		}
-	}
-	
-	var copyButton: some View {
-		Group {
-			// If message was produced by a reasoning model
-			if let reasoningText = self.message.reasoningText {
-				Button {
-					reasoningText.copyWithFormatting()
-				} label: {
-					Text("Copy Reasoning Process")
-				}
-				Button {
-					self.message.responseText.copyWithFormatting()
-				} label: {
-					Text("Copy Answer")
-				}
-			} else {
-				// Else, only allow copying of answer
-				Button {
-					self.message.text.copyWithFormatting()
-				} label: {
-					Text("Copy to Clipboard")
 				}
 			}
 		}
