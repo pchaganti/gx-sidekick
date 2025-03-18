@@ -33,6 +33,11 @@ struct DetectorInputView: View {
 	
 	var analyzeButton: some View {
 		Button {
+			// Check for local model
+			if !checkForLocalModel() {
+				return
+			}
+			// If check passed, start analysis
 			Task.detached { @MainActor in
 				await self.detectorViewController.evaluateText()
 			}
