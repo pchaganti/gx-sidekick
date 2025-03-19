@@ -77,6 +77,7 @@ struct ConversationManagerView: View {
 					.bold()
 					.foregroundStyle(toolbarTextColor)
 					.opacity(0.9)
+					.contentTransition(.numericText())
 			}
 			ToolbarItemGroup(placement: .principal) {
 				ExpertSelectionMenu()

@@ -20,6 +20,7 @@ struct ConversationNameEditor: View {
 		Group {
 			if !isEditing {
 				Text(conversation.title)
+					.contentTransition(.numericText())
 			} else {
 				TextField("Title", text: $conversation.title)
 					.focused($isFocused)

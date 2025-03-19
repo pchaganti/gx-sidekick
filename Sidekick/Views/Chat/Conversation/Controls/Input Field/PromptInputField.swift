@@ -249,7 +249,9 @@ struct PromptInputField: View {
 			), !title.isEmpty {
 				conversation.title = title
 			}
-			self.conversationManager.update(conversation)
+			withAnimation(.linear) {
+				self.conversationManager.update(conversation)
+			}
 		}
 		// Get response
 		var response: LlamaServer.CompleteResponse
