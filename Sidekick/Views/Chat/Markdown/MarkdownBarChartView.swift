@@ -21,8 +21,10 @@ struct MarkdownBarChartView: View {
 				).replacingOccurrences(
 					of: ",",
 					with: ""
+				).dropSuffixIfPresent(
+					"%"
 				)
-			)!
+			) ?? 0
 			return Bar(
 				index: index,
 				value: value,

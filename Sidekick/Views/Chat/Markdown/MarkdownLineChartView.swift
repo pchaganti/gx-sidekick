@@ -38,8 +38,8 @@ struct MarkdownLineChartView: View {
 				).replacingOccurrences(
 					of: ",",
 					with: ""
-				)
-				return Double(str)!
+				).dropSuffixIfPresent("%")
+				return Double(str) ?? 0
 			}()
 			let y: Double = {
 				let str: String = row[yIndex].replacingOccurrences(
@@ -48,8 +48,8 @@ struct MarkdownLineChartView: View {
 				).replacingOccurrences(
 					of: ",",
 					with: ""
-				)
-				return Double(str)!
+				).dropSuffixIfPresent("%")
+				return Double(str) ?? 0
 			}()
 			return Point(
 				x: x,

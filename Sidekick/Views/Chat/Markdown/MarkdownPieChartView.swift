@@ -20,8 +20,10 @@ struct MarkdownPieChartView: View {
 			).replacingOccurrences(
 				of: ",",
 				with: ""
+			).dropSuffixIfPresent(
+				"%"
 			)
-			return Double(processedRow)!
+			return Double(processedRow) ?? 0
 		}).compactMap({ $0 }).reduce(
 			0, +
 		)
@@ -33,8 +35,10 @@ struct MarkdownPieChartView: View {
 				).replacingOccurrences(
 					of: ",",
 					with: ""
+				).dropSuffixIfPresent(
+					"%"
 				)
-			)!
+			) ?? 0
 			return Sector(
 				value: value,
 				total: total,

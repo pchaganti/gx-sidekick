@@ -47,7 +47,12 @@ public class MarkdownDataViewController: ObservableObject {
 	
 	/// The data's headers
 	public var headers: [String] {
-		return data?.first ?? []
+		return (data?.first ?? []).map { value in
+			return value.trim(
+				prefix: "**",
+				suffix: "**"
+			)
+		}
 	}
 	
 	/// The data's data in rows
@@ -55,7 +60,14 @@ public class MarkdownDataViewController: ObservableObject {
 	
 	/// The data's data in columns
 	public var columns: [[String]] {
-		return rows.transpose
+		return rows.transpose.map { row in
+			return row.map { cell in
+				return cell.trim(
+					prefix: "**",
+					suffix: "**"
+				)
+			}
+		}
 	}
 	
 	/// Returns an array of `Bool`, where each item represents whether a column is numeric
