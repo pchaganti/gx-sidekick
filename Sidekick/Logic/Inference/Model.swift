@@ -361,7 +361,7 @@ public class Model: ObservableObject {
 		var messages = originalMessages
 		var jsResult: String?
 		// Loop `n` times until success
-		let loopLimit: Int = 10
+		let loopLimit: Int = 5
 		for _ in 0..<loopLimit {
 			do {
 				// Execute JavaScript
