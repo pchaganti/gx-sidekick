@@ -336,6 +336,8 @@ public class Model: ObservableObject {
 			originalMessages: messages,
 			similarityIndex: similarityIndex
 		)
+		// Switch status to show stream for final answer
+		self.status = .processing
 		// If the JavaScript was valid, return rephrased result
 		if jsCode != nil && jsResult != nil {
 			var rephrasedResponse = try await rephraseResult(
