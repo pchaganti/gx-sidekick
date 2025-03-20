@@ -63,6 +63,16 @@ Since small models are much better at writing code than doing math, having it wr
 
 ![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/codeInterpreter.png)
 
+### Canvas
+
+Create, edit and preview websites, code and other textual content using Canvas.
+
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/canvasWebsite.png)
+
+Select parts of the text, then prompt the chatbot to perform selective edits.
+
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/canvasSelectiveEdit.png)
+
 ### Image Generation
 
 Sidekick can generate images from text, allowing you to create visual aids for your work. 
