@@ -300,7 +300,8 @@ public extension String {
 	var reasoningRemoved: String {
 		// List special reasoning tokens
 		let specialTokenSets: [[String]] = [
-			["<think>", "</think>"]
+			["<think>", "</think>"],
+			["<thought>", "</thought>"]
 		]
 		// Init variable for stripped text
 		var processedResponse: String = self

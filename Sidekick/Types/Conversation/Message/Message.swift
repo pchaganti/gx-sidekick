@@ -75,7 +75,8 @@ public struct Message: Identifiable, Codable, Hashable {
 		if self.sender != .assistant { return nil }
 		// List special reasoning tokens
 		let specialTokenSets: [[String]] = [
-			["<think>", "</think>"]
+			["<think>", "</think>"],
+			["<thought>", "</thought>"]
 		]
 		// Extract text between tokens
 		// For each set of tokens
