@@ -132,7 +132,7 @@ Rephrase this prompt to not mention the need for generating a presentation. Resp
 					mode: .default
 				)
 			// Set rephrased prompt
-			self.rephrasedPrompt = response.text.thinkingTagsRemoved
+			self.rephrasedPrompt = response.text.reasoningRemoved
 		} catch {
 			throw GenerationError.rephrasingPromptFailed
 		}
@@ -165,7 +165,7 @@ Rephrase this prompt to not mention the need for generating a presentation. Resp
 				)
 			// Return messages
 			let responseMessage: Message = Message(
-				text: response.text.thinkingTagsRemoved,
+				text: response.text.reasoningRemoved,
 				sender: .assistant
 			)
 			messages.append(
@@ -203,7 +203,7 @@ You are about to create a presentation about the content above. List 1-2 word ti
 			// Extract titles
 			let imageTitles: [String] = response
 				.text
-				.thinkingTagsRemoved
+				.reasoningRemoved
 				.split(
 					separator: "\n"
 				).map { title in
@@ -342,7 +342,7 @@ Respond with the Markdown ONLY. Do not include comments.
 					mode: .default
 				)
 			// Strip code tags, thinking process & return
-			return response.text.thinkingTagsRemoved.replacingOccurrences(
+			return response.text.reasoningRemoved.replacingOccurrences(
 				of: "```Markdown",
 				with: ""
 			).replacingOccurrences(

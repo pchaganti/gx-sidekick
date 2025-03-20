@@ -17,4 +17,16 @@ public extension Array where Element: Hashable {
 		}.max { $0.1 < $1.1 }?.0
 	}
 	
+	func previousElement(of element: Element) -> Element? {
+		// Find the index of the given element
+		if let index = firstIndex(of: element) {
+			// Check if there is a previous element
+			if index > 0 {
+				return self[index - 1]
+			}
+		}
+		// Return nil if the element is not found or is the first element
+		return nil
+	}
+	
 }

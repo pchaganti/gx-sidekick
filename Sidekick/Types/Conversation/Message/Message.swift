@@ -66,7 +66,7 @@ public struct Message: Identifiable, Codable, Hashable {
 	
 	/// Computed property returning the response text
 	public var responseText: String {
-		return self.text.thinkingTagsRemoved
+		return self.text.reasoningRemoved
 	}
 	
 	/// A `String` containing the message's reasoning process
@@ -119,7 +119,7 @@ public struct Message: Identifiable, Codable, Hashable {
 	public var jsCode: String?
 	
 	/// Function returning the message text that is submitted to the LLM
-	public func submittedText(
+	public func textWithSources(
 		similarityIndex: SimilarityIndex?,
 		useWebSearch: Bool,
 		temporaryResources: [TemporaryResource]
@@ -340,6 +340,9 @@ DO NOT reference sources outside of those provided below. If you did not referen
 	/// Stored property for whether the output has finished
 	public var outputEnded: Bool
 	
+	/// A ``Snapshot`` of canvas content
+	public var snapshot: Snapshot? = nil
+	
 	/// Function to update message
 	@MainActor
 	public mutating func update(
@@ -403,9 +406,27 @@ DO NOT reference sources outside of those provided below. If you did not referen
 				}
 			}
 		}
-		// If fell through, just return
+		// If fell through, just get text
 		self.text = text
+		// Try to extract snapshot
+		self.updateSnapshot()
 	}
+	
+	/// Function to extract snapshots if available
+	private mutating func updateSnapshot() {
+		// Try to extract site
+		if let site = Snapshot.Site.extractSite(
+			from: self.responseText
+		) {
+			self.snapshot = Snapshot(site: site)
+			self.snapshot?.site?.saveToCache()
+		} else if let code = Snapshot.extractCode(
+			from: self.responseText
+		) {
+			self.snapshot = code
+		}
+	}
+		
 	
 	/// Function to end a message
 	public mutating func end() {
@@ -420,11 +441,38 @@ DO NOT reference sources outside of those provided below. If you did not referen
 			similarityIndex: SimilarityIndex? = nil,
 			shouldAddSources: Bool = false,
 			useWebSearch: Bool = false,
+			useCanvas: Bool = false,
+			canvasSelection: String? = nil,
 			temporaryResources: [TemporaryResource] = []
 		) async {
 			self.role = message.sender
+			// Set up mutable message
+			var message: Message = message
+			// Apply changes for Canvas
+			if useCanvas, let canvasSelection = canvasSelection, !canvasSelection.isEmpty {
+				message.text = """
+\(message.text)
+
+I have selected the range "\(canvasSelection)". Output the full text again with the changes applied. Keep as much of the previous text as available. 
+"""
+			} else if useCanvas {
+				message.text = """
+\(message.text)
+
+Output the full text again with the changes applied. Keep as much of the previous text as available.
+"""
+			}
+			// Apply Canvas changes if needed
+			if let snapshot = message.snapshot,
+			   snapshot.type == .text,
+			   let ogText: String = snapshot.originalText {
+				message.text = message.text.replacingOccurrences(
+					of: ogText,
+					with: snapshot.text
+				)
+			}
 			if shouldAddSources {
-				self.content = await message.submittedText(
+				self.content = await message.textWithSources(
 					similarityIndex: similarityIndex,
 					useWebSearch: useWebSearch,
 					temporaryResources: temporaryResources

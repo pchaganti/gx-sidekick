@@ -106,17 +106,29 @@ public class Model: ObservableObject {
 	
 	/// Function to set sent conversation ID
 	func setSentConversationId(_ id: UUID) {
+		// Reset pending message
+		self.pendingMessage = ""
 		self.sentConversationId = id
 	}
 	
 	/// Function to flag that conversaion naming has begun
 	func indicateStartedNamingConversation() {
+		// Reset pending message
 		self.pendingMessage = ""
-		self.status = .namingConversation
+		self.status = .generatingTitle
+	}
+	
+	/// Function to flag that a background task has begun
+	func indicateStartedBackgroundTask() {
+		// Reset pending message
+		self.pendingMessage = ""
+		self.status = .backgroundTask
 	}
 	
 	/// Function to flag that querying has begun
 	func indicateStartedQuerying() {
+		// Reset pending message
+		self.pendingMessage = ""
 		self.status = .querying
 	}
 	
@@ -129,6 +141,8 @@ public class Model: ObservableObject {
 		mode: Model.Mode,
 		similarityIndex: SimilarityIndex? = nil,
 		useWebSearch: Bool = false,
+		useCanvas: Bool = false,
+		canvasSelection: String? = nil,
 		temporaryResources: [TemporaryResource] = [],
 		handleResponseUpdate: @escaping (
 			String, // Full message
@@ -144,7 +158,7 @@ public class Model: ObservableObject {
 		self.pendingMessage = ""
 		// Set flag
 		let preQueryStatus: Status = self.status
-		if self.status != .namingConversation {
+		if preQueryStatus.isForegroundTask {
 			self.status = .querying
 		}
 		let lastIndex: Int = messages.count - 1
@@ -156,15 +170,17 @@ public class Model: ObservableObject {
 					similarityIndex: similarityIndex,
 					shouldAddSources: (index == lastIndex),
 					useWebSearch: useWebSearch,
+					useCanvas: useCanvas,
+					canvasSelection: canvasSelection,
 					temporaryResources: temporaryResources
 				)
 			}
 		// Respond to prompt
-		if self.status != .namingConversation {
+		if self.status.isForegroundTask {
 			if preQueryStatus == .cold {
-				status = .coldProcessing
+				self.status = .coldProcessing
 			} else {
-				status = .processing
+				self.status = .processing
 			}
 		}
 		// Declare variables for incremental update
@@ -227,10 +243,8 @@ public class Model: ObservableObject {
 			response!.usage?.total_tokens
 		)
 		// Update display
-		self.pendingMessage = response!.text
-		if self.status != .namingConversation {
-			self.status = .ready
-		}
+		self.pendingMessage = ""
+		self.status = .ready
 		Self.logger.notice("Finished responding to prompt")
 		return response!
 	}
@@ -480,8 +494,10 @@ public class Model: ObservableObject {
 		case coldProcessing
 		/// The system is searching in the selected profile's resources.
 		case querying
-		/// The system is creating a title for the conversation
-		case namingConversation
+		/// The system is generating a title
+		case generatingTitle
+		/// The system is running a background task
+		case backgroundTask
 		/// The system is using a code interpreter
 		case usingInterpreter
 		/// The inference server is awaiting a prompt
@@ -493,6 +509,16 @@ public class Model: ObservableObject {
 		public var isWorking: Bool {
 			switch self {
 				case .cold, .ready:
+					return false
+				default:
+					return true
+			}
+		}
+		
+		/// A `Bool` representing if the server is running a foreground task
+		public var isForegroundTask: Bool {
+			switch self {
+				case .backgroundTask, .generatingTitle:
 					return false
 				default:
 					return true

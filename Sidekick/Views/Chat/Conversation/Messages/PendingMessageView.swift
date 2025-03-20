@@ -27,19 +27,15 @@ struct PendingMessageView: View {
 	
 	var pendingMessage: Message {
 		var text: String = String(localized: "Processing...")
-		if self.model.status == .namingConversation {
+		if self.model.status == .generatingTitle {
 			text = String(localized: "Generating title...")
+		} else if self.model.status == .querying {
+			text = String(localized: "Searching...")
+		} else if self.model.status == .usingInterpreter {
+			text = String(localized: "Using code interpreter...")
 		} else if !self.model.pendingMessage.isEmpty {
 			// Show progress if availible
 			text = self.model.pendingMessage
-		} else if self.model.status == .querying {
-			if RetrievalSettings.useTavilySearch && useWebSearch {
-				text = String(localized: "Searching in resources and on the web...")
-			} else {
-				text = String(localized: "Searching in resources...")
-			}
-		} else if self.model.status == .usingInterpreter {
-			text = String(localized: "Using code interpreter...")
 		}
 		return Message(
 			text: text,

@@ -296,8 +296,8 @@ public extension String {
 		return String(self.dropFirst().dropLast())
 	}
 	
-	/// Computed property returning text with thinking tags removed
-	var thinkingTagsRemoved: String {
+	/// Computed property returning text with the resoning process removed
+	var reasoningRemoved: String {
 		// List special reasoning tokens
 		let specialTokenSets: [[String]] = [
 			["<think>", "</think>"]

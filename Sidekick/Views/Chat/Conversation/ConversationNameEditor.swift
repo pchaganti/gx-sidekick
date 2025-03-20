@@ -10,6 +10,7 @@ import SwiftUI
 struct ConversationNameEditor: View {
 	
 	@EnvironmentObject private var conversationManager: ConversationManager
+	@EnvironmentObject private var conversationState: ConversationState
 	
 	@State private var isEditing: Bool = false
 	@Binding var conversation: Conversation
@@ -41,12 +42,21 @@ struct ConversationNameEditor: View {
 					Text("Rename")
 				}
 				Button {
-					self.conversationManager.delete(conversation)
+					self.delete()
 				} label: {
 					Text("Delete")
 				}
 			}
 		}
+	}
+	
+	private func delete() {
+		// If deleting selected conversation, reset selected conversation
+		if self.conversationState.selectedConversationId == self.conversation.id {
+			self.conversationState.selectedConversationId = nil
+		}
+		// Delete
+		self.conversationManager.delete(conversation)
 	}
 	
 	private func toggleEditingMode() {

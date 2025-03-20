@@ -216,7 +216,7 @@ Cheatsheet:
 					mode: .default, handleResponseFinish:  { fullMessage, pendingMessage, _ in
 						// On finish
 						// Remove markdown code tags and thinking process
-						let d2Code: String = fullMessage.thinkingTagsRemoved.replacingOccurrences(
+						let d2Code: String = fullMessage.reasoningRemoved.replacingOccurrences(
 							of: "```D2",
 							with: ""
 						).replacingOccurrences(

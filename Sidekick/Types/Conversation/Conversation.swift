@@ -35,6 +35,18 @@ public struct Conversation: Identifiable, Codable, Hashable {
 	/// Stored property for messages
 	public var messages: [Message] = []
 	
+	/// An array of messages with snapshots
+	public var messagesWithSnapshots: [Message] {
+		return self.messages.filter { message in
+			return message.snapshot != nil
+		}
+	}
+	
+	/// A `Bool` representing whether the conversation contains snapshots
+	public var hasSnapshots: Bool {
+		return !self.messagesWithSnapshots.isEmpty
+	}
+	
 	/// Computed property for most recent update
 	public var lastUpdated: Date {
 		if let lastUpdate: Date = self.messages.map({
@@ -80,6 +92,13 @@ public struct Conversation: Identifiable, Codable, Hashable {
 				return
 			}
 		}
+	}
+	
+	/// Function to get a message with an ID
+	public func getMessage(
+		_ id: UUID
+	) -> Message? {
+		return self.messages.filter({ $0.id == id }).first
 	}
 	
 	/// Function to drop last message

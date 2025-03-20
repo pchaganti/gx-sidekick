@@ -15,11 +15,13 @@ public class ConversationState: ObservableObject {
 
 	@Published var selectedConversationId: UUID? = topmostConversation?.id
 	
+	/// The topmost conversation listed in the sidebar
 	static var topmostConversation: Conversation? {
 		return ConversationManager.shared.conversations.first
 	}
 	
-	private var selectedConversation: Conversation? {
+	/// The currently selected conversation
+	public var selectedConversation: Conversation? {
 		guard let selectedConversationId = self.selectedConversationId else {
 			return nil
 		}
@@ -29,5 +31,23 @@ public class ConversationState: ObservableObject {
 	}
 	
 	@Published var selectedExpertId: UUID? = ConversationManager.shared.conversations.first?.messages.last?.expertId ?? ExpertManager.shared.default?.id
+	
+	@Published var useCanvas: Bool = false
+	
+	/// Function to create a new conversation
+	public func newConversation() {
+		// Create new conversation
+		ConversationManager.shared.newConversation()
+		// Reset selected expert
+		withAnimation(.linear) {
+			self.selectedExpertId = ExpertManager.shared.default?.id
+		}
+		// Select newly created conversation
+		if let recentConversationId = ConversationManager.shared.recentConversation?.id {
+			withAnimation(.linear) {
+				self.selectedConversationId = recentConversationId
+			}
+		}
+	}
 	
 }

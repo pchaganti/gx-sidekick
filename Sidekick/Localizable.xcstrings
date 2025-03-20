@@ -14,6 +14,9 @@
         }
       }
     },
+    "." : {
+      "shouldTranslate" : false
+    },
     "**Setup Complete**" : {
       "localizations" : {
         "zh-Hans" : {
@@ -387,6 +390,16 @@
         }
       }
     },
+    "Canvas" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "工坊"
+          }
+        }
+      }
+    },
     "Causes of the Renaissance" : {
       "localizations" : {
         "zh-Hans" : {
@@ -633,6 +646,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "复制最终答案"
+          }
+        }
+      }
+    },
+    "Copy Raw Markdown" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "复制 Markdown"
           }
         }
       }
@@ -1327,6 +1350,16 @@
         }
       }
     },
+    "Extracting content..." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在提取内容..."
+          }
+        }
+      }
+    },
     "Extracting text..." : {
       "localizations" : {
         "zh-Hans" : {
@@ -1423,6 +1456,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "文件后缀："
+          }
+        }
+      }
+    },
+    "Filename" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文件名"
           }
         }
       }
@@ -2254,6 +2297,16 @@
         }
       }
     },
+    "No version selected." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未选择版本。"
+          }
+        }
+      }
+    },
     "Notifications" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2824,22 +2877,12 @@
         }
       }
     },
-    "Searching in resources and on the web..." : {
+    "Searching..." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "正在资源中和网络上搜索…"
-          }
-        }
-      }
-    },
-    "Searching in resources..." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "正在资源中搜索…"
+            "value" : "正在搜索…"
           }
         }
       }
@@ -3324,6 +3367,16 @@
         }
       }
     },
+    "The filename of the exported file" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导出文件的文件名"
+          }
+        }
+      }
+    },
     "The local AI model couldn’t be found, and Sidekick could not connect to a remote server. Please verify that the local and server models are configured correctly in Settings." : {
       "localizations" : {
         "zh-Hans" : {
@@ -3350,6 +3403,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "幻灯片名称"
+          }
+        }
+      }
+    },
+    "The name of the folder containing the site" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存网页的文件夹名称"
           }
         }
       }
@@ -3900,6 +3963,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "你的 "
+          }
+        }
+      }
+    },
+    "Your file will be saved to this folder" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你的文件将被保存到此文件夹"
+          }
+        }
+      }
+    },
+    "Your site will be saved to this folder" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你的网页将被保存到此文件夹"
           }
         }
       }

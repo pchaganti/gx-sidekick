@@ -93,6 +93,12 @@ Tokens per second: \(tokensPerSecondStr)
 					Text("Edit")
 				}
 			}
+			// Button to copy raw markdown
+			Button {
+				self.message.text.copy()
+			} label: {
+				Text("Copy Raw Markdown")
+			}
 			// Show code used in code interpreter
 			if message.usedCodeInterpreter ?? false && message.jsCode != nil {
 				Button {

@@ -41,11 +41,11 @@ For applicable problems that require accuracy, such as arithmetic and counting, 
 
 [{"name":"run_javascript","description":"Runs JavaScript code and returns the result.","parameters":{"type":"object","properties":{"code":{"type":"string","description":"The JavaScript code to run."}},"required":["code"]}}]
 """
-	
+
 	/// Computed property for the part of the system prompt where metadata is fed to the LLM
 	public static let metadataPrompt: String = """
 The user's name: \(Settings.username)
-Current date & time: \(Date.now.ISO8601Format())
+Current date & time: \(Date.now.formatted(date: .long, time: .shortened))
 """
 	
 	/// Static constant for the default server endpoint

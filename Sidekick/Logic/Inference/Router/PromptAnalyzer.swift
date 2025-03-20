@@ -13,6 +13,8 @@ import NaturalLanguage
 public class PromptAnalyzer {
 	
 	/// Function to detect what results are expected by the prompt
+	/// - Parameter prompt: The user's prompt
+	/// - Returns: The format of the content to be generated
 	@MainActor
 	public static func analyzePrompt(
 		_ prompt: String
@@ -40,7 +42,6 @@ public class PromptAnalyzer {
 		let processedPrompt: String = prompt.trimmingCharacters(
 			in: .punctuationCharacters
 		).lowercased()
-//		print("processedPrompt: \(processedPrompt)")
 		// Run classifier
 		let hypotheses: [String: Double] = promptClassifier.predictedLabelHypotheses(
 			for: processedPrompt,
@@ -79,6 +80,7 @@ public class PromptAnalyzer {
 	
 	/// The expected result type of a prompt
 	public enum ResultType: String, CaseIterable {
+		
 		init?(
 			_ rawValue: String
 		) {

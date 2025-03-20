@@ -18,6 +18,7 @@ struct PromptInputField: View {
 	@EnvironmentObject private var expertManager: ExpertManager
 	@EnvironmentObject private var conversationState: ConversationState
 	@EnvironmentObject private var promptController: PromptController
+	@EnvironmentObject private var canvasController: CanvasController
 	
 	var selectedConversation: Conversation? {
 		guard let selectedConversationId = conversationState.selectedConversationId else {
@@ -62,11 +63,6 @@ struct PromptInputField: View {
 				of: conversationState.selectedConversationId
 			) {
 				self.isFocused = true
-				// Use most recently selected expert
-				let expertId: UUID? = selectedConversation?.messages.last?.expertId ?? expertManager.default?.id
-				withAnimation(.linear) {
-					self.conversationState.selectedExpertId = expertId
-				}
 			}
 			.onChange(
 				of: conversationState.selectedExpertId
@@ -275,6 +271,8 @@ struct PromptInputField: View {
 				mode: .chat,
 				similarityIndex: index,
 				useWebSearch: useWebSearch,
+				useCanvas: self.conversationState.useCanvas,
+				canvasSelection: self.canvasController.selection,
 				temporaryResources: tempResources
 			)
 		} catch let error as LlamaServerError {
@@ -352,7 +350,7 @@ A user is chatting with an assistant and they have sent the message below. Gener
 		self.model.pendingMessage = ""
 		// Return
 		return title
-			.thinkingTagsRemoved
+			.reasoningRemoved
 			.trimmingWhitespaceAndNewlines()
 			.capitalizeEachWord
 			.dropPrefixIfPresent("\"")

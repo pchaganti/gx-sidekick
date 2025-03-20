@@ -5,25 +5,20 @@
 //  Created by Bean John on 10/8/24.
 //
 
-import SwiftUI
 import Combine
+import SwiftUI
 
 struct ConversationManagerView: View {
 	
 	@Environment(\.appearsActive) var appearsActive
 	
 	@StateObject private var model: Model = .shared
+	@StateObject private var canvasController: CanvasController = .init()
 	
 	@EnvironmentObject private var appState: AppState
-	
-	@EnvironmentObject private var conversationManager: ConversationManager
 	@EnvironmentObject private var expertManager: ExpertManager
-	
+	@EnvironmentObject private var conversationManager: ConversationManager
 	@EnvironmentObject private var conversationState: ConversationState
-	
-	@EnvironmentObject private var lengthyTasksController: LengthyTasksController
-	
-	@State private var isViewingToolbox: Bool = false
 	
 	var selectedExpert: Expert? {
 		guard let selectedExpertId = conversationState.selectedExpertId else {
@@ -61,8 +56,6 @@ struct ConversationManagerView: View {
 		)
 	}
 	
-	var tryToolsTip: TryToolsTip = .init()
-	
     var body: some View {
 		NavigationSplitView {
 			conversationList
@@ -91,14 +84,20 @@ struct ConversationManagerView: View {
 						self.conversationManager.update(selectedConversation)
 					}
 			}
-			ToolbarItemGroup(placement: .primaryAction) {
+			ToolbarItemGroup(
+				placement: .primaryAction
+			) {
 				Spacer()
+				// Warning message for insufficient memory
 				if InferenceSettings.lowUnifiedMemory {
 					lowMemoryWarning
 				}
+				// Warning message for full context
 				if self.contextIsFull {
 					contextFullWarning
 				}
+				// Button to toggle canvas
+				canvasToggle
 			}
 		}
 		.if(selectedExpert != nil) { view in
@@ -110,6 +109,22 @@ struct ConversationManagerView: View {
 		}
 		.onChange(of: selectedExpert) {
 			self.refreshSystemPrompt()
+		}
+		.onChange(
+			of: conversationState.selectedConversationId
+		) {
+			withAnimation(.linear) {
+				// Use most recently selected expert
+				let expertId: UUID? = selectedConversation?.messages.last?.expertId ?? expertManager.default?.id
+				self.conversationState.selectedExpertId = expertId
+				// Turn off artifacts
+				self.conversationState.useCanvas = false
+			}
+		}
+		.onChange(
+			of: self.selectedConversation?.messagesWithSnapshots
+		) {
+			self.loadLatestSnapshot()
 		}
 		.onReceive(
 			NotificationCenter.default.publisher(
@@ -162,6 +177,7 @@ struct ConversationManagerView: View {
 			}
 		}
 		.environmentObject(model)
+		.environmentObject(canvasController)
     }
 	
 	var conversationList: some View {
@@ -171,7 +187,7 @@ struct ConversationManagerView: View {
 		) {
 			ConversationNavigationListView()
 			Spacer()
-			sidebarButtons
+			ConversationSidebarButtons()
 		}
 		.padding(.vertical, 7)
 	}
@@ -181,8 +197,18 @@ struct ConversationManagerView: View {
 			if conversationState.selectedConversationId == nil || selectedConversation == nil {
 				noSelectedConversation
 			} else {
-				ConversationView()
-					.frame(minWidth: 450, minHeight: 500)
+				HSplitView {
+					ConversationView()
+						.frame(minWidth: 450, minHeight: 500)
+					if self.conversationState.useCanvas {
+						CanvasView()
+							.frame(
+								minWidth: 500,
+								idealWidth: 700,
+								maxWidth: 800
+							)
+					}
+				}
 			}
 		}
 	}
@@ -191,7 +217,7 @@ struct ConversationManagerView: View {
 		HStack {
 			Text("Hit")
 			Button("Command ⌘ + N") {
-				self.newConversation()
+				self.conversationState.newConversation()
 			}
 			Text("to start a conversation.")
 		}
@@ -217,48 +243,51 @@ struct ConversationManagerView: View {
 		}
 	}
 	
-	var sidebarButtons: some View {
-		Group {
-			if self.lengthyTasksController.hasTasks {
-				LengthyTasksNavigationButton()
-					.buttonStyle(.plain)
-					.foregroundStyle(.secondary)
-			}
-			SidebarButtonView(
-				title: String(localized: "Toolbox"),
-				systemImage: "wrench.adjustable"
-			) {
-				self.isViewingToolbox.toggle()
-			}
-			.keyboardShortcut("t", modifiers: [.command])
-			.sheet(isPresented: $isViewingToolbox) {
-				ToolboxLibraryView(
-					isPresented: $isViewingToolbox
-				)
-			}
-			.popoverTip(tryToolsTip)
-			SidebarButtonView(
-				title: String(localized: "New Conversation"),
-				systemImage: "square.and.pencil"
-			) {
-				self.newConversation()
-			}
+	var canvasToggle: some View {
+		Button {
+			self.toggleCanvas()
+		} label: {
+			Label("Canvas", systemImage: "cube")
 		}
-		.padding(.leading, 5)
-		.padding(.trailing, 4)
+		.disabled(
+			self.selectedConversation == nil || !(self.selectedConversation?.messages.contains { message in
+				return message.getSender() == .assistant
+			} ?? true)
+		)
+		.keyboardShortcut(.return, modifiers: [.command, .option])
 	}
 	
-	private func newConversation() {
-		// Create new conversation
-		ConversationManager.shared.newConversation()
-		// Reset selected expert
-		withAnimation(.linear) {
-			conversationState.selectedExpertId = expertManager.default?.id
+	/// Function to load latest snapshot
+	private func loadLatestSnapshot() {
+		// Get latest message message with snapshot
+		guard let selectedConversation = self.selectedConversation else {
+			return
 		}
-		// Select newly created conversation
-		if let recentConversationId = conversationManager.recentConversation?.id {
-			withAnimation(.linear) {
-				self.conversationState.selectedConversationId = recentConversationId
+		guard let message = selectedConversation.messagesWithSnapshots.last else {
+			return
+		}
+		// Show latest snapshot in canvas
+		withAnimation(.linear) {
+			self.canvasController.selectedMessageId = message.id
+			self.conversationState.useCanvas = true
+		}
+	}
+	
+	private func toggleCanvas() {
+		withAnimation(.linear) {
+			// Select a version if possible
+			if let message = self.selectedConversation?.messagesWithSnapshots.last {
+				self.canvasController.selectedMessageId = message.id
+			}
+			// Toggle canvas
+			self.conversationState.useCanvas.toggle()
+			// Extract snapshot if needed
+			if !self.canvasController.isExtractingSnapshot {
+				Task { @MainActor in
+					try? await self.canvasController.extractSnapshot(
+						selectedConversation: selectedConversation
+					)
+				}
 			}
 		}
 	}

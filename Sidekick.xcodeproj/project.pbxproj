@@ -32,6 +32,16 @@
 		201A1A9A2CDBA802001E9BA9 /* MarkdownBarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201A1A992CDBA802001E9BA9 /* MarkdownBarChartView.swift */; };
 		201A1A9C2CDBB5B1001E9BA9 /* MarkdownScatterPlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201A1A9B2CDBB5B1001E9BA9 /* MarkdownScatterPlotView.swift */; };
 		201A1A9E2CDBBA25001E9BA9 /* MarkdownLineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201A1A9D2CDBBA25001E9BA9 /* MarkdownLineChartView.swift */; };
+		201BB9942D8AF77F00890EE6 /* ConversationSidebarButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201BB9932D8AF77F00890EE6 /* ConversationSidebarButtons.swift */; };
+		201BB9962D8AF8AA00890EE6 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201BB9952D8AF8AA00890EE6 /* CanvasView.swift */; };
+		201BB99A2D8AFDE000890EE6 /* Snapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201BB9992D8AFDE000890EE6 /* Snapshot.swift */; };
+		201BB99C2D8B0F5E00890EE6 /* CanvasPreviewEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201BB99B2D8B0F5E00890EE6 /* CanvasPreviewEditor.swift */; };
+		201BB99E2D8B17C700890EE6 /* CanvasController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201BB99D2D8B17C700890EE6 /* CanvasController.swift */; };
+		201BB9A02D8B182800890EE6 /* CanvasVersionSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201BB99F2D8B182800890EE6 /* CanvasVersionSelector.swift */; };
+		201BB9A52D8BA0BC00890EE6 /* SnapshotCopyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201BB9A42D8BA0BC00890EE6 /* SnapshotCopyButton.swift */; };
+		201BB9A72D8BA9CA00890EE6 /* IfFits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201BB9A62D8BA9CA00890EE6 /* IfFits.swift */; };
+		201BB9C72D8BDCA800890EE6 /* SnapshotTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201BB9C62D8BDCA800890EE6 /* SnapshotTextEditor.swift */; };
+		201BB9C92D8C1CA000890EE6 /* SnapshotExportButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201BB9C82D8C1CA000890EE6 /* SnapshotExportButton.swift */; };
 		2025E67D2D89197700289E3F /* UseWebSearchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2025E67C2D89197700289E3F /* UseWebSearchButton.swift */; };
 		2025E67F2D894DFC00289E3F /* MessageCopyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2025E67E2D894DFC00289E3F /* MessageCopyButton.swift */; };
 		202801F42CC93C80005C1F7D /* DictationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202801F32CC93C80005C1F7D /* DictationButton.swift */; };
@@ -384,6 +394,16 @@
 		201A1A992CDBA802001E9BA9 /* MarkdownBarChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownBarChartView.swift; sourceTree = "<group>"; };
 		201A1A9B2CDBB5B1001E9BA9 /* MarkdownScatterPlotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownScatterPlotView.swift; sourceTree = "<group>"; };
 		201A1A9D2CDBBA25001E9BA9 /* MarkdownLineChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownLineChartView.swift; sourceTree = "<group>"; };
+		201BB9932D8AF77F00890EE6 /* ConversationSidebarButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationSidebarButtons.swift; sourceTree = "<group>"; };
+		201BB9952D8AF8AA00890EE6 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
+		201BB9992D8AFDE000890EE6 /* Snapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Snapshot.swift; sourceTree = "<group>"; };
+		201BB99B2D8B0F5E00890EE6 /* CanvasPreviewEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPreviewEditor.swift; sourceTree = "<group>"; };
+		201BB99D2D8B17C700890EE6 /* CanvasController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasController.swift; sourceTree = "<group>"; };
+		201BB99F2D8B182800890EE6 /* CanvasVersionSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasVersionSelector.swift; sourceTree = "<group>"; };
+		201BB9A42D8BA0BC00890EE6 /* SnapshotCopyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotCopyButton.swift; sourceTree = "<group>"; };
+		201BB9A62D8BA9CA00890EE6 /* IfFits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IfFits.swift; sourceTree = "<group>"; };
+		201BB9C62D8BDCA800890EE6 /* SnapshotTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotTextEditor.swift; sourceTree = "<group>"; };
+		201BB9C82D8C1CA000890EE6 /* SnapshotExportButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotExportButton.swift; sourceTree = "<group>"; };
 		2025E67C2D89197700289E3F /* UseWebSearchButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseWebSearchButton.swift; sourceTree = "<group>"; };
 		2025E67E2D894DFC00289E3F /* MessageCopyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCopyButton.swift; sourceTree = "<group>"; };
 		202801F32CC93C80005C1F7D /* DictationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictationButton.swift; sourceTree = "<group>"; };
@@ -689,6 +709,7 @@
 			children = (
 				2004D7632CBC9DA2009F294E /* ConversationState.swift */,
 				201A1A902CDB7D8E001E9BA9 /* MarkdownDataViewController.swift */,
+				201BB99D2D8B17C700890EE6 /* CanvasController.swift */,
 			);
 			path = Conversation;
 			sourceTree = "<group>";
@@ -792,6 +813,35 @@
 			path = Markdown;
 			sourceTree = "<group>";
 		};
+		201BB9972D8AF8AE00890EE6 /* Canvas */ = {
+			isa = PBXGroup;
+			children = (
+				201BB9952D8AF8AA00890EE6 /* CanvasView.swift */,
+				201BB99B2D8B0F5E00890EE6 /* CanvasPreviewEditor.swift */,
+				201BB99F2D8B182800890EE6 /* CanvasVersionSelector.swift */,
+				201BB9A12D8B1C5F00890EE6 /* Snapshot */,
+			);
+			path = Canvas;
+			sourceTree = "<group>";
+		};
+		201BB9982D8AFDCF00890EE6 /* Canvas */ = {
+			isa = PBXGroup;
+			children = (
+				201BB9992D8AFDE000890EE6 /* Snapshot.swift */,
+			);
+			path = Canvas;
+			sourceTree = "<group>";
+		};
+		201BB9A12D8B1C5F00890EE6 /* Snapshot */ = {
+			isa = PBXGroup;
+			children = (
+				201BB9A42D8BA0BC00890EE6 /* SnapshotCopyButton.swift */,
+				201BB9C62D8BDCA800890EE6 /* SnapshotTextEditor.swift */,
+				201BB9C82D8C1CA000890EE6 /* SnapshotExportButton.swift */,
+			);
+			path = Snapshot;
+			sourceTree = "<group>";
+		};
 		202801F12CC93C0D005C1F7D /* Controls */ = {
 			isa = PBXGroup;
 			children = (
@@ -819,6 +869,7 @@
 				2099BD9E2CB7E9CE00E02732 /* QuickPrompt.swift */,
 				202801F92CC949F2005C1F7D /* TemporaryResource.swift */,
 				206E9DD22CFFDCB0005E8B91 /* Message */,
+				201BB9982D8AFDCF00890EE6 /* Canvas */,
 			);
 			path = Conversation;
 			sourceTree = "<group>";
@@ -1022,10 +1073,12 @@
 			children = (
 				20573F132CB50550004C19FE /* ConversationManagerView.swift */,
 				20573F152CB505DC004C19FE /* ConversationListView.swift */,
+				201BB9932D8AF77F00890EE6 /* ConversationSidebarButtons.swift */,
 				2099BDA42CB8069800E02732 /* ConversationNameEditor.swift */,
 				20573F172CB50743004C19FE /* ConversationView.swift */,
 				202801F12CC93C0D005C1F7D /* Controls */,
 				20573F2B2CB52F9A004C19FE /* Messages */,
+				201BB9972D8AF8AE00890EE6 /* Canvas */,
 			);
 			path = Conversation;
 			sourceTree = "<group>";
@@ -1334,6 +1387,7 @@
 		20B97CD22CAFEC90009A0A5D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				2083AEA52D885BFE0049C139 /* Extension+Array.swift */,
 				209370932D6B598500E1AF73 /* Extension+CaseIterable.swift */,
 				201A1A922CDB8109001E9BA9 /* Extension+Collection.swift */,
 				20A40CF82D73763500A9D9A9 /* Extension+Date.swift */,
@@ -1347,7 +1401,6 @@
 				20B97CEA2CB00912009A0A5D /* Extension+URL.swift */,
 				200C3E2C2CD8B1380033909F /* AppKit */,
 				200C3E2B2CD8B0A40033909F /* UI */,
-				2083AEA52D885BFE0049C139 /* Extension+Array.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1414,6 +1467,7 @@
 				20B97CEE2CB010AD009A0A5D /* ThumbnailView.swift */,
 				208AA3F02CC9E42F00A0891F /* ScrollMask.swift */,
 				204592162CD32DEF00DEAA96 /* TypedTextView.swift */,
+				201BB9A62D8BA9CA00890EE6 /* IfFits.swift */,
 				204AE3BC2CEB56750086B42D /* WrappingHStack.swift */,
 				204D9CBE2CF4ABCF0052B6F4 /* StatusLabelView.swift */,
 				2030D6212D6C7F8C00F18BF4 /* CircularProgressView.swift */,
@@ -1467,8 +1521,8 @@
 		20CB7ABE2D14579C0013E30C /* Router */ = {
 			isa = PBXGroup;
 			children = (
-				20CB7AC72D145E320013E30C /* UserRequestClassifier.mlmodel */,
 				20CB7ABF2D1457B10013E30C /* PromptAnalyzer.swift */,
+				20CB7AC72D145E320013E30C /* UserRequestClassifier.mlmodel */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -1726,8 +1780,10 @@
 				20571F842CBD71C9004F3344 /* SystemPromptEditor.swift in Sources */,
 				20CB7AC02D1457B10013E30C /* PromptAnalyzer.swift in Sources */,
 				200619AF2D6766B1001949EF /* DiagrammerGeneratingView.swift in Sources */,
+				201BB9A02D8B182800890EE6 /* CanvasVersionSelector.swift in Sources */,
 				20C221062CC4B15600A99796 /* SourcesManager.swift in Sources */,
 				20B4D6B12CC3D72700817E15 /* Extension+IndexItem.swift in Sources */,
+				201BB99A2D8AFDE000890EE6 /* Snapshot.swift in Sources */,
 				20573F1F2CB5274E004C19FE /* MessagesView.swift in Sources */,
 				20B97CE72CB0066A009A0A5D /* Extension+String.swift in Sources */,
 				200619AD2D675DB9001949EF /* DiagrammerPromptView.swift in Sources */,
@@ -1761,6 +1817,8 @@
 				20573F162CB505DC004C19FE /* ConversationListView.swift in Sources */,
 				2030D6242D6D60FB00F18BF4 /* EvaluationDetails.swift in Sources */,
 				20B97CCF2CAFEC37009A0A5D /* DownloadManager.swift in Sources */,
+				201BB99C2D8B0F5E00890EE6 /* CanvasPreviewEditor.swift in Sources */,
+				201BB9C92D8C1CA000890EE6 /* SnapshotExportButton.swift in Sources */,
 				207A9F592CB8F4AF00E727DE /* ResourceSelectionView.swift in Sources */,
 				20FB0D892CBA8327006D062A /* Extension+SimilarityIndex.swift in Sources */,
 				20B97CD92CAFF2E7009A0A5D /* ModelSelectionView.swift in Sources */,
@@ -1819,6 +1877,7 @@
 				20CB7AC82D145E320013E30C /* UserRequestClassifier.mlmodel in Sources */,
 				2004D7642CBC9DA2009F294E /* ConversationState.swift in Sources */,
 				2086E1712CB036BB00FFCF57 /* ConversationManager.swift in Sources */,
+				201BB9A72D8BA9CA00890EE6 /* IfFits.swift in Sources */,
 				20C221092CC4B5A800A99796 /* SourcesView.swift in Sources */,
 				20571F6F2CBCE8F7004F3344 /* LengthyTasksController.swift in Sources */,
 				208C5FD42D79CA5900D82AA6 /* Bubble.swift in Sources */,
@@ -1833,6 +1892,7 @@
 				205E3F2C2D872E4200128D67 /* Extension+NSMutableAttributedString.swift in Sources */,
 				202801F62CC93CD5005C1F7D /* PromptInputField.swift in Sources */,
 				204D09832D1166810066B060 /* IntroductionPage.swift in Sources */,
+				201BB9942D8AF77F00890EE6 /* ConversationSidebarButtons.swift in Sources */,
 				20A40C892D72AEE600A9D9A9 /* SlideStudioExportOptionsView.swift in Sources */,
 				201A1A932CDB8109001E9BA9 /* Extension+Collection.swift in Sources */,
 				20571F772CBD6005004F3344 /* SettingsView.swift in Sources */,
@@ -1866,6 +1926,7 @@
 				20BF49D12D64A89300C329F8 /* ModelView.swift in Sources */,
 				20B97CE12CB001E0009A0A5D /* Conversation.swift in Sources */,
 				207A9F552CB8A96F00E727DE /* ExpertNavigationRowView.swift in Sources */,
+				201BB9962D8AF8AA00890EE6 /* CanvasView.swift in Sources */,
 				204AEDAD2D81AB86004028FF /* ServerModelSetupView.swift in Sources */,
 				20B97CE92CB007DF009A0A5D /* Resource.swift in Sources */,
 				20573F302CB5302C004C19FE /* TextOutputFormat.swift in Sources */,
@@ -1883,8 +1944,10 @@
 				20C62EC72D71403A00996566 /* SlideStudioQuickPromptsView.swift in Sources */,
 				20508BE32CF586CD003BC867 /* PendingMessage.swift in Sources */,
 				20E48C2B2CB560E30085E7D6 /* Extension+CGKeyCode.swift in Sources */,
+				201BB99E2D8B17C700890EE6 /* CanvasController.swift in Sources */,
 				208844312CDDE33F003BCB6F /* ModelListView.swift in Sources */,
 				2099BD9D2CB7B8E700E02732 /* Notifications.swift in Sources */,
+				201BB9A52D8BA0BC00890EE6 /* SnapshotCopyButton.swift in Sources */,
 				20C16E1B2D0EBE500001B3C9 /* IntroductionViewController.swift in Sources */,
 				20BF4A092D64C6ED00C329F8 /* SpecialtyView.swift in Sources */,
 				2099BDA12CB7EABC00E02732 /* ConversationQuickPromptsView.swift in Sources */,
@@ -1913,6 +1976,7 @@
 				204AE3B92CEAF57E0086B42D /* CommandManager.swift in Sources */,
 				201A1A9E2CDBBA25001E9BA9 /* MarkdownLineChartView.swift in Sources */,
 				200FBFF32CB66B8300A92A74 /* ServerHealth.swift in Sources */,
+				201BB9C72D8BDCA800890EE6 /* SnapshotTextEditor.swift in Sources */,
 				2099BDB22CB828A500E02732 /* PopoverButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
