@@ -54,15 +54,6 @@ struct MessagesView: View {
 				}
 			}
 		}
-		.toolbar {
-			ToolbarItemGroup(
-				placement: .primaryAction
-			) {
-				MessageShareMenu(
-					messagesView: self.messagesView
-				)
-			}
-		}
 	}
 	
 	var messagesView: some View {

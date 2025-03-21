@@ -8,15 +8,7 @@
 import FSKit_macOS
 import SwiftUI
 
-struct MessageShareMenu<Content: View>: View {
-	
-	init(
-		messagesView: Content
-	) {
-		self.messagesView = messagesView
-	}
-	
-	var messagesView: Content
+struct MessageShareMenu: View {
 	
 	@Environment(\.colorScheme) var colorScheme
 	

@@ -85,13 +85,6 @@ struct ServerModelSettingsView: View {
 				TextField("", text: $serverEndpoint.animation(.linear))
 					.textFieldStyle(.roundedBorder)
 					.frame(maxWidth: 250)
-					.onChange(of: serverEndpoint) {
-						withAnimation(.linear) {
-							if !self.endpointUrlIsValid {
-								self.useServer = false
-							}
-						}
-					}
 				if !self.endpointUrlIsValid {
 					Text("Endpoint is not valid")
 						.font(.callout)

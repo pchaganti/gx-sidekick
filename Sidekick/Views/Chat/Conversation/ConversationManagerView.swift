@@ -12,6 +12,8 @@ struct ConversationManagerView: View {
 	
 	@Environment(\.appearsActive) var appearsActive
 	
+	@AppStorage("remoteModelName") private var serverModelName: String = InferenceSettings.serverModelName
+	
 	@StateObject private var model: Model = .shared
 	@StateObject private var canvasController: CanvasController = .init()
 	
@@ -64,7 +66,7 @@ struct ConversationManagerView: View {
 		}
 		.navigationTitle("")
 		.toolbar {
-			ToolbarItem(placement: .navigation) {
+			ToolbarItemGroup(placement: .navigation) {
 				Text(navTitle)
 					.font(.title3)
 					.bold()
@@ -98,6 +100,18 @@ struct ConversationManagerView: View {
 				}
 				// Button to toggle canvas
 				canvasToggle
+				// Reduce large gaps
+				HStack(
+					spacing: 0
+				) {
+					// Menu to share conversation
+					MessageShareMenu()
+					// Menu to select model
+					ModelNameMenu(
+						modelTypes: ModelNameMenu.ModelType.allCases,
+						serverModelName: self.$serverModelName
+					)
+				}
 			}
 		}
 		.if(selectedExpert != nil) { view in
@@ -235,7 +249,7 @@ struct ConversationManagerView: View {
 	
 	var contextFullWarning: some View {
 		PopoverButton {
-			Label("Context Full", systemImage: "brain.fill")
+			Label("Context Full", systemImage: "tray.full")
 				.foregroundStyle(.red)
 		} content: {
 			Text("The AI model's context is full and may forget earlier chat history. Start a new conversation to clear context.")

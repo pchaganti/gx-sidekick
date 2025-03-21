@@ -48,13 +48,11 @@ public class Model: ObservableObject {
 	
 	/// Task where `llama-server` is launched
 	private var startupTask: Task<Void, Never>?
-	
+
 	/// Static constant for the global ``Model`` object
 	static public let shared: Model = .init(
 		systemPrompt: InferenceSettings.systemPrompt
 	)
-	
-	
 	
 	/// Property for the system prompt given to the LLM
 	private var systemPrompt: String

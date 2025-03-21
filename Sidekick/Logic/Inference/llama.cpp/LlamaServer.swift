@@ -63,9 +63,9 @@ public actor LlamaServer {
 	private var process: Process = Process()
 	
 	/// A `Bool` representing whether the remote server is accessible
-	var wasRemoteServerAccessible: Bool = false
+	public var wasRemoteServerAccessible: Bool = false
 	/// A `Date` representing when the remote server was less checked
-	var lastRemoteServerCheck: Date = .distantPast
+	private var lastRemoteServerCheck: Date = .distantPast
 	
 	/// Function to set system prompt
 	/// - Parameter systemPrompt: The system prompt, of type `String`

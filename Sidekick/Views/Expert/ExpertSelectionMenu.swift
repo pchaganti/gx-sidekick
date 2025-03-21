@@ -174,7 +174,3 @@ struct ExpertSelectionMenu: View {
 	}
 	
 }
-
-//#Preview {
-//    ExpertSelectionMenu()
-//}

@@ -80,9 +80,6 @@
         }
       }
     },
-    "Add Custom Model" : {
-
-    },
     "Add Expert" : {
       "localizations" : {
         "zh-Hans" : {
@@ -929,6 +926,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "图表制作"
+          }
+        }
+      }
+    },
+    "Disable Server" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "禁用服务器"
+          }
+        }
+      }
+    },
+    "Disable Speculative Decoding" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "禁用推测解码"
           }
         }
       }
@@ -2064,6 +2081,16 @@
         }
       }
     },
+    "Manage Custom Models" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "管理自定义模型"
+          }
+        }
+      }
+    },
     "Manage Experts" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2090,6 +2117,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "有丝分裂"
+          }
+        }
+      }
+    },
+    "Model" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模型"
           }
         }
       }
