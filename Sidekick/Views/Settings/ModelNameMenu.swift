@@ -89,6 +89,8 @@ struct ModelNameMenu: View {
 	
 	var localModelsList: some View {
 		Group {
+			Text("Local Models")
+				.bold()
 			ForEach(modelManager.models, id: \.name) { model in
 				LocalModelButton(
 					modelFile: model
@@ -100,6 +102,8 @@ struct ModelNameMenu: View {
 	
 	var localSpeculativeModelsList: some View {
 		Group {
+			Text("Speculative Decoding Models")
+				.bold()
 			ForEach(modelManager.models, id: \.name) { model in
 				LocalModelButton(
 					modelFile: model,
@@ -130,6 +134,8 @@ struct ModelNameMenu: View {
 	
 	var remoteModelsList: some View {
 		Group {
+			Text("Remote Models")
+				.bold()
 			// Show API & custom models
 			ForEach(
 				(remoteModelNames + customModelNames).sorted(),

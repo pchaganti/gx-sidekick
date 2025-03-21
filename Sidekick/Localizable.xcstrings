@@ -935,7 +935,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "禁用服务器"
+            "value" : "禁用服务器模型"
           }
         }
       }
@@ -2041,6 +2041,16 @@
         }
       }
     },
+    "Local Models" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本地模型"
+          }
+        }
+      }
+    },
     "Low Memory" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2593,6 +2603,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "远端模型名称"
+          }
+        }
+      }
+    },
+    "Remote Models" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "远端模型"
           }
         }
       }
@@ -3207,6 +3227,16 @@
         }
       }
     },
+    "Speculative Decoding Models" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "推测性解码模型"
+          }
+        }
+      }
+    },
     "Stats for Nerds" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3422,7 +3452,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sidekick 既找不到AI 模型，又无法连接到服务器。请在“设置”中验证本地和远程模型是否配置正确。"
+            "value" : "Sidekick 既找不到AI 模型，又无法连接到服务器。请在“设置”中验证本地和远端模型是否配置正确。"
           }
         }
       }
