@@ -154,6 +154,11 @@ public actor LlamaServer {
 			url: modelsEndpoint
 		)
 		request.httpMethod = "GET"
+		request.setValue(
+			"Bearer \(InferenceSettings.inferenceApiKey)",
+			forHTTPHeaderField: "Authorization"
+		)
+		request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 		let urlSession: URLSession = URLSession.shared
 		urlSession.configuration.waitsForConnectivity = false
 		urlSession.configuration.timeoutIntervalForRequest = 2
@@ -173,7 +178,7 @@ public actor LlamaServer {
 		)
 		let models: [String] = (response?.data ?? []).map({ $0.id })
 		Self.logger.info("Fetched \(models.count, privacy: .public) models from endpoint '\(modelsEndpoint.absoluteString, privacy: .public)'")
-		return models
+		return models.sorted()
 	}
 	
 	/// Function to start a monitor process that will terminate the server when our app dies

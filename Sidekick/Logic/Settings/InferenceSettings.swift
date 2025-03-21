@@ -144,9 +144,6 @@ Current date & time: \(Date.now.formatted(date: .long, time: .shortened))
 	/// A `String` containing the endpoint's url
 	public static var endpoint: String {
 		get {
-			if !useServer {
-				return Self.defaultEndpoint
-			}
 			guard let endpoint = UserDefaults.standard.string(
 				forKey: "endpoint"
 			) else {
@@ -205,6 +202,22 @@ Current date & time: \(Date.now.formatted(date: .long, time: .shortened))
 		set {
 			// Save
 			UserDefaults.standard.set(newValue, forKey: "serverWorkerModelName")
+		}
+	}
+	
+	/// A array of `[String]` representing the names of custom models
+	public static var customModelNames: [String] {
+		get {
+			guard let customModelNames: [String] = UserDefaults.standard.array(
+				forKey: "customModelNames"
+			) as? [String] else {
+				return []
+			}
+			return customModelNames
+		}
+		set {
+			// Save
+			UserDefaults.standard.set(newValue, forKey: "customModelNames")
 		}
 	}
 	

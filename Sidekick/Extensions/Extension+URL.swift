@@ -70,9 +70,11 @@ public extension URL {
 			// Create a URL session with a data task
 			let (_, response) = try await URLSession.shared.data(from: self)
 			// Check if the response is an HTTPURLResponse and has a status code in the 200-299 range
-			if let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) {
+			if let httpResponse = response as? HTTPURLResponse,
+				(200...299).contains(httpResponse.statusCode) {
 				return true
 			} else {
+				print("Failed to get HTTP response")
 				return false
 			}
 		} catch {

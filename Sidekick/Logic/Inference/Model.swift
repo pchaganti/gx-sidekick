@@ -54,6 +54,8 @@ public class Model: ObservableObject {
 		systemPrompt: InferenceSettings.systemPrompt
 	)
 	
+	
+	
 	/// Property for the system prompt given to the LLM
 	private var systemPrompt: String
 	

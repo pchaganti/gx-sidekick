@@ -12,6 +12,9 @@ struct ServerModelNameEditor: View {
 	@AppStorage("endpoint") private var serverEndpoint: String = InferenceSettings.endpoint
 	@Binding var serverModelName: String
 	
+	@State private var customModelNames: [String] = InferenceSettings.customModelNames
+	@State private var isAddingCustomModel: Bool = false
+
 	var modelType: ModelType
 	
 	var showModelList: Bool {
@@ -56,18 +59,7 @@ struct ServerModelNameEditor: View {
 		HStack(alignment: .center) {
 			description
 			Spacer()
-			VStack(
-				alignment: .trailing
-			) {
-				if !showModelList {
-					TextField("", text: self.$serverModelName)
-						.focused(self.$isFocused)
-						.textFieldStyle(.roundedBorder)
-						.frame(maxWidth: 250)
-				} else {
-					modelList
-				}
-			}
+			modelList
 		}
 		.task {
 			await self.refreshModelNames()
@@ -76,6 +68,14 @@ struct ServerModelNameEditor: View {
 			Task { @MainActor in
 				await self.refreshModelNames()
 			}
+		}
+		.sheet(
+			isPresented: self.$isAddingCustomModel
+		) {
+			CustomModelsEditor(
+				customModelNames: self.$customModelNames,
+				isPresented: self.$isAddingCustomModel
+			)
 		}
 	}
 	
@@ -90,20 +90,158 @@ struct ServerModelNameEditor: View {
 	}
 	
 	var modelList: some View {
-		Picker(
-			selection: $serverModelName
-		) {
-			ForEach(modelNames, id: \.self) { modelName in
-				Text(modelName)
-					.tag(modelName)
+		Menu {
+			Group {
+				// Show API models
+				ForEach(modelNames, id: \.self) { modelName in
+					Button {
+						self.serverModelName = modelName
+					} label: {
+						Text(modelName)
+					}
+				}
+				Divider()
+				// Show custom models
+				ForEach(customModelNames, id: \.self) { modelName in
+					Button {
+						self.serverModelName = modelName
+					} label: {
+						Text(modelName)
+					}
+				}
+				Divider()
+				Button {
+					self.isAddingCustomModel = true
+				} label: {
+					Text("Add Custom Model")
+				}
 			}
+		} label: {
+			Text(self.serverModelName)
 		}
-		.pickerStyle(.menu)
-		.frame(maxWidth: 250)
+		.frame(maxWidth: 150)
 	}
 	
 	private func refreshModelNames() async {
 		self.modelNames = await LlamaServer.getAvailableModels()
+	}
+	
+	struct CustomModelsEditor: View {
+		
+		@Binding var customModelNames: [String]
+		@Binding var isPresented: Bool
+		
+		var body: some View {
+			VStack(
+				alignment: .leading
+			) {
+				List(
+					self.$customModelNames,
+					id: \.self
+				) { modelName in
+					HStack {
+						CustomModelsEditorField(modelName: modelName)
+						Spacer()
+						Button {
+							// Remove from list
+							withAnimation(.linear) {
+								self.customModelNames = self.customModelNames.filter { name in
+									return name != modelName.wrappedValue
+								}
+							}
+						} label: {
+							Label("Delete", systemImage: "trash")
+								.foregroundStyle(.red)
+								.labelStyle(.iconOnly)
+						}
+						.buttonStyle(.plain)
+					}
+				}
+				.frame(minHeight: 200, maxHeight: 300)
+				Divider()
+				HStack {
+					Spacer()
+					addButton
+					doneButton
+				}
+				.controlSize(.large)
+				.padding([.bottom, .trailing], 12)
+			}
+			.onAppear {
+				print("Redrew editor")
+			}
+			.onDisappear {
+				withAnimation(.linear) {
+					// Filter and save
+					self.filterAndSaveModels()
+				}
+			}
+		}
+		
+		var addButton: some View {
+			Button {
+				// Add
+				withAnimation(.linear) {
+					self.customModelNames.append("")
+				}
+			} label: {
+				Text("Add")
+			}
+		}
+		
+		var doneButton: some View {
+			Button {
+				// Filter and save
+				self.filterAndSaveModels()
+				// Hide sheet
+				self.isPresented.toggle()
+			} label: {
+				Text("Done")
+			}
+			.keyboardShortcut(.defaultAction)
+		}
+		
+		/// Function to filter out blank model names
+		private func filterAndSaveModels() {
+			// Keep unique names
+			self.customModelNames = Array(Set(self.customModelNames)).sorted()
+			// Filter out blank model names
+			self.customModelNames = self.customModelNames.filter { name in
+				return !name.isEmpty
+			}
+			// Save
+			InferenceSettings.customModelNames = self.customModelNames
+		}
+		
+		struct CustomModelsEditorField: View {
+			
+			init(modelName: Binding<String>) {
+				self._modelName = modelName
+				self.name = modelName.wrappedValue
+			}
+			
+			@Binding var modelName: String
+			@State private var name: String
+			@FocusState	private var isFocused: Bool
+			
+			var body: some View {
+				TextField("", text: self.$name)
+					.focused(self.$isFocused)
+					.textFieldStyle(.plain)
+					.onChange(of: isFocused) {
+						if isFocused {
+							name = modelName
+						} else {
+							modelName = name
+						}
+					}
+					.onSubmit {
+						modelName = name
+					}
+			}
+			
+		}
+		
 	}
 	
 }
