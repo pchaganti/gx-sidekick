@@ -485,6 +485,7 @@ public class Model: ObservableObject {
 			return
 		}
 		await self.llama.interrupt()
+		self.status = .ready
 	}
 	
 	/// An enum indicating the status of the server
@@ -494,6 +495,8 @@ public class Model: ObservableObject {
 		case cold
 		/// The inference server is warming up
 		case coldProcessing
+		/// The inference server is currently processing a prompt
+		case processing
 		/// The system is searching in the selected profile's resources.
 		case querying
 		/// The system is generating a title
@@ -504,8 +507,6 @@ public class Model: ObservableObject {
 		case usingInterpreter
 		/// The inference server is awaiting a prompt
 		case ready
-		/// The inference server is currently processing a prompt
-		case processing
 		
 		/// A `Bool` representing if the server is at work
 		public var isWorking: Bool {

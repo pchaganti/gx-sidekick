@@ -60,7 +60,7 @@ struct MessageContentView: View {
 	
 	@ViewBuilder
 	private func markdownView(_ text: String) -> some View {
-		Markdown(text)
+		Markdown(MarkdownContent(text))
 			.markdownTheme(.gitHub)
 			.markdownCodeSyntaxHighlighter(.splash(theme: self.theme))
 			.markdownImageProvider(
@@ -76,7 +76,7 @@ struct MessageContentView: View {
 	
 	private func updateCachedMarkdown(_ newText: String) {
 		self.cachedMarkdown = AnyView(
-			Markdown(newText)
+			Markdown(MarkdownContent(newText))
 				.markdownTheme(.gitHub)
 				.markdownCodeSyntaxHighlighter(.splash(theme: self.theme))
 				.markdownImageProvider(

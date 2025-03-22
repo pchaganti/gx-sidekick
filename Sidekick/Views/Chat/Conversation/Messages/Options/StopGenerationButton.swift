@@ -10,11 +10,11 @@ import SwiftUIX
 
 struct StopGenerationButton: View {
 	
-	@EnvironmentObject private var model: Model
+	var action: () -> Void
 	
     var body: some View {
 		Button {
-			self.stopGeneration()
+			self.action()
 		} label: {
 			Image(systemName: "stop.circle")
 				.imageScale(.medium)
@@ -29,14 +29,4 @@ struct StopGenerationButton: View {
 		.buttonStyle(.plain)
     }
 	
-	private func stopGeneration() {
-		Task.detached { @MainActor in
-			await self.model.interrupt()
-		}
-	}
-	
 }
-
-//#Preview {
-//    StopGenerationButton()
-//}

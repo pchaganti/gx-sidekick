@@ -102,7 +102,7 @@ struct ModelNameMenu: View {
 	
 	var localSpeculativeModelsList: some View {
 		Group {
-			Text("Speculative Decoding Models")
+			Text("Draft Models")
 				.bold()
 			ForEach(modelManager.models, id: \.name) { model in
 				LocalModelButton(
@@ -164,9 +164,9 @@ struct ModelNameMenu: View {
 					)
 				} label: {
 					if InferenceSettings.useServer {
-						Text("Disable Server")
+						Text("Disable Remote Model")
 					} else {
-						Text("Use Server")
+						Text("Use Remote Model")
 					}
 				}
 			}

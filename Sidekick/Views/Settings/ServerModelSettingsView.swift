@@ -47,7 +47,7 @@ struct ServerModelSettingsView: View {
 	var useServerToggle: some View {
 		HStack(alignment: .top) {
 			VStack(alignment: .leading) {
-				Text("Use Server")
+				Text("Use Remote Model")
 					.font(.title3)
 					.bold()
 				Text("Controls whether a server is used for inference when it is available.")

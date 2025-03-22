@@ -29,29 +29,28 @@ public class Accessibility {
 	/// Function to get the currently selected text
 	public func getSelectedText() -> String? {
 		// Try getting text via Accessibility API
-		if let text = getSelectedTextAX(), text.count > 1  {
+		if let text = self.getSelectedTextAX(), text.count > 1  {
 			return text
 		}
 		// Try getting text via copy
-		return getSelectedTextViaCopy()
+		return self.getSelectedTextViaCopy()
 	}
 	
 	/// Function to get the selected text via the accessibility API
 	private func getSelectedTextAX() -> String? {
 		let systemWideElement = AXUIElementCreateSystemWide()
-		
 		var focusedApp: AnyObject?
 		var error = AXUIElementCopyAttributeValue(systemWideElement, kAXFocusedApplicationAttribute as CFString, &focusedApp)
 		guard error == .success, let focusedAppElement = focusedApp as! AXUIElement? else { return nil }
-		
+		print("Got focused app")
 		var focusedUIElement: AnyObject?
 		error = AXUIElementCopyAttributeValue(focusedAppElement, kAXFocusedUIElementAttribute as CFString, &focusedUIElement)
 		guard error == .success, let focusedElement = focusedUIElement as! AXUIElement? else { return nil }
-		
+		print("Got focused element")
 		var selectedTextValue: AnyObject?
 		error = AXUIElementCopyAttributeValue(focusedElement, kAXSelectedTextAttribute as CFString, &selectedTextValue)
 		guard error == .success, let selectedText = selectedTextValue as? String else { return nil }
-		
+		print("Got selected text")
 		return selectedText
 	}
 	
@@ -65,11 +64,9 @@ public class Accessibility {
 		pasteboard.clearContents()
 		var attempts = 0
 		var newContent: String?
-		
 		while attempts < retryAttempts && newContent == nil {
 			self.simulateCopyKeyPress()
 			usleep(100000)
-			
 			newContent = pasteboard.string(forType: .string)
 			if let newContent = newContent, !newContent.isEmpty {
 				break
@@ -111,14 +108,20 @@ public class Accessibility {
 	/// - Parameter string: The string typed into the app in the foreground
 	public func simulateTyping(
 		for string: String
-	) {
+	) -> Bool {
 		let source = CGEventSource(stateID: .combinedSessionState)
 		let utf16Chars = Array(string.utf16)
 		// Type characters one by one
-		utf16Chars.forEach { uniChar in
+		for uniChar in utf16Chars {
+			// Exit if escape key is down or if a mouse button is down
+			if CGKeyCode.kVK_Escape.isPressed {
+				return false
+			} else if NSEvent.pressedMouseButtons != 0 {
+				return false
+			}
+			// Else, type
 			var uniChar = uniChar
 			if uniChar == 0x000A {
-				
 				if let shiftDown = CGEvent(
 					keyboardEventSource: source,
 					virtualKey: CGKeyCode(0x38),
@@ -126,7 +129,6 @@ public class Accessibility {
 				) {
 					shiftDown.post(tap: .cghidEventTap)
 				}
-				
 				// Simulate pressing and releasing the Return key
 				if let eventDown = CGEvent(
 					keyboardEventSource: source,
@@ -142,12 +144,10 @@ public class Accessibility {
 					Thread.sleep(forTimeInterval: 0.005)
 					eventUp.post(tap: .cghidEventTap)
 				}
-				
 				// Simulate releasing the Shift key
 				if let shiftUp = CGEvent(keyboardEventSource: source, virtualKey: CGKeyCode(0x38), keyDown: false) {
 					shiftUp.post(tap: .cghidEventTap)
 				}
-				
 			} else {
 				// Handle other characters as before
 				if let eventDown = CGEvent(
@@ -174,6 +174,7 @@ public class Accessibility {
 				}
 			}
 		}
+		return true
 	}
 	
 	/// Function to automatically paste text into an app

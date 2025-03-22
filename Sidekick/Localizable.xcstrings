@@ -930,12 +930,12 @@
         }
       }
     },
-    "Disable Server" : {
+    "Disable Remote Model" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "禁用服务器模型"
+            "value" : "禁用远端模型"
           }
         }
       }
@@ -1036,6 +1036,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "正在下载 %@"
+          }
+        }
+      }
+    },
+    "Draft Model: %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "推测性解码模型：%@"
+          }
+        }
+      }
+    },
+    "Draft Models" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "推测性解码模型"
           }
         }
       }
@@ -3217,26 +3237,6 @@
         }
       }
     },
-    "Speculative Decoding Model: %@" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "推测性解码模型：%@"
-          }
-        }
-      }
-    },
-    "Speculative Decoding Models" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "推测性解码模型"
-          }
-        }
-      }
-    },
     "Stats for Nerds" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3767,12 +3767,12 @@
         }
       }
     },
-    "Use Server" : {
+    "Use Remote Model" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "使用服务器"
+            "value" : "使用远端模型"
           }
         }
       }

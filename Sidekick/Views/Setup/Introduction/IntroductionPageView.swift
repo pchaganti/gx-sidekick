@@ -22,7 +22,7 @@ struct IntroductionPageView: View {
 				.font(.title)
 				.bold()
 				.padding(.bottom, 10)
-			Markdown(content.description)
+			Markdown(MarkdownContent(content.description))
 				.font(.title2)
 		}
 		.frame(maxHeight: 400)

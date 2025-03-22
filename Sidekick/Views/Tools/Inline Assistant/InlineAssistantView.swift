@@ -113,6 +113,8 @@ struct InlineAssistantView: View {
 		)
 		// Process completion
 		Task.detached { @MainActor in
+			// Initialize stop variable
+			var didExit: Bool = false
 			// Get response
 			let _ = try await self.model.listenThinkRespond(
 				messages: [
@@ -121,16 +123,24 @@ struct InlineAssistantView: View {
 				],
 				mode: .default,
 				handleResponseUpdate: { pendingMessage, partialResponse in
-					self.handleResponseUpdate(
-						pendingMessage: pendingMessage,
-						partialResponse: partialResponse
-					)
+					if !didExit {
+						didExit = !self.handleResponseUpdate(
+							pendingMessage: pendingMessage,
+							partialResponse: partialResponse
+						)
+					} else {
+						Task { @MainActor in
+							await self.model.interrupt()
+						}
+					}
 				},
 				handleResponseFinish: { fullMessage, pendingMessage, _ in
-					self.handleResponseFinish(
-						fullMessage: fullMessage,
-						pendingMessage: pendingMessage
-					)
+					if !didExit {
+						self.handleResponseFinish(
+							fullMessage: fullMessage,
+							pendingMessage: pendingMessage
+						)
+					}
 				}
 			)
 		}
@@ -139,11 +149,11 @@ struct InlineAssistantView: View {
 	private func handleResponseUpdate(
 		pendingMessage: String,
 		partialResponse: String
-	) {
+	) -> Bool {
 		if self.inlineAssistantController.isShowing {
 			self.inlineAssistantController.toggleInlineAssistant()
 		}
-		Accessibility.shared.simulateTyping(for: partialResponse)
+		return Accessibility.shared.simulateTyping(for: partialResponse)
 	}
 	
 	private func handleResponseFinish(
@@ -157,7 +167,7 @@ struct InlineAssistantView: View {
 		)
 		// If delta is reasonable
 		if delta.count < 40 {
-			Accessibility.shared.simulateTyping(for: delta)
+			let _ = Accessibility.shared.simulateTyping(for: delta)
 		}
 	}
 

@@ -48,7 +48,7 @@ struct SourceRowView: View {
 	
 	var body: some View {
 		VStack {
-			Markdown(source.text)
+			Markdown(MarkdownContent(source.text))
 				.markdownTheme(.gitHub)
 				.markdownCodeSyntaxHighlighter(
 					.splash(theme: self.theme)

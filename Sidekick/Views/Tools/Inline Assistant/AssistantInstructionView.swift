@@ -29,7 +29,7 @@ Use the default keyboard shortcut `Command 􀆔 + Control 􀆍 + I` to toggle th
 				}
 				Spacer()
 			}
-			Markdown(self.instruction)
+			Markdown(MarkdownContent(self.instruction))
 		}
 		.padding(8)
 		.padding(.bottom, 10)

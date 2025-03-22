@@ -58,7 +58,7 @@ struct ConversationManagerView: View {
 		)
 	}
 	
-    var body: some View {
+	var body: some View {
 		NavigationSplitView {
 			conversationList
 		} detail: {
@@ -66,7 +66,9 @@ struct ConversationManagerView: View {
 		}
 		.navigationTitle("")
 		.toolbar {
-			ToolbarItemGroup(placement: .navigation) {
+			ToolbarItem(
+				placement: .navigation
+			) {
 				Text(navTitle)
 					.font(.title3)
 					.bold()
@@ -74,7 +76,9 @@ struct ConversationManagerView: View {
 					.opacity(0.9)
 					.contentTransition(.numericText())
 			}
-			ToolbarItemGroup(placement: .principal) {
+			ToolbarItemGroup(
+				placement: .principal
+			) {
 				ExpertSelectionMenu()
 					.onChange(
 						of: conversationState.selectedExpertId
@@ -89,7 +93,6 @@ struct ConversationManagerView: View {
 			ToolbarItemGroup(
 				placement: .primaryAction
 			) {
-				Spacer()
 				// Warning message for insufficient memory
 				if InferenceSettings.lowUnifiedMemory {
 					lowMemoryWarning

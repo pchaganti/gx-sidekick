@@ -20,6 +20,7 @@ struct MessageView: View {
 		self.canEdit = canEdit
 	}
 	
+	@EnvironmentObject private var model: Model
 	@EnvironmentObject private var conversationManager: ConversationManager
 	@EnvironmentObject private var conversationState: ConversationState
 	@EnvironmentObject private var promptController: PromptController
@@ -202,12 +203,14 @@ struct MessageView: View {
 	}
 	
 	var stopButton: some View {
-		StopGenerationButton()
-			.menuStyle(.circle)
-			.foregroundStyle(.secondary)
-			.disabled(!isGenerating)
-			.padding(0)
-			.padding(.vertical, 2)
+		StopGenerationButton {
+			self.stopGeneration()
+		}
+		.menuStyle(.circle)
+		.foregroundStyle(.secondary)
+		.disabled(!isGenerating)
+		.padding(0)
+		.padding(.vertical, 2)
 	}
 	
 	var copyButton: some View {
@@ -248,14 +251,29 @@ struct MessageView: View {
 		}
 	}
 	
+	/// Function to stop generation
+	private func stopGeneration() {
+		Task.detached { @MainActor in
+			await self.model.interrupt()
+			self.retryGeneration()
+		}
+	}
+	
 	private func retryGeneration() {
 		// Get conversation
 		guard var conversation = selectedConversation else { return }
-		guard let prevMessage = conversation.messages.dropLast().last else { return }
+		// Get last user sent message
+		var count: Int = 1
+		var prevMessage: Message? = conversation.messages.last
+		while prevMessage?.getSender() != .user {
+			prevMessage = conversation.messages.dropLast(count).last
+			count += 1
+		}
+		guard prevMessage != nil else { return }
 		// Set prompt
-		self.promptController.prompt = prevMessage.text
+		self.promptController.prompt = prevMessage?.text ?? ""
 		// Delete messages
-		conversation.messages = conversation.messages.dropLast(2)
+		conversation.messages = conversation.messages.dropLast(count)
 		conversationManager.update(conversation)
 	}
 	

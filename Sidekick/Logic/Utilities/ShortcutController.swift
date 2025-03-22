@@ -32,7 +32,6 @@ public class ShortcutController {
 		KeyboardShortcuts.onKeyDown(
 			for: name
 		) {
-			// Display annotation windows
 			show()
 		}
 	}

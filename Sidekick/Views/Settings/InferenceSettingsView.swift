@@ -123,7 +123,7 @@ struct InferenceSettingsView: View {
 		HStack(alignment: .top) {
 			VStack(alignment: .leading) {
 				Text(
-	 "Speculative Decoding Model: \(specularDecodingModelUrl?.lastPathComponent ?? String(localized: "No Model Selected"))"
+	 "Draft Model: \(specularDecodingModelUrl?.lastPathComponent ?? String(localized: "No Model Selected"))"
 				)
 				.font(.title3)
 				.bold()
