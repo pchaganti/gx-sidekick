@@ -136,12 +136,25 @@ struct PromptInputField: View {
 	
 	/// Function to send to bot
 	private func submit() {
+		// Get previous content
+		guard var conversation = selectedConversation else { return }
+		// Check if last message was successful
+		if let prevMessage: Message = conversation.messages.last {
+			// If unsuccessful
+			let wasAssistant: Bool = prevMessage.getSender() == .assistant
+			if prevMessage.text.isEmpty && prevMessage.imageUrl == nil && wasAssistant {
+				// Tell user to retry
+				Dialogs.showAlert(
+					title: String(localized: "Retry"),
+					message: String(localized: "Please retry your previous message.")
+				)
+				return
+			}
+		}
 		// Make sound
 		if Settings.playSoundEffects {
 			SoundEffects.send.play()
 		}
-		// Get previous content
-		guard var conversation = selectedConversation else { return }
 		// Get prompt expected result type
 		let resultType: PromptAnalyzer.ResultType = PromptAnalyzer.analyzePrompt(
 			promptController.prompt

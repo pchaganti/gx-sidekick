@@ -93,6 +93,7 @@ struct ConversationManagerView: View {
 			ToolbarItemGroup(
 				placement: .primaryAction
 			) {
+				Spacer()
 				// Warning message for insufficient memory
 				if InferenceSettings.lowUnifiedMemory {
 					lowMemoryWarning
