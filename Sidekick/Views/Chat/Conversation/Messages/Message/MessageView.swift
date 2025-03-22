@@ -86,6 +86,11 @@ struct MessageView: View {
 					MessageCopyButton(
 						message: message
 					)
+					if message.getSender() == .assistant {
+						MessageReadAloudButton(
+							message: message
+						)
+					}
 					MessageOptionsView(
 						isEditing: $isEditing,
 						message: message,
@@ -206,8 +211,6 @@ struct MessageView: View {
 		StopGenerationButton {
 			self.stopGeneration()
 		}
-		.menuStyle(.circle)
-		.foregroundStyle(.secondary)
 		.disabled(!isGenerating)
 		.padding(0)
 		.padding(.vertical, 2)

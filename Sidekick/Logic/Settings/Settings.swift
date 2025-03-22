@@ -156,6 +156,22 @@ public class Settings {
 		}
 	}
 	
+	/// A `String` representing the ID of the selected voice
+	public static var voiceId: String {
+		get {
+			guard let voiceId = UserDefaults.standard.string(
+				forKey: "voiceId"
+			) else {
+				return ""
+			}
+			return voiceId
+		}
+		set {
+			// Save
+			UserDefaults.standard.set(newValue, forKey: "voiceId")
+		}
+	}
+	
 	/// Computed property for whether sound effects are played
 	static var playSoundEffects: Bool {
 		get {

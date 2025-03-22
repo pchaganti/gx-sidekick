@@ -120,6 +120,9 @@
 		204FC5CA2CC9C8B400CA1DB4 /* TemporaryResourcesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204FC5C92CC9C8B400CA1DB4 /* TemporaryResourcesView.swift */; };
 		20508BE32CF586CD003BC867 /* PendingMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20508BE22CF586CD003BC867 /* PendingMessage.swift */; };
 		2051FED72D8D7474001B1E0D /* ModelNameMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2051FED62D8D7474001B1E0D /* ModelNameMenu.swift */; };
+		2051FED92D8E51FA001B1E0D /* SpeechService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2051FED82D8E51FA001B1E0D /* SpeechService.swift */; };
+		2051FEDB2D8E53CB001B1E0D /* Extension+AVSpeechSynthesisVoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2051FEDA2D8E53CB001B1E0D /* Extension+AVSpeechSynthesisVoice.swift */; };
+		2051FEDD2D8E5601001B1E0D /* MessageReadAloudButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2051FEDC2D8E5601001B1E0D /* MessageReadAloudButton.swift */; };
 		20571F6F2CBCE8F7004F3344 /* LengthyTasksController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20571F6E2CBCE8F7004F3344 /* LengthyTasksController.swift */; };
 		20571F722CBCEDD8004F3344 /* LengthyTasksList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20571F712CBCEDD8004F3344 /* LengthyTasksList.swift */; };
 		20571F742CBCEE90004F3344 /* LengthyTasksToolbarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20571F732CBCEE90004F3344 /* LengthyTasksToolbarButton.swift */; };
@@ -477,6 +480,9 @@
 		204FC5C92CC9C8B400CA1DB4 /* TemporaryResourcesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryResourcesView.swift; sourceTree = "<group>"; };
 		20508BE22CF586CD003BC867 /* PendingMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingMessage.swift; sourceTree = "<group>"; };
 		2051FED62D8D7474001B1E0D /* ModelNameMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelNameMenu.swift; sourceTree = "<group>"; };
+		2051FED82D8E51FA001B1E0D /* SpeechService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechService.swift; sourceTree = "<group>"; };
+		2051FEDA2D8E53CB001B1E0D /* Extension+AVSpeechSynthesisVoice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+AVSpeechSynthesisVoice.swift"; sourceTree = "<group>"; };
+		2051FEDC2D8E5601001B1E0D /* MessageReadAloudButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageReadAloudButton.swift; sourceTree = "<group>"; };
 		20571F6E2CBCE8F7004F3344 /* LengthyTasksController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LengthyTasksController.swift; sourceTree = "<group>"; };
 		20571F712CBCEDD8004F3344 /* LengthyTasksList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LengthyTasksList.swift; sourceTree = "<group>"; };
 		20571F732CBCEE90004F3344 /* LengthyTasksToolbarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LengthyTasksToolbarButton.swift; sourceTree = "<group>"; };
@@ -755,6 +761,7 @@
 				2031B9912CEAE3CC00627D53 /* Extension+NSWindow.swift */,
 				205E3F292D87288400128D67 /* Extension+NSAttributedString.swift */,
 				205E3F2B2D872E4200128D67 /* Extension+NSMutableAttributedString.swift */,
+				2051FEDA2D8E53CB001B1E0D /* Extension+AVSpeechSynthesisVoice.swift */,
 			);
 			path = AppKit;
 			sourceTree = "<group>";
@@ -1071,6 +1078,7 @@
 				209370752D6AB36900E1AF73 /* ContainerRefactorer.swift */,
 				200363282D769AC700770391 /* JavaScriptRunner.swift */,
 				207E5EF02D6FDEBE00A8F6FA /* Tools */,
+				2051FED82D8E51FA001B1E0D /* SpeechService.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1542,6 +1550,7 @@
 				20AA5A532CC89AAA003E5519 /* MessageBackgroundView.swift */,
 				20CEA75D2CE309F10070579B /* MessageOptionsView.swift */,
 				2025E67E2D894DFC00289E3F /* MessageCopyButton.swift */,
+				2051FEDC2D8E5601001B1E0D /* MessageReadAloudButton.swift */,
 				206FBB202D54B40700A045FF /* MessageReasoningProcessView.swift */,
 			);
 			path = Message;
@@ -1805,6 +1814,7 @@
 				20B97CCE2CAFEC37009A0A5D /* Settings.swift in Sources */,
 				20AA5A522CC87032003E5519 /* Tips.swift in Sources */,
 				20573F232CB52E79004C19FE /* Extension+Theme.swift in Sources */,
+				2051FEDD2D8E5601001B1E0D /* MessageReadAloudButton.swift in Sources */,
 				208BA3572D680B1800E0C657 /* DiagrammerQuickPromptsView.swift in Sources */,
 				200FBFF52CB66C0000A92A74 /* LlamaServerError.swift in Sources */,
 				20A96F3C2CDDA9D400E31D53 /* ModelManager.swift in Sources */,
@@ -1928,6 +1938,7 @@
 				204FC5CA2CC9C8B400CA1DB4 /* TemporaryResourcesView.swift in Sources */,
 				20C2210B2CC4B88F00A99796 /* SourcesButton.swift in Sources */,
 				2034876B2D67202D00A88DA4 /* AssistantInstructionView.swift in Sources */,
+				2051FEDB2D8E53CB001B1E0D /* Extension+AVSpeechSynthesisVoice.swift in Sources */,
 				20D65DD52CC0CC6C0052D826 /* StopGenerationButton.swift in Sources */,
 				204AEDA92D8170D0004028FF /* ServerModelNameEditor.swift in Sources */,
 				2083AEA42D8853E40049C139 /* EmailSelectionView.swift in Sources */,
@@ -1958,6 +1969,7 @@
 				201BB9A52D8BA0BC00890EE6 /* SnapshotCopyButton.swift in Sources */,
 				20C16E1B2D0EBE500001B3C9 /* IntroductionViewController.swift in Sources */,
 				20BF4A092D64C6ED00C329F8 /* SpecialtyView.swift in Sources */,
+				2051FED92D8E51FA001B1E0D /* SpeechService.swift in Sources */,
 				2099BDA12CB7EABC00E02732 /* ConversationQuickPromptsView.swift in Sources */,
 				2040DAD42D85BFD000A8F6BD /* QuickPromptButton.swift in Sources */,
 				20B9E60E2CB1414100BA0AD2 /* DockMenuCommands.swift in Sources */,

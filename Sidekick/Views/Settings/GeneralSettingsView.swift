@@ -5,15 +5,20 @@
 //  Created by Bean John on 10/14/24.
 //
 
-import SwiftUI
 import KeyboardShortcuts
+import MarkdownUI
+import SwiftUI
 
 struct GeneralSettingsView: View {
 	
 	@AppStorage("username") private var username: String = NSFullUserName()
+	
 	@AppStorage("useCodeInterpreter") private var useCodeInterpreter: Bool = true
 	@AppStorage("playSoundEffects") private var playSoundEffects: Bool = false
 	@AppStorage("generateConversationTitles") private var generateConversationTitles: Bool = true
+	@AppStorage("voiceId") private var voiceId: String = ""
+	
+	@StateObject private var speechSynthesizer: SpeechSynthesizer = .shared
 	
     var body: some View {
 		Form {
@@ -26,6 +31,7 @@ struct GeneralSettingsView: View {
 				soundEffects
 				generateConversationTitlesToggle
 				codeInterpreter
+				voice
 			} header: {
 				Text("Chat")
 			}
@@ -36,6 +42,9 @@ struct GeneralSettingsView: View {
 			}
 		}
 		.formStyle(.grouped)
+		.task {
+			SpeechSynthesizer.shared.fetchVoices()
+		}
     }
 	
 	var usernameEditor: some View {
@@ -96,6 +105,30 @@ struct GeneralSettingsView: View {
 			Spacer()
 			Toggle("", isOn: $useCodeInterpreter)
 				.toggleStyle(.switch)
+		}
+	}
+	
+	var voice: some View {
+		HStack(alignment: .top) {
+			VStack(alignment: .leading) {
+				Text("Voice")
+					.font(.title3)
+					.bold()
+				Text("The voice used to read responses aloud. Download voices in [System Settings -> Accessibility](x-apple.systempreferences:com.apple.preference.universalaccess?SpeakableItems) -> Spoken Content -> System Voice -> Manage Voices.")
+					.font(.caption)
+			}
+			Spacer()
+			Picker(
+				selection: self.$voiceId
+			) {
+				ForEach(
+					speechSynthesizer.voices,
+					id: \.self.identifier
+				) { voice in
+					Text(voice.prettyName)
+						.tag(voice.identifier)
+				}
+			}
 		}
 	}
 	
