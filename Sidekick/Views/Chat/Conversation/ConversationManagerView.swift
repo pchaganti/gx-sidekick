@@ -103,18 +103,13 @@ struct ConversationManagerView: View {
 				}
 				// Button to toggle canvas
 				canvasToggle
-				// Reduce large gaps
-				HStack(
-					spacing: 0
-				) {
-					// Menu to share conversation
-					MessageShareMenu()
-					// Menu to select model
-					ModelNameMenu(
-						modelTypes: ModelNameMenu.ModelType.allCases,
-						serverModelName: self.$serverModelName
-					)
-				}
+				// Menu to share conversation
+				MessageShareMenu()
+				// Menu to select model
+				ModelNameMenu(
+					modelTypes: ModelNameMenu.ModelType.allCases,
+					serverModelName: self.$serverModelName
+				)
 			}
 		}
 		.if(selectedExpert != nil) { view in
