@@ -15,7 +15,7 @@ struct GeneralSettingsView: View {
 	
 	@AppStorage("useCodeInterpreter") private var useCodeInterpreter: Bool = true
 	@AppStorage("playSoundEffects") private var playSoundEffects: Bool = false
-	@AppStorage("generateConversationTitles") private var generateConversationTitles: Bool = true
+	@AppStorage("generateConversationTitles") private var generateConversationTitles: Bool = InferenceSettings.useServer && !InferenceSettings.serverWorkerModelName.isEmpty
 	@AppStorage("voiceId") private var voiceId: String = ""
 	
 	@StateObject private var speechSynthesizer: SpeechSynthesizer = .shared

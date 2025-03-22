@@ -303,6 +303,8 @@ public actor LlamaServer {
 		if self.monitor.isRunning {
 			self.monitor.terminate()
 		}
+		self.process = Process()
+		self.monitor = Process()
 	}
 	
 	/// Function showing if connection was interrupted

@@ -69,9 +69,7 @@ public class Model: ObservableObject {
 	/// Function to refresh `llama-server` with the newly selected model
 	public func refreshModel() async {
 		// Restart server if needed
-		if !InferenceSettings.useServer {
-			await self.llama.stopServer()
-		}
+		await self.llama.stopServer()
 		self.llama = LlamaServer(
 			systemPrompt: self.systemPrompt
 		)

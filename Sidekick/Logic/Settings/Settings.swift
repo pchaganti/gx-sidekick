@@ -144,8 +144,9 @@ public class Settings {
 		get {
 			// Set default
 			if !UserDefaults.standard.exists(key: "generateConversationTitles") {
-				// Default to true
-				Self.generateConversationTitles = true
+				// Use default
+				Self.generateConversationTitles = InferenceSettings.useServer && !InferenceSettings.serverWorkerModelName.isEmpty
+				
 			}
 			return UserDefaults.standard.bool(
 				forKey: "generateConversationTitles"
