@@ -46,6 +46,7 @@ extension Binding where Value == Expert {
 	}
 	
 	/// Function to update a resource index
+	@MainActor
 	func update() async {
 		await wrappedValue.resources.updateResourcesIndex(
 			expertName: self.wrappedValue.name

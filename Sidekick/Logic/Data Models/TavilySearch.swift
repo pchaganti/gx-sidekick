@@ -5,7 +5,6 @@
 //  Created by Bean John on 10/16/24.
 //
 
-import ExtractKit_macOS
 import Foundation
 import OSLog
 

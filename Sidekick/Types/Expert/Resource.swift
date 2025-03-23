@@ -189,7 +189,10 @@ public struct Resource: Identifiable, Codable, Hashable, Sendable {
 	/// - Parameters:
 	///   - resourcesDirUrl: The URL of the resources's index directory
 	///   - similarityIndex: The similarity index of indexed items of type ``SimilarityIndex``
-	private func saveIndex(resourcesDirUrl: URL, similarityIndex: SimilarityIndex) {
+	private func saveIndex(
+		resourcesDirUrl: URL,
+		similarityIndex: SimilarityIndex
+	) {
 		do {
 			let _ = try similarityIndex.saveIndex(
 				toDirectory: self.getIndexDirUrl(
@@ -204,13 +207,19 @@ public struct Resource: Identifiable, Codable, Hashable, Sendable {
 	
 	/// Function that re-scans the file, then saves the updated similarity index
 	/// - Parameter resourcesDirUrl: The URL of the resources's index directory
+	@MainActor
 	public mutating func updateIndex(
 		resourcesDirUrl: URL
 	) async {
+		// Log
+		let url: URL = self.url
+		Self.logger.info("Updating index for file \"\(url, privacy: .public)\"")
 		// Create directory if needed
 		if !self.getIndexDirUrl(
 			resourcesDirUrl: resourcesDirUrl
 		).fileExists {
+			let loggerMsg: String = "Creating directory for item \"\(self.url)\""
+			Self.logger.info("\(loggerMsg, privacy: .public)")
 			self.createDirectory(resourcesDirUrl: resourcesDirUrl)
 		}
 		// Exit if needed
@@ -230,37 +239,51 @@ public struct Resource: Identifiable, Codable, Hashable, Sendable {
 			text = try await ExtractKit.shared.extractText(
 				url: self.url
 			)
+			Self.logger.info("Extracted text from \"\(url, privacy: .public)\"")
 		} catch {
-			print("Failed to extract text from \"\(self.url)\": \(error)")
+			Self.logger.error("Failed to extract text from \"\(url, privacy: .public)\": \(error, privacy: .public)")
 			return
 		}
 		// Split text
 		let splitTexts: [String] = text.groupIntoChunks(
 			maxChunkSize: 1024
 		)
+		Self.logger.info("Chunked text for resource \"\(url, privacy: .public)\"")
 		// Init new similarity index
 		let similarityIndex: SimilarityIndex = await SimilarityIndex(
 			model: DistilbertEmbeddings(),
 			metric: DotProduct()
 		)
+		Self.logger.info("Initialized index for resource \"\(url, privacy: .public)\"")
 		// Add texts to index
-		for (index, splitText) in splitTexts.enumerated() {
-			let indexItemId: String = "\(id.uuidString)_\(index)"
-			let urlStr: String = self.url.isWebURL ? self.url.absoluteString : self.url.posixPath
-			await similarityIndex.addItem(
-				id: indexItemId,
-				text: splitText,
-				metadata: [
-					"source": "\(urlStr)",
-					"itemIndex": "\(index)"
-				]
-			)
+		await withTaskGroup(
+			of: Void.self
+		) { group in
+			// Capture properties needed inside the closure
+			let idString = self.id.uuidString
+			let urlStrValue = self.url.isWebURL ? self.url.absoluteString : self.url.posixPath
+			// Add items to index
+			for (index, splitText) in splitTexts.enumerated() {
+				group.addTask {
+					let indexItemId = "\(idString)_\(index)"
+					await similarityIndex.addItem(
+						id: indexItemId,
+						text: splitText,
+						metadata: [
+							"source": urlStrValue,
+							"itemIndex": "\(index)"
+						]
+					)
+				}
+			}
 		}
+		Self.logger.info("Added items to index for resource \"\(url, privacy: .public)\"")
 		// Save index
 		self.saveIndex(
 			resourcesDirUrl: resourcesDirUrl,
 			similarityIndex: similarityIndex
 		)
+		Self.logger.info("Saved index for resource \"\(url, privacy: .public)\"")
 		// Switch flag
 		self.indexState.finishIndex()
 		// Show file updated

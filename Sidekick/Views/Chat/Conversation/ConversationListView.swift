@@ -29,18 +29,5 @@ struct ConversationNavigationListView: View {
 			max: 225
 		)
 	}
-
-	private func delete(_ conversationId: UUID) {
-		let _ = Dialogs.showConfirmation(
-			title: String(localized: "Delete Conversation"),
-			message: String(localized: "Are you sure you want to delete this conversation?")
-		) {
-			if let conversation = conversationManager.getConversation(
-				id: conversationId
-			) {
-				conversationManager.delete(conversation)
-			}
-		}
-	}
 	
 }

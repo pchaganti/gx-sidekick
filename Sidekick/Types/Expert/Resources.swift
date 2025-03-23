@@ -81,7 +81,7 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 			of: Void.self
 		) { group in
 			for index in resources.indices {
-				group.addTask {
+				group.addTask { @MainActor in
 					await resources[index].updateIndex(
 						resourcesDirUrl: indexUrl
 					)
@@ -89,6 +89,8 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 			}
 		}
 		self.resources = resources
+		// Log
+		Self.logger.notice("Updated index for resources in expert \"\(expertName, privacy: .public)\"")
 		// Record removed resources
 		let removedResources: [Resource] = self.resources.filter({
 			!(!$0.wasMoved || $0.isWebResource)
@@ -105,7 +107,9 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 			}
 		}
 		// Remove resources
-		self.resources = self.resources.filter({ !$0.wasMoved || $0.isWebResource })
+		await MainActor.run {
+			self.resources = self.resources.filter({ !$0.wasMoved || $0.isWebResource })
+		}
 		// Remove from task list
 		Task { @MainActor in
 			withAnimation(.linear(duration: 0.3)) {

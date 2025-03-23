@@ -271,6 +271,7 @@
       }
     },
     "Are you sure you want to delete this conversation?" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -872,6 +873,7 @@
       }
     },
     "Delete Conversation" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {

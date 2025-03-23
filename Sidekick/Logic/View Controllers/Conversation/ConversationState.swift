@@ -48,11 +48,6 @@ public class ConversationState: ObservableObject {
 				self.selectedConversationId = recentConversationId
 			}
 		}
-		// Send notification
-		NotificationCenter.default.post(
-			name: Notifications.newConversation.name,
-			object: nil
-		)
 	}
 	
 }
