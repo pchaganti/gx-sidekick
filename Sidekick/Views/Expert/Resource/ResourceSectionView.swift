@@ -113,7 +113,7 @@ struct ResourceSectionView: View {
 	}
 	
 	var persistResources: some View {
-		HStack(alignment: .top) {
+		HStack(alignment: .center) {
 			VStack(alignment: .leading) {
 				Text("Persist Resources")
 					.font(.title3)

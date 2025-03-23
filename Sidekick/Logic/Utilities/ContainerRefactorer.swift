@@ -109,9 +109,10 @@ public class ContainerRefactorer {
 				.appendingPathComponent(directoryName)
 			// Continue if destination URL exists
 			if destinationURL.fileExists { continue }
-			didRelocate = true
 			// If directory exists at source, move
 			if sourceURL.fileExists {
+				// Set didRelocate to true
+				didRelocate = true
 				FileManager.moveItem(
 					from: sourceURL,
 					to: destinationURL,

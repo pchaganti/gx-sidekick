@@ -57,6 +57,11 @@ struct ConversationNameEditor: View {
 		}
 		// Delete
 		self.conversationManager.delete(conversation)
+		// If no conversations, create new
+		if self.conversationManager.conversations.isEmpty {
+			// Create new conversation
+			self.conversationState.newConversation()
+		}
 	}
 	
 	private func toggleEditingMode() {

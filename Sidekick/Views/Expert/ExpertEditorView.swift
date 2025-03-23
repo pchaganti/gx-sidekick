@@ -152,7 +152,7 @@ struct ExpertEditorView: View {
 	var webSearch: some View {
 		Group {
 			if RetrievalSettings.canUseWebSearch {
-				HStack(alignment: .top) {
+				HStack(alignment: .center) {
 					VStack(alignment: .leading) {
 						Text("Use Web Search")
 							.font(.title3)

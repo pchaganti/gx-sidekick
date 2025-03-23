@@ -38,9 +38,10 @@ struct ContentView: View {
 		) {
 			ExpertManagerView()
 				.frame(
-					minWidth: 250,
-					maxWidth: 300,
-					minHeight: 450
+					minWidth: 300,
+					maxWidth: 450,
+					minHeight: 450,
+					maxHeight: 700
 				)
 		}
 		.environmentObject(conversationState)

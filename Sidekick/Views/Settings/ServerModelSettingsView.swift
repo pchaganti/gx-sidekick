@@ -31,14 +31,17 @@ struct ServerModelSettingsView: View {
 			useServerToggle
 			serverEndpointEditor
 			inferenceApiKeyEditor
-			ServerModelNameEditor(
-				serverModelName: $serverModelName,
-				modelType: .regular
-			)
-			ServerModelNameEditor(
-				serverModelName: $serverWorkerModelName,
-				modelType: .worker
-			)
+			Group {
+				ServerModelNameEditor(
+					serverModelName: $serverModelName,
+					modelType: .regular
+				)
+				ServerModelNameEditor(
+					serverModelName: $serverWorkerModelName,
+					modelType: .worker
+				)
+			}
+			.id(inferenceApiKey)
 		} header: {
 			Text("Server")
 		}

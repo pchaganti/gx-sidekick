@@ -42,6 +42,7 @@ struct ModelNameMenu: View {
 					customModelNames: self.$customModelNames,
 					isPresented: self.$isManagingCustomModel
 				)
+				.frame(minWidth: 400)
 			}
 			.task {
 				await self.refreshModelNames()
@@ -146,14 +147,14 @@ struct ModelNameMenu: View {
 					modelName: modelName
 				)
 			}
-			.disabled(!InferenceSettings.useServer)
+			.disabled(!InferenceSettings.useServer && modelTypes != [.remote])
 			Divider()
 			Button {
 				self.isManagingCustomModel = true
 			} label: {
 				Text("Manage Custom Models")
 			}
-			.disabled(!InferenceSettings.useServer)
+			.disabled(!InferenceSettings.useServer && modelTypes != [.remote])
 			if self.modelTypes != [.remote] {
 				Button {
 					InferenceSettings.useServer.toggle()

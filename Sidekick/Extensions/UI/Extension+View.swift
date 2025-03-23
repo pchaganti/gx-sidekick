@@ -17,6 +17,22 @@ extension View {
 		}
 	}
 	
+	@ViewBuilder public func ifSequoia<Content: View>(content: (Self) -> Content) -> some View {
+		if #available(macOS 15, *) {
+			content(self)
+		} else {
+			self
+		}
+	}
+	
+	@ViewBuilder public func ifSonoma<Content: View>(content: (Self) -> Content) -> some View {
+		if #available(macOS 15, *) {
+			self
+		} else {
+			content(self)
+		}
+	}
+	
 	public func glow(color: Color = .red, radius: CGFloat = 20, blurred: Bool = true) -> some View {
 		return Group {
 			if blurred {

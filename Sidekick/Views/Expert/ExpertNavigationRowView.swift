@@ -33,6 +33,7 @@ struct ExpertNavigationRowView: View {
 		.background {
 			RoundedRectangle(cornerRadius: 7)
 				.fill(self.expert.color)
+				.shadow(radius: 1.0)
 		}
 		.onHover { hovering in
 			self.isHovering = hovering

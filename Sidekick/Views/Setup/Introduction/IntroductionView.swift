@@ -37,6 +37,7 @@ struct IntroductionView: View {
 			switch introductionViewController.page {
 				case .done:
 					done
+						.frame(maxHeight: 400)
 				default:
 					IntroductionPageView(
 						content: introductionViewController.page.content!

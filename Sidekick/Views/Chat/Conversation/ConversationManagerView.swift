@@ -10,7 +10,8 @@ import SwiftUI
 
 struct ConversationManagerView: View {
 	
-	@Environment(\.appearsActive) var appearsActive
+	@Environment(\.appearsActive) private var appearsActive
+	@Environment(\.colorScheme) private var colorScheme
 	
 	@AppStorage("remoteModelName") private var serverModelName: String = InferenceSettings.serverModelName
 	
@@ -31,9 +32,21 @@ struct ConversationManagerView: View {
 	
 	var toolbarTextColor: Color {
 		guard let luminance = selectedExpert?.color.luminance else {
-			return .accentColor
+			return .primary
 		}
 		return (luminance > 0.5) ? .toolbarText : .white
+	}
+	
+	var isDarkColor: Bool {
+		guard let luminance = selectedExpert?.color.luminance else { return false }
+		return luminance < 0.5
+	}
+	
+	var isInverted: Bool {
+		guard let luminance = selectedExpert?.color.luminance else { return false }
+		let darkModeResult: Bool = luminance > 0.5
+		let lightModeResult: Bool = luminance < 0.5
+		return colorScheme == .dark ? darkModeResult : lightModeResult
 	}
 	
 	var selectedConversation: Conversation? {
@@ -43,13 +56,6 @@ struct ConversationManagerView: View {
 		return self.conversationManager.getConversation(
 			id: selectedConversationId
 		)
-	}
-	
-	var contextIsFull: Bool {
-		// Get token count
-		guard let tokenCount = selectedConversation?.tokenCount else { return false }
-		// Return whether context length is full
-		return tokenCount > InferenceSettings.contextLength
 	}
 	
 	var navTitle: String {
@@ -73,7 +79,6 @@ struct ConversationManagerView: View {
 					.font(.title3)
 					.bold()
 					.foregroundStyle(toolbarTextColor)
-					.opacity(0.9)
 					.contentTransition(.numericText())
 			}
 			ToolbarItemGroup(
@@ -94,23 +99,21 @@ struct ConversationManagerView: View {
 				placement: .primaryAction
 			) {
 				Spacer()
-				// Warning message for insufficient memory
-				if InferenceSettings.lowUnifiedMemory {
-					lowMemoryWarning
-				}
-				// Warning message for full context
-				if self.contextIsFull {
-					contextFullWarning
-				}
 				// Button to toggle canvas
 				canvasToggle
 				// Menu to share conversation
 				MessageShareMenu()
+					.if(isInverted) { view in
+						view.colorInvert()
+					}
 				// Menu to select model
 				ModelNameMenu(
 					modelTypes: ModelNameMenu.ModelType.allCases,
 					serverModelName: self.$serverModelName
 				)
+				.if(isInverted) { view in
+					view.colorInvert()
+				}
 			}
 		}
 		.if(selectedExpert != nil) { view in
@@ -236,31 +239,21 @@ struct ConversationManagerView: View {
 		}
 	}
 	
-	var lowMemoryWarning: some View {
-		PopoverButton {
-			Label("Low Memory", systemImage: "exclamationmark.triangle.fill")
-				.foregroundStyle(.yellow)
-		} content: {
-			Text("Your system has only \(InferenceSettings.unifiedMemorySize) GB of RAM, which may not be sufficient for running an AI model. \nPlease save progress in all open apps, and close memory hogging applications **in case a system crash occurs.**")
-				.padding()
-		}
-	}
-	
-	var contextFullWarning: some View {
-		PopoverButton {
-			Label("Context Full", systemImage: "tray.full")
-				.foregroundStyle(.red)
-		} content: {
-			Text("The AI model's context is full and may forget earlier chat history. Start a new conversation to clear context.")
-				.padding()
-		}
-	}
-	
 	var canvasToggle: some View {
 		Button {
 			self.toggleCanvas()
 		} label: {
 			Label("Canvas", systemImage: "cube")
+				.ifSequoia { view in
+					view
+						.foregroundStyle(toolbarTextColor)
+						.if(isDarkColor) { view in
+							view.opacity(0.5)
+						}
+						.if(!isDarkColor) { view in
+							view.opacity(0.7)
+						}
+				}
 		}
 		.disabled(
 			self.selectedConversation == nil || !(self.selectedConversation?.messages.contains { message in

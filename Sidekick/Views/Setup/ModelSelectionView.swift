@@ -124,6 +124,7 @@ struct ModelSelectionView: View {
 				isPresented: $showServerModelSetup,
 				selectedModel: $selectedModel
 			)
+			.frame(maxWidth: 500)
 		}
 	}
 	

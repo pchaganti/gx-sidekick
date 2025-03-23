@@ -23,11 +23,14 @@ struct ExpertSelectionMenu: View {
 	
 	var isInverted: Bool {
 		guard let luminance = selectedExpert?.color.luminance else { return false }
-		let forDark: Bool = (luminance > 0.5) && (colorScheme == .dark)
-		let forLight: Bool = (luminance < 0.5) && (
-			colorScheme == .light
-		)
-		return forDark || forLight
+		let darkModeSetting: Bool = luminance > 0.5
+		let lightModeSetting: Bool = luminance < 0.5
+		return colorScheme == .dark ? darkModeSetting : lightModeSetting
+	}
+	
+	var isDarkColor: Bool {
+		guard let luminance = selectedExpert?.color.luminance else { return false }
+		return luminance < 0.5
 	}
 	
 	var inactiveExperts: [Expert] {
@@ -42,6 +45,9 @@ struct ExpertSelectionMenu: View {
 		Group {
 			prevButton
 			menu
+				.if(isInverted) { view in
+					view.colorInvert()
+				}
 				.popoverTip(
 					createExpertsTip,
 					arrowEdge: .top
@@ -51,9 +57,6 @@ struct ExpertSelectionMenu: View {
 				}
 			nextButton
 		}
-		.if(isInverted) { view in
-			view.colorInvert()
-		}
 	}
 	
 	var prevButton: some View {
@@ -61,6 +64,11 @@ struct ExpertSelectionMenu: View {
 			switchToPrevExpert()
 		} label: {
 			Label("Previous Expert", systemImage: "chevron.backward")
+				.ifSequoia { view in
+					view.foregroundStyle(
+						isDarkColor ? .white.opacity(0.5) : .black.opacity(0.7)
+					)
+				}
 		}
 		.keyboardShortcut("[", modifiers: [.command])
 	}
@@ -70,6 +78,11 @@ struct ExpertSelectionMenu: View {
 			switchToNextExpert()
 		} label: {
 			Label("Next Expert", systemImage: "chevron.forward")
+				.ifSequoia { view in
+					view.foregroundStyle(
+						isDarkColor ? .white.opacity(0.5) : .black.opacity(0.7)
+					)
+				}
 		}
 		.keyboardShortcut("]", modifiers: [.command])
 	}
@@ -130,11 +143,11 @@ struct ExpertSelectionMenu: View {
 							.opacity(0.5)
 					}
 			} else {
-				HStack {
-					Image(systemName: self.selectedExpert!.symbolName)
-					Text(self.selectedExpert!.name)
-						.bold()
-				}
+				Label(
+					self.selectedExpert!.name,
+					systemImage: self.selectedExpert!.symbolName
+				)
+				.labelStyle(.titleAndIcon)
 			}
 		}
 	}

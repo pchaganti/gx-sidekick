@@ -41,13 +41,6 @@ struct MessageShareMenu: View {
 		)
 	}
 	
-	var isInverted: Bool {
-		guard let luminance = selectedExpert?.color.luminance else { return false }
-		let darkModeResult: Bool = luminance > 0.5
-		let lightModeResult: Bool = !(luminance > 0.5)
-		return colorScheme == .dark ? darkModeResult : lightModeResult
-	}
-	
 	var isGenerating: Bool {
 		let statusPass: Bool = self.model.status.isWorking
 		let conversationPass: Bool = self.selectedConversation?.id == self.model.sentConversationId
@@ -62,9 +55,6 @@ struct MessageShareMenu: View {
 			Label("Export", systemImage: "square.and.arrow.up")
 		}
 		.disabled(isGenerating || self.messages.isEmpty)
-		.if(isInverted) { view in
-			view.colorInvert()
-		}
 	}
 	
 	var saveTextButton: some View {
