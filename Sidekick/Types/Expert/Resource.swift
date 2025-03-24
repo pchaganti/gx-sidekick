@@ -213,26 +213,30 @@ public struct Resource: Identifiable, Codable, Hashable, Sendable {
 	) async {
 		// Log
 		let url: URL = self.url
-		Self.logger.info("Updating index for file \"\(url, privacy: .public)\"")
+		Self.logger.info("Updating index for resource \"\(url, privacy: .public)\"")
 		// Create directory if needed
 		if !self.getIndexDirUrl(
 			resourcesDirUrl: resourcesDirUrl
 		).fileExists {
-			let loggerMsg: String = "Creating directory for item \"\(self.url)\""
+			let loggerMsg: String = "Creating directory for resource \"\(self.url)\""
 			Self.logger.info("\(loggerMsg, privacy: .public)")
 			self.createDirectory(resourcesDirUrl: resourcesDirUrl)
 		}
+		Self.logger.info("No directory needed for resource \"\(url, privacy: .public)\"")
 		// Exit if needed
 		if await !self.shouldUpdateIndex(
 			resourcesDirUrl: resourcesDirUrl
 		) {
-			let loggerMsg: String = "Skipping update for item \"\(self.url)\""
+			let loggerMsg: String = "Skipping update for resource \"\(self.url)\""
 			Self.logger.notice("\(loggerMsg, privacy: .public)")
 			return
 		}
 		// Else, start index
 		// Switch flag
-		self.indexState.startIndex()
+		await MainActor.run {
+			self.indexState.startIndex()
+		}
+		Self.logger.info("Starting index for resource \"\(url, privacy: .public)\"")
 		// Extract text from url
 		let text: String
 		do {
@@ -250,9 +254,11 @@ public struct Resource: Identifiable, Codable, Hashable, Sendable {
 		)
 		Self.logger.info("Chunked text for resource \"\(url, privacy: .public)\"")
 		// Init new similarity index
+		let embeddings: DistilbertEmbeddings = DistilbertEmbeddings()
+		let metric: DotProduct = DotProduct()
 		let similarityIndex: SimilarityIndex = await SimilarityIndex(
-			model: DistilbertEmbeddings(),
-			metric: DotProduct()
+			model: embeddings,
+			metric: metric
 		)
 		Self.logger.info("Initialized index for resource \"\(url, privacy: .public)\"")
 		// Add texts to index
@@ -285,17 +291,18 @@ public struct Resource: Identifiable, Codable, Hashable, Sendable {
 		)
 		Self.logger.info("Saved index for resource \"\(url, privacy: .public)\"")
 		// Switch flag
-		self.indexState.finishIndex()
+		await MainActor.run {
+			self.indexState.finishIndex()
+		}
 		// Show file updated
 		let loggerMsg: String = "Updated index for item \"\(self.url)\""
 		Self.logger.notice("\(loggerMsg, privacy: .public)")
-		// Record last index date
-		self.prevIndexDate = Date.now
 	}
 	
 	/// Function to check if update is appropriate
 	/// - Parameter resourcesDirUrl: The URL of the resources's index directory
 	/// - Returns: A Boolean value indicating if an update is needed
+	@MainActor
 	private mutating func shouldUpdateIndex(
 		resourcesDirUrl: URL
 	) async -> Bool {

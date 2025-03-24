@@ -106,34 +106,16 @@ struct ResourceRowView: View {
 	}
 	
 	var actions: some View {
-		HStack {
-			Button {
-				let result: Bool = NSWorkspace.shared.open(
-					resource.url
-				)
-				if !result {
-					let _ = Dialogs.showAlert(
-						title: String(localized: "Error"),
-						message: String(localized: "Failed to open \(resource.filename)")
-					)
-				}
-			} label: {
-				Label("Open", systemImage: "pip.exit")
-					.foregroundStyle(.primary)
-					.labelStyle(.iconOnly)
+		Button {
+			Task { @MainActor in
+				await remove()
 			}
-			.buttonStyle(PlainButtonStyle())
-			Button {
-				Task { @MainActor in
-					await remove()
-				}
-			} label: {
-				Label("Remove", systemImage: "trash")
-					.foregroundStyle(.red)
-					.labelStyle(.iconOnly)
-			}
-			.buttonStyle(PlainButtonStyle())
+		} label: {
+			Label("Remove", systemImage: "trash")
+				.foregroundStyle(.red)
+				.labelStyle(.iconOnly)
 		}
+		.buttonStyle(.plain)
 	}
 	
 	var showInFinder: some View {

@@ -149,6 +149,10 @@
 		205E3F282D8723AB00128D67 /* Highlightr in Frameworks */ = {isa = PBXBuildFile; productRef = 205E3F272D8723AB00128D67 /* Highlightr */; };
 		205E3F2A2D87288400128D67 /* Extension+NSAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205E3F292D87288400128D67 /* Extension+NSAttributedString.swift */; };
 		205E3F2C2D872E4200128D67 /* Extension+NSMutableAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205E3F2B2D872E4200128D67 /* Extension+NSMutableAttributedString.swift */; };
+		206435382D905D2300020CC0 /* SimilaritySearchKit in Frameworks */ = {isa = PBXBuildFile; productRef = 206435372D905D2300020CC0 /* SimilaritySearchKit */; };
+		2064353A2D905D2300020CC0 /* SimilaritySearchKitDistilbert in Frameworks */ = {isa = PBXBuildFile; productRef = 206435392D905D2300020CC0 /* SimilaritySearchKitDistilbert */; };
+		2064353D2D905DBB00020CC0 /* SimilaritySearchKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2064353C2D905DBB00020CC0 /* SimilaritySearchKit */; };
+		2064353F2D905DBB00020CC0 /* SimilaritySearchKitDistilbert in Frameworks */ = {isa = PBXBuildFile; productRef = 2064353E2D905DBB00020CC0 /* SimilaritySearchKitDistilbert */; };
 		206934902D5CC87E006619FD /* Credits.html in Resources */ = {isa = PBXBuildFile; fileRef = 2069348E2D5CC7FE006619FD /* Credits.html */; };
 		206934932D5CCDF1006619FD /* conversationExportTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 206934922D5CCDF1006619FD /* conversationExportTemplate.html */; };
 		206AB6122CF5F8390010B09A /* AttachmentSelectionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206AB6112CF5F8390010B09A /* AttachmentSelectionButton.swift */; };
@@ -204,8 +208,6 @@
 		20A40C892D72AEE600A9D9A9 /* SlideStudioExportOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A40C882D72AEE600A9D9A9 /* SlideStudioExportOptionsView.swift */; };
 		20A40CF92D73763500A9D9A9 /* Extension+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A40CF82D73763500A9D9A9 /* Extension+Date.swift */; };
 		20A7E8FC2D8304AB00223D47 /* HelpCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A7E8FB2D8304AB00223D47 /* HelpCommands.swift */; };
-		20A8B6572CB26E4800B756FD /* SimilaritySearchKit in Frameworks */ = {isa = PBXBuildFile; productRef = 20A8B6562CB26E4800B756FD /* SimilaritySearchKit */; };
-		20A8B6592CB26E4800B756FD /* SimilaritySearchKitDistilbert in Frameworks */ = {isa = PBXBuildFile; productRef = 20A8B6582CB26E4800B756FD /* SimilaritySearchKitDistilbert */; };
 		20A8B65B2CB2709100B756FD /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A8B65A2CB2709100B756FD /* Resources.swift */; };
 		20A8B65D2CB2829500B756FD /* ExpertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A8B65C2CB2829500B756FD /* ExpertManager.swift */; };
 		20A96F3C2CDDA9D400E31D53 /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A96F3B2CDDA9D400E31D53 /* ModelManager.swift */; };
@@ -640,21 +642,23 @@
 				204186772D81E304002A5D1C /* libggml-base.dylib in Frameworks */,
 				204186782D81E304002A5D1C /* libggml-rpc.dylib in Frameworks */,
 				204186732D81E304002A5D1C /* libggml-metal.dylib in Frameworks */,
+				2064353F2D905DBB00020CC0 /* SimilaritySearchKitDistilbert in Frameworks */,
 				204186762D81E304002A5D1C /* libllava_shared.dylib in Frameworks */,
 				204186792D81E304002A5D1C /* libllama.dylib in Frameworks */,
 				204186752D81E304002A5D1C /* libggml-cpu.dylib in Frameworks */,
 				20A40C832D718D4300A9D9A9 /* CodeEditorView in Frameworks */,
 				200FBFF12CB64CB400A92A74 /* EventSource in Frameworks */,
+				206435382D905D2300020CC0 /* SimilaritySearchKit in Frameworks */,
 				20F84B992D1CFED400F44990 /* DefaultModels in Frameworks */,
-				20A8B6592CB26E4800B756FD /* SimilaritySearchKitDistilbert in Frameworks */,
-				20A8B6572CB26E4800B756FD /* SimilaritySearchKit in Frameworks */,
 				207A9F532CB82D9600E727DE /* SymbolPicker in Frameworks */,
 				2031B9952CEAE66400627D53 /* KeyboardShortcuts in Frameworks */,
 				20A40C852D718D4300A9D9A9 /* LanguageSupport in Frameworks */,
 				205E3F282D8723AB00128D67 /* Highlightr in Frameworks */,
 				20B53D072D5B03B900D1AE79 /* Sparkle in Frameworks */,
 				208388DD2CBF4E8A00C2A9F8 /* SecureDefaults in Frameworks */,
+				2064353A2D905D2300020CC0 /* SimilaritySearchKitDistilbert in Frameworks */,
 				20CC0C2F2CE2401600A3BC40 /* ExtractKit-macOS in Frameworks */,
+				2064353D2D905DBB00020CC0 /* SimilaritySearchKit in Frameworks */,
 				20CB50382D828CB60064D460 /* LaTeXSwiftUI in Frameworks */,
 				20573F282CB52F84004C19FE /* Splash in Frameworks */,
 				200619BA2D678694001949EF /* WebViewKit in Frameworks */,
@@ -1589,8 +1593,6 @@
 			packageProductDependencies = (
 				20B97CA72CAFE830009A0A5D /* FSKit-macOS */,
 				20B97CC82CAFEBEA009A0A5D /* MarkdownUI */,
-				20A8B6562CB26E4800B756FD /* SimilaritySearchKit */,
-				20A8B6582CB26E4800B756FD /* SimilaritySearchKitDistilbert */,
 				20573F272CB52F84004C19FE /* Splash */,
 				20573F292CB52F84004C19FE /* SplashMarkdown */,
 				200FBFF02CB64CB400A92A74 /* EventSource */,
@@ -1606,6 +1608,10 @@
 				20A40C842D718D4300A9D9A9 /* LanguageSupport */,
 				20CB50372D828CB60064D460 /* LaTeXSwiftUI */,
 				205E3F272D8723AB00128D67 /* Highlightr */,
+				206435372D905D2300020CC0 /* SimilaritySearchKit */,
+				206435392D905D2300020CC0 /* SimilaritySearchKitDistilbert */,
+				2064353C2D905DBB00020CC0 /* SimilaritySearchKit */,
+				2064353E2D905DBB00020CC0 /* SimilaritySearchKitDistilbert */,
 			);
 			productName = Sidekick;
 			productReference = 200549732CAFA67B00A3DCF2 /* Sidekick.app */;
@@ -1709,7 +1715,6 @@
 			packageReferences = (
 				20B97CA62CAFE830009A0A5D /* XCRemoteSwiftPackageReference "FSKit-macOS" */,
 				20B97CC72CAFEBEA009A0A5D /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
-				20A8B6552CB26E4800B756FD /* XCRemoteSwiftPackageReference "similarity-search-kit" */,
 				20573F262CB52F84004C19FE /* XCRemoteSwiftPackageReference "Splash" */,
 				200FBFEF2CB64CB400A92A74 /* XCRemoteSwiftPackageReference "EventSource" */,
 				207A9F512CB82D9600E727DE /* XCRemoteSwiftPackageReference "SymbolPicker" */,
@@ -1723,6 +1728,7 @@
 				20A40C812D718D4300A9D9A9 /* XCRemoteSwiftPackageReference "CodeEditorView" */,
 				20CB50362D828CB60064D460 /* XCRemoteSwiftPackageReference "LaTeXSwiftUI" */,
 				205E3F262D8723AB00128D67 /* XCRemoteSwiftPackageReference "Highlightr" */,
+				2064353B2D905DBB00020CC0 /* XCRemoteSwiftPackageReference "similarity-search-kit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 200549742CAFA67B00A3DCF2 /* Products */;
@@ -2201,7 +2207,7 @@
 				CODE_SIGN_ENTITLEMENTS = Sidekick/Sidekick.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_ASSET_PATHS = "\"Sidekick/Preview Content\"";
 				DEVELOPMENT_TEAM = KM2C4ZAVPJ;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2222,7 +2228,7 @@
 					"$(PROJECT_DIR)/Sidekick/Logic/Inference/llama.cpp/build/bin",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.0.27;
+				MARKETING_VERSION = 0.0.28;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pattonium.Sidekick;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -2239,7 +2245,7 @@
 				CODE_SIGN_ENTITLEMENTS = Sidekick/Sidekick.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_ASSET_PATHS = "\"Sidekick/Preview Content\"";
 				DEVELOPMENT_TEAM = KM2C4ZAVPJ;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2261,7 +2267,7 @@
 					"$(PROJECT_DIR)/Sidekick/Logic/Inference/llama.cpp/build/bin",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.0.27;
+				MARKETING_VERSION = 0.0.28;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pattonium.Sidekick;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -2471,6 +2477,14 @@
 				minimumVersion = 2.2.1;
 			};
 		};
+		2064353B2D905DBB00020CC0 /* XCRemoteSwiftPackageReference "similarity-search-kit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ZachNagengast/similarity-search-kit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.15;
+			};
+		};
 		207A9F512CB82D9600E727DE /* XCRemoteSwiftPackageReference "SymbolPicker" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/xnth97/SymbolPicker";
@@ -2493,14 +2507,6 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 0.15.3;
-			};
-		};
-		20A8B6552CB26E4800B756FD /* XCRemoteSwiftPackageReference "similarity-search-kit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ZachNagengast/similarity-search-kit";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.0.15;
 			};
 		};
 		20B53D052D5B03B900D1AE79 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
@@ -2589,6 +2595,24 @@
 			package = 205E3F262D8723AB00128D67 /* XCRemoteSwiftPackageReference "Highlightr" */;
 			productName = Highlightr;
 		};
+		206435372D905D2300020CC0 /* SimilaritySearchKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SimilaritySearchKit;
+		};
+		206435392D905D2300020CC0 /* SimilaritySearchKitDistilbert */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SimilaritySearchKitDistilbert;
+		};
+		2064353C2D905DBB00020CC0 /* SimilaritySearchKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2064353B2D905DBB00020CC0 /* XCRemoteSwiftPackageReference "similarity-search-kit" */;
+			productName = SimilaritySearchKit;
+		};
+		2064353E2D905DBB00020CC0 /* SimilaritySearchKitDistilbert */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2064353B2D905DBB00020CC0 /* XCRemoteSwiftPackageReference "similarity-search-kit" */;
+			productName = SimilaritySearchKitDistilbert;
+		};
 		207A9F522CB82D9600E727DE /* SymbolPicker */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 207A9F512CB82D9600E727DE /* XCRemoteSwiftPackageReference "SymbolPicker" */;
@@ -2608,16 +2632,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 20A40C812D718D4300A9D9A9 /* XCRemoteSwiftPackageReference "CodeEditorView" */;
 			productName = LanguageSupport;
-		};
-		20A8B6562CB26E4800B756FD /* SimilaritySearchKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 20A8B6552CB26E4800B756FD /* XCRemoteSwiftPackageReference "similarity-search-kit" */;
-			productName = SimilaritySearchKit;
-		};
-		20A8B6582CB26E4800B756FD /* SimilaritySearchKitDistilbert */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 20A8B6552CB26E4800B756FD /* XCRemoteSwiftPackageReference "similarity-search-kit" */;
-			productName = SimilaritySearchKitDistilbert;
 		};
 		20B53D062D5B03B900D1AE79 /* Sparkle */ = {
 			isa = XCSwiftPackageProductDependency;

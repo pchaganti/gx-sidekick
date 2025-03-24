@@ -11,6 +11,7 @@ import SymbolPicker
 struct ExpertEditorView: View {
 	
 	@EnvironmentObject private var expertManager: ExpertManager
+	@EnvironmentObject private var lengthyTasksController: LengthyTasksController
 	
 	@Binding var expert: Expert
 	
@@ -18,6 +19,17 @@ struct ExpertEditorView: View {
 	@State private var systemPrompt: String = ""
 	
 	@Binding var isEditing: Bool
+	
+	var isUpdating: Bool {
+		let taskName: String = String(
+			localized: "Updating resource index for expert \"\(self.expert.name)\""
+		)
+		return lengthyTasksController.tasks
+			.map(\.name)
+			.contains(
+				taskName
+			)
+	}
 	
     var body: some View {
 		VStack {
@@ -90,6 +102,7 @@ struct ExpertEditorView: View {
 				Spacer()
 				TextField("", text: $expert.name)
 					.textFieldStyle(.plain)
+					.disabled(isUpdating)
 			}
 		}
 		.padding(.horizontal, 5)
@@ -124,6 +137,7 @@ struct ExpertEditorView: View {
 						selection: $expert.color,
 						supportsOpacity: false
 					)
+					.disabled(isUpdating)
 				}
 			}
 			.padding(.horizontal, 5)
@@ -146,6 +160,7 @@ struct ExpertEditorView: View {
 				Label("Change", systemImage: expert.symbolName)
 					.labelStyle(.titleAndIcon)
 			}
+			.disabled(isUpdating)
 		}
 	}
 	

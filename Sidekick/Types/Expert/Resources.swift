@@ -88,7 +88,9 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 				}
 			}
 		}
-		self.resources = resources
+		await MainActor.run {
+			self.resources = resources
+		}
 		// Log
 		Self.logger.notice("Updated index for resources in expert \"\(expertName, privacy: .public)\"")
 		// Record removed resources
@@ -111,7 +113,7 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
 			self.resources = self.resources.filter({ !$0.wasMoved || $0.isWebResource })
 		}
 		// Remove from task list
-		Task { @MainActor in
+		await MainActor.run {
 			withAnimation(.linear(duration: 0.3)) {
 				LengthyTasksController.shared.finishTask(
 					taskId: taskId
