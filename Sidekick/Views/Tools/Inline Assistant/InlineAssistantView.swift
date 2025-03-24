@@ -121,6 +121,7 @@ struct InlineAssistantView: View {
 					systemPromptMessage,
 					commandMessage
 				],
+				modelType: .worker,
 				mode: .default,
 				handleResponseUpdate: { pendingMessage, partialResponse in
 					if !didExit {
