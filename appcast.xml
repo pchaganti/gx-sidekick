@@ -3,6 +3,16 @@
     <channel>
         <title>Sidekick-beta</title>
 		<item>
+			<title>0.0.28</title>
+			<pubDate>Mon, 24 Mar 2025 11:42:42 +0800</pubDate>
+			<sparkle:version>16</sparkle:version>
+			<sparkle:shortVersionString>0.0.28</sparkle:shortVersionString>
+			<sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+			<enclosure url="https://github.com/johnbean393/Sidekick/releases/download/0.0.28/Sidekick-beta.0.0.28.dmg"
+			sparkle:edSignature="VB9pN6srcq0lGD9TokUuQT8aIs6qPsBvB4SGf4Bz8019P/kDd352pT8yhVUyE0+qLH2bqX+WI3II+Jo1KfitDg==" length="168982398"
+			type="application/octet-stream" />
+		</item>
+		<item>
 			<title>0.0.27</title>
 			<pubDate>Sat, 22 Mar 2025 23:50:00 +0800</pubDate>
 			<sparkle:version>15</sparkle:version>
