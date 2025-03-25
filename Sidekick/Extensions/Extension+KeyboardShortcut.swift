@@ -14,4 +14,12 @@ extension KeyboardShortcuts.Name {
 		"toggleInlineAssistant"
 	)
 	
+	static let acceptNextToken: KeyboardShortcuts.Name = .init(
+		"acceptNextToken"
+	)
+	
+	static let acceptAllTokens: KeyboardShortcuts.Name = .init(
+		"acceptAllTokens"
+	)
+	
 }

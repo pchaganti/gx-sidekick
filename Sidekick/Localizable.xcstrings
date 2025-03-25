@@ -50,6 +50,12 @@
         }
       }
     },
+    "Accept All Suggestions" : {
+
+    },
+    "Accept Next Word" : {
+
+    },
     "Add" : {
       "localizations" : {
         "zh-Hans" : {
@@ -270,17 +276,6 @@
         }
       }
     },
-    "Are you sure you want to delete this conversation?" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "您确定要删除此对话吗？"
-          }
-        }
-      }
-    },
     "Are you sure you want to delete this expert?" : {
       "localizations" : {
         "zh-Hans" : {
@@ -300,6 +295,9 @@
           }
         }
       }
+    },
+    "Automatically generate and suggest typing suggestions based on your text." : {
+
     },
     "Automatically generate conversation titles based on the first message in each conversation." : {
       "localizations" : {
@@ -471,6 +469,9 @@
         }
       }
     },
+    "Click the button below to download a completion model." : {
+
+    },
     "Click to view a resource referenced in the chatbot's response." : {
       "localizations" : {
         "zh-Hans" : {
@@ -501,6 +502,9 @@
         }
       }
     },
+    "Completions is now ready to use!" : {
+
+    },
     "Concise" : {
       "localizations" : {
         "zh-Hans" : {
@@ -527,17 +531,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "确认"
-          }
-        }
-      }
-    },
-    "Context Full" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "上下文已满"
           }
         }
       }
@@ -822,6 +815,16 @@
         }
       }
     },
+    "Default shortcuts can be modified in `Settings -> General`." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "快捷键可以在 `设置 -> 常规` 中被更改。"
+          }
+        }
+      }
+    },
     "Delete" : {
       "localizations" : {
         "zh-Hans" : {
@@ -868,17 +871,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "删除所有资料来源"
-          }
-        }
-      }
-    },
-    "Delete Conversation" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "删除对话"
           }
         }
       }
@@ -1963,16 +1955,6 @@
         }
       }
     },
-    "Inline Assistant" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "写作助手"
-          }
-        }
-      }
-    },
     "Inline Writing Assistant" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2070,17 +2052,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "本地模型"
-          }
-        }
-      }
-    },
-    "Low Memory" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "内存不足"
           }
         }
       }
@@ -2310,6 +2281,9 @@
           }
         }
       }
+    },
+    "Next" : {
+
     },
     "Next Expert" : {
       "localizations" : {
@@ -2560,6 +2534,12 @@
           }
         }
       }
+    },
+    "Press `Shift + Tab` to accept a suggested phrase" : {
+
+    },
+    "Press `Tab` to accept a suggested word" : {
+
     },
     "Previous Expert" : {
       "localizations" : {
@@ -3111,6 +3091,9 @@
         }
       }
     },
+    "Set Up" : {
+
+    },
     "Settings" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3191,12 +3174,12 @@
         }
       }
     },
-    "Sidekick's Inline Assistant is enabled by default.\n\nUse the default keyboard shortcut `Command 􀆔 + Control 􀆍 + I` to toggle the assistant. You can change this shortcut in `Settings -> General`." : {
+    "Sidekick's Inline Writing Assistant is enabled by default." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "已启用 Sidekick 的写作助手。\n\n使用默认键盘快捷键 Command 􀆔 + Control 􀆍 + I` 开启助手。快捷键可以在 `设置 -> 常规` 中被更改。"
+            "value" : "默认启用 Sidekick 的写作助手。"
           }
         }
       }
@@ -3421,17 +3404,6 @@
         }
       }
     },
-    "The AI model's context is full and may forget earlier chat history. Start a new conversation to clear context." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "AI模型的上下文已满，可能会忘记之前的聊天记录。请创建新的对话，以清空上下文。"
-          }
-        }
-      }
-    },
     "The endpoint on the server used for inference. This endpoint must be accessible from this device, and provide an OpenAI compatible API. (e.g. http://localhost:8000, where http://localhost:8000/v1/chat/completions is accessible)\n\nTo ensure privacy and security of your data, host your own server." : {
       "localizations" : {
         "zh-Hans" : {
@@ -3512,12 +3484,18 @@
         }
       }
     },
-    "The shortcut used to trigger and dismiss the inline writing assistant." : {
+    "The shortcut used to accept the full completion suggestion." : {
+
+    },
+    "The shortcut used to accept the next word in completion suggestions." : {
+
+    },
+    "The shortcut used to trigger and dismiss inline writing assistant commands." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "用于触发和关闭内联写作助手的快捷键。"
+            "value" : "用于触发和关闭内联写作助手命令的快捷键。"
           }
         }
       }
@@ -3752,6 +3730,9 @@
         }
       }
     },
+    "Use Completions" : {
+
+    },
     "Use Default" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3818,6 +3799,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "启用 Tavily 搜索"
+          }
+        }
+      }
+    },
+    "Use the default keyboard shortcut `Command 􀆔 + Control 􀆍 + I` to toggle commands." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用默认键盘快捷键 `Command 􀆔 + Control 􀆍 + I` 开启助手。"
+          }
+        }
+      }
+    },
+    "Use the default keyboard shortcut `Tab` to accept suggestions for the next word, or `Shift + Tab` to accept all suggested words." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用默认键盘快捷键 `Tab` 接受下一个字，或使用 `Shift + Tab` 接受整段文字。"
           }
         }
       }
@@ -4098,17 +4099,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "您的幻灯片将被保存到此文件夹"
-          }
-        }
-      }
-    },
-    "Your system has only %lld GB of RAM, which may not be sufficient for running an AI model. \nPlease save progress in all open apps, and close memory hogging applications **in case a system crash occurs.**" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "由于你的电脑只有 %lld GB 的内存，运行AI大模型时可能会捉襟见肘。请保存其他应用程序的进度，并关闭占用大量内存的应用程序，**以防系统崩溃。**"
           }
         }
       }

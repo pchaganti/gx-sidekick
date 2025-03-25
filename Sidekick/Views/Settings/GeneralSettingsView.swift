@@ -5,7 +5,6 @@
 //  Created by Bean John on 10/14/24.
 //
 
-import KeyboardShortcuts
 import MarkdownUI
 import SwiftUI
 
@@ -35,11 +34,7 @@ struct GeneralSettingsView: View {
 			} header: {
 				Text("Chat")
 			}
-			Section {
-				inlineAssistantShortcut
-			} header: {
-				Text("Inline Assistant")
-			}
+			InlineWritingAssistantSettingsView()
 		}
 		.formStyle(.grouped)
 		.task {
@@ -109,7 +104,7 @@ struct GeneralSettingsView: View {
 	}
 	
 	var voice: some View {
-		HStack(alignment: .top) {
+		HStack(alignment: .center) {
 			VStack(alignment: .leading) {
 				Text("Voice")
 					.font(.title3)
@@ -129,23 +124,6 @@ struct GeneralSettingsView: View {
 						.tag(voice.identifier)
 				}
 			}
-		}
-	}
-	
-	var inlineAssistantShortcut: some View {
-		HStack {
-			VStack(alignment: .leading) {
-				Text("Shortcut")
-					.font(.title3)
-					.bold()
-				Text("The shortcut used to trigger and dismiss the inline writing assistant.")
-					.font(.caption)
-			}
-			Spacer()
-			KeyboardShortcuts.Recorder(
-				"",
-				name: .toggleInlineAssistant
-			)
 		}
 	}
 	

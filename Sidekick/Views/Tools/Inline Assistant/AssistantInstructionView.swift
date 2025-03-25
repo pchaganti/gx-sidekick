@@ -5,17 +5,29 @@
 //  Created by John Bean on 2/20/25.
 //
 
-import KeyboardShortcuts
 import MarkdownUI
 import SwiftUI
 
 struct AssistantInstructionView: View {
 	
-	let instruction: String = String(localized: """
-Sidekick's Inline Assistant is enabled by default.
-
-Use the default keyboard shortcut `Command 􀆔 + Control 􀆍 + I` to toggle the assistant. You can change this shortcut in `Settings -> General`.
+	var instruction: String {
+		return [
+			String(localized: "Sidekick's Inline Writing Assistant is enabled by default."),
+			commandsInstructions,
+			completionsInstructions,
+			changeShortcutInstructions
+		].joined(separator: "\n\n")
+	}
+	
+	let commandsInstructions: String = String(localized: """
+Use the default keyboard shortcut `Command 􀆔 + Control 􀆍 + I` to toggle commands.
 """)
+	
+	let completionsInstructions: String = String(localized: """
+Use the default keyboard shortcut `Tab` to accept suggestions for the next word, or `Shift + Tab` to accept all suggested words.
+""")
+	
+	let changeShortcutInstructions: String = String(localized: "Default shortcuts can be modified in `Settings -> General`.")
 	
 	@Binding var showAssistantInstructionSheet: Bool
 	

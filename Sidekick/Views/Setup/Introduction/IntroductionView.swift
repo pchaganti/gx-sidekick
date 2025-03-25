@@ -36,38 +36,18 @@ struct IntroductionView: View {
 		Group {
 			switch introductionViewController.page {
 				case .done:
-					done
-						.frame(maxHeight: 400)
+					SetupCompleteView(
+						description: String(localized: "Sidekick is ready to use.")
+					) {
+						Settings.finishSetup()
+						self.showSetup = false
+					}
+					.frame(maxHeight: 400)
 				default:
 					IntroductionPageView(
 						content: introductionViewController.page.content!
 					)
 			}
-		}
-	}
-	
-	var done: some View {
-		VStack {
-			Image(systemName: "checkmark.circle.fill")
-				.resizable()
-				.frame(width: 60, height: 60)
-				.foregroundColor(.green)
-				.imageScale(.large)
-			Text("**Setup Complete**")
-				.font(.largeTitle)
-			Text("Sidekick is ready to use.")
-				.font(.title3)
-			Button {
-				Settings.finishSetup()
-				self.showSetup = false
-			} label: {
-				Text("Continue")
-			}
-			.buttonStyle(.borderedProminent)
-			.controlSize(.large)
-			.padding(.top, 16)
-			.padding(.horizontal, 40)
-			.keyboardShortcut(.defaultAction)
 		}
 	}
 	

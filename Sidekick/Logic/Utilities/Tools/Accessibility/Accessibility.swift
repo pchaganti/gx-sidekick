@@ -17,7 +17,7 @@ public class Accessibility {
 	@MainActor public static let shared = Accessibility()
 	
 	/// Check if Sidekick has the right permissions
-	public func checkAccessibility() -> Bool {
+	public static func checkAccessibility() -> Bool {
 		let checkOptionPrompt: String = kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String
 		let options = [checkOptionPrompt: false]
 		let isTrusted: Bool = AXIsProcessTrustedWithOptions(
@@ -38,6 +38,8 @@ public class Accessibility {
 	
 	/// Function to get the selected text via the accessibility API
 	private func getSelectedTextAX() -> String? {
+		// Ask for permissions
+		guard Accessibility.checkAccessibility() else { return nil }
 		let systemWideElement = AXUIElementCreateSystemWide()
 		var focusedApp: AnyObject?
 		var error = AXUIElementCopyAttributeValue(systemWideElement, kAXFocusedApplicationAttribute as CFString, &focusedApp)

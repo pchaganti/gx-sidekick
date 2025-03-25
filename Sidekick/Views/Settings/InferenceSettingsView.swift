@@ -49,7 +49,7 @@ struct InferenceSettingsView: View {
     }
 	
 	var model: some View {
-		HStack(alignment: .top) {
+		HStack(alignment: .center) {
 			VStack(alignment: .leading) {
 				Text("Model: \(modelUrl?.lastPathComponent ?? String(localized: "No Model Selected"))")
 					.font(.title3)
@@ -120,7 +120,7 @@ struct InferenceSettingsView: View {
 	}
 	
 	var speculativeDecodingModel: some View {
-		HStack(alignment: .top) {
+		HStack(alignment: .center) {
 			VStack(alignment: .leading) {
 				Text(
 	 "Draft Model: \(specularDecodingModelUrl?.lastPathComponent ?? String(localized: "No Model Selected"))"

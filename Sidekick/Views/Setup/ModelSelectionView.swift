@@ -20,7 +20,7 @@ struct ModelSelectionView: View {
 			welcome
 			downloadButton
 				.padding(.top, 5)
-			downloadProgress
+			downloadManager.progressView
 			advancedDivider
 			selectButton
 			connectButton
@@ -70,19 +70,6 @@ struct ModelSelectionView: View {
 		}
 		.frame(maxWidth: 500)
 		.padding(.vertical, 4)
-	}
-	
-	var downloadProgress: some View {
-		Group {
-			ForEach(
-				self.downloadManager.tasks,
-				id: \.self
-			) { task in
-				ProgressView(task.progress)
-					.progressViewStyle(.linear)
-			}
-		}
-		.padding(.top)
 	}
 	
 	var downloadButton: some View {

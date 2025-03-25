@@ -19,6 +19,8 @@ public class DownloadManager: NSObject, ObservableObject {
 	
 	/// Property for currently downloading URL session
 	private var urlSession: URLSession!
+	/// A `Bool` representing whether the model should be added to the model manager
+	private var shouldAddModel: Bool = true
 	/// Published property for download progress
 	@Published var tasks: [URLSessionTask] = []
 	/// Published property for last update
@@ -28,7 +30,6 @@ public class DownloadManager: NSObject, ObservableObject {
 	
 	override private init() {
 		super.init()
-		
 		let config: URLSessionConfiguration = URLSessionConfiguration.background(
 			withIdentifier: "com.pattonium.Sidekick.DownloadManager"
 		)
@@ -47,19 +48,31 @@ public class DownloadManager: NSObject, ObservableObject {
 	public func downloadModel(
 		model: HuggingFaceModel
 	) async {
+		await downloadModel(url: model.url)
+	}
+	
+	/// Function to download an LLM
+	@MainActor
+	public func downloadModel(
+		url: URL
+	) async {
 		// Check if accessible
 		URL.verifyURL(
-			url: model.url
+			url: url
 		) { isValid in
 			if isValid {
 				// If accessible
 				self.startDownload(
-					url: model.url
+					url: url
 				)
 			} else {
 				// If not accessible
+				let mirrorUrlString: String = url.absoluteString.replacingOccurrences(
+					of: "huggingface.co",
+					with: "hf-mirror.com"
+				)
 				self.startDownload(
-					url: model.mirrorUrl
+					url: URL(string: mirrorUrlString)!
 				)
 			}
 		}
@@ -67,7 +80,7 @@ public class DownloadManager: NSObject, ObservableObject {
 		LengthyTasksController.shared.addTask(
 			id: UUID(),
 			task: String(
-				localized: "Downloading model \(model.url.lastPathComponent)"
+				localized: "Downloading model \(url.lastPathComponent)"
 			)
 		)
 	}
@@ -75,11 +88,31 @@ public class DownloadManager: NSObject, ObservableObject {
 	/// Function to download the default large language model
 	@MainActor
 	public func downloadDefaultModel() async {
+		// Set to add model
+		self.shouldAddModel = true
 		// Get default model
 		let model: HuggingFaceModel = await DefaultModels.recommendedModel
 		print("Trying to download \(model.name)")
 		// Download model
 		await self.downloadModel(model: model)
+	}
+	
+	/// Function to download the default completions model
+	@MainActor
+	public func downloadDefaultCompletionsModel() async {
+		// Set to not add model
+		self.shouldAddModel = false
+		// Get default model
+		let modelUrl: URL = URL(string: "https://huggingface.co/mradermacher/Qwen2.5-1.5B-GGUF/resolve/main/Qwen2.5-1.5B.IQ4_XS.gguf")!
+		print("Trying to download \(modelUrl.deletingLastPathComponent().lastPathComponent)")
+		// Download model
+		await self.downloadModel(url: modelUrl)
+		// Add download location to settings
+		let fileName: String = modelUrl.lastPathComponent
+		let destinationUrl: URL = Settings.dirUrl.appendingPathComponent(
+			fileName
+		)
+		InferenceSettings.completionsModelUrl = destinationUrl
 	}
 	
 	private func startDownload(url: URL) {
@@ -171,11 +204,13 @@ extension DownloadManager: URLSessionDelegate, URLSessionDownloadDelegate {
 			// Move the model to the directory
 			try fileManager.moveItem(at: location, to: destinationURL)
 			// Point to the model if needed
-			if Settings.modelUrl == nil {
-				Settings.modelUrl = destinationURL
-			}
-			ModelManager.shared.add(destinationURL)
 			Task { @MainActor in
+				if self.shouldAddModel {
+					if Settings.modelUrl == nil {
+						Settings.modelUrl = destinationURL
+					}
+					ModelManager.shared.add(destinationURL)
+				}
 				self.didFinishDownloadingModel = true
 			}
 		} catch {
@@ -186,6 +221,20 @@ extension DownloadManager: URLSessionDelegate, URLSessionDownloadDelegate {
 		LengthyTasksController.shared.tasks = LengthyTasksController.shared.tasks.filter {
 			$0.name != "Downloading model \(fileName)"
 		}
+	}
+	
+	/// A `View` that shows download progess
+	public var progressView: some View {
+		Group {
+			ForEach(
+				self.tasks,
+				id: \.self
+			) { task in
+				ProgressView(task.progress)
+					.progressViewStyle(.linear)
+			}
+		}
+		.padding(.top)
 	}
 		
 }

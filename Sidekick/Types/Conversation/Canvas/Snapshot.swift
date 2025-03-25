@@ -219,7 +219,7 @@ public extension Snapshot {
 			}
 			// If language has 1 line of code, return nil
 			let lineThreshold: Int = 1
-			if maxLines <= 1 {
+			if maxLines <= lineThreshold {
 				return nil
 			}
 			// If no language was selected, return nil.

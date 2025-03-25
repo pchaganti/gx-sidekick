@@ -34,18 +34,31 @@ public class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
 			]
 		)
 		// Configure keyboard shortcuts
-		ShortcutController.setDefaultShortcuts()
-		ShortcutController.setupShortcut(
-			name: .toggleInlineAssistant
-		) {
-			self.inlineAssistantController.toggleInlineAssistant()
-		}
+		ShortcutController.setup()
+//		do {
+//			let draft: String = try ActiveApplicationInspector.getFocusedElementText()
+//			let draftLength: Int = draft.count
+//			print("Draft length: \(draftLength)")
+//			let properties = try ActiveApplicationInspector.getFocusedElementProperties()
+//			let markedRange = properties["AXSelectedTextRange"]
+//			if let location = ActiveApplicationInspector.getEditingLocation(
+//				from: markedRange
+//			) {
+//				print("Editing location: \(location)")
+//			}
+//		} catch {
+//			print("Error: \(error)")
+//		}
 	}
 	
 	/// Function that runs before the app is terminated
 	public func applicationShouldTerminate(
 		_ sender: NSApplication
 	) -> NSApplication.TerminateReply {
+		// Stop server
+		Task {
+			await Model.shared.llama.stopServer()
+		}
 		// Remove stale sources
 		SourcesManager.shared.removeStaleSources()
 		// Remove non-persisted resources

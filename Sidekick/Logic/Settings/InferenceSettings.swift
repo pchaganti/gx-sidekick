@@ -124,6 +124,21 @@ Current date & time: \(Date.now.formatted(date: .long, time: .shortened))
 		}
 	}
 	
+	/// Computed property for the location of the LLM used for completions
+	static var completionsModelUrl: URL? {
+		get {
+			return UserDefaults.standard.url(
+				forKey: "completionsModelUrl"
+			)
+		}
+		set {
+			UserDefaults.standard.set(
+				newValue,
+				forKey: "completionsModelUrl"
+			)
+		}
+	}
+	
 	/// A `Bool` representing whether a server is used
 	public static var useServer: Bool {
 		get {

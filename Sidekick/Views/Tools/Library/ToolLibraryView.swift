@@ -75,7 +75,7 @@ struct ToolboxLibraryView: View {
 	
 	var inlineAssistantCard: some View {
 		ToolCardButton(
-			name: String(localized: "Inline Assistant"),
+			name: String(localized: "Inline Writing Assistant"),
 			description: String(localized: "Edit text with AI without leaving your editor"),
 			isSvg: false
 		) {

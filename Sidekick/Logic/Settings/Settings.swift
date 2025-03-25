@@ -185,6 +185,40 @@ public class Settings {
 		}
 	}
 	
+	/// A `Bool` representing whether completions is turned on
+	static var useCompletions: Bool {
+		get {
+			// Set default
+			if !UserDefaults.standard.exists(key: "useCompletions") {
+				// Default to false
+				Self.useCompletions = false
+			}
+			return UserDefaults.standard.bool(
+				forKey: "useCompletions"
+			)
+		}
+		set {
+			UserDefaults.standard.set(newValue, forKey: "useCompletions")
+		}
+	}
+	
+	/// A `Bool` representing whether completions has been set up
+	static var didSetUpCompletions: Bool {
+		get {
+			// Set default
+			if !UserDefaults.standard.exists(key: "didSetUpCompletions") {
+				// Default to false
+				Self.didSetUpCompletions = false
+			}
+			return UserDefaults.standard.bool(
+				forKey: "didSetUpCompletions"
+			)
+		}
+		set {
+			UserDefaults.standard.set(newValue, forKey: "didSetUpCompletions")
+		}
+	}
+	
 	/// Function to select a model
 	@MainActor
 	static func selectModel() -> Bool {
