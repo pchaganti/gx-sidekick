@@ -11,6 +11,7 @@ import SwiftUI
 struct InlineWritingAssistantSettingsView: View {
 	
 	@State private var isSettingUpCompletions: Bool = false
+	@State private var isManagingExcludedApps: Bool = false
 	
 	@AppStorage("useCompletions") private var useCompletions: Bool = false
 	@AppStorage("didSetUpCompletions") private var didSetUpCompletions: Bool = false
@@ -26,6 +27,7 @@ struct InlineWritingAssistantSettingsView: View {
 			if self.completionsIsReady {
 				nextTokenShortcut
 				allTokensShortcut
+				excludedAppsConfig
 			}
 		} header: {
 			Text("Inline Writing Assistant")
@@ -36,6 +38,15 @@ struct InlineWritingAssistantSettingsView: View {
 			CompletionsSetupView(
 				isPresented: self.$isSettingUpCompletions
 			)
+			.frame(minWidth: 400)
+		}
+		.sheet(
+			isPresented: self.$isManagingExcludedApps
+		) {
+			CompletionsExclusionList(
+				isPresented: self.$isManagingExcludedApps
+			)
+			.frame(minWidth: 400)
 		}
     }
 	
@@ -124,6 +135,24 @@ struct InlineWritingAssistantSettingsView: View {
 				"",
 				name: .acceptAllTokens
 			)
+		}
+	}
+	
+	var excludedAppsConfig: some View {
+		HStack(alignment: .center) {
+			VStack(alignment: .leading) {
+				Text("Excluded Apps")
+					.font(.title3)
+					.bold()
+				Text("Completions will be deactivated in these apps.")
+					.font(.caption)
+			}
+			Spacer()
+			Button {
+				self.isManagingExcludedApps.toggle()
+			} label: {
+				Text("Manage")
+			}
 		}
 	}
 	

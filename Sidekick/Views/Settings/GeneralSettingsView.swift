@@ -59,7 +59,7 @@ struct GeneralSettingsView: View {
 	}
 	
 	var soundEffects: some View {
-		HStack(alignment: .top) {
+		HStack(alignment: .center) {
 			VStack(alignment: .leading) {
 				Text("Play Sound Effects")
 					.font(.title3)
@@ -74,7 +74,7 @@ struct GeneralSettingsView: View {
 	}
 	
 	var generateConversationTitlesToggle: some View {
-		HStack(alignment: .top) {
+		HStack(alignment: .center) {
 			VStack(alignment: .leading) {
 				Text("Generate Conversation Titles")
 					.font(.title3)
@@ -89,7 +89,7 @@ struct GeneralSettingsView: View {
 	}
 	
 	var codeInterpreter: some View {
-		HStack(alignment: .top) {
+		HStack(alignment: .center) {
 			VStack(alignment: .leading) {
 				Text("Use Code Interpreter")
 					.font(.title3)

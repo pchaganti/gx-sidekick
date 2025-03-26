@@ -401,4 +401,16 @@ public extension String {
 		return capitalizedWords.joined(separator: " ")
 	}
 	
+	/// Function to calculate the percentage of the string made of non-special characters
+	func nonSpecialCharactersPercent() -> Double {
+		guard !self.isEmpty else { return 0.0 }
+		
+		let totalCharacters = self.count
+		let letterCharacterSet = CharacterSet.letters
+		
+		let nonSpecialCount = self.unicodeScalars.filter { letterCharacterSet.contains($0) }.count
+		
+		return (Double(nonSpecialCount) / Double(totalCharacters)) * 100.0
+	}
+	
 }

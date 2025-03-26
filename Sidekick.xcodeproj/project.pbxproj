@@ -113,6 +113,9 @@
 		20457D2C2D92511600954892 /* CompletionsSetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20457D2B2D92511600954892 /* CompletionsSetupViewModel.swift */; };
 		20457D2E2D92616E00954892 /* CompletionsDownloadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20457D2D2D92616E00954892 /* CompletionsDownloadView.swift */; };
 		20457D302D92778A00954892 /* SetupCompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20457D2F2D92778A00954892 /* SetupCompleteView.swift */; };
+		20457D322D927AB400954892 /* CompletionsExclusionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20457D312D927AB400954892 /* CompletionsExclusionList.swift */; };
+		20457D342D92827900954892 /* CompletionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20457D332D92827900954892 /* CompletionsController.swift */; };
+		20457D392D92A5FB00954892 /* AXSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 20457D382D92A5FB00954892 /* AXSwift */; };
 		204592172CD32DEF00DEAA96 /* TypedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204592162CD32DEF00DEAA96 /* TypedTextView.swift */; };
 		204735802D642BE5000740F9 /* ModelExplorerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2047357F2D642BE5000740F9 /* ModelExplorerView.swift */; };
 		204AE3B62CEAF4C20086B42D /* InlineAssistantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204AE3B52CEAF4C20086B42D /* InlineAssistantView.swift */; };
@@ -488,6 +491,8 @@
 		20457D2B2D92511600954892 /* CompletionsSetupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionsSetupViewModel.swift; sourceTree = "<group>"; };
 		20457D2D2D92616E00954892 /* CompletionsDownloadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionsDownloadView.swift; sourceTree = "<group>"; };
 		20457D2F2D92778A00954892 /* SetupCompleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupCompleteView.swift; sourceTree = "<group>"; };
+		20457D312D927AB400954892 /* CompletionsExclusionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionsExclusionList.swift; sourceTree = "<group>"; };
+		20457D332D92827900954892 /* CompletionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionsController.swift; sourceTree = "<group>"; };
 		204592162CD32DEF00DEAA96 /* TypedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypedTextView.swift; sourceTree = "<group>"; };
 		2047357F2D642BE5000740F9 /* ModelExplorerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelExplorerView.swift; sourceTree = "<group>"; };
 		204AE3B52CEAF4C20086B42D /* InlineAssistantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InlineAssistantView.swift; sourceTree = "<group>"; };
@@ -672,6 +677,7 @@
 				204186762D81E304002A5D1C /* libllava_shared.dylib in Frameworks */,
 				204186792D81E304002A5D1C /* libllama.dylib in Frameworks */,
 				204186752D81E304002A5D1C /* libggml-cpu.dylib in Frameworks */,
+				20457D392D92A5FB00954892 /* AXSwift in Frameworks */,
 				20A40C832D718D4300A9D9A9 /* CodeEditorView in Frameworks */,
 				200FBFF12CB64CB400A92A74 /* EventSource in Frameworks */,
 				206435382D905D2300020CC0 /* SimilaritySearchKit in Frameworks */,
@@ -1043,6 +1049,7 @@
 			isa = PBXGroup;
 			children = (
 				20457D222D92352900954892 /* InlineWritingAssistantSettingsView.swift */,
+				20457D312D927AB400954892 /* CompletionsExclusionList.swift */,
 				20457D282D924F3D00954892 /* Setup */,
 			);
 			path = "Inline Writing Assistant";
@@ -1150,6 +1157,7 @@
 				209370752D6AB36900E1AF73 /* ContainerRefactorer.swift */,
 				200363282D769AC700770391 /* JavaScriptRunner.swift */,
 				2051FED82D8E51FA001B1E0D /* SpeechService.swift */,
+				2041868C2D81E6B2002A5D1C /* NetworkMonitor.swift */,
 				207E5EF02D6FDEBE00A8F6FA /* Tools */,
 			);
 			path = Utilities;
@@ -1277,9 +1285,9 @@
 		207E5EF02D6FDEBE00A8F6FA /* Tools */ = {
 			isa = PBXGroup;
 			children = (
-				20457D152D918FFD00954892 /* Accessibility */,
-				2041868C2D81E6B2002A5D1C /* NetworkMonitor.swift */,
 				207E5EF12D6FDEEF00A8F6FA /* ImageSearch.swift */,
+				20457D332D92827900954892 /* CompletionsController.swift */,
+				20457D152D918FFD00954892 /* Accessibility */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -1683,6 +1691,7 @@
 				206435392D905D2300020CC0 /* SimilaritySearchKitDistilbert */,
 				2064353C2D905DBB00020CC0 /* SimilaritySearchKit */,
 				2064353E2D905DBB00020CC0 /* SimilaritySearchKitDistilbert */,
+				20457D382D92A5FB00954892 /* AXSwift */,
 			);
 			productName = Sidekick;
 			productReference = 200549732CAFA67B00A3DCF2 /* Sidekick.app */;
@@ -1800,6 +1809,7 @@
 				20CB50362D828CB60064D460 /* XCRemoteSwiftPackageReference "LaTeXSwiftUI" */,
 				205E3F262D8723AB00128D67 /* XCRemoteSwiftPackageReference "Highlightr" */,
 				2064353B2D905DBB00020CC0 /* XCRemoteSwiftPackageReference "similarity-search-kit" */,
+				20457D372D92A5FB00954892 /* XCRemoteSwiftPackageReference "AXSwift" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 200549742CAFA67B00A3DCF2 /* Products */;
@@ -1893,6 +1903,7 @@
 				20AA5A522CC87032003E5519 /* Tips.swift in Sources */,
 				20573F232CB52E79004C19FE /* Extension+Theme.swift in Sources */,
 				2051FEDD2D8E5601001B1E0D /* MessageReadAloudButton.swift in Sources */,
+				20457D342D92827900954892 /* CompletionsController.swift in Sources */,
 				208BA3572D680B1800E0C657 /* DiagrammerQuickPromptsView.swift in Sources */,
 				200FBFF52CB66C0000A92A74 /* LlamaServerError.swift in Sources */,
 				20A96F3C2CDDA9D400E31D53 /* ModelManager.swift in Sources */,
@@ -1948,6 +1959,7 @@
 				2051FED72D8D7474001B1E0D /* ModelNameMenu.swift in Sources */,
 				20B97CDD2CAFFE06009A0A5D /* Message.swift in Sources */,
 				204AEDAB2D81A7B4004028FF /* ServerModelSettingsView.swift in Sources */,
+				20457D322D927AB400954892 /* CompletionsExclusionList.swift in Sources */,
 				20B97CD02CAFEC37009A0A5D /* Model.swift in Sources */,
 				20457D2A2D9250AD00954892 /* CompletionsTutorialView.swift in Sources */,
 				20571F792CBD6019004F3344 /* GeneralSettingsView.swift in Sources */,
@@ -2545,6 +2557,14 @@
 				minimumVersion = 2.2.4;
 			};
 		};
+		20457D372D92A5FB00954892 /* XCRemoteSwiftPackageReference "AXSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/tmandry/AXSwift/";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.3.2;
+			};
+		};
 		20573F262CB52F84004C19FE /* XCRemoteSwiftPackageReference "Splash" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/JohnSundell/Splash";
@@ -2663,6 +2683,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2031B9932CEAE66400627D53 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
 			productName = KeyboardShortcuts;
+		};
+		20457D382D92A5FB00954892 /* AXSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 20457D372D92A5FB00954892 /* XCRemoteSwiftPackageReference "AXSwift" */;
+			productName = AXSwift;
 		};
 		20573F272CB52F84004C19FE /* Splash */ = {
 			isa = XCSwiftPackageProductDependency;

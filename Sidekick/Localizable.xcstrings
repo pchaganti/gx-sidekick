@@ -505,6 +505,9 @@
     "Completions is now ready to use!" : {
 
     },
+    "Completions will be deactivated in these apps." : {
+
+    },
     "Concise" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1304,6 +1307,9 @@
           }
         }
       }
+    },
+    "Excluded Apps" : {
+
     },
     "Exit" : {
       "localizations" : {

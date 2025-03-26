@@ -219,6 +219,22 @@ public class Settings {
 		}
 	}
 	
+	/// A array of `[String]` representing the bundle IDs of apps where completions are disabled
+	public static var completionsExcludedApps: [String] {
+		get {
+			guard let completionsExcludedApps: [String] = UserDefaults.standard.array(
+				forKey: "completionsExcludedApps"
+			) as? [String] else {
+				return []
+			}
+			return completionsExcludedApps
+		}
+		set {
+			// Save
+			UserDefaults.standard.set(newValue, forKey: "completionsExcludedApps")
+		}
+	}
+	
 	/// Function to select a model
 	@MainActor
 	static func selectModel() -> Bool {

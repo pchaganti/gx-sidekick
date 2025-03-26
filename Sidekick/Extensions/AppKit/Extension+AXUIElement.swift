@@ -44,36 +44,95 @@ public extension AXUIElement {
     
     // MARK: - Primary Method: Caret Bounds
     
-    /// Primary method to retrieve the bounding rect of the caret using `AXSelectedTextRange` and `AXBoundsForRange`.
-    /// - Returns: The `CGRect` representing the caret's bounding rectangle, or `nil` if unavailable.
-    private func getCaretBounds() -> CGRect? {// Obtain the cursor position
-        guard let cursorPosition = getCursorPosition() else {
-            return nil
-        }
-        // Create a CFRange for the cursor position
-        var cfRange = CFRange(location: cursorPosition, length: 1)
-        guard let axValueRange = AXValueCreate(.cfRange, &cfRange) else {
-            return nil
-        }
-        // Retrieve the bounding rectangle for the range
-        var rawBounds: CFTypeRef?
-        let error = AXUIElementCopyParameterizedAttributeValue(
-            self,
-            kAXBoundsForRangeParameterizedAttribute as CFString,
-            axValueRange,
-            &rawBounds
-        )
-        guard error == .success,
-              let boundsCF = castCF(rawBounds, to: AXValue.self) else {
-            return nil
-        }
-        // Extract CGRect from AXValue
-        var rect = CGRect.zero
-        if AXValueGetValue(boundsCF, .cgRect, &rect) {
-            return rect
-        }
-        return nil
-    }
+	/// Primary method to retrieve the bounding rect of the caret using `AXSelectedTextRange` and `AXBoundsForRange`.
+	/// - Returns: The `CGRect` representing the caret's bounding rectangle, or `nil` if unavailable.
+//	private func getCaretBounds() -> CGRect? {
+//		// Attempt to get the current cursor position
+//		guard let cursorPosition = getCursorPosition() else {
+//			// If the cursor position is not available, log an error and return nil
+//			print("Cursor position not available")
+//			return nil
+//		}
+//		// Create a CFRange starting at the cursor position with a length of 1
+//		var cfRange: CFRange = .init(location: cursorPosition, length: 1)
+//		// Convert the CFRange into an AXValue which is needed for the AX API
+//		let axVal: AXValue? = AXValueCreate(.cfRange, &cfRange)
+//		// Declare a variable to hold the bounds received from the AX API
+//		var bounds: CFTypeRef?
+//		// If the AXValue creation failed, return nil
+//		guard let axVal = axVal else { return nil }
+//		// Use the AX API to copy the parameterized attribute value for the range
+//		AXUIElementCopyParameterizedAttributeValue(
+//			self,
+//			kAXBoundsForRangeParameterizedAttribute as CFString,
+//			axVal,
+//			&bounds
+//		)
+//		// Initialize a CGRect to store the final caret bounds; start with CGRect.zero
+//		var cursorRect: CGRect = .zero
+//		// If no bounds were retrieved, return nil
+//		guard let bounds = bounds else { return nil }
+//		// Extract the CGRect from the returned AXValue
+//		AXValueGetValue(bounds as! AXValue, .cgRect, &cursorRect)
+//		// Return the computed caret bounds
+//		return cursorRect
+//	}
+	
+	func getCaretBounds() -> CGRect? {
+		// Create a system-wide accessibility object
+		let systemWideElement = AXUIElementCreateSystemWide()
+		// Get the currently focused UI element
+		var focusedElement: AnyObject?
+		let focusedResult = AXUIElementCopyAttributeValue(
+			systemWideElement,
+			kAXFocusedUIElementAttribute as CFString,
+			&focusedElement
+		)
+		guard focusedResult == .success, let element = focusedElement as! AXUIElement? else {
+			print("Failed to get focused element")
+			return nil
+		}
+		// Retrieve the 'kAXSelectedTextRangeAttribute' from the focused element
+		var selectedTextRangeRef: AnyObject?
+		let rangeResult = AXUIElementCopyAttributeValue(
+			element,
+			kAXSelectedTextRangeAttribute as CFString,
+			&selectedTextRangeRef
+		)
+		guard rangeResult == .success else {
+			print("Failed to get selected text range")
+			return nil
+		}
+		// Force cast is used here since the value is guaranteed to be an AXValue
+		let selectedTextRange = selectedTextRangeRef as! AXValue
+		// The selectedTextRange is represented as a CFRange
+		var range = CFRange()
+		guard AXValueGetValue(selectedTextRange, .cfRange, &range) else {
+			print("Failed to extract CFRange from selected text range")
+			return nil
+		}
+		// Obtain the bounding rectangle for the given text range
+		var caretBoundsRef: AnyObject?
+		let boundsResult = AXUIElementCopyParameterizedAttributeValue(
+			element,
+			kAXBoundsForRangeParameterizedAttribute as CFString,
+			selectedTextRange,
+			&caretBoundsRef
+		)
+		guard boundsResult == .success else {
+			print("Failed to get caret bounding rectangle")
+			return nil
+		}
+		// Force cast is used here as the returned value is guaranteed to be an AXValue
+		let caretBoundsValue = caretBoundsRef as! AXValue
+		var caretRect = CGRect.zero
+		guard AXValueGetValue(caretBoundsValue, .cgRect, &caretRect) else {
+			print("Failed to extract CGRect from caret value")
+			return nil
+		}
+		// Return the rect of the caret
+		return caretRect
+	}
     
     // MARK: - Secondary Method: Caret Rect
     
@@ -136,7 +195,7 @@ public extension AXUIElement {
             return nil
         }
     }
-    
+	
     // MARK: - Fallback Method: Mouse Cursor Position
     
     /// Fallback method to retrieve the mouse cursor's position as a `CGRect`.
@@ -179,6 +238,7 @@ public extension AXUIElement {
         if AXValueGetValue(axRangeValue, .cfRange, &range) {
             return range.location
         }
+		print("Failed to get range value")
         return nil
     }
     

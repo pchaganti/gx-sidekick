@@ -15,8 +15,10 @@ import TipKit
 /// The app's delegate which handles life cycle events
 public class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
 	
-	/// A object of type  `InlineAssistantController` controller
+	/// A object of type  ``InlineAssistantController`` controller
 	let inlineAssistantController: InlineAssistantController = .shared
+	/// A object of type  ``CompletionsController`` controller
+	let completionsController: CompletionsController = .shared
 	
 	/// Function that runs after the app is initialized
 	public func applicationDidFinishLaunching(
@@ -35,20 +37,6 @@ public class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
 		)
 		// Configure keyboard shortcuts
 		ShortcutController.setup()
-//		do {
-//			let draft: String = try ActiveApplicationInspector.getFocusedElementText()
-//			let draftLength: Int = draft.count
-//			print("Draft length: \(draftLength)")
-//			let properties = try ActiveApplicationInspector.getFocusedElementProperties()
-//			let markedRange = properties["AXSelectedTextRange"]
-//			if let location = ActiveApplicationInspector.getEditingLocation(
-//				from: markedRange
-//			) {
-//				print("Editing location: \(location)")
-//			}
-//		} catch {
-//			print("Error: \(error)")
-//		}
 	}
 	
 	/// Function that runs before the app is terminated

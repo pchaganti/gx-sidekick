@@ -9,7 +9,7 @@ import SwiftUI
 
 // MARK: - AXError Description Extension
 
-extension AXError: @retroactive CustomStringConvertible {
+extension AXError {
 	
     public var description: String {
         switch self {

@@ -29,26 +29,27 @@ public class ShortcutController {
 		) {
 			print("Accept all tokens")
 		}
-		// Refresh completions shortcuts status
-		ShortcutController.refreshCompletionsShortcuts()
+		// Disable completions shortcuts until a suggestion is ready
+		ShortcutController.refreshCompletionsShortcuts(
+			isEnabled: false
+		)
 	}
 	
 	/// Function to refresh completions shortcuts
-	public static func refreshCompletionsShortcuts() {
+	public static func refreshCompletionsShortcuts(
+		isEnabled: Bool? = nil
+	) {
 		let shortcuts: [KeyboardShortcuts.Name] = [
 			.acceptNextToken,
 			.acceptAllTokens
 		]
-		// If completions are not enabled or ready
-		if !Settings.useCompletions || !Settings.didSetUpCompletions {
-			ShortcutController.disableShortcuts(
-				names: shortcuts
-			)
+		let isEnabled: Bool = isEnabled ?? (Settings.useCompletions && Settings.didSetUpCompletions)
+		// If completions are not enabled or ready, or if specified
+		if !isEnabled {
+			KeyboardShortcuts.disable(shortcuts)
 		} else {
 			// Else, make sure they are active
-			ShortcutController.enableShortcuts(
-				names: shortcuts
-			)
+			KeyboardShortcuts.enable(shortcuts)
 		}
 	}
 	
@@ -94,20 +95,6 @@ public class ShortcutController {
 		) {
 			show()
 		}
-	}
-	
-	/// Function to disable keyboard shortcuts
-	public static func disableShortcuts(
-		names: [KeyboardShortcuts.Name]
-	) {
-		KeyboardShortcuts.disable(names)
-	}
-	
-	/// Function to enable keyboard shortcuts
-	public static func enableShortcuts(
-		names: [KeyboardShortcuts.Name]
-	) {
-		KeyboardShortcuts.enable(names)
 	}
 	
 }

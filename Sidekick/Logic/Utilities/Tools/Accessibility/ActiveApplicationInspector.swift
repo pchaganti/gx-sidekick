@@ -39,7 +39,7 @@ class ActiveApplicationInspector {
 	}
 	
 	/// Function to get the focused window of the current application
-	private static func getFocusedWindow(
+	public static func getFocusedWindow(
 		appRef: AXUIElement
 	) throws -> AXUIElement {
 		var windowRef: CFTypeRef?
@@ -151,7 +151,7 @@ class ActiveApplicationInspector {
 		let focusedElementRef = try Self.getFocusedElement(
 			appRef: appRef
 		)
-			return try Self.getFocusedElementValue(for: focusedElementRef)
+		return try Self.getFocusedElementValue(for: focusedElementRef)
 	}
 	
 	/// Function to extract the editing location from an AXValue
@@ -159,14 +159,12 @@ class ActiveApplicationInspector {
 		from anyValue: Any?
 	) -> Int? {
 		guard let cfValue = anyValue else {
-			print("Value is nil")
 			return nil
 		}
 		// Convert it to CFTypeRef (AnyObject works too)
 		let cfType = cfValue as AnyObject
 		// Check if it's actually an AXValue type using CFGetTypeID
 		if CFGetTypeID(cfType) != AXValueGetTypeID() {
-			print("Value is not an AXValue")
 			return nil
 		}
 		// Now it's safe to treat it as an AXValue
@@ -174,7 +172,6 @@ class ActiveApplicationInspector {
 		// Verify the AXValue type is a CFRange
 		let axValueType = AXValueGetType(axValue)
 		guard axValueType == .cfRange else {
-			print("AXValue is not a CFRange, it's \(axValueType.rawValue)")
 			return nil
 		}
 		// Extract the CFRange
@@ -182,7 +179,6 @@ class ActiveApplicationInspector {
 		if AXValueGetValue(axValue, .cfRange, &range) {
 			return range.location
 		} else {
-			print("Failed to extract CFRange from AXValue")
 			return nil
 		}
 	}

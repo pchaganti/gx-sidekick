@@ -188,7 +188,7 @@ public class Model: ObservableObject {
 		var response: LlamaServer.CompleteResponse? = nil
 		switch mode {
 			case .`default`:
-				response = try await llama.getCompletion(
+				response = try await llama.getChatCompletion(
 					mode: mode,
 					modelType: modelType,
 					messages: messagesWithSources
@@ -212,7 +212,7 @@ public class Model: ObservableObject {
 					increment: increment
 				)
 			case .contextAwareAgent:
-				response = try await llama.getCompletion(
+				response = try await llama.getChatCompletion(
 					mode: mode,
 					modelType: modelType,
 					messages: messagesWithSources,
@@ -293,7 +293,7 @@ public class Model: ObservableObject {
 		increment: Int
 	) async throws -> LlamaServer.CompleteResponse {
 		var updateResponse = ""
-		return try await llama.getCompletion(
+		return try await llama.getChatCompletion(
 			mode: mode,
 			messages: messages,
 			similarityIndex: similarityIndex
@@ -351,7 +351,7 @@ public class Model: ObservableObject {
 			return rephrasedResponse
 		} else {
 			// Else, fall back on one-shot answer
-			let response: LlamaServer.CompleteResponse = try await self.llama.getCompletion(
+			let response: LlamaServer.CompleteResponse = try await self.llama.getChatCompletion(
 				mode: .contextAwareAgent,
 				messages: messages,
 				similarityIndex: similarityIndex
@@ -389,7 +389,7 @@ public class Model: ObservableObject {
 				)
 				let errorMessageSubset = await Message.MessageSubset(message: errorMessage)
 				messages.append(errorMessageSubset)
-				let response = try await llama.getCompletion(
+				let response = try await llama.getChatCompletion(
 					mode: .chat,
 					messages: messages,
 					similarityIndex: similarityIndex
@@ -440,7 +440,7 @@ public class Model: ObservableObject {
 		]
 		// Submit for completion
 		var updateResponse: String = ""
-		return try await llama.getCompletion(
+		return try await llama.getChatCompletion(
 			mode: .contextAwareAgent,
 			messages: updatedMessages
 		) { partialResponse in

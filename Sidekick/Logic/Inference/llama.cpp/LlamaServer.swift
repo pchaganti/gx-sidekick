@@ -25,18 +25,33 @@ public actor LlamaServer {
 	///   - modelPath: The POSIX path linking to the model
 	///   - systemPrompt: The system prompt passed to the model, which controls its behaviour
 	init(
-		systemPrompt: String
+		modelUrl: URL? = nil,
+		systemPrompt: String = InferenceSettings.systemPrompt,
+		port: Int? = nil
 	) {
+		self.specifiedModelUrl = modelUrl
 		self.systemPrompt = systemPrompt
-		self.contextLength = InferenceSettings.contextLength
+		if let port {
+			self.port = String(port)
+		}
+	}
+	
+	/// The `URL` of the local model, if specified
+	private var specifiedModelUrl: URL? = nil
+	/// The `URL` of the local model
+	private var modelUrl: URL? {
+		if let specifiedModelUrl {
+			return specifiedModelUrl
+		}
+		return Settings.modelUrl
 	}
 	
 	/// The IP address of the inference server's host
-	private static let host: String = "127.0.0.1"
+	private var host: String = "127.0.0.1"
 	/// The port where the inference server is accessible
-	private static let port: String = "4579"
+	private var port: String = "4579"
 	/// The scheme through which the inference server is accessible
-	private static let scheme: String = "http"
+	private var scheme: String = "http"
 	
 	/// A `Bool` indicating if the server is being started
 	private var isStartingServer: Bool = false
@@ -48,14 +63,14 @@ public actor LlamaServer {
 	
 	/// The name of the LLM, of type `String`
 	var modelName: String {
-		return Settings.modelUrl?.deletingPathExtension().lastPathComponent ?? "Unknown Model"
+		return self.modelUrl?.deletingPathExtension().lastPathComponent ?? "Unknown Model"
 	}
 	
 	/// The system prompt given to the chatbot
 	var systemPrompt: String
 	
 	/// The context length used in chat completion
-	var contextLength: Int
+	var contextLength: Int = InferenceSettings.contextLength
 	
 	/// Property for `llama-server-watchdog` process
 	private var monitor: Process = Process()
@@ -92,7 +107,7 @@ public actor LlamaServer {
 		async let isServerReachable = self.remoteServerIsReachable()
 		let notUsingServer: Bool = !(await isServerReachable) || !InferenceSettings.useServer
 		if notUsingServer || mustUseLocalServer {
-			urlString = "\(Self.scheme)://\(Self.host):\(Self.port)\(path)"
+			urlString = "\(self.scheme)://\(self.host):\(self.port)\(path)"
 		} else {
 			urlString = "\(endpoint)\(path)"
 		}
@@ -213,15 +228,15 @@ public actor LlamaServer {
 	/// Function to start the `llama-server` process
 	public func startServer() async throws {
 		// If a model is missing, throw error
-		let hasModel: Bool = Settings.modelUrl?.fileExists ?? false
-		let usesSpeculativeModel: Bool = InferenceSettings.useSpeculativeDecoding
+		let hasModel: Bool = self.modelUrl?.fileExists ?? false
+		let usesSpeculativeModel: Bool = InferenceSettings.useSpeculativeDecoding && self.specifiedModelUrl == nil
 		let hasSpeculativeModel: Bool = InferenceSettings.speculativeDecodingModelUrl?.fileExists ?? false
 		if !hasModel || (usesSpeculativeModel && !hasSpeculativeModel) {
 			Self.logger.error("Main model or draft model is missing")
 			throw LlamaServerError.modelError
 		}
 		// If server is running, exit
-		guard !process.isRunning, let modelPath = Settings.modelUrl?.posixPath else {
+		guard !process.isRunning, let modelPath = self.modelUrl?.posixPath else {
 			return
 		}
 		// Signal beginning of server initialization
@@ -245,13 +260,14 @@ public actor LlamaServer {
 			"--threads", "\(threadsToUse)",
 			"--threads-batch", "\(threadsToUse)",
 			"--ctx-size", "\(contextLength)",
-			"--port", Self.port,
+			"--port", self.port,
 			"--flash-attn",
 			"--gpu-layers", gpuLayersToUse
 		]
 		
 		// If speculative decoding is used
-		if let speculationModelUrl = InferenceSettings.speculativeDecodingModelUrl {
+		if self.specifiedModelUrl == nil,
+			let speculationModelUrl = InferenceSettings.speculativeDecodingModelUrl {
 			if InferenceSettings.useSpeculativeDecoding {
 				// Formulate arguments
 				let draft: Int =  16
@@ -315,7 +331,7 @@ public actor LlamaServer {
 		}
 	}
 	
-	/// Function to get completion from the LLM
+	/// Function to get a chat completion from the LLM
 	/// - Parameters:
 	///   - modelType: The type of model used for completion
 	///   - mode: The chat completion mode. This controls whether advanced features like resource lookup is used
@@ -323,7 +339,7 @@ public actor LlamaServer {
 	///   - similarityIndex: A similarity index for resource lookup
 	///   - progressHandler: A handler called after a new token is generated
 	/// - Returns: The response returned from the inference server
-	public func getCompletion(
+	public func getChatCompletion(
 		mode: Model.Mode,
 		modelType: ModelType = .regular,
 		messages: [Message.MessageSubset],
@@ -487,6 +503,61 @@ public actor LlamaServer {
 		)
 	}
 	
+	/// Function to get a completion from the LLM
+	/// - Parameter text: The text to complete
+	/// - Parameter tokenNumber: The number of tokens to predict
+	/// - Returns: A sequence of tokens, each with a probability
+	public func getCompletion(
+		text: String,
+		maxTokenNumber: Int
+	) async -> [Token]? {
+		// Formulate request
+		var request = URLRequest(
+			url: URL(
+				string: "\(self.scheme)://\(self.host):\(self.port)/v1/completions"
+			)!
+		)
+		request.httpMethod = "POST"
+		request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+		// Formulate JSON
+		let params: CompletionParams = .init(
+			prompt: text,
+			max_tokens: maxTokenNumber
+		)
+		let encoder: JSONEncoder = .init()
+		guard let data: Data = try? encoder.encode(params) else {
+			return nil
+		}
+		let requestJson: String = String(
+			data: data,
+			encoding: .utf8
+		)!
+		request.httpBody = requestJson.data(using: .utf8)
+		// Send request
+		let urlSession: URLSession = URLSession.shared
+		urlSession.configuration.waitsForConnectivity = false
+		urlSession.configuration.timeoutIntervalForRequest = 10
+		urlSession.configuration.timeoutIntervalForResource = 10
+		// Get JSON response
+		guard let (data, _): (Data, URLResponse) = try? await URLSession.shared.data(
+			for: request
+		) else {
+			Self.logger.error("Failed to generate completion.")
+			return nil
+		}
+		// Decode response
+		let decoder: JSONDecoder = .init()
+		guard let response: CompletionResponse = try? decoder.decode(
+			CompletionResponse.self,
+			from: data
+		) else {
+			Self.logger.error("Failed to decode completion response.")
+			return nil
+		}
+		// Extract and return
+		return response.choices.first?.logprobs.content
+	}
+	
 	/// Function executed when output finishes
 	/// - Parameter text: The output generated by the LLM
 	public func onFinish(text: String) {}
@@ -502,7 +573,7 @@ public actor LlamaServer {
 			try await startServer()
 		}
 		// Get url of endpoint
-		let rawUrl: URL = URL(string: "\(Self.scheme)://\(Self.host):\(Self.port)/tokenize")!
+		let rawUrl: URL = URL(string: "\(self.scheme)://\(self.host):\(self.port)/tokenize")!
 		// Formulate request
 		var request = URLRequest(
 			url: rawUrl
@@ -682,6 +753,54 @@ public actor LlamaServer {
 		var count: Int {
 			return self.tokens?.count ?? 0
 		}
+		
+	}
+	
+	private struct CompletionParams: Codable {
+		
+		var prompt: String
+		var max_tokens: Int
+		var logprobs: Int = 1
+		var temperature: Double = 0.0
+		
+	}
+
+	private struct CompletionResponse: Codable {
+		
+		var completion: String? {
+			return choices.first?.text
+		}
+		var logprob: Double? {
+			return choices.first?.logprob
+		}
+		
+		var choices: [Choice]
+		
+		struct Choice: Codable {
+			
+			var text: String
+			
+			var logprobs: Logprob
+			var logprob: Double {
+				return self.logprobs.content
+					.map(keyPath: \.logprob)
+					.reduce(0, +)
+			}
+			
+			struct Logprob: Codable {
+				
+				var content: [Token]
+				
+			}
+			
+		}
+		
+	}
+	
+	public struct Token: Codable {
+		
+		var token: String
+		var logprob: Double
 		
 	}
 	
