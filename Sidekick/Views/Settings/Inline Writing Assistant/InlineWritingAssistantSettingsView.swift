@@ -86,6 +86,12 @@ struct InlineWritingAssistantSettingsView: View {
 		.onChange(
 			of: useCompletions
 		) {
+			// Start or stop controller
+			if useCompletions && didSetUpCompletions {
+				CompletionsController.shared.setup()
+			} else {
+				CompletionsController.shared.stop()
+			}
 			// Refresh completions shortcuts status
 			ShortcutController.refreshCompletionsShortcuts()
 		}
@@ -102,6 +108,7 @@ struct InlineWritingAssistantSettingsView: View {
 	var completionsToggle: some View {
 		Toggle("", isOn: self.$useCompletions.animation(.linear))
 			.toggleStyle(.switch)
+			.disabled(!didSetUpCompletions)
 	}
 	
 	var nextTokenShortcut: some View {

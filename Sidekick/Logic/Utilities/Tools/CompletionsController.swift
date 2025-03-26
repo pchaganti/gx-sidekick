@@ -41,7 +41,7 @@ public class CompletionsController: ObservableObject {
 	private var observer: Observer?
 	
 	/// A `LlamaServer` object for an instance of `llama-server`
-	private var server: LlamaServer
+	private var server: LlamaServer? = nil
 	/// An `Int` representing the port on which the server responds
 	private var port: Int = 9020
 	
@@ -49,6 +49,14 @@ public class CompletionsController: ObservableObject {
 	init() {
 		// Assign variables
 		self.completion = nil
+		// If enabled, setup
+		if Settings.useCompletions && Settings.didSetUpCompletions {
+			self.setup()
+		}
+	}
+	
+	/// Function to setup completions
+	public func setup() {
 		// Start server
 		self.server = LlamaServer(
 			modelUrl: InferenceSettings.completionsModelUrl,
@@ -56,19 +64,24 @@ public class CompletionsController: ObservableObject {
 		)
 		Task { [weak self] in
 			guard let self = self else { return }
-			try await self.server.startServer()
+			try await self.server?.startServer()
 		}
 		self.setupObservers()
 	}
 	
 	deinit {
+		// Stop everything
+		self.stop()
+	}
+	
+	/// Function to stop completions
+	public func stop() {
 		// Remove NSEvent monitors
 		for monitor in self.monitors {
 			NSEvent.removeMonitor(monitor)
 		}
 		self.monitors.removeAll()
 		NSWorkspace.shared.notificationCenter.removeObserver(self)
-		
 		// Disable and remove the key event tap
 		if let keyEventTap = self.keyEventTap {
 			CFMachPortInvalidate(keyEventTap)
@@ -76,6 +89,10 @@ public class CompletionsController: ObservableObject {
 								  CFMachPortCreateRunLoopSource(kCFAllocatorDefault, keyEventTap, 0),
 								  .commonModes)
 			self.keyEventTap = nil
+		}
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.server?.stopServer()
 		}
 	}
 	
@@ -126,6 +143,8 @@ public class CompletionsController: ObservableObject {
 	
 	/// Function to generate and display the next completion
 	private func generateAndDisplayCompletion() async {
+		// Exit if disabled
+		guard Settings.didSetUpCompletions && Settings.useCompletions else { return }
 		// Exit if is typing or if app is on exclusion list
 		guard !self.isTyping else { return }
 		if let currentId = NSWorkspace.shared.frontmostApplication?.bundleIdentifier,
@@ -198,7 +217,7 @@ public class CompletionsController: ObservableObject {
 		text: String
 	) async -> String? {
 		// Generate tokens
-		guard let tokens = await self.server.getCompletion(
+		guard let tokens = await self.server?.getCompletion(
 			text: text,
 			maxTokenNumber: 5
 		) else {

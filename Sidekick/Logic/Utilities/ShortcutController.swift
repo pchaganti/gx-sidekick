@@ -14,7 +14,7 @@ public class ShortcutController {
 	static public let shared: ShortcutController = .init()
 	
 	/// A `Bool` indicating if completion shortcuts are registered
-	public var completionsShortcutsEnabled: Bool = false
+	public var completionsShortcutsEnabled: Bool = true
 	
 	/// Function to setup global keyboard shortcuts
 	@MainActor

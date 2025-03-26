@@ -217,6 +217,7 @@
 		2099BDA92CB81A1300E02732 /* ExpertListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2099BDA82CB81A1300E02732 /* ExpertListView.swift */; };
 		2099BDAD2CB8222A00E02732 /* ExpertEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2099BDAC2CB8222A00E02732 /* ExpertEditorView.swift */; };
 		2099BDB22CB828A500E02732 /* PopoverButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2099BDB12CB828A500E02732 /* PopoverButton.swift */; };
+		209B200A2D940F8400C79185 /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 209B20092D940F8400C79185 /* LaunchAtLogin */; };
 		20A40C802D71872600A9D9A9 /* SlideStudioPreviewEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A40C7F2D71872600A9D9A9 /* SlideStudioPreviewEditor.swift */; };
 		20A40C832D718D4300A9D9A9 /* CodeEditorView in Frameworks */ = {isa = PBXBuildFile; productRef = 20A40C822D718D4300A9D9A9 /* CodeEditorView */; };
 		20A40C852D718D4300A9D9A9 /* LanguageSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 20A40C842D718D4300A9D9A9 /* LanguageSupport */; };
@@ -691,6 +692,7 @@
 				2064353A2D905D2300020CC0 /* SimilaritySearchKitDistilbert in Frameworks */,
 				20CC0C2F2CE2401600A3BC40 /* ExtractKit-macOS in Frameworks */,
 				2064353D2D905DBB00020CC0 /* SimilaritySearchKit in Frameworks */,
+				209B200A2D940F8400C79185 /* LaunchAtLogin in Frameworks */,
 				20CB50382D828CB60064D460 /* LaTeXSwiftUI in Frameworks */,
 				20573F282CB52F84004C19FE /* Splash in Frameworks */,
 				200619BA2D678694001949EF /* WebViewKit in Frameworks */,
@@ -1692,6 +1694,7 @@
 				2064353C2D905DBB00020CC0 /* SimilaritySearchKit */,
 				2064353E2D905DBB00020CC0 /* SimilaritySearchKitDistilbert */,
 				20457D382D92A5FB00954892 /* AXSwift */,
+				209B20092D940F8400C79185 /* LaunchAtLogin */,
 			);
 			productName = Sidekick;
 			productReference = 200549732CAFA67B00A3DCF2 /* Sidekick.app */;
@@ -1810,6 +1813,7 @@
 				205E3F262D8723AB00128D67 /* XCRemoteSwiftPackageReference "Highlightr" */,
 				2064353B2D905DBB00020CC0 /* XCRemoteSwiftPackageReference "similarity-search-kit" */,
 				20457D372D92A5FB00954892 /* XCRemoteSwiftPackageReference "AXSwift" */,
+				209B20082D940F8400C79185 /* XCRemoteSwiftPackageReference "LaunchAtLogin-Modern" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 200549742CAFA67B00A3DCF2 /* Products */;
@@ -2605,6 +2609,14 @@
 				minimumVersion = 1.2.2;
 			};
 		};
+		209B20082D940F8400C79185 /* XCRemoteSwiftPackageReference "LaunchAtLogin-Modern" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/LaunchAtLogin-Modern";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		20A40C812D718D4300A9D9A9 /* XCRemoteSwiftPackageReference "CodeEditorView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mchakravarty/CodeEditorView";
@@ -2731,6 +2743,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 208388DB2CBF4E8A00C2A9F8 /* XCRemoteSwiftPackageReference "SecureDefaults" */;
 			productName = SecureDefaults;
+		};
+		209B20092D940F8400C79185 /* LaunchAtLogin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 209B20082D940F8400C79185 /* XCRemoteSwiftPackageReference "LaunchAtLogin-Modern" */;
+			productName = LaunchAtLogin;
 		};
 		20A40C822D718D4300A9D9A9 /* CodeEditorView */ = {
 			isa = XCSwiftPackageProductDependency;

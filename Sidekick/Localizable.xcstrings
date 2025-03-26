@@ -640,6 +640,16 @@
         }
       }
     },
+    "Controls whether Sidekick launches automatically at login." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "控制 Sidekick 会否在登录时自动启动。"
+          }
+        }
+      }
+    },
     "Controls whether the GPU is used for inference." : {
       "localizations" : {
         "zh-Hans" : {
@@ -2047,6 +2057,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "密钥"
+          }
+        }
+      }
+    },
+    "Launch at Login" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自动启动"
           }
         }
       }

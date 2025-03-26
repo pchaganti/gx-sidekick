@@ -6,6 +6,7 @@
 //
 
 import MarkdownUI
+import LaunchAtLogin
 import SwiftUI
 
 struct GeneralSettingsView: View {
@@ -22,11 +23,12 @@ struct GeneralSettingsView: View {
     var body: some View {
 		Form {
 			Section {
-				usernameEditor
+				launchAtLogin
 			} header: {
-				Text("Username")
+				Text("General")
 			}
 			Section {
+				usernameEditor
 				soundEffects
 				generateConversationTitlesToggle
 				codeInterpreter
@@ -41,6 +43,21 @@ struct GeneralSettingsView: View {
 			SpeechSynthesizer.shared.fetchVoices()
 		}
     }
+	
+	var launchAtLogin: some View {
+		HStack(alignment: .center) {
+			VStack(alignment: .leading) {
+				Text("Launch at Login")
+					.font(.title3)
+					.bold()
+				Text("Controls whether Sidekick launches automatically at login.")
+					.font(.caption)
+			}
+			Spacer()
+			LaunchAtLogin.Toggle()
+				.labelsHidden()
+		}
+	}
 	
 	var usernameEditor: some View {
 		HStack(alignment: .center) {
