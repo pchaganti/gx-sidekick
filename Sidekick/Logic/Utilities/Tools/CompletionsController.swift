@@ -337,7 +337,7 @@ public class CompletionsController: ObservableObject {
 		textField.frame = panel.contentView?.bounds ?? rect
 		textField.alignment = .left
 		textField.font = font
-		textField.textColor = .textColor.withAlphaComponent(0.5)
+		textField.textColor = NSColor(Color.primary).withAlphaComponent(0.6)
 		textField.backgroundColor = .clear
 		textField.autoresizingMask = [.width, .height]
 		panel.contentView = textField
