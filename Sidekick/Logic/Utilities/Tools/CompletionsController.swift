@@ -135,7 +135,7 @@ public class CompletionsController: ObservableObject {
 		// Reset completions
 		self.reset()
 		// Get and check text
-		guard let text = fetchText() else {
+		guard let text = self.fetchPrecedingText() else {
 			return
 		}
 		let lengthThreshold = 5
@@ -149,17 +149,22 @@ public class CompletionsController: ObservableObject {
 			return
 		}
 		self.completion = content
-		self.displayCompletion(text: content)
+		// Enable shortcut
 		if !self.isTyping {
-			ShortcutController.refreshCompletionsShortcuts(isEnabled: true)
+			self.displayCompletion(text: content)
+			await MainActor.run {
+				ShortcutController.refreshCompletionsShortcuts(isEnabled: true)
+			}
 		}
 	}
 	
 	/// Function to generate the completion text from the focused element.
-	private func fetchText() -> String? {
+	private func fetchPrecedingText() -> String? {
+		// Get text of focused field
 		guard var text = try? ActiveApplicationInspector.getFocusedElementText() else {
 			return nil
 		}
+		// Extract part preceding text caret
 		if let focusedElementRef = ActiveApplicationInspector.getFocusedElement() {
 			let properties: [String: Any] = ActiveApplicationInspector.getAllProperties(for: focusedElementRef)
 			let markedRange = properties["AXSelectedTextRange"]
@@ -185,7 +190,6 @@ public class CompletionsController: ObservableObject {
 		let fullText: String = text + tokens.map({ token in
 			token.token
 		}).joined()
-		print(fullText)
 		// Filter tokens
 		let confidenceThreshold: Double = -2.5
 		let maxSpecialCharacters: Double = 0.5
@@ -232,9 +236,10 @@ public class CompletionsController: ObservableObject {
 		let cursorBounds = CursorBounds()
 		let topLeading = cursorBounds.getOrigin(xCorner: .minX, yCorner: .minY)
 		let bottomTrailing = cursorBounds.getOrigin(xCorner: .maxX, yCorner: .maxY)
-		guard let topLeadingOrigin = topLeading, let bottomTrailingOrigin = bottomTrailing else {
+		guard let topLeadingOrigin = topLeading, let bottomTrailingOrigin = bottomTrailing, topLeadingOrigin.type.rawValue.contains("Caret") else {
 			return
 		}
+		// Calculate coordinates
 		let height = abs(topLeadingOrigin.NSPoint.y - bottomTrailingOrigin.NSPoint.y)
 		let originY: CGFloat = {
 			if topLeadingOrigin.type == .caretFallback {
@@ -314,7 +319,9 @@ public class CompletionsController: ObservableObject {
 	
 	/// Function to reset the completion.
 	private func reset() {
-		ShortcutController.refreshCompletionsShortcuts(isEnabled: false)
+		Task { @MainActor in
+			ShortcutController.refreshCompletionsShortcuts(isEnabled: false)
+		}
 		self.removePanels()
 	}
 	

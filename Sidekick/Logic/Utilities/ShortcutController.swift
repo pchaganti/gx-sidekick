@@ -42,6 +42,7 @@ public class ShortcutController {
 	}
 	
 	/// Function to refresh completions shortcuts
+	@MainActor
 	public static func refreshCompletionsShortcuts(
 		isEnabled: Bool? = nil
 	) {
