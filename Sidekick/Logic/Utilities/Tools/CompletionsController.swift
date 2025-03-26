@@ -124,7 +124,6 @@ public class CompletionsController: ObservableObject {
 			}
 		}
 		let _ = Accessibility.shared.simulateTyping(for: word)
-		ShortcutController.refreshCompletionsShortcuts(isEnabled: false)
 		self.isTyping = false
 	}
 	
@@ -137,7 +136,6 @@ public class CompletionsController: ObservableObject {
 		self.isTyping = true
 		ShortcutController.refreshCompletionsShortcuts(isEnabled: false)
 		let _ = Accessibility.shared.simulateTyping(for: completion)
-		ShortcutController.refreshCompletionsShortcuts(isEnabled: false)
 		self.isTyping = false
 	}
 	
