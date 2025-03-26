@@ -134,17 +134,23 @@ public class CompletionsController: ObservableObject {
 		}
 		// Reset completions
 		self.reset()
-		// Get and check text
-		guard let text = self.fetchPrecedingText() else {
+		// Get text
+		guard let (preText, postText) = self.fetchText() else {
 			return
 		}
+		// Check following text
+		print(postText)
+		if !postText.isEmpty && !postText.hasPrefix("\n\n") {
+			return
+		}
+		// Check preceding text
 		let lengthThreshold = 5
-		guard text.count >= lengthThreshold else {
+		guard preText.count >= lengthThreshold else {
 			return
 		}
 		// Fetch the text being edited and check length
 		guard let content: String = await self.generateCompletion(
-			text: text
+			text: preText
 		) else {
 			return
 		}
@@ -159,20 +165,32 @@ public class CompletionsController: ObservableObject {
 	}
 	
 	/// Function to generate the completion text from the focused element.
-	private func fetchPrecedingText() -> String? {
+	private func fetchText() -> (
+		preText: String,
+		postText: String
+	)? {
 		// Get text of focused field
-		guard var text = try? ActiveApplicationInspector.getFocusedElementText() else {
+		guard var preText = try? ActiveApplicationInspector.getFocusedElementText() else {
 			return nil
 		}
 		// Extract part preceding text caret
+		var postText: String = ""
 		if let focusedElementRef = ActiveApplicationInspector.getFocusedElement() {
 			let properties: [String: Any] = ActiveApplicationInspector.getAllProperties(for: focusedElementRef)
 			let markedRange = properties["AXSelectedTextRange"]
 			if let location = ActiveApplicationInspector.getEditingLocation(from: markedRange) {
-				text = String(text.dropLast(max(text.count - location, 0)))
+				postText = String(
+					preText.dropFirst(min(location, preText.count))
+				)
+				let dropCount: Int = max(preText.count - location, 0)
+				preText = String(preText.dropLast(dropCount))
+			} else {
+				return nil
 			}
+		} else {
+			return nil
 		}
-		return text
+		return (preText, postText)
 	}
 	
 	/// Function to generate a completion for focused text field's text
