@@ -58,9 +58,9 @@ struct ToolCardButton: View {
 			Text(description)
 				.font(.subheadline)
 				.foregroundColor(.secondary)
-				.multilineTextAlignment(.center)
 		}
-		.frame(width: 150, height: 150)
+		.frame(width: 160, height: 160)
+		.multilineTextAlignment(.center)
 		.padding()
 		.background {
 			RoundedRectangle(

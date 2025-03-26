@@ -10,6 +10,12 @@ import KeyboardShortcuts
 
 public class ShortcutController {
 	
+	/// Static constant for the global ``ShortcutController`` object
+	static public let shared: ShortcutController = .init()
+	
+	/// A `Bool` indicating if completion shortcuts are registered
+	public var completionsShortcutsEnabled: Bool = false
+	
 	/// Function to setup global keyboard shortcuts
 	@MainActor
 	public static func setup() {
@@ -22,12 +28,12 @@ public class ShortcutController {
 		ShortcutController.setupShortcut(
 			name: .acceptNextToken
 		) {
-			print("Accept next token")
+			CompletionsController.shared.typeNextWord()
 		}
 		ShortcutController.setupShortcut(
 			name: .acceptAllTokens
 		) {
-			print("Accept all tokens")
+			CompletionsController.shared.typeCompletion()
 		}
 		// Disable completions shortcuts until a suggestion is ready
 		ShortcutController.refreshCompletionsShortcuts(
@@ -44,13 +50,20 @@ public class ShortcutController {
 			.acceptAllTokens
 		]
 		let isEnabled: Bool = isEnabled ?? (Settings.useCompletions && Settings.didSetUpCompletions)
+		// If no change, exit
+		if isEnabled == Self.shared.completionsShortcutsEnabled {
+			return
+		}
 		// If completions are not enabled or ready, or if specified
 		if !isEnabled {
+			// Check if enabled
 			KeyboardShortcuts.disable(shortcuts)
 		} else {
 			// Else, make sure they are active
 			KeyboardShortcuts.enable(shortcuts)
 		}
+		// Log state
+		Self.shared.completionsShortcutsEnabled = isEnabled
 	}
 	
 	/// Function to set default keyboard shortcuts
@@ -77,7 +90,7 @@ public class ShortcutController {
 		if KeyboardShortcuts.getShortcut(
 			for: .acceptAllTokens
 		) == nil {
-			// Set to "Tab"
+			// Set to "Shift + Tab"
 			KeyboardShortcuts.setShortcut(
 				.init(.tab, modifiers: .shift),
 				for: .acceptAllTokens

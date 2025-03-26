@@ -103,7 +103,7 @@ public class DownloadManager: NSObject, ObservableObject {
 		// Set to not add model
 		self.shouldAddModel = false
 		// Get default model
-		let modelUrl: URL = URL(string: "https://huggingface.co/mradermacher/Qwen2.5-1.5B-GGUF/resolve/main/Qwen2.5-1.5B.IQ4_XS.gguf")!
+		let modelUrl: URL = URL(string: "https://huggingface.co/Triangle104/Dolphin3.0-Qwen2.5-1.5B-Q4_K_M-GGUF/resolve/main/dolphin3.0-qwen2.5-1.5b-q4_k_m.gguf")!
 		print("Trying to download \(modelUrl.deletingLastPathComponent().lastPathComponent)")
 		// Download model
 		await self.downloadModel(url: modelUrl)

@@ -22,7 +22,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**设置已完成**"
+            "value" : "**已完成配置**"
           }
         }
       }
@@ -51,10 +51,24 @@
       }
     },
     "Accept All Suggestions" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接受整段建议"
+          }
+        }
+      }
     },
     "Accept Next Word" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接受单词"
+          }
+        }
+      }
     },
     "Add" : {
       "localizations" : {
@@ -297,7 +311,14 @@
       }
     },
     "Automatically generate and suggest typing suggestions based on your text." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "根据您的文本自动生成并提出续写建议。"
+          }
+        }
+      }
     },
     "Automatically generate conversation titles based on the first message in each conversation." : {
       "localizations" : {
@@ -470,7 +491,14 @@
       }
     },
     "Click the button below to download a completion model." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "单击下面的按钮下载模型。"
+          }
+        }
+      }
     },
     "Click to view a resource referenced in the chatbot's response." : {
       "localizations" : {
@@ -503,10 +531,24 @@
       }
     },
     "Completions is now ready to use!" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已启用文本续写！"
+          }
+        }
+      }
     },
     "Completions will be deactivated in these apps." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文本续写功能将在这些应用程序中被停用。"
+          }
+        }
+      }
     },
     "Concise" : {
       "localizations" : {
@@ -1309,7 +1351,14 @@
       }
     },
     "Excluded Apps" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "程序内禁用"
+          }
+        }
+      }
     },
     "Exit" : {
       "localizations" : {
@@ -2289,7 +2338,14 @@
       }
     },
     "Next" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下一步"
+          }
+        }
+      }
     },
     "Next Expert" : {
       "localizations" : {
@@ -2542,10 +2598,24 @@
       }
     },
     "Press `Shift + Tab` to accept a suggested phrase" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按“Shift + Tab”接受建议的短语"
+          }
+        }
+      }
     },
     "Press `Tab` to accept a suggested word" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按“Tab”键接受建议的单词"
+          }
+        }
+      }
     },
     "Previous Expert" : {
       "localizations" : {
@@ -3098,7 +3168,14 @@
       }
     },
     "Set Up" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "配置"
+          }
+        }
+      }
     },
     "Settings" : {
       "localizations" : {
@@ -3491,10 +3568,24 @@
       }
     },
     "The shortcut used to accept the full completion suggestion." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用于接受整段文本续写建议的快捷方式。"
+          }
+        }
+      }
     },
     "The shortcut used to accept the next word in completion suggestions." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用于接受文本续写建议中的下一个单词的快捷方式。"
+          }
+        }
+      }
     },
     "The shortcut used to trigger and dismiss inline writing assistant commands." : {
       "localizations" : {
@@ -3737,7 +3828,14 @@
       }
     },
     "Use Completions" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用文本续写"
+          }
+        }
+      }
     },
     "Use Default" : {
       "localizations" : {

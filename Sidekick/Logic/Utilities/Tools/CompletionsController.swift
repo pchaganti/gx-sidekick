@@ -21,36 +21,19 @@ public class CompletionsController: ObservableObject {
 		category: String(describing: Model.self)
 	)
 	
-	/// Initializes the ``CompletionsController`` object
-	init() {
-		// Assign variables
-		self.completion = nil
-		// Start server
-		self.server = LlamaServer(
-			modelUrl: InferenceSettings.completionsModelUrl,
-			port: self.port
-		)
-		Task {
-			try await self.server.startServer()
-		}
-		self.setupObservers()
-	}
-	
 	/// Static constant for the global ``CompletionsController`` object
 	static public let shared: CompletionsController = .init()
 	
-	/// The global key monitor
-	private var monitors: [Any?] = []
+	/// The event monitors (for scroll and click events) and the event tap for keyUp
+	private var monitors: [Any] = []
+	private var keyEventTap: CFMachPort?
 	
 	/// A `String` for the completion content
-	@Published var completion: String? = nil {
-		didSet {
-			// If the completion is not blank, set shortcut
-			ShortcutController.refreshCompletionsShortcuts(
-				isEnabled: completion != nil
-			)
-		}
-	}
+	@Published var completion: String? = nil
+	
+	/// A `Bool` representing if typing is in progress
+	private var isTyping: Bool = false
+	
 	/// A list of `NSPanel` to display the content
 	private var panels: [NSPanel] = []
 	
@@ -62,98 +45,174 @@ public class CompletionsController: ObservableObject {
 	/// An `Int` representing the port on which the server responds
 	private var port: Int = 9020
 	
+	/// Initializes the ``CompletionsController`` object
+	init() {
+		// Assign variables
+		self.completion = nil
+		// Start server
+		self.server = LlamaServer(
+			modelUrl: InferenceSettings.completionsModelUrl,
+			port: self.port
+		)
+		Task { [weak self] in
+			guard let self = self else { return }
+			try await self.server.startServer()
+		}
+		self.setupObservers()
+	}
+	
+	deinit {
+		// Remove NSEvent monitors
+		for monitor in self.monitors {
+			NSEvent.removeMonitor(monitor)
+		}
+		self.monitors.removeAll()
+		NSWorkspace.shared.notificationCenter.removeObserver(self)
+		
+		// Disable and remove the key event tap
+		if let keyEventTap = self.keyEventTap {
+			CFMachPortInvalidate(keyEventTap)
+			CFRunLoopRemoveSource(CFRunLoopGetCurrent(),
+								  CFMachPortCreateRunLoopSource(kCFAllocatorDefault, keyEventTap, 0),
+								  .commonModes)
+			self.keyEventTap = nil
+		}
+	}
+	
+	/// A function to type the next word in the completion
+	@MainActor
+	public func typeNextWord() {
+		guard let completion = self.completion, !self.isTyping else {
+			return
+		}
+		var word: String = completion
+		self.isTyping = true
+		ShortcutController.refreshCompletionsShortcuts(isEnabled: false)
+		let passCount = completion.count(where: { $0.isASCII })
+		let percent = Double(passCount) / Double(completion.count)
+		if percent > 0.3 {
+			let components = completion.components(separatedBy: " ")
+			word = ""
+			for component in components {
+				if component.isEmpty {
+					word += " "
+					continue
+				}
+				word += component
+				break
+			}
+		} else {
+			if let first = completion.first {
+				word = String(first)
+			}
+		}
+		let _ = Accessibility.shared.simulateTyping(for: word)
+		ShortcutController.refreshCompletionsShortcuts(isEnabled: false)
+		self.isTyping = false
+	}
+	
+	/// A function to type the complete text
+	@MainActor
+	public func typeCompletion() {
+		guard let completion = self.completion, !self.isTyping else {
+			return
+		}
+		self.isTyping = true
+		ShortcutController.refreshCompletionsShortcuts(isEnabled: false)
+		let _ = Accessibility.shared.simulateTyping(for: completion)
+		ShortcutController.refreshCompletionsShortcuts(isEnabled: false)
+		self.isTyping = false
+	}
+	
 	/// Function to generate and display the next completion
 	private func generateAndDisplayCompletion() async {
-		// Check app
-		if let currentId: String = NSWorkspace.shared.frontmostApplication?.bundleIdentifier,
+		// Exit if is typing or if app is on exclusion list
+		guard !self.isTyping else { return }
+		if let currentId = NSWorkspace.shared.frontmostApplication?.bundleIdentifier,
 		   Settings.completionsExcludedApps.contains(currentId) {
 			return
 		}
-		// Get rid of current displayed completions
+		// Reset completions
 		self.reset()
-		// Fetch text
-		guard var text = fetchText() else {
+		// Get and check text
+		guard let text = fetchText() else {
 			return
 		}
-		// Check if text is long enough
-		let lengthThreshold: Int = 10
+		let lengthThreshold = 5
 		guard text.count >= lengthThreshold else {
 			return
 		}
-		// Append instructions
-		text = """
-My name is \(Settings.username). I usually write in English and Chinese.
-
-Write in a friendly, professional and empathetic voice. Keep your sentences short, concise and readable.
-
-\(text)
-"""
-		// Generate
-		guard let tokens: [LlamaServer.Token] = await self.server.getCompletion(
-			text: text,
-			maxTokenNumber: 3
+		// Fetch the text being edited and check length
+		guard let content: String = await self.generateCompletion(
+			text: text
 		) else {
 			return
 		}
-		// Filter tokens
-		let confidenceThreshold: Double = -0.8
-		let specialCharacterThreshold: Double = 0.7
-		var failCount: Int = tokens.count
-		for token in tokens {
-			// Check
-			let logprobPass: Bool = token.logprob > confidenceThreshold
-			let charPass: Bool = token.token.nonSpecialCharactersPercent() > specialCharacterThreshold
-			// If they pass, increment count by minus one
-			if logprobPass || charPass {
-				failCount -= 1
-			}
-		}
-		// Put content together
-		let content: String = tokens.map({ token in
-			return token.token
-		}).dropLast(failCount).joined()
-		// Check length of content
-		guard content.count > 3 else { return }
 		self.completion = content
-		// Display
-		self.displayCompletion(
-			text: content
-		)
+		self.displayCompletion(text: content)
+		if !self.isTyping {
+			ShortcutController.refreshCompletionsShortcuts(isEnabled: true)
+		}
 	}
 	
-	/// Function to generate the completion text
+	/// Function to generate the completion text from the focused element.
 	private func fetchText() -> String? {
-		// Get the text in the focused field
 		guard var text = try? ActiveApplicationInspector.getFocusedElementText() else {
 			return nil
 		}
-		// Get the focused field's size
 		if let focusedElementRef = ActiveApplicationInspector.getFocusedElement() {
-			let properties: [String: Any] = ActiveApplicationInspector.getAllProperties(
-				for: focusedElementRef
-			)
+			let properties: [String: Any] = ActiveApplicationInspector.getAllProperties(for: focusedElementRef)
 			let markedRange = properties["AXSelectedTextRange"]
-			if let location = ActiveApplicationInspector.getEditingLocation(
-				from: markedRange
-			) {
+			if let location = ActiveApplicationInspector.getEditingLocation(from: markedRange) {
 				text = String(text.dropLast(max(text.count - location, 0)))
 			}
 		}
 		return text
 	}
 	
-	/// Function to get the rect of the focused field
+	/// Function to generate a completion for focused text field's text
+	private func generateCompletion(
+		text: String
+	) async -> String? {
+		// Generate tokens
+		guard let tokens = await self.server.getCompletion(
+			text: text,
+			maxTokenNumber: 5
+		) else {
+			return nil
+		}
+		// Print unfiltered preview
+		let fullText: String = text + tokens.map({ token in
+			token.token
+		}).joined()
+		print(fullText)
+		// Filter tokens
+		let confidenceThreshold: Double = -2.5
+		let maxSpecialCharacters: Double = 0.5
+		var failCount = tokens.count
+		for token in tokens {
+			let logprobPass = token.logprob > confidenceThreshold
+			let charPass = token.token.nonSpecialCharactersPercent() > (1 - maxSpecialCharacters)
+			if logprobPass && charPass {
+				failCount -= 1
+			} else {
+				break
+			}
+		}
+		var content: String = tokens.map({ token in token.token }).dropLast(failCount).joined()
+		if content.first == " " && text.last == " " {
+			content.trimPrefix(" ")
+		}
+		return content
+	}
+	
+	/// Function to get the rect of the focused field.
 	private func getRect() -> CGRect? {
-		// Get the focused field's size and position
 		if let focusedElementRef = ActiveApplicationInspector.getFocusedElement() {
-			let properties: [String: Any] = ActiveApplicationInspector.getAllProperties(
-				for: focusedElementRef
-			)
-			// Retrieve the "AXFrame" property using a forced cast.
+			let properties: [String: Any] = ActiveApplicationInspector.getAllProperties(for: focusedElementRef)
 			if let axFrame = properties["AXFrame"] {
 				let axFrameValue = axFrame as! AXValue
 				var rect = CGRect.zero
-				// Use AXValueGetValue to extract the CGRect.
 				if AXValueGetValue(axFrameValue, .cgRect, &rect) {
 					return rect
 				}
@@ -162,106 +221,107 @@ Write in a friendly, professional and empathetic voice. Keep your sentences shor
 		return nil
 	}
 	
-	/// Function to display the generated completion
-	private func displayCompletion(
-		text: String
-	) {
-		// Get the focused field's size and position
-		guard let rect: CGRect = self.getRect() else {
+	/// Function to display the generated completion in floating panels.
+	private func displayCompletion(text: String) {
+		guard let rect = self.getRect() else {
 			print("Failed to get focused field rect")
 			return
 		}
-		let size: CGSize = rect.size
-		let position: CGPoint = rect.origin
-		// Get text caret position
+		let size = rect.size
+		let position = rect.origin
 		let cursorBounds = CursorBounds()
-		let topLeading: Origin? = cursorBounds.getOrigin(
-			xCorner: .minX,
-			yCorner: .minY
-		)
-		let bottomTrailing: Origin? = cursorBounds.getOrigin(
-			xCorner: .maxX,
-			yCorner: .maxY
-		)
-		guard let topLeading, let bottomTrailing else {
+		let topLeading = cursorBounds.getOrigin(xCorner: .minX, yCorner: .minY)
+		let bottomTrailing = cursorBounds.getOrigin(xCorner: .maxX, yCorner: .maxY)
+		guard let topLeadingOrigin = topLeading, let bottomTrailingOrigin = bottomTrailing else {
 			return
 		}
-		// Put together same row rect
-		let height: CGFloat = topLeading.NSPoint.y - bottomTrailing.NSPoint.y
-		let sameRowRect: CGRect = CGRect(
+		let height = abs(topLeadingOrigin.NSPoint.y - bottomTrailingOrigin.NSPoint.y)
+		let originY: CGFloat = {
+			if topLeadingOrigin.type == .caretFallback {
+				return bottomTrailingOrigin.NSPoint.y - height
+			}
+			return bottomTrailingOrigin.NSPoint.y
+		}()
+		let sameRowRect = CGRect(
 			origin: NSPoint(
-				x: bottomTrailing.NSPoint.x,
-				y: bottomTrailing.NSPoint.y - height
+				x: bottomTrailingOrigin.NSPoint.x,
+				y: originY
 			),
 			size: CGSize(
-				width: (position.x + size.width) - topLeading.NSPoint.x,
+				width: (position.x + size.width) - topLeadingOrigin.NSPoint.x,
 				height: height
 			)
 		)
-		// Reset and create panels
-		self.removePanels()
-		Task { @MainActor in
-			let panel = self.createFloatingPanel(
-				with: sameRowRect,
-				text: text
+		let rowRect = CGRect(
+			origin: CGPoint(
+				x: rect.minX,
+				y: originY - height
+			),
+			size: CGSize(
+				width: rect.width,
+				height: height
 			)
-			self.panels.append(panel)
+		)
+		Task { @MainActor [weak self] in
+			guard let self = self else { return }
+			self.panels.forEach { panel in
+				panel.close()
+			}
+			self.panels.removeAll()
+			var textToDisplay = text
+			let panelResult = self.getFloatingPanel(with: sameRowRect, text: textToDisplay)
+			self.panels.append(panelResult.panel)
+			textToDisplay = panelResult.leftoverText
+			if !textToDisplay.isEmpty {
+				let newRowPanelResult = self.getFloatingPanel(with: rowRect, text: textToDisplay)
+				self.panels.append(newRowPanelResult.panel)
+			}
 		}
 	}
 	
-	func createFloatingPanel(
-		with rect: CGRect,
-		text: String
-	) -> NSPanel {
-		// Create an NSPanel with the borderless style
+	/// Returns a tuple with the NSPanel displaying the text that fits and any leftover text.
+	func getFloatingPanel(with rect: CGRect, text: String) -> (panel: NSPanel, leftoverText: String) {
+		let font = NSFont.systemFont(ofSize: rect.height * 0.8)
+		let (fittingText, leftoverText) = self.fittingSubstring(for: text, in: rect, using: font)
 		let panel = NSPanel(
 			contentRect: rect,
 			styleMask: [.nonactivatingPanel, .borderless],
 			backing: .buffered,
 			defer: false
 		)
-		// Set the panel to be non-activating (clicking on the panel does not steal focus from the app)
 		panel.isFloatingPanel = true
-		// Ensure the panel appears above other apps by setting a high window level
 		panel.level = .modalPanel
-		// Allow the panel to appear on all Spaces
 		panel.collectionBehavior = [.canJoinAllSpaces, .ignoresCycle]
-		// Set the background to clear
 		panel.backgroundColor = NSColor.clear
-		// Set text view
-		let textField = NSTextField(labelWithString: text)
+		let textField = NSTextField(labelWithString: fittingText)
 		textField.frame = panel.contentView?.bounds ?? rect
 		textField.alignment = .left
-		textField.font = NSFont.systemFont(ofSize: panel.frame.height * 0.8)
+		textField.font = font
 		textField.textColor = .textColor.withAlphaComponent(0.5)
 		textField.backgroundColor = .clear
 		textField.autoresizingMask = [.width, .height]
 		panel.contentView = textField
-		// Remove shadow
 		panel.hasShadow = false
-		// Display the panel
 		panel.orderFrontRegardless()
-		return panel
+		return (panel, leftoverText)
 	}
 	
-	/// Function to set the `AXObserver`
+	/// Function to set the AXObserver.
 	@objc private func refreshObserver(note: NSNotification) {
 		self.reset()
-		// Refresh Observer
 		self.refreshObserver()
 	}
 	
-	/// Function to reset the completion
+	/// Function to reset the completion.
 	private func reset() {
+		ShortcutController.refreshCompletionsShortcuts(isEnabled: false)
 		self.removePanels()
-		// Reset completion
-		self.completion = nil
 	}
 	
-	/// Function to remove all panels
+	/// Function to remove all panels.
 	private func removePanels() {
-		// Remove panels
-		Task { @MainActor in
+		Task { @MainActor [weak self] in
+			guard let self = self else { return }
 			self.panels.forEach { panel in
 				panel.close()
 			}
@@ -269,62 +329,69 @@ Write in a friendly, professional and empathetic voice. Keep your sentences shor
 		}
 	}
 	
-	/// Function to setup event observers
+	/// Function to setup event observers, including a CGEvent tap for keyUp events.
 	private func setupObservers() {
-		// Setup NSWorkspace notifications
-		[
+		let notifications: [NSNotification.Name: Selector] = [
 			NSWorkspace.didDeactivateApplicationNotification: #selector(refreshObserver(note:)),
 			NSWorkspace.didLaunchApplicationNotification: #selector(refreshObserver(note:)),
 			NSWorkspace.didTerminateApplicationNotification: #selector(refreshObserver(note:)),
 			NSWorkspace.activeSpaceDidChangeNotification: #selector(refreshObserver(note:))
-		].forEach { notification, sel in
-			NSWorkspace.shared.notificationCenter.addObserver(
-				self,
-				selector: sel,
-				name: notification,
-				object: nil
-			)
-		}
-		// Start watcher
-		let keyMonitor = NSEvent.addGlobalMonitorForEvents(
-			matching: .keyUp
-		) { _ in
-			// Generate and show completion
-			Task {
-				await self.generateAndDisplayCompletion()
-			}
-		}
-		let scrollMonitor = NSEvent.addGlobalMonitorForEvents(
-			matching: .scrollWheel
-		) { _ in
-			// Reset
-			self.reset()
-		}
-		let clickMonitor = NSEvent.addGlobalMonitorForEvents(
-			matching: .leftMouseDown
-		) { _ in
-			// Reset
-			self.reset()
-		}
-		self.monitors += [
-			keyMonitor,
-			scrollMonitor,
-			clickMonitor
 		]
+		for (notification, selector) in notifications {
+			NSWorkspace.shared.notificationCenter.addObserver(self,
+															  selector: selector,
+															  name: notification,
+															  object: nil)
+		}
+		// Setup a CGEvent tap for keyUp events that works globally.
+		let eventMask = (1 << CGEventType.keyUp.rawValue)
+		let callback: CGEventTapCallBack = { (proxy, type, event, refcon) in
+			guard type == CGEventType.keyUp else { return Unmanaged.passUnretained(event) }
+			if let refcon = refcon {
+				let controller = Unmanaged<CompletionsController>.fromOpaque(refcon).takeUnretainedValue()
+				Task {
+					await controller.generateAndDisplayCompletion()
+				}
+			}
+			return Unmanaged.passUnretained(event)
+		}
+		
+		let refcon = UnsafeMutableRawPointer(Unmanaged.passUnretained(self).toOpaque())
+		if let tap = CGEvent.tapCreate(
+			tap: .cgSessionEventTap,
+			place: .headInsertEventTap,
+			options: .listenOnly,
+			eventsOfInterest: CGEventMask(eventMask),
+			callback: callback,
+			userInfo: refcon
+		) {
+			self.keyEventTap = tap
+			let runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, tap, 0)
+			CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, .commonModes)
+			CGEvent.tapEnable(tap: tap, enable: true)
+		} else {
+			print("Failed to create key event tap. Ensure the app is trusted for accessibility.")
+		}
+		
+		// Global monitors for scroll and click events.
+		let scrollMonitor = NSEvent.addGlobalMonitorForEvents(matching: .scrollWheel) { [weak self] _ in
+			self?.reset()
+		}
+		let clickMonitor = NSEvent.addGlobalMonitorForEvents(matching: .leftMouseDown) { [weak self] _ in
+			self?.reset()
+		}
+		self.monitors.append(contentsOf: [scrollMonitor, clickMonitor])
 	}
 	
-	/// Function to refresh the `Observer`
+	/// Function to refresh the AXObserver.
 	private func refreshObserver() {
-		// Get active app
 		guard let appId = NSWorkspace.shared.frontmostApplication?.processIdentifier else {
 			print("No frontmost application")
 			return
 		}
-		if let app: Application = Application(forProcessID: appId) {
-			// Create and add observers
-			self.observer = app.createObserver {
-				(observer: Observer, element: UIElement, event: AXNotification, info: [String: AnyObject]?) in
-				self.reset()
+		if let app = Application(forProcessID: appId) {
+			self.observer = app.createObserver { [weak self] (observer, element, event, info) in
+				self?.reset()
 			}
 			let observedEvents: [AXNotification] = [
 				.focusedWindowChanged,
@@ -332,12 +399,65 @@ Write in a friendly, professional and empathetic voice. Keep your sentences shor
 				.windowMoved
 			]
 			for observedEvent in observedEvents {
-				try? self.observer?.addNotification(
-					observedEvent,
-					forElement: app
-				)
+				try? self.observer?.addNotification(observedEvent, forElement: app)
 			}
 		}
+	}
+}
+
+extension CompletionsController {
+	
+	/// Helper function to determine the maximum substring that fits in the rect while ensuring that no word is cut off.
+	func fittingSubstring(for text: String, in rect: CGRect, using font: NSFont) -> (fitting: String, leftover: String) {
+		func removePartialWord(from candidate: String, in fullText: String) -> String {
+			if candidate.isEmpty || candidate.last!.isWhitespace {
+				return candidate
+			}
+			if candidate.count == fullText.count {
+				return candidate
+			}
+			if let scalar = candidate.unicodeScalars.last,
+			   scalar.value >= 0x4E00 && scalar.value <= 0x9FFF {
+				return candidate
+			}
+			let nextIndex = fullText.index(fullText.startIndex, offsetBy: candidate.count)
+			if !fullText[nextIndex].isWhitespace {
+				if let lastSpaceIndex = candidate.lastIndex(where: { $0.isWhitespace }) {
+					return String(candidate[..<lastSpaceIndex])
+				}
+				return ""
+			}
+			return candidate
+		}
+		func doesFit(_ substring: String) -> Bool {
+			let attrStr = NSAttributedString(string: substring, attributes: [.font: font])
+			let boundingSize = CGSize(width: rect.width, height: CGFloat.greatestFiniteMagnitude)
+			let boundingRect = attrStr.boundingRect(with: boundingSize, options: [.usesLineFragmentOrigin, .usesFontLeading])
+			return boundingRect.height <= rect.height
+		}
+		let totalLength = text.count
+		var low = 0
+		var high = totalLength
+		var bestFit = 0
+		let characters = Array(text)
+		while low <= high {
+			let mid = (low + high) / 2
+			let candidate = String(characters.prefix(mid))
+			let adjusted = removePartialWord(from: candidate, in: text)
+			if adjusted.isEmpty {
+				low = mid + 1
+				continue
+			}
+			if doesFit(adjusted) {
+				bestFit = adjusted.count
+				low = mid + 1
+			} else {
+				high = mid - 1
+			}
+		}
+		let fittingStr = String(characters.prefix(bestFit))
+		let leftover = bestFit < totalLength ? String(characters.suffix(totalLength - bestFit)) : ""
+		return (fittingStr, leftover)
 	}
 	
 }

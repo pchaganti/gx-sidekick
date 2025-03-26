@@ -10,6 +10,7 @@ import SwiftUI
 public enum OriginType: String {
 	
     case caret = "Caret"
+	case caretFallback = "Caret Fallback"
     case rect = "Text Rect"
     case mouseCursor = "Mouse Cursor"
 	

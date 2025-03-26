@@ -24,8 +24,7 @@ class ActiveApplicationInspector {
 		guard let app = NSWorkspace.shared.frontmostApplication else {
 			throw InspectorError.noActiveApp
 		}
-		let pid = app.processIdentifier
-		let appRef = AXUIElementCreateApplication(pid)
+		let appRef = AXUIElementCreateApplication(app.processIdentifier)
 		// Verify we can access the application
 		var value: CFTypeRef?
 		let result = AXUIElementCopyAttributeValue(appRef, kAXRoleAttribute as CFString, &value)

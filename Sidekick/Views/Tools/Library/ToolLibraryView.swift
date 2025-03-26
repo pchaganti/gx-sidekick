@@ -15,7 +15,7 @@ struct ToolboxLibraryView: View {
 	@State private var showAssistantInstructionSheet: Bool = false
 	
 	let columns: [GridItem] = Array(
-		repeating: GridItem(.fixed(180)),
+		repeating: GridItem(.fixed(192.5)),
 		count: 2
 	)
 	

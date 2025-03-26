@@ -404,11 +404,15 @@ public extension String {
 	/// Function to calculate the percentage of the string made of non-special characters
 	func nonSpecialCharactersPercent() -> Double {
 		guard !self.isEmpty else { return 0.0 }
-		
 		let totalCharacters = self.count
 		let letterCharacterSet = CharacterSet.letters
-		
-		let nonSpecialCount = self.unicodeScalars.filter { letterCharacterSet.contains($0) }.count
+		let chineseCharacterRange = UnicodeScalar("一")...UnicodeScalar(
+			"龥"
+		)  // covers a broad range of Chinese ideographs
+		let nonSpecialCount = self.unicodeScalars.filter { scalar in
+			letterCharacterSet.contains(scalar) ||
+			(chineseCharacterRange.contains(scalar))
+		}.count
 		
 		return (Double(nonSpecialCount) / Double(totalCharacters)) * 100.0
 	}
