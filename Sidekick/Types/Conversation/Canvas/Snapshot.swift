@@ -277,7 +277,6 @@ public extension Snapshot.Site {
 					switch language {
 						case "html":
 							htmlCode = code
-							print("htmlCode: \(code)")
 						case "css":
 							cssCode = code
 						case "js", "javascript":
