@@ -37,7 +37,11 @@ public class InlineAssistantController: ObservableObject {
 	private func showInlineAssistant() {
 		// Get selected text
 		guard let selectedText: String = Accessibility.shared.getSelectedText() else {
-			// If no text is selected, exit
+			// If no text is selected, show alert, then exit
+			Dialogs.showAlert(
+				title: String(localized: "No Text Selected"),
+				message: String(localized: "Please select text before invoking Sidekick's Inline Writing Assistant")
+			)
 			return
 		}
 		// If no model is chosed, exit

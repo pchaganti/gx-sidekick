@@ -255,11 +255,13 @@ struct ConversationManagerView: View {
 						}
 				}
 		}
-		.disabled(
-			self.selectedConversation == nil || !(self.selectedConversation?.messages.contains { message in
-				return message.getSender() == .assistant
-			} ?? true)
-		)
+		.disabled({
+			let hasAssistantMessages = self.selectedConversation?.messages.contains {
+				$0.getSender() == .assistant
+			} ?? false
+			let hasMessages = !(self.selectedConversation?.messages.isEmpty ?? true)
+			return !hasAssistantMessages || !hasMessages
+		}())
 		.keyboardShortcut(.return, modifiers: [.command, .option])
 	}
 	

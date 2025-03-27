@@ -14,6 +14,7 @@ struct ModelSelectionView: View {
 	@Binding var selectedModel: Bool
 	
 	@State private var showServerModelSetup: Bool = false
+	@State private var didPressDownload: Bool = false
 	
     var body: some View {
 		VStack {
@@ -74,6 +75,8 @@ struct ModelSelectionView: View {
 	
 	var downloadButton: some View {
 		Button {
+			// Toggle flag
+			self.didPressDownload = true
 			// Start download of the default model
 			Task { @MainActor in
 				await self.downloadManager.downloadDefaultModel()
@@ -83,6 +86,7 @@ struct ModelSelectionView: View {
 				.padding(.horizontal, 20)
 		}
 		.keyboardShortcut(.defaultAction)
+		.disabled(didPressDownload)
 		.controlSize(.large)
 		.frame(minWidth: 220)
 	}
