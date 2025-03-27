@@ -357,6 +357,8 @@ DO NOT reference sources outside of those provided below. If you did not referen
 		let text: String = response.text.dropSuffixIfPresent("[]")
 		// Decode text for extract text and references
 		let delimiters: [String] = ["\n[", " ["]
+		// Set text as default if reference extraction fails
+		self.text = text
 		// For each delimiter
 		for delimiter in delimiters {
 			let messageText: String = text.dropFollowingSubstring(
@@ -403,12 +405,9 @@ DO NOT reference sources outside of those provided below. If you did not referen
 				) {
 					self.referencedURLs = references
 					self.text = messageText
-					return
 				}
 			}
 		}
-		// If fell through, just get text
-		self.text = text
 		// Try to extract snapshot
 		self.updateSnapshot()
 	}

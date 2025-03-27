@@ -250,32 +250,42 @@ public extension Snapshot.Site {
 		// Capture group 2: the actual code block content (including newlines)
 		let pattern = "```(\\w+)?\\n([\\s\\S]*?)```"
 		do {
-			let regex = try NSRegularExpression(pattern: pattern, options: [])
-			let nsRange = NSRange(markdown.startIndex..<markdown.endIndex, in: markdown)
-			let matches = regex.matches(in: markdown, options: [], range: nsRange)
+			let regex = try NSRegularExpression(
+				pattern: pattern, options: []
+			)
+			let nsRange = NSRange(
+				markdown.startIndex..<markdown.endIndex, in: markdown
+			)
+			let matches = regex.matches(
+				in: markdown, options: [], range: nsRange
+			)
 			// Set variables
 			var htmlCode: String? = nil
 			var cssCode: String? = nil
 			var jsCode: String? = nil
 			// Check all regex matches
 			for match in matches {
-				guard match.numberOfRanges >= 3,
-					  let languageRange = Range(match.range(at: 1), in: markdown),
-					  let codeRange = Range(match.range(at: 2), in: markdown) else {
+				guard match.numberOfRanges >= 3 else {
 					continue
 				}
-				let language = String(markdown[languageRange]).lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
-				let code = String(markdown[codeRange])
-				switch language {
-					case "html":
-						htmlCode = code
-					case "css":
-						cssCode = code
-					case "js", "javascript":
-						jsCode = code
-					default:
-						// If there's no language or an unrecognized language, ignore it.
-						continue
+				let languageRange = match.range(at: 1)
+				let codeRange = match.range(at: 2)
+				if let languageRange = Range(languageRange, in: markdown),
+				   let codeRange = Range(codeRange, in: markdown) {
+					let language = String(markdown[languageRange]).lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
+					let code = String(markdown[codeRange])
+					switch language {
+						case "html":
+							htmlCode = code
+							print("htmlCode: \(code)")
+						case "css":
+							cssCode = code
+						case "js", "javascript":
+							jsCode = code
+						default:
+							// If there's no language or an unrecognized language, ignore it.
+							continue
+					}
 				}
 			}
 			// HTML code is required, so make sure it exists
