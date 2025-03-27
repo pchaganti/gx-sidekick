@@ -719,11 +719,17 @@ public actor LlamaServer {
 			// Iterate over each pattern to find a match
 			for pattern in patterns {
 				// Get range of last instance of the start pattern
-				if let startOfCallRange = self.text.range(of: pattern.start, options: .backwards) {
+				if let startOfCallRange = self.text.reasoningRemoved.range(
+					of: pattern.start,
+					options: .backwards
+				) {
 					// Ensure searching within valid bounds
-					let searchRange = startOfCallRange.upperBound..<self.text.endIndex
+					let searchRange = startOfCallRange.upperBound..<self.text.reasoningRemoved.endIndex
 					// Get range of last instance of the end pattern
-					if let endOfCallRange = self.text.range(of: pattern.end, range: searchRange) {
+					if let endOfCallRange = self.text.reasoningRemoved.range(
+						of: pattern.end,
+						range: searchRange
+					) {
 						return startOfCallRange.upperBound..<endOfCallRange.lowerBound
 					}
 				}
