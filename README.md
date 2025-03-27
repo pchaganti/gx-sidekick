@@ -123,6 +123,8 @@ Press `Command + Control + I` to access Sidekick's inline writing assistant. For
 
 Use the default keyboard shortcut `Tab` to accept suggestions for the next word, or `Shift + Tab` to accept all suggested words. View a demo [here](https://drive.google.com/file/d/1DDzdNHid7MwIDz4tgTpnqSA-fuBCajQA/preview).
 
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/inlineWritingAssistantCompletions.png)
+
 #### Detector
 
 Use Detector to evaluate the AI percentage of text, and use provided suggestions to rewrite AI content.

@@ -387,6 +387,7 @@
 		200619AC2D675DB9001949EF /* DiagrammerPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagrammerPromptView.swift; sourceTree = "<group>"; };
 		200619AE2D6766B1001949EF /* DiagrammerGeneratingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagrammerGeneratingView.swift; sourceTree = "<group>"; };
 		200619B32D676DCE001949EF /* DiagrammerPreviewEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagrammerPreviewEditorView.swift; sourceTree = "<group>"; };
+		20067B862D95277D00D4D15A /* inlineWritingAssistantCompletions.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inlineWritingAssistantCompletions.png; sourceTree = "<group>"; };
 		200FBFDD2CB6382F00A92A74 /* llama-server-watchdog */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "llama-server-watchdog"; sourceTree = BUILT_PRODUCTS_DIR; };
 		200FBFE52CB6384400A92A74 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		200FBFE82CB638B200A92A74 /* llama-server-watchdog.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "llama-server-watchdog.entitlements"; sourceTree = "<group>"; };
@@ -954,6 +955,7 @@
 				203E84EF2D8C3FEC00C0C4C0 /* diagrammerPrompt.png */,
 				203E84F02D8C3FEC00C0C4C0 /* imageGeneration.png */,
 				203E84F12D8C3FEC00C0C4C0 /* inlineWritingAssistant.png */,
+				20067B862D95277D00D4D15A /* inlineWritingAssistantCompletions.png */,
 				203E84F22D8C3FEC00C0C4C0 /* latexRendering1.png */,
 				203E84F32D8C3FEC00C0C4C0 /* latexRendering2.png */,
 				203E84F42D8C3FEC00C0C4C0 /* reasoningModelSupport.png */,
