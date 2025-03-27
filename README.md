@@ -83,12 +83,6 @@ There are no buttons, no switches to flick, no `Image Generation` mode. Instead,
 
 Image generation is available on macOS 15.2 or above, and requires Apple Intelligence.
 
-### Inline Writing Assistant
-
-Press `Command + Control + I` to access Sidekick's inline writing assistant. For example, use the `Answer Question` command to do your homework without leaving Microsoft Word!
-
-![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/inlineWritingAssistant.png)
-
 ### Advanced Markdown Rendering
 
 Markdown is rendered beautifully in Sidekick.
@@ -120,6 +114,16 @@ Code is beautifully rendered with syntax highlighting, and can be exported or co
 ### Toolbox
 
 Use **Tools** in Sidekick to supercharge your workflow.
+
+#### Inline Writing Assistant
+
+Press `Command + Control + I` to access Sidekick's inline writing assistant. For example, use the `Answer Question` command to do your homework without leaving Microsoft Word!
+
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/README%20Images/inlineWritingAssistant.png)
+
+Use the default keyboard shortcut `Tab` to accept suggestions for the next word, or `Shift + Tab` to accept all suggested words.
+
+<iframe src="https://drive.google.com/file/d/1DDzdNHid7MwIDz4tgTpnqSA-fuBCajQA/preview" width="640" height="480" allow="autoplay"></iframe>
 
 #### Detector
 
