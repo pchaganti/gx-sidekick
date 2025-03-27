@@ -156,7 +156,6 @@ public class CompletionsController: ObservableObject {
 			return
 		}
 		// Check following text
-		print(postText)
 		if !postText.isEmpty && !postText.hasPrefix("\n\n") {
 			return
 		}
@@ -169,6 +168,10 @@ public class CompletionsController: ObservableObject {
 		guard let content: String = await self.generateCompletion(
 			text: preText
 		) else {
+			return
+		}
+		// If the text being typed has already changed, exit
+		guard let (newPreText, _) = self.fetchText(), newPreText == preText else {
 			return
 		}
 		self.completion = content
@@ -221,10 +224,6 @@ public class CompletionsController: ObservableObject {
 		) else {
 			return nil
 		}
-		// Print unfiltered preview
-		let fullText: String = text + tokens.map({ token in
-			token.token
-		}).joined()
 		// Filter tokens
 		let confidenceThreshold: Double = -2.5
 		let maxSpecialCharacters: Double = 0.5
