@@ -388,6 +388,8 @@
 		200619AE2D6766B1001949EF /* DiagrammerGeneratingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagrammerGeneratingView.swift; sourceTree = "<group>"; };
 		200619B32D676DCE001949EF /* DiagrammerPreviewEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagrammerPreviewEditorView.swift; sourceTree = "<group>"; };
 		20067B862D95277D00D4D15A /* inlineWritingAssistantCompletions.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inlineWritingAssistantCompletions.png; sourceTree = "<group>"; };
+		20067B872D962FB200D4D15A /* canvasWebsite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = canvasWebsite.png; sourceTree = "<group>"; };
+		20067B892D9635C800D4D15A /* canvasSelectiveEdit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = canvasSelectiveEdit.png; sourceTree = "<group>"; };
 		200FBFDD2CB6382F00A92A74 /* llama-server-watchdog */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "llama-server-watchdog"; sourceTree = BUILT_PRODUCTS_DIR; };
 		200FBFE52CB6384400A92A74 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		200FBFE82CB638B200A92A74 /* llama-server-watchdog.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "llama-server-watchdog.entitlements"; sourceTree = "<group>"; };
@@ -442,8 +444,6 @@
 		20353FF02CF84546002BC78E /* ToggleLaTeXButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleLaTeXButton.swift; sourceTree = "<group>"; };
 		2038CCF22CB6CBC6005AA315 /* PendingMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingMessageView.swift; sourceTree = "<group>"; };
 		203E84E12D8C3FEC00C0C4C0 /* appIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon.png; sourceTree = "<group>"; };
-		203E84E22D8C3FEC00C0C4C0 /* canvasSelectiveEdit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = canvasSelectiveEdit.png; sourceTree = "<group>"; };
-		203E84E32D8C3FEC00C0C4C0 /* canvasWebsite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = canvasWebsite.png; sourceTree = "<group>"; };
 		203E84E42D8C3FEC00C0C4C0 /* codeExport.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = codeExport.png; sourceTree = "<group>"; };
 		203E84E52D8C3FEC00C0C4C0 /* codeInterpreter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = codeInterpreter.png; sourceTree = "<group>"; };
 		203E84E62D8C3FEC00C0C4C0 /* dataVisualization1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dataVisualization1.png; sourceTree = "<group>"; };
@@ -939,8 +939,8 @@
 			isa = PBXGroup;
 			children = (
 				203E84E12D8C3FEC00C0C4C0 /* appIcon.png */,
-				203E84E22D8C3FEC00C0C4C0 /* canvasSelectiveEdit.png */,
-				203E84E32D8C3FEC00C0C4C0 /* canvasWebsite.png */,
+				20067B872D962FB200D4D15A /* canvasWebsite.png */,
+				20067B892D9635C800D4D15A /* canvasSelectiveEdit.png */,
 				203E84E42D8C3FEC00C0C4C0 /* codeExport.png */,
 				203E84E52D8C3FEC00C0C4C0 /* codeInterpreter.png */,
 				203E84E62D8C3FEC00C0C4C0 /* dataVisualization1.png */,

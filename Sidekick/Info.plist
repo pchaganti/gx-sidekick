@@ -2,10 +2,19 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>SUFeedURL</key>
-	<string>https://johnbean393.github.io/Sidekick/appcast.xml</string>
-	<key>SUPublicEDKey</key>
-	<string>jrJEixL9VTAptOmKf2JJ8aLoiMVV0bNcSNA1covfmtw=</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLIconFile</key>
+			<string></string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>sidekick</string>
+			</array>
+		</dict>
+	</array>
 	<key>NSAccessibilityUsageDescription</key>
 	<string>Sidekick can perform operations on selected text such as fixing grammar, extending texts as well as custom commands.</string>
 	<key>NSAppTransportSecurity</key>
@@ -13,5 +22,9 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>SUFeedURL</key>
+	<string>https://johnbean393.github.io/Sidekick/appcast.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>jrJEixL9VTAptOmKf2JJ8aLoiMVV0bNcSNA1covfmtw=</string>
 </dict>
 </plist>
