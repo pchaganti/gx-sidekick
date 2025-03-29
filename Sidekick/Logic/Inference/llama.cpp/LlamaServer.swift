@@ -428,6 +428,10 @@ public actor LlamaServer {
 					if let data = message.data?.data(using: .utf8) {
 						let decoder = JSONDecoder()
 						do {
+                            // Log response object
+                            if let responseStr = String(data: data, encoding: .utf8) {
+                                Self.logger.info("Received response object: \(responseStr, privacy: .public)")
+                            }
 							// Decode response object
 							let responseObj: StreamResponse = try decoder.decode(
 								StreamResponse.self,
@@ -437,19 +441,22 @@ public actor LlamaServer {
 							let fragment: String = responseObj.choices.map { choice in
 								// Init variable
 								var choiceContent: String = ""
-								if let content: String = choice.delta.content {
+                                if let content: String = choice.delta.content,
+                                   !content.isEmpty {
+                                    // Handle answer token
 									// If previous token was reasoning token, add end of reasoning token
 									choiceContent = (
 										wasReasoningToken ? "\n</think>\n" : ""
 									) + content
 									wasReasoningToken = false
-								} else if let reasoningContent: String = choice.delta.reasoning_content {
+								} else if let reasoningContent: String = choice.delta.reasoningContent {
+                                    // Handle reasoning token
 									// If previous token was not reasoning token, add reasoning special token
 									choiceContent = (
 										wasReasoningToken ? "" : "<think>\n"
 									) + reasoningContent
 									wasReasoningToken = true
-								}
+                                }
 								// Return result
 								return choiceContent
 							}.joined()
@@ -648,9 +655,24 @@ public actor LlamaServer {
 		
 		/// The new token generated, decoded to type `String?`
 		let content: String?
-		/// The new reasoning token generated, decoded to type `String?`
-		let reasoning_content: String?
+        /// The new reasoning token generated, decoded to type `String?`, for OpenRouter
+        let reasoning: String?
+        /// The new reasoning token generated, decoded to type `String?`, for Bailian
+        let reasoning_content: String?
 		
+        /// The new reasoning token generated, if available
+        var reasoningContent: String? {
+            if let reasoning = self.reasoning,
+                !reasoning.isEmpty {
+                return reasoning
+            } else if let reasoning_content = self.reasoning_content,
+                      !reasoning_content.isEmpty {
+                return reasoning_content
+            } else {
+                return nil
+            }
+        }
+        
 	}
 	
 	/// The choice component of an update streamed from the inference server

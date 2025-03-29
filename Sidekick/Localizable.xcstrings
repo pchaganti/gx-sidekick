@@ -2727,6 +2727,16 @@
         }
       }
     },
+    "Remote Model" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "远端模型"
+          }
+        }
+      }
+    },
     "Remote Model Name" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3183,16 +3193,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "导向%@概率的句子："
-          }
-        }
-      }
-    },
-    "Server" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "服务器"
           }
         }
       }

@@ -43,7 +43,7 @@ struct ServerModelSettingsView: View {
 			}
 			.id(inferenceApiKey)
 		} header: {
-			Text("Server")
+			Text("Remote Model")
 		}
 	}
 	
