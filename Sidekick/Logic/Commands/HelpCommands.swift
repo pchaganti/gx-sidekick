@@ -23,6 +23,21 @@ public class HelpCommands {
 			}
 		}
 	}
+    
+    static var helpCommand: some Commands {
+        CommandGroup(
+            replacing: .help
+        ) {
+            Button {
+                let _ = NSWorkspace.shared.open(
+                    URL(string: "https://johnbean393.github.io/Sidekick/")!
+                )
+            } label: {
+                Text("Help")
+            }
+            .keyboardShortcut("/", modifiers: [.command, .shift])
+        }
+    }
 	
 	/// Function to open page to file an issue on Github
 	private static func fileAnIssue() {

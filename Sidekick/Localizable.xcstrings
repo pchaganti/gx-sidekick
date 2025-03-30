@@ -1880,6 +1880,16 @@
         }
       }
     },
+    "Help" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "帮助"
+          }
+        }
+      }
+    },
     "Hi there! Please introduce yourself." : {
       "localizations" : {
         "zh-Hans" : {
