@@ -157,9 +157,9 @@ Export to common formats like PDF and PowerPoint.
 
 Sidekick uses `llama.cpp` as its inference backend, which is optimized to deliver lightning fast generation speeds on Apple Silicon. It also supports speculative decoding, which can further improve the generation speed.
 
-Optionally, you can offload generation to speed up processing while extending the battery life of your MacBook.
-
 ![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/Docs%20Images/Features/Local%20Models/speculativeDecodingSupport.png)
+
+Optionally, you can offload generation to speed up processing while extending the battery life of your MacBook.
 
 ![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/Docs%20Images/Features/Remote%20Models/remoteModelSettingsTop.png)
 
