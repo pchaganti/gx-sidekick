@@ -75,7 +75,8 @@ struct ChatParameters: Codable {
 		let encoder = JSONEncoder()
 		encoder.outputFormatting = .prettyPrinted
 		let jsonData = try? encoder.encode(self)
-		return String(data: jsonData!, encoding: .utf8)!
+		let jsonString = String(data: jsonData!, encoding: .utf8)!
+        return jsonString
 	}
 	
 	/// Function to get the name of the model that will be used

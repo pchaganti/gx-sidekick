@@ -295,14 +295,17 @@ public extension String {
 		}
 		return String(self.dropFirst().dropLast())
 	}
+    
+    /// A list of standard special reasoning tokens
+    static let specialReasoningTokens: [[String]] = [
+        ["<think>", "</think>"],
+        ["<thought>", "</thought>"]
+    ]
 	
 	/// Computed property returning text with the resoning process removed
 	var reasoningRemoved: String {
 		// List special reasoning tokens
-		let specialTokenSets: [[String]] = [
-			["<think>", "</think>"],
-			["<thought>", "</thought>"]
-		]
+        let specialTokenSets: [[String]] = Self.specialReasoningTokens
 		// Init variable for stripped text
 		var processedResponse: String = self
 		// Extract text

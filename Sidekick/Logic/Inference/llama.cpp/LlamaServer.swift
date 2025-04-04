@@ -445,8 +445,18 @@ public actor LlamaServer {
                                    !content.isEmpty {
                                     // Handle answer token
 									// If previous token was reasoning token, add end of reasoning token
+                                    let hasEndReasoningToken: Bool = String.specialReasoningTokens.map { tokens in
+                                        guard let endReasoningToken: String = tokens.last else {
+                                            return false
+                                        }
+                                        return content
+                                            .trimmingWhitespaceAndNewlines()
+                                            .hasSuffix(
+                                                endReasoningToken
+                                            )
+                                    }.contains(true)
 									choiceContent = (
-										wasReasoningToken ? "\n</think>\n" : ""
+                                        (wasReasoningToken && !hasEndReasoningToken) ? "\n</think>\n" : ""
 									) + content
 									wasReasoningToken = false
 								} else if let reasoningContent: String = choice.delta.reasoningContent {
