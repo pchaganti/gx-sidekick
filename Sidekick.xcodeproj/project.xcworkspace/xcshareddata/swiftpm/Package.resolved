@@ -1,5 +1,5 @@
 {
-  "originHash" : "bd2bef9df977f01e4805792689f4999a07112e1425a94a3b5b67c5c04378d998",
+  "originHash" : "4e457c0b8c54b34be60a38eac0d8564a48d0e6b0f919cbc2c4d6bd8f6315e4bb",
   "pins" : [
     {
       "identity" : "axswift",
@@ -69,7 +69,7 @@
       "location" : "https://github.com/johnbean393/ExtractKit-macOS",
       "state" : {
         "branch" : "main",
-        "revision" : "e52e3cfbc39e07485aa8f3d1004d91057c948872"
+        "revision" : "5a72d72e6e984d554fff4c7a2335efd37c23400f"
       }
     },
     {
