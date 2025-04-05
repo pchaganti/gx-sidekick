@@ -160,7 +160,7 @@ public class Model: ObservableObject {
 		self.status = .querying
 	}
 	
-	// This is the main loop of the agent
+	// Function for the main loop
 	// listen -> respond -> update mental model and save checkpoint
 	// we respond before updating to avoid a long delay after user input
 	func listenThinkRespond(
@@ -220,8 +220,8 @@ public class Model: ObservableObject {
 		var response: LlamaServer.CompleteResponse? = nil
         switch mode {
             case .`default`:
-                switch modelType {
-                    case .worker:
+                if modelType == .worker {
+                    do {
                         response = try await self.workerModelServer.getChatCompletion(
                             mode: mode,
                             canReachRemoteServer: canReachRemoteServer,
@@ -236,7 +236,7 @@ public class Model: ObservableObject {
                                 )
                             }
                         }
-                    default:
+                    } catch {
                         response = try await self.mainModelServer.getChatCompletion(
                             mode: mode,
                             canReachRemoteServer: canReachRemoteServer,
@@ -251,6 +251,22 @@ public class Model: ObservableObject {
                                 )
                             }
                         }
+                    }
+                } else {
+                    response = try await self.mainModelServer.getChatCompletion(
+                        mode: mode,
+                        canReachRemoteServer: canReachRemoteServer,
+                        messages: messagesWithSources
+                    ) { partialResponse in
+                        DispatchQueue.main.async {
+                            // Update response
+                            updateResponse += partialResponse
+                            self.handleCompletionProgress(
+                                partialResponse: partialResponse,
+                                handleResponseUpdate: handleResponseUpdate
+                            )
+                        }
+                    }
                 }
             case .chat:
                 response = try await self.getChatResponse(
