@@ -128,7 +128,8 @@ Rephrase this prompt to not mention the need for generating a presentation. Resp
 			let response: LlamaServer.CompleteResponse = try await Model
 				.shared
 				.listenThinkRespond(
-					messages: messages,
+                    messages: messages,
+                    modelType: .regular,
 					mode: .default
 				)
 			// Set rephrased prompt
@@ -157,7 +158,8 @@ Rephrase this prompt to not mention the need for generating a presentation. Resp
 			let response: LlamaServer.CompleteResponse = try await Model
 				.shared
 				.listenThinkRespond(
-					messages: messages,
+                    messages: messages,
+                    modelType: .regular,
 					mode: .chat,
 					similarityIndex: similarityIndex,
 					useWebSearch: self.useWebSearch,
@@ -198,6 +200,7 @@ You are about to create a presentation about the content above. List 1-2 word ti
 				.shared
 				.listenThinkRespond(
 					messages: messages,
+                    modelType: .regular,
 					mode: .default
 				)
 			// Extract titles
@@ -339,6 +342,7 @@ Respond with the Markdown ONLY. Do not include comments.
 				.shared
 				.listenThinkRespond(
 					messages: messages,
+                    modelType: .regular,
 					mode: .default
 				)
 			// Strip code tags, thinking process & return

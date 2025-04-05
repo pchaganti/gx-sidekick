@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MessagesView: View {
-	
+    
 	@Environment(\.colorScheme) var colorScheme
 	
 	@EnvironmentObject private var model: Model
@@ -57,10 +57,12 @@ struct MessagesView: View {
 	}
 	
 	var messagesView: some View {
-		ForEach(self.messages) { message in
-			MessageView(message: message)
-				.id(message.id)
-		}
+        ForEach(
+            self.messages
+        ) { message in
+            MessageView(message: message)
+                .id(message.id)
+        }
 	}
 	
 }

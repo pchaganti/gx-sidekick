@@ -20,36 +20,46 @@ public actor LlamaServer {
 		category: String(describing: LlamaServer.self)
 	)
 	
-	/// Initializes the inference server object
-	/// - Parameters:
-	///   - modelPath: The POSIX path linking to the model
-	///   - systemPrompt: The system prompt passed to the model, which controls its behaviour
+    /// Initializes the inference server object
+    /// - Parameters:
+    ///   - modelUrl: The url linking to the model
+    ///   - systemPrompt: The system prompt passed to the model, which controls its behaviour
+    ///   - modelType: The type of the model
+    ///   - port: The port on which a local server is made available
 	init(
-		modelUrl: URL? = nil,
-		systemPrompt: String = InferenceSettings.systemPrompt,
-		port: Int? = nil
-	) {
-		self.specifiedModelUrl = modelUrl
-		self.systemPrompt = systemPrompt
-		if let port {
-			self.port = String(port)
-		}
-	}
+        modelType: ModelType,
+		systemPrompt: String = InferenceSettings.systemPrompt
+    ) {
+        self.modelType = modelType
+        self.systemPrompt = systemPrompt
+        self.port = {
+            switch modelType {
+                case .regular:
+                    return "4579"
+                case .worker:
+                    return "9830"
+                case .completions:
+                    return "1623"
+            }
+        }()
+    }
 	
-	/// The `URL` of the local model, if specified
-	private var specifiedModelUrl: URL? = nil
 	/// The `URL` of the local model
 	private var modelUrl: URL? {
-		if let specifiedModelUrl {
-			return specifiedModelUrl
-		}
-		return Settings.modelUrl
+        switch self.modelType {
+            case .regular:
+                return Settings.modelUrl
+            case .worker:
+                return InferenceSettings.workerModelUrl
+            case .completions:
+                return InferenceSettings.completionsModelUrl
+        }
 	}
 	
 	/// The IP address of the inference server's host
 	private var host: String = "127.0.0.1"
 	/// The port where the inference server is accessible
-	private var port: String = "4579"
+	private var port: String
 	/// The scheme through which the inference server is accessible
 	private var scheme: String = "http"
 	
@@ -65,6 +75,8 @@ public actor LlamaServer {
 	var modelName: String {
 		return self.modelUrl?.deletingPathExtension().lastPathComponent ?? "Unknown Model"
 	}
+    /// The type of the LLM, of type ``ModelType``
+    var modelType: ModelType
 	
 	/// The system prompt given to the chatbot
 	var systemPrompt: String
@@ -77,11 +89,6 @@ public actor LlamaServer {
 	/// Property for `llama-server` process
 	private var process: Process = Process()
 	
-	/// A `Bool` representing whether the remote server is accessible
-	public var wasRemoteServerAccessible: Bool = false
-	/// A `Date` representing when the remote server was less checked
-	private var lastRemoteServerCheck: Date = .distantPast
-	
 	/// Function to set system prompt
 	/// - Parameter systemPrompt: The system prompt, of type `String`
 	public func setSystemPrompt(_ systemPrompt: String) {
@@ -93,6 +100,7 @@ public actor LlamaServer {
 	/// - Returns: The `URL` at which the inference server is accessible
 	private func url(
 		_ path: String,
+        canReachRemoteServer: Bool,
 		mustUseLocalServer: Bool = false
 	) async -> (
 		url: URL,
@@ -104,57 +112,13 @@ public actor LlamaServer {
 			with: ""
 		)
 		let urlString: String
-		async let isServerReachable = self.remoteServerIsReachable()
-		let notUsingServer: Bool = !(await isServerReachable) || !InferenceSettings.useServer
+        let notUsingServer: Bool = !canReachRemoteServer || !InferenceSettings.useServer
 		if notUsingServer || mustUseLocalServer {
 			urlString = "\(self.scheme)://\(self.host):\(self.port)\(path)"
 		} else {
 			urlString = "\(endpoint)\(path)"
 		}
 		return (URL(string: urlString)!, !notUsingServer)
-	}
-	
-	/// Function to check if the remote server is reachable
-	/// - Returns: A `Bool` indicating if the server can be reached
-	public func remoteServerIsReachable() async -> Bool {
-		// Return false if server is unused
-		if !InferenceSettings.useServer { return false }
-		// Try to use cached result
-		let lastPathChangeDate: Date = NetworkMonitor.shared.lastPathChange
-		if self.lastRemoteServerCheck >= lastPathChangeDate {
-			return self.wasRemoteServerAccessible
-		}
-		// Get last path change time
-		// If using server, check connection on multiple endpoints
-		let testEndpoints: [String] = [
-			"/v1/models",
-			"/v1/chat/completions"
-		]
-		for testEndpoint in testEndpoints {
-			let endpoint: String = InferenceSettings.endpoint.replacingSuffix(
-				testEndpoint,
-				with: ""
-			) + testEndpoint
-			guard let endpointUrl: URL = URL(
-				string: endpoint
-			) else {
-				continue
-			}
-			if await endpointUrl.isAPIEndpointReachable(
-				timeout: 1
-			) {
-				// Cache result, then return
-				self.wasRemoteServerAccessible = true
-				self.lastRemoteServerCheck = Date.now
-				Self.logger.info("Reached remote server at '\(InferenceSettings.endpoint, privacy: .public)'")
-				return true
-			}
-		}
-		// If fell through, cache and return false
-		Self.logger.warning("Could not reach remote server at '\(InferenceSettings.endpoint, privacy: .public)'")
-		self.wasRemoteServerAccessible = false
-		self.lastRemoteServerCheck = Date.now
-		return false
 	}
 	
 	/// Function to get a list of available models on the server
@@ -226,10 +190,12 @@ public actor LlamaServer {
 	}
 	
 	/// Function to start the `llama-server` process
-	public func startServer() async throws {
+	public func startServer(
+        canReachRemoteServer: Bool
+    ) async throws {
 		// If a model is missing, throw error
 		let hasModel: Bool = self.modelUrl?.fileExists ?? false
-		let usesSpeculativeModel: Bool = InferenceSettings.useSpeculativeDecoding && self.specifiedModelUrl == nil
+        let usesSpeculativeModel: Bool = InferenceSettings.useSpeculativeDecoding && self.modelType == .regular
 		let hasSpeculativeModel: Bool = InferenceSettings.speculativeDecodingModelUrl?.fileExists ?? false
 		if !hasModel || (usesSpeculativeModel && !hasSpeculativeModel) {
 			Self.logger.error("Main model or draft model is missing")
@@ -265,8 +231,8 @@ public actor LlamaServer {
 			"--gpu-layers", gpuLayersToUse
 		]
 		
-		// If speculative decoding is used
-		if self.specifiedModelUrl == nil,
+		// If speculative decoding is used and is main model
+        if self.modelType == .regular,
 			let speculationModelUrl = InferenceSettings.speculativeDecodingModelUrl {
 			if InferenceSettings.useSpeculativeDecoding {
 				// Formulate arguments
@@ -297,7 +263,9 @@ public actor LlamaServer {
 		
 		try process.run()
 		
-		try await self.waitForServer()
+		try await self.waitForServer(
+            canReachRemoteServer: canReachRemoteServer
+        )
 		
 		try startAppMonitor(serverPID: process.processIdentifier)
 		
@@ -341,17 +309,22 @@ public actor LlamaServer {
 	/// - Returns: The response returned from the inference server
 	public func getChatCompletion(
 		mode: Model.Mode,
-		modelType: ModelType = .regular,
+        canReachRemoteServer: Bool,
 		messages: [Message.MessageSubset],
 		similarityIndex: SimilarityIndex? = nil,
 		progressHandler: (@Sendable (String) -> Void)? = nil
 	) async throws -> CompleteResponse {
 		// Get endpoint url & whether server is used
-		let rawUrl = await self.url("/v1/chat/completions")
+        let rawUrl = await self.url(
+            "/v1/chat/completions",
+            canReachRemoteServer: canReachRemoteServer
+        )
 		// Start server if remote server is not used & local server is inactive
 		if !rawUrl.usingRemoteServer {
 			Self.logger.info("Using local model for inference...")
-			try await startServer()
+			try await startServer(
+                canReachRemoteServer: canReachRemoteServer
+            )
 		} else {
 			Self.logger.info("Using remote model for inference...")
 		}
@@ -362,7 +335,7 @@ public actor LlamaServer {
 			switch mode {
 				case .chat:
 					return await ChatParameters(
-						modelType: modelType,
+                        modelType: self.modelType,
 						messages: messages,
 						systemPrompt: self.systemPrompt,
 						useInterpreter: true,
@@ -370,14 +343,14 @@ public actor LlamaServer {
 					)
 				case .contextAwareAgent:
 					return await ChatParameters(
-						modelType: modelType,
+                        modelType: self.modelType,
 						messages: messages,
 						systemPrompt: self.systemPrompt,
 						similarityIndex: similarityIndex
 					)
 				case .default:
 					return await ChatParameters(
-						modelType: modelType,
+                        modelType: self.modelType,
 						messages: messages,
 						systemPrompt: self.systemPrompt
 					)
@@ -440,9 +413,9 @@ public actor LlamaServer {
 							// Run completion handler for update
 							let fragment: String = responseObj.choices.map { choice in
 								// Init variable
-								var choiceContent: String = ""
+                                var choiceContent: String = choice.delta.content ?? ""
                                 if let content: String = choice.delta.content,
-                                   !content.isEmpty {
+                                   !content.isEmpty, wasReasoningToken {
                                     // Handle answer token
 									// If previous token was reasoning token, add end of reasoning token
                                     let hasEndReasoningToken: Bool = String.specialReasoningTokens.map { tokens in
@@ -455,9 +428,7 @@ public actor LlamaServer {
                                                 endReasoningToken
                                             )
                                     }.contains(true)
-									choiceContent = (
-                                        (wasReasoningToken && !hasEndReasoningToken) ? "\n</think>\n" : ""
-									) + content
+									choiceContent = (!hasEndReasoningToken ? "\n</think>\n" : "") + content
 									wasReasoningToken = false
 								} else if let reasoningContent: String = choice.delta.reasoningContent {
                                     // Handle reasoning token
@@ -583,11 +554,14 @@ public actor LlamaServer {
 	/// - Parameter text: The text for which the number of tokens is calculated
 	/// - Returns: The number of tokens in the text
 	public func tokenCount(
-		in text: String
+		in text: String,
+        canReachRemoteServer: Bool
 	) async throws -> Int {
 		// Start server if not active
 		if !self.process.isRunning && !self.isStartingServer {
-			try await startServer()
+			try await startServer(
+                canReachRemoteServer: canReachRemoteServer
+            )
 		}
 		// Get url of endpoint
 		let rawUrl: URL = URL(string: "\(self.scheme)://\(self.host):\(self.port)/tokenize")!
@@ -613,13 +587,19 @@ public actor LlamaServer {
 	}
 	
 	/// Function run for waiting for the server
-	private func waitForServer() async throws {
+	private func waitForServer(
+        canReachRemoteServer: Bool
+    ) async throws {
 		// Check health
 		guard process.isRunning else { return }
 		// Init server health project
 		let serverHealth = ServerHealth()
 		await serverHealth.updateURL(
-			self.url("/health", mustUseLocalServer: true).url
+            self.url(
+                "/health",
+                canReachRemoteServer: canReachRemoteServer,
+                mustUseLocalServer: true
+            ).url
 		)
 		await serverHealth.check()
 		// Set check parameters

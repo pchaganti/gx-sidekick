@@ -109,7 +109,7 @@ Current date & time: \(Date.now.formatted(date: .long, time: .shortened))
 		}
 	}
 	
-	/// Computed property for the location of the LLM used for speculative decoding
+	/// Computed property for the location of the local LLM used for speculative decoding
 	static var speculativeDecodingModelUrl: URL? {
 		get {
 			return UserDefaults.standard.url(
@@ -123,18 +123,33 @@ Current date & time: \(Date.now.formatted(date: .long, time: .shortened))
 			)
 		}
 	}
+    
+    /// Computed property for the location of the local worker LLM
+    static var completionsModelUrl: URL? {
+        get {
+            return UserDefaults.standard.url(
+                forKey: "completionsModelUrl"
+            )
+        }
+        set {
+            UserDefaults.standard.set(
+                newValue,
+                forKey: "completionsModelUrl"
+            )
+        }
+    }
 	
-	/// Computed property for the location of the LLM used for completions
-	static var completionsModelUrl: URL? {
+	/// Computed property for the location of the local LLM used for simple tasks
+	static var workerModelUrl: URL? {
 		get {
 			return UserDefaults.standard.url(
-				forKey: "completionsModelUrl"
+				forKey: "workerModelUrl"
 			)
 		}
 		set {
 			UserDefaults.standard.set(
 				newValue,
-				forKey: "completionsModelUrl"
+				forKey: "workerModelUrl"
 			)
 		}
 	}

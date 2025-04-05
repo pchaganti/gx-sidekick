@@ -59,12 +59,13 @@ public class CompletionsController: ObservableObject {
 	public func setup() {
 		// Start server
 		self.server = LlamaServer(
-			modelUrl: InferenceSettings.completionsModelUrl,
-			port: self.port
+            modelType: .completions
 		)
 		Task { [weak self] in
 			guard let self = self else { return }
-			try await self.server?.startServer()
+			try await self.server?.startServer(
+                canReachRemoteServer: false
+            )
 		}
 		self.setupObservers()
 	}

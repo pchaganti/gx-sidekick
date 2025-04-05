@@ -212,7 +212,8 @@ Cheatsheet:
 					messages: [
 						systemPromptMessage,
 						commandMessage
-					],
+                    ],
+                    modelType: .regular,
 					mode: .default, handleResponseFinish:  { fullMessage, pendingMessage, _ in
 						// On finish
 						// Remove markdown code tags and thinking process

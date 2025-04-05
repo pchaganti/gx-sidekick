@@ -34,7 +34,7 @@ public final class NetworkMonitor {
 			self.lastPathChange = Date.now
 			// Cache network call result
 			Task {
-				let _ = await Model.shared.llama.remoteServerIsReachable()
+				let _ = await Model.shared.remoteServerIsReachable()
 			}
 		}
 		// Start monitor

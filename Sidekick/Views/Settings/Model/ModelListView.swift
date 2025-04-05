@@ -11,13 +11,13 @@ struct ModelListView: View {
 	
 	init(
 		isPresented: Binding<Bool>,
-		forSpeculativeDecoding: Bool = false
+        modelType: ModelType
 	) {
 		self._isPresented = isPresented
-		self.forSpeculativeDecoding = forSpeculativeDecoding
+        self.modelType = modelType
 	}
 	
-	var forSpeculativeDecoding: Bool = false
+    var modelType: ModelType
 	
 	@Binding var isPresented: Bool
 	@StateObject private var modelManager: ModelManager = .shared
@@ -50,20 +50,10 @@ struct ModelListView: View {
 		.onChange(
 			of: self.modelManager.models
 		) {
-			self.modelUrl = {
-				if !self.forSpeculativeDecoding {
-					return Settings.modelUrl
-				}
-				return InferenceSettings.speculativeDecodingModelUrl
-			}()
+			self.modelUrl = self.getModelUrl()
 		}
 		.onAppear {
-			self.modelUrl = {
-				if !self.forSpeculativeDecoding {
-					return Settings.modelUrl
-				}
-				return InferenceSettings.speculativeDecodingModelUrl
-			}()
+            self.modelUrl = self.getModelUrl()
 		}
 		.environmentObject(modelManager)
 	}
@@ -76,7 +66,7 @@ struct ModelListView: View {
 			ModelRowView(
 				modelFile: model,
 				modelUrl: $modelUrl,
-				forSpeculativeDecoding: forSpeculativeDecoding
+                modelType: modelType
 			)
 		}
 		.listRowSeparator(.visible)
@@ -143,7 +133,7 @@ struct ModelListView: View {
 	
 	/// Function to add model
 	private func addModel() {
-		if !self.forSpeculativeDecoding {
+        if self.modelType == .regular {
 			let _ = Settings.selectModel()
 			self.modelUrl = Settings.modelUrl
 		} else {
@@ -155,5 +145,21 @@ struct ModelListView: View {
 			object: nil
 		)
 	}
+    
+    /// Function to get the url of the current model type
+    private func getModelUrl() -> URL? {
+        switch self.modelType {
+            case .regular:
+                return Settings.modelUrl
+            case .speculative:
+                return InferenceSettings.speculativeDecodingModelUrl
+            case .worker:
+                return InferenceSettings.workerModelUrl
+        }
+    }
 
+    enum ModelType: String, CaseIterable {
+        case regular, speculative, worker
+    }
+    
 }

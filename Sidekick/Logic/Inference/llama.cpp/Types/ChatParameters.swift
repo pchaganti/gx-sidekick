@@ -97,7 +97,10 @@ struct ChatParameters: Codable {
 					return InferenceSettings.serverModelName
 				}
 				return workerModelName
-		}
+            case .completions:
+                return InferenceSettings.completionsModelUrl?
+                    .deletingLastPathComponent().lastPathComponent
+        }
 	}
 	
 	struct SystemPrompt: Codable {

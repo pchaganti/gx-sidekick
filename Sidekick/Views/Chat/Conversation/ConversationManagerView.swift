@@ -189,7 +189,7 @@ struct ConversationManagerView: View {
 		) { output in
 			/// Stop server before app is quit
 			Task {
-				await model.llama.stopServer()
+                await self.model.stopServers()
 			}
 		}
 		.environmentObject(model)

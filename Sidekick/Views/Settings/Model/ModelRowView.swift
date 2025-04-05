@@ -16,7 +16,7 @@ struct ModelRowView: View {
 	@Binding var modelUrl: URL?
 	@State var isHovering: Bool = false
 	
-	var forSpeculativeDecoding: Bool
+    var modelType: ModelListView.ModelType
 	
 	var isSelected: Bool {
 		return modelFile.url == modelUrl
@@ -91,13 +91,17 @@ struct ModelRowView: View {
 	/// Function to select model
 	private func select() {
 		// Update variables
-		if !self.forSpeculativeDecoding {
-			Settings.modelUrl = self.modelFile.url
-			self.modelUrl = Settings.modelUrl
-		} else {
-			InferenceSettings.speculativeDecodingModelUrl = self.modelFile.url
-			self.modelUrl = InferenceSettings.speculativeDecodingModelUrl
-		}
+        switch self.modelType {
+            case .regular:
+                Settings.modelUrl = self.modelFile.url
+                self.modelUrl = Settings.modelUrl
+            case .speculative:
+                InferenceSettings.speculativeDecodingModelUrl = self.modelFile.url
+                self.modelUrl = InferenceSettings.speculativeDecodingModelUrl
+            case .worker:
+                InferenceSettings.workerModelUrl = self.modelFile.url
+                self.modelUrl = InferenceSettings.workerModelUrl
+        }
 		// Send notification to reload model
 		NotificationCenter.default.post(
 			name: Notifications.changedInferenceConfig.name,

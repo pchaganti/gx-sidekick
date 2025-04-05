@@ -45,7 +45,7 @@ public class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
 	) -> NSApplication.TerminateReply {
 		// Stop server
 		Task {
-			await Model.shared.llama.stopServer()
+            await Model.shared.stopServers()
 		}
 		// Remove stale sources
 		SourcesManager.shared.removeStaleSources()

@@ -280,7 +280,8 @@ struct PromptInputField: View {
 			) ?? true)
 			didUseSources = useWebSearch || hasIndexItems || !tempResources.isEmpty
 			response = try await model.listenThinkRespond(
-				messages: self.messages,
+                messages: self.messages,
+                modelType: .regular,
 				mode: .chat,
 				similarityIndex: index,
 				useWebSearch: useWebSearch,

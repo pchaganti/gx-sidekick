@@ -2236,7 +2236,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "模型：%@"
+            "value" : "本地模型：%@"
           }
         }
       }
@@ -3737,22 +3737,32 @@
         }
       }
     },
-    "This is the default LLM used." : {
+    "This is the default local model used." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "默认使用的模型"
+            "value" : "默认使用的本地模型"
           }
         }
       }
     },
-    "This is the model used for speculative decoding. It should be smaller than the main model." : {
+    "This is the local worker model used for simpler tasks like generating chat titles." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "这是用于推测性解码的模型。它应该比主模型小。"
+            "value" : "极速模型会哦呗用于生成聊天标题等较简单的任务。"
+          }
+        }
+      }
+    },
+    "This is the model used for speculative decoding. It should be in the same family as the main model, but with less parameters." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这是用于推测性解码的本地模型。它的参数量应该比主模型少。"
           }
         }
       }
@@ -4163,6 +4173,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "你要添加的资源属于哪一类？"
+          }
+        }
+      }
+    },
+    "Worker Model: %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本地极速模型：%@"
           }
         }
       }

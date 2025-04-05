@@ -16,20 +16,20 @@ struct ServerModelNameEditor: View {
 	/// A localized `String` containing the title shown for the editor
 	var editorTitle: String {
 		switch self.modelType {
-			case .regular:
-				return String(localized: "Remote Model Name")
-			case .worker:
-				return String(localized: "Remote Worker Model Name")
+            case .worker:
+                return String(localized: "Remote Worker Model Name")
+            default:
+                return String(localized: "Remote Model Name")
 		}
 	}
 	
 	/// A localized `String` containing the description shown for the editor
 	var editorDescription: String {
 		switch self.modelType {
-			case .regular:
-				return String(localized: "The model's name. (e.g. gpt-4o)")
-			case .worker:
-				return String(localized: "The worker model's name. (e.g. gpt-4o-mini) The worker model is used for simpler tasks like generating chat titles.\n\nLeave this blank to use the main model for all tasks.")
+            case .worker:
+                return String(localized: "The worker model's name. (e.g. gpt-4o-mini) The worker model is used for simpler tasks like generating chat titles.\n\nLeave this blank to use the main model for all tasks.")
+            default:
+                return String(localized: "The model's name. (e.g. gpt-4o)")
 		}
 	}
 	

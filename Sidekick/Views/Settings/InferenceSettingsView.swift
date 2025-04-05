@@ -12,10 +12,13 @@ import UniformTypeIdentifiers
 struct InferenceSettingsView: View {
 	
 	@AppStorage("modelUrl") private var modelUrl: URL?
+    @AppStorage("workerModelUrl") private var workerModelUrl: URL?
 	@AppStorage("specularDecodingModelUrl") private var specularDecodingModelUrl: URL?
 	
 	@State private var isEditingSystemPrompt: Bool = false
+    
 	@State private var isSelectingModel: Bool = false
+    @State private var isSelectingWorkerModel: Bool = false
 	@State private var isSelectingSpeculativeDecodingModel: Bool = false
 	
 	@AppStorage("temperature") private var temperature: Double = InferenceSettings.temperature
@@ -27,6 +30,7 @@ struct InferenceSettingsView: View {
 		Form {
 			Section {
 				model
+                workerModel
 				speculativeDecoding
 			} header: {
 				Text("Models")
@@ -54,7 +58,7 @@ struct InferenceSettingsView: View {
 				Text("Model: \(modelUrl?.lastPathComponent ?? String(localized: "No Model Selected"))")
 					.font(.title3)
 					.bold()
-				Text("This is the default LLM used.")
+				Text("This is the default local model used.")
 					.font(.caption)
 			}
 			Spacer()
@@ -74,11 +78,49 @@ struct InferenceSettingsView: View {
 		}
 		.sheet(isPresented: $isSelectingModel) {
 			ModelListView(
-				isPresented: $isSelectingModel
+				isPresented: $isSelectingModel,
+                modelType: .regular
 			)
 			.frame(minWidth: 450, maxHeight: 600)
 		}
 	}
+    
+    var workerModel: some View {
+        HStack(alignment: .center) {
+            VStack(alignment: .leading) {
+                Text(
+                    "Worker Model: \(workerModelUrl?.lastPathComponent ?? String(localized: "No Model Selected"))"
+                )
+                .font(.title3)
+                .bold()
+                Text("This is the local worker model used for simpler tasks like generating chat titles.")
+                    .font(.caption)
+            }
+            Spacer()
+            Button {
+                self.isSelectingWorkerModel.toggle()
+            } label: {
+                Text("Manage")
+            }
+        }
+        .contextMenu {
+            Button {
+                guard let modelUrl: URL = InferenceSettings.workerModelUrl else {
+                    return
+                }
+                FileManager.showItemInFinder(url: modelUrl)
+            } label: {
+                Text("Show in Finder")
+            }
+        }
+        .sheet(isPresented: $isSelectingWorkerModel) {
+            ModelListView(
+                isPresented: $isSelectingWorkerModel,
+                modelType: .worker
+            )
+            .frame(minWidth: 450, maxHeight: 600)
+        }
+    }
 	
 	var speculativeDecoding: some View {
 		Group {
@@ -127,7 +169,7 @@ struct InferenceSettingsView: View {
 				)
 				.font(.title3)
 				.bold()
-				Text("This is the model used for speculative decoding. It should be smaller than the main model.")
+				Text("This is the model used for speculative decoding. It should be in the same family as the main model, but with less parameters.")
 					.font(.caption)
 			}
 			Spacer()
@@ -150,7 +192,7 @@ struct InferenceSettingsView: View {
 		.sheet(isPresented: $isSelectingSpeculativeDecodingModel) {
 			ModelListView(
 				isPresented: $isSelectingSpeculativeDecodingModel,
-				forSpeculativeDecoding: true
+                modelType: .speculative
 			)
 			.frame(minWidth: 450, maxHeight: 600)
 		}

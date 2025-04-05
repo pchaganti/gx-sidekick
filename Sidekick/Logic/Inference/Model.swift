@@ -29,16 +29,26 @@ public class Model: ObservableObject {
 		let _ = Bookmarks.shared
 		// Set system prompt
 		self.systemPrompt = systemPrompt
-		// Init LlamaServer object
-		self.llama = LlamaServer(
-			systemPrompt: systemPrompt
+		// Init LlamaServer objects
+		self.mainModelServer = LlamaServer(
+            modelType: .regular,
+            systemPrompt: systemPrompt
 		)
-		// Load model if not using server
-		Task {
-			let canReachServer: Bool = await self.llama.remoteServerIsReachable()
+        self.workerModelServer = LlamaServer(
+            modelType: .worker
+        )
+        // Load models if not using remote server
+        Task { [weak self] in
+            guard let self = self else { return }
+            let canReachRemoteServer: Bool = await self.remoteServerIsReachable()
 			do {
-				if !InferenceSettings.useServer || !canReachServer {
-					try await self.llama.startServer()
+				if !InferenceSettings.useServer || !canReachRemoteServer {
+					try await self.mainModelServer.startServer(
+                        canReachRemoteServer: canReachRemoteServer
+                    )
+                    try await self.workerModelServer.startServer(
+                        canReachRemoteServer: canReachRemoteServer
+                    )
 				}
 			} catch {
 				print("Error starting `llama-server`: \(error)")
@@ -53,6 +63,11 @@ public class Model: ObservableObject {
 	static public let shared: Model = .init(
 		systemPrompt: InferenceSettings.systemPrompt
 	)
+    
+    /// A `Bool` representing whether the remote server is accessible
+    public var wasRemoteServerAccessible: Bool = false
+    /// A `Date` representing when the remote server was less checked
+    private var lastRemoteServerCheck: Date = .distantPast
 	
 	/// Property for the system prompt given to the LLM
 	private var systemPrompt: String
@@ -63,20 +78,29 @@ public class Model: ObservableObject {
 		_ systemPrompt: String
 	) async {
 		self.systemPrompt = systemPrompt
-		await self.llama.setSystemPrompt(systemPrompt)
+		await self.mainModelServer.setSystemPrompt(systemPrompt)
 	}
 	
 	/// Function to refresh `llama-server` with the newly selected model
 	public func refreshModel() async {
-		// Restart server if needed
-		await self.llama.stopServer()
-		self.llama = LlamaServer(
+		// Restart servers if needed
+        await self.stopServers()
+		self.mainModelServer = LlamaServer(
+            modelType: .regular,
 			systemPrompt: self.systemPrompt
 		)
+        self.workerModelServer = LlamaServer(
+            modelType: .worker
+        )
 		// Load model if needed
-		let canReachServer: Bool = await self.llama.remoteServerIsReachable()
-		if !InferenceSettings.useServer || !canReachServer {
-			try? await self.llama.startServer()
+		let canReachRemoteServer: Bool = await self.remoteServerIsReachable()
+		if !InferenceSettings.useServer || !canReachRemoteServer {
+			try? await self.mainModelServer.startServer(
+                canReachRemoteServer: canReachRemoteServer
+            )
+            try? await self.workerModelServer.startServer(
+                canReachRemoteServer: canReachRemoteServer
+            )
 		}
 	}
 	
@@ -87,8 +111,10 @@ public class Model: ObservableObject {
 	/// The id of the conversation where the message was sent, of type `UUID`
 	@Published var sentConversationId: UUID? = nil
 	
-	/// Each `Model` object runs its own server, of type ``LlamaServer``
-	var llama: LlamaServer
+	/// A server fro the main model, of type ``LlamaServer``
+	var mainModelServer: LlamaServer
+    /// A server for the worker model, of type ``LlamaServer``
+    var workerModelServer: LlamaServer
 	
 	/// Computed property returning if the model is processing, of type `Bool`
 	var isProcessing: Bool {
@@ -99,7 +125,11 @@ public class Model: ObservableObject {
 	public func countTokens(
 		in text: String
 	) async -> Int? {
-		return try? await self.llama.tokenCount(in: text)
+        let canReachRemoteServer: Bool = await self.remoteServerIsReachable()
+		return try? await self.mainModelServer.tokenCount(
+            in: text,
+            canReachRemoteServer: canReachRemoteServer
+        )
 	}
 	
 	/// Function to set sent conversation ID
@@ -135,7 +165,7 @@ public class Model: ObservableObject {
 	// we respond before updating to avoid a long delay after user input
 	func listenThinkRespond(
 		messages: [Message],
-		modelType: ModelType = .regular,
+		modelType: ModelType,
 		mode: Model.Mode,
 		similarityIndex: SimilarityIndex? = nil,
 		useWebSearch: Bool = false,
@@ -181,59 +211,80 @@ public class Model: ObservableObject {
 				self.status = .processing
 			}
 		}
+        // Check if remote server is reachable
+        let canReachRemoteServer: Bool = await self.remoteServerIsReachable()
 		// Declare variables for incremental update
 		var updateResponse: String = ""
 		let increment: Int = 3
 		// Send different response based on mode
 		var response: LlamaServer.CompleteResponse? = nil
-		switch mode {
-			case .`default`:
-				response = try await llama.getChatCompletion(
-					mode: mode,
-					modelType: modelType,
-					messages: messagesWithSources
-				) { partialResponse in
-					DispatchQueue.main.async {
-						// Update response
-						updateResponse += partialResponse
-						self.handleCompletionProgress(
-							partialResponse: partialResponse,
-							handleResponseUpdate: handleResponseUpdate
-						)
-					}
-				}
-			case .chat:
-				response = try await self.getChatResponse(
-					mode: mode,
-					modelType: modelType,
-					messagesWithSources: messagesWithSources,
-					similarityIndex: similarityIndex,
-					handleResponseUpdate: handleResponseUpdate,
-					increment: increment
-				)
-			case .contextAwareAgent:
-				response = try await llama.getChatCompletion(
-					mode: mode,
-					modelType: modelType,
-					messages: messagesWithSources,
-					similarityIndex: similarityIndex
-				) { partialResponse in
-					DispatchQueue.main.async {
-						// Update response
-						updateResponse += partialResponse
-						// Display if large update
-						let updateCount: Int = updateResponse.count
-						let displayedCount = self.pendingMessage.count
-						if updateCount >= increment || displayedCount < increment {
-							self.handleCompletionProgress(
-								partialResponse: partialResponse,
-								handleResponseUpdate: handleResponseUpdate
-							)
-							updateResponse = ""
-						}
-					}
-				}
-		}
+        switch mode {
+            case .`default`:
+                switch modelType {
+                    case .worker:
+                        response = try await self.workerModelServer.getChatCompletion(
+                            mode: mode,
+                            canReachRemoteServer: canReachRemoteServer,
+                            messages: messagesWithSources
+                        ) { partialResponse in
+                            DispatchQueue.main.async {
+                                // Update response
+                                updateResponse += partialResponse
+                                self.handleCompletionProgress(
+                                    partialResponse: partialResponse,
+                                    handleResponseUpdate: handleResponseUpdate
+                                )
+                            }
+                        }
+                    default:
+                        response = try await self.mainModelServer.getChatCompletion(
+                            mode: mode,
+                            canReachRemoteServer: canReachRemoteServer,
+                            messages: messagesWithSources
+                        ) { partialResponse in
+                            DispatchQueue.main.async {
+                                // Update response
+                                updateResponse += partialResponse
+                                self.handleCompletionProgress(
+                                    partialResponse: partialResponse,
+                                    handleResponseUpdate: handleResponseUpdate
+                                )
+                            }
+                        }
+                }
+            case .chat:
+                response = try await self.getChatResponse(
+                    mode: mode,
+                    modelType: modelType,
+                    canReachRemoteServer: canReachRemoteServer,
+                    messagesWithSources: messagesWithSources,
+                    similarityIndex: similarityIndex,
+                    handleResponseUpdate: handleResponseUpdate,
+                    increment: increment
+                )
+            case .contextAwareAgent:
+                response = try await self.mainModelServer.getChatCompletion(
+                    mode: mode,
+                    canReachRemoteServer: canReachRemoteServer,
+                    messages: messagesWithSources,
+                    similarityIndex: similarityIndex
+                ) { partialResponse in
+                    DispatchQueue.main.async {
+                        // Update response
+                        updateResponse += partialResponse
+                        // Display if large update
+                        let updateCount: Int = updateResponse.count
+                        let displayedCount = self.pendingMessage.count
+                        if updateCount >= increment || displayedCount < increment {
+                            self.handleCompletionProgress(
+                                partialResponse: partialResponse,
+                                handleResponseUpdate: handleResponseUpdate
+                            )
+                            updateResponse = ""
+                        }
+                    }
+                }
+        }
 		// Handle response finish
 		handleResponseFinish(
 			response!.text,
@@ -251,6 +302,7 @@ public class Model: ObservableObject {
 	private func getChatResponse(
 		mode: Model.Mode,
 		modelType: ModelType,
+        canReachRemoteServer: Bool,
 		messagesWithSources: [Message.MessageSubset],
 		similarityIndex: SimilarityIndex? = nil,
 		handleResponseUpdate: @escaping (String, String) -> Void,
@@ -259,6 +311,7 @@ public class Model: ObservableObject {
 		// Handle initial response
 		let initialResponse = try await getInitialResponse(
 			mode: mode,
+            canReachRemoteServer: canReachRemoteServer,
 			messages: messagesWithSources,
 			similarityIndex: similarityIndex,
 			handleResponseUpdate: handleResponseUpdate,
@@ -275,6 +328,7 @@ public class Model: ObservableObject {
 		}
 		// Handle code interpreter response
 		return try await self.handleCodeInterpreterResponse(
+            canReachRemoteServer: canReachRemoteServer,
 			initialResponse: initialResponse,
 			jsCodeRange: jsCodeRange,
 			messages: messagesWithSources,
@@ -287,14 +341,17 @@ public class Model: ObservableObject {
 	/// Get the intial response to a chatbot query
 	private func getInitialResponse(
 		mode: Model.Mode,
+        canReachRemoteServer: Bool,
 		messages: [Message.MessageSubset],
 		similarityIndex: SimilarityIndex?,
 		handleResponseUpdate: @escaping (String, String) -> Void,
 		increment: Int
 	) async throws -> LlamaServer.CompleteResponse {
+        let canReachRemoteServer: Bool = await self.remoteServerIsReachable()
 		var updateResponse = ""
-		return try await llama.getChatCompletion(
+        return try await self.mainModelServer.getChatCompletion(
 			mode: mode,
+            canReachRemoteServer: canReachRemoteServer,
 			messages: messages,
 			similarityIndex: similarityIndex
 		) { partialResponse in
@@ -315,6 +372,7 @@ public class Model: ObservableObject {
 	
 	/// Function to run code if model calls the `run_javascript` tool
 	private func handleCodeInterpreterResponse(
+        canReachRemoteServer: Bool,
 		initialResponse: LlamaServer.CompleteResponse,
 		jsCodeRange: Range<String.Index>,
 		messages: [Message.MessageSubset],
@@ -330,6 +388,7 @@ public class Model: ObservableObject {
 		self.pendingMessage = ""
 		// Execute JavaScript
 		let (jsCode, jsResult, _) = try await executeJavaScriptWithRetry(
+            canReachRemoteServer: canReachRemoteServer,
 			initialCode: String(initialResponse.text[jsCodeRange]),
 			originalMessages: messages,
 			similarityIndex: similarityIndex
@@ -339,6 +398,7 @@ public class Model: ObservableObject {
 		// If the JavaScript was valid, return rephrased result
 		if jsCode != nil && jsResult != nil {
 			var rephrasedResponse = try await rephraseResult(
+                canReachRemoteServer: canReachRemoteServer,
 				initialResponse: initialResponse,
 				increment: increment,
 				jsCode: jsCode,
@@ -351,9 +411,10 @@ public class Model: ObservableObject {
 			return rephrasedResponse
 		} else {
 			// Else, fall back on one-shot answer
-			let response: LlamaServer.CompleteResponse = try await self.llama.getChatCompletion(
+			let response: LlamaServer.CompleteResponse = try await self.mainModelServer.getChatCompletion(
 				mode: .contextAwareAgent,
-				messages: messages,
+                canReachRemoteServer: canReachRemoteServer,
+                messages: messages,
 				similarityIndex: similarityIndex
 			)
 			return response
@@ -362,6 +423,7 @@ public class Model: ObservableObject {
 	
 	/// Function to try running JavaScript code for code interpreter, and retry with fixes
 	private func executeJavaScriptWithRetry(
+        canReachRemoteServer: Bool,
 		initialCode: String,
 		originalMessages: [Message.MessageSubset],
 		similarityIndex: SimilarityIndex?
@@ -389,8 +451,9 @@ public class Model: ObservableObject {
 				)
 				let errorMessageSubset = await Message.MessageSubset(message: errorMessage)
 				messages.append(errorMessageSubset)
-				let response = try await llama.getChatCompletion(
+                let response = try await self.mainModelServer.getChatCompletion(
 					mode: .chat,
+                    canReachRemoteServer: canReachRemoteServer,
 					messages: messages,
 					similarityIndex: similarityIndex
 				)
@@ -403,6 +466,7 @@ public class Model: ObservableObject {
 	
 	/// Function to rephrase code interpreter result
 	private func rephraseResult(
+        canReachRemoteServer: Bool,
 		initialResponse: LlamaServer.CompleteResponse,
 		increment: Int,
 		jsCode: String?,
@@ -440,8 +504,9 @@ public class Model: ObservableObject {
 		]
 		// Submit for completion
 		var updateResponse: String = ""
-		return try await llama.getChatCompletion(
+        return try await self.mainModelServer.getChatCompletion(
 			mode: .contextAwareAgent,
+            canReachRemoteServer: canReachRemoteServer,
 			messages: updatedMessages
 		) { partialResponse in
 			DispatchQueue.main.async {
@@ -476,13 +541,63 @@ public class Model: ObservableObject {
 		)
 		self.pendingMessage = fullMessage
 	}
+    
+    /// Function to check if the remote server is reachable
+    /// - Returns: A `Bool` indicating if the server can be reached
+    public func remoteServerIsReachable() async -> Bool {
+        // Return false if server is unused
+        if !InferenceSettings.useServer { return false }
+        // Try to use cached result
+        let lastPathChangeDate: Date = NetworkMonitor.shared.lastPathChange
+        if self.lastRemoteServerCheck >= lastPathChangeDate {
+            return self.wasRemoteServerAccessible
+        }
+        // Get last path change time
+        // If using server, check connection on multiple endpoints
+        let testEndpoints: [String] = [
+            "/v1/models",
+            "/v1/chat/completions"
+        ]
+        for testEndpoint in testEndpoints {
+            let endpoint: String = InferenceSettings.endpoint.replacingSuffix(
+                testEndpoint,
+                with: ""
+            ) + testEndpoint
+            guard let endpointUrl: URL = URL(
+                string: endpoint
+            ) else {
+                continue
+            }
+            if await endpointUrl.isAPIEndpointReachable(
+                timeout: 1
+            ) {
+                // Cache result, then return
+                self.wasRemoteServerAccessible = true
+                self.lastRemoteServerCheck = Date.now
+                Self.logger.info("Reached remote server at '\(InferenceSettings.endpoint, privacy: .public)'")
+                return true
+            }
+        }
+        // If fell through, cache and return false
+        Self.logger.warning("Could not reach remote server at '\(InferenceSettings.endpoint, privacy: .public)'")
+        self.wasRemoteServerAccessible = false
+        self.lastRemoteServerCheck = Date.now
+        return false
+    }
 	
+    /// Function to stop servers
+    func stopServers() async {
+        await self.mainModelServer.stopServer()
+        await self.workerModelServer.stopServer()
+        self.status = .cold
+    }
+    
 	/// Function to interrupt `llama-server` generation
 	func interrupt() async {
 		if self.status != .processing, self.status != .coldProcessing {
 			return
 		}
-		await self.llama.interrupt()
+		await self.mainModelServer.interrupt()
 		self.status = .ready
 	}
 	
