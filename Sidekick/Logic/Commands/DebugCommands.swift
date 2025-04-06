@@ -13,7 +13,7 @@ import TipKit
 public class DebugCommands {
 	
 	static var commands: some Commands {
-		CommandGroup(after: .help) {
+        CommandGroup(after: .help) {
 			Menu("Debug") {
 				Self.debugSettings
 				Self.debugConversations
