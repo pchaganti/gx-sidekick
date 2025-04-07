@@ -61,10 +61,12 @@ struct ExportButton: View {
 				HStack {
 					Text("Filename:")
 					TextField("", text: $fileName)
+                        .textFieldStyle(.roundedBorder)
 				}
 				HStack {
 					Text("File Extension:")
 					TextField("", text: $fileExtension)
+                        .textFieldStyle(.roundedBorder)
 				}
 				Divider()
 				controls
