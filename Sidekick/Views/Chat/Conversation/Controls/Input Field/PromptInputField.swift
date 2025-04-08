@@ -338,10 +338,6 @@ struct PromptInputField: View {
 		prompt: String
 	) async throws -> String? {
 		// Formulate messages
-		let systemPromptMessage: Message = Message(
-			text: InferenceSettings.systemPrompt,
-			sender: .system
-		)
 		let generateTitleMessage: Message = Message(
 			text: """
 A user is chatting with an assistant and they have sent the message below. Generate an extremely short label for the chat session. Actively remove details from the user's message to make the label shorter than 4 words. Respond with the label ONLY.
@@ -351,7 +347,6 @@ A user is chatting with an assistant and they have sent the message below. Gener
 			sender: .user
 		)
 		let messages: [Message] = [
-			systemPromptMessage,
 			generateTitleMessage
 		]
 		// Generate

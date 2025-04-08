@@ -189,30 +189,38 @@ public class Model: ObservableObject {
 		if preQueryStatus.isForegroundTask {
 			self.status = .querying
 		}
-		let lastIndex: Int = messages.count - 1
-		let messagesWithSources: [Message.MessageSubset] = await messages
-			.enumerated()
-			.asyncMap { index, message in
-				return await Message.MessageSubset(
-					message: message,
-					similarityIndex: similarityIndex,
-					shouldAddSources: (index == lastIndex),
-					useWebSearch: useWebSearch,
-					useCanvas: useCanvas,
-					canvasSelection: canvasSelection,
-					temporaryResources: temporaryResources
-				)
-			}
-		// Respond to prompt
-		if self.status.isForegroundTask {
-			if preQueryStatus == .cold {
-				self.status = .coldProcessing
-			} else {
-				self.status = .processing
-			}
-		}
         // Check if remote server is reachable
         let canReachRemoteServer: Bool = await self.remoteServerIsReachable()
+        // Formulate message subset
+        let useServer: Bool = canReachRemoteServer && InferenceSettings.useServer
+        let lastIndex: Int = messages.count - 1
+        let messagesWithSources: [Message.MessageSubset] = await messages
+            .enumerated()
+            .asyncMap { index, message in
+                return await Message.MessageSubset(
+                    message: message,
+                    similarityIndex: similarityIndex,
+                    temporaryResources: temporaryResources,
+                    shouldAddSources: (
+                        index == lastIndex
+                    ),
+                    useMultimodalContent: LlamaServer.modelHasVision(
+                        type: modelType,
+                        usingRemoteModel: useServer
+                    ),
+                    useWebSearch: useWebSearch,
+                    useCanvas: useCanvas,
+                    canvasSelection: canvasSelection
+                )
+            }
+        // Respond to prompt
+        if self.status.isForegroundTask {
+            if preQueryStatus == .cold {
+                self.status = .coldProcessing
+            } else {
+                self.status = .processing
+            }
+        }
 		// Declare variables for incremental update
 		var updateResponse: String = ""
 		let increment: Int = 3
@@ -465,7 +473,9 @@ public class Model: ObservableObject {
 					text: "The JavaScript code failed with an error of \"\(error)\"",
 					sender: .user
 				)
-				let errorMessageSubset = await Message.MessageSubset(message: errorMessage)
+                let errorMessageSubset = await Message.MessageSubset(
+                    message: errorMessage
+                )
 				messages.append(errorMessageSubset)
                 let response = try await self.mainModelServer.getChatCompletion(
 					mode: .chat,

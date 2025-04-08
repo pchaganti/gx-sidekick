@@ -13,8 +13,20 @@ public struct TemporaryResource: Identifiable, Sendable {
 	/// Stored property for `Identifiable` conformance
 	public var id: UUID = UUID()
 	
-	/// Stored property for the resource's url
+	/// The resource's url
 	public var url: URL
+    /// A `Bool` representing if the resource is an image
+    public var isImage: Bool {
+        let allowedExtensions: [String] = [
+            "jpg",
+            "jpeg",
+            "png",
+            "svg",
+            "webp",
+            "heic"
+        ]
+        return allowedExtensions.contains(url.pathExtension)
+    }
 	
 	/// Computed property for the resource's displayed name
 	public var name: String {

@@ -12,26 +12,31 @@ struct ChatParameters: Codable {
 	
 	/// Init for non-chat
 	init(
-		modelType: ModelType,
-		messages: [Message.MessageSubset],
-		systemPrompt: String
+        modelType: ModelType,
+        systemPrompt: String,
+        messages: [Message.MessageSubset]
 	) async {
-		let systemPromptMsg: Message = Message(
-			text: systemPrompt,
-			sender: .system
-		)
-		let systemPromptMsgSubset: Message.MessageSubset = await Message.MessageSubset(
-			message: systemPromptMsg
-		)
-		self.messages = [systemPromptMsgSubset] + messages
+        // Add system prompt if needed
+        if !messages.contains(where: { $0.role == .system }) {
+            let systemPromptMsg: Message = Message(
+                text: systemPrompt,
+                sender: .system
+            )
+            let systemPromptMsgSubset: Message.MessageSubset = await Message.MessageSubset(
+                message: systemPromptMsg
+            )
+            self.messages = [systemPromptMsgSubset] + messages
+        } else {
+            self.messages = messages
+        }
 		self.model = Self.getModelName(modelType: modelType) ?? ""
 	}
 	
 	/// Init for chat & context aware agent
 	init(
 		modelType: ModelType,
-		messages: [Message.MessageSubset],
-		systemPrompt: String,
+        systemPrompt: String,
+        messages: [Message.MessageSubset],
 		useInterpreter: Bool = false,
 		similarityIndex: SimilarityIndex?
 	) async {
@@ -52,10 +57,10 @@ struct ChatParameters: Codable {
 		)
 		let systemPromptMsgSubset: Message.MessageSubset = await Message.MessageSubset(
 			message: systemPromptMsg,
-			similarityIndex: nil,
-			shouldAddSources: false,
-			useWebSearch: false,
-			temporaryResources: []
+            similarityIndex: nil,
+            temporaryResources: [],
+            shouldAddSources: false,
+            useWebSearch: false
 		)
 		let messagesWithSystemPrompt: [Message.MessageSubset] = [systemPromptMsgSubset] + messages
 		self.messages = messagesWithSystemPrompt

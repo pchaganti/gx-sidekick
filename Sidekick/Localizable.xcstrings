@@ -620,6 +620,9 @@
         }
       }
     },
+    "Controls whether a remote model can be used for tasks that require vision." : {
+
+    },
     "Controls whether a server is used for inference when it is available." : {
       "localizations" : {
         "zh-Hans" : {
@@ -2746,6 +2749,9 @@
           }
         }
       }
+    },
+    "Remote Model has Vision" : {
+
     },
     "Remote Model Name" : {
       "localizations" : {

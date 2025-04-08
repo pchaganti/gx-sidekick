@@ -15,6 +15,7 @@ struct ServerModelSettingsView: View {
 	@State private var inferenceApiKey: String = InferenceSettings.inferenceApiKey
 	
 	@AppStorage("remoteModelName") private var serverModelName: String = InferenceSettings.serverModelName
+    @AppStorage("serverModelHasVision") private var serverModelHasVision: Bool = InferenceSettings.serverModelHasVision
 	@AppStorage("serverWorkerModelName") private var serverWorkerModelName: String = ""
 	
 	/// A `Bool` representing if the endpoint is valid
@@ -36,6 +37,7 @@ struct ServerModelSettingsView: View {
 					serverModelName: $serverModelName,
 					modelType: .regular
 				)
+                serverModelHasVisionToggle
 				ServerModelNameEditor(
 					serverModelName: $serverWorkerModelName,
 					modelType: .worker
@@ -117,5 +119,23 @@ struct ServerModelSettingsView: View {
 				}
 		}
 	}
-	
+    
+    var serverModelHasVisionToggle: some View {
+        HStack(alignment: .top) {
+            VStack(alignment: .leading) {
+                Text("Remote Model has Vision")
+                    .font(.title3)
+                    .bold()
+                Text("Controls whether a remote model can be used for tasks that require vision.")
+                    .font(.caption)
+            }
+            Spacer()
+            Toggle(
+                "",
+                isOn: $serverModelHasVision.animation(.linear)
+            )
+            .disabled(serverEndpoint.isEmpty || !endpointUrlIsValid)
+        }
+    }
+    
 }

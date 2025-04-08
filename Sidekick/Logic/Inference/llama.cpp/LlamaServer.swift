@@ -77,6 +77,29 @@ public actor LlamaServer {
 	}
     /// The type of the LLM, of type ``ModelType``
     var modelType: ModelType
+    /// Function to check whether the model is vision capable
+    func modelHasVision(
+        usingRemoteModel: Bool
+    ) -> Bool {
+        return Self.modelHasVision(
+            type: self.modelType,
+            usingRemoteModel: usingRemoteModel
+        )
+    }
+    /// Function to check whether the model is vision capable
+    static func modelHasVision(
+        type: ModelType,
+        usingRemoteModel: Bool
+    ) -> Bool {
+        // Return false if...
+        // Using local model since `llama-server` does not yet support VLMs
+        // Using non-regular model
+        if !usingRemoteModel || type != .regular {
+            return false
+        }
+        // Else, get toggle value
+        return InferenceSettings.serverModelHasVision
+    }
 	
 	/// The system prompt given to the chatbot
 	var systemPrompt: String
@@ -336,23 +359,23 @@ public actor LlamaServer {
 				case .chat:
 					return await ChatParameters(
                         modelType: self.modelType,
-						messages: messages,
-						systemPrompt: self.systemPrompt,
+                        systemPrompt: self.systemPrompt,
+                        messages: messages,
 						useInterpreter: true,
 						similarityIndex: similarityIndex
 					)
 				case .contextAwareAgent:
 					return await ChatParameters(
                         modelType: self.modelType,
-						messages: messages,
-						systemPrompt: self.systemPrompt,
+                        systemPrompt: self.systemPrompt,
+                        messages: messages,
 						similarityIndex: similarityIndex
 					)
 				case .default:
 					return await ChatParameters(
                         modelType: self.modelType,
-						messages: messages,
-						systemPrompt: self.systemPrompt
+                        systemPrompt: self.systemPrompt,
+                        messages: messages
 					)
 			}
 		}()
@@ -418,16 +441,16 @@ public actor LlamaServer {
                                    !content.isEmpty, wasReasoningToken {
                                     // Handle answer token
 									// If previous token was reasoning token, add end of reasoning token
-                                    let hasEndReasoningToken: Bool = String.specialReasoningTokens.map { tokens in
+                                    let hasEndReasoningToken: Bool = String.specialReasoningTokens.contains (where: { tokens in
                                         guard let endReasoningToken: String = tokens.last else {
                                             return false
                                         }
                                         return content
                                             .trimmingWhitespaceAndNewlines()
-                                            .hasSuffix(
+                                            .contains(
                                                 endReasoningToken
                                             )
-                                    }.contains(true)
+                                    })
 									choiceContent = (!hasEndReasoningToken ? "\n</think>\n" : "") + content
 									wasReasoningToken = false
 								} else if let reasoningContent: String = choice.delta.reasoningContent {

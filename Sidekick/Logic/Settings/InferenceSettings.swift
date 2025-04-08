@@ -218,6 +218,23 @@ Current date & time: \(Date.now.formatted(date: .long, time: .shortened))
 			UserDefaults.standard.set(newValue, forKey: "remoteModelName")
 		}
 	}
+    
+    /// A `Bool` representing whether the LLM has vision
+    static var serverModelHasVision: Bool {
+        get {
+            // Set default
+            if !UserDefaults.standard.exists(key: "serverModelHasVision") {
+                // Default to false
+                Self.useGPUAcceleration = false
+            }
+            return UserDefaults.standard.bool(
+                forKey: "serverModelHasVision"
+            )
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "serverModelHasVision")
+        }
+    }
 	
 	/// A `String` representing the name of the remote worker model
 	public static var serverWorkerModelName: String {

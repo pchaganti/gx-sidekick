@@ -431,60 +431,172 @@ DO NOT reference sources outside of those provided below. If you did not referen
 		self.outputEnded = true
 	}
 	
-	public struct MessageSubset: Codable {
-		
-		init(
-			message: Message,
-			similarityIndex: SimilarityIndex? = nil,
-			shouldAddSources: Bool = false,
-			useWebSearch: Bool = false,
-			useCanvas: Bool = false,
-			canvasSelection: String? = nil,
-			temporaryResources: [TemporaryResource] = []
-		) async {
-			self.role = message.sender
-			// Set up mutable message
-			var message: Message = message
-			// Apply changes for Canvas
-			if useCanvas, let canvasSelection = canvasSelection, !canvasSelection.isEmpty {
-				message.text = """
+    public struct MessageSubset: Codable {
+        
+        init(
+            message: Message,
+            similarityIndex: SimilarityIndex? = nil,
+            temporaryResources: [TemporaryResource] = [],
+            shouldAddSources: Bool = false,
+            useMultimodalContent: Bool = false,
+            useWebSearch: Bool = false,
+            useCanvas: Bool = false,
+            canvasSelection: String? = nil
+        ) async {
+            self.role = message.sender
+            // Set up mutable message
+            var message: Message = message
+            // Apply changes for Canvas
+            if useCanvas, let canvasSelection = canvasSelection, !canvasSelection.isEmpty {
+                message.text = """
 \(message.text)
 
 I have selected the range "\(canvasSelection)". Output the full text again with the changes applied. Keep as much of the previous text as available. 
 """
-			} else if useCanvas {
-				message.text = """
+            } else if useCanvas {
+                message.text = """
 \(message.text)
 
 Output the full text again with the changes applied. Keep as much of the previous text as available.
 """
-			}
-			// Apply Canvas changes if needed
-			if let snapshot = message.snapshot,
-			   snapshot.type == .text,
-			   let ogText: String = snapshot.originalText {
-				message.text = message.text.replacingOccurrences(
-					of: ogText,
-					with: snapshot.text
-				)
-			}
-			if shouldAddSources {
-				self.content = await message.textWithSources(
-					similarityIndex: similarityIndex,
-					useWebSearch: useWebSearch,
-					temporaryResources: temporaryResources
-				).text
-			} else {
-				self.content = message.text
-			}
-		}
-		
-		/// Stored property for who sent the message
-		var role: Sender
-		/// Stored property for the message's content
-		var content: String
-		
-	}
+            }
+            // Apply Canvas changes if needed
+            if let snapshot = message.snapshot,
+               snapshot.type == .text,
+               let ogText: String = snapshot.originalText {
+                message.text = message.text.replacingOccurrences(
+                    of: ogText,
+                    with: snapshot.text
+                )
+            }
+            // Add sources if needed
+            if shouldAddSources {
+                // Initialize the content based on the useMultimodalContent flag.
+                if useMultimodalContent {
+                    var contentArr: [Content] = []
+                    // Add text content, stripping images
+                    let textContentStr: String = await message.textWithSources(
+                        similarityIndex: similarityIndex,
+                        useWebSearch: useWebSearch,
+                        temporaryResources: temporaryResources.filter({ !$0.isImage })
+                    ).text
+                    let textContentItem: Content = .text(textContentStr)
+                    contentArr.append(textContentItem)
+                    // Add image content
+                    let imageUrls: [URL] = temporaryResources.filter({ $0.isImage }).map(\.url)
+                    let encodedImages: [String] = imageUrls.map { url in
+                        guard let data = try? Data(contentsOf: url) else {
+                            return nil // Return nil if file can't be read
+                        }
+                        let encoding: String = data.base64EncodedString()
+                        let type: String = url.pathExtension
+                        return "data:image/\(type);base64,\(encoding)"
+                    }.compactMap({ $0 })
+                    let imageContentItems: [Content] = encodedImages.map { encodedImage in
+                        return .imageURL(ImageURL(url: encodedImage))
+                    }
+                    contentArr += imageContentItems
+                    self.content = .multimodal(contentArr)
+                } else {
+                    // Else, initialize text content
+                    let textContentStr: String = await message.textWithSources(
+                        similarityIndex: similarityIndex,
+                        useWebSearch: useWebSearch,
+                        temporaryResources: temporaryResources
+                    ).text
+                    self.content = .textOnly(textContentStr)
+                }
+            } else {
+                // Else, just use message text
+                let plainText: String = message.text
+                self.content = .textOnly(plainText)
+            }
+        }
+        
+        /// A ``Sender`` object representing the sender
+        var role: Sender
+        /// The message's content
+        var content: ContentValue
+        
+        public enum Content: Codable {
+            
+            case text(String)
+            case imageURL(ImageURL)
+            
+            private enum CodingKeys: String, CodingKey {
+                case type
+                case text
+                case imageURL = "image_url"
+            }
+            
+            public init(from decoder: Decoder) throws {
+                let container = try decoder.container(keyedBy: CodingKeys.self)
+                let type = try container.decode(String.self, forKey: .type)
+                
+                switch type {
+                    case "text":
+                        let text = try container.decode(String.self, forKey: .text)
+                        self = .text(text)
+                    case "image_url":
+                        let imageUrl = try container.decode(ImageURL.self, forKey: .imageURL)
+                        self = .imageURL(imageUrl)
+                    default:
+                        throw DecodingError.dataCorruptedError(forKey: .type, in: container, debugDescription: "Invalid content type")
+                }
+            }
+            
+            public func encode(to encoder: Encoder) throws {
+                var container = encoder.container(keyedBy: CodingKeys.self)
+                switch self {
+                    case .text(let text):
+                        try container.encode("text", forKey: .type)
+                        try container.encode(text, forKey: .text)
+                    case .imageURL(let url):
+                        try container.encode("image_url", forKey: .type)
+                        try container.encode(url, forKey: .imageURL)
+                }
+            }
+        }
+        
+        public struct ImageURL: Codable {
+            let url: String
+        }
+        
+        public enum ContentValue: Codable {
+            
+            case textOnly(String)
+            case multimodal([Content])
+            
+            public init(from decoder: Decoder) throws {
+                let container = try decoder.singleValueContainer()
+                // Try decoding as a String (single mode)
+                if let stringValue = try? container.decode(String.self) {
+                    self = .textOnly(stringValue)
+                    return
+                }
+                // Then try decoding as a [Content] array (multimodal mode)
+                if let arrayValue = try? container.decode([Content].self) {
+                    self = .multimodal(arrayValue)
+                    return
+                }
+                throw DecodingError.dataCorruptedError(
+                    in: container,
+                    debugDescription: "Unable to decode ContentValue as either a String or an array of Content"
+                )
+            }
+            
+            public func encode(to encoder: Encoder) throws {
+                var container = encoder.singleValueContainer()
+                switch self {
+                    case .textOnly(let str):
+                        try container.encode(str)
+                    case .multimodal(let contents):
+                        try container.encode(contents)
+                }
+            }
+        }
+           
+    }
 	
 	private enum JSONType: String, CaseIterable {
 		case unknown
