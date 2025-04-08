@@ -13,7 +13,7 @@ struct GeneralSettingsView: View {
 	
 	@AppStorage("username") private var username: String = NSFullUserName()
 	
-	@AppStorage("useCodeInterpreter") private var useCodeInterpreter: Bool = true
+    @AppStorage("useFunctions") private var useFunctions: Bool = Settings.useFunctions
 	@AppStorage("playSoundEffects") private var playSoundEffects: Bool = false
 	@AppStorage("generateConversationTitles") private var generateConversationTitles: Bool = InferenceSettings.useServer && !InferenceSettings.serverWorkerModelName.isEmpty
 	@AppStorage("voiceId") private var voiceId: String = ""
@@ -108,14 +108,14 @@ struct GeneralSettingsView: View {
 	var codeInterpreter: some View {
 		HStack(alignment: .center) {
 			VStack(alignment: .leading) {
-				Text("Use Code Interpreter")
+				Text("Use Functions")
 					.font(.title3)
 					.bold()
-				Text("Encourage models to generate code, which is evaluated to produce a more accurate answer.")
+				Text("Encourage models to use functions, which are evaluated to execute actions.")
 					.font(.caption)
 			}
 			Spacer()
-			Toggle("", isOn: $useCodeInterpreter)
+            Toggle("", isOn: $useFunctions)
 				.toggleStyle(.switch)
 		}
 	}

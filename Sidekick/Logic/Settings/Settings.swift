@@ -105,20 +105,20 @@ public class Settings {
 		return hasLocalModel || hasServerModel
 	}
 	
-	/// A `Bool` representing whether code interpreter is enabled
-	static var useCodeInterpreter: Bool {
+	/// A `Bool` representing whether functions are enabled
+	static var useFunctions: Bool {
 		get {
 			// Set default
-			if !UserDefaults.standard.exists(key: "useCodeInterpreter") {
+			if !UserDefaults.standard.exists(key: "useFunctions") {
 				// Default to true
-				Self.useCodeInterpreter = true
+				Self.useFunctions = true
 			}
 			return UserDefaults.standard.bool(
-				forKey: "useCodeInterpreter"
+				forKey: "useFunctions"
 			)
 		}
 		set {
-			UserDefaults.standard.set(newValue, forKey: "useCodeInterpreter")
+			UserDefaults.standard.set(newValue, forKey: "useFunctions")
 		}
 	}
 	

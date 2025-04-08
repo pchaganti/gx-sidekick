@@ -341,21 +341,20 @@ public class Model: ObservableObject {
 			handleResponseUpdate: handleResponseUpdate,
 			increment: increment
 		)
-		// Return if code interpreter is disabled
-		if !Settings.useCodeInterpreter {
+		// Return if functions are disabled
+        if !Settings.useFunctions {
 			return initialResponse
 		}
-		// Return if code interpreter wasn't used
-		guard initialResponse.containsInterpreterCall,
-			  let jsCodeRange = initialResponse.javascriptCodeRange else {
+		// Return if no function call
+        guard let functionCall = initialResponse.functionCall else {
 			return initialResponse
 		}
-		// Handle code interpreter response
-		return try await self.handleCodeInterpreterResponse(
+		// Run agent in a loop
+        return try await self.handleFunctionCall(
             canReachRemoteServer: canReachRemoteServer,
 			initialResponse: initialResponse,
-			jsCodeRange: jsCodeRange,
 			messages: messagesWithSources,
+            functionCall: functionCall,
 			similarityIndex: similarityIndex,
 			handleResponseUpdate: handleResponseUpdate,
 			increment: increment
@@ -394,12 +393,12 @@ public class Model: ObservableObject {
 		}
 	}
 	
-	/// Function to run code if model calls the `run_javascript` tool
-	private func handleCodeInterpreterResponse(
+	/// Function to run code if model calls a function
+	private func handleFunctionCall(
         canReachRemoteServer: Bool,
 		initialResponse: LlamaServer.CompleteResponse,
-		jsCodeRange: Range<String.Index>,
 		messages: [Message.MessageSubset],
+        functionCall: FunctionCall,
 		similarityIndex: SimilarityIndex?,
 		handleResponseUpdate: @escaping (
 			String, // Full message
@@ -408,148 +407,74 @@ public class Model: ObservableObject {
 		increment: Int
 	) async throws -> LlamaServer.CompleteResponse {
 		// Set status
-		self.status = .usingInterpreter
+		self.status = .usingFunctions
 		self.pendingMessage = ""
-		// Execute JavaScript
-		let (jsCode, jsResult, _) = try await executeJavaScriptWithRetry(
-            canReachRemoteServer: canReachRemoteServer,
-			initialCode: String(initialResponse.text[jsCodeRange]),
-			originalMessages: messages,
-			similarityIndex: similarityIndex
-		)
-		// Switch status to show stream for final answer
-		self.status = .processing
-		// If the JavaScript was valid, return rephrased result
-		if jsCode != nil && jsResult != nil {
-			var rephrasedResponse = try await rephraseResult(
-                canReachRemoteServer: canReachRemoteServer,
-				initialResponse: initialResponse,
-				increment: increment,
-				jsCode: jsCode,
-				jsResult: jsResult,
-				messages: messages,
-				handleResponseUpdate: handleResponseUpdate
-			)
-			rephrasedResponse.jsCode = jsCode
-			rephrasedResponse.usedCodeInterpreter = true
-			return rephrasedResponse
-		} else {
-			// Else, fall back on one-shot answer
-			let response: LlamaServer.CompleteResponse = try await self.mainModelServer.getChatCompletion(
-				mode: .contextAwareAgent,
+		// Execute functions on a loop
+        var messages: [Message.MessageSubset] = messages
+        var maxIterations: Int = 10
+        var response: LlamaServer.CompleteResponse? = initialResponse
+        while maxIterations > 0, let functionCall = response?.functionCall {
+            // Log function call
+            let callJsonSchema: String = functionCall.getJsonSchema()
+            Self.logger.info("Executing function call: \(callJsonSchema, privacy: .public)")
+            // Call function
+            var messageString: String? = nil
+            do {
+                let result: String = try functionCall.call() ?? "Function evaluated successfully"
+                messageString = """
+Below is the result produced by the tool call: `\(callJsonSchema)`. If the tool call provides enough information to solve the user's query, organize the information into an answer. Else, call another tool with a callback if needed.
+
+```tool_call_result
+\(result)
+``` 
+"""
+            } catch {
+                messageString = """
+The function call `\(callJsonSchema)` failed, producing the error below.
+
+```tool_call_error
+\(error.localizedDescription)
+```
+"""
+            }
+            let message = Message(
+                text: messageString!,
+                sender: .user
+            )
+            let messageSubset = await Message.MessageSubset(
+                message: message
+            )
+            messages.append(messageSubset)
+            // Get response
+            response = try await self.mainModelServer.getChatCompletion(
+                mode: .chat,
                 canReachRemoteServer: canReachRemoteServer,
                 messages: messages,
-				similarityIndex: similarityIndex
-			)
-			return response
-		}
-	}
-	
-	/// Function to try running JavaScript code for code interpreter, and retry with fixes
-	private func executeJavaScriptWithRetry(
-        canReachRemoteServer: Bool,
-		initialCode: String,
-		originalMessages: [Message.MessageSubset],
-		similarityIndex: SimilarityIndex?
-	) async throws -> (
-		jsCode: String?,
-		jsResult: String?,
-		messages: [Message.MessageSubset]
-	) {
-		// Initialize variables for multi-step interpreter
-		var jsCode = initialCode
-		var messages = originalMessages
-		var jsResult: String?
-		// Loop `n` times until success
-		let loopLimit: Int = 5
-		for _ in 0..<loopLimit {
-			do {
-				// Execute JavaScript
-				jsResult = try JavaScriptRunner.executeJavaScript(jsCode)
-				break
-			} catch let error as JavaScriptRunner.JSError {
-				// Try to get the model to fix the code
-				let errorMessage = Message(
-					text: "The JavaScript code failed with an error of \"\(error)\"",
-					sender: .user
-				)
-                let errorMessageSubset = await Message.MessageSubset(
-                    message: errorMessage
-                )
-				messages.append(errorMessageSubset)
-                let response = try await self.mainModelServer.getChatCompletion(
-					mode: .chat,
-                    canReachRemoteServer: canReachRemoteServer,
-					messages: messages,
-					similarityIndex: similarityIndex
-				)
-				jsCode = response.javascriptCodeRange.map { String(response.text[$0]) } ?? ""
-				if jsCode.isEmpty { break }
-			}
-		}
-		return (jsCode, jsResult, messages)
-	}
-	
-	/// Function to rephrase code interpreter result
-	private func rephraseResult(
-        canReachRemoteServer: Bool,
-		initialResponse: LlamaServer.CompleteResponse,
-		increment: Int,
-		jsCode: String?,
-		jsResult: String?,
-		messages: [Message.MessageSubset],
-		handleResponseUpdate: @escaping (
-			String, // Full message
-			String // Delta
-		) -> Void
-	) async throws -> LlamaServer.CompleteResponse {
-		// Formulate messages
-		let initialResponseMessage = Message(
-			text: initialResponse.text,
-			sender: .user
-		)
-		let initialResponseMessageSubset: Message.MessageSubset = await Message.MessageSubset(
-			message: initialResponseMessage
-		)
-		let rephraseMessage = Message(
-			text: """
-  The JavaScript code `\(jsCode ?? "Error")` produced the result below:
-  
-  \(jsResult ?? "Error")
-  
-  Explain how the question above would be answered without code, then end with the answer calculated and verified by the JavaScript you wrote. 
-  """,
-			sender: .user
-		)
-		let rephraseMessageSubset: Message.MessageSubset = await Message.MessageSubset(
-			message: rephraseMessage
-		)
-		let updatedMessages: [Message.MessageSubset] = messages + [
-			initialResponseMessageSubset,
-			rephraseMessageSubset
-		]
-		// Submit for completion
-		var updateResponse: String = ""
-        return try await self.mainModelServer.getChatCompletion(
-			mode: .contextAwareAgent,
-            canReachRemoteServer: canReachRemoteServer,
-			messages: updatedMessages
-		) { partialResponse in
-			DispatchQueue.main.async {
-				// Update response
-				updateResponse += partialResponse
-				// Display if large update
-				let updateCount: Int = updateResponse.count
-				let displayedCount = self.pendingMessage.count
-				if updateCount >= increment || displayedCount < increment {
-					self.handleCompletionProgress(
-						partialResponse: updateResponse,
-						handleResponseUpdate: handleResponseUpdate
-					)
-					updateResponse = ""
-				}
-			}
-		}
+                similarityIndex: similarityIndex
+            )
+            // Increment counter & reset
+            maxIterations -= 1
+        }
+        // Switch status to show stream for final answer
+        self.status = .processing
+        // Get reason for finishing
+        let finishReason: FinishReason = maxIterations == 0 ? .maxIterationsReached : .noFunctionCall
+        if finishReason == .noFunctionCall, let response = response {
+            return response
+        } else {
+            // Else, fall back on one-shot answer
+            let response: LlamaServer.CompleteResponse = try await self.mainModelServer.getChatCompletion(
+                mode: .contextAwareAgent,
+                canReachRemoteServer: canReachRemoteServer,
+                messages: messages,
+                similarityIndex: similarityIndex
+            )
+            return response
+        }
+		// An enum of reasons for finishing
+        enum FinishReason {
+            case noFunctionCall, maxIterationsReached
+        }
 	}
 	
 	/// Function to handle response update
@@ -643,7 +568,7 @@ public class Model: ObservableObject {
 		/// The system is running a background task
 		case backgroundTask
 		/// The system is using a code interpreter
-		case usingInterpreter
+		case usingFunctions
 		/// The inference server is awaiting a prompt
 		case ready
 		

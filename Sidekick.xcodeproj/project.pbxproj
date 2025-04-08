@@ -279,6 +279,9 @@
 		20C5CBC62DA3D7310071F5F7 /* Function.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C5CBC52DA3D7310071F5F7 /* Function.swift */; };
 		20C5CBC92DA3D82E0071F5F7 /* DefaultFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C5CBC82DA3D82E0071F5F7 /* DefaultFunctions.swift */; };
 		20C5CBCB2DA4F3BA0071F5F7 /* RemoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C5CBCA2DA4F3BA0071F5F7 /* RemoteModel.swift */; };
+		20C5CBCD2DA52AB40071F5F7 /* FunctionCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C5CBCC2DA52AB40071F5F7 /* FunctionCall.swift */; };
+		20C5CBD12DA5333C0071F5F7 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C5CBD02DA5333C0071F5F7 /* Functions.swift */; };
+		20C5CBD32DA55BDA0071F5F7 /* StringOr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C5CBD22DA55BDA0071F5F7 /* StringOr.swift */; };
 		20C62EBF2D71373500996566 /* SlideStudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C62EBE2D71373500996566 /* SlideStudioView.swift */; };
 		20C62EC12D713BC000996566 /* SlideStudioProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C62EC02D713BC000996566 /* SlideStudioProgressView.swift */; };
 		20C62EC32D713D5100996566 /* SlideStudioPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C62EC22D713D5100996566 /* SlideStudioPromptView.swift */; };
@@ -677,6 +680,9 @@
 		20C5CBC52DA3D7310071F5F7 /* Function.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Function.swift; sourceTree = "<group>"; };
 		20C5CBC82DA3D82E0071F5F7 /* DefaultFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFunctions.swift; sourceTree = "<group>"; };
 		20C5CBCA2DA4F3BA0071F5F7 /* RemoteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteModel.swift; sourceTree = "<group>"; };
+		20C5CBCC2DA52AB40071F5F7 /* FunctionCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionCall.swift; sourceTree = "<group>"; };
+		20C5CBD02DA5333C0071F5F7 /* Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
+		20C5CBD22DA55BDA0071F5F7 /* StringOr.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringOr.swift; sourceTree = "<group>"; };
 		20C62EBE2D71373500996566 /* SlideStudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideStudioView.swift; sourceTree = "<group>"; };
 		20C62EC02D713BC000996566 /* SlideStudioProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideStudioProgressView.swift; sourceTree = "<group>"; };
 		20C62EC22D713D5100996566 /* SlideStudioPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideStudioPromptView.swift; sourceTree = "<group>"; };
@@ -1519,6 +1525,7 @@
 				202801F72CC94938005C1F7D /* Conversation */,
 				20C5CBC42DA3D7190071F5F7 /* Model */,
 				202801F82CC94962005C1F7D /* Expert */,
+				20C5CBD22DA55BDA0071F5F7 /* StringOr.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -1802,7 +1809,9 @@
 			isa = PBXGroup;
 			children = (
 				20C5CBC52DA3D7310071F5F7 /* Function.swift */,
+				20C5CBD02DA5333C0071F5F7 /* Functions.swift */,
 				20C5CBC82DA3D82E0071F5F7 /* DefaultFunctions.swift */,
+				20C5CBCC2DA52AB40071F5F7 /* FunctionCall.swift */,
 			);
 			path = Functions;
 			sourceTree = "<group>";
@@ -2084,6 +2093,7 @@
 				20571F842CBD71C9004F3344 /* SystemPromptEditor.swift in Sources */,
 				20CB7AC02D1457B10013E30C /* PromptAnalyzer.swift in Sources */,
 				200619AF2D6766B1001949EF /* DiagrammerGeneratingView.swift in Sources */,
+				20C5CBCD2DA52AB40071F5F7 /* FunctionCall.swift in Sources */,
 				201BB9A02D8B182800890EE6 /* CanvasVersionSelector.swift in Sources */,
 				20C221062CC4B15600A99796 /* SourcesManager.swift in Sources */,
 				20B4D6B12CC3D72700817E15 /* Extension+IndexItem.swift in Sources */,
@@ -2154,6 +2164,7 @@
 				20C62EC32D713D5100996566 /* SlideStudioPromptView.swift in Sources */,
 				2034876F2D6723A200A88DA4 /* ToolCardButton.swift in Sources */,
 				204AE3C62CEC7C030086B42D /* NewCommandView.swift in Sources */,
+				20C5CBD12DA5333C0071F5F7 /* Functions.swift in Sources */,
 				204C795C2CB79AB900EED58E /* ExpertManagerView.swift in Sources */,
 				20DEABED2CC4D68A0046447C /* Extension+CGImage.swift in Sources */,
 				20C62EC12D713BC000996566 /* SlideStudioProgressView.swift in Sources */,
@@ -2179,6 +2190,7 @@
 				20E48C262CB560730085E7D6 /* ChatStyle.swift in Sources */,
 				20B9B1212CDF91CD00B66D4D /* PerformanceGaugeView.swift in Sources */,
 				20571F7B2CBD602B004F3344 /* InferenceSettingsView.swift in Sources */,
+				20C5CBD32DA55BDA0071F5F7 /* StringOr.swift in Sources */,
 				20B97CDF2CAFFE6A009A0A5D /* Sender.swift in Sources */,
 				2025E67D2D89197700289E3F /* UseWebSearchButton.swift in Sources */,
 				204D09872D1182EC0066B060 /* IntroductionPageView.swift in Sources */,

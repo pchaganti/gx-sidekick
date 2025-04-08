@@ -14,15 +14,10 @@ struct MessageOptionsView: View {
 	@Environment(\.colorScheme) private var colorScheme
 	
 	@State private var showNerdInfo: Bool = false
-	@State private var showInterpreterCode: Bool = false
 	@Binding var isEditing: Bool
 	
 	var message: Message
 	var canEdit: Bool
-	
-	var interpreterCodeAction: String {
-		return showNerdInfo ? String(localized: "Hide Code Used") : String(localized: "Show Code Used")
-	}
 	
 	private var theme: Splash.Theme {
 		switch self.colorScheme {
@@ -69,9 +64,6 @@ Tokens per second: \(tokensPerSecondStr)
 				.font(.caption)
 				.textSelection(.enabled)
 		}
-		.popover(isPresented: $showInterpreterCode) {
-			codeView
-		}
 		.disabled(isGenerating)
 		.padding(0)
 		.padding(.vertical, 2)
@@ -99,14 +91,6 @@ Tokens per second: \(tokensPerSecondStr)
 			} label: {
 				Text("Copy Raw Markdown")
 			}
-			// Show code used in code interpreter
-			if message.usedCodeInterpreter ?? false && message.jsCode != nil {
-				Button {
-					showInterpreterCode.toggle()
-				} label: {
-					Text(interpreterCodeAction)
-				}
-			}
 			// Show info for bots
 			if message.getSender() == .assistant {
 				Button {
@@ -114,27 +98,6 @@ Tokens per second: \(tokensPerSecondStr)
 				} label: {
 					Text("Stats for Nerds")
 				}
-			}
-		}
-	}
-	
-	var codeView: some View {
-		Group {
-			if let jsCode = self.message.jsCode {
-				ScrollView {
-					Markdown {
-						CodeBlock(
-							language: "JavaScript",
-							content: jsCode
-						)
-					}
-					.markdownTheme(.gitHub)
-					.markdownCodeSyntaxHighlighter(.splash(theme: self.theme))
-					.padding(12)
-					.textSelection(.enabled)
-				}
-			} else {
-				EmptyView()
 			}
 		}
 	}

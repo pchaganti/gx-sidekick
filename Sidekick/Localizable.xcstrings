@@ -420,6 +420,16 @@
         }
       }
     },
+    "Calling functions..." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在使用函数…"
+          }
+        }
+      }
+    },
     "Cancel" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1261,11 +1271,22 @@
       }
     },
     "Encourage models to generate code, which is evaluated to produce a more accurate answer." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "鼓励模型生成代码，并运行代码，以得出更准确的答案。"
+          }
+        }
+      }
+    },
+    "Encourage models to use functions, which are evaluated to execute actions." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "鼓励模型使用函数，用于执行操作和进行计算。"
           }
         }
       }
@@ -1931,6 +1952,7 @@
       }
     },
     "Hide Code Used" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3288,6 +3310,7 @@
       }
     },
     "Show Code Used" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3917,16 +3940,6 @@
         }
       }
     },
-    "Use Code Interpreter" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "启用代码执行器"
-          }
-        }
-      }
-    },
     "Use Completions" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3943,6 +3956,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "重置"
+          }
+        }
+      }
+    },
+    "Use Functions" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用函数"
           }
         }
       }
@@ -4083,16 +4106,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "用户名"
-          }
-        }
-      }
-    },
-    "Using code interpreter..." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "正在运行代码…"
           }
         }
       }

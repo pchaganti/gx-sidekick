@@ -15,7 +15,6 @@ public struct Message: Identifiable, Codable, Hashable {
 		text: String,
 		sender: Sender,
 		model: String? = nil,
-		usedCodeInterpreter: Bool? = false,
 		jsCode: String? = nil,
 		expertId: UUID? = nil
 	) {
@@ -29,8 +28,6 @@ public struct Message: Identifiable, Codable, Hashable {
 			localized: "Unknown"
 		)
 		self.model = modelName
-		self.usedCodeInterpreter = usedCodeInterpreter
-		self.jsCode = jsCode
 		self.expertId = expertId
 	}
 	
@@ -110,11 +107,6 @@ public struct Message: Identifiable, Codable, Hashable {
 		// b.) The message does come from a model
 		return (self.reasoningText != nil) && (self.sender == .assistant)
 	}
-	
-	/// A `Bool` representing whether the message was generated with the help of a code interpreter
-	public var usedCodeInterpreter: Bool?
-	/// A `String` containing the JavaScript code that was executed, if any
-	public var jsCode: String?
 	
 	/// Function returning the message text that is submitted to the LLM
 	public func textWithSources(

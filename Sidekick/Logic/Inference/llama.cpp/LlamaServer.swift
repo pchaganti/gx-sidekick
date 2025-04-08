@@ -731,46 +731,46 @@ public actor LlamaServer {
 		/// A `Bool` indicating whether a remote server was used
 		var usedServer: Bool
 		
-		/// A `Bool` representing whether a JavaScript code interpreter was used
-		var usedCodeInterpreter: Bool = false
 		/// A `String` containing the JavaScript code that was executed, if any
 		var jsCode: String?
 		
-		/// A `Bool` representing if code interpreter was used
-		var containsInterpreterCall: Bool {
-			return self.javascriptCodeRange != nil
+		/// A `Bool` representing if a function was called
+		var containsFunctionCall: Bool {
+            return self.functionCall != nil
 		}
 		
-		/// The `Range<String.Index>` where the JavaScript code is located
-		var javascriptCodeRange: Range<String.Index>? {
-			// Define the patterns to search for
-			let patterns = [
-				(start: "run_javascript(code: \"", end: "\")"),
-				(start: "run_javascript(code: `", end: "`)"),
-				(start: "run_javascript(code: `\"", end: "`\")"),
-				(start: "run_javascript(code: \"`", end: "\"`)"),
-				(start: "run_javascript(code=\"", end: "\")"),
-			]
-			// Iterate over each pattern to find a match
-			for pattern in patterns {
-				// Get range of last instance of the start pattern
-				if let startOfCallRange = self.text.reasoningRemoved.range(
-					of: pattern.start,
-					options: .backwards
-				) {
-					// Ensure searching within valid bounds
-					let searchRange = startOfCallRange.upperBound..<self.text.reasoningRemoved.endIndex
-					// Get range of last instance of the end pattern
-					if let endOfCallRange = self.text.reasoningRemoved.range(
-						of: pattern.end,
-						range: searchRange
-					) {
-						return startOfCallRange.upperBound..<endOfCallRange.lowerBound
-					}
-				}
-			}
-			return nil
-		}
+        /// The first ``FunctionCall`` in the response; if any
+        var functionCall: FunctionCall? {
+            // The regular expression pattern matches any substring that starts with "{" and ends with "}"
+            let pattern = "\\{.*\\}"
+            let input: String = self.text.reasoningRemoved
+            guard let regex = try? NSRegularExpression(pattern: pattern, options: [.dotMatchesLineSeparators]) else {
+                return nil
+            }
+            let nsRange = NSRange(input.startIndex..<input.endIndex, in: input)
+            let matches = regex.matches(in: input, options: [], range: nsRange)
+            let decoder = JSONDecoder()
+            // Try to decode each JSON found into a ToolCall instance
+            for match in matches {
+                if let range = Range(match.range, in: input) {
+                    let jsonString = String(input[range])
+                    if let jsonData = jsonString.data(using: .utf8) {
+                        do {
+                            let functionCall: FunctionCall = try decoder.decode(
+                                FunctionCall.self,
+                                from: jsonData
+                            )
+                            return functionCall
+                        } catch {
+                            // Move to the next found JSON object if decoding fails
+                            continue
+                        }
+                    }
+                }
+            }
+            // If fell through, return nil
+            return nil
+        }
 		
 	}
 	

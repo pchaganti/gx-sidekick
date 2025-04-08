@@ -35,11 +35,25 @@ The user's request might be followed by reference information, organized by sour
 If the provided information is related to the request, you will respond with reference to the information, filling in the gaps with your own knowledge. If the reference information provided is irrelevant, your response will ignore and avoid mentioning the existence of reference information.
 """
 	
-	/// Static constant for the part of the system prompt telling the LLM to use code interpreter
-	public static let useInterpreterPrompt: String = """
-For applicable problems that require accuracy, such as arithmetic and counting, you should run JavaScript code by calling the `run_javascript` tool as specified in the schema below. To run the code, include `run_javascript(code: "codeString")` in your response. Only run JavaScript when it can directly solve the user's question; do not include the `run_javascript(code: "codeString")` tool as a step in your response, or as optional code that the user can run.
+	/// Static constant for the part of the system prompt telling the LLM to use functions
+	public static let useFunctionsPrompt: String = """
+In this environment you have access to a set of tools you can use to answer the user's question. Call the functions by outputting JSON in the format below, where all non-nil values within the dictionary `arguments` are formatted as strings.
 
-[{"name":"run_javascript","description":"Runs JavaScript code and returns the result.","parameters":{"type":"object","properties":{"code":{"type":"string","description":"The JavaScript code to run."}},"required":["code"]}}]
+{
+  "function_call": {
+    "name": "name_of_function",
+    "arguments": {
+      "example_param_1": "Hello, World",
+      "example_param_2": "1.1",
+      "example_param_3": "[1, 2, 3, 4]",
+      "optional_example_param_4": null
+    }
+  }
+}
+
+After a tool is run, a result will be provided. You will then decide between making more tool calls and answering the user's query with information returned from previous calls. 
+
+Here are the functions available in JSON schema format:
 """
 
 	/// Computed property for the part of the system prompt where metadata is fed to the LLM

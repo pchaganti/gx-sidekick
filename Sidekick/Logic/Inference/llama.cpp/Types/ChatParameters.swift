@@ -44,11 +44,16 @@ struct ChatParameters: Codable {
 		// Formulate system prompt
 		var fullSystemPromptComponents: [String] = []
 		fullSystemPromptComponents.append(systemPrompt)
-		fullSystemPromptComponents.append(InferenceSettings.useSourcesPrompt)
-		if useInterpreter && Settings.useCodeInterpreter {
-			fullSystemPromptComponents.append(InferenceSettings.useInterpreterPrompt)
-		}
-		fullSystemPromptComponents.append(InferenceSettings.metadataPrompt)
+        fullSystemPromptComponents.append(InferenceSettings.metadataPrompt)
+        // Tell the LLM to use sources
+        fullSystemPromptComponents.append(InferenceSettings.useSourcesPrompt)
+        // Tell the LLM to use tools
+        fullSystemPromptComponents.append(InferenceSettings.useFunctionsPrompt)
+        // Inject function schema
+        for function in Functions.functions {
+            fullSystemPromptComponents.append(function.getJsonSchema())
+        }
+        // Join all components
 		let fullSystemPrompt: String = fullSystemPromptComponents.joined(separator: "\n\n")
 		// Formulate system prompt message
 		let systemPromptMsg: Message = Message(
@@ -81,7 +86,6 @@ struct ChatParameters: Codable {
 		encoder.outputFormatting = .prettyPrinted
 		let jsonData = try? encoder.encode(self)
 		let jsonString = String(data: jsonData!, encoding: .utf8)!
-//        print(jsonString)
         return jsonString
 	}
 	

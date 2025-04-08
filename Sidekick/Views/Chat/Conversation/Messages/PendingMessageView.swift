@@ -31,8 +31,8 @@ struct PendingMessageView: View {
 			text = String(localized: "Generating title...")
 		} else if self.model.status == .querying {
 			text = String(localized: "Searching...")
-		} else if self.model.status == .usingInterpreter {
-			text = String(localized: "Using code interpreter...")
+		} else if self.model.status == .usingFunctions {
+			text = String(localized: "Calling functions...")
 		} else if !self.model.pendingMessage.isEmpty {
 			// Show progress if availible
 			text = self.model.pendingMessage

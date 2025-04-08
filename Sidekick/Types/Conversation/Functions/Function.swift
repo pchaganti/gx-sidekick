@@ -46,6 +46,7 @@ protocol ArrayParameterValue: ParameterValue {
 
 // MARK: - Array Extensions
 extension Array: ParameterValue where Element: ParameterValue {
+    
     public init?(
         stringValue: String
     ) {
@@ -58,10 +59,12 @@ extension Array: ParameterValue where Element: ParameterValue {
         guard values.count == components.count else { return nil }
         self = values
     }
+    
 }
 
 // MARK: - Updated Function Parameter
 public struct FunctionParameter: Codable {
+    
     var label: String
     var description: String
     var datatype: Datatype
@@ -98,24 +101,24 @@ public struct FunctionParameter: Codable {
     }
 }
 
-// MARK: - Type-safe Parameter
+// MARK: - Type-safe Parameter with Throwing Initializer
 public struct TypedParameter<T: ParameterValue> {
     
     let label: String
     let value: T?
     let isRequired: Bool
     
-    init?(
+    public init(
         label: String,
         stringValue: String?,
         isRequired: Bool = true
-    ) {
+    ) throws {
         self.label = label
         self.isRequired = isRequired
-        // Handle nil stringValue for optional parameters
+        // Handle nil stringValue for required parameters
         guard let stringValue = stringValue else {
             if isRequired {
-                return nil
+                throw ParameterParsingError.invalidValue("Required parameter \(label) is nil")
             }
             self.value = nil
             return
@@ -123,7 +126,7 @@ public struct TypedParameter<T: ParameterValue> {
         // Convert string value to type T
         guard let convertedValue = T(stringValue: stringValue) else {
             if isRequired {
-                return nil
+                throw ParameterParsingError.invalidValue("Required parameter \(label) has an invalid value")
             }
             self.value = nil
             return
@@ -138,10 +141,12 @@ public struct TypedParameter<T: ParameterValue> {
         }
         return value
     }
+    
 }
 
 // MARK: - Function Protocol
 protocol FunctionProtocol: Identifiable {
+    
     associatedtype Parameters
     associatedtype Result
     
@@ -150,10 +155,14 @@ protocol FunctionProtocol: Identifiable {
     var description: String { get }
     var params: [FunctionParameter] { get }
     var run: (Parameters) throws -> Result { get }
+    
+    func getJsonSchema() -> String
+    
 }
 
 // MARK: - Generic Function Implementation
-public struct Function<Parameter, Result>: FunctionProtocol {
+public struct Function<Parameter: Codable, Result>: FunctionProtocol, AnyFunctionBox {
+
     public var id: String { return name }
     public var name: String
     public var description: String
@@ -172,7 +181,7 @@ public struct Function<Parameter, Result>: FunctionProtocol {
         self.run = run
     }
     
-    public var toolObject: FunctionObject {
+    public var functionObject: FunctionObject {
         // Create numbered properties to ensure order
         let properties = Dictionary(uniqueKeysWithValues: params.enumerated().map { index, param in
             let numberedKey = String(format: "%04d_%@", index, param.label)
@@ -200,7 +209,7 @@ public struct Function<Parameter, Result>: FunctionProtocol {
     public func getJsonSchema() -> String {
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
-        let jsonData = try! encoder.encode(self.toolObject)
+        let jsonData = try! encoder.encode(self.functionObject)
         // Process the JSON to remove the number prefixes
         let jsonStr = String(data: jsonData, encoding: .utf8)!
         return cleanNumberedKeys(jsonStr)
@@ -225,16 +234,29 @@ public struct Function<Parameter, Result>: FunctionProtocol {
         return lines.joined(separator: "\n")
     }
     
+    public func call(
+        withData data: Data
+    ) throws -> String? {
+        // Decode the provided arguments to the generic Parameter type
+        let params = try JSONDecoder().decode(Parameter.self, from: data)
+        // Execute the wrapped run closure.
+        let result = try run(params)
+        return String(describing: result)
+    }
+    
     public struct FunctionObject: Codable {
+        
         var type: String = "function"
         var function: Function
         
         public struct Function: Codable {
+            
             var name: String
             var description: String
             var inputSchema: InputSchema
             
             public struct InputSchema: Codable {
+                
                 let type: String
                 let properties: [String: Property]
                 var required: [String]
@@ -282,9 +304,13 @@ public struct Function<Parameter, Result>: FunctionProtocol {
                     let description: String
                     let isRequired: Bool
                 }
+                
             }
+            
         }
+        
     }
+    
 }
 
 // MARK: - Parameter Parsing Error
