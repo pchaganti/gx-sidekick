@@ -108,9 +108,17 @@ struct GeneralSettingsView: View {
 	var codeInterpreter: some View {
 		HStack(alignment: .center) {
 			VStack(alignment: .leading) {
-				Text("Use Functions")
-					.font(.title3)
-					.bold()
+                HStack {
+                    Text("Use Functions")
+                        .font(.title3)
+                        .bold()
+                    StatusLabelView(
+                        text: String(localized: "Beta"),
+                        textColor: .primary,
+                        fill: .blue
+                    )
+                    .help("Model could not be found")
+                }
 				Text("Encourage models to use functions, which are evaluated to execute actions.")
 					.font(.caption)
 			}

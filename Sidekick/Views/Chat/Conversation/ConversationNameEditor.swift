@@ -55,7 +55,7 @@ struct ConversationNameEditor: View {
 		if self.conversationState.selectedConversationId == self.conversation.id {
 			self.conversationState.selectedConversationId = nil
 		}
-		// Delete
+        // Delete
 		self.conversationManager.delete(conversation)
 		// If no conversations, create new
 		if self.conversationManager.conversations.isEmpty {
