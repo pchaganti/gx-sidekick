@@ -278,6 +278,7 @@
 		20C5CB7B2D9AB7980071F5F7 /* libllava_shared.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 20C5CB5F2D9AB7510071F5F7 /* libllava_shared.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		20C5CBC62DA3D7310071F5F7 /* Tool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C5CBC52DA3D7310071F5F7 /* Tool.swift */; };
 		20C5CBC92DA3D82E0071F5F7 /* DefaultTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C5CBC82DA3D82E0071F5F7 /* DefaultTools.swift */; };
+		20C5CBCB2DA4F3BA0071F5F7 /* RemoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C5CBCA2DA4F3BA0071F5F7 /* RemoteModel.swift */; };
 		20C62EBF2D71373500996566 /* SlideStudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C62EBE2D71373500996566 /* SlideStudioView.swift */; };
 		20C62EC12D713BC000996566 /* SlideStudioProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C62EC02D713BC000996566 /* SlideStudioProgressView.swift */; };
 		20C62EC32D713D5100996566 /* SlideStudioPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C62EC22D713D5100996566 /* SlideStudioPromptView.swift */; };
@@ -675,6 +676,7 @@
 		20C5CBC22DA179660071F5F7 /* demoScreenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = demoScreenshot.png; sourceTree = "<group>"; };
 		20C5CBC52DA3D7310071F5F7 /* Tool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tool.swift; sourceTree = "<group>"; };
 		20C5CBC82DA3D82E0071F5F7 /* DefaultTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTools.swift; sourceTree = "<group>"; };
+		20C5CBCA2DA4F3BA0071F5F7 /* RemoteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteModel.swift; sourceTree = "<group>"; };
 		20C62EBE2D71373500996566 /* SlideStudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideStudioView.swift; sourceTree = "<group>"; };
 		20C62EC02D713BC000996566 /* SlideStudioProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideStudioProgressView.swift; sourceTree = "<group>"; };
 		20C62EC22D713D5100996566 /* SlideStudioPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideStudioPromptView.swift; sourceTree = "<group>"; };
@@ -1789,6 +1791,7 @@
 		20C5CBC42DA3D7190071F5F7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				20C5CBCA2DA4F3BA0071F5F7 /* RemoteModel.swift */,
 				20BF49CA2D649FD700C329F8 /* ModelFamily.swift */,
 				2090A8A52D8995FA0060DC63 /* ModelType.swift */,
 			);
@@ -2095,6 +2098,7 @@
 				209370972D6B5B8100E1AF73 /* DetectorViewController.swift in Sources */,
 				208844332CDDE394003BCB6F /* ModelRowView.swift in Sources */,
 				208C5FD62D79CB8E00D82AA6 /* LiquidView.swift in Sources */,
+				20C5CBCB2DA4F3BA0071F5F7 /* RemoteModel.swift in Sources */,
 				20353FF12CF84546002BC78E /* ToggleLaTeXButton.swift in Sources */,
 				2030D6222D6C7F8C00F18BF4 /* CircularProgressView.swift in Sources */,
 				20B97CCE2CAFEC37009A0A5D /* Settings.swift in Sources */,

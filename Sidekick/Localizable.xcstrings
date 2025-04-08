@@ -50,6 +50,26 @@
         }
       }
     },
+    "A new remote model has been selected, which has been identified as having vision capabilities. Would you like to turn on vision for this model?" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已选定一个接受视觉输入的远端模型。您是否要为该模型打开视觉输入？"
+          }
+        }
+      }
+    },
+    "A new remote model has been selected, which might not include vision capabilities. Would you like to turn off vision for this model?" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已选定一种新的远端模型，该模型可能不拥有视觉输入。您是否要为该模型关闭视觉输入？"
+          }
+        }
+      }
+    },
     "Accept All Suggestions" : {
       "localizations" : {
         "zh-Hans" : {
@@ -620,8 +640,15 @@
         }
       }
     },
-    "Controls whether a remote model can be used for tasks that require vision." : {
-
+    "Controls whether a remote model can be used for tasks that require vision. Turn it on only when the remote model has vision capabilities." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "控制是否可以使用远端模型来完成需要视觉的任务。仅在远端模型具有视觉功能时才开启。"
+          }
+        }
+      }
     },
     "Controls whether a server is used for inference when it is available." : {
       "localizations" : {
@@ -2224,6 +2251,16 @@
         }
       }
     },
+    "Model Changed" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模型已更改"
+          }
+        }
+      }
+    },
     "Model could not be found" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2749,9 +2786,6 @@
           }
         }
       }
-    },
-    "Remote Model has Vision" : {
-
     },
     "Remote Model Name" : {
       "localizations" : {
@@ -3989,6 +4023,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "使用默认键盘快捷键 `Tab` 接受下一个字，或使用 `Shift + Tab` 接受整段文字。"
+          }
+        }
+      }
+    },
+    "Use Vision Capabilities" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启用视觉输入"
           }
         }
       }

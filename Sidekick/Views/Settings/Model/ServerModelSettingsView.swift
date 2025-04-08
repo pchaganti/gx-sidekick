@@ -123,10 +123,10 @@ struct ServerModelSettingsView: View {
     var serverModelHasVisionToggle: some View {
         HStack(alignment: .top) {
             VStack(alignment: .leading) {
-                Text("Remote Model has Vision")
+                Text("Use Vision Capabilities")
                     .font(.title3)
                     .bold()
-                Text("Controls whether a remote model can be used for tasks that require vision.")
+                Text("Controls whether a remote model can be used for tasks that require vision. Turn it on only when the remote model has vision capabilities.")
                     .font(.caption)
             }
             Spacer()

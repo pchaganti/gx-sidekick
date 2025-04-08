@@ -53,12 +53,12 @@ public class Dialogs {
 		message: String? = nil,
 		option1: String,
 		option2: String,
-		ifOption1: @escaping () -> Void,
-		ifOption2: @escaping () -> Void
+        ifOption1: @escaping () -> Void = {},
+        ifOption2: @escaping () -> Void = {}
 	) -> Bool {
 		// Define alert
 		let alert: NSAlert = NSAlert()
-		alert.messageText = title
+        alert.messageText = title
 		if let message = message {
 			alert.informativeText = message
 		}

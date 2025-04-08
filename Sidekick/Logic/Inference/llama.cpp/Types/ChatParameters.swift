@@ -81,6 +81,7 @@ struct ChatParameters: Codable {
 		encoder.outputFormatting = .prettyPrinted
 		let jsonData = try? encoder.encode(self)
 		let jsonString = String(data: jsonData!, encoding: .utf8)!
+//        print(jsonString)
         return jsonString
 	}
 	

@@ -12,7 +12,9 @@ struct ModelNameMenu: View {
 	var modelTypes: [ModelNameMenu.ModelType]
 	
 	@AppStorage("endpoint") private var serverEndpoint: String = InferenceSettings.endpoint
+    
 	@Binding var serverModelName: String
+    @AppStorage("serverModelHasVision") private var serverModelHasVision: Bool = InferenceSettings.serverModelHasVision
 	
 	@State private var remoteModelNames: [String] = []
 	@State private var customModelNames: [String] = InferenceSettings.customModelNames
@@ -60,6 +62,31 @@ struct ModelNameMenu: View {
 				// Refresh selection
 				self.localModelsListId = UUID()
 			}
+            .onChange(
+                of: self.serverModelName
+            ) {
+                // Turn has vision on if model is in multimodal list
+                let serverModelHasVision: Bool =  RemoteModel.multimodalModels.contains { model in
+                    self.serverModelName.contains(model.primaryName)
+                }
+                // If no change, exit
+                if serverModelHasVision == self.serverModelHasVision {
+                    return
+                }
+                // Get message
+                let message: String = serverModelHasVision ? String(localized: "A new remote model has been selected, which has been identified as having vision capabilities. Would you like to turn on vision for this model?") : String(localized: "A new remote model has been selected, which might not include vision capabilities. Would you like to turn off vision for this model?")
+                // Confirm with user
+                if Dialogs.dichotomy(
+                    title: String(localized: "Model Changed"),
+                    message: message,
+                    option1: String(localized: "Yes"),
+                    option2: String(localized: "No")
+                ) {
+                    withAnimation(.linear) {
+                        self.serverModelHasVision = serverModelHasVision
+                    }
+                }
+            }
 	}
 	
 	var menu: some View {

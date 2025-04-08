@@ -10,7 +10,7 @@ import SwiftUI
 struct ServerModelNameEditor: View {
 	
 	@Binding var serverModelName: String
-
+    
 	var modelType: ModelType
 	
 	/// A localized `String` containing the title shown for the editor
@@ -34,15 +34,15 @@ struct ServerModelNameEditor: View {
 	}
 	
 	var body: some View {
-		HStack(alignment: .center) {
-			description
-			Spacer()
-			ModelNameMenu(
-				modelTypes: [.remote],
-				serverModelName: self.$serverModelName
-			)
-			.frame(maxWidth: 150)
-		}
+        HStack(alignment: .center) {
+            description
+            Spacer()
+            ModelNameMenu(
+                modelTypes: [.remote],
+                serverModelName: self.$serverModelName
+            )
+            .frame(maxWidth: 150)
+        }
 	}
 	
 	var description: some View {
