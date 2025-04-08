@@ -1,5 +1,5 @@
 //
-//  Tool.swift
+//  Function.swift
 //  Sidekick
 //
 //  Created by John Bean on 4/7/25.
@@ -60,8 +60,8 @@ extension Array: ParameterValue where Element: ParameterValue {
     }
 }
 
-// MARK: - Updated Tool Parameter
-public struct ToolParameter: Codable {
+// MARK: - Updated Function Parameter
+public struct FunctionParameter: Codable {
     var label: String
     var description: String
     var datatype: Datatype
@@ -140,30 +140,30 @@ public struct TypedParameter<T: ParameterValue> {
     }
 }
 
-// MARK: - Tool Protocol
-protocol ToolProtocol: Identifiable {
+// MARK: - Function Protocol
+protocol FunctionProtocol: Identifiable {
     associatedtype Parameters
     associatedtype Result
     
     var id: String { get }
     var name: String { get }
     var description: String { get }
-    var params: [ToolParameter] { get }
+    var params: [FunctionParameter] { get }
     var run: (Parameters) throws -> Result { get }
 }
 
-// MARK: - Generic Tool Implementation
-public struct Tool<Parameter, Result>: ToolProtocol {
+// MARK: - Generic Function Implementation
+public struct Function<Parameter, Result>: FunctionProtocol {
     public var id: String { return name }
     public var name: String
     public var description: String
-    public var params: [ToolParameter]
+    public var params: [FunctionParameter]
     public var run: (Parameter) throws -> Result
     
     public init(
         name: String,
         description: String,
-        params: [ToolParameter],
+        params: [FunctionParameter],
         run: @escaping (Parameter) throws -> Result
     ) {
         self.name = name
@@ -172,23 +172,23 @@ public struct Tool<Parameter, Result>: ToolProtocol {
         self.run = run
     }
     
-    public var toolObject: ToolObject {
+    public var toolObject: FunctionObject {
         // Create numbered properties to ensure order
         let properties = Dictionary(uniqueKeysWithValues: params.enumerated().map { index, param in
             let numberedKey = String(format: "%04d_%@", index, param.label)
-            return (numberedKey, ToolObject.Function.InputSchema.Property(
+            return (numberedKey, FunctionObject.Function.InputSchema.Property(
                 type: param.datatype.rawValue,
                 description: param.description,
                 isRequired: param.isRequired
             ))
         })
         
-        return ToolObject(
+        return FunctionObject(
             type: "function",
-            function: ToolObject.Function(
+            function: FunctionObject.Function(
                 name: self.name,
                 description: self.description,
-                inputSchema: ToolObject.Function.InputSchema(
+                inputSchema: FunctionObject.Function.InputSchema(
                     type: "object",
                     properties: properties,
                     paramLabels: params.map { $0.label }
@@ -225,7 +225,7 @@ public struct Tool<Parameter, Result>: ToolProtocol {
         return lines.joined(separator: "\n")
     }
     
-    public struct ToolObject: Codable {
+    public struct FunctionObject: Codable {
         var type: String = "function"
         var function: Function
         
