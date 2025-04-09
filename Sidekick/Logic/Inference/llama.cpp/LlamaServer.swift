@@ -445,7 +445,7 @@ public actor LlamaServer {
                                         guard let endReasoningToken: String = tokens.last else {
                                             return false
                                         }
-                                        return content
+                                        return pendingMessage
                                             .trimmingWhitespaceAndNewlines()
                                             .contains(
                                                 endReasoningToken
