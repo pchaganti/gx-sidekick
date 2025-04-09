@@ -282,6 +282,7 @@
 		20C5CBCD2DA52AB40071F5F7 /* FunctionCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C5CBCC2DA52AB40071F5F7 /* FunctionCall.swift */; };
 		20C5CBD12DA5333C0071F5F7 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C5CBD02DA5333C0071F5F7 /* Functions.swift */; };
 		20C5CBD32DA55BDA0071F5F7 /* StringOr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C5CBD22DA55BDA0071F5F7 /* StringOr.swift */; };
+		20C5CBD52DA5F7640071F5F7 /* FunctionCallsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C5CBD42DA5F7640071F5F7 /* FunctionCallsView.swift */; };
 		20C62EBF2D71373500996566 /* SlideStudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C62EBE2D71373500996566 /* SlideStudioView.swift */; };
 		20C62EC12D713BC000996566 /* SlideStudioProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C62EC02D713BC000996566 /* SlideStudioProgressView.swift */; };
 		20C62EC32D713D5100996566 /* SlideStudioPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C62EC22D713D5100996566 /* SlideStudioPromptView.swift */; };
@@ -683,6 +684,7 @@
 		20C5CBCC2DA52AB40071F5F7 /* FunctionCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionCall.swift; sourceTree = "<group>"; };
 		20C5CBD02DA5333C0071F5F7 /* Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
 		20C5CBD22DA55BDA0071F5F7 /* StringOr.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringOr.swift; sourceTree = "<group>"; };
+		20C5CBD42DA5F7640071F5F7 /* FunctionCallsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionCallsView.swift; sourceTree = "<group>"; };
 		20C62EBE2D71373500996566 /* SlideStudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideStudioView.swift; sourceTree = "<group>"; };
 		20C62EC02D713BC000996566 /* SlideStudioProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideStudioProgressView.swift; sourceTree = "<group>"; };
 		20C62EC22D713D5100996566 /* SlideStudioPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideStudioPromptView.swift; sourceTree = "<group>"; };
@@ -1843,6 +1845,7 @@
 				2025E67E2D894DFC00289E3F /* MessageCopyButton.swift */,
 				2051FEDC2D8E5601001B1E0D /* MessageReadAloudButton.swift */,
 				206FBB202D54B40700A045FF /* MessageReasoningProcessView.swift */,
+				20C5CBD42DA5F7640071F5F7 /* FunctionCallsView.swift */,
 			);
 			path = Message;
 			sourceTree = "<group>";
@@ -2093,6 +2096,7 @@
 				20571F842CBD71C9004F3344 /* SystemPromptEditor.swift in Sources */,
 				20CB7AC02D1457B10013E30C /* PromptAnalyzer.swift in Sources */,
 				200619AF2D6766B1001949EF /* DiagrammerGeneratingView.swift in Sources */,
+				20C5CBD52DA5F7640071F5F7 /* FunctionCallsView.swift in Sources */,
 				20C5CBCD2DA52AB40071F5F7 /* FunctionCall.swift in Sources */,
 				201BB9A02D8B182800890EE6 /* CanvasVersionSelector.swift in Sources */,
 				20C221062CC4B15600A99796 /* SourcesManager.swift in Sources */,

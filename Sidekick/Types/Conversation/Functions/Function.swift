@@ -210,8 +210,8 @@ public struct Function<Parameter: Codable, Result>: FunctionProtocol, AnyFunctio
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
         let jsonData = try! encoder.encode(self.functionObject)
-        // Process the JSON to remove the number prefixes
         let jsonStr = String(data: jsonData, encoding: .utf8)!
+        // Process the JSON to remove the number prefixes
         return cleanNumberedKeys(jsonStr)
     }
     

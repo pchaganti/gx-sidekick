@@ -115,9 +115,9 @@ struct MessageView: View {
 	
 	var content: some View {
 		Group {
-			// Check for blank message
+			// Check for blank message or function calls
 			if message.text.isEmpty && message.imageUrl == nil && message
-				.getSender() == .assistant {
+                .getSender() == .assistant && model.status != .usingFunctions {
 				RetryButton {
 					self.retryGeneration()
 				}
@@ -153,11 +153,18 @@ struct MessageView: View {
 					alignment: .leading,
 					spacing: 4
 				) {
+                    // Show function calls if availible
+                    if self.message.hasFunctionCalls {
+                        FunctionCallsView(message: self.message)
+                            .if(!self.message.text.isEmpty) { view in
+                                view.padding(.bottom, 5)
+                            }
+                    }
 					// Show reasoning process if availible
 					if self.message.hasReasoning {
 						MessageReasoningProcessView(message: self.message)
 							.if(!self.message.responseText.isEmpty) { view in
-								view.padding(.bottom, 6)
+								view.padding(.bottom, 5)
 							}
 					}
 					// Show message response

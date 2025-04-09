@@ -15,21 +15,22 @@ public struct Message: Identifiable, Codable, Hashable {
 		text: String,
 		sender: Sender,
 		model: String? = nil,
-		jsCode: String? = nil,
+        functionCalls: [FunctionCall]? = nil,
 		expertId: UUID? = nil
-	) {
-		self.id = UUID()
-		self.text = text
-		self.sender = sender
-		self.startTime = .now
-		self.lastUpdated = .now
-		self.outputEnded = false
-		let modelName: String = model ?? String(
-			localized: "Unknown"
-		)
-		self.model = modelName
-		self.expertId = expertId
-	}
+    ) {
+        self.id = UUID()
+        self.text = text
+        self.sender = sender
+        self.startTime = .now
+        self.lastUpdated = .now
+        self.outputEnded = false
+        let modelName: String = model ?? String(
+            localized: "Unknown"
+        )
+        self.model = modelName
+        self.functionCalls = functionCalls
+        self.expertId = expertId
+    }
 	
 	init(
 		imageUrl: URL,
@@ -297,8 +298,16 @@ DO NOT reference sources outside of those provided below. If you did not referen
 			}
 		}
 	}
-	
-	/// An array for URLs of sources referenced in a response
+    
+    /// An array of ``FunctionCall`` used in the response
+    public var functionCalls: [FunctionCall]? = nil
+	/// A `Bool` representing whether the message has function calls
+    public var hasFunctionCalls: Bool {
+        guard let functionCalls else { return false }
+        return !functionCalls.isEmpty
+    }
+    
+	/// An array for `URL` of sources referenced in a response
 	public var referencedURLs: [ReferencedURL] = []
 	
 	/// Function to get the sender
@@ -343,8 +352,9 @@ DO NOT reference sources outside of those provided below. If you did not referen
 		self.tokensPerSecond = response.predictedPerSecond
 		self.responseStartSeconds = response.responseStartSeconds
 		self.lastUpdated = .now
-		let text: String = response.text.dropSuffixIfPresent("[]")
-		// Decode text for extract text and references
+        print(functionCalls)
+        // Decode text for extract text and references
+        let text: String = response.text.dropSuffixIfPresent("[]")
 		let delimiters: [String] = ["\n[", " ["]
 		// Set text as default if reference extraction fails
 		self.text = text

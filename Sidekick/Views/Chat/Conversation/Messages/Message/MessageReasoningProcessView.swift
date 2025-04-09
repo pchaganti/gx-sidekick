@@ -70,16 +70,22 @@ struct MessageReasoningProcessView: View {
 			.fill(Color.purple.opacity(0.2))
 			.overlay {
 				HStack {
-					Label("Reasoning Process", systemImage: "brain.fill")
-						.fontWeight(.semibold)
+                    Label {
+                        Text("Reasoning Process")
+                            .opacity(0.8)
+                    } icon: {
+                        Image(systemName: "brain.fill")
+                            .foregroundStyle(Color.purple)
+                    }
+                    .fontWeight(.semibold)
 					Spacer()
 					Image(systemName: "chevron.up")
 						.fontWeight(.semibold)
 						.rotationEffect(
 							self.showReasoning ? .zero : .degrees(180)
 						)
+                        .foregroundStyle(.secondary.opacity(0.8))
 				}
-				.foregroundStyle(Color.purple)
 				.padding(.horizontal, 7)
 			}
 			.frame(height: 33)

@@ -25,34 +25,11 @@ struct PendingMessageView: View {
 		return selectedExpert?.useWebSearch ?? true
 	}
 	
-	var pendingMessage: Message {
-		var text: String = String(localized: "Processing...")
-		if self.model.status == .generatingTitle {
-			text = String(localized: "Generating title...")
-		} else if self.model.status == .querying {
-			text = String(localized: "Searching...")
-		} else if self.model.status == .usingFunctions {
-			text = String(localized: "Calling functions...")
-		} else if !self.model.pendingMessage.isEmpty {
-			// Show progress if availible
-			text = self.model.pendingMessage
-		}
-		return Message(
-			text: text,
-			sender: .assistant,
-			expertId: promptController.sentExpertId
-		)
-	}
-	
     var body: some View {
 		MessageView(
-			message: pendingMessage,
+            message: self.model.displayedPendingMessage,
 			canEdit: false
 		)
     }
 	
 }
-
-//#Preview {
-//    PendingMessageView()
-//}

@@ -10,9 +10,10 @@ import Foundation
 enum Functions {
     
     static var functions: [AnyFunctionBox] = [
-        DefaultFunctions.add,
+        DefaultFunctions.sum,
         DefaultFunctions.average,
         DefaultFunctions.multiply,
+        DefaultFunctions.sumRange,
         DefaultFunctions.join,
         DefaultFunctions.runJavaScript,
         DefaultFunctions.showAlert

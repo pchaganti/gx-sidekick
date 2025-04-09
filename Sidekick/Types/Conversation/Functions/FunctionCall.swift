@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 protocol AnyFunctionBox {
     
@@ -15,17 +16,36 @@ protocol AnyFunctionBox {
     
 }
 
-struct FunctionCall: Codable {
+public struct FunctionCall: Codable, Equatable, Hashable {
     
+    /// Function to conform to equatable
+    public static func == (lhs: FunctionCall, rhs: FunctionCall) -> Bool {
+        return lhs.config == rhs.config && lhs.status == rhs.status && lhs.timeCalled == rhs.timeCalled
+    }
+    
+    /// The function call's configuration
     let config: FunctionCallConfig
+    
+    /// A ``Status`` representing if the function was executed successfully
+    var status: Status? = .executing
+    /// A `Date` for the time where the function was called
+    var timeCalled: Date? = nil
+    /// A `String` containing the result of the run
+    var result: String? = nil
     
     // Custom coding keys to match the JSON structure
     enum CodingKeys: String, CodingKey {
         case config = "function_call"
+        case status = "status"
+        case timeCalled = "timeCalled"
+        case result = "result"
     }
     
     /// Function to call the function
-    func call() throws -> String? {
+    mutating func call() throws -> String? {
+        // Mark as executing
+        self.status = .executing
+        self.timeCalled = Date.now
         // Locate the function by name
         guard let function = Functions.functions.first(
             where: { $0.name == self.config.name }
@@ -45,12 +65,30 @@ struct FunctionCall: Codable {
         return String(data: jsonData!, encoding: .utf8)!
     }
     
-    enum FunctionCallError: String, Error {
+    public enum FunctionCallError: String, Error {
         case functionNotFound = "The function called is not available"
+    }
+    
+    public enum Status: Codable, CaseIterable {
+        
+        case succeeded
+        case failed
+        case executing
+        
+        var color: Color {
+            switch self {
+                case .succeeded:
+                    return .brightGreen
+                case .failed:
+                    return .red
+                case .executing:
+                    return .secondary
+            }
+        }
     }
 }
 
-struct FunctionCallConfig: Codable {
+public struct FunctionCallConfig: Codable, Hashable {
     let name: String
     let arguments: [String: String]
 }

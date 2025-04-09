@@ -309,7 +309,7 @@ struct PromptInputField: View {
 				text: response.text,
 				sender: .assistant,
 				model: response.modelName,
-				jsCode: response.jsCode,
+                functionCalls: response.functionCalls,
 				expertId: promptController.sentExpertId
 			)
 			responseMessage.update(
@@ -355,7 +355,7 @@ A user is chatting with an assistant and they have sent the message below. Gener
 			mode: .default
 		).text
 		// Reset pending message text
-		self.model.pendingMessage = ""
+        self.model.pendingMessage = nil
 		// Return
 		return title
 			.reasoningRemoved

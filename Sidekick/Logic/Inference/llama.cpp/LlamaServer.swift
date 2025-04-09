@@ -510,7 +510,7 @@ public actor LlamaServer {
 			predictedPerSecond: Double(tokens) / generationTime,
 			modelName: modelName,
 			usage: stopResponse?.usage,
-			usedServer: rawUrl.usingRemoteServer
+            usedServer: rawUrl.usingRemoteServer
 		)
 	}
 	
@@ -731,14 +731,12 @@ public actor LlamaServer {
 		/// A `Bool` indicating whether a remote server was used
 		var usedServer: Bool
 		
-		/// A `String` containing the JavaScript code that was executed, if any
-		var jsCode: String?
-		
+        /// An array of ``FunctionCall`` executed in the response
+        var functionCalls: [FunctionCall] = []
 		/// A `Bool` representing if a function was called
 		var containsFunctionCall: Bool {
             return self.functionCall != nil
 		}
-		
         /// The first ``FunctionCall`` in the response; if any
         var functionCall: FunctionCall? {
             // The regular expression pattern matches any substring that starts with "{" and ends with "}"

@@ -104,8 +104,40 @@ public class Model: ObservableObject {
 		}
 	}
 	
-	/// The content of the message being generated, of type `String`
-	@Published var pendingMessage: String = ""
+	/// The message being generated
+	@Published var pendingMessage: Message? = nil
+    /// The pending message displayed to users
+    public var displayedPendingMessage: Message {
+        var text: String = ""
+        var functionCalls: [FunctionCall] = self.pendingMessage?.functionCalls ?? []
+        switch self.status {
+            case .cold, .coldProcessing, .processing, .backgroundTask, .ready:
+                if let pendingText = self.pendingMessage?.text {
+                    text = pendingText
+                } else {
+                    text = String(localized: "Processing...")
+                }
+            case .querying:
+                text = String(localized: "Searching...")
+            case .generatingTitle:
+                text = String(localized: "Generating title...")
+            case .usingFunctions:
+                if functionCalls.isEmpty {
+                    // If no calls found
+                    text = String(localized: "Calling functions...")
+                }
+                // Show progress
+                if let pendingText = self.pendingMessage?.text {
+                    text = pendingText
+                }
+        }
+        return Message(
+            text: text,
+            sender: .assistant,
+            functionCalls: functionCalls
+        )
+    }
+    
 	/// The status of `llama-server`, of type ``Model.Status``
 	@Published var status: Status = .cold
 	/// The id of the conversation where the message was sent, of type `UUID`
@@ -135,28 +167,28 @@ public class Model: ObservableObject {
 	/// Function to set sent conversation ID
 	func setSentConversationId(_ id: UUID) {
 		// Reset pending message
-		self.pendingMessage = ""
+		self.pendingMessage = nil
 		self.sentConversationId = id
 	}
 	
 	/// Function to flag that conversaion naming has begun
 	func indicateStartedNamingConversation() {
 		// Reset pending message
-		self.pendingMessage = ""
+		self.pendingMessage = nil
 		self.status = .generatingTitle
 	}
 	
 	/// Function to flag that a background task has begun
 	func indicateStartedBackgroundTask() {
 		// Reset pending message
-		self.pendingMessage = ""
+		self.pendingMessage = nil
 		self.status = .backgroundTask
 	}
 	
 	/// Function to flag that querying has begun
 	func indicateStartedQuerying() {
 		// Reset pending message
-		self.pendingMessage = ""
+		self.pendingMessage = nil
 		self.status = .querying
 	}
 	
@@ -183,7 +215,7 @@ public class Model: ObservableObject {
 		) -> Void = { _, _, _ in }
 	) async throws -> LlamaServer.CompleteResponse {
 		// Reset pending message
-		self.pendingMessage = ""
+		self.pendingMessage = nil
 		// Set flag
 		let preQueryStatus: Status = self.status
 		if preQueryStatus.isForegroundTask {
@@ -298,7 +330,7 @@ public class Model: ObservableObject {
                         updateResponse += partialResponse
                         // Display if large update
                         let updateCount: Int = updateResponse.count
-                        let displayedCount = self.pendingMessage.count
+                        let displayedCount = self.pendingMessage?.text.count ?? 0
                         if updateCount >= increment || displayedCount < increment {
                             self.handleCompletionProgress(
                                 partialResponse: partialResponse,
@@ -312,11 +344,11 @@ public class Model: ObservableObject {
 		// Handle response finish
 		handleResponseFinish(
 			response!.text,
-			self.pendingMessage,
+            self.pendingMessage?.text ?? "",
 			response!.usage?.total_tokens
 		)
 		// Update display
-		self.pendingMessage = ""
+		self.pendingMessage = nil
 		self.status = .ready
 		Self.logger.notice("Finished responding to prompt")
 		return response!
@@ -381,7 +413,7 @@ public class Model: ObservableObject {
 			DispatchQueue.main.async {
 				updateResponse += partialResponse
 				let shouldUpdate = updateResponse.count >= increment ||
-				self.pendingMessage.count < increment
+                (self.pendingMessage?.text.count ?? 0 < increment)
 				if shouldUpdate {
 					self.handleCompletionProgress(
 						partialResponse: updateResponse,
@@ -408,19 +440,26 @@ public class Model: ObservableObject {
 	) async throws -> LlamaServer.CompleteResponse {
 		// Set status
 		self.status = .usingFunctions
-		self.pendingMessage = ""
 		// Execute functions on a loop
         var messages: [Message.MessageSubset] = messages
-        var maxIterations: Int = 10
+        var maxIterations: Int = 15
         var response: LlamaServer.CompleteResponse? = initialResponse
-        while maxIterations > 0, let functionCall = response?.functionCall {
+        while maxIterations > 0, var functionCall = response?.functionCall {
             // Log function call
             let callJsonSchema: String = functionCall.getJsonSchema()
             Self.logger.info("Executing function call: \(callJsonSchema, privacy: .public)")
+            // Display call to user
+            let functionCalls = self.pendingMessage?.functionCalls ?? []
+            self.pendingMessage?.functionCalls = functionCalls + [functionCall]
             // Call function
             var messageString: String? = nil
             do {
+                // Run
                 let result: String = try functionCall.call() ?? "Function evaluated successfully"
+                // Mark as succeeded
+                functionCall.status = .succeeded
+                functionCall.result = result
+                // Formulate callback message
                 messageString = """
 Below is the result produced by the tool call: `\(callJsonSchema)`. If the tool call provides enough information to solve the user's query, organize the information into an answer. Else, call another tool with a callback if needed.
 
@@ -429,6 +468,10 @@ Below is the result produced by the tool call: `\(callJsonSchema)`. If the tool 
 ``` 
 """
             } catch {
+                // Mark as failed
+                functionCall.status = .failed
+                functionCall.result = error.localizedDescription
+                // Formulate callback message
                 messageString = """
 The function call `\(callJsonSchema)` failed, producing the error below.
 
@@ -437,6 +480,7 @@ The function call `\(callJsonSchema)` failed, producing the error below.
 ```
 """
             }
+            self.pendingMessage?.functionCalls = functionCalls + [functionCall]
             let message = Message(
                 text: messageString!,
                 sender: .user
@@ -445,13 +489,30 @@ The function call `\(callJsonSchema)` failed, producing the error below.
                 message: message
             )
             messages.append(messageSubset)
+            // Declare variable for incremental update
+            var updateResponse: String = ""
+            self.pendingMessage?.text = updateResponse
             // Get response
             response = try await self.mainModelServer.getChatCompletion(
                 mode: .chat,
                 canReachRemoteServer: canReachRemoteServer,
                 messages: messages,
                 similarityIndex: similarityIndex
-            )
+            )  { partialResponse in
+                DispatchQueue.main.async {
+                    updateResponse += partialResponse
+                    let shouldUpdate = updateResponse.count >= increment ||
+                    (self.pendingMessage?.text.count ?? 0 < increment)
+                    if shouldUpdate {
+                        self.handleCompletionProgress(
+                            partialResponse: updateResponse,
+                            handleResponseUpdate: handleResponseUpdate
+                        )
+                        updateResponse = ""
+                    }
+                }
+            }
+            response?.functionCalls = functionCalls + [functionCall]
             // Increment counter & reset
             maxIterations -= 1
         }
@@ -463,12 +524,33 @@ The function call `\(callJsonSchema)` failed, producing the error below.
             return response
         } else {
             // Else, fall back on one-shot answer
-            let response: LlamaServer.CompleteResponse = try await self.mainModelServer.getChatCompletion(
+            Self.logger.error("Maximum number of function calls reached. Falling back to one-shot answer.")
+            // Declare variable for incremental update
+            var updateResponse: String = ""
+            self.pendingMessage?.text = updateResponse
+            // Get response
+            var response: LlamaServer.CompleteResponse = try await self.mainModelServer.getChatCompletion(
                 mode: .contextAwareAgent,
                 canReachRemoteServer: canReachRemoteServer,
                 messages: messages,
                 similarityIndex: similarityIndex
-            )
+            ) { partialResponse in
+                DispatchQueue.main.async {
+                    updateResponse += partialResponse
+                    let shouldUpdate = updateResponse.count >= increment ||
+                    (self.pendingMessage?.text.count ?? 0 < increment)
+                    if shouldUpdate {
+                        self.handleCompletionProgress(
+                            partialResponse: updateResponse,
+                            handleResponseUpdate: handleResponseUpdate
+                        )
+                        updateResponse = ""
+                    }
+                }
+            }
+            if let functionCalls = self.pendingMessage?.functionCalls {
+                response.functionCalls = functionCalls
+            }
             return response
         }
 		// An enum of reasons for finishing
@@ -485,12 +567,16 @@ The function call `\(callJsonSchema)` failed, producing the error below.
 			String // Delta
 		) -> Void
 	) {
-		let fullMessage: String = (self.pendingMessage + partialResponse)
+        // Assign if nil
+        if self.pendingMessage == nil {
+            self.pendingMessage = Message(text: "", sender: .assistant)
+        }
+        let fullMessage: String = (self.pendingMessage?.text ?? "") + partialResponse
 		handleResponseUpdate(
 			fullMessage,
 			partialResponse
 		)
-		self.pendingMessage = fullMessage
+        self.pendingMessage?.text = fullMessage
 	}
     
     /// Function to check if the remote server is reachable

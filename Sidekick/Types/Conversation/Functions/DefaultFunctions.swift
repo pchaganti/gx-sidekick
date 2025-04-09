@@ -19,15 +19,22 @@ struct JoinParams: Codable {
     let end: String
 }
 
-// Updated parameter structs using the property wrapper to decode numbers that may be strings.
 struct AddParams: Codable {
     @StringOrNumber var a: Float
     @OptionalStringOrNumber var b: Float?
+    @OptionalStringOrNumber var c: Float?
+    @OptionalStringOrNumber var d: Float?
+    @OptionalStringOrNumber var e: Float?
 }
 
 struct MultiplyParams: Codable {
     @StringOrNumber var a: Float
     @StringOrNumber var b: Float
+}
+
+struct SumRangeParams: Codable {
+    @StringOrNumber var a: Int
+    @StringOrNumber var b: Int
 }
 
 struct AverageParams: Codable {
@@ -87,9 +94,9 @@ public class DefaultFunctions {
     )
     
     /// A ``Function`` for adding up 2 numbers
-    static let add = Function<AddParams, Float>(
+    static let sum = Function<AddParams, Float>(
         name: "sum",
-        description: "Adds two numbers together. The second number is optional.",
+        description: "Adds a maximum of 5 numbers together. All but the first number is optional.",
         params: [
             FunctionParameter(
                 label: "a",
@@ -102,10 +109,28 @@ public class DefaultFunctions {
                 description: "The second number to add (optional)",
                 datatype: .float,
                 isRequired: false
+            ),
+            FunctionParameter(
+                label: "c",
+                description: "The third number to add (optional)",
+                datatype: .float,
+                isRequired: false
+            ),
+            FunctionParameter(
+                label: "d",
+                description: "The fourth number to add (optional)",
+                datatype: .float,
+                isRequired: false
+            ),
+            FunctionParameter(
+                label: "e",
+                description: "The fifth number to add (optional)",
+                datatype: .float,
+                isRequired: false
             )
         ],
         run: { params in
-            return params.a + (params.b ?? 0)
+            return params.a + (params.b ?? 0) + (params.c ?? 0) + (params.d ?? 0) + (params.e ?? 0)
         }
     )
     
@@ -129,6 +154,29 @@ public class DefaultFunctions {
         ],
         run: { params in
             return params.a * params.b
+        }
+    )
+    
+    /// A ``Function`` for getting the sum of all numbers within a range
+    static let sumRange = Function<SumRangeParams, Int>(
+        name: "sum_range",
+        description: "Sums all integers between 2 integers, inclusive.",
+        params: [
+            FunctionParameter(
+                label: "a",
+                description: "The first number in the range",
+                datatype: .integer,
+                isRequired: true
+            ),
+            FunctionParameter(
+                label: "b",
+                description: "The second number in the range",
+                datatype: .integer,
+                isRequired: true
+            )
+        ],
+        run: { params in
+            return Array(params.a...params.b).reduce(0, +)
         }
     )
     
@@ -160,7 +208,7 @@ public class DefaultFunctions {
     /// A ``Function`` for running JavaScript
     static let runJavaScript = Function<RunJavaScriptParams, String>(
         name: "run_javascript",
-        description: "Runs the JavaScript code provided and returns the result",
+        description: "Runs JavaScript code and returns the result. Useful for performing calculations with many steps or performing transformations on data.",
         params: [
             FunctionParameter(
                 label: "code",

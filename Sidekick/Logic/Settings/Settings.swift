@@ -111,7 +111,7 @@ public class Settings {
 			// Set default
 			if !UserDefaults.standard.exists(key: "useFunctions") {
 				// Default to true
-				Self.useFunctions = true
+				Self.useFunctions = InferenceSettings.useServer
 			}
 			return UserDefaults.standard.bool(
 				forKey: "useFunctions"
@@ -146,7 +146,6 @@ public class Settings {
 			if !UserDefaults.standard.exists(key: "generateConversationTitles") {
 				// Use default
 				Self.generateConversationTitles = InferenceSettings.useServer && !InferenceSettings.serverWorkerModelName.isEmpty
-				
 			}
 			return UserDefaults.standard.bool(
 				forKey: "generateConversationTitles"

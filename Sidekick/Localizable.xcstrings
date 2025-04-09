@@ -420,6 +420,9 @@
         }
       }
     },
+    "Call: " : {
+
+    },
     "Calling functions..." : {
       "localizations" : {
         "zh-Hans" : {
@@ -1420,6 +1423,9 @@
           }
         }
       }
+    },
+    "Executed Function: " : {
+
     },
     "Exit" : {
       "localizations" : {
@@ -2968,6 +2974,9 @@
           }
         }
       }
+    },
+    "Result: " : {
+
     },
     "Retrieval" : {
       "localizations" : {
