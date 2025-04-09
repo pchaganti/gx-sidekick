@@ -47,11 +47,13 @@ struct ChatParameters: Codable {
         fullSystemPromptComponents.append(InferenceSettings.metadataPrompt)
         // Tell the LLM to use sources
         fullSystemPromptComponents.append(InferenceSettings.useSourcesPrompt)
-        // Tell the LLM to use tools
-        fullSystemPromptComponents.append(InferenceSettings.useFunctionsPrompt)
-        // Inject function schema
-        for function in Functions.functions {
-            fullSystemPromptComponents.append(function.getJsonSchema())
+        // Tell the LLM to use functions when enabled
+        if Settings.useFunctions {
+            fullSystemPromptComponents.append(InferenceSettings.useFunctionsPrompt)
+            // Inject function schema
+            for function in Functions.functions {
+                fullSystemPromptComponents.append(function.getJsonSchema())
+            }
         }
         // Join all components
 		let fullSystemPrompt: String = fullSystemPromptComponents.joined(separator: "\n\n")
