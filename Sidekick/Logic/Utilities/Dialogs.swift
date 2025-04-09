@@ -28,7 +28,7 @@ public class Dialogs {
 	public static func showConfirmation(
 		title: String,
 		message: String? = nil,
-		ifConfirmed: @escaping () -> Void
+        ifConfirmed: @escaping () -> Void = {}
 	) -> Bool {
 		// Define alert
 		let alert: NSAlert = NSAlert()

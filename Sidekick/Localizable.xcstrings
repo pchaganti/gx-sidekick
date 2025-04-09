@@ -1420,16 +1420,6 @@
         }
       }
     },
-    "Executed Function: " : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "调用函数："
-          }
-        }
-      }
-    },
     "Exit" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1686,6 +1676,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "输出格式"
+          }
+        }
+      }
+    },
+    "Function: " : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "函数："
           }
         }
       }
@@ -3363,6 +3363,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sidekick 需要权限才能阅读 Apple Mail 中的电子邮件。请点击下面的按钮并按“打开”。"
+          }
+        }
+      }
+    },
+    "Sidekick needs to look up the web to address your request. Do you wish to permit this?" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sidekick需要查阅网络来处理您的请求。您是否允许此操作？"
           }
         }
       }

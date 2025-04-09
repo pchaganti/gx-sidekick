@@ -37,7 +37,7 @@ struct ChatParameters: Codable {
 		modelType: ModelType,
         systemPrompt: String,
         messages: [Message.MessageSubset],
-		useInterpreter: Bool = false,
+        useWebSearch: Bool = false,
 		similarityIndex: SimilarityIndex?
 	) async {
 		// Formulate messages
@@ -51,7 +51,8 @@ struct ChatParameters: Codable {
         if Settings.useFunctions {
             fullSystemPromptComponents.append(InferenceSettings.useFunctionsPrompt)
             // Inject function schema
-            for function in Functions.functions {
+            let functions: [any AnyFunctionBox] = Functions.functions
+            for function in functions {
                 fullSystemPromptComponents.append(function.getJsonSchema())
             }
         }

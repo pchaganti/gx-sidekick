@@ -17,6 +17,16 @@ public struct Source: Identifiable, Codable, Hashable {
 	
 	/// The name of the source
 	public var source: String
+    
+    /// The info associated with the source
+    public var info: SourceInfo {
+        return .init(text: self.text, url: self.source)
+    }
+    
+    public struct SourceInfo: Codable {
+        public var text: String
+        public var url: String
+    }
 	
 }
 

@@ -16,6 +16,7 @@ enum Functions {
         DefaultFunctions.sumRange,
         DefaultFunctions.join,
         DefaultFunctions.runJavaScript,
+        DefaultFunctions.webSearch,
         DefaultFunctions.showAlert
     ]
     

@@ -9,7 +9,6 @@ import Foundation
 
 import Foundation
 
-// Parameter structs that conform to Codable
 struct ShowAlertParams: Codable {
     let message: String
 }
@@ -21,17 +20,17 @@ struct JoinParams: Codable {
 
 struct AddParams: Codable {
     @StringOrNumber var a: Float
-    @OptionalStringOrNumber var b: Float?
-    @OptionalStringOrNumber var c: Float?
-    @OptionalStringOrNumber var d: Float?
-    @OptionalStringOrNumber var e: Float?
+    @OptionalStringOrNumber var b: Float? = nil
+    @OptionalStringOrNumber var c: Float? = nil
+    @OptionalStringOrNumber var d: Float? = nil
+    @OptionalStringOrNumber var e: Float? = nil
 }
 
 struct MultiplyParams: Codable {
     @StringOrNumber var a: Float
     @StringOrNumber var b: Float
 }
-
+    
 struct SumRangeParams: Codable {
     @StringOrNumber var a: Int
     @StringOrNumber var b: Int
@@ -43,6 +42,10 @@ struct AverageParams: Codable {
 
 struct RunJavaScriptParams: Codable {
     let code: String
+}
+
+struct WebSearchParams: Codable {
+    let query: String
 }
 
 public class DefaultFunctions {
@@ -219,6 +222,54 @@ public class DefaultFunctions {
         ],
         run: { params in
             return try JavaScriptRunner.executeJavaScript(params.code)
+        }
+    )
+    
+    /// A ``Function`` to conduct a web search
+    static let webSearch = Function<WebSearchParams, String>(
+        name: "web_search",
+        description: "Searches the web with the provided query.",
+        params: [
+            FunctionParameter(
+                label: "query",
+                description: "The topic to look up online",
+                datatype: .string,
+                isRequired: true
+            )
+        ],
+        run: { param in
+            // Check if enabled
+            if !RetrievalSettings.canUseWebSearch {
+                throw WebSearchError.notEnabled
+            }
+            // Ask user for permission
+            if !Dialogs.showConfirmation(
+                title: String(localized: "Web Search"),
+                message: String(localized: "Sidekick needs to look up the web to address your request. Do you wish to permit this?")
+            ) {
+                // If denied, throw error
+                throw WebSearchError.permissionsDenied
+            }
+            // Conduct search
+            let sources: [Source] = try await TavilySearch.search(
+                query: param.query,
+                resultCount: 3
+            )
+            // Convert to JSON
+            let sourcesInfo: [Source.SourceInfo] = sources.map(\.info)
+            let jsonEncoder: JSONEncoder = JSONEncoder()
+            jsonEncoder.outputFormatting = [.prettyPrinted]
+            let jsonData: Data = try! jsonEncoder.encode(sourcesInfo)
+            let resultsText: String = String(
+                data: jsonData,
+                encoding: .utf8
+            )!
+            return resultsText
+            // Custom error for Web Search function
+            enum WebSearchError: String, Error {
+                case notEnabled = "Web search has not been enabled in Settings."
+                case permissionsDenied = "The user denied your request to access the web."
+            }
         }
     )
     

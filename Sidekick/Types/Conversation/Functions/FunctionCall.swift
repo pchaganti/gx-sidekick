@@ -12,7 +12,7 @@ protocol AnyFunctionBox {
     
     var name: String { get }
     func getJsonSchema() -> String
-    func call(withData data: Data) throws -> String?
+    func call(withData data: Data) async throws -> String?
     
 }
 
@@ -42,7 +42,7 @@ public struct FunctionCall: Codable, Equatable, Hashable {
     }
     
     /// Function to call the function
-    mutating func call() throws -> String? {
+    mutating func call() async throws -> String? {
         // Mark as executing
         self.status = .executing
         self.timeCalled = Date.now
@@ -55,7 +55,7 @@ public struct FunctionCall: Codable, Equatable, Hashable {
         // Instead of expecting a raw type (like a tuple or a simple String), we are using Codable structs for parameters.
         let argumentData = try JSONSerialization.data(withJSONObject: config.arguments, options: [])
         // Use the type erased call method.
-        return try function.call(withData: argumentData)
+        return try await function.call(withData: argumentData)
     }
     
     /// Function to convert the function call to JSON

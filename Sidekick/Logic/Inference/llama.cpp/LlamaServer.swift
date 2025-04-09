@@ -334,6 +334,7 @@ public actor LlamaServer {
 		mode: Model.Mode,
         canReachRemoteServer: Bool,
 		messages: [Message.MessageSubset],
+        useWebSearch: Bool = false,
 		similarityIndex: SimilarityIndex? = nil,
 		progressHandler: (@Sendable (String) -> Void)? = nil
 	) async throws -> CompleteResponse {
@@ -361,7 +362,7 @@ public actor LlamaServer {
                         modelType: self.modelType,
                         systemPrompt: self.systemPrompt,
                         messages: messages,
-						useInterpreter: true,
+                        useWebSearch: useWebSearch,
 						similarityIndex: similarityIndex
 					)
 				case .contextAwareAgent:
@@ -737,47 +738,52 @@ public actor LlamaServer {
 		var containsFunctionCall: Bool {
             return self.functionCall != nil
 		}
-        /// The first ``FunctionCall`` in the response; if any
+        /// The updated computed property that returns the first valid FunctionCall found in the text.
         var functionCall: FunctionCall? {
             let input: String = self.text.reasoningRemoved
-            guard let startIndex = input.firstIndex(of: "{") else { return nil }
-            var braceCount = 0
-            var currentIndex = startIndex
-            var insideString = false
-            var previousChar: Character? = nil
-            var endIndex: String.Index? = nil
-            while currentIndex < input.endIndex {
-                let character = input[currentIndex]
-                // Toggle whether we're inside a string, careful to ignore escaped quotes.
-                if character == "\"" && previousChar != "\\" {
-                    insideString.toggle()
+            let decoder = JSONDecoder()
+            var searchStartIndex = input.startIndex
+            // Look for every occurrence of '{'
+            while let startIndex = input[searchStartIndex...].firstIndex(of: "{") {
+                var braceCount = 0
+                var currentIndex = startIndex
+                var insideString = false
+                var previousChar: Character? = nil
+                var endIndex: String.Index? = nil
+                // Attempt to balance the braces from here
+                while currentIndex < input.endIndex {
+                    let character = input[currentIndex]
+                    // Toggle whether we're inside a string, ignoring escaped quotes
+                    if character == "\"" && previousChar != "\\" {
+                        insideString.toggle()
+                    }
+                    // Only process braces if we're not inside a string literal
+                    if !insideString {
+                        if character == "{" {
+                            braceCount += 1
+                        } else if character == "}" {
+                            braceCount -= 1
+                            if braceCount == 0 {
+                                endIndex = currentIndex
+                                break
+                            }
+                        }
+                    }
+                    previousChar = character
+                    currentIndex = input.index(after: currentIndex)
                 }
-                // Only count braces when not inside a string literal.
-                if !insideString {
-                    if character == "{" {
-                        braceCount += 1
-                    } else if character == "}" {
-                        braceCount -= 1
-                        if braceCount == 0 {
-                            endIndex = currentIndex
-                            break
+                // If we found matching braces, attempt to decode
+                if let finalIndex = endIndex {
+                    let jsonSubstring = input[startIndex...finalIndex]
+                    let jsonString = String(jsonSubstring)
+                    if let jsonData = jsonString.data(using: .utf8) {
+                        if let functionCall = try? decoder.decode(FunctionCall.self, from: jsonData) {
+                            return functionCall
                         }
                     }
                 }
-                previousChar = character
-                currentIndex = input.index(after: currentIndex)
-            }
-            guard let finalIndex = endIndex else { return nil }
-            let jsonSubstring = input[startIndex...finalIndex]
-            let jsonString = String(jsonSubstring)
-            let decoder = JSONDecoder()
-            if let jsonData = jsonString.data(using: .utf8) {
-                do {
-                    let functionCall = try decoder.decode(FunctionCall.self, from: jsonData)
-                    return functionCall
-                } catch {
-                    return nil
-                }
+                // Move the search start index forward to look for the next occurrence.
+                searchStartIndex = input.index(after: startIndex)
             }
             return nil
         }

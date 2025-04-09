@@ -154,7 +154,7 @@ protocol FunctionProtocol: Identifiable {
     var name: String { get }
     var description: String { get }
     var params: [FunctionParameter] { get }
-    var run: (Parameters) throws -> Result { get }
+    var run: (Parameters) async throws -> Result { get }
     
     func getJsonSchema() -> String
     
@@ -167,13 +167,13 @@ public struct Function<Parameter: Codable, Result>: FunctionProtocol, AnyFunctio
     public var name: String
     public var description: String
     public var params: [FunctionParameter]
-    public var run: (Parameter) throws -> Result
+    public var run: (Parameter) async throws -> Result
     
     public init(
         name: String,
         description: String,
         params: [FunctionParameter],
-        run: @escaping (Parameter) throws -> Result
+        run: @escaping (Parameter) async throws -> Result
     ) {
         self.name = name
         self.description = description
@@ -236,11 +236,11 @@ public struct Function<Parameter: Codable, Result>: FunctionProtocol, AnyFunctio
     
     public func call(
         withData data: Data
-    ) throws -> String? {
+    ) async throws -> String? {
         // Decode the provided arguments to the generic Parameter type
         let params = try JSONDecoder().decode(Parameter.self, from: data)
         // Execute the wrapped run closure.
-        let result = try run(params)
+        let result = try await run(params)
         return String(describing: result)
     }
     

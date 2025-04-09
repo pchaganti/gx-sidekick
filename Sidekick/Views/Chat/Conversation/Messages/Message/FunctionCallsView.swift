@@ -78,7 +78,7 @@ struct FunctionCallsView: View {
                     )
                     .padding(.horizontal, 5)
                 Group {
-                    Text("Executed Function: ").bold() + Text(self.functionCall.config.name).italic()
+                    Text("Function: ").bold() + Text(self.functionCall.config.name).italic()
                 }
                 .opacity(0.8)
                 Spacer()

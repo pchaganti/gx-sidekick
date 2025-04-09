@@ -203,15 +203,15 @@ public struct Message: Identifiable, Codable, Hashable {
 		if results.isEmpty {
 			return (self.text, 0)
 		}
-		let resultsTexts: [String] = results.enumerated().map { index, result in
-			return """
-{
-	"text": "\(result.text)",
-	"url": "\(result.source)"
-}
-"""
-		}
-		let resultsText: String = resultsTexts.joined(separator: ",\n")
+        // Convert to JSON
+        let sourcesInfo: [Source.SourceInfo] = results.map(\.info)
+        let jsonEncoder: JSONEncoder = JSONEncoder()
+        jsonEncoder.outputFormatting = [.prettyPrinted]
+        let jsonData: Data = try! jsonEncoder.encode(sourcesInfo)
+        let resultsText: String = String(
+            data: jsonData,
+            encoding: .utf8
+        )!
 		let messageText: String = """
 \(self.text)
 

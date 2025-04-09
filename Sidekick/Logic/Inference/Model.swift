@@ -9,6 +9,7 @@ import Foundation
 import FSKit_macOS
 import OSLog
 import SimilaritySearchKit
+import SwiftUI
 
 /// An object which abstracts LLM inference
 @MainActor
@@ -314,6 +315,7 @@ public class Model: ObservableObject {
                     modelType: modelType,
                     canReachRemoteServer: canReachRemoteServer,
                     messagesWithSources: messagesWithSources,
+                    useWebSearch: useWebSearch,
                     similarityIndex: similarityIndex,
                     handleResponseUpdate: handleResponseUpdate,
                     increment: increment
@@ -360,6 +362,7 @@ public class Model: ObservableObject {
 		modelType: ModelType,
         canReachRemoteServer: Bool,
 		messagesWithSources: [Message.MessageSubset],
+        useWebSearch: Bool,
 		similarityIndex: SimilarityIndex? = nil,
 		handleResponseUpdate: @escaping (String, String) -> Void,
 		increment: Int
@@ -369,6 +372,7 @@ public class Model: ObservableObject {
 			mode: mode,
             canReachRemoteServer: canReachRemoteServer,
 			messages: messagesWithSources,
+            useWebSearch: useWebSearch,
 			similarityIndex: similarityIndex,
 			handleResponseUpdate: handleResponseUpdate,
 			increment: increment
@@ -387,6 +391,7 @@ public class Model: ObservableObject {
 			initialResponse: initialResponse,
 			messages: messagesWithSources,
             functionCall: functionCall,
+            useWebSearch: useWebSearch,
 			similarityIndex: similarityIndex,
 			handleResponseUpdate: handleResponseUpdate,
 			increment: increment
@@ -398,6 +403,7 @@ public class Model: ObservableObject {
 		mode: Model.Mode,
         canReachRemoteServer: Bool,
 		messages: [Message.MessageSubset],
+        useWebSearch: Bool,
 		similarityIndex: SimilarityIndex?,
 		handleResponseUpdate: @escaping (String, String) -> Void,
 		increment: Int
@@ -408,6 +414,7 @@ public class Model: ObservableObject {
 			mode: mode,
             canReachRemoteServer: canReachRemoteServer,
 			messages: messages,
+            useWebSearch: useWebSearch,
 			similarityIndex: similarityIndex
 		) { partialResponse in
 			DispatchQueue.main.async {
@@ -431,6 +438,7 @@ public class Model: ObservableObject {
 		initialResponse: LlamaServer.CompleteResponse,
 		messages: [Message.MessageSubset],
         functionCall: FunctionCall,
+        useWebSearch: Bool,
 		similarityIndex: SimilarityIndex?,
 		handleResponseUpdate: @escaping (
 			String, // Full message
@@ -450,18 +458,21 @@ public class Model: ObservableObject {
             Self.logger.info("Executing function call: \(callJsonSchema, privacy: .public)")
             // Display call to user
             let functionCalls = self.pendingMessage?.functionCalls ?? []
-            self.pendingMessage?.functionCalls = functionCalls + [functionCall]
+            withAnimation(.linear) {
+                self.pendingMessage?.functionCalls = functionCalls + [functionCall]
+                self.pendingMessage?.text = ""
+            }
             // Call function
             var messageString: String? = nil
             do {
                 // Run
-                let result: String = try functionCall.call() ?? "Function evaluated successfully"
+                let result: String = try await functionCall.call() ?? "Function evaluated successfully"
                 // Mark as succeeded
                 functionCall.status = .succeeded
                 functionCall.result = result
                 // Formulate callback message
                 messageString = """
-Below is the result produced by the tool call: `\(callJsonSchema)`. If the tool call provides enough information to solve the user's query, organize the information into an answer. Else, call another tool with a callback if needed.
+Below is the result produced by the tool call: `\(callJsonSchema)`. If the tool call provides enough information to solve the user's query, organize the information into an answer. Else, call another tool, with no explaination.
 
 ```tool_call_result
 \(result)
@@ -480,7 +491,9 @@ The function call `\(callJsonSchema)` failed, producing the error below.
 ```
 """
             }
-            self.pendingMessage?.functionCalls = functionCalls + [functionCall]
+            withAnimation(.linear) {
+                self.pendingMessage?.functionCalls = functionCalls + [functionCall]
+            }
             let message = Message(
                 text: messageString!,
                 sender: .user
@@ -497,6 +510,7 @@ The function call `\(callJsonSchema)` failed, producing the error below.
                 mode: .chat,
                 canReachRemoteServer: canReachRemoteServer,
                 messages: messages,
+                useWebSearch: useWebSearch,
                 similarityIndex: similarityIndex
             )  { partialResponse in
                 DispatchQueue.main.async {
