@@ -352,7 +352,6 @@ DO NOT reference sources outside of those provided below. If you did not referen
 		self.tokensPerSecond = response.predictedPerSecond
 		self.responseStartSeconds = response.responseStartSeconds
 		self.lastUpdated = .now
-        print(functionCalls)
         // Decode text for extract text and references
         let text: String = response.text.dropSuffixIfPresent("[]")
 		let delimiters: [String] = ["\n[", " ["]

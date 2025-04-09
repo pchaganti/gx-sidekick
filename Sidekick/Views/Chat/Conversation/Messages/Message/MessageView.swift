@@ -156,7 +156,9 @@ struct MessageView: View {
                     // Show function calls if availible
                     if self.message.hasFunctionCalls {
                         FunctionCallsView(message: self.message)
-                            .if(!self.message.text.isEmpty) { view in
+                            .if(
+                                !self.message.text.isEmpty || (self.message.functionCalls?.count ?? 0) > 1
+                            ) { view in
                                 view.padding(.bottom, 5)
                             }
                     }

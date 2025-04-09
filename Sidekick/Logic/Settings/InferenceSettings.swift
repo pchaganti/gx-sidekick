@@ -37,7 +37,7 @@ If the provided information is related to the request, you will respond with ref
 	
 	/// Static constant for the part of the system prompt telling the LLM to use functions
 	public static let useFunctionsPrompt: String = """
-In this environment you have access to a set of tools you can use to answer the user's question. Call the functions by outputting JSON in the format below, where all non-nil values within the dictionary `arguments` are formatted as strings.
+In this environment you have access to a set of tools you can use to answer the user's question. Call a tool by outputting JSON in the format below, where all non-nil values within the dictionary `arguments` are formatted as strings. Call one tool at a time. 
 
 {
   "function_call": {
