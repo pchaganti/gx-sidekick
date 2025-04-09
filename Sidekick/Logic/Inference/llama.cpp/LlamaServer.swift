@@ -739,34 +739,46 @@ public actor LlamaServer {
 		}
         /// The first ``FunctionCall`` in the response; if any
         var functionCall: FunctionCall? {
-            // The regular expression pattern matches any substring that starts with "{" and ends with "}"
-            let pattern = "\\{.*\\}"
             let input: String = self.text.reasoningRemoved
-            guard let regex = try? NSRegularExpression(pattern: pattern, options: [.dotMatchesLineSeparators]) else {
-                return nil
-            }
-            let nsRange = NSRange(input.startIndex..<input.endIndex, in: input)
-            let matches = regex.matches(in: input, options: [], range: nsRange)
-            let decoder = JSONDecoder()
-            // Try to decode each JSON found into a ToolCall instance
-            for match in matches {
-                if let range = Range(match.range, in: input) {
-                    let jsonString = String(input[range])
-                    if let jsonData = jsonString.data(using: .utf8) {
-                        do {
-                            let functionCall: FunctionCall = try decoder.decode(
-                                FunctionCall.self,
-                                from: jsonData
-                            )
-                            return functionCall
-                        } catch {
-                            // Move to the next found JSON object if decoding fails
-                            continue
+            guard let startIndex = input.firstIndex(of: "{") else { return nil }
+            var braceCount = 0
+            var currentIndex = startIndex
+            var insideString = false
+            var previousChar: Character? = nil
+            var endIndex: String.Index? = nil
+            while currentIndex < input.endIndex {
+                let character = input[currentIndex]
+                // Toggle whether we're inside a string, careful to ignore escaped quotes.
+                if character == "\"" && previousChar != "\\" {
+                    insideString.toggle()
+                }
+                // Only count braces when not inside a string literal.
+                if !insideString {
+                    if character == "{" {
+                        braceCount += 1
+                    } else if character == "}" {
+                        braceCount -= 1
+                        if braceCount == 0 {
+                            endIndex = currentIndex
+                            break
                         }
                     }
                 }
+                previousChar = character
+                currentIndex = input.index(after: currentIndex)
             }
-            // If fell through, return nil
+            guard let finalIndex = endIndex else { return nil }
+            let jsonSubstring = input[startIndex...finalIndex]
+            let jsonString = String(jsonSubstring)
+            let decoder = JSONDecoder()
+            if let jsonData = jsonString.data(using: .utf8) {
+                do {
+                    let functionCall = try decoder.decode(FunctionCall.self, from: jsonData)
+                    return functionCall
+                } catch {
+                    return nil
+                }
+            }
             return nil
         }
 		
