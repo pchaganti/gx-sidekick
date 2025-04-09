@@ -421,7 +421,14 @@
       }
     },
     "Call: " : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "调用："
+          }
+        }
+      }
     },
     "Calling functions..." : {
       "localizations" : {
@@ -1273,17 +1280,6 @@
         }
       }
     },
-    "Encourage models to generate code, which is evaluated to produce a more accurate answer." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "鼓励模型生成代码，并运行代码，以得出更准确的答案。"
-          }
-        }
-      }
-    },
     "Encourage models to use functions, which are evaluated to execute actions." : {
       "localizations" : {
         "zh-Hans" : {
@@ -1425,7 +1421,14 @@
       }
     },
     "Executed Function: " : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "调用函数："
+          }
+        }
+      }
     },
     "Exit" : {
       "localizations" : {
@@ -1683,6 +1686,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "输出格式"
+          }
+        }
+      }
+    },
+    "Functions" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "函数"
           }
         }
       }
@@ -1953,17 +1966,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "你好！请进行自我介绍。"
-          }
-        }
-      }
-    },
-    "Hide Code Used" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "隐藏代码"
           }
         }
       }
@@ -2976,7 +2978,14 @@
       }
     },
     "Result: " : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "返回结果:"
+          }
+        }
+      }
     },
     "Retrieval" : {
       "localizations" : {
@@ -3314,17 +3323,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "快捷键"
-          }
-        }
-      }
-    },
-    "Show Code Used" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "显示代码"
           }
         }
       }

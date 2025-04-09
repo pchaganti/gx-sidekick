@@ -21,21 +21,25 @@ struct GeneralSettingsView: View {
 	@StateObject private var speechSynthesizer: SpeechSynthesizer = .shared
 	
     var body: some View {
-		Form {
-			Section {
-				launchAtLogin
-			} header: {
-				Text("General")
-			}
-			Section {
-				usernameEditor
-				soundEffects
-				generateConversationTitlesToggle
-				codeInterpreter
-				voice
-			} header: {
-				Text("Chat")
-			}
+        Form {
+            Section {
+                launchAtLogin
+            } header: {
+                Text("General")
+            }
+            Section {
+                usernameEditor
+                soundEffects
+                generateConversationTitlesToggle
+                voice
+            } header: {
+                Text("Chat")
+            }
+            Section {
+                useFunctionsToggle
+            } header: {
+                Text("Functions")
+            }
 			InlineWritingAssistantSettingsView()
 		}
 		.formStyle(.grouped)
@@ -105,7 +109,7 @@ struct GeneralSettingsView: View {
 		}
 	}
 	
-	var codeInterpreter: some View {
+	var useFunctionsToggle: some View {
 		HStack(alignment: .center) {
 			VStack(alignment: .leading) {
                 HStack {

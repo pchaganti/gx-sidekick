@@ -57,13 +57,14 @@ Sidekick supports a variety of reasoning models, including Alibaba Cloud's QwQ-3
 
 ![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/Docs%20Images/Features/Conversations/reasoningModelSupport.png)
 
-### Code Interpreter
 
-Sidekick uses a code interpreter to boost the mathematical and logical capabilities of models. 
+### Function Calling
 
-Since small models are much better at writing code than doing math, having it write the code, execute it, and present the results dramatically increases trustworthiness of answers.
+Sidekick can call functions to boost the mathematical and logical capabilities of models, and to execute actions. Functions are called sequentially in a loop until a result is obtained.
 
-![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/Docs%20Images/Features/Conversations/codeInterpreter.png)
+For example, when asking Sidekick to reverse a string or do arithmetic operation, it runs tools, then presents the result.
+
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/Docs%20Images/Features/Conversations/functionCalling.png)
 
 ### Canvas
 
