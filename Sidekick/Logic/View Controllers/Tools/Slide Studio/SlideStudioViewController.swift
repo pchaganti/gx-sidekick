@@ -650,7 +650,7 @@ Respond with the Markdown ONLY. Do not include comments.
 						return "PowerPoint"
 					case .pptxEditable:
 						return String(localized: "Editable ") + "PowerPoint" + String(
-							localized: " (Beta)"
+							localized: " (Experimental)"
 						)
 					case .html:
 						return String(localized: "Website")

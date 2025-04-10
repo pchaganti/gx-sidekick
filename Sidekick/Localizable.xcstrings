@@ -4,12 +4,12 @@
     "" : {
       "shouldTranslate" : false
     },
-    " (Beta)" : {
+    " (Experimental)" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " （公测）"
+            "value" : "（实验性功能）"
           }
         }
       }
@@ -386,16 +386,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "基准测试分数（MMLU）：%@"
-          }
-        }
-      }
-    },
-    "Beta" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "公测"
           }
         }
       }
@@ -1426,6 +1416,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "退出"
+          }
+        }
+      }
+    },
+    "Experimental" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "实验性功能"
           }
         }
       }

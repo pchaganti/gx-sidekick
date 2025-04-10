@@ -41,9 +41,9 @@ struct StatusLabelView: View {
 			}
     }
 	
-	static public var beta: some View {
+	static public var experimental: some View {
 		StatusLabelView(
-			text: String(localized: "Beta"),
+			text: String(localized: "Experimental"),
 			textColor: .primary,
 			fill: .blue
 		)

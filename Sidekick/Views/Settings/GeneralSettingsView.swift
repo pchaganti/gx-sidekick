@@ -116,12 +116,7 @@ struct GeneralSettingsView: View {
                     Text("Use Functions")
                         .font(.title3)
                         .bold()
-                    StatusLabelView(
-                        text: String(localized: "Beta"),
-                        textColor: .primary,
-                        fill: .blue
-                    )
-                    .help("Model could not be found")
+                    StatusLabelView.experimental
                 }
 				Text("Encourage models to use functions, which are evaluated to execute actions.")
 					.font(.caption)
