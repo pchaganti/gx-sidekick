@@ -74,7 +74,7 @@ struct ExpertEditorView: View {
 					Text("Icon")
 				}
 			}
-			ResourceSectionView(expert: $expert)
+            ResourceSectionView(expert: self.$expert)
 			Section {
 				webSearch
 			} header: {

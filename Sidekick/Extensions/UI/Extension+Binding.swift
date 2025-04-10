@@ -19,7 +19,7 @@ extension Binding where Value == TemporaryResource {
 
 
 extension Binding where Value == Expert {
-	
+    
 	/// Function to add a resource
 	func addResource(_ resource: Resource) async {
 		// Add resource

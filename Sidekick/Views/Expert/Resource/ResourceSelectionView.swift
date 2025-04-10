@@ -9,23 +9,14 @@ import Foundation
 import SwiftUI
 
 struct ResourceSelectionView: View {
-	
+    
+    @State private var timer: Timer? = nil
+    
 	@Binding var expert: Expert
 	@EnvironmentObject private var lengthyTasksController: LengthyTasksController
 	
 	var hasResources: Bool {
-		return !expert.resources.resources.isEmpty
-	}
-	
-	var isUpdating: Bool {
-		let taskName: String = String(
-			localized: "Updating resource index for expert \"\(self.expert.name)\""
-		)
-		return lengthyTasksController.tasks
-			.map(\.name)
-			.contains(
-				taskName
-			)
+        return !self.expert.resources.resources.isEmpty
 	}
 	
 	var body: some View {
@@ -33,7 +24,9 @@ struct ResourceSelectionView: View {
 			if hasResources {
 				list
 			} else {
-				noResources
+                NoResourceView(
+                    expert: self.$expert
+                )
 			}
 		}
 		.frame(minHeight: 30)
@@ -59,20 +52,48 @@ struct ResourceSelectionView: View {
 		.padding(.horizontal)
 		.listStyle(.plain)
 	}
-	
-	var noResources: some View {
-		HStack {
-			Spacer()
-			Text(!isUpdating ? String(localized: "No resources") : String(localized: "Indexing in Progress"))
-				.foregroundStyle(.secondary)
-			if isUpdating {
-				ProgressView()
-					.progressViewStyle(.circular)
-					.scaleEffect(0.5)
-			}
-			Spacer()
-		}
-	}
+    
+    struct NoResourceView: View {
+        
+        @Binding var expert: Expert
+        
+        @EnvironmentObject private var lengthyTasksController: LengthyTasksController
+        
+        var isUpdating: Bool {
+            let taskName: String = String(
+                localized: "Updating resource index for expert \"\(self.expert.name)\""
+            )
+            return lengthyTasksController.tasks
+                .map(\.name)
+                .contains(
+                    taskName
+                )
+        }
+        
+        var description: String {
+            if isUpdating {
+                return String(localized: "Indexing in Progress")
+            } else {
+                return String(localized: "No resources")
+            }
+        }
+        
+        var body: some View {
+            HStack {
+                Spacer()
+                VStack {
+                    Text(description)
+                        .foregroundStyle(.secondary)
+                    if isUpdating {
+                        ProgressView()
+                            .progressViewStyle(.circular)
+                            .scaleEffect(0.5)
+                    }
+                }
+                Spacer()
+            }
+        }
+    }
 	
 }
 
@@ -135,7 +156,3 @@ struct ResourceRowView: View {
 	}
 	
 }
-
-//#Preview {
-//    ResourceSelectionView()
-//}

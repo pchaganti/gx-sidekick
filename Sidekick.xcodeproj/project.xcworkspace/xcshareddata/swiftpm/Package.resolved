@@ -1,5 +1,5 @@
 {
-  "originHash" : "4e457c0b8c54b34be60a38eac0d8564a48d0e6b0f919cbc2c4d6bd8f6315e4bb",
+  "originHash" : "cd445bb0c73b6219baccf10b05e7876af80295144167dbc1e68af8d446885fad",
   "pins" : [
     {
       "identity" : "axswift",
@@ -174,10 +174,10 @@
     {
       "identity" : "similarity-search-kit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/ZachNagengast/similarity-search-kit",
+      "location" : "https://github.com/johnbean393/similarity-search-kit",
       "state" : {
-        "revision" : "9bec54706c8124bb9b20a3a06d566066a9f55712",
-        "version" : "0.0.15"
+        "branch" : "main",
+        "revision" : "e97ebe65375af1899833762d4172340b520c6b4c"
       }
     },
     {

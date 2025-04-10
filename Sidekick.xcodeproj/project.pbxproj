@@ -70,6 +70,8 @@
 		2034876F2D6723A200A88DA4 /* ToolCardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2034876E2D6723A200A88DA4 /* ToolCardButton.swift */; };
 		203487712D672A8F00A88DA4 /* ToolLibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203487702D672A8F00A88DA4 /* ToolLibraryView.swift */; };
 		20353FF12CF84546002BC78E /* ToggleLaTeXButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20353FF02CF84546002BC78E /* ToggleLaTeXButton.swift */; };
+		203786382DA76EBB003975CC /* SimilaritySearchKit in Frameworks */ = {isa = PBXBuildFile; productRef = 203786372DA76EBB003975CC /* SimilaritySearchKit */; };
+		2037863A2DA76EBB003975CC /* SimilaritySearchKitDistilbert in Frameworks */ = {isa = PBXBuildFile; productRef = 203786392DA76EBB003975CC /* SimilaritySearchKitDistilbert */; };
 		2038CCF32CB6CBC6005AA315 /* PendingMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2038CCF22CB6CBC6005AA315 /* PendingMessageView.swift */; };
 		2040DAD42D85BFD000A8F6BD /* QuickPromptButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2040DAD32D85BFD000A8F6BD /* QuickPromptButton.swift */; };
 		2040DBA52D85CB2200A8F6BD /* MarkdownImageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2040DBA42D85CB2200A8F6BD /* MarkdownImageProvider.swift */; };
@@ -141,8 +143,6 @@
 		205E3F2C2D872E4200128D67 /* Extension+NSMutableAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205E3F2B2D872E4200128D67 /* Extension+NSMutableAttributedString.swift */; };
 		206435382D905D2300020CC0 /* SimilaritySearchKit in Frameworks */ = {isa = PBXBuildFile; productRef = 206435372D905D2300020CC0 /* SimilaritySearchKit */; };
 		2064353A2D905D2300020CC0 /* SimilaritySearchKitDistilbert in Frameworks */ = {isa = PBXBuildFile; productRef = 206435392D905D2300020CC0 /* SimilaritySearchKitDistilbert */; };
-		2064353D2D905DBB00020CC0 /* SimilaritySearchKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2064353C2D905DBB00020CC0 /* SimilaritySearchKit */; };
-		2064353F2D905DBB00020CC0 /* SimilaritySearchKitDistilbert in Frameworks */ = {isa = PBXBuildFile; productRef = 2064353E2D905DBB00020CC0 /* SimilaritySearchKitDistilbert */; };
 		206934902D5CC87E006619FD /* Credits.html in Resources */ = {isa = PBXBuildFile; fileRef = 2069348E2D5CC7FE006619FD /* Credits.html */; };
 		206934932D5CCDF1006619FD /* conversationExportTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 206934922D5CCDF1006619FD /* conversationExportTemplate.html */; };
 		206AB6122CF5F8390010B09A /* AttachmentSelectionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206AB6112CF5F8390010B09A /* AttachmentSelectionButton.swift */; };
@@ -722,21 +722,21 @@
 				20C5CB642D9AB7510071F5F7 /* libggml-rpc.dylib in Frameworks */,
 				20C5CB692D9AB7510071F5F7 /* libllama.dylib in Frameworks */,
 				20C5CB662D9AB7510071F5F7 /* libggml-cpu.dylib in Frameworks */,
-				2064353F2D905DBB00020CC0 /* SimilaritySearchKitDistilbert in Frameworks */,
 				20457D392D92A5FB00954892 /* AXSwift in Frameworks */,
 				20A40C832D718D4300A9D9A9 /* CodeEditorView in Frameworks */,
+				203786382DA76EBB003975CC /* SimilaritySearchKit in Frameworks */,
 				200FBFF12CB64CB400A92A74 /* EventSource in Frameworks */,
 				206435382D905D2300020CC0 /* SimilaritySearchKit in Frameworks */,
 				20F84B992D1CFED400F44990 /* DefaultModels in Frameworks */,
 				207A9F532CB82D9600E727DE /* SymbolPicker in Frameworks */,
 				2031B9952CEAE66400627D53 /* KeyboardShortcuts in Frameworks */,
 				20A40C852D718D4300A9D9A9 /* LanguageSupport in Frameworks */,
+				2037863A2DA76EBB003975CC /* SimilaritySearchKitDistilbert in Frameworks */,
 				205E3F282D8723AB00128D67 /* Highlightr in Frameworks */,
 				20B53D072D5B03B900D1AE79 /* Sparkle in Frameworks */,
 				208388DD2CBF4E8A00C2A9F8 /* SecureDefaults in Frameworks */,
 				2064353A2D905D2300020CC0 /* SimilaritySearchKitDistilbert in Frameworks */,
 				20CC0C2F2CE2401600A3BC40 /* ExtractKit-macOS in Frameworks */,
-				2064353D2D905DBB00020CC0 /* SimilaritySearchKit in Frameworks */,
 				209B200A2D940F8400C79185 /* LaunchAtLogin in Frameworks */,
 				20CB50382D828CB60064D460 /* LaTeXSwiftUI in Frameworks */,
 				20573F282CB52F84004C19FE /* Splash in Frameworks */,
@@ -1902,10 +1902,10 @@
 				205E3F272D8723AB00128D67 /* Highlightr */,
 				206435372D905D2300020CC0 /* SimilaritySearchKit */,
 				206435392D905D2300020CC0 /* SimilaritySearchKitDistilbert */,
-				2064353C2D905DBB00020CC0 /* SimilaritySearchKit */,
-				2064353E2D905DBB00020CC0 /* SimilaritySearchKitDistilbert */,
 				20457D382D92A5FB00954892 /* AXSwift */,
 				209B20092D940F8400C79185 /* LaunchAtLogin */,
+				203786372DA76EBB003975CC /* SimilaritySearchKit */,
+				203786392DA76EBB003975CC /* SimilaritySearchKitDistilbert */,
 			);
 			productName = Sidekick;
 			productReference = 200549732CAFA67B00A3DCF2 /* Sidekick.app */;
@@ -2022,9 +2022,9 @@
 				20A40C812D718D4300A9D9A9 /* XCRemoteSwiftPackageReference "CodeEditorView" */,
 				20CB50362D828CB60064D460 /* XCRemoteSwiftPackageReference "LaTeXSwiftUI" */,
 				205E3F262D8723AB00128D67 /* XCRemoteSwiftPackageReference "Highlightr" */,
-				2064353B2D905DBB00020CC0 /* XCRemoteSwiftPackageReference "similarity-search-kit" */,
 				20457D372D92A5FB00954892 /* XCRemoteSwiftPackageReference "AXSwift" */,
 				209B20082D940F8400C79185 /* XCRemoteSwiftPackageReference "LaunchAtLogin-Modern" */,
+				203786362DA76EBB003975CC /* XCRemoteSwiftPackageReference "similarity-search-kit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 200549742CAFA67B00A3DCF2 /* Products */;
@@ -2529,7 +2529,7 @@
 				CODE_SIGN_ENTITLEMENTS = Sidekick/Sidekick.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 21;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Sidekick/Preview Content\"";
 				DEVELOPMENT_TEAM = KM2C4ZAVPJ;
@@ -2550,8 +2550,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Sidekick/Logic/Inference/llama.cpp/build/bin",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.0.32;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = "1.0.0-rc.1";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pattonium.Sidekick;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -2568,7 +2568,7 @@
 				CODE_SIGN_ENTITLEMENTS = Sidekick/Sidekick.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 21;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Sidekick/Preview Content\"";
 				DEVELOPMENT_TEAM = KM2C4ZAVPJ;
@@ -2590,8 +2590,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Sidekick/Logic/Inference/llama.cpp/build/bin",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.0.32;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = "1.0.0-rc.1";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pattonium.Sidekick;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -2791,6 +2791,14 @@
 				minimumVersion = 2.2.4;
 			};
 		};
+		203786362DA76EBB003975CC /* XCRemoteSwiftPackageReference "similarity-search-kit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/johnbean393/similarity-search-kit";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		20457D372D92A5FB00954892 /* XCRemoteSwiftPackageReference "AXSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/tmandry/AXSwift/";
@@ -2813,14 +2821,6 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 2.2.1;
-			};
-		};
-		2064353B2D905DBB00020CC0 /* XCRemoteSwiftPackageReference "similarity-search-kit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ZachNagengast/similarity-search-kit";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.0.15;
 			};
 		};
 		207A9F512CB82D9600E727DE /* XCRemoteSwiftPackageReference "SymbolPicker" */ = {
@@ -2926,6 +2926,16 @@
 			package = 2031B9932CEAE66400627D53 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
 			productName = KeyboardShortcuts;
 		};
+		203786372DA76EBB003975CC /* SimilaritySearchKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 203786362DA76EBB003975CC /* XCRemoteSwiftPackageReference "similarity-search-kit" */;
+			productName = SimilaritySearchKit;
+		};
+		203786392DA76EBB003975CC /* SimilaritySearchKitDistilbert */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 203786362DA76EBB003975CC /* XCRemoteSwiftPackageReference "similarity-search-kit" */;
+			productName = SimilaritySearchKitDistilbert;
+		};
 		20457D382D92A5FB00954892 /* AXSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 20457D372D92A5FB00954892 /* XCRemoteSwiftPackageReference "AXSwift" */;
@@ -2952,16 +2962,6 @@
 		};
 		206435392D905D2300020CC0 /* SimilaritySearchKitDistilbert */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = SimilaritySearchKitDistilbert;
-		};
-		2064353C2D905DBB00020CC0 /* SimilaritySearchKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 2064353B2D905DBB00020CC0 /* XCRemoteSwiftPackageReference "similarity-search-kit" */;
-			productName = SimilaritySearchKit;
-		};
-		2064353E2D905DBB00020CC0 /* SimilaritySearchKitDistilbert */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 2064353B2D905DBB00020CC0 /* XCRemoteSwiftPackageReference "similarity-search-kit" */;
 			productName = SimilaritySearchKitDistilbert;
 		};
 		207A9F522CB82D9600E727DE /* SymbolPicker */ = {

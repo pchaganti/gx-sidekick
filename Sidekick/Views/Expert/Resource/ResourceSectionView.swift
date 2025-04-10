@@ -108,7 +108,7 @@ struct ResourceSectionView: View {
 				.disabled(self.isUpdating)
 			}
 			Divider()
-			ResourceSelectionView(expert: $expert)
+            ResourceSelectionView(expert: self.$expert)
 		}
 	}
 	

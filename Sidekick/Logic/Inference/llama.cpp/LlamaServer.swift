@@ -738,7 +738,7 @@ public actor LlamaServer {
 		var containsFunctionCall: Bool {
             return self.functionCall != nil
 		}
-        /// The updated computed property that returns the first valid FunctionCall found in the text.
+        /// The first valid FunctionCall found in the text
         var functionCall: FunctionCall? {
             let input: String = self.text.reasoningRemoved
             let decoder = JSONDecoder()
