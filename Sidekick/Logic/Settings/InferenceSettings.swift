@@ -239,7 +239,7 @@ Current date & time: \(Date.now.formatted(date: .long, time: .shortened))
             // Set default
             if !UserDefaults.standard.exists(key: "serverModelHasVision") {
                 // Default to false
-                Self.useGPUAcceleration = false
+                Self.serverModelHasVision = false
             }
             return UserDefaults.standard.bool(
                 forKey: "serverModelHasVision"
