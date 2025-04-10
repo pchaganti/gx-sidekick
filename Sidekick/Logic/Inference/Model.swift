@@ -645,10 +645,11 @@ The function call `\(callJsonSchema)` failed, producing the error below.
     
 	/// Function to interrupt `llama-server` generation
 	func interrupt() async {
-		if self.status != .processing, self.status != .coldProcessing {
+        if !self.status.isWorking {
 			return
 		}
 		await self.mainModelServer.interrupt()
+        self.pendingMessage = nil
 		self.status = .ready
 	}
 	

@@ -30,7 +30,3 @@ struct SourcesButton: View {
 	}
 	
 }
-
-//#Preview {
-//    StopGenerationButton()
-//}
