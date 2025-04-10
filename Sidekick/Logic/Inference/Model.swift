@@ -472,7 +472,7 @@ public class Model: ObservableObject {
                 functionCall.result = result
                 // Formulate callback message
                 messageString = """
-Below is the result produced by the tool call: `\(callJsonSchema)`. If the tool call provides enough information to solve the user's query, organize the information into an answer. Else, call another tool, with no explaination.
+Below is the result produced by the tool call: `\(callJsonSchema)`. If the tool call provides enough information to solve the user's query, organize the information into an answer. If the tool call did not provide enough information, try breaking down the user's query and finding information about its constituent parts. Else, call another tool to obtain more information or execute more actions.
 
 ```tool_call_result
 \(result)

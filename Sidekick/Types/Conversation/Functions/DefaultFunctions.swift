@@ -228,7 +228,7 @@ public class DefaultFunctions {
     /// A ``Function`` to conduct a web search
     static let webSearch = Function<WebSearchParams, String>(
         name: "web_search",
-        description: "Searches the web with the provided query.",
+        description: "Retrieves information from the web with the provided query, instead of estimating it.",
         params: [
             FunctionParameter(
                 label: "query",
@@ -245,7 +245,7 @@ public class DefaultFunctions {
             // Ask user for permission
             if !Dialogs.showConfirmation(
                 title: String(localized: "Web Search"),
-                message: String(localized: "Sidekick needs to look up the web to address your request. Do you wish to permit this?")
+                message: String(localized: "Sidekick needs to use the web to address your request. Do you wish to permit this?")
             ) {
                 // If denied, throw error
                 throw WebSearchError.permissionsDenied

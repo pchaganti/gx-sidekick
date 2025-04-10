@@ -3367,12 +3367,12 @@
         }
       }
     },
-    "Sidekick needs to look up the web to address your request. Do you wish to permit this?" : {
+    "Sidekick needs to use the web to address your request. Do you wish to permit this?" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sidekick需要查阅网络来处理您的请求。您是否允许此操作？"
+            "value" : "Sidekick需要启用网络搜索来处理您的请求。您是否允许此操作？"
           }
         }
       }
