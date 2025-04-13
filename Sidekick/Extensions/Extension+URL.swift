@@ -103,7 +103,6 @@ public extension URL {
         session.configuration.timeoutIntervalForResource = timeout
         do {
 			let (data, response) = try await URLSession.shared.data(for: request)
-            print(String(data: data, encoding: .utf8)!)
 			guard let httpResponse = response as? HTTPURLResponse else {
 				return false
 			}

@@ -603,6 +603,7 @@ The function call `\(callJsonSchema)` failed, producing the error below.
         // Try to use cached result
         let lastPathChangeDate: Date = NetworkMonitor.shared.lastPathChange
         if self.lastRemoteServerCheck >= lastPathChangeDate {
+            Self.logger.info("Using cached remote server reachability result")
             return self.wasRemoteServerAccessible
         }
         // Get last path change time
