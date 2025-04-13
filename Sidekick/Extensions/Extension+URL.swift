@@ -88,14 +88,22 @@ public extension URL {
 		method: String = "GET",
 		timeout: TimeInterval = 3.0
 	) async -> Bool {
+        // Formulate request
 		var request = URLRequest(url: self)
 		request.httpMethod = method
 		request.timeoutInterval = timeout
-		let session = URLSession.shared
-		session.configuration.timeoutIntervalForRequest = timeout
-		session.configuration.timeoutIntervalForResource = timeout
-		do {
-			let (_, response) = try await URLSession.shared.data(for: request)
+        // Attach API Key
+        request.setValue(
+            "Bearer \(InferenceSettings.inferenceApiKey)",
+            forHTTPHeaderField: "Authorization"
+        )
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let session = URLSession.shared
+        session.configuration.timeoutIntervalForRequest = timeout
+        session.configuration.timeoutIntervalForResource = timeout
+        do {
+			let (data, response) = try await URLSession.shared.data(for: request)
+            print(String(data: data, encoding: .utf8)!)
 			guard let httpResponse = response as? HTTPURLResponse else {
 				return false
 			}

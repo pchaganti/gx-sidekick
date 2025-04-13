@@ -622,7 +622,7 @@ The function call `\(callJsonSchema)` failed, producing the error below.
                 continue
             }
             if await endpointUrl.isAPIEndpointReachable(
-                timeout: 1
+                timeout: 3
             ) {
                 // Cache result, then return
                 self.wasRemoteServerAccessible = true
