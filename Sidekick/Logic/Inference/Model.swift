@@ -110,7 +110,7 @@ public class Model: ObservableObject {
     /// The pending message displayed to users
     public var displayedPendingMessage: Message {
         var text: String = ""
-        var functionCalls: [FunctionCall] = self.pendingMessage?.functionCalls ?? []
+        let functionCalls: [FunctionCall] = self.pendingMessage?.functionCalls ?? []
         switch self.status {
             case .cold, .coldProcessing, .processing, .backgroundTask, .ready:
                 if let pendingText = self.pendingMessage?.text {
@@ -595,7 +595,9 @@ The function call `\(callJsonSchema)` failed, producing the error below.
     
     /// Function to check if the remote server is reachable
     /// - Returns: A `Bool` indicating if the server can be reached
-    public func remoteServerIsReachable() async -> Bool {
+    public func remoteServerIsReachable(
+        endpoint: String = InferenceSettings.endpoint
+    ) async -> Bool {
         // Return false if server is unused
         if !InferenceSettings.useServer { return false }
         // Try to use cached result
@@ -606,11 +608,11 @@ The function call `\(callJsonSchema)` failed, producing the error below.
         // Get last path change time
         // If using server, check connection on multiple endpoints
         let testEndpoints: [String] = [
-            "/v1/models",
-            "/v1/chat/completions"
+            "/models",
+            "/chat/completions"
         ]
         for testEndpoint in testEndpoints {
-            let endpoint: String = InferenceSettings.endpoint.replacingSuffix(
+            let endpoint: String = endpoint.replacingSuffix(
                 testEndpoint,
                 with: ""
             ) + testEndpoint
@@ -625,12 +627,12 @@ The function call `\(callJsonSchema)` failed, producing the error below.
                 // Cache result, then return
                 self.wasRemoteServerAccessible = true
                 self.lastRemoteServerCheck = Date.now
-                Self.logger.info("Reached remote server at '\(InferenceSettings.endpoint, privacy: .public)'")
+                Self.logger.info("Reached remote server at '\(endpoint, privacy: .public)'")
                 return true
             }
         }
         // If fell through, cache and return false
-        Self.logger.warning("Could not reach remote server at '\(InferenceSettings.endpoint, privacy: .public)'")
+        Self.logger.warning("Could not reach remote server at '\(endpoint, privacy: .public)'")
         self.wasRemoteServerAccessible = false
         self.lastRemoteServerCheck = Date.now
         return false

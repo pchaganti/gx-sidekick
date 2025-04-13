@@ -123,6 +123,7 @@ public actor LlamaServer {
 	/// - Returns: The `URL` at which the inference server is accessible
 	private func url(
 		_ path: String,
+        openAiCompatiblePath: Bool,
         canReachRemoteServer: Bool,
 		mustUseLocalServer: Bool = false
 	) async -> (
@@ -131,13 +132,14 @@ public actor LlamaServer {
 	) {
 		// Check endpoint
 		let endpoint: String = InferenceSettings.endpoint.replacingSuffix(
-			"/v1/chat/completions",
+			"/chat/completions",
 			with: ""
 		)
 		let urlString: String
         let notUsingServer: Bool = !canReachRemoteServer || !InferenceSettings.useServer
 		if notUsingServer || mustUseLocalServer {
-			urlString = "\(self.scheme)://\(self.host):\(self.port)\(path)"
+            let addV1: String = openAiCompatiblePath ? "/v1" : ""
+            urlString = "\(self.scheme)://\(self.host):\(self.port)\(addV1)\(path)"
 		} else {
 			urlString = "\(endpoint)\(path)"
 		}
@@ -148,7 +150,7 @@ public actor LlamaServer {
 	public static func getAvailableModels() async -> [String] {
 		// Set up request
 		guard let modelsEndpoint: URL = URL(
-			string: InferenceSettings.endpoint + "/v1/models"
+			string: InferenceSettings.endpoint + "/models"
 		) else {
 			return []
 		}
@@ -340,7 +342,8 @@ public actor LlamaServer {
 	) async throws -> CompleteResponse {
 		// Get endpoint url & whether server is used
         let rawUrl = await self.url(
-            "/v1/chat/completions",
+            "/chat/completions",
+            openAiCompatiblePath: true,
             canReachRemoteServer: canReachRemoteServer
         )
 		// Start server if remote server is not used & local server is inactive
@@ -621,6 +624,7 @@ public actor LlamaServer {
 		await serverHealth.updateURL(
             self.url(
                 "/health",
+                openAiCompatiblePath: false,
                 canReachRemoteServer: canReachRemoteServer,
                 mustUseLocalServer: true
             ).url

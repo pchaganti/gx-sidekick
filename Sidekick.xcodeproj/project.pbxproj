@@ -178,7 +178,7 @@
 		208C5FD82D79CBA200D82AA6 /* OrbView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208C5FD72D79CBA200D82AA6 /* OrbView.swift */; };
 		208C5FDA2D7A771F00D82AA6 /* RetryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208C5FD92D7A771F00D82AA6 /* RetryButton.swift */; };
 		2090A8A62D8995FA0060DC63 /* ModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2090A8A52D8995FA0060DC63 /* ModelType.swift */; };
-		209370762D6AB36900E1AF73 /* ContainerRefactorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209370752D6AB36900E1AF73 /* ContainerRefactorer.swift */; };
+		209370762D6AB36900E1AF73 /* Refactorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209370752D6AB36900E1AF73 /* Refactorer.swift */; };
 		209370942D6B598500E1AF73 /* Extension+CaseIterable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209370932D6B598500E1AF73 /* Extension+CaseIterable.swift */; };
 		209370972D6B5B8100E1AF73 /* DetectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209370962D6B5B8100E1AF73 /* DetectorViewController.swift */; };
 		209370A32D6C05B900E1AF73 /* Extension+Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209370A22D6C05B900E1AF73 /* Extension+Double.swift */; };
@@ -602,7 +602,7 @@
 		208C5FD72D79CBA200D82AA6 /* OrbView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrbView.swift; sourceTree = "<group>"; };
 		208C5FD92D7A771F00D82AA6 /* RetryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryButton.swift; sourceTree = "<group>"; };
 		2090A8A52D8995FA0060DC63 /* ModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelType.swift; sourceTree = "<group>"; };
-		209370752D6AB36900E1AF73 /* ContainerRefactorer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerRefactorer.swift; sourceTree = "<group>"; };
+		209370752D6AB36900E1AF73 /* Refactorer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Refactorer.swift; sourceTree = "<group>"; };
 		209370932D6B598500E1AF73 /* Extension+CaseIterable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+CaseIterable.swift"; sourceTree = "<group>"; };
 		209370962D6B5B8100E1AF73 /* DetectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectorViewController.swift; sourceTree = "<group>"; };
 		209370A22D6C05B900E1AF73 /* Extension+Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Double.swift"; sourceTree = "<group>"; };
@@ -1345,7 +1345,7 @@
 				2086E1AB2CB03CD200FFCF57 /* Dialogs.swift */,
 				20571F802CBD6A6D004F3344 /* SoundEffects.swift */,
 				2031B9972CEAE78F00627D53 /* ShortcutController.swift */,
-				209370752D6AB36900E1AF73 /* ContainerRefactorer.swift */,
+				209370752D6AB36900E1AF73 /* Refactorer.swift */,
 				200363282D769AC700770391 /* JavaScriptRunner.swift */,
 				2051FED82D8E51FA001B1E0D /* SpeechService.swift */,
 				2041868C2D81E6B2002A5D1C /* NetworkMonitor.swift */,
@@ -2307,7 +2307,7 @@
 				204C79562CB765D700EED58E /* ExpertSelectionMenu.swift in Sources */,
 				203487712D672A8F00A88DA4 /* ToolLibraryView.swift in Sources */,
 				209370942D6B598500E1AF73 /* Extension+CaseIterable.swift in Sources */,
-				209370762D6AB36900E1AF73 /* ContainerRefactorer.swift in Sources */,
+				209370762D6AB36900E1AF73 /* Refactorer.swift in Sources */,
 				20C62EBF2D71373500996566 /* SlideStudioView.swift in Sources */,
 				201A1A8E2CDB7C1C001E9BA9 /* MarkdownDataView.swift in Sources */,
 				20A8B65B2CB2709100B756FD /* Resources.swift in Sources */,

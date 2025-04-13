@@ -1,17 +1,24 @@
 //
-//  ContainerRefactorer.swift
+//  Refactorer.swift
 //  Sidekick
 //
 //  Created by John Bean on 2/23/25.
 //
 
+import AppKit
 import Foundation
 import FSKit_macOS
-import AppKit
+import OSLog
 
-public class ContainerRefactorer {
+public class Refactorer {
 	
-	/// Function 
+    /// A `Logger` object for the ``Refactorer`` object
+    private static let logger: Logger = .init(
+        subsystem: Bundle.main.bundleIdentifier!,
+        category: String(describing: Refactorer.self)
+    )
+    
+	/// Function
 	@MainActor
 	static func refactor() {
 		// Init check for refactor
@@ -129,5 +136,41 @@ public class ContainerRefactorer {
 		// Return if relocated
 		return didRelocate
 	}
+    
+    /// Function to update endpoint
+    @MainActor
+    static func updateEndpoint() async {
+        // Update endpoint url format if needed
+        if InferenceSettings.endpointFormatVersion <= 0,
+           !InferenceSettings.endpoint.isEmpty {
+            // Create new endpoint
+            let newEndpoint: String = InferenceSettings.endpoint + "/v1"
+            // Test new endpoint
+            if await Model.shared.remoteServerIsReachable(
+                endpoint: newEndpoint
+            ) {
+                // If it works, set it
+                InferenceSettings.endpoint = newEndpoint
+                Self.logger.info(
+                    "Updated endpoint to \(newEndpoint)"
+                )
+            } else {
+                // Else, log and show error
+                Self.logger.error(
+                    "Failed to update endpoint to \(newEndpoint)"
+                )
+                Dialogs.showAlert(
+                    title: String(localized: "Endpoint Error"),
+                    message: String(
+                        localized: """
+Sidekick has adopted OpenAI's API endpoint format. Please navigate to `Settings` -> `Inference` and update your endpoint to end with `/v1`.
+"""
+                    )
+                )
+            }
+            // Update version
+            InferenceSettings.endpointFormatVersion = 1
+        }
+    }
 	
 }

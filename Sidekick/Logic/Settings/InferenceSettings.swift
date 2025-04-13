@@ -204,6 +204,25 @@ Current date & time: \(Date.now.formatted(date: .long, time: .shortened))
 			UserDefaults.standard.set(newValue, forKey: "endpoint")
 		}
 	}
+    
+    /// A `String` containing the endpoint url's format version
+    public static var endpointFormatVersion: Int {
+        get {
+            // Set default
+            if !UserDefaults.standard.exists(
+                key: "endpointFormatVersion"
+            ) {
+                // Default to 0
+                print("Failed to get endpoint version, using default")
+                Self.endpointFormatVersion = 0
+            }
+            return UserDefaults.standard.integer(forKey: "endpointFormatVersion")
+        }
+        set {
+            // Save
+            UserDefaults.standard.set(newValue, forKey: "endpointFormatVersion")
+        }
+    }
 	
 	/// Computed property for inference API key
 	public static var inferenceApiKey: String {

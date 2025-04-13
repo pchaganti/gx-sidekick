@@ -1300,6 +1300,16 @@
         }
       }
     },
+    "Endpoint Error" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "端点错误"
+          }
+        }
+      }
+    },
     "Endpoint is not valid" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3347,6 +3357,16 @@
         }
       }
     },
+    "Sidekick has adopted OpenAI's API endpoint format. Please navigate to `Settings` -> `Inference` and update your endpoint to end with `/v1`." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sidekick已经采用了OpenAI的API端点格式。请前往`设置` -> `推理`并更新你的端点使其以`/v1`结尾。"
+          }
+        }
+      }
+    },
     "Sidekick is ready to use." : {
       "localizations" : {
         "zh-Hans" : {
@@ -3617,12 +3637,12 @@
         }
       }
     },
-    "The endpoint on the server used for inference. This endpoint must be accessible from this device, and provide an OpenAI compatible API. (e.g. http://localhost:8000, where http://localhost:8000/v1/chat/completions is accessible)\n\nTo ensure privacy and security of your data, host your own server." : {
+    "The endpoint on the server used for inference. This endpoint must be accessible from this device, and provide an OpenAI compatible API. (e.g. http://localhost:8000/v1/, where http://localhost:8000/v1/chat/completions is accessible)\n\nTo ensure privacy and security of your data, host your own server." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "用于推理的服务器上的端点。此端点必须可从此设备访问，并提供与 OpenAI 兼容的 API。 （例如 http://localhost:8000，其中 http://localhost:8000/v1/chat/completions 可被访问）\n\n为保障隐私和数据安全，我们建议你托管您自己的服务器。"
+            "value" : "用于推理的服务器上的端点。此端点必须可从此设备访问，并提供与 OpenAI 兼容的 API。 （例如 http://localhost:11434/v1，其中 http://localhost:11434/v1/chat/completions 可被访问）\n\n为保障隐私和数据安全，我们建议你托管您自己的服务器。"
           }
         }
       }

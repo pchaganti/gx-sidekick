@@ -20,7 +20,7 @@ struct ServerModelSettingsView: View {
 	
 	/// A `Bool` representing if the endpoint is valid
 	var endpointUrlIsValid: Bool {
-		let paths: [String] = ["", "/v1/models", "/v1/chat/completions"]
+		let paths: [String] = ["", "/models", "/chat/completions"]
 		let pathsAreValid: [Bool] = paths.map { path in
 			return URL(string: self.serverEndpoint + path) != nil
 		}
@@ -80,7 +80,7 @@ struct ServerModelSettingsView: View {
 				Text("Endpoint")
 					.font(.title3)
 					.bold()
-				Text("The endpoint on the server used for inference. This endpoint must be accessible from this device, and provide an OpenAI compatible API. (e.g. http://localhost:8000, where http://localhost:8000/v1/chat/completions is accessible)\n\nTo ensure privacy and security of your data, host your own server.")
+				Text("The endpoint on the server used for inference. This endpoint must be accessible from this device, and provide an OpenAI compatible API. (e.g. http://localhost:8000/v1/, where http://localhost:8000/v1/chat/completions is accessible)\n\nTo ensure privacy and security of your data, host your own server.")
 					.font(.caption)
 			}
 			Spacer()

@@ -26,17 +26,21 @@ public class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
 	) {
 		// Relocate legacy resources if setup finished
 		if Settings.setupComplete {
-			ContainerRefactorer.refactor()
+			Refactorer.refactor()
 		}
-		// Configure Tip's data container
-		try? Tips.configure(
-			[
-				.datastoreLocation(.applicationDefault),
-				.displayFrequency(.daily)
-			]
-		)
+        // Configure Tip's data container
+        try? Tips.configure(
+            [
+                .datastoreLocation(.applicationDefault),
+                .displayFrequency(.daily)
+            ]
+        )
 		// Configure keyboard shortcuts
 		ShortcutController.setup()
+        // Update endpoint format
+        Task { @MainActor in
+            await Refactorer.updateEndpoint()
+        }
 	}
 	
 	/// Function that runs before the app is terminated
