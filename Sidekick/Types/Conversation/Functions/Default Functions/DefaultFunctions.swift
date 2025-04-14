@@ -199,8 +199,12 @@ public class DefaultFunctions {
     /// A function to get all contacts
     static let fetchContacts = Function<FetchContactsParams, String>(
         name: "fetch_contacts",
-        description: "Fetches contacts from macOS Contacts after requesting permissions if needed. Returns JSON objects for each contact containing the person's name, emails, phone numbers, birthday (as string), and address. Supports filtering based on name, email, and phone number.",
-        clearance: .sensitive,
+        description: """
+Fetches contacts from macOS Contacts. The user's contact can be accessed to obtain their email, birthday, address, etc.
+
+Returns JSON objects for each contact containing the person's name, emails, phone numbers, birthday (as string), and address. Supports filtering based on name, email, and phone number.
+""",
+        clearance: .dangerous,
         params: [
             FunctionParameter(
                 label: "name",
