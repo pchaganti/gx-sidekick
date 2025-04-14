@@ -18,48 +18,50 @@ public class PromptAnalyzer {
 	@MainActor
 	public static func analyzePrompt(
 		_ prompt: String
-	) -> ResultType {
-		// Check what types are available
-		let resultTypes: [ResultType] = ResultType.allCases.filter(\.isAvailable)
-		// If only one type is available, return it
-		if resultTypes.count == 1 {
-			return resultTypes.first!
-		}
-		// Else, init classifier model
-		let mlModelConfig = MLModelConfiguration()
-		mlModelConfig.computeUnits = .all
-		guard let promptClassifier: NLModel = try? NLModel(
-			mlModel: MLModel(
-				contentsOf: Bundle.main.url(
-					forResource: "UserRequestClassifier",
-					withExtension: "mlmodelc"
-				)!
-			)
-		) else {
-			return .text
-		}
-		// Pre-process prompt to drop all trailing punctuation and convert to lowercase
-		let processedPrompt: String = prompt.trimmingCharacters(
-			in: .punctuationCharacters
-		).lowercased()
-		// Run classifier
-		let hypotheses: [String: Double] = promptClassifier.predictedLabelHypotheses(
-			for: processedPrompt,
-			maximumCount: 2
-		)
-		let textGenScore: Double = hypotheses[ResultType.text.rawValue] ?? 1.0
-		let imageGenScore: Double = hypotheses[ResultType.image.rawValue] ?? 1.0
-		// Get most likely result type
-		let mostLikelyResultType: ResultType = {
-			if textGenScore > imageGenScore {
-				return .text
-			}
-			return .image
-		}()
-		// If score is similar, prompt user
-		var wantedResultType: ResultType?
+    ) -> ResultType {
+        // Check what types are available
+        let resultTypes: [ResultType] = ResultType.allCases.filter(\.isAvailable)
+        // If only one type is available, return it
+        if resultTypes.count == 1 {
+            return resultTypes.first!
+        }
+        // Else, init classifier model
+        let mlModelConfig = MLModelConfiguration()
+        mlModelConfig.computeUnits = .all
+        guard let promptClassifier: NLModel = try? NLModel(
+            mlModel: MLModel(
+                contentsOf: Bundle.main.url(
+                    forResource: "UserRequestClassifier",
+                    withExtension: "mlmodelc"
+                )!
+            )
+        ) else {
+            return .text
+        }
+        // Pre-process prompt to drop all trailing punctuation and convert to lowercase
+        let processedPrompt: String = prompt.trimmingCharacters(
+            in: .punctuationCharacters
+        ).lowercased()
+        // Run classifier
+        let hypotheses: [String: Double] = promptClassifier.predictedLabelHypotheses(
+            for: processedPrompt,
+            maximumCount: 2
+        )
+        let textGenScore: Double = hypotheses[ResultType.text.rawValue] ?? 1.0
+        let imageGenScore: Double = hypotheses[ResultType.image.rawValue] ?? 1.0
+        // Get most likely result type
+        let mostLikelyResultType: ResultType = {
+            if textGenScore > imageGenScore {
+                return .text
+            }
+            return .image
+        }()
+        // If score is similar or if prompt was too short to confirm need for image, prompt user
+        var wantedResultType: ResultType? = nil
 		let similarThreshold = 0.3
-		if abs(textGenScore - imageGenScore) < similarThreshold {
+        let scoreWasSimilar: Bool = abs(textGenScore - imageGenScore) < similarThreshold
+        let promptWasTooShort: Bool = processedPrompt.count < 50 && mostLikelyResultType == .image
+        if scoreWasSimilar || promptWasTooShort {
 			// Prompt user
 			let _ = Dialogs.dichotomy(
 				title: String(localized: "Response"),
