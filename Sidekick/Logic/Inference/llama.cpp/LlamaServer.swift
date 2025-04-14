@@ -782,9 +782,15 @@ public actor LlamaServer {
                     let jsonString = String(jsonSubstring)
                     if let jsonData = jsonString.data(using: .utf8) {
                         // Try for all function types
-                        for function in Functions.functions {
+                        let functions = DefaultFunctions.functions.sorted(
+                            by: \.params.count,
+                            order: .reverse
+                        )
+                        for function in functions {
                             if let functionCall = function.functionCallType.parse(
                                 from: jsonData, using: decoder
+                            ), jsonString.contains(
+                                "\"\(function.name)\""
                             ) {
                                 return functionCall
                             }

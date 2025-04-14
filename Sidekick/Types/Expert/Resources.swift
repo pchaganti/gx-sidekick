@@ -86,9 +86,6 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
         var resources: [Resource] = self.resources
         let indexUrl: URL = self.indexUrl
         for index in resources.indices {
-            let progress: Double = Double(index + 1) / Double(
-                self.resources.count
-            )
             await resources[index].updateIndex(
                 resourcesDirUrl: indexUrl
             )

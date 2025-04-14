@@ -6,62 +6,8 @@
 //
 
 import Foundation
+import LocalAuthentication
 import SwiftUI
-
-// MARK: - Parameter Value Protocol
-public protocol ParameterValue {
-    init?(stringValue: String)
-}
-
-// MARK: - Basic Type Extensions
-extension String: ParameterValue {
-    public init(stringValue: String) {
-        self = stringValue
-    }
-}
-
-extension Float: ParameterValue {
-    public init?(stringValue: String) {
-        self.init(stringValue)
-    }
-}
-
-extension Int: ParameterValue {
-    public init?(stringValue: String) {
-        self.init(stringValue)
-    }
-}
-
-extension Bool: ParameterValue {
-    public init?(stringValue: String) {
-        self.init(stringValue.lowercased() == "true")
-    }
-}
-
-// MARK: - Array Parameter Value Protocol
-protocol ArrayParameterValue: ParameterValue {
-    static func parseArray(
-        from string: String
-    ) -> [Self]?
-}
-
-// MARK: - Array Extensions
-extension Array: ParameterValue where Element: ParameterValue {
-    
-    public init?(
-        stringValue: String
-    ) {
-        // Remove brackets and whitespace, then split by commas
-        let trimmed = stringValue.trimmingCharacters(in: CharacterSet(charactersIn: "[]"))
-        let components = trimmed.split(separator: ",").map(String.init)
-        // Convert each component to the element type
-        let values = components.compactMap { Element(stringValue: $0.trimmingCharacters(in: .whitespaces)) }
-        // Only succeed if we could convert all elements
-        guard values.count == components.count else { return nil }
-        self = values
-    }
-    
-}
 
 // MARK: Function Call Decoder
 public protocol DecodableFunctionCall: Decodable {
@@ -114,49 +60,6 @@ public struct FunctionParameter: Codable {
     }
 }
 
-// MARK: - Type-safe Parameter with Throwing Initializer
-public struct TypedParameter<T: ParameterValue> {
-    
-    let label: String
-    let value: T?
-    let isRequired: Bool
-    
-    public init(
-        label: String,
-        stringValue: String?,
-        isRequired: Bool = true
-    ) throws {
-        self.label = label
-        self.isRequired = isRequired
-        // Handle nil stringValue for required parameters
-        guard let stringValue = stringValue else {
-            if isRequired {
-                throw ParameterParsingError.invalidValue("Required parameter \(label) is nil")
-            }
-            self.value = nil
-            return
-        }
-        // Convert string value to type T
-        guard let convertedValue = T(stringValue: stringValue) else {
-            if isRequired {
-                throw ParameterParsingError.invalidValue("Required parameter \(label) has an invalid value")
-            }
-            self.value = nil
-            return
-        }
-        self.value = convertedValue
-    }
-    
-    // Helper to get the value or throw an error if nil
-    func getValue() throws -> T {
-        guard let value = self.value else {
-            throw ParameterParsingError.invalidValue("Required parameter \(label) is nil")
-        }
-        return value
-    }
-    
-}
-
 // MARK: - Function Protocol
 protocol FunctionProtocol: Identifiable {
     
@@ -177,20 +80,26 @@ protocol FunctionProtocol: Identifiable {
 public struct Function<Parameter: FunctionParams, Result>: FunctionProtocol, AnyFunctionBox {
 
     public var id: String { return name }
+    
     public var name: String
     public var description: String
+    public var clearance: Clearance
+    
     public var params: [FunctionParameter]
-    public var paramType: Codable.Type
     public var run: (Parameter) async throws -> Result
+    
+    public var paramType: Codable.Type
     
     public init(
         name: String,
         description: String,
+        clearance: Clearance = .regular,
         params: [FunctionParameter],
         run: @escaping (Parameter) async throws -> Result
     ) {
         self.name = name
         self.description = description
+        self.clearance = clearance
         self.params = params
         self.paramType = Parameter.self
         self.run = run
@@ -221,6 +130,7 @@ public struct Function<Parameter: FunctionParams, Result>: FunctionProtocol, Any
         )
     }
     
+    /// A function to get the function's JSON schema to inject into the system prompt
     public func getJsonSchema() -> String {
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
@@ -249,14 +159,57 @@ public struct Function<Parameter: FunctionParams, Result>: FunctionProtocol, Any
         return lines.joined(separator: "\n")
     }
     
+    /// A function to call the function
     public func call(
         withData data: Data
     ) async throws -> String? {
         // Decode the provided arguments to the generic Parameter type
-        let params = try JSONDecoder().decode(Parameter.self, from: data)
+        let params: Parameter = try JSONDecoder().decode(
+            Parameter.self,
+            from: data
+        )
+        // Ask for permissions if needed
+        let requestDescription: String = String(localized: """
+Sidekick wants to run the function `\(self.name)` to complete your request with the parameters below.
+
+\(String(data: data, encoding: .utf8)!)
+
+Do you wish to permit this?
+""")
+        switch self.clearance {
+            case .regular:
+                break
+            case .sensitive:
+                // Ask with dialog
+                if await !Dialogs.showConfirmation(
+                    title: String(localized: "Function Use"),
+                    message: requestDescription
+                ) {
+                    // If denied, throw error
+                    throw FunctionCallError.permissionsDenied
+                }
+            case .dangerous:
+                // Ask for identification
+                let context: LAContext = LAContext()
+                let policy: LAPolicy = LAPolicy.deviceOwnerAuthentication
+                let result = try await context.evaluatePolicy(
+                    policy,
+                    localizedReason: requestDescription
+                )
+        }
         // Execute the wrapped run closure.
         let result = try await run(params)
         return String(describing: result)
+    }
+    
+    public enum Clearance: String, CaseIterable {
+        case regular
+        case sensitive
+        case dangerous
+    }
+    
+    public enum FunctionCallError: String, Error {
+        case permissionsDenied = "The user denied your request to use this tool."
     }
     
     public struct FunctionObject: Codable {
@@ -378,13 +331,14 @@ public struct Function<Parameter: FunctionParams, Result>: FunctionProtocol, Any
         /// Function to call the function
         mutating public func call() async throws -> String? {
             // Locate the function by name
-            guard let function = Functions.functions.first(
+            guard let function = DefaultFunctions.functions.first(
                 where: { $0.name == self.config.name }
             ) else {
                 throw FunctionCallError.functionNotFound
             }
             // Instead of expecting a raw type (like a tuple or a simple String), we are using Codable structs for parameters
             let encoder: JSONEncoder = JSONEncoder()
+            encoder.outputFormatting = .prettyPrinted
             let argumentData: Data = try encoder.encode(self.config.arguments)
             // Use the type erased call method.
             return try await function.call(withData: argumentData)

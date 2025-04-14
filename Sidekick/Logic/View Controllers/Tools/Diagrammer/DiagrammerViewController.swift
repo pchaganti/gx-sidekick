@@ -40,7 +40,10 @@ Use D2 markup language to draw a highly detailed diagram, following the syntax i
 		) else {
 			return prompt
 		}
-		let cheatsheetText: String = try! String(contentsOf: cheatsheetURL)
+        let cheatsheetText: String = try! String(
+            contentsOf: cheatsheetURL,
+            encoding: .utf8
+        )
 		// Return full prompt
 		return """
 \(prompt)

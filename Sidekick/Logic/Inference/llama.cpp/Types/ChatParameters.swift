@@ -51,7 +51,7 @@ struct ChatParameters: Codable {
         if Settings.useFunctions {
             fullSystemPromptComponents.append(InferenceSettings.useFunctionsPrompt)
             // Inject function schema
-            let functions: [any AnyFunctionBox] = Functions.functions
+            let functions: [any AnyFunctionBox] = DefaultFunctions.functions
             for function in functions {
                 fullSystemPromptComponents.append(function.getJsonSchema())
             }

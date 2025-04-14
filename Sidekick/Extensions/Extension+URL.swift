@@ -38,6 +38,35 @@ public extension URL {
 		}
 		return files
 	}
+    
+    /// Function to get all files in a directory
+    func getContents(
+        recursive: Bool = false
+    ) -> [URL]? {
+        // If no directory
+        guard self.hasDirectoryPath else {
+            return nil
+        }
+        // Setup options
+        var options: FileManager.DirectoryEnumerationOptions = [
+            .skipsHiddenFiles
+        ]
+        if !recursive {
+            options.insert(.skipsSubdirectoryDescendants)
+        }
+        // Enumerate directory
+        var files = [URL]()
+        if let enumerator = FileManager.default.enumerator(
+            at: url,
+            includingPropertiesForKeys: [],
+            options: options
+        ) {
+            for case let url as URL in enumerator {
+                files.append(url)
+            }
+        }
+        return files
+    }
 	
 	/// Function to verify if url is reachable
 	static func verifyURL(
@@ -102,7 +131,7 @@ public extension URL {
         session.configuration.timeoutIntervalForRequest = timeout
         session.configuration.timeoutIntervalForResource = timeout
         do {
-			let (data, response) = try await URLSession.shared.data(for: request)
+			let (_, response) = try await URLSession.shared.data(for: request)
 			guard let httpResponse = response as? HTTPURLResponse else {
 				return false
 			}

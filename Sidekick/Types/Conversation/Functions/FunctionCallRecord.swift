@@ -11,6 +11,7 @@ import SwiftUI
 protocol AnyFunctionBox {
     
     var name: String { get }
+    var params: [FunctionParameter] { get }
     
     func getJsonSchema() -> String
     func call(withData data: Data) async throws -> String?

@@ -410,17 +410,6 @@
         }
       }
     },
-    "Call: " : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "调用："
-          }
-        }
-      }
-    },
     "Calling functions..." : {
       "localizations" : {
         "zh-Hans" : {
@@ -1687,6 +1676,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "输出格式"
+          }
+        }
+      }
+    },
+    "Function Use" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "调用函数"
           }
         }
       }
@@ -3388,12 +3387,40 @@
         }
       }
     },
-    "Sidekick needs to use the web to address your request. Do you wish to permit this?" : {
+    "Sidekick wants to run the function `%@` to complete your request with the parameters below.\n\n%@\n\nDo you wish to permit this?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Sidekick wants to run the function `%1$@` to complete your request with the parameters below.\n\n%2$@\n\nDo you wish to permit this?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sidekick需要启用 `%@` 函数处理您的请求。该函数运行的参数如下。\n\n%2$@\n\n您是否允许此操作？"
+          }
+        }
+      }
+    },
+    "Sidekick wants to use the function `%@` for your request. Do you wish to permit this?" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sidekick需要启用网络搜索来处理您的请求。您是否允许此操作？"
+            "value" : "Sidekick需要启用 `%@` 函数处理您的请求。您是否允许此操作？"
+          }
+        }
+      }
+    },
+    "Sidekick wants to use the tool `%@` for your request. Do you wish to permit this?" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sidekick需要启用 `%@` 来处理您的请求。您是否允许此操作？"
           }
         }
       }

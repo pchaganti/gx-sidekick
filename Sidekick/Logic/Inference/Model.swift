@@ -490,7 +490,7 @@ Below is the result produced by the tool call: `\(callJsonSchema)`. If the tool 
 The function call `\(callJsonSchema)` failed, producing the error below.
 
 ```tool_call_error
-\(error.localizedDescription)
+\(error)
 ```
 """
             }
