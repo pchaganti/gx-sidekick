@@ -202,6 +202,7 @@ public class Model: ObservableObject {
 		mode: Model.Mode,
 		similarityIndex: SimilarityIndex? = nil,
 		useWebSearch: Bool = false,
+        useFunctions: Bool = false,
 		useCanvas: Bool = false,
 		canvasSelection: String? = nil,
 		temporaryResources: [TemporaryResource] = [],
@@ -316,6 +317,7 @@ public class Model: ObservableObject {
                     canReachRemoteServer: canReachRemoteServer,
                     messagesWithSources: messagesWithSources,
                     useWebSearch: useWebSearch,
+                    useFunctions: useFunctions,
                     similarityIndex: similarityIndex,
                     handleResponseUpdate: handleResponseUpdate,
                     increment: increment
@@ -363,6 +365,7 @@ public class Model: ObservableObject {
         canReachRemoteServer: Bool,
 		messagesWithSources: [Message.MessageSubset],
         useWebSearch: Bool,
+        useFunctions: Bool,
 		similarityIndex: SimilarityIndex? = nil,
 		handleResponseUpdate: @escaping (String, String) -> Void,
 		increment: Int
@@ -373,12 +376,13 @@ public class Model: ObservableObject {
             canReachRemoteServer: canReachRemoteServer,
 			messages: messagesWithSources,
             useWebSearch: useWebSearch,
+            useFunctions: useFunctions,
 			similarityIndex: similarityIndex,
 			handleResponseUpdate: handleResponseUpdate,
 			increment: increment
 		)
 		// Return if functions are disabled
-        if !Settings.useFunctions {
+        if !Settings.useFunctions || !useFunctions {
 			return initialResponse
 		}
 		// Return if no function call
@@ -392,6 +396,7 @@ public class Model: ObservableObject {
 			messages: messagesWithSources,
             functionCall: functionCall,
             useWebSearch: useWebSearch,
+            useFunctions: useFunctions,
 			similarityIndex: similarityIndex,
 			handleResponseUpdate: handleResponseUpdate,
 			increment: increment
@@ -404,6 +409,7 @@ public class Model: ObservableObject {
         canReachRemoteServer: Bool,
 		messages: [Message.MessageSubset],
         useWebSearch: Bool,
+        useFunctions: Bool,
 		similarityIndex: SimilarityIndex?,
 		handleResponseUpdate: @escaping (String, String) -> Void,
 		increment: Int
@@ -415,6 +421,7 @@ public class Model: ObservableObject {
             canReachRemoteServer: canReachRemoteServer,
 			messages: messages,
             useWebSearch: useWebSearch,
+            useFunctions: useFunctions,
 			similarityIndex: similarityIndex
 		) { partialResponse in
 			DispatchQueue.main.async {
@@ -439,6 +446,7 @@ public class Model: ObservableObject {
 		messages: [Message.MessageSubset],
         functionCall: any DecodableFunctionCall,
         useWebSearch: Bool,
+        useFunctions: Bool,
 		similarityIndex: SimilarityIndex?,
 		handleResponseUpdate: @escaping (
 			String, // Full message
@@ -523,6 +531,7 @@ The function call `\(callJsonSchema)` failed, producing the error below.
                 canReachRemoteServer: canReachRemoteServer,
                 messages: messages,
                 useWebSearch: useWebSearch,
+                useFunctions: useFunctions,
                 similarityIndex: similarityIndex
             )  { partialResponse in
                 DispatchQueue.main.async {

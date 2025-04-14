@@ -337,6 +337,7 @@ public actor LlamaServer {
         canReachRemoteServer: Bool,
 		messages: [Message.MessageSubset],
         useWebSearch: Bool = false,
+        useFunctions: Bool = false,
 		similarityIndex: SimilarityIndex? = nil,
 		progressHandler: (@Sendable (String) -> Void)? = nil
 	) async throws -> CompleteResponse {
@@ -366,6 +367,7 @@ public actor LlamaServer {
                         systemPrompt: self.systemPrompt,
                         messages: messages,
                         useWebSearch: useWebSearch,
+                        useFunctions: useFunctions,
 						similarityIndex: similarityIndex
 					)
 				case .contextAwareAgent:

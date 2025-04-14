@@ -38,6 +38,7 @@ struct ChatParameters: Codable {
         systemPrompt: String,
         messages: [Message.MessageSubset],
         useWebSearch: Bool = false,
+        useFunctions: Bool = false,
 		similarityIndex: SimilarityIndex?
 	) async {
 		// Formulate messages
@@ -48,7 +49,7 @@ struct ChatParameters: Codable {
         // Tell the LLM to use sources
         fullSystemPromptComponents.append(InferenceSettings.useSourcesPrompt)
         // Tell the LLM to use functions when enabled
-        if Settings.useFunctions {
+        if Settings.useFunctions && useFunctions {
             fullSystemPromptComponents.append(InferenceSettings.useFunctionsPrompt)
             // Inject function schema
             let functions: [any AnyFunctionBox] = DefaultFunctions.functions

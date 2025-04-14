@@ -171,6 +171,8 @@
 		2086E1AC2CB03CD200FFCF57 /* Dialogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2086E1AB2CB03CD200FFCF57 /* Dialogs.swift */; };
 		208844312CDDE33F003BCB6F /* ModelListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208844302CDDE33F003BCB6F /* ModelListView.swift */; };
 		208844332CDDE394003BCB6F /* ModelRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208844322CDDE394003BCB6F /* ModelRowView.swift */; };
+		208855CA2DAD062A00071F0B /* CapsuleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208855C92DAD062A00071F0B /* CapsuleButton.swift */; };
+		208855CC2DAD078800071F0B /* UseFunctionsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208855CB2DAD078800071F0B /* UseFunctionsButton.swift */; };
 		208AA3F12CC9E42F00A0891F /* ScrollMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208AA3F02CC9E42F00A0891F /* ScrollMask.swift */; };
 		208BA3572D680B1800E0C657 /* DiagrammerQuickPromptsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208BA3562D680B1800E0C657 /* DiagrammerQuickPromptsView.swift */; };
 		208C5FD12D79CA3E00D82AA6 /* BubbleAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208C5FD02D79CA3E00D82AA6 /* BubbleAnimationView.swift */; };
@@ -594,6 +596,8 @@
 		2086E1AB2CB03CD200FFCF57 /* Dialogs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dialogs.swift; sourceTree = "<group>"; };
 		208844302CDDE33F003BCB6F /* ModelListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelListView.swift; sourceTree = "<group>"; };
 		208844322CDDE394003BCB6F /* ModelRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelRowView.swift; sourceTree = "<group>"; };
+		208855C92DAD062A00071F0B /* CapsuleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleButton.swift; sourceTree = "<group>"; };
+		208855CB2DAD078800071F0B /* UseFunctionsButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseFunctionsButton.swift; sourceTree = "<group>"; };
 		208AA3F02CC9E42F00A0891F /* ScrollMask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollMask.swift; sourceTree = "<group>"; };
 		208BA3562D680B1800E0C657 /* DiagrammerQuickPromptsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagrammerQuickPromptsView.swift; sourceTree = "<group>"; };
 		208C5FD02D79CA3E00D82AA6 /* BubbleAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleAnimationView.swift; sourceTree = "<group>"; };
@@ -1587,6 +1591,8 @@
 				202801F32CC93C80005C1F7D /* DictationButton.swift */,
 				206AB6112CF5F8390010B09A /* AttachmentSelectionButton.swift */,
 				2025E67C2D89197700289E3F /* UseWebSearchButton.swift */,
+				208855CB2DAD078800071F0B /* UseFunctionsButton.swift */,
+				208855C92DAD062A00071F0B /* CapsuleButton.swift */,
 			);
 			path = "Input Field";
 			sourceTree = "<group>";
@@ -2165,6 +2171,7 @@
 				2099BDA92CB81A1300E02732 /* ExpertListView.swift in Sources */,
 				201A1A9C2CDBB5B1001E9BA9 /* MarkdownScatterPlotView.swift in Sources */,
 				20C62EC32D713D5100996566 /* SlideStudioPromptView.swift in Sources */,
+				208855CC2DAD078800071F0B /* UseFunctionsButton.swift in Sources */,
 				2034876F2D6723A200A88DA4 /* ToolCardButton.swift in Sources */,
 				204AE3C62CEC7C030086B42D /* NewCommandView.swift in Sources */,
 				204C795C2CB79AB900EED58E /* ExpertManagerView.swift in Sources */,
@@ -2262,6 +2269,7 @@
 				204AEDA92D8170D0004028FF /* ServerModelNameEditor.swift in Sources */,
 				2083AEA42D8853E40049C139 /* EmailSelectionView.swift in Sources */,
 				20BF49D12D64A89300C329F8 /* ModelView.swift in Sources */,
+				208855CA2DAD062A00071F0B /* CapsuleButton.swift in Sources */,
 				20B97CE12CB001E0009A0A5D /* Conversation.swift in Sources */,
 				207A9F552CB8A96F00E727DE /* ExpertNavigationRowView.swift in Sources */,
 				201BB9962D8AF8AA00890EE6 /* CanvasView.swift in Sources */,

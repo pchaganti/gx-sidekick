@@ -13,51 +13,20 @@ struct UseWebSearchButton: View {
 	
 	var useWebSearchTip: UseWebSearchTip = .init()
 	
-	var webSearchTextColor: Color {
-		return self.useWebSearch ? .accentColor : .secondary
-	}
-	
-	var webSearchBubbleColor: Color {
-		return self.useWebSearch ? .accentColor.opacity(0.3) : .clear
-	}
-	
-	var webSearchBubbleBorderColor: Color {
-		return self.useWebSearch ? webSearchBubbleColor : .secondary
-	}
-	
     var body: some View {
-		Button {
-			self.toggleWebSearch()
-		} label: {
-			Label("Web Search", systemImage: "globe")
-				.foregroundStyle(self.webSearchTextColor)
-				.font(.caption)
-				.padding(5)
-				.background {
-					capsule
-				}
-		}
-		.buttonStyle(.plain)
+        CapsuleButton(
+            label: "Web Search",
+            systemImage: "globe",
+            isActivated: self.$useWebSearch
+        ) { newValue in
+            self.onToggle(newValue: newValue)
+        }
 		.popoverTip(self.useWebSearchTip)
     }
 	
-	var capsule: some View {
-		ZStack {
-			if self.useWebSearch {
-				Capsule()
-					.fill(self.webSearchBubbleColor)
-			}
-			Capsule()
-				.stroke(
-					style: .init(
-						lineWidth: 0.3
-					)
-				)
-				.fill(self.webSearchBubbleBorderColor)
-		}
-	}
-	
-	private func toggleWebSearch() {
+    private func onToggle(
+        newValue: Bool
+    ) {
 		// Check if search is configured
 		if !RetrievalSettings.canUseWebSearch {
 			// If not, show error and return
@@ -65,12 +34,9 @@ struct UseWebSearchButton: View {
 				title: String(localized: "Search not configured"),
 				message: String(localized: "Search is not configured. Please configure it in \"Settings\" -> \"Retrieval\".")
 			)
+            // Set back to false
+            self.useWebSearch = false
 			return
-		}
-		withAnimation(
-			.linear(duration: 0.15)
-		) {
-			self.useWebSearch.toggle()
 		}
 	}
 	

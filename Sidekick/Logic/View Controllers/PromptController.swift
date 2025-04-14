@@ -28,6 +28,7 @@ public class PromptController: ObservableObject, DropDelegate {
 	@Published var imageConcept: String? = nil
 	
 	@Published var useWebSearch: Bool = false
+    @Published var useFunctions: Bool = Settings.useFunctions
 	
 	@Published var isRecording: Bool = false
 	@Published var prompt: String = ""

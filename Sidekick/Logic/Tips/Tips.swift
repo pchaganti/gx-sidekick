@@ -163,3 +163,19 @@ struct UseWebSearchTip: Tip {
 	}
 	
 }
+
+struct UseFunctionsTip: Tip {
+    
+    var title: Text {
+        Text("Use Functions")
+    }
+    
+    var message: Text? {
+        Text("Encourage models to use functions, which are evaluated to execute actions.")
+    }
+    
+    var image: Image? {
+        Image(systemName: "function")
+    }
+    
+}

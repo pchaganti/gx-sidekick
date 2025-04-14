@@ -1710,6 +1710,26 @@
         }
       }
     },
+    "Functions are disabled in Settings. Please configure it in \"Settings\" -> \"General\" -> \"Functions\"." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "函数功能处于关闭状态。请前往“设置” -> “通用” -> “功能”中进行配置。"
+          }
+        }
+      }
+    },
+    "Functions Disabled" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已关闭函数"
+          }
+        }
+      }
+    },
     "General" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3398,29 +3418,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sidekick需要启用 `%@` 函数处理您的请求。该函数运行的参数如下。\n\n%2$@\n\n您是否允许此操作？"
-          }
-        }
-      }
-    },
-    "Sidekick wants to use the function `%@` for your request. Do you wish to permit this?" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sidekick需要启用 `%@` 函数处理您的请求。您是否允许此操作？"
-          }
-        }
-      }
-    },
-    "Sidekick wants to use the tool `%@` for your request. Do you wish to permit this?" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sidekick需要启用 `%@` 来处理您的请求。您是否允许此操作？"
+            "value" : "Sidekick需要启用 `%1$@` 函数处理您的请求。该函数运行的参数如下。\n\n%2$@\n\n您是否允许此操作？"
           }
         }
       }

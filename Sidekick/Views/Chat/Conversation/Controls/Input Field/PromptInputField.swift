@@ -110,9 +110,14 @@ struct PromptInputField: View {
 			DictationButton()
 		}
 		.overlay(alignment: .bottomLeading) {
-			UseWebSearchButton(
-				useWebSearch: self.$promptController.useWebSearch
-			)
+            HStack {
+                UseWebSearchButton(
+                    useWebSearch: self.$promptController.useWebSearch
+                )
+                UseFunctionsButton(
+                    useFunctions: self.$promptController.useFunctions
+                )
+            }
 			.padding(.leading, 32)
 			.padding(.bottom, 10)
 			.frame(height: 25)
@@ -285,6 +290,7 @@ struct PromptInputField: View {
 				mode: .chat,
 				similarityIndex: index,
 				useWebSearch: useWebSearch,
+                useFunctions: self.promptController.useFunctions,
 				useCanvas: self.conversationState.useCanvas,
 				canvasSelection: self.canvasController.selection,
 				temporaryResources: tempResources
