@@ -5,8 +5,9 @@
 //  Created by Bean John on 9/23/24.
 //
 
-import Foundation
 import AppKit
+import DefaultModels
+import Foundation
 import FSKit_macOS
 import UniformTypeIdentifiers
 
@@ -110,8 +111,34 @@ public class Settings {
 		get {
 			// Set default
 			if !UserDefaults.standard.exists(key: "useFunctions") {
-				// Default to true
-				Self.useFunctions = InferenceSettings.useServer
+                // Default to true if using server
+                if InferenceSettings.useServer {
+                    Self.useFunctions = true
+                } else {
+                    // Default to true if local model exeeds a certain size
+                    // Get list of non-reasoning base models
+                    let models: [HuggingFaceModel] = DefaultModels.hardcodedModels.filter {
+                        !$0.isReasoningModel
+                    }
+                    // Get baseline model
+                    let minModel: HuggingFaceModel = models.sorted(by: {
+                        $0.minRam < $1.minRam
+                    }).first!
+                    // Get model that can be run
+                    let model: HuggingFaceModel = {
+                        if let maxModel: HuggingFaceModel = models.filter({
+                            $0.canRun()
+                        }).sorted(by: {
+                            $0.mmluScore > $1.mmluScore
+                        }).first {
+                            return maxModel
+                        } else {
+                            return minModel
+                        }
+                    }()
+                    // If param count >= 3, use function calling
+                    Self.useFunctions = (model.params >= 3)
+                }
 			}
 			return UserDefaults.standard.bool(
 				forKey: "useFunctions"

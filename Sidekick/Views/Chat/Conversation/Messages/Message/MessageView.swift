@@ -154,7 +154,7 @@ struct MessageView: View {
 					spacing: 4
 				) {
                     // Show function calls if availible
-                    if self.message.hasFunctionCalls {
+                    if self.message.hasFunctionCallRecords {
                         FunctionCallsView(message: self.message)
                             .if(
                                 !self.message.text

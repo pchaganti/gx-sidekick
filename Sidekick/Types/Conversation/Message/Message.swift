@@ -301,8 +301,8 @@ DO NOT reference sources outside of those provided below. If you did not referen
     
     /// An array of ``FunctionCallRecord`` used in the response
     public var functionCallRecords: [FunctionCallRecord]? = nil
-	/// A `Bool` representing whether the message has function calls
-    public var hasFunctionCalls: Bool {
+	/// A `Bool` representing whether the message did execute function calls
+    public var hasFunctionCallRecords: Bool {
         guard let functionCallRecords else { return false }
         return !functionCallRecords.isEmpty
     }

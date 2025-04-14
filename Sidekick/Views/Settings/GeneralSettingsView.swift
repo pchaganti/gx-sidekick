@@ -116,7 +116,6 @@ struct GeneralSettingsView: View {
                     Text("Use Functions")
                         .font(.title3)
                         .bold()
-                    StatusLabelView.experimental
                 }
 				Text("Encourage models to use functions, which are evaluated to execute actions.")
 					.font(.caption)
