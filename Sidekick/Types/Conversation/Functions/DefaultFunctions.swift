@@ -25,6 +25,7 @@ public class DefaultFunctions {
         DefaultFunctions.extractFileText,
         DefaultFunctions.writePlaintextToFile,
         DefaultFunctions.deleteFile,
+        DefaultFunctions.runCommand
     ]
     
     /// A ``Function`` to show alerts
@@ -172,9 +173,15 @@ public class DefaultFunctions {
                 throw AverageError.noNumbers
             }
             return params.numbers.reduce(0, +) / Float(params.numbers.count)
-            // Custom error for Average function
-            enum AverageError: String, Error {
-                case noNumbers = "No numbers were provided from which to calculate an average."
+            // Custom error for average function
+            enum AverageError: Error {
+                case noNumbers
+                var localizedDescription: String {
+                    switch self {
+                        case .noNumbers:
+                            return "No numbers were provided from which to calculate an average."
+                    }
+                }
             }
         }
     )
@@ -236,8 +243,14 @@ public class DefaultFunctions {
             )!
             return resultsText
             // Custom error for Web Search function
-            enum WebSearchError: String, Error {
-                case notEnabled = "Web search has not been enabled in Settings."
+            enum WebSearchError: Error {
+                case notEnabled
+                var localizedDescription: String {
+                    switch self {
+                        case .notEnabled:
+                            return "Web search has not been enabled in Settings."
+                    }
+                }
             }
         }
     )
@@ -248,7 +261,7 @@ public class DefaultFunctions {
     /// A function to list files in a directory
     static let listDirectory = Function<ListDirectoryParams, [String]>(
         name: "list_directory",
-        description: "Lists the files in a directory. Use the `recursive` parameter to list files in subdirectories recursively.\n\nThe user's home directory is `\(URL.homeDirectory.posixPath)`, their downloads directory is \(URL.downloadsDirectory.posixPath), and their desktop directory is \(URL.desktopDirectory.posixPath)",
+        description: "Lists the files in a directory, non-recursively.\n\nThe user's home directory is `\(URL.homeDirectory.posixPath)`, their downloads directory is \(URL.downloadsDirectory.posixPath), and their desktop directory is \(URL.desktopDirectory.posixPath)",
         clearance: .sensitive,
         params: [
             FunctionParameter(
@@ -256,12 +269,6 @@ public class DefaultFunctions {
                 description: "The POSIX path of the directory.",
                 datatype: .string,
                 isRequired: true
-            ),
-            FunctionParameter(
-                label: "recursive",
-                description: "Controls whether files in subdirectories are listed. (optional, defaults to true)",
-                datatype: .boolean,
-                isRequired: false
             )
         ],
         run: { params in
@@ -276,22 +283,30 @@ public class DefaultFunctions {
                 throw ListDirectoryError.notDirectory
             }
             // Fetch items
-            let isRecursive: Bool = params.recursive ?? true
-            let urls: [URL] = url.getContents(recursive: isRecursive) ?? []
+            let urls: [URL] = url.getContents(recursive: false) ?? []
             let paths: [String] = urls.map { url in
                 return url.posixPath
             }
             return paths
             enum ListDirectoryError: String, Error {
-                case invalidPath = "The provided POSIX path is not valid."
-                case pathNotFound = "The specified path does not exist."
-                case notDirectory = "The specified path is not a directory."
+                case invalidPath
+                case pathNotFound
+                case notDirectory
+                var localizedDescription: String {
+                    switch self {
+                        case .invalidPath:
+                            return "The provided POSIX path is not valid."
+                        case .pathNotFound:
+                            return "The specified path does not exist."
+                        case .notDirectory:
+                            return "The specified path is not a directory."
+                    }
+                }
             }
         }
     )
     struct ListDirectoryParams: FunctionParams {
         var posixPath: String
-        var recursive: Bool?
     }
     
     /// A function to extract the text from a file
@@ -325,9 +340,19 @@ public class DefaultFunctions {
             )
             return text
             enum ExtractFileTextError: String, Error {
-                case invalidPath = "The provided POSIX path is not valid."
-                case pathNotFound = "The file does not exist at the specified path."
-                case notFile = "The specified path is not a file."
+                case invalidPath
+                case pathNotFound
+                case notFile
+                var localizedDescription: String {
+                    switch self {
+                        case .invalidPath:
+                            return "The provided POSIX path is not valid."
+                        case .pathNotFound:
+                            return "The file does not exist at the specified path."
+                        case .notFile:
+                            return "The specified path is not a file."
+                    }
+                }
             }
         }
     )
@@ -363,7 +388,13 @@ public class DefaultFunctions {
             try params.text.write(to: url, atomically: true, encoding: .utf8)
             return "The text was written successfully to the file at \(params.posixPath)."
             enum WriteToTxtFileError: String, Error {
-                case invalidPath = "The provided POSIX path is not valid."
+                case invalidPath
+                var localizedDescription: String {
+                    switch self {
+                        case .invalidPath:
+                            return "The provided POSIX path is not valid."
+                    }
+                }
             }
         }
     )
@@ -396,14 +427,88 @@ public class DefaultFunctions {
             // Delete the file
             FileManager.removeItem(at: url)
             return "The file at `\(params.posixPath)` was deleted successfully."
-            enum ExtractFileTextError: String, Error {
-                case invalidPath = "The provided POSIX path is not valid."
-                case pathNotFound = "The file does not exist at the specified path."
+            enum ExtractFileTextError: Error {
+                case invalidPath
+                case pathNotFound
+                var localizedDescription: String {
+                    switch self {
+                        case .invalidPath:
+                            return "The provided POSIX path is not valid."
+                        case .pathNotFound:
+                            return "The file does not exist at the specified path."
+                    }
+                }
             }
         }
     )
     struct DeleteFileParams: FunctionParams {
         var posixPath: String
     }
+    
+    /// A function to run a terminal command
+    static let runCommand = Function<RunCommandParams, String?>(
+        name: "run_command",
+        description: "Executes the specified command in the macOS Terminal and returns the output.",
+        clearance: .dangerous,
+        params: [
+            FunctionParameter(
+                label: "command",
+                description: "The shell command to execute.",
+                datatype: .string,
+                isRequired: true
+            ),
+            FunctionParameter(
+                label: "workingDirectory",
+                description: "The POSIX path of the working directory for command execution. Defaults to home directory `\(URL.homeDirectory.posixPath)` if not specified.",
+                datatype: .string,
+                isRequired: false
+            )
+        ],
+        run: { params in
+            let process = Process()
+            let pipe = Pipe()
+            // Configure the process
+            process.executableURL = URL(fileURLWithPath: "/bin/zsh")
+            process.arguments = ["-c", params.command]
+            // Set working directory if provided
+            if let workingDir = params.workingDirectory {
+                process.currentDirectoryURL = URL(fileURLWithPath: workingDir)
+            } else {
+                process.currentDirectoryURL = URL.homeDirectory
+            }
+            // Setup output pipe
+            process.standardOutput = pipe
+            process.standardError = pipe
+            do {
+                try process.run()
+                process.waitUntilExit()
+                // Get command output
+                let data = pipe.fileHandleForReading.readDataToEndOfFile()
+                guard let output = String(data: data, encoding: .utf8) else {
+                    throw CommandError.outputEncodingFailed
+                }
+                return output.trimmingCharacters(in: .whitespacesAndNewlines)
+            } catch {
+                throw CommandError.executionFailed(error.localizedDescription)
+            }
+            enum CommandError: Error {
+                case executionFailed(String)
+                case outputEncodingFailed
+                var localizedDescription: String {
+                    switch self {
+                        case .executionFailed(let message):
+                            return "Failed to execute command: \(message)"
+                        case .outputEncodingFailed:
+                            return "Failed to encode command output"
+                    }
+                }
+            }
+        }
+    )
+    struct RunCommandParams: FunctionParams {
+        var command: String
+        var workingDirectory: String?
+    }
+    
     
 }

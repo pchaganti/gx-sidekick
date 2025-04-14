@@ -69,6 +69,19 @@ public class JavaScriptRunner {
 		case exception(error: String)
 		case executionFailed
 		case couldNotObtainResult
+        
+        var localizedDescription: String {
+            switch self {
+                case .failedToInitContext:
+                    return "Failed to initialize `JSContext` object"
+                case .exception(let error):
+                    return "JavaScript execution failed: \(error)"
+                case .executionFailed:
+                    return "JavaScript execution failed"
+                case .couldNotObtainResult:
+                    return "JavaScript execution did not return a result"
+            }
+        }
 	}
 	
 }

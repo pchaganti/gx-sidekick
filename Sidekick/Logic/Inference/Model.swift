@@ -448,10 +448,10 @@ public class Model: ObservableObject {
 	) async throws -> LlamaServer.CompleteResponse {
 		// Set status
 		self.status = .usingFunctions
-		// Execute functions on a loop
-        var messages: [Message.MessageSubset] = messages
+        // Execute functions on a loop
         var maxIterations: Int = 15
         var response: LlamaServer.CompleteResponse? = initialResponse
+        var messages: [Message.MessageSubset] = messages
         while maxIterations > 0, var functionCall = response?.functionCall {
             // Log function call
             let callJsonSchema: String = functionCall.getJsonSchema()
@@ -490,21 +490,30 @@ Below is the result produced by the tool call: `\(callJsonSchema)`. If the tool 
 The function call `\(callJsonSchema)` failed, producing the error below.
 
 ```tool_call_error
-\(error)
+\(error.localizedDescription)
 ```
 """
             }
             withAnimation(.linear) {
                 self.pendingMessage?.functionCallRecords = functionCalls + [functionCallRecord]
             }
-            let message = Message(
+            // Add response messages
+            let responseMessage: Message = Message(
+                text: initialResponse.text,
+                sender: .assistant
+            )
+            let responseMessageSubset: Message.MessageSubset = await Message.MessageSubset(
+                message: responseMessage
+            )
+            messages.append(responseMessageSubset)
+            let changeMessage = Message(
                 text: messageString!,
                 sender: .user
             )
-            let messageSubset = await Message.MessageSubset(
-                message: message
+            let changeMessageSubset = await Message.MessageSubset(
+                message: changeMessage
             )
-            messages.append(messageSubset)
+            messages.append(changeMessageSubset)
             // Declare variable for incremental update
             var updateResponse: String = ""
             self.pendingMessage?.text = updateResponse
