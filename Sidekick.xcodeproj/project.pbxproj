@@ -173,6 +173,10 @@
 		208844332CDDE394003BCB6F /* ModelRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208844322CDDE394003BCB6F /* ModelRowView.swift */; };
 		208855CA2DAD062A00071F0B /* CapsuleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208855C92DAD062A00071F0B /* CapsuleButton.swift */; };
 		208855CC2DAD078800071F0B /* UseFunctionsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208855CB2DAD078800071F0B /* UseFunctionsButton.swift */; };
+		208855CF2DAD1D6F00071F0B /* ArithmeticFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208855CE2DAD1D6F00071F0B /* ArithmeticFunctions.swift */; };
+		208855D12DAD1D9900071F0B /* CodeFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208855D02DAD1D9900071F0B /* CodeFunctions.swift */; };
+		208855D32DAD1E1400071F0B /* FileFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208855D22DAD1E1400071F0B /* FileFunctions.swift */; };
+		208855D52DAD20CC00071F0B /* Extension+CNContactStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208855D42DAD20CC00071F0B /* Extension+CNContactStore.swift */; };
 		208AA3F12CC9E42F00A0891F /* ScrollMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208AA3F02CC9E42F00A0891F /* ScrollMask.swift */; };
 		208BA3572D680B1800E0C657 /* DiagrammerQuickPromptsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208BA3562D680B1800E0C657 /* DiagrammerQuickPromptsView.swift */; };
 		208C5FD12D79CA3E00D82AA6 /* BubbleAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208C5FD02D79CA3E00D82AA6 /* BubbleAnimationView.swift */; };
@@ -598,6 +602,10 @@
 		208844322CDDE394003BCB6F /* ModelRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelRowView.swift; sourceTree = "<group>"; };
 		208855C92DAD062A00071F0B /* CapsuleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleButton.swift; sourceTree = "<group>"; };
 		208855CB2DAD078800071F0B /* UseFunctionsButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseFunctionsButton.swift; sourceTree = "<group>"; };
+		208855CE2DAD1D6F00071F0B /* ArithmeticFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArithmeticFunctions.swift; sourceTree = "<group>"; };
+		208855D02DAD1D9900071F0B /* CodeFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeFunctions.swift; sourceTree = "<group>"; };
+		208855D22DAD1E1400071F0B /* FileFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileFunctions.swift; sourceTree = "<group>"; };
+		208855D42DAD20CC00071F0B /* Extension+CNContactStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+CNContactStore.swift"; sourceTree = "<group>"; };
 		208AA3F02CC9E42F00A0891F /* ScrollMask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollMask.swift; sourceTree = "<group>"; };
 		208BA3562D680B1800E0C657 /* DiagrammerQuickPromptsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagrammerQuickPromptsView.swift; sourceTree = "<group>"; };
 		208C5FD02D79CA3E00D82AA6 /* BubbleAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleAnimationView.swift; sourceTree = "<group>"; };
@@ -848,6 +856,7 @@
 				205E3F2B2D872E4200128D67 /* Extension+NSMutableAttributedString.swift */,
 				2051FEDA2D8E53CB001B1E0D /* Extension+AVSpeechSynthesisVoice.swift */,
 				206990C22DACA68000114EB8 /* Extension+LSContext.swift */,
+				208855D42DAD20CC00071F0B /* Extension+CNContactStore.swift */,
 			);
 			path = AppKit;
 			sourceTree = "<group>";
@@ -1505,6 +1514,17 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		208855CD2DAD1D5A00071F0B /* Default Functions */ = {
+			isa = PBXGroup;
+			children = (
+				20C5CBC82DA3D82E0071F5F7 /* DefaultFunctions.swift */,
+				208855CE2DAD1D6F00071F0B /* ArithmeticFunctions.swift */,
+				208855D02DAD1D9900071F0B /* CodeFunctions.swift */,
+				208855D22DAD1E1400071F0B /* FileFunctions.swift */,
+			);
+			path = "Default Functions";
+			sourceTree = "<group>";
+		};
 		20896B352D54B0F0006F9368 /* bin */ = {
 			isa = PBXGroup;
 			children = (
@@ -1817,8 +1837,8 @@
 			isa = PBXGroup;
 			children = (
 				20C5CBC52DA3D7310071F5F7 /* Function.swift */,
-				20C5CBC82DA3D82E0071F5F7 /* DefaultFunctions.swift */,
 				20C5CBCC2DA52AB40071F5F7 /* FunctionCallRecord.swift */,
+				208855CD2DAD1D5A00071F0B /* Default Functions */,
 			);
 			path = Functions;
 			sourceTree = "<group>";
@@ -2149,6 +2169,7 @@
 				207A9F592CB8F4AF00E727DE /* ResourceSelectionView.swift in Sources */,
 				20FB0D892CBA8327006D062A /* Extension+SimilarityIndex.swift in Sources */,
 				20B97CD92CAFF2E7009A0A5D /* ModelSelectionView.swift in Sources */,
+				208855D52DAD20CC00071F0B /* Extension+CNContactStore.swift in Sources */,
 				20B97CDA2CAFF2E7009A0A5D /* IntroductionView.swift in Sources */,
 				208388E22CBF51F900C2A9F8 /* RetrievalSettingsView.swift in Sources */,
 				207A9F5F2CB903FD00E727DE /* Extension+Binding.swift in Sources */,
@@ -2162,6 +2183,7 @@
 				204AE3B62CEAF4C20086B42D /* InlineAssistantView.swift in Sources */,
 				20457D232D92352900954892 /* InlineWritingAssistantSettingsView.swift in Sources */,
 				207A9F5D2CB8FD0900E727DE /* ResourceSectionView.swift in Sources */,
+				208855D32DAD1E1400071F0B /* FileFunctions.swift in Sources */,
 				20D9A9732CD2769300171FDE /* MessageShareMenu.swift in Sources */,
 				200619A22D6750D9001949EF /* DiagrammerViewController.swift in Sources */,
 				20B53D0C2D5B053E00D1AE79 /* CheckForUpdatesView.swift in Sources */,
@@ -2320,8 +2342,10 @@
 				20CEA75B2CE308AD0070579B /* MessageContentView.swift in Sources */,
 				202801FC2CC9C5C2005C1F7D /* TemporaryResourceView.swift in Sources */,
 				20573F182CB50743004C19FE /* ConversationView.swift in Sources */,
+				208855CF2DAD1D6F00071F0B /* ArithmeticFunctions.swift in Sources */,
 				2034876D2D67236000A88DA4 /* DiagrammerView.swift in Sources */,
 				204AE3B92CEAF57E0086B42D /* CommandManager.swift in Sources */,
+				208855D12DAD1D9900071F0B /* CodeFunctions.swift in Sources */,
 				201A1A9E2CDBBA25001E9BA9 /* MarkdownLineChartView.swift in Sources */,
 				200FBFF32CB66B8300A92A74 /* ServerHealth.swift in Sources */,
 				201BB9C72D8BDCA800890EE6 /* SnapshotTextEditor.swift in Sources */,
@@ -2543,6 +2567,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sidekick/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSContactsUsageDescription = "Sidekick needs to access your contacts.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Sidekick needs access to the microphone for transcription.";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Sidekick needs access to speech recognition services for transcription.";
@@ -2583,6 +2608,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sidekick/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSContactsUsageDescription = "Sidekick needs to access your contacts.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Sidekick needs access to the microphone for transcription.";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Sidekick needs access to speech recognition services for transcription.";
