@@ -11,8 +11,8 @@ struct FunctionCallsView: View {
     
     var message: Message
     
-    var functionCalls: [FunctionCall] {
-        return self.message.functionCalls ?? []
+    var functionCalls: [FunctionCallRecord] {
+        return self.message.functionCallRecords ?? []
     }
     
     var body: some View {
@@ -28,7 +28,7 @@ struct FunctionCallsView: View {
         
         @State private var showDetails: Bool = false
         
-        var functionCall: FunctionCall
+        var functionCall: FunctionCallRecord
         var boxColor: Color {
             return self.functionCall.status?.color ?? .secondary
         }
@@ -78,7 +78,7 @@ struct FunctionCallsView: View {
                     )
                     .padding(.horizontal, 5)
                 Group {
-                    Text("Function: ").bold() + Text(self.functionCall.config.name).italic()
+                    Text("Function: ").bold() + Text(self.functionCall.name).italic()
                 }
                 .opacity(0.8)
                 Spacer()
@@ -94,7 +94,6 @@ struct FunctionCallsView: View {
         
         var details: some View {
             VStack(alignment: .leading) {
-                Text("Call: ").bold() + Text(self.functionCall.getJsonSchema()).italic()
                 if let result = self.functionCall.result {
                     Text("Result: ").bold() + Text(result).italic()
                 }

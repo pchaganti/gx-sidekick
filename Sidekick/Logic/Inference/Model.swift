@@ -110,7 +110,7 @@ public class Model: ObservableObject {
     /// The pending message displayed to users
     public var displayedPendingMessage: Message {
         var text: String = ""
-        let functionCalls: [FunctionCall] = self.pendingMessage?.functionCalls ?? []
+        let functionCalls: [FunctionCallRecord] = self.pendingMessage?.functionCallRecords ?? []
         switch self.status {
             case .cold, .coldProcessing, .processing, .backgroundTask, .ready:
                 if let pendingText = self.pendingMessage?.text {
@@ -135,7 +135,7 @@ public class Model: ObservableObject {
         return Message(
             text: text,
             sender: .assistant,
-            functionCalls: functionCalls
+            functionCallRecords: functionCalls
         )
     }
     
@@ -437,7 +437,7 @@ public class Model: ObservableObject {
         canReachRemoteServer: Bool,
 		initialResponse: LlamaServer.CompleteResponse,
 		messages: [Message.MessageSubset],
-        functionCall: FunctionCall,
+        functionCall: any DecodableFunctionCall,
         useWebSearch: Bool,
 		similarityIndex: SimilarityIndex?,
 		handleResponseUpdate: @escaping (
@@ -457,9 +457,12 @@ public class Model: ObservableObject {
             let callJsonSchema: String = functionCall.getJsonSchema()
             Self.logger.info("Executing function call: \(callJsonSchema, privacy: .public)")
             // Display call to user
-            let functionCalls = self.pendingMessage?.functionCalls ?? []
+            let functionCalls = self.pendingMessage?.functionCallRecords ?? []
+            var functionCallRecord: FunctionCallRecord = FunctionCallRecord(
+                name: functionCall.name
+            )
             withAnimation(.linear) {
-                self.pendingMessage?.functionCalls = functionCalls + [functionCall]
+                self.pendingMessage?.functionCallRecords = functionCalls + [functionCallRecord]
                 self.pendingMessage?.text = ""
             }
             // Call function
@@ -468,8 +471,8 @@ public class Model: ObservableObject {
                 // Run
                 let result: String = try await functionCall.call() ?? "Function evaluated successfully"
                 // Mark as succeeded
-                functionCall.status = .succeeded
-                functionCall.result = result
+                functionCallRecord.status = .succeeded
+                functionCallRecord.result = result
                 // Formulate callback message
                 messageString = """
 Below is the result produced by the tool call: `\(callJsonSchema)`. If the tool call provides enough information to solve the user's query, organize the information into an answer. If the tool call did not provide enough information, try breaking down the user's query and finding information about its constituent parts. Else, call another tool to obtain more information or execute more actions.
@@ -480,8 +483,8 @@ Below is the result produced by the tool call: `\(callJsonSchema)`. If the tool 
 """
             } catch {
                 // Mark as failed
-                functionCall.status = .failed
-                functionCall.result = error.localizedDescription
+                functionCallRecord.status = .failed
+                functionCallRecord.result = error.localizedDescription
                 // Formulate callback message
                 messageString = """
 The function call `\(callJsonSchema)` failed, producing the error below.
@@ -492,7 +495,7 @@ The function call `\(callJsonSchema)` failed, producing the error below.
 """
             }
             withAnimation(.linear) {
-                self.pendingMessage?.functionCalls = functionCalls + [functionCall]
+                self.pendingMessage?.functionCallRecords = functionCalls + [functionCallRecord]
             }
             let message = Message(
                 text: messageString!,
@@ -526,7 +529,7 @@ The function call `\(callJsonSchema)` failed, producing the error below.
                     }
                 }
             }
-            response?.functionCalls = functionCalls + [functionCall]
+            response?.functionCalls = functionCalls + [functionCallRecord]
             // Increment counter & reset
             maxIterations -= 1
         }
@@ -562,7 +565,7 @@ The function call `\(callJsonSchema)` failed, producing the error below.
                     }
                 }
             }
-            if let functionCalls = self.pendingMessage?.functionCalls {
+            if let functionCalls = self.pendingMessage?.functionCallRecords {
                 response.functionCalls = functionCalls
             }
             return response

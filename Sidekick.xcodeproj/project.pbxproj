@@ -253,7 +253,7 @@
 		20C5CBC62DA3D7310071F5F7 /* Function.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C5CBC52DA3D7310071F5F7 /* Function.swift */; };
 		20C5CBC92DA3D82E0071F5F7 /* DefaultFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C5CBC82DA3D82E0071F5F7 /* DefaultFunctions.swift */; };
 		20C5CBCB2DA4F3BA0071F5F7 /* RemoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C5CBCA2DA4F3BA0071F5F7 /* RemoteModel.swift */; };
-		20C5CBCD2DA52AB40071F5F7 /* FunctionCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C5CBCC2DA52AB40071F5F7 /* FunctionCall.swift */; };
+		20C5CBCD2DA52AB40071F5F7 /* FunctionCallRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C5CBCC2DA52AB40071F5F7 /* FunctionCallRecord.swift */; };
 		20C5CBD12DA5333C0071F5F7 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C5CBD02DA5333C0071F5F7 /* Functions.swift */; };
 		20C5CBD32DA55BDA0071F5F7 /* StringOr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C5CBD22DA55BDA0071F5F7 /* StringOr.swift */; };
 		20C5CBD52DA5F7640071F5F7 /* FunctionCallsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C5CBD42DA5F7640071F5F7 /* FunctionCallsView.swift */; };
@@ -672,7 +672,7 @@
 		20C5CBC52DA3D7310071F5F7 /* Function.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Function.swift; sourceTree = "<group>"; };
 		20C5CBC82DA3D82E0071F5F7 /* DefaultFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFunctions.swift; sourceTree = "<group>"; };
 		20C5CBCA2DA4F3BA0071F5F7 /* RemoteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteModel.swift; sourceTree = "<group>"; };
-		20C5CBCC2DA52AB40071F5F7 /* FunctionCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionCall.swift; sourceTree = "<group>"; };
+		20C5CBCC2DA52AB40071F5F7 /* FunctionCallRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionCallRecord.swift; sourceTree = "<group>"; };
 		20C5CBD02DA5333C0071F5F7 /* Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
 		20C5CBD22DA55BDA0071F5F7 /* StringOr.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringOr.swift; sourceTree = "<group>"; };
 		20C5CBD42DA5F7640071F5F7 /* FunctionCallsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionCallsView.swift; sourceTree = "<group>"; };
@@ -1815,7 +1815,7 @@
 				20C5CBC52DA3D7310071F5F7 /* Function.swift */,
 				20C5CBD02DA5333C0071F5F7 /* Functions.swift */,
 				20C5CBC82DA3D82E0071F5F7 /* DefaultFunctions.swift */,
-				20C5CBCC2DA52AB40071F5F7 /* FunctionCall.swift */,
+				20C5CBCC2DA52AB40071F5F7 /* FunctionCallRecord.swift */,
 			);
 			path = Functions;
 			sourceTree = "<group>";
@@ -2099,7 +2099,7 @@
 				20CB7AC02D1457B10013E30C /* PromptAnalyzer.swift in Sources */,
 				200619AF2D6766B1001949EF /* DiagrammerGeneratingView.swift in Sources */,
 				20C5CBD52DA5F7640071F5F7 /* FunctionCallsView.swift in Sources */,
-				20C5CBCD2DA52AB40071F5F7 /* FunctionCall.swift in Sources */,
+				20C5CBCD2DA52AB40071F5F7 /* FunctionCallRecord.swift in Sources */,
 				201BB9A02D8B182800890EE6 /* CanvasVersionSelector.swift in Sources */,
 				20C221062CC4B15600A99796 /* SourcesManager.swift in Sources */,
 				20B4D6B12CC3D72700817E15 /* Extension+IndexItem.swift in Sources */,

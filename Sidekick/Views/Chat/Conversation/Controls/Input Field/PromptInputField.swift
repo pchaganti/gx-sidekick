@@ -309,7 +309,7 @@ struct PromptInputField: View {
 				text: response.text,
 				sender: .assistant,
 				model: response.modelName,
-                functionCalls: response.functionCalls,
+                functionCallRecords: response.functionCalls,
 				expertId: promptController.sentExpertId
 			)
 			responseMessage.update(

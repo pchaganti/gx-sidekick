@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 // MARK: - Parameter Value Protocol
 public protocol ParameterValue {
@@ -59,6 +60,18 @@ extension Array: ParameterValue where Element: ParameterValue {
         guard values.count == components.count else { return nil }
         self = values
     }
+    
+}
+
+// MARK: Function Call Decoder
+public protocol DecodableFunctionCall: Decodable {
+    
+    static func parse(from data: Data, using decoder: JSONDecoder) -> Self?
+    
+    var name: String { get }
+    
+    mutating func call() async throws -> String?
+    func getJsonSchema() -> String
     
 }
 
@@ -161,12 +174,13 @@ protocol FunctionProtocol: Identifiable {
 }
 
 // MARK: - Generic Function Implementation
-public struct Function<Parameter: Codable, Result>: FunctionProtocol, AnyFunctionBox {
+public struct Function<Parameter: FunctionParams, Result>: FunctionProtocol, AnyFunctionBox {
 
     public var id: String { return name }
     public var name: String
     public var description: String
     public var params: [FunctionParameter]
+    public var paramType: Codable.Type
     public var run: (Parameter) async throws -> Result
     
     public init(
@@ -178,6 +192,7 @@ public struct Function<Parameter: Codable, Result>: FunctionProtocol, AnyFunctio
         self.name = name
         self.description = description
         self.params = params
+        self.paramType = Parameter.self
         self.run = run
     }
     
@@ -306,6 +321,124 @@ public struct Function<Parameter: Codable, Result>: FunctionProtocol, AnyFunctio
                 }
                 
             }
+            
+        }
+        
+    }
+    
+    public var functionCallType: DecodableFunctionCall.Type {
+        return Self.FunctionCall.self
+    }
+    
+    public struct FunctionCall: Codable, Equatable, Hashable, DecodableFunctionCall {
+        
+        /// Function to conform to equatable
+        public static func == (lhs: FunctionCall, rhs: FunctionCall) -> Bool {
+            return lhs.config == rhs.config
+        }
+        
+        /// The name of the function
+        public var name: String {
+            return self.config.name
+        }
+        /// The function call's configuration
+        let config: FunctionCallConfig
+        
+        // Custom coding keys to match both possible JSON structures
+        enum CodingKeys: String, CodingKey {
+            case functionCall = "function_call"
+            case function = "function"
+        }
+        
+        // Custom decoding initialization to handle both keys
+        public init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            
+            // Try decoding using function_call first, then function
+            if let config = try? container.decode(FunctionCallConfig.self, forKey: .functionCall) {
+                self.config = config
+            } else if let config = try? container.decode(FunctionCallConfig.self, forKey: .function) {
+                self.config = config
+            } else {
+                throw DecodingError.dataCorrupted(
+                    DecodingError.Context(
+                        codingPath: container.codingPath,
+                        debugDescription: "Neither 'function_call' nor 'function' key found in JSON"
+                    )
+                )
+            }
+        }
+        
+        // Custom encoding to use function_call key
+        public func encode(to encoder: Encoder) throws {
+            var container = encoder.container(keyedBy: CodingKeys.self)
+            try container.encode(config, forKey: .functionCall)
+        }
+        
+        /// Function to call the function
+        mutating public func call() async throws -> String? {
+            // Locate the function by name
+            guard let function = Functions.functions.first(
+                where: { $0.name == self.config.name }
+            ) else {
+                throw FunctionCallError.functionNotFound
+            }
+            // Instead of expecting a raw type (like a tuple or a simple String), we are using Codable structs for parameters
+            let encoder: JSONEncoder = JSONEncoder()
+            let argumentData: Data = try encoder.encode(self.config.arguments)
+            // Use the type erased call method.
+            return try await function.call(withData: argumentData)
+        }
+        
+        /// Function to convert the function call to JSON
+        public func getJsonSchema() -> String {
+            let encoder: JSONEncoder = JSONEncoder()
+            let jsonData: Data? = try? encoder.encode(self)
+            return String(data: jsonData!, encoding: .utf8)!
+        }
+        
+        /// Function to decode the function from data
+        public static func parse(
+            from data: Data,
+            using decoder: JSONDecoder
+        ) -> Function<Parameter, Result>.FunctionCall? {
+            return try? decoder.decode(
+                Function<Parameter, Result>.FunctionCall.self,
+                from: data
+            )
+        }
+        
+        public enum FunctionCallError: String, Error {
+            case functionNotFound = "The function called is not available"
+        }
+        
+        public enum Status: Codable, CaseIterable {
+            
+            case succeeded
+            case failed
+            case executing
+            
+            var color: Color {
+                switch self {
+                    case .succeeded:
+                        return .brightGreen
+                    case .failed:
+                        return .red
+                    case .executing:
+                        return .secondary
+                }
+            }
+            
+        }
+        
+        public struct FunctionCallConfig: Codable, Hashable {
+            
+            public static func == (lhs: Function<Parameter, Result>.FunctionCall.FunctionCallConfig, rhs: Function<Parameter, Result>.FunctionCall.FunctionCallConfig) -> Bool {
+                return lhs.name == rhs.name
+            }
+            
+            let name: String
+            let arguments: Parameter
             
         }
         

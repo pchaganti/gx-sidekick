@@ -411,6 +411,7 @@
       }
     },
     "Call: " : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {

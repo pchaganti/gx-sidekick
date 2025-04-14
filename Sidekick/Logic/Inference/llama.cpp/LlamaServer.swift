@@ -737,13 +737,13 @@ public actor LlamaServer {
 		var usedServer: Bool
 		
         /// An array of ``FunctionCall`` executed in the response
-        var functionCalls: [FunctionCall] = []
+        var functionCalls: [FunctionCallRecord] = []
 		/// A `Bool` representing if a function was called
 		var containsFunctionCall: Bool {
             return self.functionCall != nil
 		}
         /// The first valid FunctionCall found in the text
-        var functionCall: FunctionCall? {
+        var functionCall: (any DecodableFunctionCall)? {
             let input: String = self.text.reasoningRemoved
             let decoder = JSONDecoder()
             var searchStartIndex = input.startIndex
@@ -781,8 +781,13 @@ public actor LlamaServer {
                     let jsonSubstring = input[startIndex...finalIndex]
                     let jsonString = String(jsonSubstring)
                     if let jsonData = jsonString.data(using: .utf8) {
-                        if let functionCall = try? decoder.decode(FunctionCall.self, from: jsonData) {
-                            return functionCall
+                        // Try for all function types
+                        for function in Functions.functions {
+                            if let functionCall = function.functionCallType.parse(
+                                from: jsonData, using: decoder
+                            ) {
+                                return functionCall
+                            }
                         }
                     }
                 }

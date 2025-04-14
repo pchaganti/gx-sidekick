@@ -7,44 +7,44 @@
 
 import Foundation
 
-import Foundation
+public protocol FunctionParams: Codable, Hashable {}
 
-struct ShowAlertParams: Codable {
+struct ShowAlertParams: FunctionParams {
     let message: String
 }
 
-struct JoinParams: Codable {
+struct JoinParams: FunctionParams {
     let front: String
     let end: String
 }
 
-struct AddParams: Codable {
-    @StringOrNumber var a: Float
-    @OptionalStringOrNumber var b: Float? = nil
-    @OptionalStringOrNumber var c: Float? = nil
-    @OptionalStringOrNumber var d: Float? = nil
-    @OptionalStringOrNumber var e: Float? = nil
+struct AddParams: FunctionParams {
+    var a: Float
+    var b: Float? = nil
+    var c: Float? = nil
+    var d: Float? = nil
+    var e: Float? = nil
 }
 
-struct MultiplyParams: Codable {
-    @StringOrNumber var a: Float
-    @StringOrNumber var b: Float
+struct MultiplyParams: FunctionParams {
+    var a: Float
+    var b: Float
 }
     
-struct SumRangeParams: Codable {
-    @StringOrNumber var a: Int
-    @StringOrNumber var b: Int
+struct SumRangeParams: FunctionParams {
+    var a: Int
+    var b: Int
 }
 
-struct AverageParams: Codable {
-    @StringOrArray var numbers: [Float]
+struct AverageParams: FunctionParams {
+    var numbers: [Float]
 }
 
-struct RunJavaScriptParams: Codable {
+struct RunJavaScriptParams: FunctionParams {
     let code: String
 }
 
-struct WebSearchParams: Codable {
+struct WebSearchParams: FunctionParams {
     let query: String
 }
 
@@ -69,7 +69,7 @@ public class DefaultFunctions {
                     message: params.message
                 )
             }
-            return nil
+            return "An alert with the message \"\(params.message)\" was shown."
         }
     )
     

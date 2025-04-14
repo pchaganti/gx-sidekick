@@ -15,7 +15,7 @@ public struct Message: Identifiable, Codable, Hashable {
 		text: String,
 		sender: Sender,
 		model: String? = nil,
-        functionCalls: [FunctionCall]? = nil,
+        functionCallRecords: [FunctionCallRecord]? = nil,
 		expertId: UUID? = nil
     ) {
         self.id = UUID()
@@ -28,7 +28,7 @@ public struct Message: Identifiable, Codable, Hashable {
             localized: "Unknown"
         )
         self.model = modelName
-        self.functionCalls = functionCalls
+        self.functionCallRecords = functionCallRecords
         self.expertId = expertId
     }
 	
@@ -299,12 +299,12 @@ DO NOT reference sources outside of those provided below. If you did not referen
 		}
 	}
     
-    /// An array of ``FunctionCall`` used in the response
-    public var functionCalls: [FunctionCall]? = nil
+    /// An array of ``FunctionCallRecord`` used in the response
+    public var functionCallRecords: [FunctionCallRecord]? = nil
 	/// A `Bool` representing whether the message has function calls
     public var hasFunctionCalls: Bool {
-        guard let functionCalls else { return false }
-        return !functionCalls.isEmpty
+        guard let functionCallRecords else { return false }
+        return !functionCallRecords.isEmpty
     }
     
 	/// An array for `URL` of sources referenced in a response

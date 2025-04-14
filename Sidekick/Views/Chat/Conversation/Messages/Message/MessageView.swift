@@ -157,7 +157,8 @@ struct MessageView: View {
                     if self.message.hasFunctionCalls {
                         FunctionCallsView(message: self.message)
                             .if(
-                                !self.message.text.isEmpty || (self.message.functionCalls?.count ?? 0) > 1
+                                !self.message.text
+                                    .isEmpty || (self.message.functionCallRecords?.count ?? 0) > 1
                             ) { view in
                                 view.padding(.bottom, 5)
                             }
