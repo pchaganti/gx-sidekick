@@ -1,5 +1,5 @@
 //
-//  RetryButton.swift
+//  RegenerateButton.swift
 //  Sidekick
 //
 //  Created by John Bean on 3/7/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RetryButton: View {
+struct RegenerateButton: View {
 	
 	var action: () -> Void = {}
 	
@@ -19,7 +19,6 @@ struct RetryButton: View {
 				"Retry",
 				systemImage: "arrow.trianglehead.clockwise"
 			)
-			.labelStyle(.titleAndIcon)
 		}
 		.buttonStyle(.plain)
     }

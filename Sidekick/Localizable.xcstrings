@@ -2497,6 +2497,26 @@
         }
       }
     },
+    "No Content Found" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无内容"
+          }
+        }
+      }
+    },
+    "No content found. Would you like to extract content from your most recent message?" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未找到内容。需要从你最近的消息中提取内容吗？"
+          }
+        }
+      }
+    },
     "No Local Model" : {
       "localizations" : {
         "zh-Hans" : {

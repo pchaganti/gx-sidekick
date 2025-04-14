@@ -286,7 +286,17 @@ struct ConversationManagerView: View {
 			// Select a version if possible
 			if let message = self.selectedConversation?.messagesWithSnapshots.last {
 				self.canvasController.selectedMessageId = message.id
-			}
+            }
+            // Confirm whether content should be extracted
+            if self.selectedConversation?.messagesWithSnapshots.isEmpty ?? true {
+                // If no snapshots, confirm extraction
+                if !Dialogs.showConfirmation(
+                    title: String(localized: "No Content Found"),
+                    message: String(localized: "No content found. Would you like to extract content from your most recent message?")
+                ) {
+                    return // If no, exit
+                }
+            }
 			// Toggle canvas
 			self.conversationState.useCanvas.toggle()
 			// Extract snapshot if needed

@@ -90,6 +90,15 @@ struct MessageView: View {
 						MessageReadAloudButton(
 							message: message
 						)
+                        if !self.isGenerating {
+                            RegenerateButton {
+                                self.retryGeneration(
+                                    message: message
+                                )
+                            }
+                            .labelStyle(.iconOnly)
+                            .foregroundStyle(.secondary)
+                        }
 					}
 					MessageOptionsView(
 						isEditing: $isEditing,
@@ -118,9 +127,12 @@ struct MessageView: View {
 			// Check for blank message or function calls
 			if message.text.isEmpty && message.imageUrl == nil && message
                 .getSender() == .assistant && model.status != .usingFunctions {
-				RetryButton {
-					self.retryGeneration()
+				RegenerateButton {
+					self.retryGeneration(
+                        message: message
+                    )
 				}
+                .labelStyle(.titleAndIcon)
 				.padding(11)
 			} else {
 				switch message.contentType {
@@ -184,26 +196,31 @@ struct MessageView: View {
 	
 	var contentEditor: some View {
 		VStack {
-			TextEditor(text: $messageText)
+            TextEditor(text: self.$messageText)
 				.frame(minWidth: 0, maxWidth: .infinity)
 				.font(.title3)
 			HStack {
-				Button {
-					isEditing.toggle()
-				} label: {
-					Text("Cancel")
-				}
-				Button {
-					withAnimation(
-						.linear(duration: 0.5)
-					) {
-						self.isEditing.toggle()
-					}
-					self.updateMessage()
-				} label: {
-					Text("Save")
-				}
-				.keyboardShortcut("s", modifiers: .command)
+                Spacer()
+                Button {
+                    withAnimation(
+                        .linear(duration: 0.5)
+                    ) {
+                        self.isEditing.toggle()
+                    }
+                } label: {
+                    Text("Cancel")
+                }
+                Button {
+                    self.updateMessage()
+                    withAnimation(
+                        .linear(duration: 0.5)
+                    ) {
+                        self.isEditing.toggle()
+                    }
+                } label: {
+                    Text("Save")
+                }
+                .keyboardShortcut("s", modifiers: .command)
 			}
 		}
 	}
@@ -268,25 +285,36 @@ struct MessageView: View {
 	private func stopGeneration() {
 		Task.detached { @MainActor in
 			await self.model.interrupt()
-			self.retryGeneration()
+			self.retryGeneration(
+                message: message
+            )
 		}
 	}
 	
-	private func retryGeneration() {
+	private func retryGeneration(
+        message: Message
+    ) {
 		// Get conversation
-		guard var conversation = selectedConversation else { return }
-		// Get last user sent message
-		var count: Int = 1
-		var prevMessage: Message? = conversation.messages.last
-		while prevMessage?.getSender() != .user {
-			prevMessage = conversation.messages.dropLast(count).last
-			count += 1
-		}
-		guard prevMessage != nil else { return }
-		// Set prompt
-		self.promptController.prompt = prevMessage?.text ?? ""
-		// Delete messages
-		conversation.messages = conversation.messages.dropLast(count)
+        guard var conversation = self.selectedConversation else { return }
+		// Get drop count
+        var count: Int = 0
+        if let messageIndex = conversation.messages.firstIndex(where: { currMessage in
+            currMessage.id == message.id
+        }) {
+            count = conversation.messages.count - (messageIndex - 1)
+        } else {
+            // If index not found, is pending message
+            count = 1
+        }
+        // Check for safety
+        count = max(min(count, conversation.messages.count), 0)
+        // Set prompt
+        let prevMessage: Message? = conversation.messages.previousElement(
+            of: message
+        ) ?? conversation.messages.last
+        self.promptController.prompt = prevMessage?.text ?? ""
+        // Delete messages
+        conversation.messages = conversation.messages.dropLast(count)
 		conversationManager.update(conversation)
 	}
 	
