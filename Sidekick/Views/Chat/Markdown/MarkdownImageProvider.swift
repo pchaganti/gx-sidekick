@@ -77,6 +77,7 @@ struct MarkdownInlineImageProvider: InlineImageProvider {
 	
 	let scaleFactor: CGFloat
 	
+    @MainActor
 	public func image(
 		with url: URL,
 		label: String
@@ -90,7 +91,7 @@ struct MarkdownInlineImageProvider: InlineImageProvider {
 			return image.renderingMode(.template).resizable()
 		} else if url.absoluteString.hasPrefix("latex://"),
 			let latexStr = url.withoutSchema.removingPercentEncoding,
-				let latexImage: Image = await LaTeX(latexStr)
+				let latexImage: Image = LaTeX(latexStr)
 					.blockMode(.alwaysInline)
 					.errorMode(.original)
 					.padding(.horizontal, 3)

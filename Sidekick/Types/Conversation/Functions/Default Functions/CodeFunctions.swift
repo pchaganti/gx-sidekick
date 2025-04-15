@@ -73,10 +73,16 @@ public class CodeFunctions {
                 process.waitUntilExit()
                 // Get command output
                 let data = pipe.fileHandleForReading.readDataToEndOfFile()
-                guard let output = String(data: data, encoding: .utf8) else {
+                guard var output = String(data: data, encoding: .utf8) else {
                     throw CommandError.outputEncodingFailed
                 }
-                return output.trimmingCharacters(in: .whitespacesAndNewlines)
+                output = output.trimmingCharacters(in: .whitespacesAndNewlines)
+                // If not blank
+                if !output.isEmpty {
+                    return output
+                } else {
+                    return "The command was executed successfully, but did not produce any output."
+                }
             } catch {
                 throw CommandError.executionFailed(error.localizedDescription)
             }
