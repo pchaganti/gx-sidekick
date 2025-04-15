@@ -8,18 +8,6 @@
 import Foundation
 import SwiftUI
 
-protocol AnyFunctionBox {
-    
-    var name: String { get }
-    var params: [FunctionParameter] { get }
-    
-    func getJsonSchema() -> String
-    func call(withData data: Data) async throws -> String?
-    
-    var functionCallType: DecodableFunctionCall.Type { get }
-    
-}
-
 public struct FunctionCallRecord: Codable, Equatable, Hashable {
     
     /// The function call's ID
@@ -50,4 +38,5 @@ public struct FunctionCallRecord: Codable, Equatable, Hashable {
             }
         }
     }
+    
 }

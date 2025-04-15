@@ -409,12 +409,18 @@ public actor LlamaServer {
 		self.dataTask = await eventSource!.dataTask(
 			for: request
 		)
+        // Init variables for content
 		var pendingMessage: String = ""
 		var responseDiff: Double = 0.0
-		var tokenCount: Int = 0
-		var usage: Usage? = nil
-		var stopResponse: StopResponse? = nil
-		var wasReasoningToken: Bool = false
+        var wasReasoningToken: Bool = false
+        // Init variables for tool use
+        var functionName: String? = nil
+        var functionArguments: String? = nil
+        // Init variables for usage
+        var tokenCount: Int = 0
+        var usage: Usage? = nil
+        // Init variables for control
+        var stopResponse: StopResponse? = nil
 		// Start streaming completion events
 		listenLoop: for await event in await dataTask!.events() {
 			switch event {
@@ -472,13 +478,26 @@ public actor LlamaServer {
 							}.joined()
 							pendingMessage.append(fragment)
 							progressHandler?(fragment)
+                            // Handle tool call (first call only)
+                            if let firstChoice = responseObj.choices.first?.delta,
+                               let toolCall = firstChoice.tool_calls?.first,
+                               toolCall.index == 0 {
+                                // Set function name
+                                if let name = toolCall.function.name {
+                                    functionName = name
+                                }
+                                // Add to arguments if needed
+                                if let argument = toolCall.function.arguments {
+                                    functionArguments = (functionArguments ?? "") + argument
+                                }
+                            }
 							// Document usage
 							tokenCount += 1
 							usage = responseObj.usage
 							if responseDiff == 0 {
 								responseDiff = CFAbsoluteTimeGetCurrent() - start
 							}
-							if responseObj.choices[0].finish_reason != nil {
+                            if responseObj.choices.first?.finish_reason != nil {
 								do {
 									stopResponse = try decoder.decode(StopResponse.self, from: data)
 									break listenLoop
@@ -497,13 +516,21 @@ public actor LlamaServer {
 			}
 		}
 		// Adding a trailing quote or space is a common mistake with the smaller model output
-		let cleanText: String = pendingMessage
-			.removeUnmatchedTrailingQuote()
+		let cleanText: String = pendingMessage.removeUnmatchedTrailingQuote()
 		// Indicate response finished
 		if responseDiff > 0 {
 			// Call onFinish
 			onFinish(text: cleanText)
 		}
+        // Extract tool call if available
+        var blockFunctionCall: (any DecodableFunctionCall)? = nil
+        if let functionName, let functionArguments {
+            blockFunctionCall = StreamMessage.OpenAIToolCall.Function
+                .getFunctionCall(
+                    name: functionName,
+                    arguments: functionArguments
+                )
+        }
 		// Return info
 		let tokens: Int = stopResponse?.usage?.completion_tokens ?? (
 			usage?.completion_tokens ?? tokenCount
@@ -516,7 +543,8 @@ public actor LlamaServer {
 			predictedPerSecond: Double(tokens) / generationTime,
 			modelName: modelName,
 			usage: stopResponse?.usage,
-            usedServer: rawUrl.usingRemoteServer
+            usedServer: rawUrl.usingRemoteServer,
+            blockFunctionCall: blockFunctionCall
 		)
 	}
 	
@@ -675,6 +703,7 @@ public actor LlamaServer {
 		
 		/// The new token generated, decoded to type `String?`
 		let content: String?
+        
         /// The new reasoning token generated, decoded to type `String?`, for OpenRouter
         let reasoning: String?
         /// The new reasoning token generated, decoded to type `String?`, for Bailian
@@ -693,6 +722,60 @@ public actor LlamaServer {
             }
         }
         
+        /// A list of ``ToolCalls``, if it exists
+        var tool_calls: [OpenAIToolCall]?
+        
+        struct OpenAIToolCall: Codable {
+            
+            var index: Int
+            var id: String?
+            var type: String?
+            
+            var function: Function
+            
+            struct Function: Codable {
+                
+                var name: String?
+                var arguments: String?
+                
+                /// Function to get the corresponding function call
+                public static func getFunctionCall(
+                    name: String,
+                    arguments: String
+                ) -> (any DecodableFunctionCall)? {
+                    // Try to init each function type
+                    for function in DefaultFunctions.sortedFunctions {
+                        // If function name matches
+                        if function.name == name {
+                            // Try to formulate arguments
+                            let decoder: JSONDecoder = JSONDecoder()
+                            // Convert to data
+                            guard let data = arguments.data(
+                                using: .utf8
+                            ) else {
+                                continue
+                            }
+                            // Decode
+                            guard let params = try? decoder.decode(
+                                function.paramsType.self,
+                                from: data
+                            ) else {
+                                continue
+                            }
+                            // Init function call
+                            return function.functionCallType.init(
+                                name: function.name,
+                                params: params
+                            )
+                        }
+                    }
+                    // If failed to init, return nil
+                    return nil
+                }
+                
+            }
+            
+        }
 	}
 	
 	/// The choice component of an update streamed from the inference server
@@ -744,8 +827,18 @@ public actor LlamaServer {
 		var containsFunctionCall: Bool {
             return self.functionCall != nil
 		}
-        /// The first valid FunctionCall found in the text
+        /// Any function call in the response
         var functionCall: (any DecodableFunctionCall)? {
+            // Try to get block call first
+            if self.blockFunctionCall != nil {
+                return self.blockFunctionCall
+            }
+            return self.inlineFunctionCall
+        }
+        /// A function call in the response JSON
+        var blockFunctionCall: (any DecodableFunctionCall)?
+        /// The first valid inline function call found in the text
+        var inlineFunctionCall: (any DecodableFunctionCall)? {
             let input: String = self.text.reasoningRemoved
             let decoder = JSONDecoder()
             var searchStartIndex = input.startIndex
@@ -784,13 +877,10 @@ public actor LlamaServer {
                     let jsonString = String(jsonSubstring)
                     if let jsonData = jsonString.data(using: .utf8) {
                         // Try for all function types
-                        let functions = DefaultFunctions.functions.sorted(
-                            by: \.params.count,
-                            order: .reverse
-                        )
-                        for function in functions {
+                        for function in DefaultFunctions.sortedFunctions {
                             if let functionCall = function.functionCallType.parse(
-                                from: jsonData, using: decoder
+                                from: jsonData,
+                                using: decoder
                             ), jsonString.contains(
                                 "\"\(function.name)\""
                             ) {
@@ -853,7 +943,7 @@ public actor LlamaServer {
 		struct Choice: Codable {
 			
 			var text: String
-			
+            
 			var logprobs: Logprob
 			var logprob: Double {
 				return self.logprobs.content
@@ -864,7 +954,7 @@ public actor LlamaServer {
 			struct Logprob: Codable {
 				
 				var content: [Token]
-				
+                
 			}
 			
 		}

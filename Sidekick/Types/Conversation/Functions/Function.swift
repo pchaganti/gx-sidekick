@@ -12,6 +12,11 @@ import SwiftUI
 // MARK: Function Call Decoder
 public protocol DecodableFunctionCall: Decodable {
     
+    init?(
+        name: String,
+        params: any FunctionParams
+    )
+    
     static func parse(from data: Data, using decoder: JSONDecoder) -> Self?
     
     var name: String { get }
@@ -30,6 +35,7 @@ public struct FunctionParameter: Codable {
     var isRequired: Bool = true
     
     public enum Datatype: String, Codable {
+        
         case string
         case integer
         case float
@@ -37,27 +43,18 @@ public struct FunctionParameter: Codable {
         case stringArray
         case integerArray
         case floatArray
+        
+        var isArray: Bool {
+            switch self {
+                case .stringArray, .integerArray, .floatArray:
+                    return true
+                default:
+                    return false
+            }
+        }
+        
     }
     
-    /// Helper function to get the Swift type for a Datatype
-    func getSwiftType() -> Any.Type {
-        switch datatype {
-            case .string:
-                return String.self
-            case .integer:
-                return Int.self
-            case .float:
-                return Float.self
-            case .boolean:
-                return Bool.self
-            case .stringArray:
-                return [String].self
-            case .integerArray:
-                return [Int].self
-            case .floatArray:
-                return [Float].self
-        }
-    }
 }
 
 // MARK: - Function Protocol
@@ -77,7 +74,7 @@ protocol FunctionProtocol: Identifiable {
 }
 
 // MARK: - Generic Function Implementation
-public struct Function<Parameter: FunctionParams, Result>: FunctionProtocol, AnyFunctionBox {
+public struct Function<Parameter: FunctionParams, Result: Codable>: FunctionProtocol, AnyFunctionBox {
 
     public var id: String { return name }
     
@@ -88,7 +85,8 @@ public struct Function<Parameter: FunctionParams, Result>: FunctionProtocol, Any
     public var params: [FunctionParameter]
     public var run: (Parameter) async throws -> Result
     
-    public var paramType: Codable.Type
+    public var paramsType: any FunctionParams.Type
+    public var resultType: Codable.Type
     
     public init(
         name: String,
@@ -101,7 +99,8 @@ public struct Function<Parameter: FunctionParams, Result>: FunctionProtocol, Any
         self.description = description
         self.clearance = clearance
         self.params = params
-        self.paramType = Parameter.self
+        self.paramsType = Parameter.self
+        self.resultType = Result.self
         self.run = run
     }
     
@@ -206,7 +205,39 @@ Do you wish to permit this?
         return String(describing: result)
     }
     
-    public enum Clearance: String, CaseIterable {
+    /// The function mapped to an OpenAI compatible function call
+    public var openAiFunctionCall: OpenAIFunction {
+        // Map the function parameters to the OpenAI function properties
+        let properties = self.params.reduce(
+            into: [String: PropertyDetail]()
+        ) { dict, param in
+            dict[param.label] = PropertyDetail(
+                functionParameter: param
+            )
+        }
+        let requiredFields = self.params.filter { $0.isRequired }.map { $0.label }
+        
+        let parameterSchema = ParameterSchema(
+            type: "object",
+            properties: properties,
+            required: requiredFields,
+            additionalProperties: false
+        )
+        
+        let funcDetail = FunctionDetail(
+            name: self.name,
+            description: self.description,
+            parameters: parameterSchema,
+            strict: false
+        )
+        
+        return OpenAIFunction(
+            type: "function",
+            function: funcDetail
+        )
+    }
+    
+    public enum Clearance: String, CaseIterable, Codable {
         case regular
         case sensitive
         case dangerous
@@ -317,6 +348,22 @@ Do you wish to permit this?
         enum CodingKeys: String, CodingKey {
             case functionCall = "function_call"
             case function = "function"
+        }
+        
+        // Custom initializer to handle OpenAI tool calling format
+        public init?(
+            name: String,
+            params: any FunctionParams
+        ) {
+            // Cast params
+            guard let params = params as? Parameter else {
+                return nil
+            }
+            // Create config
+            self.config = FunctionCallConfig(
+                name: name,
+                arguments: params
+            )
         }
         
         // Custom decoding initialization to handle both keys

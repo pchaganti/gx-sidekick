@@ -74,11 +74,14 @@ struct ChatParameters: Codable {
 		let messagesWithSystemPrompt: [Message.MessageSubset] = [systemPromptMsgSubset] + messages
 		self.messages = messagesWithSystemPrompt
 		self.model = Self.getModelName(modelType: modelType) ?? ""
+        self.tools = !useFunctions ? [] : DefaultFunctions.functions.map(keyPath: \.openAiFunctionCall)
 	}
 	
 	var model: String = InferenceSettings.useServer ? InferenceSettings.serverModelName : ""
 	var messages: [Message.MessageSubset]
-	
+    
+    var tools: [OpenAIFunction] = []
+    
 	var temperature = InferenceSettings.temperature
 	
 	var stream: Bool = true

@@ -26,6 +26,13 @@ public class DefaultFunctions {
         ]
     ].flatMap { $0 }
     
+    static var sortedFunctions: [AnyFunctionBox] {
+        return DefaultFunctions.functions.sorted(
+            by: \.params.count,
+            order: .reverse
+        )
+    }
+    
     /// A ``Function`` to show alerts
     static let showAlert = Function<ShowAlertParams, String?>(
         name: "show_alert",
