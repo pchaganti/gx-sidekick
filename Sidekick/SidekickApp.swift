@@ -45,12 +45,19 @@ struct SidekickApp: App {
 		}
 		.windowToolbarStyle(.unified)
 		.commands {
+            // Commands for operations in conversations (e.g. Creating a new conversation)
 			ConversationCommands.commands
+            // Commands to use and manage experts
 			ConversationCommands.expertCommands
+            // Commands to change the window state / appearance
 			WindowCommands.commands
+            // Command replacing the help button
             HelpCommands.helpCommand
+            // Commands useful for debugging
             DebugCommands.commands
+            // Commands to obtain help and report problems
             HelpCommands.commands
+            // Command to check for update
 			CommandGroup(after: .appInfo) {
 				CheckForUpdatesView(updater: updaterController.updater)
 			}

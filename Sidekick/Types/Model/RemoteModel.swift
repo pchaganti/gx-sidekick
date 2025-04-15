@@ -357,6 +357,30 @@ public struct RemoteModel: Identifiable, Codable {
             ]
         ),
         RemoteModel(
+            primaryName: "gpt-4.1-mini",
+            organization: .openAi,
+            modalities: [
+                .text,
+                .image
+            ]
+        ),
+        RemoteModel(
+            primaryName: "gpt-4.1-nano",
+            organization: .openAi,
+            modalities: [
+                .text,
+                .image
+            ]
+        ),
+        RemoteModel(
+            primaryName: "gpt-4.1",
+            organization: .openAi,
+            modalities: [
+                .text,
+                .image
+            ]
+        ),
+        RemoteModel(
             primaryName: "gpt-4.5",
             organization: .openAi,
             modalities: [

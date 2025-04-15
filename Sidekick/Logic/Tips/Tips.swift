@@ -179,3 +179,19 @@ struct UseFunctionsTip: Tip {
     }
     
 }
+
+struct PopularEndpointsTip: Tip {
+    
+    var title: Text {
+        Text("Popular Providers")
+    }
+    
+    var message: Text? {
+        Text("Use popular inference providers like OpenAI, Anthropic, or Groq.")
+    }
+    
+    var image: Image? {
+        Image(systemName: "cpu")
+    }
+    
+}

@@ -18,6 +18,8 @@ struct ServerModelSettingsView: View {
     @AppStorage("serverModelHasVision") private var serverModelHasVision: Bool = InferenceSettings.serverModelHasVision
 	@AppStorage("serverWorkerModelName") private var serverWorkerModelName: String = ""
 	
+    var popularEndpointsTip: PopularEndpointsTip = .init()
+    
 	/// A `Bool` representing if the endpoint is valid
 	var endpointUrlIsValid: Bool {
 		let paths: [String] = ["", "/models", "/chat/completions"]
@@ -75,7 +77,7 @@ struct ServerModelSettingsView: View {
 	}
 	
 	var serverEndpointEditor: some View {
-		HStack(alignment: .center) {
+		HStack(alignment: .top) {
 			VStack(alignment: .leading) {
 				Text("Endpoint")
 					.font(.title3)
@@ -87,10 +89,33 @@ struct ServerModelSettingsView: View {
 			VStack(
 				alignment: .trailing
 			) {
-				TextField("", text: $serverEndpoint.animation(.linear))
-                    .textContentType(.username)
-					.textFieldStyle(.roundedBorder)
-					.frame(maxWidth: 250)
+                HStack(
+                    alignment: .bottom
+                ) {
+                    TextField("", text: $serverEndpoint.animation(.linear))
+                        .textContentType(.username)
+                        .textFieldStyle(.roundedBorder)
+                        .frame(maxWidth: 200)
+                    Menu {
+                        ForEach(
+                            Provider.popularProviders
+                        ) { provider in
+                            Button {
+                                withAnimation(.linear) {
+                                    self.serverEndpoint = provider.endpointUrl.absoluteString
+                                }
+                            } label: {
+                                Text(provider.name)
+                            }
+                        }
+                    } label: {
+                        Image(systemName: "arrowtriangle.down.fill")
+                    }
+                    .menuIndicator(.hidden)
+                    .menuStyle(.borderedButton)
+                    .frame(maxWidth: 25)
+                    .popoverTip(self.popularEndpointsTip)
+                }
 				if !self.endpointUrlIsValid {
 					Text("Endpoint is not valid")
 						.font(.callout)
@@ -99,6 +124,7 @@ struct ServerModelSettingsView: View {
 						.padding(.top, 4)
 				}
 			}
+            .padding(.top, 10)
 		}
 	}
 	

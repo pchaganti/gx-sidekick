@@ -311,6 +311,7 @@
 		20F84B992D1CFED400F44990 /* DefaultModels in Frameworks */ = {isa = PBXBuildFile; productRef = 20F84B982D1CFED400F44990 /* DefaultModels */; };
 		20FB0D892CBA8327006D062A /* Extension+SimilarityIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FB0D882CBA8327006D062A /* Extension+SimilarityIndex.swift */; };
 		20FB0D8B2CBA8828006D062A /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FB0D8A2CBA8828006D062A /* SearchResult.swift */; };
+		20FDE2A02DAE50E7000A16F8 /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FDE29F2DAE50E7000A16F8 /* Provider.swift */; };
 		20FE94DA2CB96DE8006E9F06 /* ExitButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FE94D92CB96DE8006E9F06 /* ExitButton.swift */; };
 /* End PBXBuildFile section */
 
@@ -719,6 +720,7 @@
 		20FDE27F2DAE2A98000A16F8 /* setupSheet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setupSheet.png; sourceTree = "<group>"; };
 		20FDE2812DAE2A98000A16F8 /* appIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon.png; sourceTree = "<group>"; };
 		20FDE2822DAE2A98000A16F8 /* demoScreenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = demoScreenshot.png; sourceTree = "<group>"; };
+		20FDE29F2DAE50E7000A16F8 /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
 		20FE94D92CB96DE8006E9F06 /* ExitButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitButton.swift; sourceTree = "<group>"; };
 		20FE94DB2CB96FCD006E9F06 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1658,6 +1660,7 @@
 				20C5CBCA2DA4F3BA0071F5F7 /* RemoteModel.swift */,
 				20BF49CA2D649FD700C329F8 /* ModelFamily.swift */,
 				2090A8A52D8995FA0060DC63 /* ModelType.swift */,
+				20FDE29F2DAE50E7000A16F8 /* Provider.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2137,6 +2140,7 @@
 				20B4D6B12CC3D72700817E15 /* Extension+IndexItem.swift in Sources */,
 				201BB99A2D8AFDE000890EE6 /* Snapshot.swift in Sources */,
 				20573F1F2CB5274E004C19FE /* MessagesView.swift in Sources */,
+				20FDE2A02DAE50E7000A16F8 /* Provider.swift in Sources */,
 				20457D272D924F0C00954892 /* CompletionsSetupView.swift in Sources */,
 				20B97CE72CB0066A009A0A5D /* Extension+String.swift in Sources */,
 				200619AD2D675DB9001949EF /* DiagrammerPromptView.swift in Sources */,

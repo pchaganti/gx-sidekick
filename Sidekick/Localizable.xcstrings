@@ -2757,6 +2757,16 @@
         }
       }
     },
+    "Popular Providers" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "热门端点"
+          }
+        }
+      }
+    },
     "Press 'Command + Control + I' to access Sidekick's inline writing assistant. For example, use the 'Answer Question' command to do your homework without leaving Microsoft Word!" : {
       "localizations" : {
         "zh-Hans" : {
@@ -4079,6 +4089,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "使用服务器上的模型"
+          }
+        }
+      }
+    },
+    "Use popular inference providers like OpenAI, Anthropic, or Groq." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用流行的推理端点，如 OpenAI、Anthropic 或 Groq。"
           }
         }
       }
