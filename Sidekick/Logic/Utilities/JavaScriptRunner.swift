@@ -64,13 +64,14 @@ public class JavaScriptRunner {
 	}
 	
 	/// Enum for possible errors during JavaScript execution
-	public enum JSError: Error {
+    public enum JSError: LocalizedError {
+        
 		case failedToInitContext
 		case exception(error: String)
 		case executionFailed
 		case couldNotObtainResult
         
-        var localizedDescription: String {
+        public var errorDescription: String? {
             switch self {
                 case .failedToInitContext:
                     return "Failed to initialize `JSContext` object"

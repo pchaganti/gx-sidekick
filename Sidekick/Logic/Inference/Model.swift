@@ -490,15 +490,17 @@ Below is the result produced by the tool call: `\(callJsonSchema)`. If the tool 
 ``` 
 """
             } catch {
+                // Get error description
+                let errorDescription: String = error.localizedDescription
                 // Mark as failed
                 functionCallRecord.status = .failed
-                functionCallRecord.result = error.localizedDescription
+                functionCallRecord.result = errorDescription
                 // Formulate callback message
                 messageString = """
 The function call `\(callJsonSchema)` failed, producing the error below.
 
 ```tool_call_error
-\(error.localizedDescription)
+\(errorDescription)
 ```
 """
             }

@@ -80,10 +80,10 @@ public class CodeFunctions {
             } catch {
                 throw CommandError.executionFailed(error.localizedDescription)
             }
-            enum CommandError: Error {
+            enum CommandError: LocalizedError {
                 case executionFailed(String)
                 case outputEncodingFailed
-                var localizedDescription: String {
+                var errorDescription: String? {
                     switch self {
                         case .executionFailed(let message):
                             return "Failed to execute command: \(message)"

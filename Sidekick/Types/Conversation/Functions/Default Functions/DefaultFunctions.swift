@@ -86,9 +86,9 @@ public class DefaultFunctions {
             )!
             return resultsText
             // Custom error for Web Search function
-            enum WebSearchError: Error {
+            enum WebSearchError: LocalizedError {
                 case notEnabled
-                var localizedDescription: String {
+                var errorDescription: String? {
                     switch self {
                         case .notEnabled:
                             return "Web search has not been enabled in Settings."
@@ -172,12 +172,12 @@ public class DefaultFunctions {
             }
             let _ = NSWorkspace.shared.open(url)
             return "Successfully created email draft"
-            enum DraftEmailError: Error {
+            enum DraftEmailError: LocalizedError {
                 
                 case percentEncodingFailed
                 case urlCreationFailed
                 
-                var localizedDescription: String {
+                var errorDescription: String? {
                     switch self {
                         case .percentEncodingFailed:
                             return "Failed to add percent encoding to `mailto` URL"

@@ -48,11 +48,11 @@ public class FileFunctions {
                 return url.posixPath
             }
             return paths
-            enum ListDirectoryError: String, Error {
+            enum ListDirectoryError: LocalizedError {
                 case invalidPath
                 case pathNotFound
                 case notDirectory
-                var localizedDescription: String {
+                var errorDescription: String? {
                     switch self {
                         case .invalidPath:
                             return "The provided POSIX path is not valid."
@@ -99,11 +99,11 @@ public class FileFunctions {
                 speed: .fast
             )
             return text
-            enum ExtractFileTextError: String, Error {
+            enum ExtractFileTextError: LocalizedError {
                 case invalidPath
                 case pathNotFound
                 case notFile
-                var localizedDescription: String {
+                var errorDescription: String? {
                     switch self {
                         case .invalidPath:
                             return "The provided POSIX path is not valid."
@@ -147,9 +147,9 @@ public class FileFunctions {
             // Write text
             try params.text.write(to: url, atomically: true, encoding: .utf8)
             return "The text was written successfully to the file at \(params.posixPath)."
-            enum WriteToTxtFileError: String, Error {
+            enum WriteToTxtFileError: LocalizedError {
                 case invalidPath
-                var localizedDescription: String {
+                var errorDescription: String? {
                     switch self {
                         case .invalidPath:
                             return "The provided POSIX path is not valid."
@@ -187,10 +187,12 @@ public class FileFunctions {
             // Delete the file
             FileManager.removeItem(at: url)
             return "The file at `\(params.posixPath)` was deleted successfully."
-            enum ExtractFileTextError: Error {
+            enum ExtractFileTextError: LocalizedError {
+                
                 case invalidPath
                 case pathNotFound
-                var localizedDescription: String {
+                
+                var errorDescription: String? {
                     switch self {
                         case .invalidPath:
                             return "The provided POSIX path is not valid."

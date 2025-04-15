@@ -196,6 +196,10 @@ Do you wish to permit this?
                     policy,
                     localizedReason: requestDescription
                 )
+                if !result {
+                    // If denied, throw error
+                    throw FunctionCallError.permissionsDenied
+                }
         }
         // Execute the wrapped run closure.
         let result = try await run(params)
@@ -208,14 +212,17 @@ Do you wish to permit this?
         case dangerous
     }
     
-    public enum FunctionCallError: String, Error {
+    public enum FunctionCallError: LocalizedError {
         
         case permissionsDenied
+        case functionNotFound
         
-        var localizedDescription: String {
+        public var errorDescription: String? {
             switch self {
                 case .permissionsDenied:
                     return "The user denied your request to use this tool."
+                case .functionNotFound:
+                    return "The function called is not available."
             }
         }
         
@@ -369,10 +376,6 @@ Do you wish to permit this?
                 Function<Parameter, Result>.FunctionCall.self,
                 from: data
             )
-        }
-        
-        public enum FunctionCallError: String, Error {
-            case functionNotFound = "The function called is not available"
         }
         
         public enum Status: Codable, CaseIterable {

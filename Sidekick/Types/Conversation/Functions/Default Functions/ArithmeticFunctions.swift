@@ -136,9 +136,9 @@ public class ArithmeticFunctions {
             }
             return params.numbers.reduce(0, +) / Float(params.numbers.count)
             // Custom error for average function
-            enum AverageError: Error {
+            enum AverageError: LocalizedError {
                 case noNumbers
-                var localizedDescription: String {
+                var errorDescription: String? {
                     switch self {
                         case .noNumbers:
                             return "No numbers were provided from which to calculate an average."
