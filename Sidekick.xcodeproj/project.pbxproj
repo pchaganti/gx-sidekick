@@ -275,6 +275,7 @@
 		20CEA75E2CE309F10070579B /* MessageOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CEA75D2CE309F10070579B /* MessageOptionsView.swift */; };
 		20D65DD52CC0CC6C0052D826 /* StopGenerationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D65DD42CC0CC6C0052D826 /* StopGenerationButton.swift */; };
 		20D9A9732CD2769300171FDE /* MessageShareMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D9A9722CD2769300171FDE /* MessageShareMenu.swift */; };
+		20DAC4422DADF01F0039208E /* WebFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DAC4412DADF01F0039208E /* WebFunctions.swift */; };
 		20DE89EE2DAAACBB002C1B5D /* libggml-base.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 20DE89ED2DAAACBB002C1B5D /* libggml-base.dylib */; };
 		20DE89F82DAAACC5002C1B5D /* libggml-rpc.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 20DE89F32DAAACC5002C1B5D /* libggml-rpc.dylib */; };
 		20DE89F92DAAACC5002C1B5D /* libllama.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 20DE89F42DAAACC5002C1B5D /* libllama.dylib */; };
@@ -699,6 +700,7 @@
 		20D65DD22CC0B8A20052D826 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		20D65DD42CC0CC6C0052D826 /* StopGenerationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopGenerationButton.swift; sourceTree = "<group>"; };
 		20D9A9722CD2769300171FDE /* MessageShareMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageShareMenu.swift; sourceTree = "<group>"; };
+		20DAC4412DADF01F0039208E /* WebFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebFunctions.swift; sourceTree = "<group>"; };
 		20DE89ED2DAAACBB002C1B5D /* libggml-base.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-base.dylib"; sourceTree = "<group>"; };
 		20DE89EF2DAAACC5002C1B5D /* libggml.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libggml.dylib; sourceTree = "<group>"; };
 		20DE89F02DAAACC5002C1B5D /* libggml-blas.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-blas.dylib"; sourceTree = "<group>"; };
@@ -1345,6 +1347,7 @@
 				208855CE2DAD1D6F00071F0B /* ArithmeticFunctions.swift */,
 				208855D02DAD1D9900071F0B /* CodeFunctions.swift */,
 				208855D22DAD1E1400071F0B /* FileFunctions.swift */,
+				20DAC4412DADF01F0039208E /* WebFunctions.swift */,
 			);
 			path = "Default Functions";
 			sourceTree = "<group>";
@@ -2234,6 +2237,7 @@
 				2030D61A2D6C50A000F18BF4 /* DetectorInputView.swift in Sources */,
 				20CB7AC82D145E320013E30C /* UserRequestClassifier.mlmodel in Sources */,
 				2004D7642CBC9DA2009F294E /* ConversationState.swift in Sources */,
+				20DAC4422DADF01F0039208E /* WebFunctions.swift in Sources */,
 				2086E1712CB036BB00FFCF57 /* ConversationManager.swift in Sources */,
 				201BB9A72D8BA9CA00890EE6 /* IfFits.swift in Sources */,
 				20C221092CC4B5A800A99796 /* SourcesView.swift in Sources */,
@@ -2559,7 +2563,7 @@
 				CODE_SIGN_ENTITLEMENTS = Sidekick/Sidekick.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 24;
+				CURRENT_PROJECT_VERSION = 25;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Sidekick/Preview Content\"";
 				DEVELOPMENT_TEAM = KM2C4ZAVPJ;
@@ -2582,7 +2586,7 @@
 					"$(PROJECT_DIR)/Sidekick/Logic/Inference/llama.cpp/build/bin",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = "1.0.0-rc.4";
+				MARKETING_VERSION = "1.0.0-rc.5";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pattonium.Sidekick;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -2599,7 +2603,7 @@
 				CODE_SIGN_ENTITLEMENTS = Sidekick/Sidekick.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 24;
+				CURRENT_PROJECT_VERSION = 25;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Sidekick/Preview Content\"";
 				DEVELOPMENT_TEAM = KM2C4ZAVPJ;
@@ -2623,7 +2627,7 @@
 					"$(PROJECT_DIR)/Sidekick/Logic/Inference/llama.cpp/build/bin",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = "1.0.0-rc.4";
+				MARKETING_VERSION = "1.0.0-rc.5";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pattonium.Sidekick;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

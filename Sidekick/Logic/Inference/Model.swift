@@ -487,7 +487,7 @@ Below is the result produced by the tool call: `\(callJsonSchema)`. If the tool 
 
 ```tool_call_result
 \(result)
-``` 
+```
 """
             } catch {
                 // Get error description

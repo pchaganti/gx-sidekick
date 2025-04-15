@@ -18,9 +18,9 @@ public class DefaultFunctions {
         ArithmeticFunctions.functions,
         FileFunctions.functions,
         CodeFunctions.functions,
+        WebFunctions.functions,
         [
             DefaultFunctions.showAlert,
-            DefaultFunctions.webSearch,
             DefaultFunctions.draftEmail,
             DefaultFunctions.fetchContacts
         ]
@@ -50,55 +50,6 @@ public class DefaultFunctions {
     )
     struct ShowAlertParams: FunctionParams {
         let message: String
-    }
-    
-    /// A ``Function`` to conduct a web search
-    static let webSearch = Function<WebSearchParams, String>(
-        name: "web_search",
-        description: "Retrieves information from the web with the provided query, instead of estimating it.",
-        clearance: .sensitive,
-        params: [
-            FunctionParameter(
-                label: "query",
-                description: "The topic to look up online",
-                datatype: .string,
-                isRequired: true
-            )
-        ],
-        run: { param in
-            // Check if enabled
-            if !RetrievalSettings.canUseWebSearch {
-                throw WebSearchError.notEnabled
-            }
-            // Conduct search
-            let sources: [Source] = try await TavilySearch.search(
-                query: param.query,
-                resultCount: 3
-            )
-            // Convert to JSON
-            let sourcesInfo: [Source.SourceInfo] = sources.map(\.info)
-            let jsonEncoder: JSONEncoder = JSONEncoder()
-            jsonEncoder.outputFormatting = [.prettyPrinted]
-            let jsonData: Data = try! jsonEncoder.encode(sourcesInfo)
-            let resultsText: String = String(
-                data: jsonData,
-                encoding: .utf8
-            )!
-            return resultsText
-            // Custom error for Web Search function
-            enum WebSearchError: LocalizedError {
-                case notEnabled
-                var errorDescription: String? {
-                    switch self {
-                        case .notEnabled:
-                            return "Web search has not been enabled in Settings."
-                    }
-                }
-            }
-        }
-    )
-    struct WebSearchParams: FunctionParams {
-        let query: String
     }
     
     /// A function to create an email draft
