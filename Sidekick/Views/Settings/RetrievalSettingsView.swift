@@ -84,6 +84,7 @@ struct RetrievalSettingsView: View {
 			)
 			Spacer()
 			SecureField("", text: $tavilyApiKey)
+                .textContentType(.password)
 				.textFieldStyle(.roundedBorder)
 				.frame(width: 300)
 				.onChange(of: tavilyApiKey) { oldValue, newValue in

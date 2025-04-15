@@ -209,7 +209,16 @@ Do you wish to permit this?
     }
     
     public enum FunctionCallError: String, Error {
-        case permissionsDenied = "The user denied your request to use this tool."
+        
+        case permissionsDenied
+        
+        var localizedDescription: String {
+            switch self {
+                case .permissionsDenied:
+                    return "The user denied your request to use this tool."
+            }
+        }
+        
     }
     
     public struct FunctionObject: Codable {

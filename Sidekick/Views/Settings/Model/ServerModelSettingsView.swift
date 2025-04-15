@@ -88,6 +88,7 @@ struct ServerModelSettingsView: View {
 				alignment: .trailing
 			) {
 				TextField("", text: $serverEndpoint.animation(.linear))
+                    .textContentType(.username)
 					.textFieldStyle(.roundedBorder)
 					.frame(maxWidth: 250)
 				if !self.endpointUrlIsValid {
@@ -112,6 +113,7 @@ struct ServerModelSettingsView: View {
 			}
 			Spacer()
 			SecureField("", text: $inferenceApiKey)
+                .textContentType(.password)
 				.textFieldStyle(.roundedBorder)
 				.frame(width: 300)
 				.onChange(of: inferenceApiKey) { oldValue, newValue in
