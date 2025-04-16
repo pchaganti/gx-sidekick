@@ -126,7 +126,7 @@ struct MessageView: View {
 		Group {
 			// Check for blank message or function calls
 			if message.text.isEmpty && message.imageUrl == nil && message
-                .getSender() == .assistant && model.status != .usingFunctions {
+                .getSender() == .assistant && !model.status.isWorking {
 				RegenerateButton {
 					self.retryGeneration(
                         message: message

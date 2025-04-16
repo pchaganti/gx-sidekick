@@ -123,12 +123,16 @@ public class Model: ObservableObject {
             case .generatingTitle:
                 text = String(localized: "Generating title...")
             case .usingFunctions:
-                if functionCalls.isEmpty {
-                    // If no calls found
+                // If no calls found or if all calls are complete
+                let areExecuting: Bool = functionCalls.contains(where: { call in
+                    call.status == .executing
+                })
+                if functionCalls.isEmpty || !areExecuting {
                     text = String(localized: "Calling functions...")
                 }
                 // Show progress
-                if let pendingText = self.pendingMessage?.text {
+                if let pendingText = self.pendingMessage?.text,
+                    !pendingText.isEmpty {
                     text = pendingText
                 }
         }
