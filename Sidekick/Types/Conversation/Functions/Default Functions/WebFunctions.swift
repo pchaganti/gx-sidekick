@@ -65,7 +65,9 @@ public class WebFunctions {
                 encoding: .utf8
             )!
             return """
-Below are the sites and corresponding content returned from your `web_search` query. The content from each site here is a summary; to get the full content from a website, use the `get_website_content` function.
+Below are the sites and corresponding content returned from your `web_search` query.
+
+The content from each site here is a summary. Use the `get_website_content` function to get the full content from a website.
 
 \(resultsText)
 """

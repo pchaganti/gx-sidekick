@@ -88,11 +88,35 @@ struct ChatParameters: Codable {
 	var stream_options: StreamOptions = .init()
 	
 	/// Function to convert chat parameters to JSON
-	public func toJSON() -> String {
-		let encoder = JSONEncoder()
-		encoder.outputFormatting = .prettyPrinted
-		let jsonData = try? encoder.encode(self)
-		let jsonString = String(data: jsonData!, encoding: .utf8)!
+	public func toJSON(
+        modelType: ModelType
+    ) -> String {
+        // Declare variable for params
+        var params: any Codable = self
+        // If modelType is .worker, encode without tools
+        if modelType == .worker {
+            // Omit 'tools'
+            struct EncodableWithoutTools: Codable {
+                let model: String
+                let messages: [Message.MessageSubset]
+                let temperature: Double
+                let stream: Bool
+                let stream_options: StreamOptions
+            }
+            let wrapper: EncodableWithoutTools = EncodableWithoutTools(
+                model: self.model,
+                messages: self.messages,
+                temperature: self.temperature,
+                stream: self.stream,
+                stream_options: self.stream_options
+            )
+            params = wrapper
+        }
+        // Encode
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        let jsonData = try? encoder.encode(params)
+        let jsonString = String(data: jsonData!, encoding: .utf8)!
         return jsonString
 	}
 	

@@ -400,7 +400,9 @@ public actor LlamaServer {
 			)
 			request.setValue("nil", forHTTPHeaderField: "ngrok-skip-browser-warning")
 		}
-		let requestJson: String = await params.toJSON()
+		let requestJson: String = await params.toJSON(
+            modelType: self.modelType
+        )
 		request.httpBody = requestJson.data(using: .utf8)
 		// Use EventSource to receive server sent events
 		self.eventSource = EventSource(
@@ -630,7 +632,7 @@ public actor LlamaServer {
 		request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 		request.setValue("keep-alive", forHTTPHeaderField: "Connection")
 		let requestParams: TokenizeParams = .init(content: text)
-		let requestJson: String = requestParams.toJSON()
+        let requestJson: String = requestParams.toJSON()
 		request.httpBody = requestJson.data(using: .utf8)
 		// Send request
 		let (data, _) = try await URLSession.shared.data(

@@ -242,7 +242,7 @@ Current date & time: \(Date.now.formatted(date: .long, time: .shortened))
 			guard let serverModelName = UserDefaults.standard.string(
 				forKey: "remoteModelName"
 			) else {
-				return "gpt-4o"
+				return "gpt-4.1"
 			}
 			return serverModelName
 		}
@@ -275,7 +275,7 @@ Current date & time: \(Date.now.formatted(date: .long, time: .shortened))
 			guard let serverWorkerModelName = UserDefaults.standard.string(
 				forKey: "serverWorkerModelName"
 			) else {
-				return "gpt-4o-mini"
+				return "gpt-4.1-nano"
 			}
 			return serverWorkerModelName
 		}
