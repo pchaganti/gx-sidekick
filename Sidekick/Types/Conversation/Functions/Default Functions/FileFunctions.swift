@@ -96,7 +96,7 @@ public class FileFunctions {
             // Extract text
             let text = try await ExtractKit.shared.extractText(
                 url: url,
-                speed: .fast
+                speed: ExtractionSpeed.default
             )
             return text
             enum ExtractFileTextError: LocalizedError {
