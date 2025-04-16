@@ -50,22 +50,22 @@
         }
       }
     },
-    "A new endpoint has been selected, which has been identified as capable of native tool calling. Would you like to turn on native tool calling?" : {
+    "A new endpoint has been selected, which has been identified as capable of native function calling. Would you like to turn on native tool calling?" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "已选择一个新的端点，该端点已被确认支持原生工具调用功能。您是否要启用原生工具调用？"
+            "value" : "已选择一个新的端点，该端点已被确认支持原生函数调用功能。您是否要启用原生函数调用？"
           }
         }
       }
     },
-    "A new endpoint has been selected, which might not be capable of native tool calling. Would you like to turn off native tool calling?" : {
+    "A new endpoint has been selected, which might not be capable of native function calling. Would you like to turn off native tool calling?" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "已选择新端点，该端点可能不支持原生工具调用功能。是否要关闭原生工具调用？"
+            "value" : "已选择新端点，该端点可能不支持原生函数调用功能。是否要关闭原生函数调用？"
           }
         }
       }
@@ -690,12 +690,12 @@
         }
       }
     },
-    "Controls whether native tool calling is available for the remote model. Turn it on only when the inference provider supports native tool calling for the selected model." : {
+    "Controls whether native function calling is available for the remote model. Turn it on only when the inference provider supports native tool calling for the selected model." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "控制远程模型是否支持原生工具调用功能。仅在推理服务提供商确认所选模型支持原生工具调用时，才开启此选项。"
+            "value" : "控制远程模型是否支持原生函数调用功能。仅在推理服务提供商确认所选模型支持原生函数调用时，才开启此选项。"
           }
         }
       }
@@ -2437,12 +2437,12 @@
         }
       }
     },
-    "Native Tool Calling" : {
+    "Native Function Calling" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "原生工具调用"
+            "value" : "原生函数调用"
           }
         }
       }
