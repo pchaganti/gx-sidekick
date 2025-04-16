@@ -50,7 +50,7 @@
         }
       }
     },
-    "A new endpoint has been selected, which has been identified as capable of native function calling. Would you like to turn on native tool calling?" : {
+    "A new endpoint has been selected, which has been identified as capable of native function calling. Would you like to turn on native function calling?" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -60,7 +60,7 @@
         }
       }
     },
-    "A new endpoint has been selected, which might not be capable of native function calling. Would you like to turn off native tool calling?" : {
+    "A new endpoint has been selected, which might not be capable of native function calling. Would you like to turn off native function calling?" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -690,7 +690,7 @@
         }
       }
     },
-    "Controls whether native function calling is available for the remote model. Turn it on only when the inference provider supports native tool calling for the selected model." : {
+    "Controls whether native function calling is available for the remote model. Turn it on only when the inference provider supports native function calling for the selected model." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -4028,7 +4028,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "实用工具"
+            "value" : "试用工具"
           }
         }
       }

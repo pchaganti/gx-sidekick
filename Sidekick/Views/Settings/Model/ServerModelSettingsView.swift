@@ -184,7 +184,7 @@ struct ServerModelSettingsView: View {
                 Text("Native Function Calling")
                     .font(.title3)
                     .bold()
-                Text("Controls whether native function calling is available for the remote model. Turn it on only when the inference provider supports native tool calling for the selected model.")
+                Text("Controls whether native function calling is available for the remote model. Turn it on only when the inference provider supports native function calling for the selected model.")
                     .font(.caption)
             }
             Spacer()
@@ -208,8 +208,8 @@ struct ServerModelSettingsView: View {
             return
         }
         // Get message
-        let message: String = providerSupportsToolCalling ? String(localized: "A new endpoint has been selected, which has been identified as capable of native function calling. Would you like to turn on native tool calling?") : String(
-            localized: "A new endpoint has been selected, which might not be capable of native function calling. Would you like to turn off native tool calling?"
+        let message: String = providerSupportsToolCalling ? String(localized: "A new endpoint has been selected, which has been identified as capable of native function calling. Would you like to turn on native function calling?") : String(
+            localized: "A new endpoint has been selected, which might not be capable of native function calling. Would you like to turn off native function calling?"
         )
         // Confirm with user
         if Dialogs.dichotomy(
