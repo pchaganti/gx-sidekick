@@ -15,7 +15,10 @@ struct ServerModelSettingsView: View {
 	@State private var inferenceApiKey: String = InferenceSettings.inferenceApiKey
 	
 	@AppStorage("remoteModelName") private var serverModelName: String = InferenceSettings.serverModelName
+    
     @AppStorage("serverModelHasVision") private var serverModelHasVision: Bool = InferenceSettings.serverModelHasVision
+    @AppStorage("hasNativeToolCalling") private var hasNativeToolCalling: Bool = InferenceSettings.hasNativeToolCalling
+    
 	@AppStorage("serverWorkerModelName") private var serverWorkerModelName: String = ""
 	
     var popularEndpointsTip: PopularEndpointsTip = .init()
@@ -40,6 +43,7 @@ struct ServerModelSettingsView: View {
 					modelType: .regular
 				)
                 serverModelHasVisionToggle
+                hasNativeToolCallingToggle
 				ServerModelNameEditor(
 					serverModelName: $serverWorkerModelName,
 					modelType: .worker
@@ -126,6 +130,14 @@ struct ServerModelSettingsView: View {
 			}
             .padding(.top, 10)
 		}
+        .onChange(of: self.serverEndpoint) {
+            // Return if invalid or blank
+            if !self.endpointUrlIsValid || self.serverEndpoint.isEmpty {
+                return
+            }
+            // Else, run check
+            self.checkProviderForToolCalling()
+        }
 	}
 	
 	var inferenceApiKeyEditor: some View {
@@ -163,6 +175,48 @@ struct ServerModelSettingsView: View {
                 isOn: $serverModelHasVision.animation(.linear)
             )
             .disabled(serverEndpoint.isEmpty || !endpointUrlIsValid)
+        }
+    }
+    
+    var hasNativeToolCallingToggle: some View {
+        HStack(alignment: .top) {
+            VStack(alignment: .leading) {
+                Text("Native Tool Calling")
+                    .font(.title3)
+                    .bold()
+                Text("Controls whether native tool calling is available for the remote model. Turn it on only when the inference provider supports native tool calling for the selected model.")
+                    .font(.caption)
+            }
+            Spacer()
+            Toggle(
+                "",
+                isOn: $hasNativeToolCalling.animation(.linear)
+            )
+            .disabled(serverEndpoint.isEmpty || !endpointUrlIsValid)
+        }
+    }
+    
+    private func checkProviderForToolCalling() {
+        // Check provider, defaulting to false
+        let providerSupportsToolCalling = InferenceSettings.providerSupportsToolCalling() ?? false
+        // If no change, exit
+        if providerSupportsToolCalling == self.hasNativeToolCalling {
+            return
+        }
+        // Get message
+        let message: String = providerSupportsToolCalling ? String(localized: "A new endpoint has been selected, which has been identified as capable of native tool calling. Would you like to turn on native tool calling?") : String(
+            localized: "A new endpoint has been selected, which might not be capable of native tool calling. Would you like to turn off native tool calling?"
+        )
+        // Confirm with user
+        if Dialogs.dichotomy(
+            title: String(localized: "Provider Changed"),
+            message: message,
+            option1: String(localized: "Yes"),
+            option2: String(localized: "No")
+        ) {
+            withAnimation(.linear) {
+                self.hasNativeToolCalling = providerSupportsToolCalling
+            }
         }
     }
     

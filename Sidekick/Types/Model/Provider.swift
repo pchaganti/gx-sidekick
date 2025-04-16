@@ -16,16 +16,20 @@ public struct Provider: Identifiable {
     public var name: String
     /// A `URL` for the provider's OpenAI compatible endpoint
     public var endpointUrl: URL
+    /// A `Bool` for whether the provider supports OpenAI style tool calling
+    public var supportsToolCalling: Bool = false
     
     /// A list of popular providers
     public static let popularProviders: [Provider] = [
         Provider(
             name: "Aliyun Bailian (China)",
-            endpointUrl: URL(string: "https://dashscope.aliyuncs.com/compatible-mode/v1")!
+            endpointUrl: URL(string: "https://dashscope.aliyuncs.com/compatible-mode/v1")!,
+            supportsToolCalling: true
         ),
         Provider(
             name: "Anthropic",
-            endpointUrl: URL(string: "https://api.anthropic.com/v1")!
+            endpointUrl: URL(string: "https://api.anthropic.com/v1")!,
+            supportsToolCalling: true
         ),
         Provider(
             name: "DeepSeek",
@@ -37,11 +41,13 @@ public struct Provider: Identifiable {
         ),
         Provider(
             name: "Groq",
-            endpointUrl: URL(string: "https://api.groq.com/openai/v1")!
+            endpointUrl: URL(string: "https://api.groq.com/openai/v1")!,
+            supportsToolCalling: true
         ),
         Provider(
             name: "LM Studio",
-            endpointUrl: URL(string: "http://localhost:1234/v1")!
+            endpointUrl: URL(string: "http://localhost:1234/v1")!,
+            supportsToolCalling: true
         ),
         Provider(
             name: "Mistral",
@@ -49,15 +55,18 @@ public struct Provider: Identifiable {
         ),
         Provider(
             name: "Ollama",
-            endpointUrl: URL(string: "http://localhost:11434/v1")!
+            endpointUrl: URL(string: "http://localhost:11434/v1")!,
+            supportsToolCalling: true
         ),
         Provider(
             name: "OpenAI",
-            endpointUrl: URL(string: "https://api.openai.com/v1")!
+            endpointUrl: URL(string: "https://api.openai.com/v1")!,
+            supportsToolCalling: true
         ),
         Provider(
             name: "OpenRouter",
-            endpointUrl: URL(string: "https://openrouter.ai/api/v1")!
+            endpointUrl: URL(string: "https://openrouter.ai/api/v1")!,
+            supportsToolCalling: true
         )
     ]
 }

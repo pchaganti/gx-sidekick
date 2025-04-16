@@ -253,7 +253,7 @@ Current date & time: \(Date.now.formatted(date: .long, time: .shortened))
 	}
     
     /// A `Bool` representing whether the LLM has vision
-    static var serverModelHasVision: Bool {
+    public static var serverModelHasVision: Bool {
         get {
             // Set default
             if !UserDefaults.standard.exists(key: "serverModelHasVision") {
@@ -268,7 +268,37 @@ Current date & time: \(Date.now.formatted(date: .long, time: .shortened))
             UserDefaults.standard.set(newValue, forKey: "serverModelHasVision")
         }
     }
+    
+    /// A `Bool` representing whether the inference provider supports tool calling natively
+    public static var hasNativeToolCalling: Bool {
+        get {
+            // Set default
+            if !UserDefaults.standard.exists(key: "hasNativeToolCalling") {
+                // Use default
+                Self.hasNativeToolCalling = Self.providerSupportsToolCalling() ?? false
+            }
+            return UserDefaults.standard.bool(
+                forKey: "hasNativeToolCalling"
+            )
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "hasNativeToolCalling")
+        }
+    }
 	
+    /// A function to check if the provider selected supports tool calling
+    public static func providerSupportsToolCalling() -> Bool? {
+        // Check inference provider
+        for provider in Provider.popularProviders {
+            // If matches, use provider value
+            if Self.endpoint == provider.endpointUrl.absoluteString {
+                return provider.supportsToolCalling
+            }
+        }
+        // Default to nil
+        return nil
+    }
+    
 	/// A `String` representing the name of the remote worker model
 	public static var serverWorkerModelName: String {
 		get {

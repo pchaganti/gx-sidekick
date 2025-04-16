@@ -50,6 +50,26 @@
         }
       }
     },
+    "A new endpoint has been selected, which has been identified as capable of native tool calling. Would you like to turn on native tool calling?" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已选择一个新的端点，该端点已被确认支持原生工具调用功能。您是否要启用原生工具调用？"
+          }
+        }
+      }
+    },
+    "A new endpoint has been selected, which might not be capable of native tool calling. Would you like to turn off native tool calling?" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已选择新端点，该端点可能不支持原生工具调用功能。是否要关闭原生工具调用？"
+          }
+        }
+      }
+    },
     "A new remote model has been selected, which has been identified as having vision capabilities. Would you like to turn on vision for this model?" : {
       "localizations" : {
         "zh-Hans" : {
@@ -666,6 +686,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "控制是否向聊天机器人提供搜索结果的上下文。启用此功能将减慢文字生成速度，但每个搜索结果的长度将增加。"
+          }
+        }
+      }
+    },
+    "Controls whether native tool calling is available for the remote model. Turn it on only when the inference provider supports native tool calling for the selected model." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "控制远程模型是否支持原生工具调用功能。仅在推理服务提供商确认所选模型支持原生工具调用时，才开启此选项。"
           }
         }
       }
@@ -2407,6 +2437,16 @@
         }
       }
     },
+    "Native Tool Calling" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "原生工具调用"
+          }
+        }
+      }
+    },
     "Needed to access an API for inference" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2823,6 +2863,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "提示"
+          }
+        }
+      }
+    },
+    "Provider Changed" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新端点"
           }
         }
       }

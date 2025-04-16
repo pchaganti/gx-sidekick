@@ -93,8 +93,8 @@ struct ChatParameters: Codable {
     ) -> String {
         // Declare variable for params
         var params: any Codable = self
-        // If modelType is .worker, encode without tools
-        if modelType == .worker {
+        // If modelType is .worker, or if native tools disabled in settings, encode without tools
+        if modelType == .worker || !InferenceSettings.hasNativeToolCalling {
             // Omit 'tools'
             struct EncodableWithoutTools: Codable {
                 let model: String
