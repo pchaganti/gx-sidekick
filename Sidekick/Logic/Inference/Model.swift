@@ -108,12 +108,19 @@ public class Model: ObservableObject {
 	/// The message being generated
 	@Published var pendingMessage: Message? = nil
     /// The pending message displayed to users
+    @MainActor
     public var displayedPendingMessage: Message {
         var text: String = ""
         let functionCalls: [FunctionCallRecord] = self.pendingMessage?.functionCallRecords ?? []
+        DispatchQueue.main.async {
+            self.textIsIndicator = true
+        }
         switch self.status {
             case .cold, .coldProcessing, .processing, .backgroundTask, .ready:
                 if let pendingText = self.pendingMessage?.text {
+                    DispatchQueue.main.async {
+                        self.textIsIndicator = false
+                    }
                     text = pendingText
                 } else {
                     // Set default text
@@ -150,6 +157,9 @@ public class Model: ObservableObject {
                 // Show progress
                 if let pendingText = self.pendingMessage?.text,
                     !pendingText.isEmpty {
+                    DispatchQueue.main.async {
+                        self.textIsIndicator = false
+                    }
                     text = pendingText
                 }
         }
@@ -159,6 +169,8 @@ public class Model: ObservableObject {
             functionCallRecords: functionCalls
         )
     }
+    /// A `Bool` representing whether the text or an indicator is shown
+    @Published public var textIsIndicator: Bool = false
     
 	/// The status of `llama-server`, of type ``Model.Status``
 	@Published var status: Status = .cold
@@ -378,6 +390,7 @@ public class Model: ObservableObject {
 		)
 		// Update display
 		self.pendingMessage = nil
+        self.textIsIndicator = false
 		self.status = .ready
 		Self.logger.notice("Finished responding to prompt")
 		return response!

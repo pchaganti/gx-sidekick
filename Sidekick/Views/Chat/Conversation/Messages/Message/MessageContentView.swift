@@ -9,11 +9,12 @@ import LaTeXSwiftUI
 import MarkdownUI
 import Splash
 import SwiftUI
+import Shimmer
 
 struct MessageContentView: View {
 	
 	@Environment(\.colorScheme) private var colorScheme
-	
+    
 	@State private var cachedMarkdown: AnyView? // Cache rendered markdown view
 	
 	var text: String
@@ -54,7 +55,7 @@ struct MessageContentView: View {
 		} else {
 			self.markdownView(
 				self.textLatexProcessed
-			) // Fall back on live view
+			)
 		}
 	}
 	

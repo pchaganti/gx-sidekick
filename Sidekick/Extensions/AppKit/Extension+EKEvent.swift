@@ -20,6 +20,8 @@ extension EKEventAvailability {
                 return "Tenative"
             case .unavailable:
                 return "Unavailable"
+            case .notSupported:
+                return nil
             @unknown default:
                 return nil
         }
@@ -38,6 +40,8 @@ extension EKEventStatus {
                 return "Tentative"
             case .canceled:
                 return "Canceled"
+            case .none:
+                return nil
             @unknown default:
                 return nil
         }

@@ -296,7 +296,8 @@ You are about to create a presentation about the content above. List 1-2 word ti
 			throw GenerationError.generatingContentFailed
 		}
 		let cheatsheetText: String = try! String(
-			contentsOf: cheatsheetUrl
+			contentsOf: cheatsheetUrl,
+            encoding: .utf8
 		)
 		// Formulate prompt
 		do {

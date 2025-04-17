@@ -13,11 +13,13 @@ struct MessageView: View {
 	
 	init(
 		message: Message,
-		canEdit: Bool = true
+		canEdit: Bool = true,
+        shimmer: Bool = false
 	) {
 		self.messageText = message.text
 		self.message = message
 		self.canEdit = canEdit
+        self.shimmer = shimmer
 	}
 	
 	@EnvironmentObject private var model: Model
@@ -29,6 +31,7 @@ struct MessageView: View {
 	@State private var messageText: String
 	@State private var isShowingSources: Bool = false
 	
+    var shimmer: Bool
 	var viewReferenceTip: ViewReferenceTip = .init()
 	
 	var selectedConversation: Conversation? {
@@ -184,6 +187,9 @@ struct MessageView: View {
 					}
 					// Show message response
 					MessageContentView(text: self.message.responseText)
+                        .if(shimmer) { view in
+                            view.shimmering()
+                        }
 					// Show references if needed
 					if !self.message.referencedURLs.isEmpty {
 						messageReferences

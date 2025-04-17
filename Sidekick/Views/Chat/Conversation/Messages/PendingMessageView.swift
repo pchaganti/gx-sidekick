@@ -28,7 +28,8 @@ struct PendingMessageView: View {
     var body: some View {
 		MessageView(
             message: self.model.displayedPendingMessage,
-			canEdit: false
+			canEdit: false,
+            shimmer: self.model.textIsIndicator
 		)
     }
 	

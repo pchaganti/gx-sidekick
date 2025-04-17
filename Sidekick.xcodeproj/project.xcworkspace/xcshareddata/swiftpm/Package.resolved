@@ -1,5 +1,5 @@
 {
-  "originHash" : "8d78ec81bf802f2a28589c89ad4a79b033420bf538c63e0a7968c51e935913be",
+  "originHash" : "b17b277cd9b8feb53714ee1167900ed0cfa6dd69a4e2968bd08d9161d824d0bf",
   "pins" : [
     {
       "identity" : "axswift",
@@ -69,7 +69,7 @@
       "location" : "https://github.com/johnbean393/ExtractKit-macOS",
       "state" : {
         "branch" : "main",
-        "revision" : "7a8b78bc86b5ea855f99b7fe601e2b20426c704f"
+        "revision" : "6ecc1199823426ff1a1579da03bfde6ad94a5c36"
       }
     },
     {
@@ -313,6 +313,15 @@
       "state" : {
         "revision" : "0e96a20ffd37a515c5c963952d4335c89bed50a6",
         "version" : "2.6.0"
+      }
+    },
+    {
+      "identity" : "swiftui-shimmer",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/markiv/SwiftUI-Shimmer",
+      "state" : {
+        "revision" : "0226e21f9bf355d40e07e5f5e1c33679d50e167f",
+        "version" : "1.5.1"
       }
     },
     {
