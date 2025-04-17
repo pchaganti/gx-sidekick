@@ -180,7 +180,7 @@ struct ExpertEditorView: View {
 				}
 				.padding(.horizontal, 5)
 			} else {
-				Text("Search is not enabled in Settings")
+				Text("Search is not configured properly in Settings")
 					.font(.title3)
 					.bold()
 					.padding()

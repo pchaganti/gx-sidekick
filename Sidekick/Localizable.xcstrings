@@ -180,16 +180,6 @@
         }
       }
     },
-    "Allow the chatbot to search the web for information relevant to user prompts" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "允许模型在网络上搜索与用户问题相关的信息"
-          }
-        }
-      }
-    },
     "Alternatively..." : {
       "localizations" : {
         "zh-Hans" : {
@@ -1199,6 +1189,9 @@
           }
         }
       }
+    },
+    "DuckDuckGo" : {
+      "shouldTranslate" : false
     },
     "Due to limited hardware specifications, you may suffer from degraded performance when running this model. " : {
       "localizations" : {
@@ -3227,6 +3220,26 @@
         }
       }
     },
+    "Search is not configured properly in Settings" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "搜索配置错误。"
+          }
+        }
+      }
+    },
+    "Search is not configured properly. Please configure it in \"Settings\" -> \"Retrieval\"." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "搜索未正确配置。请在“设置”->“搜索”中进行配置。"
+          }
+        }
+      }
+    },
     "Search is not configured. Please configure it in \"Settings\" -> \"Retrieval\"." : {
       "localizations" : {
         "zh-Hans" : {
@@ -3237,22 +3250,22 @@
         }
       }
     },
-    "Search is not enabled in Settings" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "请在设置里启用网络搜索"
-          }
-        }
-      }
-    },
     "Search not configured" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "未设置搜索"
+          }
+        }
+      }
+    },
+    "Search Provider" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "搜索引擎"
           }
         }
       }
@@ -3373,6 +3386,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "请选择文件或文件夹"
+          }
+        }
+      }
+    },
+    "Select the search provider used for web search." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择用于网页搜索的搜索引擎。"
           }
         }
       }
@@ -3653,15 +3676,8 @@
         }
       }
     },
-    "Tavily Search" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tavily 搜索"
-          }
-        }
-      }
+    "Tavily" : {
+      "shouldTranslate" : false
     },
     "Teach me" : {
       "localizations" : {
@@ -4169,16 +4185,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "使用推测性解码"
-          }
-        }
-      }
-    },
-    "Use Tavily Search" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "启用 Tavily 搜索"
           }
         }
       }

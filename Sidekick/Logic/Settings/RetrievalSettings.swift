@@ -34,25 +34,19 @@ public class RetrievalSettings {
 		}
 	}
 	
-	/// Computed property for whether tavily search is used
-	static var useTavilySearch: Bool {
-		get {
-			// Set default
-			if !UserDefaults.standard.exists(key: "useTavilySearch") {
-				Self.useTavilySearch = false
-			}
-			return UserDefaults.standard.bool(
-				forKey: "useTavilySearch"
-			)
-		}
-		set {
-			UserDefaults.standard.set(newValue, forKey: "useTavilySearch")
-		}
-	}
-	
 	/// A `Bool` representing whether web search can be used
 	static var canUseWebSearch: Bool {
-		return Self.useTavilySearch && !Self.tavilyApiKey.isEmpty
+        // Get provider
+        let provider: SearchProvider = SearchProvider(
+            rawValue: Self.defaultSearchProvider
+        ) ?? .duckDuckGo
+        // Check for each provider
+        switch provider {
+            case .duckDuckGo:
+                return true
+            case .tavily:
+                return !Self.tavilyApiKey.isEmpty
+        }
 	}
 	
 	/// Computed property for whether the context of a search result is used
@@ -87,5 +81,29 @@ public class RetrievalSettings {
 			UserDefaults.standard.set(newValue, forKey: "searchResultsMultiplier")
 		}
 	}
+    
+    /// The default search provider, where 0 = DuckDuckGo, 1 = Tavily
+    static var defaultSearchProvider: Int {
+        get {
+            // Default to DuckDuckGo
+            if !UserDefaults.standard.exists(key: "defaultSearchProvider") {
+                Self.defaultSearchProvider = 0
+            }
+            return UserDefaults.standard.integer(
+                forKey: "defaultSearchProvider"
+            )
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "defaultSearchProvider")
+        }
+    }
+    
+    /// Search providers supported by Sidekick
+    public enum SearchProvider: Int, CaseIterable {
+        
+        case duckDuckGo = 0
+        case tavily = 1
+        
+    }
 	
 }

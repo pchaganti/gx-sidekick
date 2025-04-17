@@ -32,7 +32,7 @@ struct UseWebSearchButton: View {
 			// If not, show error and return
 			Dialogs.showAlert(
 				title: String(localized: "Search not configured"),
-				message: String(localized: "Search is not configured. Please configure it in \"Settings\" -> \"Retrieval\".")
+				message: String(localized: "Search is not configured properly. Please configure it in \"Settings\" -> \"Retrieval\".")
 			)
             // Set back to false
             self.useWebSearch = false

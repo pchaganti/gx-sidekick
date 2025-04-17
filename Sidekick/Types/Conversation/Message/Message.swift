@@ -169,21 +169,14 @@ public struct Message: Identifiable, Codable, Hashable {
 			)
 		}
 		// Search Tavily
-		var resultsCount: Int = (hasResources && !resourcesResults.isEmpty) ? 1 : 2
-		resultsCount = resultsCount * searchResultsMultiplier
-		var tavilyResults: [Source]? = []
+		var resultCount: Int = (hasResources && !resourcesResults.isEmpty) ? 1 : 2
+		resultCount = resultCount * searchResultsMultiplier
+		var searchResults: [Source]? = []
 		if useWebSearch {
-			tavilyResults = try? await TavilySearch.search(
-				query: text,
-				resultCount: resultsCount
-			)
-			if tavilyResults == nil {
-				tavilyResults = try? await TavilySearch.search(
-					query: text,
-					resultCount: resultsCount,
-					useBackupApi: true
-				)
-			}
+            searchResults = try? await WebSearch.search(
+                query: text,
+                resultCount: resultCount
+            )
 		}
 		// Get temporary resources as sources
 		let temporaryResourcesSources: [Source] = temporaryResources.map(
@@ -191,7 +184,7 @@ public struct Message: Identifiable, Codable, Hashable {
 		).compactMap({ $0 })
 		// Combine
 		let results: [Source] = resourcesResults + (
-			tavilyResults ?? []
+            searchResults ?? []
 		) + temporaryResourcesSources
 		// Save sources
 		let sources: Sources = Sources(

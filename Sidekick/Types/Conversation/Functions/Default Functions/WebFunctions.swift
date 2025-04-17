@@ -46,10 +46,10 @@ public class WebFunctions {
         run: { params in
             // Check if enabled
             if !RetrievalSettings.canUseWebSearch {
-                throw WebSearchError.notEnabled
+                throw WebSearchError.notConfigured
             }
             // Conduct search
-            let sources: [Source] = try await TavilySearch.search(
+            let sources: [Source] = try await WebSearch.search(
                 query: params.query,
                 resultCount: params.num_results ?? 5
             )
@@ -73,11 +73,11 @@ The content from each site here is a summary. Use the `get_website_content` func
 """
             // Custom error for Web Search function
             enum WebSearchError: LocalizedError {
-                case notEnabled
+                case notConfigured
                 var errorDescription: String? {
                     switch self {
-                        case .notEnabled:
-                            return "Web search has not been enabled in Settings."
+                        case .notConfigured:
+                            return "Web search has not been properly configured in Settings."
                     }
                 }
             }

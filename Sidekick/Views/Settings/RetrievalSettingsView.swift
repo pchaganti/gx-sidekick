@@ -9,11 +9,12 @@ import SwiftUI
 
 struct RetrievalSettingsView: View {
 	
-	@AppStorage("useTavilySearch") private var useTavilySearch: Bool = RetrievalSettings.useTavilySearch
+    @AppStorage("defaultSearchProvider") private var defaultSearchProvider: Int = RetrievalSettings.defaultSearchProvider
+    
 	@State private var tavilyApiKey: String = RetrievalSettings.tavilyApiKey
 	@State private var tavilyBackupApiKey: String = RetrievalSettings.tavilyBackupApiKey
 	
-	@State private var searchResultMultiplier: Int = RetrievalSettings.searchResultsMultiplier
+    @AppStorage("searchResultsMultiplier") private var searchResultsMultiplier: Int = RetrievalSettings.searchResultsMultiplier
 	@State private var useSearchResultContext: Bool = RetrievalSettings.useSearchResultContext
 
     var body: some View {
@@ -24,44 +25,49 @@ struct RetrievalSettingsView: View {
 				Text("Resources Search")
 			}
 			Section {
-				tavilySearch
+                searchProviderPicker
+                // If Tavily is selected
+                if defaultSearchProvider == 1 {
+                    tavilySearch
+                }
 			} header: {
-				Text("Tavily Search")
+				Text("Web Search")
 			}
 		}
 		.formStyle(.grouped)
     }
+    
+    var searchProviderPicker: some View {
+        HStack(alignment: .top) {
+            VStack(alignment: .leading) {
+                Text("Search Provider")
+                    .font(.title3)
+                    .bold()
+                Text("Select the search provider used for web search.")
+                    .font(.caption)
+            }
+            Spacer()
+            Picker(
+                selection: $defaultSearchProvider.animation(.linear)
+            ) {
+               Text("DuckDuckGo")
+                    .tag(0)
+                Text("Tavily")
+                    .tag(1)
+            }
+            .pickerStyle(.menu)
+        }
+    }
 	
 	var tavilySearch: some View {
-		Group {
-			useSearch
-			Group {
-				tavilyApiKeyEditor
-				tavilyBackupApiKeyEditor
-			}
-			.foregroundStyle(useTavilySearch ? .primary : .secondary)
-		}
-		.onAppear {
-			self.useTavilySearch = RetrievalSettings.useTavilySearch
-			self.tavilyApiKey = RetrievalSettings.tavilyApiKey
-			self.tavilyBackupApiKey = RetrievalSettings.tavilyBackupApiKey
-		}
-	}
-	
-	var useSearch: some View {
-		HStack(alignment: .top) {
-			VStack(alignment: .leading) {
-				Text("Use Tavily Search")
-					.font(.title3)
-					.bold()
-				Text("Allow the chatbot to search the web for information relevant to user prompts")
-					.font(.caption)
-			}
-			Spacer()
-			Toggle("", isOn: $useTavilySearch.animation())
-				.toggleStyle(.switch)
-				.disabled(self.tavilyApiKey.isEmpty)
-		}
+        Group {
+            tavilyApiKeyEditor
+            tavilyBackupApiKeyEditor
+        }
+        .onAppear {
+            self.tavilyApiKey = RetrievalSettings.tavilyApiKey
+            self.tavilyBackupApiKey = RetrievalSettings.tavilyBackupApiKey
+        }
 	}
 	
 	var tavilyApiKeyEditor: some View {
@@ -79,9 +85,7 @@ struct RetrievalSettingsView: View {
 					Text("Get an API Key")
 				}
 			}
-			.foregroundStyle(
-				useTavilySearch && tavilyApiKey.isEmpty ? .red : .primary
-			)
+			.foregroundStyle(tavilyApiKey.isEmpty ? .red : .primary)
 			Spacer()
 			SecureField("", text: $tavilyApiKey)
                 .textContentType(.password)
@@ -132,7 +136,7 @@ struct RetrievalSettingsView: View {
 			}
 			.frame(minWidth: 250)
 			Spacer()
-			Picker(selection: $searchResultMultiplier) {
+			Picker(selection: $searchResultsMultiplier) {
 				Text("Less")
 					.tag(2)
 				Text("Default")
@@ -143,9 +147,6 @@ struct RetrievalSettingsView: View {
 					.tag(6)
 			}
 			.pickerStyle(.segmented)
-		}
-		.onChange(of: searchResultMultiplier) {
-			RetrievalSettings.searchResultsMultiplier = self.searchResultMultiplier
 		}
 	}
 	

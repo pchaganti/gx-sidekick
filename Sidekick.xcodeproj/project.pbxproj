@@ -18,6 +18,8 @@
 		200619B42D676DCE001949EF /* DiagrammerPreviewEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200619B32D676DCE001949EF /* DiagrammerPreviewEditorView.swift */; };
 		200619BA2D678694001949EF /* WebViewKit in Frameworks */ = {isa = PBXBuildFile; productRef = 200619B92D678694001949EF /* WebViewKit */; };
 		200B23652DB0D31A00127D48 /* ReminderFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200B23642DB0D31A00127D48 /* ReminderFunctions.swift */; };
+		200B23682DB1214800127D48 /* WebSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200B23672DB1214800127D48 /* WebSearch.swift */; };
+		200B236A2DB1227A00127D48 /* DuckDuckGoSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200B23692DB1227A00127D48 /* DuckDuckGoSearch.swift */; };
 		200FBFE72CB6384400A92A74 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200FBFE52CB6384400A92A74 /* main.swift */; };
 		200FBFEC2CB63BEA00A92A74 /* llama-server-watchdog in Embed Helper Tools */ = {isa = PBXBuildFile; fileRef = 200FBFDD2CB6382F00A92A74 /* llama-server-watchdog */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		200FBFEE2CB6477400A92A74 /* LlamaServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200FBFED2CB6477400A92A74 /* LlamaServer.swift */; };
@@ -409,6 +411,8 @@
 		200619AE2D6766B1001949EF /* DiagrammerGeneratingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagrammerGeneratingView.swift; sourceTree = "<group>"; };
 		200619B32D676DCE001949EF /* DiagrammerPreviewEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagrammerPreviewEditorView.swift; sourceTree = "<group>"; };
 		200B23642DB0D31A00127D48 /* ReminderFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderFunctions.swift; sourceTree = "<group>"; };
+		200B23672DB1214800127D48 /* WebSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSearch.swift; sourceTree = "<group>"; };
+		200B23692DB1227A00127D48 /* DuckDuckGoSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuckDuckGoSearch.swift; sourceTree = "<group>"; };
 		200FBFDD2CB6382F00A92A74 /* llama-server-watchdog */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "llama-server-watchdog"; sourceTree = BUILT_PRODUCTS_DIR; };
 		200FBFE52CB6384400A92A74 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		200FBFE82CB638B200A92A74 /* llama-server-watchdog.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "llama-server-watchdog.entitlements"; sourceTree = "<group>"; };
@@ -852,6 +856,16 @@
 			path = bin;
 			sourceTree = "<group>";
 		};
+		200B23662DB1213C00127D48 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				200B23672DB1214800127D48 /* WebSearch.swift */,
+				200B23692DB1227A00127D48 /* DuckDuckGoSearch.swift */,
+				208388D92CBF4DF500C2A9F8 /* TavilySearch.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 		200C3E2B2CD8B0A40033909F /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -1205,6 +1219,7 @@
 				2051FED82D8E51FA001B1E0D /* SpeechService.swift */,
 				2041868C2D81E6B2002A5D1C /* NetworkMonitor.swift */,
 				206AB9662DB09BB800385510 /* Location.swift */,
+				200B23662DB1213C00127D48 /* Search */,
 				207E5EF02D6FDEBE00A8F6FA /* Tools */,
 			);
 			path = Utilities;
@@ -1655,7 +1670,6 @@
 				20A96F3B2CDDA9D400E31D53 /* ModelManager.swift */,
 				20A8B65C2CB2829500B756FD /* ExpertManager.swift */,
 				20C221052CC4B15600A99796 /* SourcesManager.swift */,
-				208388D92CBF4DF500C2A9F8 /* TavilySearch.swift */,
 				204AE3B82CEAF57E0086B42D /* CommandManager.swift */,
 			);
 			path = "Data Models";
@@ -2189,6 +2203,7 @@
 				204735802D642BE5000740F9 /* ModelExplorerView.swift in Sources */,
 				2083AEA22D8853DD0049C139 /* WebsiteSelectionView.swift in Sources */,
 				20BF49CD2D64A08200C329F8 /* ModelExplorerViewController.swift in Sources */,
+				200B236A2DB1227A00127D48 /* DuckDuckGoSearch.swift in Sources */,
 				201A1A962CDB99C6001E9BA9 /* MarkdownTableView.swift in Sources */,
 				206AB9652DB096C100385510 /* Extension+EKEvent.swift in Sources */,
 				206AB9632DB0889F00385510 /* CalendarFunctions.swift in Sources */,
@@ -2255,6 +2270,7 @@
 				20573F2D2CB52FAF004C19FE /* SplashCodeSyntaxHighlighter.swift in Sources */,
 				20B22E252CD9BC8B0030A8D3 /* ExportButton.swift in Sources */,
 				20E48C262CB560730085E7D6 /* ChatStyle.swift in Sources */,
+				200B23682DB1214800127D48 /* WebSearch.swift in Sources */,
 				20B9B1212CDF91CD00B66D4D /* PerformanceGaugeView.swift in Sources */,
 				20571F7B2CBD602B004F3344 /* InferenceSettingsView.swift in Sources */,
 				20B97CDF2CAFFE6A009A0A5D /* Sender.swift in Sources */,

@@ -37,6 +37,17 @@ public struct FunctionCallRecord: Codable, Equatable, Hashable {
                     return .secondary
             }
         }
+        
+        /// A `Bool` representing whether the function has been executed
+        var didExecute: Bool {
+            switch self {
+                case .succeeded, .failed:
+                    return true
+                case .executing:
+                    return false
+            }
+        }
+        
     }
     
 }

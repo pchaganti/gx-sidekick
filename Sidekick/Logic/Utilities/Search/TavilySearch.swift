@@ -20,11 +20,11 @@ public class TavilySearch {
 	public static func search(
 		query: String,
 		resultCount: Int,
-		useBackupApi: Bool = false
+        useBackupApi: Bool = false
 	) async throws -> [Source] {
 		// Check if search is on
-		if !RetrievalSettings.useTavilySearch {
-			throw TavilySearchError.notActivated
+        if RetrievalSettings.tavilyApiKey.isEmpty {
+            throw TavilySearchError.noApiKey
 		}
 		// Get results from Tavily
 		let apiKey: String = !useBackupApi ? RetrievalSettings.tavilyApiKey : RetrievalSettings.tavilyBackupApiKey
@@ -81,7 +81,9 @@ public class TavilySearch {
 		let (data, _): (Data, URLResponse) = try await URLSession.shared.data(
 			for: request
 		)
-		print("Tavily returned results in \(Date.now.timeIntervalSince(startTime)) secs")
+        Self.logger.info(
+            "Tavily returned results in \(Date.now.timeIntervalSince(startTime)) secs"
+        )
 		let decoder: JSONDecoder = JSONDecoder()
 		let response: Tavily.Response = try decoder.decode(
 			Tavily.Response.self,
@@ -98,9 +100,20 @@ public class TavilySearch {
 		return results
 	}
 	
-	enum TavilySearchError: Error {
-		case notActivated
+    enum TavilySearchError: LocalizedError {
+        
+		case noApiKey
 		case invalidApiKey
+        
+        var errorDescription: String? {
+            switch self {
+                case .noApiKey:
+                    return "No API key provided"
+                case .invalidApiKey:
+                    return "Invalid API key"
+            }
+        }
+        
 	}
 	
 }

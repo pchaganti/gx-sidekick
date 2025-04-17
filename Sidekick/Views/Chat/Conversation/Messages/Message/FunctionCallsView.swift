@@ -33,10 +33,17 @@ struct FunctionCallsView: View {
             return self.functionCall.status?.color ?? .secondary
         }
         
+        var didExecute: Bool {
+            self.functionCall.status?.didExecute ?? false
+        }
+        
         var body: some View {
             Button {
-                withAnimation(.linear) {
-                    self.showDetails.toggle()
+                // Toggle if results are available
+                if self.didExecute {
+                    withAnimation(.linear) {
+                        self.showDetails.toggle()
+                    }
                 }
             } label: {
                 label
@@ -82,12 +89,14 @@ struct FunctionCallsView: View {
                 }
                 .opacity(0.8)
                 Spacer()
-                Image(systemName: "chevron.up")
-                    .fontWeight(.semibold)
-                    .foregroundStyle(.secondary.opacity(0.8))
-                    .rotationEffect(
-                        self.showDetails ? .zero : .degrees(180)
-                    )
+                if self.didExecute {
+                    Image(systemName: "chevron.up")
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.secondary.opacity(0.8))
+                        .rotationEffect(
+                            self.showDetails ? .zero : .degrees(180)
+                        )
+                }
             }
             .padding(.horizontal, 7)
         }
