@@ -16,13 +16,16 @@ public class DefaultFunctions {
     
     static var functions: [AnyFunctionBox] = [
         ArithmeticFunctions.functions,
-        FileFunctions.functions,
+        CalendarFunctions.functions,
         CodeFunctions.functions,
+        FileFunctions.functions,
+        RemindersFunctions.functions,
         WebFunctions.functions,
         [
             DefaultFunctions.showAlert,
             DefaultFunctions.draftEmail,
-            DefaultFunctions.fetchContacts
+            DefaultFunctions.fetchContacts,
+            DefaultFunctions.getLocation
         ]
     ].flatMap { $0 }
     
@@ -291,5 +294,17 @@ Returns JSON objects for each contact containing the person's name, emails, phon
         var email: String?
         var phone: String?
     }
+    
+    /// A function to get the user's location
+    static let getLocation = Function<BlankParams, String>(
+        name: "get_location",
+        description: "A function to get the user's location. Use this before providing answers that depend on location, such as weather or holidays.",
+        params: [ 
+        ],
+        run: { params in
+            return try await IPLocation.getLocation()
+        }
+    )
+    struct BlankParams: FunctionParams {}
     
 }

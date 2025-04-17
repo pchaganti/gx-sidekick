@@ -17,6 +17,7 @@
 		200619B22D6768F6001949EF /* SwiftfulLoadingIndicators in Frameworks */ = {isa = PBXBuildFile; productRef = 200619B12D6768F6001949EF /* SwiftfulLoadingIndicators */; };
 		200619B42D676DCE001949EF /* DiagrammerPreviewEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200619B32D676DCE001949EF /* DiagrammerPreviewEditorView.swift */; };
 		200619BA2D678694001949EF /* WebViewKit in Frameworks */ = {isa = PBXBuildFile; productRef = 200619B92D678694001949EF /* WebViewKit */; };
+		200B23652DB0D31A00127D48 /* ReminderFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200B23642DB0D31A00127D48 /* ReminderFunctions.swift */; };
 		200FBFE72CB6384400A92A74 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200FBFE52CB6384400A92A74 /* main.swift */; };
 		200FBFEC2CB63BEA00A92A74 /* llama-server-watchdog in Embed Helper Tools */ = {isa = PBXBuildFile; fileRef = 200FBFDD2CB6382F00A92A74 /* llama-server-watchdog */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		200FBFEE2CB6477400A92A74 /* LlamaServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200FBFED2CB6477400A92A74 /* LlamaServer.swift */; };
@@ -147,6 +148,9 @@
 		206934932D5CCDF1006619FD /* conversationExportTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 206934922D5CCDF1006619FD /* conversationExportTemplate.html */; };
 		206990C32DACA68000114EB8 /* Extension+LSContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206990C22DACA68000114EB8 /* Extension+LSContext.swift */; };
 		206AB6122CF5F8390010B09A /* AttachmentSelectionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206AB6112CF5F8390010B09A /* AttachmentSelectionButton.swift */; };
+		206AB9632DB0889F00385510 /* CalendarFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206AB9622DB0889F00385510 /* CalendarFunctions.swift */; };
+		206AB9652DB096C100385510 /* Extension+EKEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206AB9642DB096C100385510 /* Extension+EKEvent.swift */; };
+		206AB9672DB09BB800385510 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206AB9662DB09BB800385510 /* Location.swift */; };
 		206FBB212D54B40700A045FF /* MessageReasoningProcessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206FBB202D54B40700A045FF /* MessageReasoningProcessView.swift */; };
 		2075220B2D7FDF6C00A1CA60 /* Extension+SecureDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2075220A2D7FDF6C00A1CA60 /* Extension+SecureDefaults.swift */; };
 		207A9F532CB82D9600E727DE /* SymbolPicker in Frameworks */ = {isa = PBXBuildFile; productRef = 207A9F522CB82D9600E727DE /* SymbolPicker */; };
@@ -404,6 +408,7 @@
 		200619AC2D675DB9001949EF /* DiagrammerPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagrammerPromptView.swift; sourceTree = "<group>"; };
 		200619AE2D6766B1001949EF /* DiagrammerGeneratingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagrammerGeneratingView.swift; sourceTree = "<group>"; };
 		200619B32D676DCE001949EF /* DiagrammerPreviewEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagrammerPreviewEditorView.swift; sourceTree = "<group>"; };
+		200B23642DB0D31A00127D48 /* ReminderFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderFunctions.swift; sourceTree = "<group>"; };
 		200FBFDD2CB6382F00A92A74 /* llama-server-watchdog */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "llama-server-watchdog"; sourceTree = BUILT_PRODUCTS_DIR; };
 		200FBFE52CB6384400A92A74 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		200FBFE82CB638B200A92A74 /* llama-server-watchdog.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "llama-server-watchdog.entitlements"; sourceTree = "<group>"; };
@@ -525,6 +530,9 @@
 		206934922D5CCDF1006619FD /* conversationExportTemplate.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = conversationExportTemplate.html; sourceTree = "<group>"; };
 		206990C22DACA68000114EB8 /* Extension+LSContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+LSContext.swift"; sourceTree = "<group>"; };
 		206AB6112CF5F8390010B09A /* AttachmentSelectionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentSelectionButton.swift; sourceTree = "<group>"; };
+		206AB9622DB0889F00385510 /* CalendarFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarFunctions.swift; sourceTree = "<group>"; };
+		206AB9642DB096C100385510 /* Extension+EKEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+EKEvent.swift"; sourceTree = "<group>"; };
+		206AB9662DB09BB800385510 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		206FBB202D54B40700A045FF /* MessageReasoningProcessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageReasoningProcessView.swift; sourceTree = "<group>"; };
 		2075220A2D7FDF6C00A1CA60 /* Extension+SecureDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+SecureDefaults.swift"; sourceTree = "<group>"; };
 		207A9F542CB8A96F00E727DE /* ExpertNavigationRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertNavigationRowView.swift; sourceTree = "<group>"; };
@@ -868,6 +876,7 @@
 				2051FEDA2D8E53CB001B1E0D /* Extension+AVSpeechSynthesisVoice.swift */,
 				206990C22DACA68000114EB8 /* Extension+LSContext.swift */,
 				208855D42DAD20CC00071F0B /* Extension+CNContactStore.swift */,
+				206AB9642DB096C100385510 /* Extension+EKEvent.swift */,
 			);
 			path = AppKit;
 			sourceTree = "<group>";
@@ -1195,6 +1204,7 @@
 				200363282D769AC700770391 /* JavaScriptRunner.swift */,
 				2051FED82D8E51FA001B1E0D /* SpeechService.swift */,
 				2041868C2D81E6B2002A5D1C /* NetworkMonitor.swift */,
+				206AB9662DB09BB800385510 /* Location.swift */,
 				207E5EF02D6FDEBE00A8F6FA /* Tools */,
 			);
 			path = Utilities;
@@ -1356,6 +1366,8 @@
 				208855D02DAD1D9900071F0B /* CodeFunctions.swift */,
 				208855D22DAD1E1400071F0B /* FileFunctions.swift */,
 				20DAC4412DADF01F0039208E /* WebFunctions.swift */,
+				206AB9622DB0889F00385510 /* CalendarFunctions.swift */,
+				200B23642DB0D31A00127D48 /* ReminderFunctions.swift */,
 			);
 			path = "Default Functions";
 			sourceTree = "<group>";
@@ -2178,6 +2190,8 @@
 				2083AEA22D8853DD0049C139 /* WebsiteSelectionView.swift in Sources */,
 				20BF49CD2D64A08200C329F8 /* ModelExplorerViewController.swift in Sources */,
 				201A1A962CDB99C6001E9BA9 /* MarkdownTableView.swift in Sources */,
+				206AB9652DB096C100385510 /* Extension+EKEvent.swift in Sources */,
+				206AB9632DB0889F00385510 /* CalendarFunctions.swift in Sources */,
 				20A40C872D7190BA00A9D9A9 /* SlideStudioPromptOptionsView.swift in Sources */,
 				202801FA2CC949F2005C1F7D /* TemporaryResource.swift in Sources */,
 				205E3F2A2D87288400128D67 /* Extension+NSAttributedString.swift in Sources */,
@@ -2197,6 +2211,7 @@
 				2030D6262D6D680800F18BF4 /* DetectorEntitySentencesView.swift in Sources */,
 				2030D61E2D6C523600F18BF4 /* DetectorResultView.swift in Sources */,
 				20AC3CE52CDA700700947FDA /* AppState.swift in Sources */,
+				206AB9672DB09BB800385510 /* Location.swift in Sources */,
 				2099BD9F2CB7E9CE00E02732 /* QuickPrompt.swift in Sources */,
 				20AF0A0A2CDC6339007780FE /* MarkdownCodeBlockView.swift in Sources */,
 				204AE3C02CEB57330086B42D /* CommandButton.swift in Sources */,
@@ -2326,6 +2341,7 @@
 				20C5CBC92DA3D82E0071F5F7 /* DefaultFunctions.swift in Sources */,
 				2030D6182D6C4ED200F18BF4 /* DetectorView.swift in Sources */,
 				20573F1B2CB5099B004C19FE /* ConversationCommands.swift in Sources */,
+				200B23652DB0D31A00127D48 /* ReminderFunctions.swift in Sources */,
 				20B9E60C2CB140A000BA0AD2 /* AppDelegate.swift in Sources */,
 				2075220B2D7FDF6C00A1CA60 /* Extension+SecureDefaults.swift in Sources */,
 				208388ED2CBF825400C2A9F8 /* Tavily.swift in Sources */,
@@ -2589,9 +2605,16 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sidekick/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "Sidekick needs to access your calendar.";
 				INFOPLIST_KEY_NSContactsUsageDescription = "Sidekick needs to access your contacts.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Sidekick needs to access your location.";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Sidekick needs to access your location.";
+				INFOPLIST_KEY_NSLocationTemporaryUsageDescriptionDictionary = "Sidekick needs to access your location.";
+				INFOPLIST_KEY_NSLocationUsageDescription = "Sidekick needs to access your location.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Sidekick needs to access your location.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Sidekick needs access to the microphone for transcription.";
+				INFOPLIST_KEY_NSRemindersUsageDescription = "Sidekick needs to access your reminders.";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Sidekick needs access to speech recognition services for transcription.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2630,9 +2653,16 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sidekick/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "Sidekick needs to access your calendar.";
 				INFOPLIST_KEY_NSContactsUsageDescription = "Sidekick needs to access your contacts.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Sidekick needs to access your location.";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Sidekick needs to access your location.";
+				INFOPLIST_KEY_NSLocationTemporaryUsageDescriptionDictionary = "Sidekick needs to access your location.";
+				INFOPLIST_KEY_NSLocationUsageDescription = "Sidekick needs to access your location.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Sidekick needs to access your location.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Sidekick needs access to the microphone for transcription.";
+				INFOPLIST_KEY_NSRemindersUsageDescription = "Sidekick needs to access your reminders.";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Sidekick needs access to speech recognition services for transcription.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

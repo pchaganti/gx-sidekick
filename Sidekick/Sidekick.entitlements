@@ -6,9 +6,15 @@
 	<string>KM2C4ZAVPJ.com.pattonium.Sidekick</string>
 	<key>com.apple.security.cs.allow-jit</key>
 	<true/>
+	<key>com.apple.security.device.audio-input</key>
+	<true/>
 	<key>com.apple.security.files.bookmarks.app-scope</key>
 	<true/>
 	<key>com.apple.security.personal-information.addressbook</key>
+	<true/>
+	<key>com.apple.security.personal-information.calendars</key>
+	<true/>
+	<key>com.apple.security.personal-information.location</key>
 	<true/>
 </dict>
 </plist>

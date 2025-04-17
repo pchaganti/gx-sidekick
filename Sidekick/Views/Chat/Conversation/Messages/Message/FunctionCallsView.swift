@@ -98,6 +98,7 @@ struct FunctionCallsView: View {
                     Text("Result: ").bold() + Text(result).italic()
                 }
             }
+            .textSelection(.enabled)
             .opacity(0.9)
             .padding(.horizontal, 9)
             .padding(.vertical, 9)
