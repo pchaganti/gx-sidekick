@@ -339,7 +339,8 @@ public actor LlamaServer {
         useWebSearch: Bool = false,
         useFunctions: Bool = false,
 		similarityIndex: SimilarityIndex? = nil,
-		progressHandler: (@Sendable (String) -> Void)? = nil
+        updateStatusHandler: (@Sendable (Model.Status) async -> Void)? = nil,
+        progressHandler: (@Sendable (String) -> Void)? = nil
 	) async throws -> CompleteResponse {
 		// Get endpoint url & whether server is used
         let rawUrl = await self.url(
@@ -484,6 +485,10 @@ public actor LlamaServer {
                             if let firstChoice = responseObj.choices.first?.delta,
                                let toolCall = firstChoice.tool_calls?.first,
                                toolCall.index == 0 {
+                                // Show progress
+                                if let updateStatusHandler {
+                                    await updateStatusHandler(.usingFunctions)
+                                }
                                 // Set function name
                                 if let name = toolCall.function.name {
                                     functionName = name

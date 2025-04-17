@@ -324,6 +324,22 @@ public struct RemoteModel: Identifiable, Codable {
             ]
         ),
         RemoteModel(
+            primaryName: "o4",
+            organization: .openAi,
+            modalities: [
+                .text,
+                .image
+            ]
+        ),
+        RemoteModel(
+            primaryName: "o4-mini",
+            organization: .openAi,
+            modalities: [
+                .text,
+                .image
+            ]
+        ),
+        RemoteModel(
             primaryName: "gpt-4-vision",
             organization: .openAi,
             modalities: [

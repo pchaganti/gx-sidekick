@@ -271,48 +271,51 @@ public class Model: ObservableObject {
                         response = try await self.workerModelServer.getChatCompletion(
                             mode: mode,
                             canReachRemoteServer: canReachRemoteServer,
-                            messages: messagesWithSources
-                        ) { partialResponse in
-                            DispatchQueue.main.async {
-                                // Update response
-                                updateResponse += partialResponse
-                                self.handleCompletionProgress(
-                                    partialResponse: partialResponse,
-                                    handleResponseUpdate: handleResponseUpdate
-                                )
+                            messages: messagesWithSources,
+                            progressHandler:  { partialResponse in
+                                DispatchQueue.main.async {
+                                    // Update response
+                                    updateResponse += partialResponse
+                                    self.handleCompletionProgress(
+                                        partialResponse: partialResponse,
+                                        handleResponseUpdate: handleResponseUpdate
+                                    )
+                                }
                             }
-                        }
+                        )
                     } catch {
                         response = try await self.mainModelServer.getChatCompletion(
                             mode: mode,
                             canReachRemoteServer: canReachRemoteServer,
-                            messages: messagesWithSources
-                        ) { partialResponse in
-                            DispatchQueue.main.async {
-                                // Update response
-                                updateResponse += partialResponse
-                                self.handleCompletionProgress(
-                                    partialResponse: partialResponse,
-                                    handleResponseUpdate: handleResponseUpdate
-                                )
+                            messages: messagesWithSources,
+                            progressHandler:  { partialResponse in
+                                DispatchQueue.main.async {
+                                    // Update response
+                                    updateResponse += partialResponse
+                                    self.handleCompletionProgress(
+                                        partialResponse: partialResponse,
+                                        handleResponseUpdate: handleResponseUpdate
+                                    )
+                                }
                             }
-                        }
+                        )
                     }
                 } else {
                     response = try await self.mainModelServer.getChatCompletion(
                         mode: mode,
                         canReachRemoteServer: canReachRemoteServer,
-                        messages: messagesWithSources
-                    ) { partialResponse in
-                        DispatchQueue.main.async {
-                            // Update response
-                            updateResponse += partialResponse
-                            self.handleCompletionProgress(
-                                partialResponse: partialResponse,
-                                handleResponseUpdate: handleResponseUpdate
-                            )
+                        messages: messagesWithSources,
+                        progressHandler:  { partialResponse in
+                            DispatchQueue.main.async {
+                                // Update response
+                                updateResponse += partialResponse
+                                self.handleCompletionProgress(
+                                    partialResponse: partialResponse,
+                                    handleResponseUpdate: handleResponseUpdate
+                                )
+                            }
                         }
-                    }
+                    )
                 }
             case .chat:
                 response = try await self.getChatResponse(
@@ -331,23 +334,24 @@ public class Model: ObservableObject {
                     mode: mode,
                     canReachRemoteServer: canReachRemoteServer,
                     messages: messagesWithSources,
-                    similarityIndex: similarityIndex
-                ) { partialResponse in
-                    DispatchQueue.main.async {
-                        // Update response
-                        updateResponse += partialResponse
-                        // Display if large update
-                        let updateCount: Int = updateResponse.count
-                        let displayedCount = self.pendingMessage?.text.count ?? 0
-                        if updateCount >= increment || displayedCount < increment {
-                            self.handleCompletionProgress(
-                                partialResponse: partialResponse,
-                                handleResponseUpdate: handleResponseUpdate
-                            )
-                            updateResponse = ""
+                    similarityIndex: similarityIndex,
+                    progressHandler:  { partialResponse in
+                        DispatchQueue.main.async {
+                            // Update response
+                            updateResponse += partialResponse
+                            // Display if large update
+                            let updateCount: Int = updateResponse.count
+                            let displayedCount = self.pendingMessage?.text.count ?? 0
+                            if updateCount >= increment || displayedCount < increment {
+                                self.handleCompletionProgress(
+                                    partialResponse: partialResponse,
+                                    handleResponseUpdate: handleResponseUpdate
+                                )
+                                updateResponse = ""
+                            }
                         }
                     }
-                }
+                )
         }
 		// Handle response finish
 		handleResponseFinish(
@@ -361,6 +365,13 @@ public class Model: ObservableObject {
 		Self.logger.notice("Finished responding to prompt")
 		return response!
 	}
+    
+    /// A function to update the inference status
+    private func updateStatus(
+        _ status: Status
+    ) {
+        self.status = status
+    }
 	
 	/// Function to get response for chat
 	private func getChatResponse(
@@ -417,31 +428,35 @@ public class Model: ObservableObject {
 		similarityIndex: SimilarityIndex?,
 		handleResponseUpdate: @escaping (String, String) -> Void,
 		increment: Int
-	) async throws -> LlamaServer.CompleteResponse {
+    ) async throws -> LlamaServer.CompleteResponse {
         let canReachRemoteServer: Bool = await self.remoteServerIsReachable()
-		var updateResponse = ""
+        var updateResponse = ""
         return try await self.mainModelServer.getChatCompletion(
-			mode: mode,
+            mode: mode,
             canReachRemoteServer: canReachRemoteServer,
-			messages: messages,
+            messages: messages,
             useWebSearch: useWebSearch,
             useFunctions: useFunctions,
-			similarityIndex: similarityIndex
-		) { partialResponse in
-			DispatchQueue.main.async {
-				updateResponse += partialResponse
-				let shouldUpdate = updateResponse.count >= increment ||
-                (self.pendingMessage?.text.count ?? 0 < increment)
-				if shouldUpdate {
-					self.handleCompletionProgress(
-						partialResponse: updateResponse,
-						handleResponseUpdate: handleResponseUpdate
-					)
-					updateResponse = ""
-				}
-			}
-		}
-	}
+            similarityIndex: similarityIndex,
+            updateStatusHandler: { status in
+                await self.updateStatus(status)
+            },
+            progressHandler:  { partialResponse in
+                DispatchQueue.main.async {
+                    updateResponse += partialResponse
+                    let shouldUpdate = updateResponse.count >= increment ||
+                    (self.pendingMessage?.text.count ?? 0 < increment)
+                    if shouldUpdate {
+                        self.handleCompletionProgress(
+                            partialResponse: updateResponse,
+                            handleResponseUpdate: handleResponseUpdate
+                        )
+                        updateResponse = ""
+                    }
+                }
+            }
+        )
+    }
 	
 	/// Function to run code if model calls a function
 	private func handleFunctionCall(
@@ -538,21 +553,27 @@ The function call `\(callJsonSchema)` failed, producing the error below.
                 messages: messages,
                 useWebSearch: useWebSearch,
                 useFunctions: useFunctions,
-                similarityIndex: similarityIndex
-            )  { partialResponse in
-                DispatchQueue.main.async {
-                    updateResponse += partialResponse
-                    let shouldUpdate = updateResponse.count >= increment ||
-                    (self.pendingMessage?.text.count ?? 0 < increment)
-                    if shouldUpdate {
-                        self.handleCompletionProgress(
-                            partialResponse: updateResponse,
-                            handleResponseUpdate: handleResponseUpdate
+                similarityIndex: similarityIndex,
+                updateStatusHandler: { status in
+                    await self.updateStatus(status)
+                },
+                progressHandler: { partialResponse in
+                    DispatchQueue.main.async {
+                        updateResponse += partialResponse
+                        let shouldUpdate = updateResponse.count >= increment ||
+                        (
+                            self.pendingMessage?.text.count ?? 0 < increment
                         )
-                        updateResponse = ""
+                        if shouldUpdate {
+                            self.handleCompletionProgress(
+                                partialResponse: updateResponse,
+                                handleResponseUpdate: handleResponseUpdate
+                            )
+                            updateResponse = ""
+                        }
                     }
                 }
-            }
+            )
             response?.functionCalls = functionCalls + [functionCallRecord]
             // Increment counter & reset
             maxIterations -= 1
@@ -574,21 +595,24 @@ The function call `\(callJsonSchema)` failed, producing the error below.
                 mode: .contextAwareAgent,
                 canReachRemoteServer: canReachRemoteServer,
                 messages: messages,
-                similarityIndex: similarityIndex
-            ) { partialResponse in
-                DispatchQueue.main.async {
-                    updateResponse += partialResponse
-                    let shouldUpdate = updateResponse.count >= increment ||
-                    (self.pendingMessage?.text.count ?? 0 < increment)
-                    if shouldUpdate {
-                        self.handleCompletionProgress(
-                            partialResponse: updateResponse,
-                            handleResponseUpdate: handleResponseUpdate
+                similarityIndex: similarityIndex,
+                progressHandler: { partialResponse in
+                    DispatchQueue.main.async {
+                        updateResponse += partialResponse
+                        let shouldUpdate = updateResponse.count >= increment ||
+                        (
+                            self.pendingMessage?.text.count ?? 0 < increment
                         )
-                        updateResponse = ""
+                        if shouldUpdate {
+                            self.handleCompletionProgress(
+                                partialResponse: updateResponse,
+                                handleResponseUpdate: handleResponseUpdate
+                            )
+                            updateResponse = ""
+                        }
                     }
                 }
-            }
+            )
             if let functionCalls = self.pendingMessage?.functionCallRecords {
                 response.functionCalls = functionCalls
             }
