@@ -402,6 +402,7 @@ public actor LlamaServer {
 			request.setValue("nil", forHTTPHeaderField: "ngrok-skip-browser-warning")
 		}
 		let requestJson: String = await params.toJSON(
+            usingRemoteModel: rawUrl.usingRemoteServer,
             modelType: self.modelType
         )
 		request.httpBody = requestJson.data(using: .utf8)
@@ -430,9 +431,10 @@ public actor LlamaServer {
 				case .open:
 					continue listenLoop
 				case .error(let error):
-					Self.logger.error(
-						"llama.cpp EventSource server error: \(error, privacy: .public)"
-					)
+                    // Log error
+					Self.logger.error("Inference server error: \(error, privacy: .public)")
+                    // Throw error
+                    throw LlamaServerError.errorResponse(error.localizedDescription)
 				case .event(let message):
 					// Parse json in message.data string
 					// Then, print the data.content value and append it to response

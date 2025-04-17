@@ -1673,6 +1673,9 @@
         }
       }
     },
+    "Fix the error according to the server’s error message below, then try again.\n\n%@" : {
+
+    },
     "Flip Axis" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3888,6 +3891,9 @@
           }
         }
       }
+    },
+    "Thinking..." : {
+
     },
     "This command's name" : {
       "localizations" : {

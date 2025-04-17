@@ -116,7 +116,24 @@ public class Model: ObservableObject {
                 if let pendingText = self.pendingMessage?.text {
                     text = pendingText
                 } else {
+                    // Set default text
                     text = String(localized: "Processing...")
+                    // Get model name
+                    if let modelName: String = ChatParameters.getModelName(
+                        modelType: .regular
+                    ) {
+                        // Determine if is reasoning model
+                        if RemoteModel.popularModels.contains(
+                            where: { model in
+                                let nameMatches: Bool = modelName.contains(
+                                    model.primaryName
+                                )
+                                return nameMatches && model.isReasoningModel
+                            }
+                        ) {
+                            text = String(localized: "Thinking...")
+                        }
+                    }
                 }
             case .querying:
                 text = String(localized: "Searching...")

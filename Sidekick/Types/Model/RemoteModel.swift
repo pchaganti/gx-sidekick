@@ -20,6 +20,17 @@ public struct RemoteModel: Identifiable, Codable {
     
     /// An array of supported ``Modality``
     public var modalities: [Modality]
+    /// A `Bool` representing whethe the model is multimodal
+    public var isMultimodal: Bool {
+        return modalities.count > 1
+    }
+    
+    /// An array of supported ``Capability``
+    public var capabilities: [Capability] = []
+    /// A `Bool` representing whethe the model is capable of reasoning
+    public var isReasoningModel: Bool {
+        return self.capabilities.contains(.reasoning)
+    }
     
     /// Organizations that train models
     public enum Organization: String, Codable, CaseIterable {
@@ -42,8 +53,13 @@ public struct RemoteModel: Identifiable, Codable {
         case text
     }
     
-    /// A list of multimodal models
-    public static let multimodalModels: [RemoteModel] = [
+    /// Capabilities supported by models
+    public enum Capability: String, Codable, CaseIterable {
+        case reasoning
+    }
+    
+    /// A list of popular models
+    public static let popularModels: [RemoteModel] = [
         // Alibaba
         RemoteModel(
             primaryName: "qwen-vl",
@@ -91,7 +107,8 @@ public struct RemoteModel: Identifiable, Codable {
             modalities: [
                 .text,
                 .image
-            ]
+            ],
+            capabilities: [.reasoning]
         ),
         RemoteModel(
             primaryName: "qvq-plus",
@@ -99,7 +116,8 @@ public struct RemoteModel: Identifiable, Codable {
             modalities: [
                 .text,
                 .image
-            ]
+            ],
+            capabilities: [.reasoning]
         ),
         RemoteModel(
             primaryName: "qvq-72b",
@@ -107,7 +125,32 @@ public struct RemoteModel: Identifiable, Codable {
             modalities: [
                 .text,
                 .image
-            ]
+            ],
+            capabilities: [.reasoning]
+        ),
+        RemoteModel(
+            primaryName: "qwq-32b",
+            organization: .alibaba,
+            modalities: [
+                .text
+            ],
+            capabilities: [.reasoning]
+        ),
+        RemoteModel(
+            primaryName: "qwq-max",
+            organization: .alibaba,
+            modalities: [
+                .text
+            ],
+            capabilities: [.reasoning]
+        ),
+        RemoteModel(
+            primaryName: "qwq-plus",
+            organization: .alibaba,
+            modalities: [
+                .text
+            ],
+            capabilities: [.reasoning]
         ),
         
         // Amazon
@@ -170,6 +213,15 @@ public struct RemoteModel: Identifiable, Codable {
                 .image
             ]
         ),
+        RemoteModel(
+            primaryName: "claude-3.7-sonnet-thinking",
+            organization: .anthropic,
+            modalities: [
+                .text,
+                .image
+            ],
+            capabilities: [.reasoning]
+        ),
         
         // Google
         RemoteModel(
@@ -211,7 +263,8 @@ public struct RemoteModel: Identifiable, Codable {
                 .text,
                 .image,
                 .audio
-            ]
+            ],
+            capabilities: [.reasoning]
         ),
         RemoteModel(
             primaryName: "gemma-3-4b-it",
@@ -297,7 +350,8 @@ public struct RemoteModel: Identifiable, Codable {
             modalities: [
                 .text,
                 .image
-            ]
+            ],
+            capabilities: [.reasoning]
         ),
         RemoteModel(
             primaryName: "o1-pro",
@@ -305,7 +359,8 @@ public struct RemoteModel: Identifiable, Codable {
             modalities: [
                 .text,
                 .image
-            ]
+            ],
+            capabilities: [.reasoning]
         ),
         RemoteModel(
             primaryName: "o3",
@@ -313,7 +368,8 @@ public struct RemoteModel: Identifiable, Codable {
             modalities: [
                 .text,
                 .image
-            ]
+            ],
+            capabilities: [.reasoning]
         ),
         RemoteModel(
             primaryName: "o3-mini",
@@ -321,7 +377,8 @@ public struct RemoteModel: Identifiable, Codable {
             modalities: [
                 .text,
                 .image
-            ]
+            ],
+            capabilities: [.reasoning]
         ),
         RemoteModel(
             primaryName: "o4",
@@ -329,7 +386,8 @@ public struct RemoteModel: Identifiable, Codable {
             modalities: [
                 .text,
                 .image
-            ]
+            ],
+            capabilities: [.reasoning]
         ),
         RemoteModel(
             primaryName: "o4-mini",
@@ -337,7 +395,8 @@ public struct RemoteModel: Identifiable, Codable {
             modalities: [
                 .text,
                 .image
-            ]
+            ],
+            capabilities: [.reasoning]
         ),
         RemoteModel(
             primaryName: "gpt-4-vision",

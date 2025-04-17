@@ -1,5 +1,5 @@
 {
-  "originHash" : "8c0393236bcf388106682c277e3c62faab7134c40c60ec8bbc1fa69e58a9b2f6",
+  "originHash" : "8d78ec81bf802f2a28589c89ad4a79b033420bf538c63e0a7968c51e935913be",
   "pins" : [
     {
       "identity" : "axswift",
@@ -57,10 +57,10 @@
     {
       "identity" : "eventsource",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Recouse/EventSource.git",
+      "location" : "https://github.com/johnbean393/EventSource",
       "state" : {
-        "revision" : "bcdfb61b3587d0116d61f393c5f7691c0f888591",
-        "version" : "0.1.1"
+        "branch" : "main",
+        "revision" : "5f4eb7beba7979d38a7ecc85a755da2df36e1683"
       }
     },
     {

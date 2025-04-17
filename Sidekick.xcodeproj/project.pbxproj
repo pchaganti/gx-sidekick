@@ -2875,10 +2875,10 @@
 		};
 		200FBFEF2CB64CB400A92A74 /* XCRemoteSwiftPackageReference "EventSource" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Recouse/EventSource.git";
+			repositoryURL = "https://github.com/johnbean393/EventSource";
 			requirement = {
-				kind = exactVersion;
-				version = 0.1.1;
+				branch = main;
+				kind = branch;
 			};
 		};
 		2031B9932CEAE66400627D53 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {
