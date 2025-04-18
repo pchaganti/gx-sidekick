@@ -15,17 +15,15 @@ public protocol FunctionParams: Codable, Hashable {}
 public class DefaultFunctions {
     
     static var functions: [AnyFunctionBox] = [
-        [
-            DefaultFunctions.plan
-        ],
         ArithmeticFunctions.functions,
         CalendarFunctions.functions,
         CodeFunctions.functions,
         FileFunctions.functions,
+        InputFunctions.functions,
         RemindersFunctions.functions,
         WebFunctions.functions,
         [
-            DefaultFunctions.getConfirmation,
+            DefaultFunctions.plan,
             DefaultFunctions.fetchContacts
         ]
     ].flatMap { $0 }
@@ -35,41 +33,6 @@ public class DefaultFunctions {
             by: \.params.count,
             order: .reverse
         )
-    }
-    
-    /// A ``Function`` to ask for confirmation
-    static let getConfirmation = Function<GetConfirmationParams, String>(
-        name: "get_confirmation",
-        description: "Get user confirmation to clarify user intent by presenting a dialog with a title and message, where the user can click `Yes` or `No. ONLY returns `Yes` or `No`.",
-        params: [
-            FunctionParameter(
-                label: "title",
-                description: "The title displayed in the alert",
-                datatype: .string,
-                isRequired: true
-            ),
-            FunctionParameter(
-                label: "message",
-                description: "The message displayed in the alert. This should end with a yes or no question such as `Do you want to continue?`.",
-                datatype: .string,
-                isRequired: true
-            )
-        ],
-        run: { params in
-            let dialogResult: Bool = Dialogs.showConfirmation(
-                title: params.title,
-                message: params.message
-            )
-            return """
-An confirmation dialog with the message \"\(params.message)\" was shown.
-
-The user responded by clicking \(dialogResult ? "Yes" : "No").
-"""
-        }
-    )
-    struct GetConfirmationParams: FunctionParams {
-        let title: String
-        let message: String
     }
     
     /// A function to get all contacts

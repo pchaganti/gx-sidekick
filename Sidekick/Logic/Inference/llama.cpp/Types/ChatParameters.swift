@@ -98,9 +98,9 @@ struct ChatParameters: Codable {
         modelType: ModelType,
         omittedParams: [ParamKey] = []
     ) -> String {
-        // Omit tools if needed
+        // Omit tools if non-regular, or has no native tool calling
         var omittedParams = omittedParams
-        if modelType != .regular || !InferenceSettings.hasNativeToolCalling {
+        if modelType != .regular || !InferenceSettings.hasNativeToolCalling || !usingRemoteModel {
             omittedParams.append(.tools)
         }
         // If is remote model, omit temperature to use provider reccomended params
@@ -150,13 +150,7 @@ struct ChatParameters: Codable {
             return "{}"
         }
         // Log call
-        let jsonStringApiHidden = jsonString.replacingOccurrences(
-            of: InferenceSettings.inferenceApiKey,
-            with: "REDACTED_API_KEY"
-        )
-        Self.logger.info(
-            "Made API call with parameters: \(jsonStringApiHidden, privacy: .public)"
-        )
+        Self.logger.info("Made API call with parameters: \(jsonString, privacy: .public)")
         // Return JSON
         return jsonString
     }

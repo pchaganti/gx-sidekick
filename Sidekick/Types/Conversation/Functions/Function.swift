@@ -93,7 +93,7 @@ public struct Function<Parameter: FunctionParams, Result: Codable>: FunctionProt
         description: String,
         clearance: Clearance = .regular,
         params: [FunctionParameter],
-        run: @escaping (Parameter) async throws -> Result
+        run: @MainActor @escaping (Parameter) async throws -> Result
     ) {
         self.name = name
         self.description = description

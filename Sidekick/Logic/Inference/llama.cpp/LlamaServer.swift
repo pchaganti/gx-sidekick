@@ -396,10 +396,10 @@ public actor LlamaServer {
         let omittedParams: [ChatParameters.ParamKey] = {
             switch mode {
                 case .chat:
-                    if useFunctions {
-                        return []
-                    } else {
+                    if !useFunctions {
                         return [.tools]
+                    } else {
+                        return []
                     }
                 case .`default`:
                     return [.tools]

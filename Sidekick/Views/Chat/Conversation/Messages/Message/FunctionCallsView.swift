@@ -7,7 +7,6 @@
 
 import Combine
 import Shimmer
-import SwiftfulLoadingIndicators
 import SwiftUI
 
 struct FunctionCallsView: View {
@@ -86,27 +85,14 @@ struct FunctionCallsView: View {
                     view.shimmering()
                 }
                 Spacer()
-                labelMoreInfo
-            }
-            .padding(.horizontal, 7)
-        }
-        
-        var labelMoreInfo: some View {
-            Group {
                 if didExecute {
                     Image(systemName: "chevron.up")
                         .fontWeight(.semibold)
                         .foregroundStyle(.secondary.opacity(0.8))
                         .rotationEffect(showDetails ? .zero : .degrees(180))
-                } else {
-                    LoadingIndicator(
-                        animation: .circleRunner,
-                        color: self.functionCall.status?.color ?? .gray,
-                        size: .small
-                    )
-                    .scaleEffect(0.6)
                 }
             }
+            .padding(.horizontal, 7)
         }
         
         var details: some View {
