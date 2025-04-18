@@ -5,6 +5,7 @@
 //  Created by John Bean on 4/15/25.
 //
 
+import AppKit
 import ExtractKit_macOS
 import Foundation
 
@@ -12,7 +13,9 @@ public class WebFunctions {
     
     static var functions: [AnyFunctionBox] = [
         WebFunctions.webSearch,
-        WebFunctions.getWebsiteContent
+        WebFunctions.getWebsiteContent,
+        WebFunctions.draftEmail,
+        WebFunctions.getLocation
     ]
     
     /// A function to check if a web function was used
@@ -125,5 +128,112 @@ The content from each site here is a summary. Use the `get_website_content` func
     struct GetWebsiteContentParams: FunctionParams {
         let url: String
     }
+    
+    /// A function to create an email draft
+    static let draftEmail = Function<DraftEmailParams, String>(
+        name: "draft_email",
+        description: "Uses the \"mailto:\" URL scheme to create an email draft in the default email client.",
+        clearance: .sensitive,
+        params: [
+            FunctionParameter(
+                label: "recipients",
+                description: "An array containing the email addresses of the recipients.",
+                datatype: .stringArray,
+                isRequired: true
+            ),
+            FunctionParameter(
+                label: "cc",
+                description: "An array containing the email addresses of the cc recipients.",
+                datatype: .stringArray,
+                isRequired: true
+            ),
+            FunctionParameter(
+                label: "bcc",
+                description: "An array containing the email addresses of the cc recipients.",
+                datatype: .stringArray,
+                isRequired: true
+            ),
+            FunctionParameter(
+                label: "subject",
+                description: "The subject of the email",
+                datatype: .string,
+                isRequired: true
+            ),
+            FunctionParameter(
+                label: "body",
+                description: "The body of the email.",
+                datatype: .string,
+                isRequired: true
+            )
+        ],
+        run: { params in
+            // Formulate URL
+            var urlString: String = "mailto:"
+            urlString += params.recipients.joined(separator: ",")
+            // Start query parameters
+            var queryItems: [String] = []
+            // Add CC & BCC recipients if present
+            if let cc = params.cc, !cc.isEmpty {
+                queryItems.append("cc=\(cc.joined(separator: ","))")
+            }
+            if let bcc = params.bcc, !bcc.isEmpty {
+                queryItems.append("bcc=\(bcc.joined(separator: ","))")
+            }
+            // Add subject & body
+            if !params.subject.isEmpty {
+                queryItems.append("subject=\(params.subject)")
+            }
+            if !params.body.isEmpty {
+                queryItems.append("body=\(params.body)")
+            }
+            // Append query parameters if there are any
+            if !queryItems.isEmpty {
+                urlString += "?" + queryItems.joined(separator: "&")
+            }
+            // URL encode the string
+            guard let encodedString = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
+                throw DraftEmailError.percentEncodingFailed
+            }
+            // Formulate and open URL
+            guard let url: URL = URL(string: encodedString) else {
+                throw DraftEmailError.urlCreationFailed
+            }
+            let _ = NSWorkspace.shared.open(url)
+            return "Successfully created email draft"
+            enum DraftEmailError: LocalizedError {
+                
+                case percentEncodingFailed
+                case urlCreationFailed
+                
+                var errorDescription: String? {
+                    switch self {
+                        case .percentEncodingFailed:
+                            return "Failed to add percent encoding to `mailto` URL"
+                        case .urlCreationFailed:
+                            return "Failed to create URL from `mailto` string"
+                    }
+                }
+            }
+        }
+    )
+    struct DraftEmailParams: FunctionParams {
+        let recipients: [String]
+        let cc: [String]?
+        let bcc: [String]?
+        let subject: String
+        let body: String
+    }
+    
+    /// A function to get the user's location
+    static let getLocation = Function<BlankParams, String>(
+        name: "get_location",
+        description: "A function to get the user's location. Use this before providing answers that depend on location, such as weather or holidays.",
+        params: [
+        ],
+        run: { params in
+            return try await IPLocation.getLocation()
+        }
+    )
+    struct BlankParams: FunctionParams {}
     
 }

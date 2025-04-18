@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PendingMessageView: View {
-	
+    
 	@EnvironmentObject private var model: Model
 	@EnvironmentObject private var conversationState: ConversationState
 	@EnvironmentObject private var expertManager: ExpertManager
@@ -31,6 +31,7 @@ struct PendingMessageView: View {
 			canEdit: false,
             shimmer: self.model.textIsIndicator
 		)
+        .id(self.model.displayedPendingMessage.id)
     }
 	
 }

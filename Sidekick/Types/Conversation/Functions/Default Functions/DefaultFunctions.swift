@@ -15,6 +15,9 @@ public protocol FunctionParams: Codable, Hashable {}
 public class DefaultFunctions {
     
     static var functions: [AnyFunctionBox] = [
+        [
+            DefaultFunctions.plan
+        ],
         ArithmeticFunctions.functions,
         CalendarFunctions.functions,
         CodeFunctions.functions,
@@ -22,10 +25,8 @@ public class DefaultFunctions {
         RemindersFunctions.functions,
         WebFunctions.functions,
         [
-            DefaultFunctions.showAlert,
-            DefaultFunctions.draftEmail,
-            DefaultFunctions.fetchContacts,
-            DefaultFunctions.getLocation
+            DefaultFunctions.getConfirmation,
+            DefaultFunctions.fetchContacts
         ]
     ].flatMap { $0 }
     
@@ -36,125 +37,39 @@ public class DefaultFunctions {
         )
     }
     
-    /// A ``Function`` to show alerts
-    static let showAlert = Function<ShowAlertParams, String?>(
-        name: "show_alert",
-        description: "Show an alert dialog to the user",
+    /// A ``Function`` to ask for confirmation
+    static let getConfirmation = Function<GetConfirmationParams, String>(
+        name: "get_confirmation",
+        description: "Get user confirmation to clarify user intent by presenting a dialog with a title and message, where the user can click `Yes` or `No. ONLY returns `Yes` or `No`.",
         params: [
+            FunctionParameter(
+                label: "title",
+                description: "The title displayed in the alert",
+                datatype: .string,
+                isRequired: true
+            ),
             FunctionParameter(
                 label: "message",
-                description: "The message displayed in the alert",
+                description: "The message displayed in the alert. This should end with a yes or no question such as `Do you want to continue?`.",
                 datatype: .string,
                 isRequired: true
             )
         ],
         run: { params in
-            DispatchQueue.main.async {
-                Dialogs.showAlert(
-                    title: "Alert",
-                    message: params.message
-                )
-            }
-            return "An alert with the message \"\(params.message)\" was shown."
+            let dialogResult: Bool = Dialogs.showConfirmation(
+                title: params.title,
+                message: params.message
+            )
+            return """
+An confirmation dialog with the message \"\(params.message)\" was shown.
+
+The user responded by clicking \(dialogResult ? "Yes" : "No").
+"""
         }
     )
-    struct ShowAlertParams: FunctionParams {
+    struct GetConfirmationParams: FunctionParams {
+        let title: String
         let message: String
-    }
-    
-    /// A function to create an email draft
-    static let draftEmail = Function<DraftEmailParams, String>(
-        name: "draft_email",
-        description: "Uses the \"mailto:\" URL scheme to create an email draft in the default email client.",
-        clearance: .sensitive,
-        params: [
-            FunctionParameter(
-                label: "recipients",
-                description: "An array containing the email addresses of the recipients.",
-                datatype: .stringArray,
-                isRequired: true
-            ),
-            FunctionParameter(
-                label: "cc",
-                description: "An array containing the email addresses of the cc recipients.",
-                datatype: .stringArray,
-                isRequired: true
-            ),
-            FunctionParameter(
-                label: "bcc",
-                description: "An array containing the email addresses of the cc recipients.",
-                datatype: .stringArray,
-                isRequired: true
-            ),
-            FunctionParameter(
-                label: "subject",
-                description: "The subject of the email",
-                datatype: .string,
-                isRequired: true
-            ),
-            FunctionParameter(
-                label: "body",
-                description: "The body of the email.",
-                datatype: .string,
-                isRequired: true
-            )
-        ],
-        run: { params in
-            // Formulate URL
-            var urlString: String = "mailto:"
-            urlString += params.recipients.joined(separator: ",")
-            // Start query parameters
-            var queryItems: [String] = []
-            // Add CC & BCC recipients if present
-            if let cc = params.cc, !cc.isEmpty {
-                queryItems.append("cc=\(cc.joined(separator: ","))")
-            }
-            if let bcc = params.bcc, !bcc.isEmpty {
-                queryItems.append("bcc=\(bcc.joined(separator: ","))")
-            }
-            // Add subject & body
-            if !params.subject.isEmpty {
-                queryItems.append("subject=\(params.subject)")
-            }
-            if !params.body.isEmpty {
-                queryItems.append("body=\(params.body)")
-            }
-            // Append query parameters if there are any
-            if !queryItems.isEmpty {
-                urlString += "?" + queryItems.joined(separator: "&")
-            }
-            // URL encode the string
-            guard let encodedString = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
-                throw DraftEmailError.percentEncodingFailed
-            }
-            // Formulate and open URL
-            guard let url: URL = URL(string: encodedString) else {
-                throw DraftEmailError.urlCreationFailed
-            }
-            let _ = NSWorkspace.shared.open(url)
-            return "Successfully created email draft"
-            enum DraftEmailError: LocalizedError {
-                
-                case percentEncodingFailed
-                case urlCreationFailed
-                
-                var errorDescription: String? {
-                    switch self {
-                        case .percentEncodingFailed:
-                            return "Failed to add percent encoding to `mailto` URL"
-                        case .urlCreationFailed:
-                            return "Failed to create URL from `mailto` string"
-                    }
-                }
-            }
-        }
-    )
-    struct DraftEmailParams: FunctionParams {
-        let recipients: [String]
-        let cc: [String]?
-        let bcc: [String]?
-        let subject: String
-        let body: String
     }
     
     /// A function to get all contacts
@@ -163,7 +78,7 @@ public class DefaultFunctions {
         description: """
 Fetches contacts from macOS Contacts. The user's contact can be accessed to obtain their email, birthday, address, etc.
 
-Returns JSON objects for each contact containing the person's name, emails, phone numbers, birthday (as string), and address. Supports filtering based on name, email, and phone number.
+Returns JSON objects for each contact containing the person's name, emails, phone numbers, birthday, and address. Supports filtering based on name, email, and phone number.
 """,
         clearance: .dangerous,
         params: [
@@ -295,16 +210,63 @@ Returns JSON objects for each contact containing the person's name, emails, phon
         var phone: String?
     }
     
-    /// A function to get the user's location
-    static let getLocation = Function<BlankParams, String>(
-        name: "get_location",
-        description: "A function to get the user's location. Use this before providing answers that depend on location, such as weather or holidays.",
-        params: [ 
+    /// A ``Function`` to plan the course of execution
+    static let plan = Function<PlanParams, String>(
+        name: "plan",
+        description: """
+Plan the course of execution for complex user requests that require tool calling. This should be the first tool called for complex user requests that require tool calling.
+
+Returns a step by step plan.
+""",
+        params: [
+            FunctionParameter(
+                label: "request",
+                description: "The request provided by the user to the assistant.",
+                datatype: .string,
+                isRequired: true
+            )
         ],
         run: { params in
-            return try await IPLocation.getLocation()
+            // Formulate message
+            var messageComponents: [String] = []
+            messageComponents.append("Below is a list of functions.\n")
+            // Inject functions
+            let functions: [any AnyFunctionBox] = DefaultFunctions.functions
+            for (index, function) in functions.enumerated() {
+                messageComponents.append(
+                    "\(index + 1). \(function.name): \(function.description)."
+                )
+            }
+            // Inject instructions
+            messageComponents.append("\nThe user has given you the mission below. Plan out all steps required, in the context of function calls. Think about dependencies that each step has, and order the steps in the most reasonable way. Respond with the steps and associated potential function calls ONLY.\n")
+            // Inject user mission
+            messageComponents.append("\n\"\(params.request)\"")
+            // Put together prompt
+            let messageText = messageComponents.joined(separator: "\n")
+            // Formulate message
+            let systemPromptMessage: Message = Message(
+                text: InferenceSettings.systemPrompt,
+                sender: .system
+            )
+            let commandMessage: Message = Message(
+                text: messageText,
+                sender: .user
+            )
+            // Get response
+            let response: LlamaServer.CompleteResponse = try await Model.shared.listenThinkRespond(
+                messages: [
+                    systemPromptMessage,
+                    commandMessage
+                ],
+                modelType: .regular,
+                mode: .`default`
+            )
+            // Return response
+            return response.text.reasoningRemoved
         }
     )
-    struct BlankParams: FunctionParams {}
+    struct PlanParams: FunctionParams {
+        var request: String
+    }
     
 }

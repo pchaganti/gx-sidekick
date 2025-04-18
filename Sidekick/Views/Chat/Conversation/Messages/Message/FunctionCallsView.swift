@@ -5,6 +5,9 @@
 //  Created by John Bean on 4/9/25.
 //
 
+import Combine
+import Shimmer
+import SwiftfulLoadingIndicators
 import SwiftUI
 
 struct FunctionCallsView: View {
@@ -29,21 +32,18 @@ struct FunctionCallsView: View {
         @State private var showDetails: Bool = false
         
         var functionCall: FunctionCallRecord
-        var boxColor: Color {
-            return self.functionCall.status?.color ?? .secondary
-        }
         
         var didExecute: Bool {
-            self.functionCall.status?.didExecute ?? false
+            functionCall.status?.didExecute ?? false
+        }
+        var boxColor: Color {
+            functionCall.status?.color ?? .secondary
         }
         
         var body: some View {
             Button {
-                // Toggle if results are available
-                if self.didExecute {
-                    withAnimation(.linear) {
-                        self.showDetails.toggle()
-                    }
+                if didExecute {
+                    withAnimation(.linear) { showDetails.toggle() }
                 }
             } label: {
                 label
@@ -52,13 +52,9 @@ struct FunctionCallsView: View {
         }
         
         var label: some View {
-            VStack(
-                alignment: .leading,
-                spacing: 0
-            ) {
-                labelContent
-                    .frame(height: 33)
-                if self.showDetails {
+            VStack(alignment: .leading, spacing: 0) {
+                labelContent.frame(height: 33)
+                if showDetails {
                     Divider()
                     details
                 }
@@ -80,30 +76,42 @@ struct FunctionCallsView: View {
             HStack {
                 Circle()
                     .frame(width: 10, height: 10)
-                    .foregroundStyle(
-                        self.functionCall.status?.color ?? .gray
-                    )
+                    .foregroundStyle(self.functionCall.status?.color ?? .gray)
                     .padding(.horizontal, 5)
                 Group {
                     Text("Function: ").bold() + Text(self.functionCall.name).italic()
                 }
                 .opacity(0.8)
-                Spacer()
-                if self.didExecute {
-                    Image(systemName: "chevron.up")
-                        .fontWeight(.semibold)
-                        .foregroundStyle(.secondary.opacity(0.8))
-                        .rotationEffect(
-                            self.showDetails ? .zero : .degrees(180)
-                        )
+                .if(!self.didExecute) { view in
+                    view.shimmering()
                 }
+                Spacer()
+                labelMoreInfo
             }
             .padding(.horizontal, 7)
         }
         
+        var labelMoreInfo: some View {
+            Group {
+                if didExecute {
+                    Image(systemName: "chevron.up")
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.secondary.opacity(0.8))
+                        .rotationEffect(showDetails ? .zero : .degrees(180))
+                } else {
+                    LoadingIndicator(
+                        animation: .circleRunner,
+                        color: self.functionCall.status?.color ?? .gray,
+                        size: .small
+                    )
+                    .scaleEffect(0.6)
+                }
+            }
+        }
+        
         var details: some View {
             VStack(alignment: .leading) {
-                if let result = self.functionCall.result {
+                if let result = functionCall.result {
                     Text("Result: ").bold() + Text(result).italic()
                 }
             }

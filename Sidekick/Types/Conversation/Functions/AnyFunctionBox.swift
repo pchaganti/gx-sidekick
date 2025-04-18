@@ -10,6 +10,7 @@ import Foundation
 protocol AnyFunctionBox {
     
     var name: String { get }
+    var description: String { get }
     var params: [FunctionParameter] { get }
     
     func getJsonSchema() -> String

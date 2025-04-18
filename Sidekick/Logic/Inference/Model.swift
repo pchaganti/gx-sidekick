@@ -112,15 +112,9 @@ public class Model: ObservableObject {
     public var displayedPendingMessage: Message {
         var text: String = ""
         let functionCalls: [FunctionCallRecord] = self.pendingMessage?.functionCallRecords ?? []
-        DispatchQueue.main.async {
-            self.textIsIndicator = true
-        }
         switch self.status {
             case .cold, .coldProcessing, .processing, .backgroundTask, .ready:
                 if let pendingText = self.pendingMessage?.text {
-                    DispatchQueue.main.async {
-                        self.textIsIndicator = false
-                    }
                     text = pendingText
                 } else {
                     // Set default text
@@ -148,29 +142,40 @@ public class Model: ObservableObject {
                 text = String(localized: "Generating title...")
             case .usingFunctions:
                 // If no calls found or if all calls are complete
-                let areExecuting: Bool = functionCalls.contains(where: { call in
-                    call.status == .executing
-                })
-                if functionCalls.isEmpty || !areExecuting {
-                    text = String(localized: "Calling functions...")
-                }
+                text = String(localized: "Calling functions...")
                 // Show progress
-                if let pendingText = self.pendingMessage?.text,
-                    !pendingText.isEmpty {
-                    DispatchQueue.main.async {
-                        self.textIsIndicator = false
-                    }
+                if let pendingText = self.pendingMessage?.text {
                     text = pendingText
                 }
         }
-        return Message(
-            text: text,
-            sender: .assistant,
-            functionCallRecords: functionCalls
-        )
+        if var pendingMessage: Message = self.pendingMessage {
+            pendingMessage.text = text
+            pendingMessage.functionCallRecords = functionCalls
+            return pendingMessage
+        } else {
+            return Message(
+                text: text,
+                sender: .assistant
+            )
+        }
     }
     /// A `Bool` representing whether the text or an indicator is shown
-    @Published public var textIsIndicator: Bool = false
+    public var textIsIndicator: Bool {
+        let hasText: Bool = {
+            if let text = self.pendingMessage?.text {
+                return !text.isEmpty
+            }
+            return false
+        }()
+        switch self.status {
+            case .cold, .coldProcessing, .processing, .backgroundTask, .ready:
+                return !hasText
+            case .usingFunctions:
+                return !hasText
+            default:
+                return true
+        }
+    }
     
 	/// The status of `llama-server`, of type ``Model.Status``
 	@Published var status: Status = .cold
@@ -250,7 +255,9 @@ public class Model: ObservableObject {
 		) -> Void = { _, _, _ in }
 	) async throws -> LlamaServer.CompleteResponse {
 		// Reset pending message
-		self.pendingMessage = nil
+        if self.status.isForegroundTask {
+            self.pendingMessage = nil
+        }
 		// Set flag
 		let preQueryStatus: Status = self.status
 		if preQueryStatus.isForegroundTask {
@@ -288,9 +295,6 @@ public class Model: ObservableObject {
                 self.status = .processing
             }
         }
-		// Declare variables for incremental update
-		var updateResponse: String = ""
-		let increment: Int = 3
 		// Send different response based on mode
 		var response: LlamaServer.CompleteResponse? = nil
         switch mode {
@@ -300,50 +304,20 @@ public class Model: ObservableObject {
                         response = try await self.workerModelServer.getChatCompletion(
                             mode: mode,
                             canReachRemoteServer: canReachRemoteServer,
-                            messages: messagesWithSources,
-                            progressHandler:  { partialResponse in
-                                DispatchQueue.main.async {
-                                    // Update response
-                                    updateResponse += partialResponse
-                                    self.handleCompletionProgress(
-                                        partialResponse: partialResponse,
-                                        handleResponseUpdate: handleResponseUpdate
-                                    )
-                                }
-                            }
+                            messages: messagesWithSources
                         )
                     } catch {
                         response = try await self.mainModelServer.getChatCompletion(
                             mode: mode,
                             canReachRemoteServer: canReachRemoteServer,
-                            messages: messagesWithSources,
-                            progressHandler:  { partialResponse in
-                                DispatchQueue.main.async {
-                                    // Update response
-                                    updateResponse += partialResponse
-                                    self.handleCompletionProgress(
-                                        partialResponse: partialResponse,
-                                        handleResponseUpdate: handleResponseUpdate
-                                    )
-                                }
-                            }
+                            messages: messagesWithSources
                         )
                     }
                 } else {
                     response = try await self.mainModelServer.getChatCompletion(
                         mode: mode,
                         canReachRemoteServer: canReachRemoteServer,
-                        messages: messagesWithSources,
-                        progressHandler:  { partialResponse in
-                            DispatchQueue.main.async {
-                                // Update response
-                                updateResponse += partialResponse
-                                self.handleCompletionProgress(
-                                    partialResponse: partialResponse,
-                                    handleResponseUpdate: handleResponseUpdate
-                                )
-                            }
-                        }
+                        messages: messagesWithSources
                     )
                 }
             case .chat:
@@ -355,31 +329,7 @@ public class Model: ObservableObject {
                     useWebSearch: useWebSearch,
                     useFunctions: useFunctions,
                     similarityIndex: similarityIndex,
-                    handleResponseUpdate: handleResponseUpdate,
-                    increment: increment
-                )
-            case .contextAwareAgent:
-                response = try await self.mainModelServer.getChatCompletion(
-                    mode: mode,
-                    canReachRemoteServer: canReachRemoteServer,
-                    messages: messagesWithSources,
-                    similarityIndex: similarityIndex,
-                    progressHandler:  { partialResponse in
-                        DispatchQueue.main.async {
-                            // Update response
-                            updateResponse += partialResponse
-                            // Display if large update
-                            let updateCount: Int = updateResponse.count
-                            let displayedCount = self.pendingMessage?.text.count ?? 0
-                            if updateCount >= increment || displayedCount < increment {
-                                self.handleCompletionProgress(
-                                    partialResponse: partialResponse,
-                                    handleResponseUpdate: handleResponseUpdate
-                                )
-                                updateResponse = ""
-                            }
-                        }
-                    }
+                    handleResponseUpdate: handleResponseUpdate
                 )
         }
 		// Handle response finish
@@ -389,9 +339,10 @@ public class Model: ObservableObject {
 			response!.usage?.total_tokens
 		)
 		// Update display
-		self.pendingMessage = nil
-        self.textIsIndicator = false
-		self.status = .ready
+        if preQueryStatus.isForegroundTask {
+            self.pendingMessage = nil
+            self.status = .ready
+        }
 		Self.logger.notice("Finished responding to prompt")
 		return response!
 	}
@@ -400,7 +351,9 @@ public class Model: ObservableObject {
     private func updateStatus(
         _ status: Status
     ) {
-        self.status = status
+        if self.status != status {
+            self.status = status
+        }
     }
 	
 	/// Function to get response for chat
@@ -412,9 +365,10 @@ public class Model: ObservableObject {
         useWebSearch: Bool,
         useFunctions: Bool,
 		similarityIndex: SimilarityIndex? = nil,
-		handleResponseUpdate: @escaping (String, String) -> Void,
-		increment: Int
+		handleResponseUpdate: @escaping (String, String) -> Void
 	) async throws -> LlamaServer.CompleteResponse {
+        // Define increment for update
+        let increment: Int = 3
 		// Handle initial response
 		let initialResponse = try await getInitialResponse(
 			mode: mode,
@@ -422,7 +376,6 @@ public class Model: ObservableObject {
 			messages: messagesWithSources,
             useWebSearch: useWebSearch,
             useFunctions: useFunctions,
-			similarityIndex: similarityIndex,
 			handleResponseUpdate: handleResponseUpdate,
 			increment: increment
 		)
@@ -455,7 +408,6 @@ public class Model: ObservableObject {
 		messages: [Message.MessageSubset],
         useWebSearch: Bool,
         useFunctions: Bool,
-		similarityIndex: SimilarityIndex?,
 		handleResponseUpdate: @escaping (String, String) -> Void,
 		increment: Int
     ) async throws -> LlamaServer.CompleteResponse {
@@ -467,7 +419,6 @@ public class Model: ObservableObject {
             messages: messages,
             useWebSearch: useWebSearch,
             useFunctions: useFunctions,
-            similarityIndex: similarityIndex,
             updateStatusHandler: { status in
                 await self.updateStatus(status)
             },
@@ -528,8 +479,10 @@ public class Model: ObservableObject {
                 // Run
                 let result: String = try await functionCall.call() ?? "Function evaluated successfully"
                 // Mark as succeeded
-                functionCallRecord.status = .succeeded
-                functionCallRecord.result = result
+                functionCallRecord.markAsFinished(
+                    status: .succeeded,
+                    result: result
+                )
                 // Formulate callback message
                 messageString = """
 Below is the result produced by the tool call: `\(callJsonSchema)`. If the tool call provides enough information to solve the user's query, organize the information into an answer. If the tool call did not provide enough information, try breaking down the user's query and finding information about its constituent parts. Else, call another tool to obtain more information or execute more actions.
@@ -542,8 +495,10 @@ Below is the result produced by the tool call: `\(callJsonSchema)`. If the tool 
                 // Get error description
                 let errorDescription: String = error.localizedDescription
                 // Mark as failed
-                functionCallRecord.status = .failed
-                functionCallRecord.result = errorDescription
+                functionCallRecord.markAsFinished(
+                    status: .succeeded,
+                    result: errorDescription
+                )
                 // Formulate callback message
                 messageString = """
 The function call `\(callJsonSchema)` failed, producing the error below.
@@ -583,7 +538,6 @@ The function call `\(callJsonSchema)` failed, producing the error below.
                 messages: messages,
                 useWebSearch: useWebSearch,
                 useFunctions: useFunctions,
-                similarityIndex: similarityIndex,
                 updateStatusHandler: { status in
                     await self.updateStatus(status)
                 },
@@ -622,10 +576,9 @@ The function call `\(callJsonSchema)` failed, producing the error below.
             self.pendingMessage?.text = updateResponse
             // Get response
             var response: LlamaServer.CompleteResponse = try await self.mainModelServer.getChatCompletion(
-                mode: .contextAwareAgent,
+                mode: .default,
                 canReachRemoteServer: canReachRemoteServer,
                 messages: messages,
-                similarityIndex: similarityIndex,
                 progressHandler: { partialResponse in
                     DispatchQueue.main.async {
                         updateResponse += partialResponse
@@ -752,7 +705,7 @@ The function call `\(callJsonSchema)` failed, producing the error below.
 		case generatingTitle
 		/// The system is running a background task
 		case backgroundTask
-		/// The system is using a code interpreter
+		/// The system is using a function
 		case usingFunctions
 		/// The inference server is awaiting a prompt
 		case ready
@@ -770,7 +723,7 @@ The function call `\(callJsonSchema)` failed, producing the error below.
 		/// A `Bool` representing if the server is running a foreground task
 		public var isForegroundTask: Bool {
 			switch self {
-				case .backgroundTask, .generatingTitle:
+                case .backgroundTask, .generatingTitle, .usingFunctions:
 					return false
 				default:
 					return true
@@ -784,8 +737,6 @@ The function call `\(callJsonSchema)` failed, producing the error below.
 		
 		/// Indicates the LLM is used as a chatbot, with extra features like resource lookup and code interpreter
 		case chat
-		/// Indicates the LLM is used with context aware agent, with features like resource lookup
-		case contextAwareAgent
 		/// Indicates the LLM is used for simple chat completion
 		case `default`
 		

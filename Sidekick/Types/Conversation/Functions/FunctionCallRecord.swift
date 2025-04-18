@@ -16,10 +16,21 @@ public struct FunctionCallRecord: Codable, Equatable, Hashable {
     var name: String
     /// A ``Status`` representing if the function was executed successfully
     var status: Status? = .executing
+    
     /// A `Date` for the time where the function was called
     var timeCalled: Date = .now
+    
     /// A `String` containing the result of the run
     var result: String? = nil
+    
+    /// Function to mark the function as complete
+    public mutating func markAsFinished(
+        status: Status,
+        result: String
+    ) {
+        self.status = status
+        self.result = result
+    }
     
     public enum Status: Codable, CaseIterable {
         

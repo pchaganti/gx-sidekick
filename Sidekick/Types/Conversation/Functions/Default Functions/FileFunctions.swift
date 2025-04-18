@@ -121,7 +121,7 @@ public class FileFunctions {
     }
     
     /// A function to write to a text file
-    static let writePlaintextToFile = Function<WritePlaintextToFileParams, String?>(
+    static let writePlaintextToFile = Function<WritePlaintextToFileParams, String>(
         name: "write_plaintext_to_file",
         description: "Writes the provided text to a file at the specified POSIX path.",
         clearance: .sensitive,
@@ -164,7 +164,7 @@ public class FileFunctions {
     }
     
     /// A function to delete a file
-    static let deleteFile = Function<DeleteFileParams, String?>(
+    static let deleteFile = Function<DeleteFileParams, String>(
         name: "delete_file",
         description: "Deletes the file or directory at the specified POSIX path. Directories are deleted recursively.",
         clearance: .dangerous,

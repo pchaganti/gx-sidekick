@@ -338,7 +338,6 @@ public actor LlamaServer {
 		messages: [Message.MessageSubset],
         useWebSearch: Bool = false,
         useFunctions: Bool = false,
-		similarityIndex: SimilarityIndex? = nil,
         updateStatusHandler: (@Sendable (Model.Status) async -> Void)? = nil,
         progressHandler: (@Sendable (String) -> Void)? = nil
 	) async throws -> CompleteResponse {
@@ -368,15 +367,7 @@ public actor LlamaServer {
                         systemPrompt: self.systemPrompt,
                         messages: messages,
                         useWebSearch: useWebSearch,
-                        useFunctions: useFunctions,
-						similarityIndex: similarityIndex
-					)
-				case .contextAwareAgent:
-					return await ChatParameters(
-                        modelType: self.modelType,
-                        systemPrompt: self.systemPrompt,
-                        messages: messages,
-						similarityIndex: similarityIndex
+                        useFunctions: useFunctions
 					)
 				case .default:
 					return await ChatParameters(
@@ -401,9 +392,23 @@ public actor LlamaServer {
 			)
 			request.setValue("nil", forHTTPHeaderField: "ngrok-skip-browser-warning")
 		}
+        // Formulate request JSON
+        let omittedParams: [ChatParameters.ParamKey] = {
+            switch mode {
+                case .chat:
+                    if useFunctions {
+                        return []
+                    } else {
+                        return [.tools]
+                    }
+                case .`default`:
+                    return [.tools]
+            }
+        }()
 		let requestJson: String = await params.toJSON(
             usingRemoteModel: rawUrl.usingRemoteServer,
-            modelType: self.modelType
+            modelType: self.modelType,
+            omittedParams: omittedParams
         )
 		request.httpBody = requestJson.data(using: .utf8)
 		// Use EventSource to receive server sent events

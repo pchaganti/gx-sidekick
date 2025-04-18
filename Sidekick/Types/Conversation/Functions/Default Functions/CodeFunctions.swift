@@ -35,7 +35,7 @@ public class CodeFunctions {
     }
     
     /// A function to run a terminal command
-    static let runCommand = Function<RunCommandParams, String?>(
+    static let runCommand = Function<RunCommandParams, String>(
         name: "run_command",
         description: "Executes the specified command in the macOS Terminal and returns the output.",
         clearance: .dangerous,

@@ -369,11 +369,16 @@ Do you wish to permit this?
         // Custom decoding initialization to handle both keys
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            
             // Try decoding using function_call first, then function
-            if let config = try? container.decode(FunctionCallConfig.self, forKey: .functionCall) {
+            if let config = try? container.decode(
+                FunctionCallConfig.self,
+                forKey: .functionCall
+            ) {
                 self.config = config
-            } else if let config = try? container.decode(FunctionCallConfig.self, forKey: .function) {
+            } else if let config = try? container.decode(
+                FunctionCallConfig.self,
+                forKey: .function
+            ) {
                 self.config = config
             } else {
                 throw DecodingError.dataCorrupted(
@@ -419,10 +424,14 @@ Do you wish to permit this?
             from data: Data,
             using decoder: JSONDecoder
         ) -> Function<Parameter, Result>.FunctionCall? {
-            return try? decoder.decode(
-                Function<Parameter, Result>.FunctionCall.self,
-                from: data
-            )
+            do {
+                return try decoder.decode(
+                    Function<Parameter, Result>.FunctionCall.self,
+                    from: data
+                )
+            } catch {
+                return nil
+            }
         }
         
         public enum Status: Codable, CaseIterable {

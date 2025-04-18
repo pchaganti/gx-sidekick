@@ -45,8 +45,7 @@ struct ChatParameters: Codable {
         systemPrompt: String,
         messages: [Message.MessageSubset],
         useWebSearch: Bool = false,
-        useFunctions: Bool = false,
-		similarityIndex: SimilarityIndex?
+        useFunctions: Bool = false
 	) async {
 		// Formulate messages
 		// Formulate system prompt
@@ -73,7 +72,6 @@ struct ChatParameters: Codable {
 		)
 		let systemPromptMsgSubset: Message.MessageSubset = await Message.MessageSubset(
 			message: systemPromptMsg,
-            similarityIndex: nil,
             temporaryResources: [],
             shouldAddSources: false,
             useWebSearch: false
@@ -102,7 +100,7 @@ struct ChatParameters: Codable {
     ) -> String {
         // Omit tools if needed
         var omittedParams = omittedParams
-        if modelType == .worker || !InferenceSettings.hasNativeToolCalling {
+        if modelType != .regular || !InferenceSettings.hasNativeToolCalling {
             omittedParams.append(.tools)
         }
         // If is remote model, omit temperature to use provider reccomended params
@@ -113,6 +111,7 @@ struct ChatParameters: Codable {
         omittedParams = Array(Set(omittedParams))
         // Use JSONEncoder and a wrapper struct for omitted keys
         struct OmitWrapper: Encodable {
+            
             let model: String?
             let messages: [Message.MessageSubset]?
             let temperature: Double?

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MessagesView: View {
-    
+ 
 	@Environment(\.colorScheme) var colorScheme
 	
 	@EnvironmentObject private var model: Model
@@ -30,31 +30,28 @@ struct MessagesView: View {
 	}
 	
 	var shouldShowPreview: Bool {
-		let statusPass: Bool = self.model.status.isWorking && self.model.status != .backgroundTask
+        let statusPass: Bool = self.model.status.isWorking && self.model.status != .backgroundTask
 		let conversationPass: Bool = self.selectedConversation?.id == self.model.sentConversationId
 		return statusPass && conversationPass
 	}
 	
-	var body: some View {
-		ScrollView {
-			ScrollViewReader { proxy in
-				HStack(alignment: .top) {
-					LazyVStack(alignment: .leading, spacing: 13) {
-						Group {
-							self.messagesView
-							if self.shouldShowPreview {
-								PendingMessageView()
-									.id("pending")
-							}
-						}
-					}
-					.padding(.vertical)
-					.padding(.bottom, 150)
-					Spacer()
-				}
-			}
-		}
-	}
+    var body: some View {
+        ScrollView {
+            HStack(alignment: .top) {
+                LazyVStack(alignment: .leading, spacing: 13) {
+                    Group {
+                        self.messagesView
+                        if self.shouldShowPreview {
+                            PendingMessageView()
+                        }
+                    }
+                }
+                .padding(.vertical)
+                .padding(.bottom, 175)
+                Spacer()
+            }
+        }
+    }
 	
 	var messagesView: some View {
         ForEach(
