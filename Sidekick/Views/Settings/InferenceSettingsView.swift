@@ -245,9 +245,18 @@ struct InferenceSettingsView: View {
 	var temperatureEditor: some View {
 		HStack(alignment: .center) {
 			VStack(alignment: .leading) {
-				Text("Temperature")
-					.font(.title3)
-					.bold()
+                HStack {
+                    Text("Temperature")
+                        .font(.title3)
+                        .bold()
+                    PopoverButton {
+                        Image(systemName: "questionmark.circle")
+                            .foregroundStyle(.secondary)
+                    } content: {
+                        temperaturePopup
+                    }
+                    .buttonStyle(.plain)
+                }
 				Text("Temperature is a parameter that influences LLM output, determining whether it is more random and creative or more predictable. The lower the setting the more predictable the model acts.")
 					.font(.caption)
 			}
@@ -267,6 +276,41 @@ struct InferenceSettingsView: View {
 			}
 		}
 	}
+    
+    var temperaturePopup: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Recommended values:")
+                .font(.system(size: 14))
+                .foregroundColor(.secondary)
+            HStack {
+                Text("Coding / Math")
+                Spacer()
+                Text("0")
+            }
+            HStack {
+                Text("Data Cleaning / Data Analysis")
+                Spacer()
+                Text("0.6")
+            }
+            HStack {
+                Text("General Conversation")
+                Spacer()
+                Text("0.8")
+            }
+            HStack {
+                Text("Translation")
+                Spacer()
+                Text("0.8")
+            }
+            HStack {
+                Text("Creative Writing / Poetry")
+                Spacer()
+                Text("1.3")
+            }
+        }
+        .font(.system(size: 11))
+        .padding(10)
+    }
 	
 	var useGPUAccelerationToggle: some View {
 		VStack {

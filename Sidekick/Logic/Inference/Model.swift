@@ -304,20 +304,47 @@ public class Model: ObservableObject {
                         response = try await self.workerModelServer.getChatCompletion(
                             mode: mode,
                             canReachRemoteServer: canReachRemoteServer,
-                            messages: messagesWithSources
+                            messages: messagesWithSources,
+                            progressHandler: { partialResponse in
+                                DispatchQueue.main.async {
+                                    // Update response
+                                    self.handleCompletionProgress(
+                                        partialResponse: partialResponse,
+                                        handleResponseUpdate: handleResponseUpdate
+                                    )
+                                }
+                            }
                         )
                     } catch {
                         response = try await self.mainModelServer.getChatCompletion(
                             mode: mode,
                             canReachRemoteServer: canReachRemoteServer,
-                            messages: messagesWithSources
+                            messages: messagesWithSources,
+                            progressHandler: { partialResponse in
+                                DispatchQueue.main.async {
+                                    // Update response
+                                    self.handleCompletionProgress(
+                                        partialResponse: partialResponse,
+                                        handleResponseUpdate: handleResponseUpdate
+                                    )
+                                }
+                            }
                         )
                     }
                 } else {
                     response = try await self.mainModelServer.getChatCompletion(
                         mode: mode,
                         canReachRemoteServer: canReachRemoteServer,
-                        messages: messagesWithSources
+                        messages: messagesWithSources,
+                        progressHandler: { partialResponse in
+                            DispatchQueue.main.async {
+                                // Update response
+                                self.handleCompletionProgress(
+                                    partialResponse: partialResponse,
+                                    handleResponseUpdate: handleResponseUpdate
+                                )
+                            }
+                        }
                     )
                 }
             case .chat:
