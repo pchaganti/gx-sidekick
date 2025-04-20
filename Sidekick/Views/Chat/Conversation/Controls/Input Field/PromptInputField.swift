@@ -67,13 +67,6 @@ struct PromptInputField: View {
                     AddFilesTip.readyForAddingFiles = true
                 }
 			}
-            .onReceive(
-                NotificationCenter.default.publisher(
-                    for: Notifications.shouldResignPromptFocus.name
-                )
-            ) { _ in
-                self.isFocused = false
-            }
 			.onChange(
 				of: conversationState.selectedConversationId
 			) {
@@ -98,29 +91,18 @@ struct PromptInputField: View {
 	}
 	
 	var textField: some View {
-		TextField(
-            "",
-            text: $promptController.prompt.animation(
-                .linear
-            ),
-            selection: $promptController.selection,
-            prompt: Text("Enter a message. Press ") + self.sendShortcutDescription + Text(" to send."),
-			axis: .vertical
-		)
+        ChatPromptEditor(
+            isFocused: self._isFocused,
+            isRecording: self.$promptController.isRecording,
+            useAttachments: true,
+            bottomOptions: true,
+            cornerRadius: 22
+        )
         .onKeyPress { press in
             return self.handleKeyPress(press)
         }
         .focused(self.$isFocused)
         .submitLabel(.send)
-        .textFieldStyle(
-            ChatStyle(
-                isFocused: self._isFocused,
-                isRecording: self.$promptController.isRecording,
-                useAttachments: true,
-                bottomOptions: true,
-                cornerRadius: 22
-            )
-        )
         .overlay(alignment: .leading) {
             AttachmentSelectionButton { url in
                 await self.promptController.addFile(url)
@@ -155,46 +137,18 @@ struct PromptInputField: View {
                 // Send if command key is down and required
                 self.onSubmit()
                 return .handled
-            } else if press.modifiers == .shift || press.modifiers == .option || self.useCommandReturn && press.modifiers.isEmpty,
-                let indicies = self.promptController.selection?.indices {
-                // If the right keys are pressed, insert a new line
-                switch indicies {
-                    case .selection(let range) where range.lowerBound == range.upperBound:
-                        // Just the cursor, insert a new line and move selection
-                        DispatchQueue.main.async {
-                            withAnimation {
-                                self.promptController.prompt.insert(
-                                    "\n",
-                                    at: range.lowerBound
-                                )
-                                let newIndex: String.Index = self.promptController.prompt.index(
-                                    range.lowerBound,
-                                    offsetBy: 1
-                                )
-                                self.promptController.selection = .init(
-                                    insertionPoint: newIndex
-                                )
-                            }
-                        }
-                    case .selection(let range):
-                        // Replace the selected text with a new line
-                        DispatchQueue.main.async {
-                            withAnimation {
-                                self.promptController.prompt.replaceSubrange(
-                                    range,
-                                    with: "\n"
-                                )
-                                let newIndex: String.Index = self.promptController.prompt.index(
-                                    range.lowerBound,
-                                    offsetBy: 1
-                                )
-                                self.promptController.selection = .init(
-                                    insertionPoint: newIndex
-                                )
-                            }
-                        }
-                    default:
-                        return .ignored
+            } else if press.modifiers == .shift || press.modifiers == .option || self.useCommandReturn && press.modifiers.isEmpty {
+                // At the cursor, insert a new line and move selection
+                let index: String.Index = self.promptController.prompt.index(
+                    atDistance: self.promptController.insertionPoint
+                )
+                DispatchQueue.main.async {
+                    withAnimation {
+                        self.promptController.prompt.insert(
+                            "\n",
+                            at: index
+                        )
+                    }
                 }
                 return .handled
             } else if !self.useCommandReturn {
@@ -212,10 +166,6 @@ struct PromptInputField: View {
         if promptController.prompt.trimmingCharacters(in: .whitespacesAndNewlines) != "" {
 			// End recording
 			self.promptController.stopRecording()
-            // Reset selection
-            DispatchQueue.main.async {
-                self.promptController.selection = nil
-            }
 			// Send message
 			self.submit()
 		}

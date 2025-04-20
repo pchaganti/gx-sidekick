@@ -51,7 +51,7 @@ struct SlideStudioPromptView: View {
 		.submitLabel(.send)
 		.focused($isFocused)
 		.textFieldStyle(
-			ChatStyle(
+			ChatFieldStyle(
                 isFocused: self._isFocused,
 				isRecording: .constant(false),
 				useAttachments: true,

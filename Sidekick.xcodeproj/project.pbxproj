@@ -54,6 +54,8 @@
 		202801FC2CC9C5C2005C1F7D /* TemporaryResourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202801FB2CC9C5C2005C1F7D /* TemporaryResourceView.swift */; };
 		202E3EDD2CBB8F7B00AF86C8 /* ReferencedURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202E3EDC2CBB8F7B00AF86C8 /* ReferencedURL.swift */; };
 		202E93662DB22D3000AB361E /* InputFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202E93652DB22D3000AB361E /* InputFunctions.swift */; };
+		202E936A2DB546EC00AB361E /* MultilineTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202E93692DB546EC00AB361E /* MultilineTextEditor.swift */; };
+		202E936C2DB54CDE00AB361E /* ChatPromptEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202E936B2DB54CDE00AB361E /* ChatPromptEditor.swift */; };
 		2030A10F2CECAE1500F2E235 /* CommandEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2030A10E2CECAE1500F2E235 /* CommandEditorView.swift */; };
 		2030D6182D6C4ED200F18BF4 /* DetectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2030D6172D6C4ED200F18BF4 /* DetectorView.swift */; };
 		2030D61A2D6C50A000F18BF4 /* DetectorInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2030D6192D6C50A000F18BF4 /* DetectorInputView.swift */; };
@@ -448,6 +450,8 @@
 		202801FB2CC9C5C2005C1F7D /* TemporaryResourceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryResourceView.swift; sourceTree = "<group>"; };
 		202E3EDC2CBB8F7B00AF86C8 /* ReferencedURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferencedURL.swift; sourceTree = "<group>"; };
 		202E93652DB22D3000AB361E /* InputFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFunctions.swift; sourceTree = "<group>"; };
+		202E93692DB546EC00AB361E /* MultilineTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultilineTextEditor.swift; sourceTree = "<group>"; };
+		202E936B2DB54CDE00AB361E /* ChatPromptEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatPromptEditor.swift; sourceTree = "<group>"; };
 		2030A10E2CECAE1500F2E235 /* CommandEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandEditorView.swift; sourceTree = "<group>"; };
 		2030D6172D6C4ED200F18BF4 /* DetectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectorView.swift; sourceTree = "<group>"; };
 		2030D6192D6C50A000F18BF4 /* DetectorInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectorInputView.swift; sourceTree = "<group>"; };
@@ -1475,11 +1479,13 @@
 			isa = PBXGroup;
 			children = (
 				202801F52CC93CD5005C1F7D /* PromptInputField.swift */,
+				202E936B2DB54CDE00AB361E /* ChatPromptEditor.swift */,
 				202801F32CC93C80005C1F7D /* DictationButton.swift */,
 				206AB6112CF5F8390010B09A /* AttachmentSelectionButton.swift */,
 				2025E67C2D89197700289E3F /* UseWebSearchButton.swift */,
 				208855CB2DAD078800071F0B /* UseFunctionsButton.swift */,
 				208855C92DAD062A00071F0B /* CapsuleButton.swift */,
+				202E93692DB546EC00AB361E /* MultilineTextEditor.swift */,
 			);
 			path = "Input Field";
 			sourceTree = "<group>";
@@ -2229,6 +2235,7 @@
 				20B97CDA2CAFF2E7009A0A5D /* IntroductionView.swift in Sources */,
 				208388E22CBF51F900C2A9F8 /* RetrievalSettingsView.swift in Sources */,
 				207A9F5F2CB903FD00E727DE /* Extension+Binding.swift in Sources */,
+				202E936C2DB54CDE00AB361E /* ChatPromptEditor.swift in Sources */,
 				201A1A982CDB9DED001E9BA9 /* MarkdownPieChartView.swift in Sources */,
 				2030D6262D6D680800F18BF4 /* DetectorEntitySentencesView.swift in Sources */,
 				2030D61E2D6C523600F18BF4 /* DetectorResultView.swift in Sources */,
@@ -2288,6 +2295,7 @@
 				202E3EDD2CBB8F7B00AF86C8 /* ReferencedURL.swift in Sources */,
 				202801F42CC93C80005C1F7D /* DictationButton.swift in Sources */,
 				2030D61A2D6C50A000F18BF4 /* DetectorInputView.swift in Sources */,
+				202E936A2DB546EC00AB361E /* MultilineTextEditor.swift in Sources */,
 				20CB7AC82D145E320013E30C /* UserRequestClassifier.mlmodel in Sources */,
 				2004D7642CBC9DA2009F294E /* ConversationState.swift in Sources */,
 				20DAC4422DADF01F0039208E /* WebFunctions.swift in Sources */,

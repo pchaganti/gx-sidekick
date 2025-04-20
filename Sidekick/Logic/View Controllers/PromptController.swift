@@ -30,34 +30,9 @@ public class PromptController: ObservableObject, DropDelegate {
 	@Published var useWebSearch: Bool = false
     @Published var useFunctions: Bool = Settings.useFunctions
 	
-    @Published var prompt: String = "" {
-        didSet {
-            self.invalidateSelection()
-        }
-    }
+    @Published var prompt: String = ""
+    @Published var insertionPoint: Int = 0
     @FocusState public var isFocused: Bool
-    @Published var selection: TextSelection? = nil
-    
-    /// Function to invalidate selection if needed
-    private func invalidateSelection() {
-        // Check if selection is still valid
-        let indicies = self.prompt.startIndex..<self.prompt.endIndex
-        if let selection = self.selection?.indices {
-            switch selection {
-                case .selection(let range):
-                    if !indicies.contains(range) {
-                        self.selection = nil
-                    }
-                default:
-                    return
-            }
-        }
-    }
-    
-    /// Function to set selection to end
-    public func selectEnd() {
-        self.selection = .init(insertionPoint: self.prompt.endIndex)
-    }
     
     @Published var isRecording: Bool = false
 	@Published var audioLevel: Float = 0.0

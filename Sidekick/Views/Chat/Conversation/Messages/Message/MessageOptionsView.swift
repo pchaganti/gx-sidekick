@@ -79,11 +79,6 @@ Tokens per second: \(tokensPerSecondStr)
 						withAnimation(
 							.linear(duration: 0.5)
 						) {
-                            // Send notification to remove focus model
-                            NotificationCenter.default.post(
-                                name: Notifications.shouldResignPromptFocus.name,
-                                object: nil
-                            )
                             self.isEditing.toggle()
 						}
 					}
