@@ -13,12 +13,14 @@ struct GeneralSettingsView: View {
 	
 	@AppStorage("username") private var username: String = NSFullUserName()
 	
+    @AppStorage("useCommandReturn") private var useCommandReturn: Bool = Settings.useCommandReturn
+    @AppStorage("playSoundEffects") private var playSoundEffects: Bool = false
+    @AppStorage("generateConversationTitles") private var generateConversationTitles: Bool = InferenceSettings.useServer && !InferenceSettings.serverWorkerModelName.isEmpty
+    @AppStorage("voiceId") private var voiceId: String = ""
+    
     @AppStorage("useFunctions") private var useFunctions: Bool = Settings.useFunctions
-	@AppStorage("playSoundEffects") private var playSoundEffects: Bool = false
-	@AppStorage("generateConversationTitles") private var generateConversationTitles: Bool = InferenceSettings.useServer && !InferenceSettings.serverWorkerModelName.isEmpty
-	@AppStorage("voiceId") private var voiceId: String = ""
-	
-	@StateObject private var speechSynthesizer: SpeechSynthesizer = .shared
+
+    @StateObject private var speechSynthesizer: SpeechSynthesizer = .shared
 	
     var body: some View {
         Form {
@@ -29,6 +31,7 @@ struct GeneralSettingsView: View {
             }
             Section {
                 usernameEditor
+                sendShortcutToggle
                 soundEffects
                 generateConversationTitlesToggle
                 voice
@@ -79,6 +82,27 @@ struct GeneralSettingsView: View {
 		}
 	}
 	
+    var sendShortcutToggle: some View {
+        HStack(alignment: .center) {
+            VStack(alignment: .leading) {
+                Text("Send Message")
+                    .font(.title3)
+                    .bold()
+                Text("Send a message with the selected shortcut.")
+                    .font(.caption)
+            }
+            Spacer()
+            Picker(
+                selection: self.$useCommandReturn
+            ) {
+                Text(Settings.SendShortcut(true).rawValue)
+                    .tag(true)
+                Text(Settings.SendShortcut(false).rawValue)
+                    .tag(false)
+            }
+        }
+    }
+    
 	var soundEffects: some View {
 		HStack(alignment: .center) {
 			VStack(alignment: .leading) {

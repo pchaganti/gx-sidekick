@@ -58,7 +58,7 @@ struct DiagrammerPromptView: View {
 		.focused($isFocused)
 		.textFieldStyle(
 			ChatStyle(
-				isFocused: _isFocused,
+                isFocused: self._isFocused,
 				isRecording: .constant(false),
 				useAttachments: false,
 				useDictation: false

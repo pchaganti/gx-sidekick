@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct ChatStyle: TextFieldStyle {
-	
+    
 	@Environment(\.colorScheme) var colorScheme
 	
-	@FocusState var isFocused: Bool
+    @FocusState var isFocused: Bool
 	@Binding var isRecording: Bool
 	
 	var useAttachments: Bool = true

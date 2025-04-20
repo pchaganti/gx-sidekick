@@ -11,7 +11,13 @@ import ImagePlayground
 
 struct PromptInputField: View {
 	
-	@FocusState private var isFocused: Bool
+    @AppStorage("useCommandReturn") private var useCommandReturn: Bool = Settings.useCommandReturn
+    var sendShortcutDescription: Text {
+        return Text(
+            Settings.SendShortcut(self.useCommandReturn).rawValue
+        )
+        .italic()
+    }
 	
 	@EnvironmentObject private var model: Model
 	@EnvironmentObject private var conversationManager: ConversationManager
@@ -20,6 +26,8 @@ struct PromptInputField: View {
 	@EnvironmentObject private var promptController: PromptController
 	@EnvironmentObject private var canvasController: CanvasController
 	
+    @FocusState var isFocused: Bool
+    
 	var selectedConversation: Conversation? {
 		guard let selectedConversationId = conversationState.selectedConversationId else {
 			return nil
@@ -49,20 +57,27 @@ struct PromptInputField: View {
 	var body: some View {
 		textField
 			.onExitCommand {
-				self.isFocused = false
+                self.isFocused = false
 			}
 			.onChange(
-				of: isFocused
+                of: self.isFocused
 			) {
 				// Show add files and dictation tips if needed
-				if self.isFocused {
-					AddFilesTip.readyForAddingFiles = true
-				}
+                if self.isFocused {
+                    AddFilesTip.readyForAddingFiles = true
+                }
 			}
+            .onReceive(
+                NotificationCenter.default.publisher(
+                    for: Notifications.shouldResignPromptFocus.name
+                )
+            ) { _ in
+                self.isFocused = false
+            }
 			.onChange(
 				of: conversationState.selectedConversationId
 			) {
-				self.isFocused = true
+                self.isFocused = true
 			}
 			.onChange(
 				of: conversationState.selectedExpertId
@@ -77,39 +92,44 @@ struct PromptInputField: View {
 				}
 			}
 			.onAppear {
-				self.isFocused = true
+                self.isFocused = true
 			}
 			.popoverTip(addFilesTip)
 	}
 	
 	var textField: some View {
 		TextField(
-			"Send a Message",
-			text: $promptController.prompt.animation(
-				.linear
-			),
+            "",
+            text: $promptController.prompt.animation(
+                .linear
+            ),
+            selection: $promptController.selection,
+            prompt: Text("Enter a message. Press ") + self.sendShortcutDescription + Text(" to send."),
 			axis: .vertical
 		)
-		.onSubmit(onSubmit)
-		.focused($isFocused)
-		.textFieldStyle(
-			ChatStyle(
-				isFocused: _isFocused,
-				isRecording: $promptController.isRecording,
-				useAttachments: true,
-				bottomOptions: true,
-				cornerRadius: 22
-			)
-		)
-		.overlay(alignment: .leading) {
-			AttachmentSelectionButton { url in
-				await self.promptController.addFile(url)
-			}
-		}
-		.overlay(alignment: .trailing) {
-			DictationButton()
-		}
-		.overlay(alignment: .bottomLeading) {
+        .onKeyPress { press in
+            return self.handleKeyPress(press)
+        }
+        .focused(self.$isFocused)
+        .submitLabel(.send)
+        .textFieldStyle(
+            ChatStyle(
+                isFocused: self._isFocused,
+                isRecording: self.$promptController.isRecording,
+                useAttachments: true,
+                bottomOptions: true,
+                cornerRadius: 22
+            )
+        )
+        .overlay(alignment: .leading) {
+            AttachmentSelectionButton { url in
+                await self.promptController.addFile(url)
+            }
+        }
+        .overlay(alignment: .trailing) {
+            DictationButton()
+        }
+        .overlay(alignment: .bottomLeading) {
             HStack {
                 UseWebSearchButton(
                     useWebSearch: self.$promptController.useWebSearch
@@ -118,22 +138,84 @@ struct PromptInputField: View {
                     useFunctions: self.$promptController.useFunctions
                 )
             }
-			.padding(.leading, 32)
-			.padding(.bottom, 10)
-			.frame(height: 25)
-		}
-		.submitLabel(.send)
+            .padding(.leading, 32)
+            .padding(.bottom, 10)
+            .frame(height: 25)
+        }
 		.padding([.vertical, .leading], 10)
 	}
+    
+    /// Function to handle a key press
+    private func handleKeyPress(
+        _ press: KeyPress
+    ) -> KeyPress.Result {
+        // If return key is down
+        if press.key == .return {
+            if press.modifiers.contains(.command) && self.useCommandReturn {
+                // Send if command key is down and required
+                self.onSubmit()
+                return .handled
+            } else if press.modifiers == .shift || press.modifiers == .option || self.useCommandReturn && press.modifiers.isEmpty,
+                let indicies = self.promptController.selection?.indices {
+                // If the right keys are pressed, insert a new line
+                switch indicies {
+                    case .selection(let range) where range.lowerBound == range.upperBound:
+                        // Just the cursor, insert a new line and move selection
+                        DispatchQueue.main.async {
+                            withAnimation {
+                                self.promptController.prompt.insert(
+                                    "\n",
+                                    at: range.lowerBound
+                                )
+                                let newIndex: String.Index = self.promptController.prompt.index(
+                                    range.lowerBound,
+                                    offsetBy: 1
+                                )
+                                self.promptController.selection = .init(
+                                    insertionPoint: newIndex
+                                )
+                            }
+                        }
+                    case .selection(let range):
+                        // Replace the selected text with a new line
+                        DispatchQueue.main.async {
+                            withAnimation {
+                                self.promptController.prompt.replaceSubrange(
+                                    range,
+                                    with: "\n"
+                                )
+                                let newIndex: String.Index = self.promptController.prompt.index(
+                                    range.lowerBound,
+                                    offsetBy: 1
+                                )
+                                self.promptController.selection = .init(
+                                    insertionPoint: newIndex
+                                )
+                            }
+                        }
+                    default:
+                        return .ignored
+                }
+                return .handled
+            } else if !self.useCommandReturn {
+                // Else, if command key is not required, send
+                self.onSubmit()
+                return .handled
+            }
+        }
+        return .ignored
+    }
 	
 	/// Function to run when the `return` key is hit
 	private func onSubmit() {
-		// New line if shift or option pressed
-		if CGKeyCode.kVK_Shift.isPressed || CGKeyCode.kVK_Option.isPressed {
-			promptController.prompt += "\n"
-		} else if promptController.prompt.trimmingCharacters(in: .whitespacesAndNewlines) != "" {
+		// If not blank, submit
+        if promptController.prompt.trimmingCharacters(in: .whitespacesAndNewlines) != "" {
 			// End recording
 			self.promptController.stopRecording()
+            // Reset selection
+            DispatchQueue.main.async {
+                self.promptController.selection = nil
+            }
 			// Send message
 			self.submit()
 		}
@@ -173,11 +255,15 @@ struct PromptInputField: View {
 			text: promptController.prompt,
 			sender: .user
 		)
-		let _ = conversation.addMessage(newUserMessage)
-		conversationManager.update(conversation)
+        DispatchQueue.main.async {
+            let _ = conversation.addMessage(newUserMessage)
+            conversationManager.update(conversation)
+        }
 		// Store sent properties
-		self.promptController.sentConversation = conversation
-		self.promptController.sentExpertId = self.conversationState.selectedExpertId
+        DispatchQueue.main.async {
+            self.promptController.sentConversation = conversation
+            self.promptController.sentExpertId = self.conversationState.selectedExpertId
+        }
 		// Capture temp resources
 		let tempResources: [TemporaryResource] = self.promptController.tempResources
 		// If result type is text, send message
@@ -230,7 +316,9 @@ struct PromptInputField: View {
 	}
 	
 	private func clearInputs() {
-		self.promptController.prompt.removeAll()
+        DispatchQueue.main.async {
+            self.promptController.prompt.removeAll()
+        }
 	}
 	
 	private func generateChatResponse(

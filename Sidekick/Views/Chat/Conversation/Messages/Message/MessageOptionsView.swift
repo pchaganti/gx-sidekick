@@ -12,9 +12,10 @@ import SwiftUI
 struct MessageOptionsView: View {
 	
 	@Environment(\.colorScheme) private var colorScheme
+    @EnvironmentObject private var promptController: PromptController
 	
 	@State private var showNerdInfo: Bool = false
-	@Binding var isEditing: Bool
+    @Binding var isEditing: Bool
 	
 	var message: Message
 	var canEdit: Bool
@@ -78,7 +79,12 @@ Tokens per second: \(tokensPerSecondStr)
 						withAnimation(
 							.linear(duration: 0.5)
 						) {
-							self.isEditing.toggle()
+                            // Send notification to remove focus model
+                            NotificationCenter.default.post(
+                                name: Notifications.shouldResignPromptFocus.name,
+                                object: nil
+                            )
+                            self.isEditing.toggle()
 						}
 					}
 				} label: {

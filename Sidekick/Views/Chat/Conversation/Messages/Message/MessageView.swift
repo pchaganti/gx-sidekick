@@ -5,6 +5,7 @@
 //  Created by Bean John on 10/8/24.
 //
 
+import AppKit
 import MarkdownUI
 import Splash
 import SwiftUI
@@ -29,6 +30,7 @@ struct MessageView: View {
 	
 	@State private var isEditing: Bool = false
 	@State private var messageText: String
+    
 	@State private var isShowingSources: Bool = false
 	
     var shimmer: Bool
@@ -104,7 +106,7 @@ struct MessageView: View {
                         }
 					}
 					MessageOptionsView(
-						isEditing: $isEditing,
+                        isEditing: $isEditing,
 						message: message,
 						canEdit: canEdit
 					)
@@ -161,7 +163,7 @@ struct MessageView: View {
 	
 	var textContent: some View {
 		Group {
-			if isEditing {
+            if self.isEditing {
 				contentEditor
 			} else {
 				VStack(
@@ -202,9 +204,11 @@ struct MessageView: View {
 	
 	var contentEditor: some View {
 		VStack {
-            TextEditor(text: self.$messageText)
-				.frame(minWidth: 0, maxWidth: .infinity)
-				.font(.title3)
+            TextEditor(
+                text: self.$messageText
+            )
+            .frame(minWidth: 0, maxWidth: .infinity)
+            .font(.title3)
 			HStack {
                 Spacer()
                 Button {

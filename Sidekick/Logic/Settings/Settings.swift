@@ -323,5 +323,30 @@ public class Settings {
 		Settings.setupComplete = true
 		InferenceSettings.setDefaults()
 	}
+    
+    /// A `Bool` representing whether `Command + Return` is used for sending messages
+    static var useCommandReturn: Bool {
+        get {
+            // Set default
+            if !UserDefaults.standard.exists(key: "useCommandReturn") {
+                // Default to false
+                Self.useCommandReturn = false
+            }
+            return UserDefaults.standard.bool(
+                forKey: "useCommandReturn"
+            )
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "useCommandReturn")
+        }
+    }
+    /// An enum for the selected send shortcut
+    public enum SendShortcut: String, CaseIterable {
+        public init(_ useCommandReturn: Bool) {
+            self = useCommandReturn ? .commandReturn : .`return`
+        }
+        case `return` = "Return 􀅇"
+        case commandReturn = "Command ⌘ + Return 􀅇"
+    }
 	
 }
