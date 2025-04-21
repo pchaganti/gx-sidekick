@@ -144,7 +144,7 @@ class PromptingTextView: NSTextView {
         super.draw(dirtyRect)
         if string.isEmpty, !prompt.isEmpty {
             let attrs: [NSAttributedString.Key: Any] = [
-                .foregroundColor: NSColor.placeholderTextColor,
+                .foregroundColor: NSColor.secondaryLabelColor,
                 .font: NSFont.systemFont(ofSize: NSFont.systemFontSize)
             ]
             let rect = bounds.insetBy(dx: 5, dy: 4)
