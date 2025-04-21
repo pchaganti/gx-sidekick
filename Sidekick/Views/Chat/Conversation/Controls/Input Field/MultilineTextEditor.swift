@@ -43,25 +43,33 @@ struct MultilineTextField: NSViewRepresentable {
     
     func updateNSView(_ nsView: PromptingScrollView, context: Context) {
         guard let textView = nsView.documentView as? PromptingTextView else { return }
+        // Only update the text if it actually changed, but preserve the selection
         if textView.string != text {
+            let newInsertion: Int = insertionPoint
             DispatchQueue.main.async {
                 withAnimation(.linear) {
                     textView.string = text
+                    textView.font = NSFont.systemFont(ofSize: NSFont.systemFontSize)
+                    // Restore selection right after string update
+                    textView.setSelectedRange(NSRange(location: newInsertion, length: 0))
+                }
+            }
+        } else if textView.selectedRange.location != insertionPoint {
+            // Only update selection if needed
+            DispatchQueue.main.async {
+                withAnimation(.linear) {
+                    textView.setSelectedRange(NSRange(location: insertionPoint, length: 0))
                 }
             }
         }
         textView.setPrompt(prompt)
-        if textView.selectedRange.location != insertionPoint {
-            DispatchQueue.main.async {
-                textView.setSelectedRange(NSRange(location: insertionPoint, length: 0))
-            }
-        }
         // Invalidate intrinsic content size for height recalculation
         textView.invalidateIntrinsicContentSize()
         nsView.invalidateIntrinsicContentSize()
     }
     
     class Coordinator: NSObject, NSTextViewDelegate {
+        
         var parent: MultilineTextField
         
         init(_ parent: MultilineTextField) {
@@ -72,21 +80,26 @@ struct MultilineTextField: NSViewRepresentable {
             guard let textView = notification.object as? NSTextView else { return }
             withAnimation(.linear) {
                 parent.text = textView.string
+                parent.insertionPoint = textView.selectedRange.location
             }
-            parent.insertionPoint = textView.selectedRange.location
+            // Always update insertionPoint after text change
             textView.invalidateIntrinsicContentSize()
             textView.enclosingScrollView?.invalidateIntrinsicContentSize()
         }
         
         func textViewDidChangeSelection(_ notification: Notification) {
             guard let textView = notification.object as? NSTextView else { return }
-            parent.insertionPoint = textView.selectedRange.location
+            withAnimation(.linear) {
+                parent.insertionPoint = textView.selectedRange.location
+            }
         }
         
     }
+    
 }
 
 class PromptingScrollView: NSScrollView {
+    
     override var intrinsicContentSize: NSSize {
         if let docView = self.documentView {
             var size = docView.intrinsicContentSize
@@ -95,6 +108,7 @@ class PromptingScrollView: NSScrollView {
         }
         return super.intrinsicContentSize
     }
+    
 }
 
 class PromptingTextView: NSTextView {
@@ -145,6 +159,20 @@ class PromptingTextView: NSTextView {
             }
         }
         needsDisplay = true
+    }
+    
+    /// Function to force pasting as plain text
+    override func paste(_ sender: Any?) {
+        if let plainText = NSPasteboard.general.string(
+            forType: .string
+        ) {
+            self.insertText(
+                plainText,
+                replacementRange: self.selectedRange()
+            )
+        } else {
+            super.paste(sender)
+        }
     }
     
 }

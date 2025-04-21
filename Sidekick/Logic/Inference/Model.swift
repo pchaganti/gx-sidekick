@@ -144,7 +144,8 @@ public class Model: ObservableObject {
                 // If no calls found or if all calls are complete
                 text = String(localized: "Calling functions...")
                 // Show progress
-                if let pendingText = self.pendingMessage?.text {
+                if let pendingText = self.pendingMessage?.text,
+                    !pendingText.isEmpty {
                     text = pendingText
                 }
         }
@@ -411,7 +412,8 @@ public class Model: ObservableObject {
 			return initialResponse
 		}
 		// Return if no function call
-        guard let functionCall = initialResponse.functionCall else {
+        guard let functionCalls = initialResponse.functionCalls,
+                !functionCalls.isEmpty else {
 			return initialResponse
 		}
 		// Run agent in a loop
@@ -419,7 +421,6 @@ public class Model: ObservableObject {
             canReachRemoteServer: canReachRemoteServer,
 			initialResponse: initialResponse,
 			messages: messagesWithSources,
-            functionCall: functionCall,
             useWebSearch: useWebSearch,
             useFunctions: useFunctions,
 			similarityIndex: similarityIndex,
@@ -471,7 +472,6 @@ public class Model: ObservableObject {
         canReachRemoteServer: Bool,
 		initialResponse: LlamaServer.CompleteResponse,
 		messages: [Message.MessageSubset],
-        functionCall: any DecodableFunctionCall,
         useWebSearch: Bool,
         useFunctions: Bool,
 		similarityIndex: SimilarityIndex?,
@@ -487,56 +487,62 @@ public class Model: ObservableObject {
         var maxIterations: Int = 15
         var response: LlamaServer.CompleteResponse? = initialResponse
         var messages: [Message.MessageSubset] = messages
-        while maxIterations > 0, var functionCall = response?.functionCall {
-            // Log function call
-            let callJsonSchema: String = functionCall.getJsonSchema()
-            Self.logger.info("Executing function call: \(callJsonSchema, privacy: .public)")
-            // Display call to user
-            let functionCalls = self.pendingMessage?.functionCallRecords ?? []
-            var functionCallRecord: FunctionCallRecord = FunctionCallRecord(
-                name: functionCall.name
-            )
-            withAnimation(.linear) {
-                self.pendingMessage?.functionCallRecords = functionCalls + [functionCallRecord]
-                self.pendingMessage?.text = ""
-            }
-            // Call function
-            var messageString: String? = nil
-            do {
-                // Run
-                let result: String = try await functionCall.call() ?? "Function evaluated successfully"
-                // Mark as succeeded
-                functionCallRecord.markAsFinished(
-                    status: .succeeded,
-                    result: result
+        while maxIterations > 0, var functionCalls = response?.functionCalls {
+            // Execute each call
+            var messageStringComponents: [String] = []
+            var functionCallRecords = self.pendingMessage?.functionCallRecords ?? []
+            for index in functionCalls.indices {
+                var functionCall = functionCalls[index]
+                // Log function call
+                let callJsonSchema: String = functionCall.getJsonSchema()
+                Self.logger.info("Executing function call: \(callJsonSchema, privacy: .public)")
+                // Display call to user
+                functionCallRecords = self.pendingMessage?.functionCallRecords ?? []
+                var functionCallRecord: FunctionCallRecord = FunctionCallRecord(
+                    name: functionCall.name
                 )
-                // Formulate callback message
-                messageString = """
+                withAnimation(.linear) {
+                    self.pendingMessage?.functionCallRecords = functionCallRecords + [functionCallRecord]
+                    self.pendingMessage?.text = ""
+                }
+                // Call function
+                do {
+                    // Run
+                    let result: String = try await functionCall.call() ?? "Function evaluated successfully"
+                    // Mark as succeeded
+                    functionCallRecord.markAsFinished(
+                        status: .succeeded,
+                        result: result
+                    )
+                    // Formulate callback message
+                    messageStringComponents.append("""
 Below is the result produced by the tool call: `\(callJsonSchema)`. If the tool call provides enough information to solve the user's query, organize the information into an answer. If the tool call did not provide enough information, try breaking down the user's query and finding information about its constituent parts. Else, call another tool to obtain more information or execute more actions.
 
 ```tool_call_result
 \(result)
 ```
-"""
-            } catch {
-                // Get error description
-                let errorDescription: String = error.localizedDescription
-                // Mark as failed
-                functionCallRecord.markAsFinished(
-                    status: .succeeded,
-                    result: errorDescription
-                )
-                // Formulate callback message
-                messageString = """
+""")
+                } catch {
+                    // Get error description
+                    let errorDescription: String = error.localizedDescription
+                    // Mark as failed
+                    functionCallRecord.markAsFinished(
+                        status: .succeeded,
+                        result: errorDescription
+                    )
+                    // Formulate callback message
+                    messageStringComponents.append("""
 The function call `\(callJsonSchema)` failed, producing the error below.
 
 ```tool_call_error
 \(errorDescription)
 ```
-"""
-            }
-            withAnimation(.linear) {
-                self.pendingMessage?.functionCallRecords = functionCalls + [functionCallRecord]
+""")
+                }
+                withAnimation(.linear) {
+                    functionCallRecords += [functionCallRecord]
+                    self.pendingMessage?.functionCallRecords = functionCallRecords
+                }
             }
             // Add response messages
             let responseMessage: Message = Message(
@@ -548,7 +554,7 @@ The function call `\(callJsonSchema)` failed, producing the error below.
             )
             messages.append(responseMessageSubset)
             let changeMessage = Message(
-                text: messageString!,
+                text: messageStringComponents.joined(separator: "\n\n"),
                 sender: .user
             )
             let changeMessageSubset = await Message.MessageSubset(
@@ -585,7 +591,7 @@ The function call `\(callJsonSchema)` failed, producing the error below.
                     }
                 }
             )
-            response?.functionCalls = functionCalls + [functionCallRecord]
+            response?.functionCallRecords = functionCallRecords
             // Increment counter & reset
             maxIterations -= 1
         }
@@ -623,8 +629,8 @@ The function call `\(callJsonSchema)` failed, producing the error below.
                     }
                 }
             )
-            if let functionCalls = self.pendingMessage?.functionCallRecords {
-                response.functionCalls = functionCalls
+            if let functionCallRecords = self.pendingMessage?.functionCallRecords {
+                response.functionCallRecords = functionCallRecords
             }
             return response
         }

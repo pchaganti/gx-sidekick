@@ -148,6 +148,7 @@ struct PromptInputField: View {
                             "\n",
                             at: index
                         )
+                        self.promptController.insertionPoint += 1
                     }
                 }
                 return .handled
@@ -353,7 +354,7 @@ struct PromptInputField: View {
 				text: response.text,
 				sender: .assistant,
 				model: response.modelName,
-                functionCallRecords: response.functionCalls,
+                functionCallRecords: response.functionCallRecords,
 				expertId: promptController.sentExpertId
 			)
 			responseMessage.update(

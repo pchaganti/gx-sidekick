@@ -425,6 +425,7 @@ public actor LlamaServer {
         // Init variables for tool use
         var functionName: String? = nil
         var functionArguments: String? = nil
+        var blockFunctionCalls: [(any DecodableFunctionCall)] = []
         // Init variables for usage
         var tokenCount: Int = 0
         var usage: Usage? = nil
@@ -504,6 +505,18 @@ public actor LlamaServer {
                                 if let argument = toolCall.function.arguments {
                                     functionArguments = (functionArguments ?? "") + argument
                                 }
+                                // Extract tool call
+                                if let name = functionName,
+                                   let args = functionArguments,
+                                   let function = StreamMessage.OpenAIToolCall.Function.getFunctionCall(
+                                    name: name,
+                                    arguments: args
+                                   ){
+                                    // Append and reset
+                                    blockFunctionCalls.append(function)
+                                    functionName = nil
+                                    functionArguments = nil
+                                }
                             }
 							// Document usage
 							tokenCount += 1
@@ -536,15 +549,6 @@ public actor LlamaServer {
 			// Call onFinish
 			onFinish(text: cleanText)
 		}
-        // Extract tool call if available
-        var blockFunctionCall: (any DecodableFunctionCall)? = nil
-        if let functionName, let functionArguments {
-            blockFunctionCall = StreamMessage.OpenAIToolCall.Function
-                .getFunctionCall(
-                    name: functionName,
-                    arguments: functionArguments
-                )
-        }
 		// Return info
 		let tokens: Int = stopResponse?.usage?.completion_tokens ?? (
 			usage?.completion_tokens ?? tokenCount
@@ -558,7 +562,7 @@ public actor LlamaServer {
 			modelName: modelName,
 			usage: stopResponse?.usage,
             usedServer: rawUrl.usingRemoteServer,
-            blockFunctionCall: blockFunctionCall
+            blockFunctionCalls: blockFunctionCalls
 		)
 	}
 	
@@ -835,27 +839,49 @@ public actor LlamaServer {
 		/// A `Bool` indicating whether a remote server was used
 		var usedServer: Bool
 		
-        /// An array of ``FunctionCall`` executed in the response
-        var functionCalls: [FunctionCallRecord] = []
+        /// An array of ``FunctionCallRecord`` executed in the response
+        var functionCallRecords: [FunctionCallRecord] = []
 		/// A `Bool` representing if a function was called
 		var containsFunctionCall: Bool {
-            return self.functionCall != nil
+            if let functionCalls = self.functionCalls,
+               !functionCalls.isEmpty {
+                return true
+            }
+            return false
 		}
         /// Any function call in the response
-        var functionCall: (any DecodableFunctionCall)? {
+        var functionCalls: [(any DecodableFunctionCall)]? {
             // Try to get block call first
-            if self.blockFunctionCall != nil {
-                return self.blockFunctionCall
+            if let blockFunctionCalls = self.blockFunctionCalls,
+                !blockFunctionCalls.isEmpty {
+                return blockFunctionCalls
             }
-            return self.inlineFunctionCall
+            return self.inlineFunctionCalls
         }
         /// A function call in the response JSON
-        var blockFunctionCall: (any DecodableFunctionCall)?
-        /// The first valid inline function call found in the text
-        var inlineFunctionCall: (any DecodableFunctionCall)? {
+        var blockFunctionCalls: [(any DecodableFunctionCall)]?
+        /// All inline function call found in the text
+        var inlineFunctionCalls: [(any DecodableFunctionCall)]? {
+            // Configure input
             let input: String = self.text.reasoningRemoved
+            // Init decoder
             let decoder = JSONDecoder()
-            var searchStartIndex = input.startIndex
+            // Decode
+            return Self.decodeAllFunctionCalls(
+                in: input,
+                decoder: decoder
+            )
+        }
+        
+        /// Function to decode all function calls
+        private static func decodeAllFunctionCalls(
+            in input: String,
+            decoder: JSONDecoder,
+            searchStartIndex: String.Index? = nil
+        ) -> [(any DecodableFunctionCall)]? {
+            var results: [(any DecodableFunctionCall)] = []
+            let startIdx = searchStartIndex ?? input.startIndex
+            var searchStartIndex = startIdx
             // Look for every occurrence of '{'
             while let startIndex = input[searchStartIndex...].firstIndex(of: "{") {
                 var braceCount = 0
@@ -898,15 +924,19 @@ public actor LlamaServer {
                             ), jsonString.contains(
                                 "\"\(function.name)\""
                             ) {
-                                return functionCall
+                                results.append(functionCall)
+                                break
                             }
                         }
                     }
+                    // Move searchStartIndex past this function call for the next iteration
+                    searchStartIndex = input.index(after: finalIndex)
+                } else {
+                    // If we didn't find a matching '}', break the loop
+                    break
                 }
-                // Move the search start index forward to look for the next occurrence.
-                searchStartIndex = input.index(after: startIndex)
             }
-            return nil
+            return results.isEmpty ? nil : results
         }
 		
 	}

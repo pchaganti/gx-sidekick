@@ -37,7 +37,7 @@ If the provided information is related to the request, you will respond with ref
 	
 	/// Static constant for the part of the system prompt telling the LLM to use functions
 	public static let useFunctionsPrompt: String = """
-In this environment you have access to a set of tools you can use to answer the user's question. Call a tool by outputting JSON in the format below. Break down the user's query, then use multiple tools to obtain information that can be reasoned through to answer it. Call one tool at a time. 
+In this environment you have access to a set of tools you can use to answer the user's question. Call a tool by outputting JSON in the format below. Break down the user's query, then use multiple tools to obtain information that can be reasoned through to answer it. You can call multiple tools at once. 
 
 {
   "function_call": {
