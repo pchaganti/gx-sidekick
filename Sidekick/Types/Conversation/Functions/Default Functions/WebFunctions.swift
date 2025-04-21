@@ -70,7 +70,6 @@ public class WebFunctions {
     static let tavilyWebSearch = Function<TavilyWebSearchParams, String>(
         name: "web_search",
         description: "Retrieves information from the web with the provided query, instead of estimating it.",
-        clearance: .sensitive,
         params: [
             FunctionParameter(
                 label: "query",
@@ -103,8 +102,8 @@ public class WebFunctions {
                 timeRange: params.time_range
             )
             // Convert to JSON
-            let sourcesInfo: [Source.SourceExcerpt] = sources.map(
-                \.excerpt
+            let sourcesInfo: [Source.SourceInfo] = sources.map(
+                \.info
             )
             let jsonEncoder: JSONEncoder = JSONEncoder()
             jsonEncoder.outputFormatting = [.prettyPrinted]
@@ -142,7 +141,7 @@ The content from each site here is an incomplete except. Use the `get_website_co
             ),
             FunctionParameter(
                 label: "num_results",
-                description: "The maximum number of search results (optional, default: 10)",
+                description: "The maximum number of search results (optional, default: 3, maximum: 10)",
                 datatype: .integer,
                 isRequired: false
             ),
@@ -184,18 +183,27 @@ The content from each site here is an incomplete except. Use the `get_website_co
             // Conduct search
             let sources: [Source] = try await DuckDuckGoSearch.search(
                 query: params.query,
-                resultCount: params.num_results ?? 10,
+                resultCount: params.num_results ?? 3,
                 startDate: startDate,
                 endDate: endDate
             )
             // Convert to JSON
-            let sourceUrls: [String] = sources.map(
-                \.excerpt.url
+            let sourceContents: [Source.SourceContent] = await sources.asyncMap { source in
+                return try? await source.getContent()
+            }.compactMap({ $0 })
+            let jsonEncoder: JSONEncoder = JSONEncoder()
+            jsonEncoder.outputFormatting = [.prettyPrinted]
+            let jsonData: Data = try! jsonEncoder.encode(
+                sourceContents
             )
+            let resultsText: String = String(
+                data: jsonData,
+                encoding: .utf8
+            )!
             return """
-Below are the sites returned from your `web_search` query. Use the `get_website_content` function to get the full content from a website.
+Below are the sites and corresponding content returned from your `web_search` query.
 
-\(sourceUrls.joined(separator: "\n"))
+\(sourceContents)
 """
         }
     )
@@ -219,36 +227,42 @@ Below are the sites returned from your `web_search` query. Use the `get_website_
             )
         ],
         run: { params in
-            // Check URL
-            guard let url: URL = URL(string: params.url) else {
-                throw GetWebsiteContentError.invalidUrl
-            }
-            // Extract text
-            return try await ExtractKit.shared.extractText(
-                url: url,
-                contentType: .website
+            return try await WebFunctions.scrapeWebsite(
+                url: params.url
             )
-            // Custom error for Web Search function
-            enum GetWebsiteContentError: LocalizedError {
-                case invalidUrl
-                var errorDescription: String? {
-                    switch self {
-                        case .invalidUrl:
-                            return "The provided website URL is invalid."
-                    }
-                }
-            }
         }
     )
     struct GetWebsiteContentParams: FunctionParams {
         let url: String
     }
     
+    /// Function to scrape the contents of a website
+    static func scrapeWebsite(url: String) async throws -> String {
+        // Check URL
+        guard let url: URL = URL(string: url) else {
+            throw GetWebsiteContentError.invalidUrl
+        }
+        // Extract text
+        return try await ExtractKit.shared.extractText(
+            url: url,
+            contentType: .website
+        )
+        // Custom error for Web Search function
+        enum GetWebsiteContentError: LocalizedError {
+            case invalidUrl
+            var errorDescription: String? {
+                switch self {
+                    case .invalidUrl:
+                        return "The provided website URL is invalid."
+                }
+            }
+        }
+    }
+    
     /// A function to create an email draft
     static let draftEmail = Function<DraftEmailParams, String>(
         name: "draft_email",
         description: "Uses the \"mailto:\" URL scheme to create an email draft in the default email client.",
-        clearance: .sensitive,
         params: [
             FunctionParameter(
                 label: "recipients",

@@ -99,7 +99,7 @@ public class CalendarFunctions {
     static let getEvents = Function<GetEventsParams, String>(
         name: "get_events",
         description: "Get all events between the provided start and end dates, inclusive.",
-        clearance: .dangerous,
+        clearance: .sensitive,
         params: [
             FunctionParameter(
                 label: "start_date",
@@ -309,7 +309,7 @@ public class CalendarFunctions {
     static let removeEvent = Function<RemoveEventParams, String>(
         name: "remove_event",
         description: "Remove an event from the user's calendar by its event UUID. Call `get_events` to find the UUID of an event.",
-        clearance: .dangerous,
+        clearance: .sensitive,
         params: [
             FunctionParameter(
                 label: "eventIdentifier",
@@ -347,7 +347,7 @@ public class CalendarFunctions {
     static let editEvent = Function<EditEventParams, String>(
         name: "edit_event",
         description: "Edit an existing event in the user's calendar by its UUID. Only provided fields will be updated. Call `get_events` to find the UUID of an event.",
-        clearance: .dangerous,
+        clearance: .sensitive,
         params: [
             FunctionParameter(
                 label: "eventIdentifier",

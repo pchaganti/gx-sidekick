@@ -43,7 +43,7 @@ Fetches contacts from macOS Contacts. The user's contact can be accessed to obta
 
 Returns JSON objects for each contact containing the person's name, emails, phone numbers, birthday, and address. Supports filtering based on name, email, and phone number.
 """,
-        clearance: .dangerous,
+        clearance: .sensitive,
         params: [
             FunctionParameter(
                 label: "name",

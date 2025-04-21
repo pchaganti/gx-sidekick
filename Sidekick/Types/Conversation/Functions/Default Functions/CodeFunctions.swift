@@ -18,6 +18,7 @@ public class CodeFunctions {
     static let runJavaScript = Function<RunJavaScriptParams, String>(
         name: "run_javascript",
         description: "Runs JavaScript code and returns the result. Useful for performing calculations with many steps or performing transformations on data.",
+        clearance: .dangerous,
         params: [
             FunctionParameter(
                 label: "code",

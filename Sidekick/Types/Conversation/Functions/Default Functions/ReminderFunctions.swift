@@ -104,7 +104,7 @@ public class RemindersFunctions {
     static let getReminders = Function<GetRemindersParams, String>(
         name: "get_reminders",
         description: "Get all reminders, optionally filtering by completion and due date range.",
-        clearance: .dangerous,
+        clearance: .sensitive,
         params: [
             FunctionParameter(
                 label: "completed",

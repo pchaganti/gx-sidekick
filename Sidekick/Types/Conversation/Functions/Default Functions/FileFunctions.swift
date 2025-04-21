@@ -22,7 +22,6 @@ public class FileFunctions {
     static let listDirectory = Function<ListDirectoryParams, [String]>(
         name: "list_directory",
         description: "Lists the files in a directory, non-recursively.\n\nThe user's home directory is `\(URL.homeDirectory.posixPath)`, their downloads directory is \(URL.downloadsDirectory.posixPath), and their desktop directory is \(URL.desktopDirectory.posixPath)",
-        clearance: .sensitive,
         params: [
             FunctionParameter(
                 label: "posixPath",
@@ -73,7 +72,7 @@ public class FileFunctions {
     static let extractFileText = Function<ExtractFileTextParams, String>(
         name: "extract_file_text",
         description: "Extracts and outputs the contents of a file. Supports plain text, images, PDFs, Word documents, PowerPoints, Excel spreadsheets, and more file formats. OCR is used for images.",
-        clearance: .dangerous,
+        clearance: .sensitive,
         params: [
             FunctionParameter(
                 label: "posixPath",
@@ -124,7 +123,7 @@ public class FileFunctions {
     static let writePlaintextToFile = Function<WritePlaintextToFileParams, String>(
         name: "write_plaintext_to_file",
         description: "Writes the provided text to a file at the specified POSIX path.",
-        clearance: .sensitive,
+        clearance: .dangerous,
         params: [
             FunctionParameter(
                 label: "text",

@@ -20,22 +20,27 @@ public struct Source: Identifiable, Codable, Hashable {
     
     /// The info associated with the source
     public var info: SourceInfo {
-        return .init(text: self.text, url: self.source)
+        return .init(url: self.source, text: self.text)
     }
     
-    /// The except associated with the source
-    public var excerpt: SourceExcerpt {
-        return .init(excerpt: self.text, url: self.source)
+    /// The content associated with the source
+    public func getContent() async throws -> SourceContent {
+        // Get content
+        let content: String = try await WebFunctions.scrapeWebsite(
+            url: self.source
+        )
+        // Return
+        return .init(url: self.source, content: content)
     }
     
     public struct SourceInfo: Codable {
-        public var text: String
         public var url: String
+        public var text: String
     }
     
-    public struct SourceExcerpt: Codable {
-        public var excerpt: String
+    public struct SourceContent: Codable {
         public var url: String
+        public var content: String
     }
 	
 }
