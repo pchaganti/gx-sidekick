@@ -102,13 +102,13 @@ public class CalendarFunctions {
         clearance: .dangerous,
         params: [
             FunctionParameter(
-                label: "startDate",
+                label: "start_date",
                 description: "The start date, in the format `yyyy-MM-dd HH:mm:ss`",
                 datatype: .string,
                 isRequired: true
             ),
             FunctionParameter(
-                label: "endDate",
+                label: "end_date",
                 description: "The end date, in the format `yyyy-MM-dd HH:mm:ss`",
                 datatype: .string,
                 isRequired: true
@@ -121,10 +121,10 @@ public class CalendarFunctions {
             }
             // Get start and end date
             let startDate: Date = try CalendarFunctions.convertStringToDate(
-                params.startDate
+                params.start_date
             )
             let endDate: Date = try CalendarFunctions.convertStringToDate(
-                params.endDate
+                params.end_date
             )
             // Get events
             let eventStore: EKEventStore = EKEventStore()
@@ -152,8 +152,8 @@ public class CalendarFunctions {
         }
     )
     struct GetEventsParams: FunctionParams {
-        var startDate: String
-        var endDate: String
+        var start_date: String
+        var end_date: String
     }
     
     /// A ``Function`` for adding an event to the user's calendar
@@ -169,19 +169,19 @@ public class CalendarFunctions {
                 isRequired: true
             ),
             FunctionParameter(
-                label: "startDate",
+                label: "start_date",
                 description: "The start date/time of the event, in the format `yyyy-MM-dd HH:mm:ss`.",
                 datatype: .string,
                 isRequired: true
             ),
             FunctionParameter(
-                label: "endDate",
+                label: "end_date",
                 description: "The end date/time of the event, in the format `yyyy-MM-dd HH:mm:ss`. (optional, defaults to one hour after startDate)",
                 datatype: .string,
                 isRequired: false
             ),
             FunctionParameter(
-                label: "isAllDay",
+                label: "is_all_day",
                 description: "Whether the event is an all day event.",
                 datatype: .boolean,
                 isRequired: false
@@ -199,7 +199,7 @@ public class CalendarFunctions {
                 isRequired: false
             ),
             FunctionParameter(
-                label: "ignoreConflicts",
+                label: "ignore_conflicts",
                 description: "Schedule the event even if it conflicts with existing events. (optional, defaults to false)",
                 datatype: .boolean,
                 isRequired: false
@@ -220,9 +220,11 @@ public class CalendarFunctions {
             event.calendar = calendar
             event.title = params.title
             // Set event date
-            let startDate = try CalendarFunctions.convertStringToDate(params.startDate)
+            let startDate = try CalendarFunctions.convertStringToDate(
+                params.start_date
+            )
             let endDate: Date
-            if let userEndDate = params.endDate {
+            if let userEndDate = params.end_date {
                 endDate = try CalendarFunctions.convertStringToDate(userEndDate)
             } else {
                 // Add 1 hour
@@ -230,7 +232,7 @@ public class CalendarFunctions {
             }
             event.startDate = startDate
             event.endDate = endDate
-            event.isAllDay = params.isAllDay ?? false
+            event.isAllDay = params.is_all_day ?? false
             if let notes = params.notes {
                 event.notes = notes
             }
@@ -239,7 +241,7 @@ public class CalendarFunctions {
             }
             
             // Check for conflicts
-            let ignoreConflicts = params.ignoreConflicts ?? false
+            let ignoreConflicts = params.ignore_conflicts ?? false
             if !ignoreConflicts {
                 // Check for any overlapping events
                 let predicate = eventStore.predicateForEvents(
@@ -295,12 +297,12 @@ public class CalendarFunctions {
     )
     struct AddEventParams: FunctionParams {
         var title: String
-        var startDate: String
-        var endDate: String?
-        var isAllDay: Bool?
+        var start_date: String
+        var end_date: String?
+        var is_all_day: Bool?
         var notes: String?
         var location: String?
-        var ignoreConflicts: Bool?
+        var ignore_conflicts: Bool?
     }
     
     /// A ``Function`` to remove an event by its identifier.

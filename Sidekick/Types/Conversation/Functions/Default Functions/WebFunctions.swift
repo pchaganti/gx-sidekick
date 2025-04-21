@@ -11,12 +11,51 @@ import Foundation
 
 public class WebFunctions {
     
-    static var functions: [AnyFunctionBox] = [
-        WebFunctions.webSearch,
-        WebFunctions.getWebsiteContent,
-        WebFunctions.draftEmail,
-        WebFunctions.getLocation
-    ]
+    static var functions: [AnyFunctionBox] {
+        var functions: [AnyFunctionBox] = [
+            WebFunctions.getWebsiteContent,
+            WebFunctions.draftEmail,
+            WebFunctions.getLocation
+        ]
+        // Add web search function
+        let provider: RetrievalSettings.SearchProvider = RetrievalSettings.SearchProvider(
+            rawValue: RetrievalSettings.defaultSearchProvider
+        ) ?? .duckDuckGo
+        if provider == .tavily {
+            functions.append(WebFunctions.tavilyWebSearch)
+        } else {
+            functions.append(WebFunctions.duckDuckGoWebSearch)
+        }
+        return functions
+    }
+    
+    /// Custom error for Web Search functions
+    enum WebSearchError: LocalizedError {
+        case notConfigured
+        case invalidDateFormat
+        var errorDescription: String? {
+            switch self {
+                case .invalidDateFormat:
+                    return "Invalid date format"
+                case .notConfigured:
+                    return "Web search has not been properly configured in Settings."
+            }
+        }
+    }
+    
+    /// A function to convert strings to dates
+    private static func convertStringToDate(
+        _ input: String
+    ) throws -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        // Check if date can be extracted
+        if let date = dateFormatter.date(from: input) {
+            return date
+        } else {
+            throw WebSearchError.invalidDateFormat
+        }
+    }
     
     /// A function to check if a web function was used
     public static func includesWebFunction(
@@ -27,8 +66,8 @@ public class WebFunctions {
         }
     }
     
-    /// A ``Function`` to conduct a web search
-    static let webSearch = Function<WebSearchParams, String>(
+    /// A ``Function`` to conduct a web search with Tavily
+    static let tavilyWebSearch = Function<TavilyWebSearchParams, String>(
         name: "web_search",
         description: "Retrieves information from the web with the provided query, instead of estimating it.",
         clearance: .sensitive,
@@ -41,8 +80,14 @@ public class WebFunctions {
             ),
             FunctionParameter(
                 label: "num_results",
-                description: "The maximum number of search results (optional, default: 5)",
+                description: "The maximum number of search results (optional, default: 10)",
                 datatype: .integer,
+                isRequired: false
+            ),
+            FunctionParameter(
+                label: "time_range",
+                description: "The time range back from the current date to filter results. (optional, options: day, week, month, year, default: nil)",
+                datatype: .string,
                 isRequired: false
             )
         ],
@@ -52,13 +97,14 @@ public class WebFunctions {
                 throw WebSearchError.notConfigured
             }
             // Conduct search
-            let sources: [Source] = try await WebSearch.search(
+            let sources: [Source] = try await TavilySearch.search(
                 query: params.query,
-                resultCount: params.num_results ?? 5
+                resultCount: params.num_results ?? 10,
+                timeRange: params.time_range
             )
             // Convert to JSON
-            let sourcesInfo: [Source.SourceInfo] = sources.map(
-                \.info
+            let sourcesInfo: [Source.SourceExcerpt] = sources.map(
+                \.excerpt
             )
             let jsonEncoder: JSONEncoder = JSONEncoder()
             jsonEncoder.outputFormatting = [.prettyPrinted]
@@ -70,25 +116,94 @@ public class WebFunctions {
             return """
 Below are the sites and corresponding content returned from your `web_search` query.
 
-The content from each site here is a summary. Use the `get_website_content` function to get the full content from a website.
+The content from each site here is an incomplete except. Use the `get_website_content` function to get the full content from a website.
 
 \(resultsText)
 """
-            // Custom error for Web Search function
-            enum WebSearchError: LocalizedError {
-                case notConfigured
-                var errorDescription: String? {
-                    switch self {
-                        case .notConfigured:
-                            return "Web search has not been properly configured in Settings."
-                    }
-                }
-            }
         }
     )
-    struct WebSearchParams: FunctionParams {
+    struct TavilyWebSearchParams: FunctionParams {
         let query: String
         let num_results: Int?
+        let time_range: TavilySearch.TimeRange?
+    }
+    
+    /// A ``Function`` to conduct a web search with DuckDuckGo
+    static let duckDuckGoWebSearch = Function<DuckDuckGoSearchParams, String>(
+        name: "web_search",
+        description: "Retrieves information from the web with the provided query, instead of estimating it.",
+        clearance: .sensitive,
+        params: [
+            FunctionParameter(
+                label: "query",
+                description: "The topic to look up online",
+                datatype: .string,
+                isRequired: true
+            ),
+            FunctionParameter(
+                label: "num_results",
+                description: "The maximum number of search results (optional, default: 10)",
+                datatype: .integer,
+                isRequired: false
+            ),
+            FunctionParameter(
+                label: "start_date",
+                description: "The start date of search results, in the format `yyyy-MM-dd`. (optional)",
+                datatype: .string,
+                isRequired: false
+            ),
+            FunctionParameter(
+                label: "end_date",
+                description: "The end date of search results, in the format `yyyy-MM-dd`. (optional)",
+                datatype: .string,
+                isRequired: false
+            ),
+        ],
+        run: { params in
+            // Check if enabled
+            if !RetrievalSettings.canUseWebSearch {
+                throw WebSearchError.notConfigured
+            }
+            // Get start and end date
+            let startDate: Date? = try {
+                if let start_date = params.start_date {
+                    return try WebFunctions.convertStringToDate(
+                        start_date
+                    )
+                }
+                return nil
+            }()
+            let endDate: Date? = try {
+                if let end_date = params.end_date {
+                    return try WebFunctions.convertStringToDate(
+                        end_date
+                    )
+                }
+                return nil
+            }()
+            // Conduct search
+            let sources: [Source] = try await DuckDuckGoSearch.search(
+                query: params.query,
+                resultCount: params.num_results ?? 10,
+                startDate: startDate,
+                endDate: endDate
+            )
+            // Convert to JSON
+            let sourceUrls: [String] = sources.map(
+                \.excerpt.url
+            )
+            return """
+Below are the sites returned from your `web_search` query. Use the `get_website_content` function to get the full content from a website.
+
+\(sourceUrls.joined(separator: "\n"))
+"""
+        }
+    )
+    struct DuckDuckGoSearchParams: FunctionParams {
+        let query: String
+        let num_results: Int?
+        let start_date: String?
+        let end_date: String?
     }
     
     /// A function to get the content of a website via its url

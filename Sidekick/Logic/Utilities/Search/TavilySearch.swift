@@ -20,6 +20,7 @@ public class TavilySearch {
 	public static func search(
 		query: String,
 		resultCount: Int,
+        timeRange: TimeRange? = nil,
         useBackupApi: Bool = false
 	) async throws -> [Source] {
 		// Check if search is on
@@ -36,6 +37,7 @@ public class TavilySearch {
 			let tavilyResults: [Tavily.Response.Result] = try await Self.hitTavilyApi(
 				query: query,
 				apiKey: apiKey,
+                timeRange: timeRange,
 				resultCount: resultCount
 			)
 			// Get all site content
@@ -56,6 +58,7 @@ public class TavilySearch {
 	public static func hitTavilyApi(
 		query: String,
 		apiKey: String,
+        timeRange: TimeRange?,
 		resultCount: Int
 	) async throws -> [Tavily.Response.Result] {
 		// Set up query params
@@ -63,7 +66,8 @@ public class TavilySearch {
 		let params = Tavily.Request(
 			api_key: apiKey,
 			query: query,
-			max_results: resultCount
+            max_results: resultCount,
+            time_range: timeRange
 		)
 		let tavilyEndpoint: URL = URL(string: "https://api.tavily.com/search")!
 		// Set up request
@@ -99,6 +103,10 @@ public class TavilySearch {
 		let results: [Tavily.Response.Result] = response.results + [answerResult]
 		return results
 	}
+    
+    public enum TimeRange: String, CaseIterable, Codable {
+        case day, week, month, year
+    }
 	
     enum TavilySearchError: LocalizedError {
         

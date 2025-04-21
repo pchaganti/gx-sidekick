@@ -23,8 +23,18 @@ public struct Source: Identifiable, Codable, Hashable {
         return .init(text: self.text, url: self.source)
     }
     
+    /// The except associated with the source
+    public var excerpt: SourceExcerpt {
+        return .init(excerpt: self.text, url: self.source)
+    }
+    
     public struct SourceInfo: Codable {
         public var text: String
+        public var url: String
+    }
+    
+    public struct SourceExcerpt: Codable {
+        public var excerpt: String
         public var url: String
     }
 	

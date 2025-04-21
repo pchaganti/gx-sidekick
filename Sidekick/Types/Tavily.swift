@@ -14,6 +14,7 @@ public class Tavily {
 		var api_key: String
 		var query: String
 		var max_results: Int = 3
+        var time_range: TavilySearch.TimeRange? = nil
 		var include_answer: Bool = true
 		var include_raw_content: Bool = false
 		var include_domains: [String] = []

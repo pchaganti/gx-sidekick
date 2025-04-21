@@ -90,7 +90,9 @@ public class DuckDuckGoSearch {
     /// Function to search DuckDuckGo for sources
     public static func search(
         query: String,
-        resultCount: Int
+        resultCount: Int,
+        startDate: Date? = nil,
+        endDate: Date? = nil
     ) async throws -> [Source] {
         // Formulate parameters
         let maxCount = min(max(resultCount, 1), 5)
@@ -99,7 +101,22 @@ public class DuckDuckGoSearch {
         ) else {
             return []
         }
-        let urlString = "https://html.duckduckgo.com/html/?q=\(query)"
+        var urlString = "https://html.duckduckgo.com/html/?q=\(query)"
+        // Add date parameter to URL if needed
+        let dateFormatter: DateFormatter = DateFormatter(
+            dateFormat: "yyyy-MM-dd"
+        )
+        if let startDate,
+           let endDate {
+            let startDateString = dateFormatter.string(
+                from: startDate
+            )
+            let endDateString = dateFormatter.string(
+                from: endDate
+            )
+            urlString += "&df=\(startDateString)..\(endDateString)"
+        }
+        // Formulate URL
         guard let url = URL(string: urlString) else { return [] }
         // Formulate request
         var request = URLRequest(url: url)
@@ -151,6 +168,17 @@ public class DuckDuckGoSearch {
         }
         // Return results
         return results
+    }
+    
+    // Custom error for DuckDuckGo search
+    enum DuckDuckGoSearchError: LocalizedError {
+        case startDateAfterEndDate
+        var errorDescription: String? {
+            switch self {
+                case .startDateAfterEndDate:
+                    return "The start date cannot be after the end date."
+            }
+        }
     }
     
 }
