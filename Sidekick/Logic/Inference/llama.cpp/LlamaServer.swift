@@ -491,8 +491,7 @@ public actor LlamaServer {
 							progressHandler?(fragment)
                             // Handle tool call (first call only)
                             if let firstChoice = responseObj.choices.first?.delta,
-                               let toolCall = firstChoice.tool_calls?.first,
-                               toolCall.index == 0 {
+                               let toolCall = firstChoice.tool_calls?.first {
                                 // Show progress
                                 if let updateStatusHandler {
                                     await updateStatusHandler(.usingFunctions)
