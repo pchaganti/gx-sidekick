@@ -13,19 +13,19 @@ struct IntroductionPageView: View {
 	var content: IntroductionPage.Content
 	
     var body: some View {
-		VStack {
-			content.image
-				.resizable()
-				.aspectRatio(contentMode: .fit)
-				.frame(width: 800)
-			Text(content.title)
-				.font(.title)
-				.bold()
-				.padding(.bottom, 10)
-			Markdown(MarkdownContent(content.description))
-				.font(.title2)
-		}
-		.frame(maxHeight: 400)
+        VStack {
+            content.image
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(height: 400)
+            Text(content.title)
+                .font(.title)
+                .bold()
+                .padding(.vertical, 10)
+            Markdown(MarkdownContent(content.description))
+                .font(.title2)
+        }
+        .frame(minWidth: 700, minHeight: 700)
     }
 	
 }

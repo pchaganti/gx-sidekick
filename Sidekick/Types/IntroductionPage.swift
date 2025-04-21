@@ -11,10 +11,10 @@ import SwiftUI
 enum IntroductionPage: CaseIterable {
 	
 	case useExperts
-	case temporaryResources
 	case webSearch
-	case dataVisualization
-	case inlineWritingAssistant
+    case functionUse
+	case inlineWritingAssistantCommands
+    case inlineWritingAssistantCompletions
 	case done
 	
 	public var content: Content? {
@@ -25,30 +25,30 @@ enum IntroductionPage: CaseIterable {
 					title: String(localized: "Experts"),
 					description: String(localized: "Create and use experts to allow the chatbot to reply with **domain specific** information from your own files and folders.")
 				)
-			case .temporaryResources:
-				return Content(
-					image: Image(.temporaryResources),
-					title: String(localized: "Temporary Resources"),
-					description: String(localized: "Give the chatbot temporary access to a file by dropping it into the prompt field.")
-				)
 			case .webSearch:
 				return Content(
 					image: Image(.webSearch),
 					title: String(localized: "Web Search"),
 					description: String(localized: "Use Web Search to find up to date information about a topic.")
 				)
-			case .dataVisualization:
+            case .functionUse:
 				return Content(
-					image: Image(.dataVisualization),
-					title: String(localized: "Data Visualization"),
-					description: String(localized: "Visualizations are automatically generated for tables when appropriate, with a variety of charts available, including bar charts, line charts and pie charts.")
+					image: Image(.functionUse),
+					title: String(localized: "Functions"),
+					description: String(localized: "Sidekick can call functions to obtain information from other applications and perform tasks. For example, when asked to reschedule a meeting, Sidekick can get all events from your calendar, find an available time slot, and then reschedule the meeting by creating a calendar event and drafting an email.")
 				)
-			case .inlineWritingAssistant:
+            case .inlineWritingAssistantCommands:
 				return Content(
-					image: Image(.inlineWritingAssistant),
-					title: String(localized: "Inline Writing Assistant"),
+					image: Image(.inlineWritingAssistantCommands),
+					title: String(localized: "Inline Writing Assistant Commands"),
 					description: String(localized: "Press 'Command + Control + I' to access Sidekick's inline writing assistant. For example, use the 'Answer Question' command to do your homework without leaving Microsoft Word!")
 				)
+            case .inlineWritingAssistantCompletions:
+                return Content(
+                    image: Image(.inlineWritingAssistantCompletions),
+                    title: String(localized: "Inline Writing Assistant Completions"),
+                    description: String(localized: "Use typing completions to speed up composition. Instead of typing out a word, just press 'Tab' to complete it.")
+                )
 			default:
 				return nil
 		}

@@ -15,7 +15,14 @@
       }
     },
     " to send." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " 发送。"
+          }
+        }
+      }
     },
     "." : {
       "shouldTranslate" : false
@@ -935,16 +942,6 @@
         }
       }
     },
-    "Data Visualization" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "数据可视化"
-          }
-        }
-      }
-    },
     "Debug" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1409,7 +1406,14 @@
       }
     },
     "Enter a message. Press " : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "输入消息，然后按 "
+          }
+        }
+      }
     },
     "Enter Full Screen" : {
       "localizations" : {
@@ -2021,16 +2025,6 @@
         }
       }
     },
-    "Give the chatbot temporary access to a file by dropping it into the prompt field." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "将文件拖放至聊天框，即可授予聊天机器人对文件的临时访问权限。"
-          }
-        }
-      }
-    },
     "GPU poor" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2217,6 +2211,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "写作助手"
+          }
+        }
+      }
+    },
+    "Inline Writing Assistant Commands" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文本改写快捷指令"
+          }
+        }
+      }
+    },
+    "Inline Writing Assistant Completions" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文本续写"
           }
         }
       }
@@ -3478,22 +3492,25 @@
         }
       }
     },
-    "Send a Message" : {
-      "extractionState" : "stale",
+    "Send a message with the selected shortcut." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "发送一条信息"
+            "value" : "使用选定的快捷键发送消息。"
           }
         }
       }
     },
-    "Send a message with the selected shortcut." : {
-
-    },
     "Send Message" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "发送消息"
+          }
+        }
+      }
     },
     "Sentences driving %@ probability:" : {
       "localizations" : {
@@ -3561,6 +3578,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "在访达中显示"
+          }
+        }
+      }
+    },
+    "Sidekick can call functions to obtain information from other applications and perform tasks. For example, when asked to reschedule a meeting, Sidekick can get all events from your calendar, find an available time slot, and then reschedule the meeting by creating a calendar event and drafting an email." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sidekick可以调用函数从其他应用程序获取信息并执行任务。例如，当被要求重新安排会议时，Sidekick可以从你的日历中获取所有事件，找到一个可用的时间段，然后通过创建日历事件和起草电子邮件重新安排会议。"
           }
         }
       }
@@ -3804,16 +3831,6 @@
         }
       }
     },
-    "Temporary Resources" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "添加文件"
-          }
-        }
-      }
-    },
     "Text" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3949,7 +3966,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "用于触发和关闭写作助手命令的快捷键。"
+            "value" : "用于触发和关闭写作助手命令的快捷指令。"
           }
         }
       }
@@ -4314,6 +4331,16 @@
         }
       }
     },
+    "Use typing completions to speed up composition. Instead of typing out a word, just press 'Tab' to complete it." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用输入完成功能来加快撰写速度。与其输入整个单词，只需按下“Tab”键即可完成它。"
+          }
+        }
+      }
+    },
     "Use Vision Capabilities" : {
       "localizations" : {
         "zh-Hans" : {
@@ -4400,16 +4427,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "查看资源"
-          }
-        }
-      }
-    },
-    "Visualizations are automatically generated for tables when appropriate, with a variety of charts available, including bar charts, line charts and pie charts." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sidekick 可自动根据表格生成图表，并提供各种图表，包括条形图、折线图和饼图。"
           }
         }
       }
