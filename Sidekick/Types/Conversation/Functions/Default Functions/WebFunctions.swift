@@ -131,7 +131,6 @@ The content from each site here is an incomplete except. Use the `get_website_co
     static let duckDuckGoWebSearch = Function<DuckDuckGoSearchParams, String>(
         name: "web_search",
         description: "Retrieves information from the web with the provided query, instead of estimating it.",
-        clearance: .sensitive,
         params: [
             FunctionParameter(
                 label: "query",

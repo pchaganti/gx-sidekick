@@ -16,7 +16,9 @@ struct ContentView: View {
 	
 	@StateObject private var conversationState: ConversationState = ConversationState()
 	
+    // TODO: Make dynamic again
 	@State private var showSetup: Bool = Settings.showSetup
+//    @State private var showSetup: Bool = true
 	
     var body: some View {
 		Group {

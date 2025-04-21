@@ -15,6 +15,8 @@ struct ConversationNameEditor: View {
 	@State private var isEditing: Bool = false
 	@Binding var conversation: Conversation
 	
+    @State private var newTitle: String = ""
+    
 	@FocusState private var isFocused: Bool
 	
     var body: some View {
@@ -23,7 +25,7 @@ struct ConversationNameEditor: View {
 				Text(conversation.title)
 					.contentTransition(.numericText())
 			} else {
-				TextField("Title", text: $conversation.title)
+                TextField("Title", text: self.$newTitle)
 					.focused($isFocused)
 					.textFieldStyle(.plain)
 					.onSubmit {
@@ -65,7 +67,13 @@ struct ConversationNameEditor: View {
 	}
 	
 	private func toggleEditingMode() {
-		// Exit editing mode
+        // Sync
+        if !self.isEditing {
+            self.newTitle = self.conversation.title
+        } else {
+            self.conversation.title = self.newTitle
+        }
+        // Exit editing mode
 		self.isFocused.toggle()
 		self.isEditing.toggle()
 	}
