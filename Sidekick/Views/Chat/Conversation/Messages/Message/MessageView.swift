@@ -141,6 +141,39 @@ struct MessageView: View {
             if self.isGenerating {
                 stopButton
             }
+            if hasMemories, let memory {
+                Spacer()
+                // Show memory updated
+                PopoverButton(
+                    arrowEdge: .bottom
+                ) {
+                    Label("Memory updated", systemImage: "pencil.and.list.clipboard")
+                        .foregroundStyle(.secondary)
+                } content: {
+                    VStack {
+                        Text(memory.text)
+                            .font(.body)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
+                        HStack {
+                            Button {
+                                self.memories.forget(memory)
+                            } label: {
+                                Text("Forget")
+                            }
+                            Button {
+                                self.openWindow(id: "memory")
+                            } label: {
+                                Text("Manage Memories")
+                            }
+                        }
+                    }
+                    .padding(.horizontal, 8)
+                    .frame(maxWidth: 400, maxHeight: 80)
+                }
+                .buttonStyle(.plain)
+                .padding(.top, 3)
+            }
         }
     }
 	
@@ -182,10 +215,10 @@ struct MessageView: View {
 		Group {
             if self.isEditing {
 				contentEditor
-			} else {
-				VStack(
-					alignment: .leading,
-					spacing: 4
+            } else {
+                VStack(
+                    alignment: .leading,
+                    spacing: 4
                 ) {
                     // Show function calls if availible
                     if self.message.hasFunctionCallRecords {
@@ -209,41 +242,9 @@ struct MessageView: View {
                         .if(shimmer) { view in
                             view.shimmering()
                         }
-                    // Show references & memory
-                    if !self.message.referencedURLs.isEmpty || hasMemories {
-                        HStack(
-                            alignment: .bottom
-                        ) {
-                            // Show references if needed
-                            if !self.message.referencedURLs.isEmpty {
-                                messageReferences
-                            }
-                            if hasMemories, let memory {
-                                Spacer()
-                                PopoverButton(
-                                    arrowEdge: .bottom
-                                ) {
-                                    Label("Memory updated", systemImage: "pencil.and.list.clipboard")
-                                        .foregroundStyle(.secondary)
-                                } content: {
-                                    VStack {
-                                        Text(memory.text)
-                                            .font(.body)
-                                            .lineLimit(nil)
-                                            .fixedSize(horizontal: false, vertical: true)
-                                        Button {
-                                            self.openWindow(id: "memory")
-                                        } label: {
-                                            Text("Manage Memories")
-                                        }
-                                    }
-                                    .padding(.horizontal, 8)
-                                    .frame(maxWidth: 400, maxHeight: 80)
-                                }
-                                .buttonStyle(.plain)
-                                .padding(.top, 3)
-                            }
-                        }
+                    // Show references if needed
+                    if !self.message.referencedURLs.isEmpty {
+                        messageReferences
                     }
                 }
 			}

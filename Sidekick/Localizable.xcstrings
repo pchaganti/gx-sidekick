@@ -1825,6 +1825,16 @@
         }
       }
     },
+    "Forget" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "遗忘"
+          }
+        }
+      }
+    },
     "Format" : {
       "localizations" : {
         "zh-Hans" : {
