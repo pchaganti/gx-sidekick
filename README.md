@@ -74,11 +74,11 @@ When telling Sidekick to draft an invitation email for a birthday celebration to
 
 Sidekick can now remember helpful information between conversations, making its responses more relevant and personalized. Whether you're typing, speaking, or generating images in Sidekick, it can recall details and preferences you’ve shared and use them to tailor its responses. The more you use it, the more useful it becomes, and you’ll start to notice improvements over time.
 
-For example, I can tell Sidekick about my new dog, Cat...
+For example, I might tell Sidekick that I am a beginner in Python trying to create my own version of Tetris.
 
 ![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/Docs%20Images/Features/Conversations/memoryRemember.png)
 
-so that when I ask Sidekick what to feed Cat, it recommends dog food.
+When I ask it about `pygame` alternatives, it makes recommendations based on my current project, Tetris.
 
 ![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/Docs%20Images/Features/Conversations/memoryUse.png)
 
