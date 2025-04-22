@@ -10,10 +10,11 @@ import SwiftUI
 
 enum IntroductionPage: CaseIterable {
 	
-	case useExperts
-	case webSearch
+    case useExperts
+    case setupExpert
+    case webSearch
     case functionUse
-	case inlineWritingAssistantCommands
+    case inlineWritingAssistantCommands
     case inlineWritingAssistantCompletions
 	case done
 	

@@ -20,13 +20,13 @@ struct SetupView: View {
 			if !selectedModel {
 				// If no model, download or select a model
 				ModelSelectionView(selectedModel: $selectedModel)
+                    .padding(.vertical)
 			} else {
 				// Else, show setup complete screen
 				IntroductionView(showSetup: $showSetup)
 			}
 		}
 		.padding()
-		.padding(.vertical)
 		.interactiveDismissDisabled(true)
     }
 	

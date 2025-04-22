@@ -18,6 +18,9 @@ struct ResourceSectionView: View {
 	
 	@EnvironmentObject private var lengthyTasksController: LengthyTasksController
 	
+    var isTutorial: Bool = false
+    var fileUrl: URL? = nil
+    
 	var isUpdating: Bool {
 		let taskName: String = String(
 			localized: "Updating resource index for expert \"\(self.expert.name)\""
@@ -45,7 +48,11 @@ struct ResourceSectionView: View {
 			isPresented: $showAddOptions
 		) {
 			Button {
-				self.addFile()
+                if !isTutorial {
+                    self.addFile()
+                } else {
+                    self.tutorialAddFile()
+                }
 			} label: {
 				Text("File / Folder")
 			}
@@ -54,11 +61,13 @@ struct ResourceSectionView: View {
 			} label: {
 				Text("Website")
 			}
+            .disabled(isTutorial)
 			Button {
 				self.isAddingEmail.toggle()
 			} label: {
 				Text("Email (Mail.app only)")
 			}
+            .disabled(isTutorial)
 		} message: {
 			Text("What type of resource do you want to add?")
 		}
@@ -105,7 +114,7 @@ struct ResourceSectionView: View {
 				} label: {
 					Text("Update")
 				}
-				.disabled(self.isUpdating)
+                .disabled(self.isUpdating || self.isTutorial)
 			}
 			Divider()
             ResourceSelectionView(expert: self.$expert)
@@ -124,6 +133,7 @@ struct ResourceSectionView: View {
 			Spacer()
 			Toggle("", isOn: $expert.persistResources)
 				.toggleStyle(.switch)
+                .disabled(isTutorial)
 		}
 	}
 	
@@ -133,12 +143,37 @@ struct ResourceSectionView: View {
 			dialogTitle: String(localized: "Select Files or Folders"),
 			allowMultipleSelection: true
 		) else { return }
-		let resources: [Resource] = selectedUrls.map({
-			Resource(url: $0)
-		})
-		Task { @MainActor in
-			await $expert.addResources(resources)
-		}
+        self.addUrls(urls: selectedUrls)
 	}
+    
+    @MainActor
+    private func tutorialAddFile() {
+        guard let selectedUrls: [URL] = try? FileManager.selectFile(
+            rootUrl: fileUrl,
+            dialogTitle: String(localized: "Select Files or Folders"),
+            allowMultipleSelection: true
+        ) else { return }
+        // Check
+        if selectedUrls != [fileUrl] {
+            // Show alert and return
+            Dialogs.showAlert(
+                title: String(localized: "Error"),
+                message: String(localized: "Wrong files selected. Please select the file \"\(fileUrl?.lastPathComponent ?? "")\".")
+            )
+            return
+        }
+        // Add
+        self.addUrls(urls: selectedUrls)
+    }
 	
+    @MainActor
+    private func addUrls(urls: [URL]) {
+        let resources: [Resource] = urls.map({
+            Resource(url: $0)
+        })
+        Task { @MainActor in
+            await $expert.addResources(resources)
+        }
+    }
+    
 }
