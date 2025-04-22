@@ -57,15 +57,15 @@ struct DiagrammerPreviewEditorView: View {
 	
 	var editor: some View {
 		CodeEditor(
-			text: self.$diagrammerViewController.d2Code,
+            text: self.$diagrammerViewController.mermaidCode,
 			position: self.$position,
 			messages: self.$messages
 		)
 		.environment(
 			\.codeEditorTheme, colorScheme == .dark ? Theme.defaultDark : Theme.defaultLight
 		)
-		.onChange(of: diagrammerViewController.d2Code) {
-			self.diagrammerViewController.saveD2Code()
+		.onChange(of: diagrammerViewController.mermaidCode) {
+			self.diagrammerViewController.saveMermaidCode()
 		}
 	}
 	
@@ -122,10 +122,9 @@ struct DiagrammerPreviewEditorView: View {
 	}
 	
 	private func resetDiagram() {
-		self.diagrammerViewController.stopRender()
 		self.diagrammerViewController.stopPreview()
-		self.diagrammerViewController.d2Code = ""
-		self.diagrammerViewController.saveD2Code()
+		self.diagrammerViewController.mermaidCode = ""
+		self.diagrammerViewController.saveMermaidCode()
 		self.diagrammerViewController.currentStep = .prompt
 	}
 	

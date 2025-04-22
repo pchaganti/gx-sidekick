@@ -10,8 +10,6 @@
 		200363292D769AC700770391 /* JavaScriptRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200363282D769AC700770391 /* JavaScriptRunner.swift */; };
 		2004D7642CBC9DA2009F294E /* ConversationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2004D7632CBC9DA2009F294E /* ConversationState.swift */; };
 		200619A22D6750D9001949EF /* DiagrammerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200619A12D6750D9001949EF /* DiagrammerViewController.swift */; };
-		200619A82D6756EB001949EF /* d2 in Resources */ = {isa = PBXBuildFile; fileRef = 200619A72D6756EB001949EF /* d2 */; };
-		200619AA2D6759EF001949EF /* d2-cheatsheet.txt in Resources */ = {isa = PBXBuildFile; fileRef = 200619A92D6759EF001949EF /* d2-cheatsheet.txt */; };
 		200619AD2D675DB9001949EF /* DiagrammerPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200619AC2D675DB9001949EF /* DiagrammerPromptView.swift */; };
 		200619AF2D6766B1001949EF /* DiagrammerGeneratingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200619AE2D6766B1001949EF /* DiagrammerGeneratingView.swift */; };
 		200619B22D6768F6001949EF /* SwiftfulLoadingIndicators in Frameworks */ = {isa = PBXBuildFile; productRef = 200619B12D6768F6001949EF /* SwiftfulLoadingIndicators */; };
@@ -315,6 +313,8 @@
 		20DEABED2CC4D68A0046447C /* Extension+CGImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DEABEC2CC4D68A0046447C /* Extension+CGImage.swift */; };
 		20DFF47F2DB7187C00F3F76C /* Markdown in Resources */ = {isa = PBXBuildFile; fileRef = 20DFF47E2DB7187C00F3F76C /* Markdown */; };
 		20DFF4812DB718E000F3F76C /* ExpertSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DFF4802DB718E000F3F76C /* ExpertSetupView.swift */; };
+		20DFF4842DB73C9000F3F76C /* mermaid-cli in Resources */ = {isa = PBXBuildFile; fileRef = 20DFF4832DB73C9000F3F76C /* mermaid-cli */; };
+		20DFF4862DB741D900F3F76C /* FileMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DFF4852DB741D900F3F76C /* FileMonitor.swift */; };
 		20E48C262CB560730085E7D6 /* ChatStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E48C252CB560730085E7D6 /* ChatStyle.swift */; };
 		20E48C292CB560B50085E7D6 /* ConversationControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E48C282CB560B50085E7D6 /* ConversationControlsView.swift */; };
 		20E48C2B2CB560E30085E7D6 /* Extension+CGKeyCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E48C2A2CB560E30085E7D6 /* Extension+CGKeyCode.swift */; };
@@ -410,8 +410,6 @@
 		200549842CAFA67D00A3DCF2 /* SidekickTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SidekickTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2005498E2CAFA67D00A3DCF2 /* SidekickUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SidekickUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		200619A12D6750D9001949EF /* DiagrammerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagrammerViewController.swift; sourceTree = "<group>"; };
-		200619A72D6756EB001949EF /* d2 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = d2; sourceTree = "<group>"; };
-		200619A92D6759EF001949EF /* d2-cheatsheet.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "d2-cheatsheet.txt"; sourceTree = "<group>"; };
 		200619AC2D675DB9001949EF /* DiagrammerPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagrammerPromptView.swift; sourceTree = "<group>"; };
 		200619AE2D6766B1001949EF /* DiagrammerGeneratingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagrammerGeneratingView.swift; sourceTree = "<group>"; };
 		200619B32D676DCE001949EF /* DiagrammerPreviewEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagrammerPreviewEditorView.swift; sourceTree = "<group>"; };
@@ -739,6 +737,8 @@
 		20DFF3882DB6806C00F3F76C /* demoScreenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = demoScreenshot.png; sourceTree = "<group>"; };
 		20DFF47E2DB7187C00F3F76C /* Markdown */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Markdown; sourceTree = "<group>"; };
 		20DFF4802DB718E000F3F76C /* ExpertSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertSetupView.swift; sourceTree = "<group>"; };
+		20DFF4832DB73C9000F3F76C /* mermaid-cli */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "mermaid-cli"; sourceTree = "<group>"; };
+		20DFF4852DB741D900F3F76C /* FileMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileMonitor.swift; sourceTree = "<group>"; };
 		20E48C252CB560730085E7D6 /* ChatStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatStyle.swift; sourceTree = "<group>"; };
 		20E48C282CB560B50085E7D6 /* ConversationControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationControlsView.swift; sourceTree = "<group>"; };
 		20E48C2A2CB560E30085E7D6 /* Extension+CGKeyCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+CGKeyCode.swift"; sourceTree = "<group>"; };
@@ -864,7 +864,7 @@
 		200619A62D6756DF001949EF /* bin */ = {
 			isa = PBXGroup;
 			children = (
-				200619A72D6756EB001949EF /* d2 */,
+				20DFF4832DB73C9000F3F76C /* mermaid-cli */,
 			);
 			path = bin;
 			sourceTree = "<group>";
@@ -1352,7 +1352,6 @@
 		207E5EED2D6F636200A8F6FA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				200619A92D6759EF001949EF /* d2-cheatsheet.txt */,
 				200619A62D6756DF001949EF /* bin */,
 			);
 			path = Resources;
@@ -1363,7 +1362,9 @@
 			children = (
 				207E5EF12D6FDEEF00A8F6FA /* ImageSearch.swift */,
 				20457D332D92827900954892 /* CompletionsController.swift */,
+				20DFF4852DB741D900F3F76C /* FileMonitor.swift */,
 				20457D152D918FFD00954892 /* Accessibility */,
+				20B9E60D2CB1414100BA0AD2 /* DockMenuCommands.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -1631,7 +1632,6 @@
 		20B9E60F2CB1429E00BA0AD2 /* Commands */ = {
 			isa = PBXGroup;
 			children = (
-				20B9E60D2CB1414100BA0AD2 /* DockMenuCommands.swift */,
 				20B9E6102CB142FD00BA0AD2 /* DebugCommands.swift */,
 				20573F1A2CB5099B004C19FE /* ConversationCommands.swift */,
 				207A9F612CB94B0000E727DE /* WindowCommands.swift */,
@@ -2148,13 +2148,12 @@
 				20DE8A062DAAACE0002C1B5D /* libllama.dylib in Resources */,
 				20DE8A072DAAACE0002C1B5D /* libllava_shared.dylib in Resources */,
 				20DE8A082DAAACE0002C1B5D /* libggml-base.dylib in Resources */,
+				20DFF4842DB73C9000F3F76C /* mermaid-cli in Resources */,
 				206934932D5CCDF1006619FD /* conversationExportTemplate.html in Resources */,
 				206934902D5CC87E006619FD /* Credits.html in Resources */,
 				20AF90F42D73DBDD00E23C68 /* marp in Resources */,
 				20DE89FF2DAAACC5002C1B5D /* llama-perplexity in Resources */,
 				20DE8A002DAAACC5002C1B5D /* llama-server in Resources */,
-				200619AA2D6759EF001949EF /* d2-cheatsheet.txt in Resources */,
-				200619A82D6756EB001949EF /* d2 in Resources */,
 				20B97CB32CAFE86C009A0A5D /* Preview Assets.xcassets in Resources */,
 				20F2D5122CC1F33B004CE730 /* Localizable.xcstrings in Resources */,
 				20B97CB42CAFE86C009A0A5D /* Assets.xcassets in Resources */,
@@ -2244,6 +2243,7 @@
 				201BB99C2D8B0F5E00890EE6 /* CanvasPreviewEditor.swift in Sources */,
 				201BB9C92D8C1CA000890EE6 /* SnapshotExportButton.swift in Sources */,
 				207A9F592CB8F4AF00E727DE /* ResourceSelectionView.swift in Sources */,
+				20DFF4862DB741D900F3F76C /* FileMonitor.swift in Sources */,
 				20FB0D892CBA8327006D062A /* Extension+SimilarityIndex.swift in Sources */,
 				20B97CD92CAFF2E7009A0A5D /* ModelSelectionView.swift in Sources */,
 				208855D52DAD20CC00071F0B /* Extension+CNContactStore.swift in Sources */,

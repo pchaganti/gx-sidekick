@@ -48,7 +48,14 @@
       }
     },
     "### Experts are the primary way Sidekick taps into domain specific knowledge and gains context about you and your work. \n\n### Let's create an tutorial expert so you can learn about Sidekick!" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "专家是Sidekick获取特定领域知识并了解你和你的工作背景的主要途径。\n\n请按照教程创建一个教程专家，协助你学习如何使用Sidekick！"
+          }
+        }
+      }
     },
     "%lld%%" : {
       "shouldTranslate" : false
@@ -546,7 +553,14 @@
       }
     },
     "Click \"Add\", select \"File / Folder\", then click \"Open\" to add files." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "点击“添加”，选择“文件/文件夹”，然后点击“打开”以添加文件。"
+          }
+        }
+      }
     },
     "Click the button below to download a completion model." : {
       "localizations" : {
@@ -629,7 +643,14 @@
       }
     },
     "Configure the system prompt to customize the expert's behaviour" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "配置系统提示以自定义专家的行为"
+          }
+        }
+      }
     },
     "Configuring image layout..." : {
       "localizations" : {
@@ -857,6 +878,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "无法获得困惑度分数。"
+          }
+        }
+      }
+    },
+    "Could not render the diagram within reasonable time." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法在合理的时间内渲染图表。"
           }
         }
       }
@@ -4581,7 +4612,14 @@
       }
     },
     "Wrong files selected. Please select the file \"%@\"." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择的文件错误。请选取文件“￼%@”。"
+          }
+        }
+      }
     },
     "Yes" : {
       "localizations" : {

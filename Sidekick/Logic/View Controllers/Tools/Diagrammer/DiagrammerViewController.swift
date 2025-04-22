@@ -25,133 +25,148 @@ public class DiagrammerViewController: ObservableObject {
 	/// The prompt entered, of type `String`
 	@Published public var prompt: String = ""
 	
-	/// The full prompt used to generate D2 diagram code, of type `String`
+	/// The full prompt used to generate mermaid diagram code, of type `String`
 	var fullPrompt: String {
 		// Init prompt text
 		let prompt: String = """
+Use Mermaid markup language to draw a highly detailed diagram for the topic below. Respond with ONLY the Mermaid code.
+
 \(self.prompt)
-
-Use D2 markup language to draw a highly detailed diagram, following the syntax in the provided cheatsheet. Respond with ONLY the D2 code.
 """
-		// Get cheatsheet text
-		guard let cheatsheetURL: URL = Bundle.main.url(
-			forResource: "d2-cheatsheet",
-			withExtension: "txt"
-		) else {
-			return prompt
-		}
-        let cheatsheetText: String = try! String(
-            contentsOf: cheatsheetURL,
-            encoding: .utf8
-        )
 		// Return full prompt
-		return """
-\(prompt)
-
-Cheatsheet:
-
-\(cheatsheetText)
-"""
+        return prompt
 	}
 	
-	/// The d2 child process to serve the preview
-	var d2PreviewServerProcess: Process = Process()
-	/// The d2 child process to render the image
-	var d2RenderProcess: Process = Process()
-	/// The port where the preview is hosted
-	let port: Int = 2942
+	/// The mermaid child process to serve the preview
+	var mermaidPreviewServerProcess: Process = Process()
 	
-	/// The D2 code, of type `String`
-	@Published public var d2Code: String = ""
-	
+	/// The mermaid code, of type `String`
+	@Published public var mermaidCode: String = ""
+    
+    /// A file monitor to watch for changes in the preview
+    private var fileMonitor: FileMonitor?
+    /// The preview's ID
+    @Published private var previewId: UUID = UUID()
+    
 	/// A preview of the diagram
 	public var preview: some View {
 		WebView(
-			url: URL(
-				string: "http://127.0.0.1:\(self.port)"
-			)!
+            url: Self.previewFileUrl
 		)
+        .id(previewId)
 	}
 	
-	/// The URL of the d2 code file, of type `URL`
-	private var d2FileUrl: URL {
-		let d2FileUrl: URL = Settings
+	/// The URL of the mermaid code file, of type `URL`
+	private var mermaidFileUrl: URL {
+		let mermaidDirUrl: URL = Settings
 			.cacheUrl
-			.appendingPathComponent(
-				"newDiagram.d2"
-			)
-		return d2FileUrl
+            .appendingPathComponent("Diagrammer")
+        if !mermaidDirUrl.fileExists {
+            FileManager.createDirectory(
+                at: mermaidDirUrl,
+                withIntermediateDirectories: true
+            )
+        }
+        return mermaidDirUrl.appendingPathComponent(
+            "newDiagram.mmd"
+        )
 	}
+    
+    /// The URL of the previewed file, of type `URL`
+    private static var previewFileUrl: URL {
+        let mermaidDirUrl: URL = Settings
+            .cacheUrl
+            .appendingPathComponent("Diagrammer")
+        if !mermaidDirUrl.fileExists {
+            FileManager.createDirectory(
+                at: mermaidDirUrl,
+                withIntermediateDirectories: true
+            )
+        }
+        return mermaidDirUrl.appendingPathComponent(
+            "newDiagram.svg"
+        )
+    }
 	
-	/// Function to save the D2 code
-	public func saveD2Code() {
-		// Save D2 text to file
+	/// Function to save the mermaid code
+	public func saveMermaidCode() {
+		// Save mermaid text to file
 		do {
-			try self.d2Code.write(
-				to: self.d2FileUrl,
+			try self.mermaidCode.write(
+				to: self.mermaidFileUrl,
 				atomically: true,
 				encoding: .utf8
 			)
 		} catch {
-			Self.logger.error("Error saving D2 code: \(error, privacy: .public)")
+			Self.logger.error("Error saving mermaid code: \(error, privacy: .public)")
 		}
 	}
 	
-	/// Function to start the preview from the D2 code
+	/// Function to start the preview from the mermaid code
 	public func startPreview() {
 		// Save the code
-		self.saveD2Code()
-		// Start the D2 child process
-		self.d2PreviewServerProcess = Process()
-		self.d2PreviewServerProcess.executableURL = Bundle.main.resourceURL?.appendingPathComponent("d2")
+        self.saveMermaidCode()
+		// Start the mermaid child process
+		self.mermaidPreviewServerProcess = Process()
+		self.mermaidPreviewServerProcess.executableURL = Bundle.main.resourceURL?.appendingPathComponent("mermaid-cli")
 		let arguments = [
-			"--watch",
-			self.d2FileUrl.posixPath,
-			"--port",
-			"\(self.port)",
-			"--browser",
-			"0"
+			"-watch",
+			self.mermaidFileUrl.posixPath
 		]
-		self.d2PreviewServerProcess.arguments = arguments
-		self.d2PreviewServerProcess.standardInput = FileHandle.nullDevice
-		// To debug with server's output, comment these 2 lines to inherit stdout.
-		self.d2PreviewServerProcess.standardOutput =  FileHandle.nullDevice
-		self.d2PreviewServerProcess.standardError =  FileHandle.nullDevice
+		self.mermaidPreviewServerProcess.arguments = arguments
+		self.mermaidPreviewServerProcess.standardInput = FileHandle.nullDevice
+        let pipe: Pipe = Pipe()
+		self.mermaidPreviewServerProcess.standardOutput = pipe
+		self.mermaidPreviewServerProcess.standardError =  FileHandle.nullDevice
 		// Run the process
 		do {
-			try self.d2PreviewServerProcess.run()
+            // Setup monitor
+            let id: UUID = self.previewId
+            self.fileMonitor = try? FileMonitor(
+                url: Self.previewFileUrl
+            ) {
+                // Render
+                DispatchQueue.main.asyncAfter(
+                    deadline: .now() + 1
+                ) {
+                    self.previewId = UUID()
+                    Self.logger.notice("Updated diagrammer preview")
+                }
+            }
+            try self.mermaidPreviewServerProcess.run()
 			Self.logger.notice("Started diagrammer preview server")
+            // If file not updated, trigger error
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                if self.previewId == id {
+                    self.handleRenderError()
+                }
+            }
 		} catch {
 			// Print error
-			print("Error generating diagram: \(error)")
-			// Return to first step
-			Task.detached { @MainActor in
-				Dialogs.showAlert(
-					title: String(localized: "Error"),
-					message: String(localized: "An error occurred while generating the diagram.")
-				)
-				self.stopPreview()
-			}
+            Self.logger.error("Error generating diagram: \(error)")
+            self.handleRenderError()
 		}
 	}
+    
+    public func handleRenderError() {
+        // Return to first step
+        Task { @MainActor in
+            Dialogs.showAlert(
+                title: String(localized: "Error"),
+                message: String(localized: "Could not render the diagram within reasonable time.")
+            )
+            self.stopPreview()
+        }
+    }
 	
 	/// Function to stop the preview
 	public func stopPreview() {
 		// Exit if not running
-		if self.d2PreviewServerProcess.executableURL == nil { return }
+		if self.mermaidPreviewServerProcess.executableURL == nil { return }
 		// Else, terminate and reinit
 		Self.logger.notice("Stopping diagrammer preview server")
-		self.d2PreviewServerProcess.terminate()
-		self.d2PreviewServerProcess = Process()
-	}
-	
-	/// Function to stop the render process
-	public func stopRender() {
-		// Exit if not running
-		if self.d2RenderProcess.executableURL == nil { return }
-		self.d2RenderProcess.terminate()
-		// Else, terminate and reinit
-		self.d2RenderProcess = Process()
+		self.mermaidPreviewServerProcess.terminate()
+		self.mermaidPreviewServerProcess = Process()
 	}
 	
 	/// Function to save an image of the diagram
@@ -162,41 +177,32 @@ Cheatsheet:
 			rootUrl: .downloadsDirectory,
 			dialogTitle: String(localized: "Select a Folder"),
 			canSelectFiles: false
-		).first {
-			// Generate image
-			self.d2RenderProcess = Process()
-			self.d2RenderProcess.executableURL = Bundle.main.resourceURL?
-				.appendingPathComponent("d2")
-			let saveUrl: URL = url.appendingPathComponent(
-				"diagram \(Date.now.dateString).svg"
-			)
-			self.d2RenderProcess.arguments = [
-				self.d2FileUrl.posixPath,
-				saveUrl.posixPath
-			]
-			self.d2RenderProcess.standardInput = FileHandle.nullDevice
-			// To debug with server's output, comment these 2 lines to inherit stdout.
-			self.d2RenderProcess.standardOutput =  FileHandle.nullDevice
-			self.d2RenderProcess.standardError =  FileHandle.nullDevice
-			do {
-				try self.d2RenderProcess.run()
-				Self.logger.notice("Started diagrammer render process")
-				// Return success
-				return true
-			} catch {
-				Self.logger.error("Failed to start diagrammer render process: \(error, privacy: .public)")
-				// Return fail
-				return false
-			}
-		}
+        ).first {
+            do {
+                Self.logger.notice("Started diagrammer render")
+                // Relocate file
+                try FileManager.default.moveItem(
+                    at: Self.previewFileUrl,
+                    to: url.appendingPathComponent(
+                        "newDiagram.svg"
+                    )
+                )
+                // Return success
+                return true
+            } catch {
+                Self.logger.error("Failed to render diagram: \(error, privacy: .public)")
+                // Return fail
+                return false
+            }
+        }
 		// Return fail
 		return false
 	}
 	
 	/// Function to submit the prompt
 	public func submitPrompt() {
-		// Reset d2Code
-		self.d2Code = ""
+		// Reset mermaidCode
+		self.mermaidCode = ""
 		// Set step to generating
 		self.currentStep.nextCase()
 		// Formulate message
@@ -208,7 +214,7 @@ Cheatsheet:
 			text: self.fullPrompt,
 			sender: .user
 		)
-		// Generate the D2 code
+		// Generate the mermaid code
 		Task { @MainActor in
 			do {
 				let _ = try await Model.shared.listenThinkRespond(
@@ -220,11 +226,8 @@ Cheatsheet:
 					mode: .default, handleResponseFinish:  { fullMessage, pendingMessage, _ in
 						// On finish
 						// Remove markdown code tags and thinking process
-						let d2Code: String = fullMessage.reasoningRemoved.replacingOccurrences(
-							of: "```D2",
-							with: ""
-						).replacingOccurrences(
-							of: "```d2",
+						let mermaidCode: String = fullMessage.reasoningRemoved.replacingOccurrences(
+							of: "```mermaid",
 							with: ""
 						).replacingOccurrences(
 							of: "```",
@@ -233,8 +236,8 @@ Cheatsheet:
 							of: "_",
 							with: " "
 						).trimmingWhitespaceAndNewlines()
-						// Set the D2 code
-						self.d2Code = d2Code
+						// Set the mermaid code
+						self.mermaidCode = mermaidCode
 						self.startPreview()
 						// Move to next step
 						self.currentStep.nextCase()
@@ -253,7 +256,7 @@ Cheatsheet:
 		self.prompt = ""
 	}
 	
-	/// The steps to generate the D2 diagram
+	/// The steps to generate the mermaid diagram
 	public enum DiagrammerStep: CaseIterable {
 		
 		case prompt
