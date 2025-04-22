@@ -342,6 +342,16 @@
         }
       }
     },
+    "Are you sure you want to delete all memories?" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你确定要删除所有记忆吗？"
+          }
+        }
+      }
+    },
     "Are you sure you want to delete all sources?" : {
       "localizations" : {
         "zh-Hans" : {
@@ -762,6 +772,16 @@
         }
       }
     },
+    "Controls whether Sidekick remembers information about you to provide more customized, personal responses in the future." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "控制Sidekick是否记住关于您的信息，以便将来提供更加定制化和个人化的回应。"
+          }
+        }
+      }
+    },
     "Controls whether the GPU is used for inference." : {
       "localizations" : {
         "zh-Hans" : {
@@ -1048,6 +1068,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Delete All Profiles"
+          }
+        }
+      }
+    },
+    "Delete All Memories" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除所有记忆"
           }
         }
       }
@@ -2245,6 +2275,16 @@
         }
       }
     },
+    "Info" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "资料"
+          }
+        }
+      }
+    },
     "Inline Writing Assistant" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2422,6 +2462,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "编辑专家"
+          }
+        }
+      }
+    },
+    "Manage Memories" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "管理记忆"
+          }
+        }
+      }
+    },
+    "Memories" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "记忆"
+          }
+        }
+      }
+    },
+    "Memory" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "记忆"
+          }
+        }
+      }
+    },
+    "Memory updated" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已更新记忆"
           }
         }
       }
@@ -3382,6 +3462,16 @@
         }
       }
     },
+    "Search Memories" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "搜索记忆"
+          }
+        }
+      }
+    },
     "Search not configured" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3658,6 +3748,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sidekick 需要权限才能阅读 Apple Mail 中的电子邮件。请点击下面的按钮并按“打开”。"
+          }
+        }
+      }
+    },
+    "Sidekick remembers useful details about you and" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sidekick会记住关于你和你的偏好和"
           }
         }
       }
@@ -4311,6 +4411,16 @@
         }
       }
     },
+    "Use Memory" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启用记忆"
+          }
+        }
+      }
+    },
     "Use model server" : {
       "localizations" : {
         "zh-Hans" : {
@@ -4647,6 +4757,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "你的文件将被保存到此文件夹"
+          }
+        }
+      }
+    },
+    "your preferences so it can be more helpful." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "其他细节，以便能更有效地帮助你。"
           }
         }
       }

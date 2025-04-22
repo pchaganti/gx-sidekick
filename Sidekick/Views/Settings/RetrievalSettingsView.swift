@@ -9,6 +9,8 @@ import SwiftUI
 
 struct RetrievalSettingsView: View {
 	
+    @AppStorage("useMemory") private var useMemory: Bool = RetrievalSettings.useMemory
+    
     @AppStorage("defaultSearchProvider") private var defaultSearchProvider: Int = RetrievalSettings.defaultSearchProvider
     
 	@State private var tavilyApiKey: String = RetrievalSettings.tavilyApiKey
@@ -19,6 +21,11 @@ struct RetrievalSettingsView: View {
 
     var body: some View {
 		Form {
+            Section {
+                useMemoryToggle
+            } header: {
+                Text("Memory")
+            }
 			Section {
 				resourcesSearch
 			} header: {
@@ -35,6 +42,27 @@ struct RetrievalSettingsView: View {
 			}
 		}
 		.formStyle(.grouped)
+    }
+    
+    var useMemoryToggle: some View {
+        HStack(
+            alignment: .center
+        ) {
+            VStack(
+                alignment: .leading
+            ) {
+                HStack {
+                    Text("Use Memory")
+                        .font(.title3)
+                        .bold()
+                    StatusLabelView.experimental
+                }
+                Text("Controls whether Sidekick remembers information about you to provide more customized, personal responses in the future.")
+                    .font(.caption)
+            }
+            Spacer()
+            Toggle("", isOn: $useMemory)
+        }
     }
     
     var searchProviderPicker: some View {

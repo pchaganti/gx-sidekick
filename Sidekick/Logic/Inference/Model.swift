@@ -310,6 +310,7 @@ public class Model: ObservableObject {
                                 DispatchQueue.main.async {
                                     // Update response
                                     self.handleCompletionProgress(
+                                        updateUI: false,
                                         partialResponse: partialResponse,
                                         handleResponseUpdate: handleResponseUpdate
                                     )
@@ -325,6 +326,7 @@ public class Model: ObservableObject {
                                 DispatchQueue.main.async {
                                     // Update response
                                     self.handleCompletionProgress(
+                                        updateUI: false,
                                         partialResponse: partialResponse,
                                         handleResponseUpdate: handleResponseUpdate
                                     )
@@ -642,6 +644,7 @@ The function call `\(callJsonSchema)` failed, producing the error below.
 	
 	/// Function to handle response update
 	func handleCompletionProgress(
+        updateUI: Bool = true,
 		partialResponse: String,
 		handleResponseUpdate: @escaping (
 			String, // Full message
@@ -649,7 +652,7 @@ The function call `\(callJsonSchema)` failed, producing the error below.
 		) -> Void
 	) {
         // Assign if nil
-        if self.pendingMessage == nil {
+        if self.pendingMessage == nil && updateUI {
             self.pendingMessage = Message(text: "", sender: .assistant)
         }
         let fullMessage: String = (self.pendingMessage?.text ?? "") + partialResponse
@@ -657,7 +660,9 @@ The function call `\(callJsonSchema)` failed, producing the error below.
 			fullMessage,
 			partialResponse
 		)
-        self.pendingMessage?.text = fullMessage
+        if updateUI {
+            self.pendingMessage?.text = fullMessage
+        }
 	}
     
     /// Function to check if the remote server is reachable

@@ -8,8 +8,8 @@
 import AppKit
 import Foundation
 import FSKit_macOS
-import SwiftUI
 import Sparkle
+import SwiftUI
 
 @main
 struct SidekickApp: App {
@@ -21,6 +21,7 @@ struct SidekickApp: App {
 	@StateObject private var conversationManager: ConversationManager = .shared
 	@StateObject private var expertManager: ExpertManager = .shared
 	@StateObject private var commandManager: CommandManager = .shared
+    @StateObject private var memories: Memories = .shared
 	
 	@StateObject private var lengthyTasksController: LengthyTasksController = .shared
 	
@@ -41,6 +42,7 @@ struct SidekickApp: App {
 				.environmentObject(conversationManager)
 				.environmentObject(expertManager)
 				.environmentObject(lengthyTasksController)
+                .environmentObject(memories)
 				.applyWindowMaterial()
 		}
 		.windowToolbarStyle(.unified)
@@ -63,26 +65,35 @@ struct SidekickApp: App {
 			}
 		}
 		
-		// Window for Tool: Models
-		SwiftUI.Window("Models", id: "models") {
-			ModelExplorerView()
-		}
-		
-		// Window for Tool: Diagrammer
-		SwiftUI.Window("Diagrammer", id: "diagrammer") {
-			DiagrammerView()
-		}
-		
-		// Window for Tool: Slide Studio
-		SwiftUI.Window("Slide Studio", id: "slideStudio") {
-			SlideStudioView()
-		}
-		
-		// Window for Tool: Detector
-		SwiftUI.Window("Detector", id: "detector") {
-			DetectorView()
-		}
-		
+        // Window for managing memories
+        SwiftUI.Window("Memory", id: "memory") {
+            MemoriesManagerView()
+                .environmentObject(memories)
+                .frame(minWidth: 500, maxWidth: 600, maxHeight: 550)
+        }
+        .windowResizability(.contentSize)
+        .windowIdealSize(.fitToContent)
+        
+        // Window for Tool: Models
+        SwiftUI.Window("Models", id: "models") {
+            ModelExplorerView()
+        }
+        
+        // Window for Tool: Diagrammer
+        SwiftUI.Window("Diagrammer", id: "diagrammer") {
+            DiagrammerView()
+        }
+        
+        // Window for Tool: Slide Studio
+        SwiftUI.Window("Slide Studio", id: "slideStudio") {
+            SlideStudioView()
+        }
+        
+        // Window for Tool: Detector
+        SwiftUI.Window("Detector", id: "detector") {
+            DetectorView()
+        }
+        
 		// Settings window
 		SwiftUI.Settings {
 			SettingsView()

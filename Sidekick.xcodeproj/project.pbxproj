@@ -315,6 +315,9 @@
 		20DFF4812DB718E000F3F76C /* ExpertSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DFF4802DB718E000F3F76C /* ExpertSetupView.swift */; };
 		20DFF4842DB73C9000F3F76C /* mermaid-cli in Resources */ = {isa = PBXBuildFile; fileRef = 20DFF4832DB73C9000F3F76C /* mermaid-cli */; };
 		20DFF4862DB741D900F3F76C /* FileMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DFF4852DB741D900F3F76C /* FileMonitor.swift */; };
+		20DFF48B2DB76B9E00F3F76C /* Memories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DFF48A2DB76B9E00F3F76C /* Memories.swift */; };
+		20DFF48D2DB76DC800F3F76C /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DFF48C2DB76DC800F3F76C /* Memory.swift */; };
+		20DFF4902DB7AB6D00F3F76C /* MemoriesManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DFF48F2DB7AB6D00F3F76C /* MemoriesManagerView.swift */; };
 		20E48C262CB560730085E7D6 /* ChatStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E48C252CB560730085E7D6 /* ChatStyle.swift */; };
 		20E48C292CB560B50085E7D6 /* ConversationControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E48C282CB560B50085E7D6 /* ConversationControlsView.swift */; };
 		20E48C2B2CB560E30085E7D6 /* Extension+CGKeyCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E48C2A2CB560E30085E7D6 /* Extension+CGKeyCode.swift */; };
@@ -343,7 +346,7 @@
 			remoteGlobalIDString = 200549722CAFA67B00A3DCF2;
 			remoteInfo = Sidekick;
 		};
-		200FBFE92CB63B1A00A92A74 /* PBXContainerItemProxy */ = {
+		20DFF4912DB7BBB000F3F76C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2005496B2CAFA67B00A3DCF2 /* Project object */;
 			proxyType = 1;
@@ -739,6 +742,9 @@
 		20DFF4802DB718E000F3F76C /* ExpertSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertSetupView.swift; sourceTree = "<group>"; };
 		20DFF4832DB73C9000F3F76C /* mermaid-cli */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "mermaid-cli"; sourceTree = "<group>"; };
 		20DFF4852DB741D900F3F76C /* FileMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileMonitor.swift; sourceTree = "<group>"; };
+		20DFF48A2DB76B9E00F3F76C /* Memories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memories.swift; sourceTree = "<group>"; };
+		20DFF48C2DB76DC800F3F76C /* Memory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memory.swift; sourceTree = "<group>"; };
+		20DFF48F2DB7AB6D00F3F76C /* MemoriesManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoriesManagerView.swift; sourceTree = "<group>"; };
 		20E48C252CB560730085E7D6 /* ChatStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatStyle.swift; sourceTree = "<group>"; };
 		20E48C282CB560B50085E7D6 /* ConversationControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationControlsView.swift; sourceTree = "<group>"; };
 		20E48C2A2CB560E30085E7D6 /* Extension+CGKeyCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+CGKeyCode.swift"; sourceTree = "<group>"; };
@@ -1021,6 +1027,7 @@
 				20B97CE02CB001E0009A0A5D /* Conversation.swift */,
 				2099BD9E2CB7E9CE00E02732 /* QuickPrompt.swift */,
 				202801F92CC949F2005C1F7D /* TemporaryResource.swift */,
+				20DFF48C2DB76DC800F3F76C /* Memory.swift */,
 				206E9DD22CFFDCB0005E8B91 /* Message */,
 				201BB9982D8AFDCF00890EE6 /* Canvas */,
 				20C5CBC72DA3D8260071F5F7 /* Functions */,
@@ -1363,8 +1370,8 @@
 				207E5EF12D6FDEEF00A8F6FA /* ImageSearch.swift */,
 				20457D332D92827900954892 /* CompletionsController.swift */,
 				20DFF4852DB741D900F3F76C /* FileMonitor.swift */,
-				20457D152D918FFD00954892 /* Accessibility */,
 				20B9E60D2CB1414100BA0AD2 /* DockMenuCommands.swift */,
+				20457D152D918FFD00954892 /* Accessibility */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -1555,6 +1562,7 @@
 				20B9E6122CB1457200BA0AD2 /* Setup */,
 				20571F752CBD5FF4004F3344 /* Settings */,
 				20B53D082D5B042000D1AE79 /* Update */,
+				20DFF48E2DB7AB5100F3F76C /* Memories */,
 				20B9E6132CB1458500BA0AD2 /* Misc */,
 				20E48C272CB560A30085E7D6 /* Styles */,
 				2048941B2CE76ABD00473107 /* View Modifiers */,
@@ -1682,6 +1690,7 @@
 		20B9E6152CB1465900BA0AD2 /* Data Models */ = {
 			isa = PBXGroup;
 			children = (
+				20DFF48A2DB76B9E00F3F76C /* Memories.swift */,
 				2086E1702CB036BB00FFCF57 /* ConversationManager.swift */,
 				20B97CCA2CAFEC37009A0A5D /* DownloadManager.swift */,
 				20A96F3B2CDDA9D400E31D53 /* ModelManager.swift */,
@@ -1943,6 +1952,14 @@
 			path = Expert;
 			sourceTree = "<group>";
 		};
+		20DFF48E2DB7AB5100F3F76C /* Memories */ = {
+			isa = PBXGroup;
+			children = (
+				20DFF48F2DB7AB6D00F3F76C /* MemoriesManagerView.swift */,
+			);
+			path = Memories;
+			sourceTree = "<group>";
+		};
 		20E48C272CB560A30085E7D6 /* Styles */ = {
 			isa = PBXGroup;
 			children = (
@@ -1970,7 +1987,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				200FBFEA2CB63B1A00A92A74 /* PBXTargetDependency */,
+				20DFF4922DB7BBB000F3F76C /* PBXTargetDependency */,
 			);
 			name = Sidekick;
 			packageProductDependencies = (
@@ -2207,6 +2224,7 @@
 				200FBFF72CB68ABF00A92A74 /* ChatParameters.swift in Sources */,
 				20B97CB52CAFE86C009A0A5D /* ContentView.swift in Sources */,
 				200619B42D676DCE001949EF /* DiagrammerPreviewEditorView.swift in Sources */,
+				20DFF48D2DB76DC800F3F76C /* Memory.swift in Sources */,
 				209370972D6B5B8100E1AF73 /* DetectorViewController.swift in Sources */,
 				208844332CDDE394003BCB6F /* ModelRowView.swift in Sources */,
 				208C5FD62D79CB8E00D82AA6 /* LiquidView.swift in Sources */,
@@ -2405,6 +2423,7 @@
 				20C16E1B2D0EBE500001B3C9 /* IntroductionViewController.swift in Sources */,
 				20BF4A092D64C6ED00C329F8 /* SpecialtyView.swift in Sources */,
 				2051FED92D8E51FA001B1E0D /* SpeechService.swift in Sources */,
+				20DFF48B2DB76B9E00F3F76C /* Memories.swift in Sources */,
 				2099BDA12CB7EABC00E02732 /* ConversationQuickPromptsView.swift in Sources */,
 				2040DAD42D85BFD000A8F6BD /* QuickPromptButton.swift in Sources */,
 				20B9E60E2CB1414100BA0AD2 /* DockMenuCommands.swift in Sources */,
@@ -2426,6 +2445,7 @@
 				208C5FDA2D7A771F00D82AA6 /* RetryButton.swift in Sources */,
 				204D9CBF2CF4ABCF0052B6F4 /* StatusLabelView.swift in Sources */,
 				20CEA75B2CE308AD0070579B /* MessageContentView.swift in Sources */,
+				20DFF4902DB7AB6D00F3F76C /* MemoriesManagerView.swift in Sources */,
 				202801FC2CC9C5C2005C1F7D /* TemporaryResourceView.swift in Sources */,
 				20573F182CB50743004C19FE /* ConversationView.swift in Sources */,
 				208855CF2DAD1D6F00071F0B /* ArithmeticFunctions.swift in Sources */,
@@ -2477,10 +2497,10 @@
 			target = 200549722CAFA67B00A3DCF2 /* Sidekick */;
 			targetProxy = 2005498F2CAFA67D00A3DCF2 /* PBXContainerItemProxy */;
 		};
-		200FBFEA2CB63B1A00A92A74 /* PBXTargetDependency */ = {
+		20DFF4922DB7BBB000F3F76C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 200FBFDC2CB6382F00A92A74 /* llama-server-watchdog */;
-			targetProxy = 200FBFE92CB63B1A00A92A74 /* PBXContainerItemProxy */;
+			targetProxy = 20DFF4912DB7BBB000F3F76C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -2643,7 +2663,7 @@
 				CODE_SIGN_ENTITLEMENTS = Sidekick/Sidekick.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 27;
+				CURRENT_PROJECT_VERSION = 28;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Sidekick/Preview Content\"";
 				DEVELOPMENT_TEAM = KM2C4ZAVPJ;
@@ -2673,7 +2693,7 @@
 					"$(PROJECT_DIR)/Sidekick/Logic/Inference/llama.cpp/build/bin",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = "1.0.0-rc.7";
+				MARKETING_VERSION = "1.0.0-rc.8";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pattonium.Sidekick;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -2690,7 +2710,7 @@
 				CODE_SIGN_ENTITLEMENTS = Sidekick/Sidekick.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 27;
+				CURRENT_PROJECT_VERSION = 28;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Sidekick/Preview Content\"";
 				DEVELOPMENT_TEAM = KM2C4ZAVPJ;
@@ -2721,7 +2741,7 @@
 					"$(PROJECT_DIR)/Sidekick/Logic/Inference/llama.cpp/build/bin",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = "1.0.0-rc.7";
+				MARKETING_VERSION = "1.0.0-rc.8";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pattonium.Sidekick;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

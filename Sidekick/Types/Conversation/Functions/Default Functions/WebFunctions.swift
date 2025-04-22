@@ -140,7 +140,7 @@ The content from each site here is an incomplete except. Use the `get_website_co
             ),
             FunctionParameter(
                 label: "num_results",
-                description: "The maximum number of search results (optional, default: 3, maximum: 10)",
+                description: "The maximum number of search results (optional, default: 3, maximum: 5)",
                 datatype: .integer,
                 isRequired: false
             ),

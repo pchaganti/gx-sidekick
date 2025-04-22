@@ -5,9 +5,8 @@
 //  Created by Bean John on 10/23/24.
 //
 
-import SwiftUI
 import SimilaritySearchKit
-import ImagePlayground
+import SwiftUI
 
 struct PromptInputField: View {
 	
@@ -375,6 +374,17 @@ struct PromptInputField: View {
 			// Reset sentConversation
 			self.promptController.sentConversation = nil
 		}
+        // Memorize content if needed
+        if RetrievalSettings.useMemory,
+           let assistantMessage: Message = self.messages.last,
+           let userMessage: Message = self.messages.dropLast(1).last,
+           assistantMessage.getSender() == .assistant,
+           userMessage.getSender() == .user {
+            await Memories.shared.rememberIfNeeded(
+                messageId: assistantMessage.id,
+                text: userMessage.text
+            )
+        }
 	}
 	
 	/// Function to generate a title for the conversation

@@ -10,6 +10,23 @@ import SecureDefaults
 
 public class RetrievalSettings {
 
+    /// A `Bool` representing whether the memory feature is used
+    static var useMemory: Bool {
+        get {
+            // Set default
+            if !UserDefaults.standard.exists(key: "useMemory") {
+                // Default to false
+                Self.useMemory = false
+            }
+            return UserDefaults.standard.bool(
+                forKey: "useMemory"
+            )
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "useMemory")
+        }
+    }
+    
 	/// Computed property for Tavily API key
 	public static var tavilyApiKey: String {
 		set {

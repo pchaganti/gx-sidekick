@@ -61,6 +61,22 @@ Here are the functions available in JSON schema format:
 The user's name: \(Settings.username)
 Current date & time: \(Date.now.formatted(date: .complete, time: .shortened))
 """
+    
+    /// Function to obtain the part of the system prompt where memorized information is fed to the LLM
+    public static func getMemoryPrompt(prompt: String) async -> String? {
+        // Get memories
+        if let memories: [String] = await Memories.shared.recall(
+            prompt: prompt
+        ), !memories.isEmpty {
+            // Else, compile and return
+            return """
+You recall the following information about the user from prior interactions:
+\(memories.joined(separator: "\n"))
+"""
+        } else {
+            return nil
+        }
+    }
 	
 	/// Static constant for the default server endpoint
 	public static let defaultEndpoint: String = ""

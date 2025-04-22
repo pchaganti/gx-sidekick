@@ -23,10 +23,13 @@ struct MessageView: View {
         self.shimmer = shimmer
 	}
 	
+    @Environment(\.openWindow) var openWindow
+    
 	@EnvironmentObject private var model: Model
 	@EnvironmentObject private var conversationManager: ConversationManager
 	@EnvironmentObject private var conversationState: ConversationState
 	@EnvironmentObject private var promptController: PromptController
+    @EnvironmentObject private var memories: Memories
 	
 	@State private var isEditing: Bool = false
 	@State private var messageText: String
@@ -63,6 +66,16 @@ struct MessageView: View {
 		let hasSources: Bool = !(sources?.sources.isEmpty ?? true)
 		return hasSources && self.message.getSender() == .user
 	}
+    
+    var memory: Memory? {
+        return memories.getMemories(
+            id: message.id
+        )
+    }
+    
+    var hasMemories: Bool {
+        return (memory != nil)
+    }
 	
 	private var timeDescription: String {
 		return message.startTime.formatted(
@@ -82,38 +95,7 @@ struct MessageView: View {
 				alignment: .leading,
 				spacing: 8
 			) {
-				HStack {
-					Text(timeDescription)
-						.foregroundStyle(.secondary)
-					if showSources {
-						sourcesButton
-					}
-					MessageCopyButton(
-						message: message
-					)
-					if message.getSender() == .assistant {
-						MessageReadAloudButton(
-							message: message
-						)
-                        if !self.isGenerating {
-                            RegenerateButton {
-                                self.retryGeneration(
-                                    message: message
-                                )
-                            }
-                            .labelStyle(.iconOnly)
-                            .foregroundStyle(.secondary)
-                        }
-					}
-					MessageOptionsView(
-                        isEditing: $isEditing,
-						message: message,
-						canEdit: canEdit
-					)
-					if self.isGenerating {
-						stopButton
-					}
-				}
+				controls
 				content
 			}
 		}
@@ -125,6 +107,41 @@ struct MessageView: View {
 			)
 			.frame(minWidth: 600, minHeight: 650, maxHeight: 700)
 		}
+    }
+    
+    var controls: some View {
+        HStack {
+            Text(timeDescription)
+                .foregroundStyle(.secondary)
+            if showSources {
+                sourcesButton
+            }
+            MessageCopyButton(
+                message: message
+            )
+            if message.getSender() == .assistant {
+                MessageReadAloudButton(
+                    message: message
+                )
+                if !self.isGenerating {
+                    RegenerateButton {
+                        self.retryGeneration(
+                            message: message
+                        )
+                    }
+                    .labelStyle(.iconOnly)
+                    .foregroundStyle(.secondary)
+                }
+            }
+            MessageOptionsView(
+                isEditing: $isEditing,
+                message: message,
+                canEdit: canEdit
+            )
+            if self.isGenerating {
+                stopButton
+            }
+        }
     }
 	
 	var content: some View {
@@ -169,7 +186,7 @@ struct MessageView: View {
 				VStack(
 					alignment: .leading,
 					spacing: 4
-				) {
+                ) {
                     // Show function calls if availible
                     if self.message.hasFunctionCallRecords {
                         FunctionCallsView(message: self.message)
@@ -180,28 +197,60 @@ struct MessageView: View {
                                 view.padding(.bottom, 5)
                             }
                     }
-					// Show reasoning process if availible
-					if self.message.hasReasoning {
-						MessageReasoningProcessView(message: self.message)
-							.if(!self.message.responseText.isEmpty) { view in
-								view.padding(.bottom, 5)
-							}
-					}
-					// Show message response
-					MessageContentView(text: self.message.responseText)
+                    // Show reasoning process if availible
+                    if self.message.hasReasoning {
+                        MessageReasoningProcessView(message: self.message)
+                            .if(!self.message.responseText.isEmpty) { view in
+                                view.padding(.bottom, 5)
+                            }
+                    }
+                    // Show message response
+                    MessageContentView(text: self.message.responseText)
                         .if(shimmer) { view in
                             view.shimmering()
                         }
-					// Show references if needed
-					if !self.message.referencedURLs.isEmpty {
-						messageReferences
-					}
-				}
+                    // Show references & memory
+                    if !self.message.referencedURLs.isEmpty || hasMemories {
+                        HStack(
+                            alignment: .bottom
+                        ) {
+                            // Show references if needed
+                            if !self.message.referencedURLs.isEmpty {
+                                messageReferences
+                            }
+                            if hasMemories, let memory {
+                                Spacer()
+                                PopoverButton(
+                                    arrowEdge: .bottom
+                                ) {
+                                    Label("Memory updated", systemImage: "pencil.and.list.clipboard")
+                                        .foregroundStyle(.secondary)
+                                } content: {
+                                    VStack {
+                                        Text(memory.text)
+                                            .font(.body)
+                                            .lineLimit(nil)
+                                            .fixedSize(horizontal: false, vertical: true)
+                                        Button {
+                                            self.openWindow(id: "memory")
+                                        } label: {
+                                            Text("Manage Memories")
+                                        }
+                                    }
+                                    .padding(.horizontal, 8)
+                                    .frame(maxWidth: 400, maxHeight: 80)
+                                }
+                                .buttonStyle(.plain)
+                                .padding(.top, 3)
+                            }
+                        }
+                    }
+                }
 			}
 		}
 		.padding(11)
 	}
-	
+    
 	var contentEditor: some View {
 		VStack {
             TextEditor(

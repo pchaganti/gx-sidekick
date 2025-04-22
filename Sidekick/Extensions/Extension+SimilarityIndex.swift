@@ -14,7 +14,8 @@ public extension SimilarityIndex {
 	/// Function to search similarity index
 	func search(
 		query: String,
-		maxResults: Int
+		maxResults: Int,
+        threshold: Float = 0.6
 	) async -> [Sidekick.SearchResult] {
 		// Search
 		let results: [SimilaritySearchKit.SearchResult] = await self.search(
@@ -24,7 +25,6 @@ public extension SimilarityIndex {
 		)
 		// Set similarity threshhold
 		// For cosine similarity, a value of -1 indicates maximum distance, and a value of 1 indicates that the vectors are identical
-		let threshold: Float = 0.6
 		let similarResults: [Sidekick.SearchResult] = results.filter { result in
 			return result.score >= threshold
 		}.map { result in

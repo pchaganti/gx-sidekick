@@ -51,7 +51,31 @@ struct ChatParameters: Codable {
 		// Formulate system prompt
 		var fullSystemPromptComponents: [String] = []
 		fullSystemPromptComponents.append(systemPrompt)
+        // Get metadata about the user and the date
         fullSystemPromptComponents.append(InferenceSettings.metadataPrompt)
+        // Get information about the user
+        var prompt: String? = nil
+        if let content = messages.last?.content {
+            switch content {
+                case .textOnly(let string):
+                    prompt = string
+                case .multimodal(let contents):
+                    for content in contents {
+                        switch content {
+                            case .text(let string):
+                                prompt = string
+                            default:
+                                continue
+                        }
+                    }
+            }
+        }
+        if let prompt,
+            let memorizedInfo = await InferenceSettings.getMemoryPrompt(
+            prompt: prompt
+        ) {
+            fullSystemPromptComponents.append(memorizedInfo)
+        }
         // Tell the LLM to use sources
         fullSystemPromptComponents.append(InferenceSettings.useSourcesPrompt)
         // Tell the LLM to use functions when enabled
