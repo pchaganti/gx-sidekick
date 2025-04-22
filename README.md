@@ -144,7 +144,7 @@ Use Detector to evaluate the AI percentage of text, and use provided suggestions
 
 Diagrammer allows you to swiftly generate intricate relational diagrams all from a prompt. Take advantage of the integrated preview and editor for quick edits.
 
-![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/Docs%20Images/Features/Tools/Diagrammer/diagrammerPreviewEditor.png)
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/Docs%20Images/Features/Tools/Diagrammer/diagrammerPreviewEditor2.png)
 
 #### Slide Studio
 
