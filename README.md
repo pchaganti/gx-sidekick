@@ -70,6 +70,18 @@ When telling Sidekick to draft an invitation email for a birthday celebration to
 
 ![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/Docs%20Images/Features/Conversations/functionCallingDraftEmail.png)
 
+### Memory
+
+Sidekick can now remember helpful information between conversations, making its responses more relevant and personalized. Whether you're typing, speaking, or generating images in Sidekick, it can recall details and preferences you’ve shared and use them to tailor its responses. The more you use it, the more useful it becomes, and you’ll start to notice improvements over time.
+
+For example, I can tell Sidekick about my new dog, Cat...
+
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/Docs%20Images/Features/Conversations/memoryRemember.png)
+
+so that when I ask Sidekick what to feed Cat, it recommends dog food.
+
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/Docs%20Images/Features/Conversations/memoryUse.png)
+
 ### Canvas
 
 Create, edit and preview websites, code and other textual content using Canvas.
