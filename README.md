@@ -175,13 +175,13 @@ Optionally, you can offload generation to speed up processing while extending th
 - RAM ≥ 8 GB
 
 **Download and Setup**
-- Follow the guide [here](https://johnbean393.github.io/Sidekick/gettingStarted/).
+- Follow the guide [here](https://johnbean393.github.io/Sidekick/Markdown/gettingStarted/).
 
 ## Goals
 
 The main goal of Sidekick is to make open, local, private, and contextually aware AI applications accessible to the masses.
 
-Read more about our mission [here](https://johnbean393.github.io/Sidekick/About/mission/).
+Read more about our mission [here](https://johnbean393.github.io/Sidekick/Markdown/About/mission/).
 
 ## Developer Setup
 
