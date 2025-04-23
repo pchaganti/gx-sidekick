@@ -14,17 +14,15 @@ struct MessageContentView: View {
     
     @Environment(\.colorScheme) private var colorScheme
     
-    // Asynchronously rendered markdown cached view.
     @State private var cachedMarkdown: AnyView? = nil
-    // Stores the processed text after LaTeX conversion.
     @State private var processedText: String = ""
-    // Used to debounce rapid changes.
-    @State private var debounceWorkItem: DispatchWorkItem?
+    @State private var lastUpdate: Date = Date()
+    @State private var throttleTimer: Timer?
     
     var text: String
     private let imageScaleFactor: CGFloat = 1.0
+    private let throttleInterval: TimeInterval = 0.33
     
-    // Computes the code highlighting theme from the color scheme.
     private var theme: Splash.Theme {
         switch colorScheme {
             case .dark:
@@ -36,8 +34,6 @@ struct MessageContentView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            // Always render the inline markdown immediately using processedText
-            // This provides quick visual feedback while the cached version is updated
             if let cached = cachedMarkdown {
                 cached
             } else {
@@ -45,17 +41,20 @@ struct MessageContentView: View {
             }
         }
         .onAppear {
-            // Immediately update processed text and asynchronously update the cached markdown
             updateProcessedTextAndMarkdown(text)
         }
         .onChange(of: self.text) { _, newText in
             updateProcessedTextAndMarkdown(newText)
         }
+        .onDisappear {
+            throttleTimer?.invalidate()
+        }
     }
     
-    /// Function to render a markdown view for the provided text
     @ViewBuilder
-    private func markdownView(_ text: String) -> some View {
+    private func markdownView(
+        _ text: String
+    ) -> some View {
         Markdown(MarkdownContent(text))
             .markdownTheme(.gitHub)
             .markdownCodeSyntaxHighlighter(.splash(theme: theme))
@@ -64,25 +63,29 @@ struct MessageContentView: View {
             .textSelection(.enabled)
     }
     
-    /// Function to update the processed text and debounce the cached markdown update
-    private func updateProcessedTextAndMarkdown(_ newText: String) {
+    private func updateProcessedTextAndMarkdown(
+        _ newText: String
+    ) {
         let converted = newText.convertLaTeX()
-        // Update inline view immediately.
         processedText = converted
         
-        // Cancel any pending update.
-        debounceWorkItem?.cancel()
-        
-        // Shorten debounce time to reduce perceived delay (e.g., 0.1 second).
-        let workItem = DispatchWorkItem { [converted] in
+        let now = Date()
+        let timeSinceLast = now.timeIntervalSince(lastUpdate)
+        if timeSinceLast >= throttleInterval {
+            lastUpdate = now
             updateCachedMarkdown(with: converted)
+        } else {
+            throttleTimer?.invalidate()
+            throttleTimer = Timer.scheduledTimer(withTimeInterval: throttleInterval - timeSinceLast, repeats: false) { _ in
+                lastUpdate = Date()
+                updateCachedMarkdown(with: converted)
+            }
         }
-        debounceWorkItem = workItem
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: workItem)
     }
     
-    /// Function to asynchronously render and update the cached markdown view.
-    private func updateCachedMarkdown(with text: String) {
+    private func updateCachedMarkdown(
+        with text: String
+    ) {
         DispatchQueue.global(qos: .userInitiated).async {
             let rendered = AnyView(
                 Markdown(MarkdownContent(text))

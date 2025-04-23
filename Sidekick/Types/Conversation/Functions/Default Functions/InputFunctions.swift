@@ -12,6 +12,7 @@ public class InputFunctions {
     
     static var functions: [AnyFunctionBox] = [
         InputFunctions.getConfirmation,
+        InputFunctions.getUserSelection,
         InputFunctions.getTextInput
     ]
     
@@ -48,6 +49,73 @@ The user responded by clicking \(dialogResult ? "Yes" : "No").
     struct GetConfirmationParams: FunctionParams {
         let title: String
         let message: String
+    }
+    
+    /// A ``Function`` to ask for user selection
+    static let getUserSelection = Function<GetUserSelectionParams, String>(
+        name: "get_user_selection",
+        description: "Displays a prompt asking the the user from a list of options. Returns the selected option from the user.",
+        params: [
+            FunctionParameter(
+                label: "title",
+                description: "The title displayed in the prompt.",
+                datatype: .string,
+                isRequired: true
+            ),
+            FunctionParameter(
+                label: "message",
+                description: "The message displayed in the prompt. Use this to ask the user for input.",
+                datatype: .string,
+                isRequired: true
+            ),
+            FunctionParameter(
+                label: "options",
+                description: "A list of options that the user can choose from.",
+                datatype: .stringArray,
+                isRequired: true
+            )
+        ],
+        run: { params in
+            // Check if options are blank
+            guard !params.options.isEmpty else {
+                throw GetSelectionError.noOptions
+            }
+            // Put together alert
+            let alert = NSAlert()
+            alert.messageText = params.title
+            alert.informativeText = params.message
+            alert.addButton(withTitle: "OK")
+            alert.addButton(withTitle: "Cancel")
+            let popupButton = NSPopUpButton(frame: NSRect(x: 0, y: 0, width: 200, height: 26))
+            popupButton.addItems(withTitles: params.options)
+            alert.accessoryView = popupButton
+            // Present alert
+            let response = alert.runModal()
+            if response == .alertFirstButtonReturn,
+               let selection = popupButton.selectedItem?.title,
+               params.options.contains(selection) {
+                return selection
+            } else {
+                throw GetSelectionError.declined
+            }
+            enum GetSelectionError: LocalizedError {
+                case declined
+                case noOptions
+                var errorDescription: String? {
+                    switch self {
+                        case .noOptions:
+                            return "The `options` parameter cannot be empty."
+                        case .declined:
+                            return "The user declined the request without making a selection."
+                    }
+                }
+            }
+        }
+    )
+    struct GetUserSelectionParams: FunctionParams {
+        let title: String
+        let message: String
+        let options: [String]
     }
     
     /// A ``Function`` to ask for text input
