@@ -78,7 +78,12 @@ struct MultilineTextField: NSViewRepresentable {
         
         func textDidChange(_ notification: Notification) {
             guard let textView = notification.object as? NSTextView else { return }
-            withAnimation(.linear) {
+            if parent.text.isEmpty {
+                withAnimation(.linear) {
+                    parent.text = textView.string
+                    parent.insertionPoint = textView.selectedRange.location
+                }
+            } else {
                 parent.text = textView.string
                 parent.insertionPoint = textView.selectedRange.location
             }
@@ -89,9 +94,7 @@ struct MultilineTextField: NSViewRepresentable {
         
         func textViewDidChangeSelection(_ notification: Notification) {
             guard let textView = notification.object as? NSTextView else { return }
-            withAnimation(.linear) {
-                parent.insertionPoint = textView.selectedRange.location
-            }
+            parent.insertionPoint = textView.selectedRange.location
         }
         
     }
