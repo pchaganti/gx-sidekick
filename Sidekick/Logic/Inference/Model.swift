@@ -489,7 +489,7 @@ public class Model: ObservableObject {
         var maxIterations: Int = 15
         var response: LlamaServer.CompleteResponse? = initialResponse
         var messages: [Message.MessageSubset] = messages
-        while maxIterations > 0, var functionCalls = response?.functionCalls {
+        while maxIterations > 0, let functionCalls = response?.functionCalls {
             // Execute each call
             var messageStringComponents: [String] = []
             var functionCallRecords = self.pendingMessage?.functionCallRecords ?? []

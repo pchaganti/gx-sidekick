@@ -225,7 +225,9 @@ public class Settings {
 			guard let completionsExcludedApps: [String] = UserDefaults.standard.array(
 				forKey: "completionsExcludedApps"
 			) as? [String] else {
-				return []
+				return [
+                    "com.pattonium.Sidekick"
+                ]
 			}
 			return completionsExcludedApps
 		}
