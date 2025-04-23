@@ -64,11 +64,13 @@ Sidekick can call functions to boost the mathematical and logical capabilities o
 
 For example, when asking Sidekick to reverse a string or do arithmetic operation, it runs tools, then presents the result.
 
-![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/Docs%20Images/Features/Conversations/functionCalling.png)
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/Docs%20Images/Features/Function%20Calling/functionCalling.png)
 
 When telling Sidekick to draft an invitation email for a birthday celebration to my friend Jean, Sidekick finds my birthday and Jean's email address from my contacts book, and creates a draft in my default email client. 
 
-![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/Docs%20Images/Features/Conversations/functionCallingDraftEmail.png)
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/Docs%20Images/Features/Function%20Calling/functionCallingDraftEmail.png)
+
+This enables agents running fully locally. 
 
 ### Memory
 
@@ -76,11 +78,11 @@ Sidekick can now remember helpful information between conversations, making its 
 
 For example, I might tell Sidekick that I am a beginner in Python trying to create my own version of Tetris.
 
-![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/Docs%20Images/Features/Conversations/memoryRemember.png)
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/Docs%20Images/Features/Memory/memoryRemember.png)
 
 When I ask it about `pygame` alternatives, it makes recommendations based on my current project, Tetris.
 
-![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/Docs%20Images/Features/Conversations/memoryUse.png)
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/Docs%20Images/Features/Memory/memoryUse.png)
 
 ### Canvas
 
