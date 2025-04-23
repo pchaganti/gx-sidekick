@@ -32,7 +32,7 @@ struct ModelNameMenu: View {
 	}
 	
 	var showRemote: Bool {
-		return modelTypes.contains(.remote) && !remoteModelNames.isEmpty
+		return modelTypes.contains(.remote)
 	}
 	
 	var body: some View {
@@ -106,7 +106,7 @@ struct ModelNameMenu: View {
 			}
 			if showRemote {
 				remoteModelsList
-			}
+            }
 		} label: {
 			if self.modelTypes == [.remote] {
 				Text(self.serverModelName)
@@ -176,31 +176,39 @@ struct ModelNameMenu: View {
 				)
 			}
 			.disabled(!InferenceSettings.useServer && modelTypes != [.remote])
-			Divider()
-			Button {
-				self.isManagingCustomModel = true
-			} label: {
-				Text("Manage Custom Models")
-			}
-			.disabled(!InferenceSettings.useServer && modelTypes != [.remote])
-			if self.modelTypes != [.remote] {
-				Button {
-					InferenceSettings.useServer.toggle()
-					// Send notification to reload model
-					NotificationCenter.default.post(
-						name: Notifications.changedInferenceConfig.name,
-						object: nil
-					)
-				} label: {
-					if InferenceSettings.useServer {
-						Text("Disable Remote Model")
-					} else {
-						Text("Use Remote Model")
-					}
-				}
-			}
+            if !(remoteModelNames + customModelNames).isEmpty {
+                Divider()
+            }
+            remoteModelOptions
 		}
 	}
+    
+    var remoteModelOptions: some View {
+        Group {
+            Button {
+                self.isManagingCustomModel = true
+            } label: {
+                Text("Manage Custom Models")
+            }
+            .disabled(!InferenceSettings.useServer && modelTypes != [.remote])
+            if self.modelTypes != [.remote] {
+                Button {
+                    InferenceSettings.useServer.toggle()
+                    // Send notification to reload model
+                    NotificationCenter.default.post(
+                        name: Notifications.changedInferenceConfig.name,
+                        object: nil
+                    )
+                } label: {
+                    if InferenceSettings.useServer {
+                        Text("Disable Remote Model")
+                    } else {
+                        Text("Use Remote Model")
+                    }
+                }
+            }
+        }
+    }
 	
 	private func refreshModelNames() async {
 		self.remoteModelNames = await LlamaServer.getAvailableModels()
