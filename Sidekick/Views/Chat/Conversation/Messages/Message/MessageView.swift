@@ -160,6 +160,7 @@ struct MessageView: View {
                                 self.memories.forget(memory)
                             } label: {
                                 Text("Forget")
+                                    .foregroundStyle(.red)
                             }
                             Button {
                                 self.openWindow(id: "memory")

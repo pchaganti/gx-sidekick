@@ -22,7 +22,8 @@ struct ConversationNavigationListView: View {
 			NavigationLink(value: conversation.id) {
 				ConversationNameEditor(conversation: conversation)
 			}
-		}
+        }
+        .scrollIndicators(.never)
 		.navigationSplitViewColumnWidth(
 			min: 125,
 			ideal: 175,

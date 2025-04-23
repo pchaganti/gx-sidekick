@@ -2486,6 +2486,16 @@
         }
       }
     },
+    "Mange Sidekick's memories." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "管理Sidekick的记忆。"
+          }
+        }
+      }
+    },
     "Memories" : {
       "localizations" : {
         "zh-Hans" : {

@@ -9,6 +9,8 @@ import SwiftUI
 
 struct RetrievalSettingsView: View {
 	
+    @Environment(\.openWindow) var openWindow
+    
     @AppStorage("useMemory") private var useMemory: Bool = RetrievalSettings.useMemory
     
     @AppStorage("defaultSearchProvider") private var defaultSearchProvider: Int = RetrievalSettings.defaultSearchProvider
@@ -23,6 +25,7 @@ struct RetrievalSettingsView: View {
 		Form {
             Section {
                 useMemoryToggle
+                manageMemories
             } header: {
                 Text("Memory")
             }
@@ -61,7 +64,27 @@ struct RetrievalSettingsView: View {
                     .font(.caption)
             }
             Spacer()
+                .frame(maxWidth: 50)
+                .border(Color.blue)
             Toggle("", isOn: $useMemory)
+        }
+    }
+    
+    var manageMemories: some View {
+        HStack(alignment: .center) {
+            VStack(alignment: .leading) {
+                Text("Memories")
+                    .font(.title3)
+                    .bold()
+                Text("Mange Sidekick's memories.")
+                    .font(.caption)
+            }
+            Spacer()
+            Button {
+                self.openWindow(id: "memory")
+            } label: {
+                Text("Manage")
+            }
         }
     }
     
