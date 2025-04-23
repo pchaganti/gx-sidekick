@@ -10,8 +10,14 @@ import MarkdownUI
 import Splash
 import SwiftUI
 
-struct MessageView: View {
+struct MessageView: View, Equatable {
 	
+    static func == (lhs: MessageView, rhs: MessageView) -> Bool {
+        lhs.message.id == rhs.message.id &&
+        lhs.message.text == rhs.message.text &&
+        lhs.message.functionCallRecords == rhs.message.functionCallRecords
+    }
+    
 	init(
 		message: Message,
 		canEdit: Bool = true,

@@ -58,6 +58,7 @@ struct MessagesView: View {
             self.messages
         ) { message in
             MessageView(message: message)
+                .equatable()
                 .id(message.id)
         }
 	}
