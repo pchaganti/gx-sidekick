@@ -43,23 +43,13 @@ struct MultilineTextField: NSViewRepresentable {
     
     func updateNSView(_ nsView: PromptingScrollView, context: Context) {
         guard let textView = nsView.documentView as? PromptingTextView else { return }
-        // Only update the text if it actually changed, but preserve the selection
-        if textView.string != text {
-            let newInsertion: Int = insertionPoint
-            DispatchQueue.main.async {
-                withAnimation(.linear) {
-                    textView.string = text
-                    textView.font = NSFont.systemFont(ofSize: NSFont.systemFontSize)
-                    // Restore selection right after string update
-                    textView.setSelectedRange(NSRange(location: newInsertion, length: 0))
-                }
+        // Only update if the text changed externally (not while user is editing)
+        if textView.window?.firstResponder != textView {
+            if textView.string != text {
+                textView.string = text
             }
-        } else if textView.selectedRange.location != insertionPoint {
-            // Only update selection if needed
-            DispatchQueue.main.async {
-                withAnimation(.linear) {
-                    textView.setSelectedRange(NSRange(location: insertionPoint, length: 0))
-                }
+            if textView.selectedRange.location != insertionPoint {
+                textView.setSelectedRange(NSRange(location: insertionPoint, length: 0))
             }
         }
         textView.setPrompt(prompt)
@@ -71,30 +61,45 @@ struct MultilineTextField: NSViewRepresentable {
     class Coordinator: NSObject, NSTextViewDelegate {
         
         var parent: MultilineTextField
+        private var previousTextWasEmpty: Bool = true
         
         init(_ parent: MultilineTextField) {
             self.parent = parent
         }
         
-        func textDidChange(_ notification: Notification) {
+        func textDidChange(
+            _ notification: Notification
+        ) {
             guard let textView = notification.object as? NSTextView else { return }
-            if parent.text.isEmpty || textView.string.isEmpty {
+            // Don't update during IME composition.
+            if textView.hasMarkedText() { return }
+            let newString = textView.string
+            let cursor = textView.selectedRange.location
+            // Animate when transitioning between empty and non-empty
+            let nowEmpty = newString.isEmpty
+            if previousTextWasEmpty != nowEmpty {
                 withAnimation(.linear) {
-                    parent.text = textView.string
-                    parent.insertionPoint = textView.selectedRange.location
+                    parent.text = newString
+                    parent.insertionPoint = cursor
                 }
             } else {
-                parent.text = textView.string
-                parent.insertionPoint = textView.selectedRange.location
+                parent.text = newString
+                parent.insertionPoint = cursor
             }
-            // Always update insertionPoint after text change
+            previousTextWasEmpty = nowEmpty
+            
             textView.invalidateIntrinsicContentSize()
             textView.enclosingScrollView?.invalidateIntrinsicContentSize()
         }
         
-        func textViewDidChangeSelection(_ notification: Notification) {
+        func textViewDidChangeSelection(
+            _ notification: Notification
+        ) {
             guard let textView = notification.object as? NSTextView else { return }
-            parent.insertionPoint = textView.selectedRange.location
+            let cursor = textView.selectedRange.location
+            if parent.insertionPoint != cursor {
+                parent.insertionPoint = cursor
+            }
         }
         
     }

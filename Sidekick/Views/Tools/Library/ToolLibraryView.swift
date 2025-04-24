@@ -56,7 +56,7 @@ struct ToolboxLibraryView: View {
 			description: String(localized: "Generate diagrams with AI"),
 			isSvg: true
 		) {
-			Image("mindmap")
+            Image("mindmap")
 		} action: {
 			self.openToolWindow(id: "diagrammer")
 		}
