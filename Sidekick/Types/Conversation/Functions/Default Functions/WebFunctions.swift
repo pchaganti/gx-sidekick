@@ -188,11 +188,10 @@ The content from each site here is an incomplete except. Use the `get_website_co
                 endDate: endDate
             )
             // Convert to JSON
-            var remainingTokens: Int = 128_000 / 2 // Max 64K tokens
+            var remainingTokens: Int = 80_000 // Max 80K tokens
             var sourceContents: [Source.SourceContent] = await sources.concurrentMap { source in
                 // Trim to fit max input tokens
                 let result = try? await source.getContent()
-                print("result.url:", result?.url ?? "nil")
                 return result
             }.compactMap {
                 $0
@@ -202,12 +201,10 @@ The content from each site here is an incomplete except. Use the `get_website_co
             sourceContents = sourceContents
                 .enumerated()
                 .map { (index, content) in
-                    // Calculate max tokens
-                    let maxTokens: Int = Int(Double(remainingTokens) / Double(sourceContents.count - index))
                     // Trim
                     var content: Source.SourceContent = content
                     let result = content.content.trimmingSuffixToTokens(
-                        maxTokens: maxTokens
+                        maxTokens: remainingTokens
                     )
                     // Mutate variables to track
                     content.content = result.trimmed
