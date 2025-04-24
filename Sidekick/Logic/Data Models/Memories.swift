@@ -224,7 +224,7 @@ public class Memories: ObservableObject {
         }
         // Prompt worker model
         let messageText: String = """
-The user sent the message below. What personal information / opinion does this reveal about the user?
+The user sent the message below. What personal information / opinion does this reveal about the user? Do not extract the information if it is very message specific, such as a specific request. 
 
 Respond in the format `The user [verb] [information]`. If there is no personal information / opinion, respond with the word "nil".
 

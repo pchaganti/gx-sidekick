@@ -52,7 +52,10 @@ In this environment you have access to a set of tools you can use to answer the 
 }
 
 After a tool is run, a result will be provided. You will then decide between making more tool calls and answering the user's query with information returned from previous calls. 
-
+"""
+    
+    /// Static constant for the part of the system prompt telling the LLM what functions are available
+    public static let functionsSchemaPrompt: String = """
 Here are the functions available in JSON schema format:
 """
 

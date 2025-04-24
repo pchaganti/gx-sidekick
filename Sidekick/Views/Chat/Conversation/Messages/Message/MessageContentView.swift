@@ -21,7 +21,7 @@ struct MessageContentView: View {
     
     var text: String
     private let imageScaleFactor: CGFloat = 1.0
-    private let throttleInterval: TimeInterval = 0.33
+    private let throttleInterval: TimeInterval = 0.4
     
     private var theme: Splash.Theme {
         switch colorScheme {

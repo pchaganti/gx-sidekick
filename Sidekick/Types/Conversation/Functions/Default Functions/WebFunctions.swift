@@ -183,11 +183,11 @@ The content from each site here is an incomplete except. Use the `get_website_co
             let numResults: Int = params.num_results ?? 3
             let sources: [Source] = try await DuckDuckGoSearch.search(
                 query: params.query,
-                resultCount: numResults,
+                resultCount: 5,
                 startDate: startDate,
                 endDate: endDate
             )
-            // Convert to JSON
+            // Get full content
             var remainingTokens: Int = 80_000 // Max 80K tokens
             var sourceContents: [Source.SourceContent] = await sources.concurrentMap { source in
                 // Trim to fit max input tokens
@@ -195,9 +195,14 @@ The content from each site here is an incomplete except. Use the `get_website_co
                 return result
             }.compactMap {
                 $0
-            }.sorted(
+            }
+            // Sort and drop
+            sourceContents = sourceContents.dropLast(
+                max(sourceContents.count - numResults, 0)
+            ).sorted(
                 by: \.content.estimatedTokenCount
             )
+            // Trim
             sourceContents = sourceContents
                 .enumerated()
                 .map { (index, content) in

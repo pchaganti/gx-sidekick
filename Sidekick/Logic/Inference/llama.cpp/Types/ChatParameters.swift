@@ -78,13 +78,16 @@ struct ChatParameters: Codable {
         }
         // Tell the LLM to use sources
         fullSystemPromptComponents.append(InferenceSettings.useSourcesPrompt)
-        // Tell the LLM to use functions when enabled
+        // Tell the LLM to use functions when enabled and server does not support native tool calling
         if Settings.useFunctions && useFunctions {
             fullSystemPromptComponents.append(InferenceSettings.useFunctionsPrompt)
-            // Inject function schema
-            let functions: [any AnyFunctionBox] = DefaultFunctions.functions
-            for function in functions {
-                fullSystemPromptComponents.append(function.getJsonSchema())
+            // Inject function schema if no native tool calling
+            if !InferenceSettings.hasNativeToolCalling {
+                fullSystemPromptComponents.append(InferenceSettings.functionsSchemaPrompt)
+                let functions: [any AnyFunctionBox] = DefaultFunctions.functions
+                for function in functions {
+                    fullSystemPromptComponents.append(function.getJsonSchema())
+                }
             }
         }
         // Join all components
