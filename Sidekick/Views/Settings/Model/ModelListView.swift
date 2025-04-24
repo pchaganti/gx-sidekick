@@ -15,6 +15,7 @@ struct ModelListView: View {
 	) {
 		self._isPresented = isPresented
         self.modelType = modelType
+        self._modelUrl = AppStorage(modelType.key)
 	}
 	
     var modelType: ModelType
@@ -24,7 +25,7 @@ struct ModelListView: View {
 	
 	@Environment(\.openWindow) var openWindow
 	
-	@State private var modelUrl: URL? = nil
+    @AppStorage private var modelUrl: URL?
 	
 	@State private var hoveringAdd: Bool = false
 	@State private var hoveringDownload: Bool = false
@@ -47,14 +48,6 @@ struct ModelListView: View {
 			.padding(.bottom, 3)
 		}
 		.padding(7)
-		.onChange(
-			of: self.modelManager.models
-		) {
-			self.modelUrl = self.getModelUrl()
-		}
-		.onAppear {
-            self.modelUrl = self.getModelUrl()
-		}
 		.environmentObject(modelManager)
 	}
 	
@@ -135,7 +128,6 @@ struct ModelListView: View {
 	private func addModel() {
         if self.modelType == .regular {
 			let _ = Settings.selectModel()
-			self.modelUrl = Settings.modelUrl
 		} else {
 			let _ = modelManager.addModel()
 		}
@@ -159,7 +151,20 @@ struct ModelListView: View {
     }
 
     enum ModelType: String, CaseIterable {
+        
         case regular, speculative, worker
+        
+        /// The key of the model in UserDefaults
+        var key: String {
+            switch self {
+                case .regular:
+                    return "modelUrl"
+                case .speculative:
+                    return "speculativeDecodingModelUrl"
+                case .worker:
+                    return "workerModelUrl"
+            }
+        }
     }
     
 }

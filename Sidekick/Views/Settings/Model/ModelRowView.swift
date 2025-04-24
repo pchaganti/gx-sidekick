@@ -11,9 +11,9 @@ import SwiftUI
 struct ModelRowView: View {
 	
 	@EnvironmentObject private var modelManager: ModelManager
-	
+    
 	@Binding var modelFile: ModelManager.ModelFile
-	@Binding var modelUrl: URL?
+    @Binding var modelUrl: URL?
 	@State var isHovering: Bool = false
 	
     var modelType: ModelListView.ModelType
@@ -72,8 +72,13 @@ struct ModelRowView: View {
 	
 	var button: some View {
 		Group {
-			if !isSelected && isHovering {
+			 if isHovering {
 				Button {
+                    // If is selected, set selection to nil
+                    if self.isSelected {
+                        self.modelUrl = nil
+                    }
+                    // Delete
 					self.modelManager.delete(self.modelFile)
 				} label: {
 					Label(
