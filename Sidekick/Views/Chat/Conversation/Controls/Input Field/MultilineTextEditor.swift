@@ -9,7 +9,6 @@ import AppKit
 import SwiftUI
 
 struct MultilineTextField: NSViewRepresentable {
-    
     @Binding var text: String
     @Binding var insertionPoint: Int
     let prompt: String
@@ -43,21 +42,19 @@ struct MultilineTextField: NSViewRepresentable {
     
     func updateNSView(_ nsView: PromptingScrollView, context: Context) {
         guard let textView = nsView.documentView as? PromptingTextView else { return }
+        let coordinator = context.coordinator
         let isFirstResponder = textView.window?.firstResponder == textView
         let hasMarkedText = textView.hasMarkedText()
-        // Only update if:
-        // - Not first responder (not editing), OR
-        // - Is first responder, but NOT composing (no marked text)
+        
+        // Only update if not editing (or not composing)
         if !isFirstResponder || !hasMarkedText {
             if textView.string != text {
-                DispatchQueue.main.async {
-                    textView.string = text
-                }
+                coordinator.isProgrammaticUpdate = true
+                textView.string = text
             }
             if textView.selectedRange.location != insertionPoint {
-                DispatchQueue.main.async {
-                    textView.setSelectedRange(NSRange(location: insertionPoint, length: 0))
-                }
+                coordinator.isProgrammaticUpdate = true
+                textView.setSelectedRange(NSRange(location: insertionPoint, length: 0))
             }
         }
         textView.setPrompt(prompt)
@@ -66,55 +63,45 @@ struct MultilineTextField: NSViewRepresentable {
     }
     
     class Coordinator: NSObject, NSTextViewDelegate {
-        
         var parent: MultilineTextField
-        private var previousTextWasEmpty: Bool = true
+        var isProgrammaticUpdate = false
         
         init(_ parent: MultilineTextField) {
             self.parent = parent
         }
         
-        func textDidChange(
-            _ notification: Notification
-        ) {
+        func textDidChange(_ notification: Notification) {
             guard let textView = notification.object as? NSTextView else { return }
             // Don't update during IME composition.
             if textView.hasMarkedText() { return }
+            // Prevent feedback loop: only update binding if not a programmatic change
+            if isProgrammaticUpdate {
+                isProgrammaticUpdate = false
+                return
+            }
             let newString = textView.string
             let cursor = textView.selectedRange.location
-            // Animate when transitioning between empty and non-empty
-            let nowEmpty = newString.isEmpty
-            if previousTextWasEmpty != nowEmpty {
-                withAnimation(.linear) {
-                    parent.text = newString
-                    parent.insertionPoint = cursor
-                }
-            } else {
-                parent.text = newString
-                parent.insertionPoint = cursor
-            }
-            previousTextWasEmpty = nowEmpty
-            
+            parent.text = newString
+            parent.insertionPoint = cursor
             textView.invalidateIntrinsicContentSize()
             textView.enclosingScrollView?.invalidateIntrinsicContentSize()
         }
         
-        func textViewDidChangeSelection(
-            _ notification: Notification
-        ) {
+        func textViewDidChangeSelection(_ notification: Notification) {
             guard let textView = notification.object as? NSTextView else { return }
+            if isProgrammaticUpdate {
+                isProgrammaticUpdate = false
+                return
+            }
             let cursor = textView.selectedRange.location
             if parent.insertionPoint != cursor {
                 parent.insertionPoint = cursor
             }
         }
-        
     }
-    
 }
 
 class PromptingScrollView: NSScrollView {
-    
     override var intrinsicContentSize: NSSize {
         if let docView = self.documentView {
             var size = docView.intrinsicContentSize
@@ -123,11 +110,9 @@ class PromptingScrollView: NSScrollView {
         }
         return super.intrinsicContentSize
     }
-    
 }
 
 class PromptingTextView: NSTextView {
-    
     private var prompt: String = ""
     
     override var intrinsicContentSize: NSSize {
@@ -135,24 +120,15 @@ class PromptingTextView: NSTextView {
         guard let layoutManager = self.layoutManager, let textContainer = self.textContainer else {
             return super.intrinsicContentSize
         }
-        layoutManager.ensureLayout(
-            for: textContainer
-        )
-        let usedRect = layoutManager.usedRect(
-            for: textContainer
-        )
-        let font = NSFont.systemFont(
-            ofSize: NSFont.systemFontSize
-        )
+        layoutManager.ensureLayout(for: textContainer)
+        let usedRect = layoutManager.usedRect(for: textContainer)
+        let font = NSFont.systemFont(ofSize: NSFont.systemFontSize)
         let lineHeight = font.ascender - font.descender + font.leading
-        // Calculate dimentions
+        // Calculate dimensions
         let minHeight = lineHeight + self.textContainerInset.height * 2
         let neededHeight = max(minHeight, usedRect.height + self.textContainerInset.height * 2)
         let width = self.enclosingScrollView?.frame.width ?? usedRect.width
-        return NSSize(
-            width: width,
-            height: neededHeight
-        )
+        return NSSize(width: width, height: neededHeight)
     }
     
     override func draw(_ dirtyRect: NSRect) {
@@ -178,25 +154,16 @@ class PromptingTextView: NSTextView {
     
     /// Function to force pasting as plain text
     override func paste(_ sender: Any?) {
-        if let plainText = NSPasteboard.general.string(
-            forType: .string
-        ) {
-            self.insertText(
-                plainText,
-                replacementRange: self.selectedRange()
-            )
+        if let plainText = NSPasteboard.general.string(forType: .string) {
+            self.insertText(plainText, replacementRange: self.selectedRange())
         } else {
             super.paste(sender)
         }
     }
-    
 }
 
 extension MultilineTextField {
-    
     func isProgrammaticTextChange(old: String, new: String) -> Bool {
-        // If the change inserts/removes more than 1 character at once, treat as programmatic
         abs(old.count - new.count) > 1 || (old.count > 1 && new.count > 1 && old != new)
     }
-    
 }
