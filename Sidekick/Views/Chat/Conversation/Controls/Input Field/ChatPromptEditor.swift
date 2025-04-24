@@ -68,7 +68,7 @@ struct ChatPromptEditor: View {
             view
                 .padding(.bottom, 30)
         }
-        .padding(.vertical, 6)
+        .padding(.vertical, 5)
         .cornerRadius(cornerRadius)
         .background(
             LinearGradient(

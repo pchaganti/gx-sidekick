@@ -5,8 +5,8 @@
 //  Created by John Bean on 4/20/25.
 //
 
-import SwiftUI
 import AppKit
+import SwiftUI
 
 struct MultilineTextField: NSViewRepresentable {
     
@@ -43,17 +43,24 @@ struct MultilineTextField: NSViewRepresentable {
     
     func updateNSView(_ nsView: PromptingScrollView, context: Context) {
         guard let textView = nsView.documentView as? PromptingTextView else { return }
-        // Only update if the text changed externally (not while user is editing)
-        if textView.window?.firstResponder != textView {
+        let isFirstResponder = textView.window?.firstResponder == textView
+        let hasMarkedText = textView.hasMarkedText()
+        // Only update if:
+        // - Not first responder (not editing), OR
+        // - Is first responder, but NOT composing (no marked text)
+        if !isFirstResponder || !hasMarkedText {
             if textView.string != text {
-                textView.string = text
+                DispatchQueue.main.async {
+                    textView.string = text
+                }
             }
             if textView.selectedRange.location != insertionPoint {
-                textView.setSelectedRange(NSRange(location: insertionPoint, length: 0))
+                DispatchQueue.main.async {
+                    textView.setSelectedRange(NSRange(location: insertionPoint, length: 0))
+                }
             }
         }
         textView.setPrompt(prompt)
-        // Invalidate intrinsic content size for height recalculation
         textView.invalidateIntrinsicContentSize()
         nsView.invalidateIntrinsicContentSize()
     }
@@ -181,6 +188,15 @@ class PromptingTextView: NSTextView {
         } else {
             super.paste(sender)
         }
+    }
+    
+}
+
+extension MultilineTextField {
+    
+    func isProgrammaticTextChange(old: String, new: String) -> Bool {
+        // If the change inserts/removes more than 1 character at once, treat as programmatic
+        abs(old.count - new.count) > 1 || (old.count > 1 && new.count > 1 && old != new)
     }
     
 }

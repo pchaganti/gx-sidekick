@@ -17,7 +17,7 @@ struct QuickPromptButton: View {
 		Button {
 			withAnimation(.linear) {
 				self.input = self.prompt.text
-			}
+            }
 		} label: {
 			prompt.label
 				.padding(.vertical, 8)

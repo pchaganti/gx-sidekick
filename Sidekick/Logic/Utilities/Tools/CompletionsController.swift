@@ -422,7 +422,9 @@ public class CompletionsController: ObservableObject {
 		let clickMonitor = NSEvent.addGlobalMonitorForEvents(matching: .leftMouseDown) { [weak self] _ in
 			self?.reset()
 		}
-		self.monitors.append(contentsOf: [scrollMonitor, clickMonitor])
+        self.monitors.append(
+            contentsOf: [scrollMonitor as Any, clickMonitor as Any]
+        )
 	}
 	
 	/// Function to refresh the AXObserver.
