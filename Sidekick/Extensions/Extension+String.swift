@@ -420,4 +420,111 @@ public extension String {
         return (Double(nonSpecialCount) / Double(totalCharacters)) * 100.0
     }
     
+    /// Function to remove all base64-encoded images (data URLs) from a string. Matches image data syntax using a data URL
+    func removingBase64Images() -> String {
+        // Regex for Markdown images and inline data:image/...;base64,....)
+        let pattern = #"data:image\/[a-zA-Z0-9\+\-\.]+;base64,[a-zA-Z0-9\/\+=]+"#
+        let regex = try! NSRegularExpression(pattern: pattern, options: [.caseInsensitive])
+        // Get range and replace
+        let range: NSRange = NSRange(
+            self.startIndex..<self.endIndex,
+            in: self
+        )
+        let result: String = regex.stringByReplacingMatches(
+            in: self,
+            options: [],
+            range: range,
+            withTemplate: ""
+        )
+        return result
+    }
+    
+    /// The dominant language of the string using NSLinguisticTagger
+    private var detectedLanguage: DetectedLanguage {
+        // Emoji-heavy detection
+        let emojiScalars = self.unicodeScalars.filter { $0.properties.isEmoji }
+        if !self.isEmpty && Double(emojiScalars.count) / Double(self.count) > 0.5 {
+            return .emoji
+        }
+        // Use NSLinguisticTagger to detect language
+        let tagger = NSLinguisticTagger(tagSchemes: [.language], options: 0)
+        tagger.string = self
+        let langCode = tagger.dominantLanguage ?? ""
+        switch langCode {
+            case "en": return .english
+            case "zh": return .chinese
+            case "ja": return .japanese
+            case "ko": return .korean
+            case "ru": return .russian
+            case "ar": return .arabic
+            default: return .other
+        }
+    }
+    
+    /// Estimates the token count for the string, using heuristics based on detected language.
+    var estimatedTokenCount: Int {
+        switch self.detectedLanguage {
+            case .english:
+                // English: ~4 characters per token
+                return max(1, self.count / 4)
+            case .chinese, .japanese, .korean:
+                // CJK: ~1 character per token
+                return max(1, self.count)
+            case .russian, .arabic:
+                // Russian/Arabic: ~2 characters per token
+                return max(1, self.count / 2)
+            case .emoji:
+                // Emojis: estimate 3 tokens per emoji
+                let emojiCount = self.unicodeScalars.filter { $0.properties.isEmoji }.count
+                return max(1, emojiCount * 3)
+            case .other:
+                // Fallback: ~4 chars per token
+                return max(1, self.count / 4)
+        }
+    }
+    
+    /// Function to returns a new string by trimming the suffix so that the estimatedTokenCount is at most `maxTokens`
+    func trimmingSuffixToTokens(
+        maxTokens: Int
+    ) -> (
+        trimmed: String,
+        usedTokens: Int
+    ) {
+        let currentTokens = self.estimatedTokenCount
+        if currentTokens <= maxTokens {
+            return (self, currentTokens)
+        }
+        // Estimate how many characters to keep based on language heuristic
+        let keepLength: Int
+        switch self.detectedLanguage {
+            case .english, .other:
+                keepLength = maxTokens * 4
+            case .chinese, .japanese, .korean:
+                keepLength = maxTokens
+            case .russian, .arabic:
+                keepLength = maxTokens * 2
+            case .emoji:
+                // Each emoji ~3 tokens
+                keepLength = maxTokens / 3
+        }
+        // Take prefix, then trim one-by-one if still over (for accuracy)
+        var trimmed = String(self.prefix(keepLength))
+        while trimmed.estimatedTokenCount > maxTokens && !trimmed.isEmpty {
+            trimmed.removeLast()
+        }
+        let tokensUsed = trimmed.estimatedTokenCount
+        return (trimmed, tokensUsed)
+    }
+    
+}
+    
+enum DetectedLanguage {
+    case english
+    case chinese
+    case japanese
+    case korean
+    case russian
+    case arabic
+    case emoji
+    case other
 }

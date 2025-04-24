@@ -24,13 +24,16 @@ public struct Source: Identifiable, Codable, Hashable {
     }
     
     /// The content associated with the source
-    public func getContent() async throws -> SourceContent {
+    public func getContent(
+        transform: (String) -> String = { return $0 }
+    ) async throws -> SourceContent {
         // Get content
-        let content: String = try await WebFunctions.scrapeWebsite(
+        var content: String = try await WebFunctions.scrapeWebsite(
             url: self.source
-        )
+        ).removingBase64Images()
+        content = transform(content)
         // Return
-        return .init(url: self.source, content: content)
+        return SourceContent(url: self.source, content: content)
     }
     
     public struct SourceInfo: Codable {

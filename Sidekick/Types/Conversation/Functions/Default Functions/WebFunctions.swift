@@ -180,16 +180,40 @@ The content from each site here is an incomplete except. Use the `get_website_co
                 return nil
             }()
             // Conduct search
+            let numResults: Int = params.num_results ?? 3
             let sources: [Source] = try await DuckDuckGoSearch.search(
                 query: params.query,
-                resultCount: params.num_results ?? 3,
+                resultCount: numResults,
                 startDate: startDate,
                 endDate: endDate
             )
             // Convert to JSON
-            let sourceContents: [Source.SourceContent] = await sources.asyncMap { source in
-                return try? await source.getContent()
-            }.compactMap({ $0 })
+            var remainingTokens: Int = 128_000 / 2 // Max 64K tokens
+            var sourceContents: [Source.SourceContent] = await sources.concurrentMap { source in
+                // Trim to fit max input tokens
+                let result = try? await source.getContent()
+                print("result.url:", result?.url ?? "nil")
+                return result
+            }.compactMap {
+                $0
+            }.sorted(
+                by: \.content.estimatedTokenCount
+            )
+            sourceContents = sourceContents
+                .enumerated()
+                .map { (index, content) in
+                    // Calculate max tokens
+                    let maxTokens: Int = Int(Double(remainingTokens) / Double(sourceContents.count - index))
+                    // Trim
+                    var content: Source.SourceContent = content
+                    let result = content.content.trimmingSuffixToTokens(
+                        maxTokens: maxTokens
+                    )
+                    // Mutate variables to track
+                    content.content = result.trimmed
+                    remainingTokens -= result.usedTokens
+                    return content
+                }
             let jsonEncoder: JSONEncoder = JSONEncoder()
             jsonEncoder.outputFormatting = [.prettyPrinted]
             let jsonData: Data = try! jsonEncoder.encode(
@@ -202,7 +226,7 @@ The content from each site here is an incomplete except. Use the `get_website_co
             return """
 Below are the sites and corresponding content returned from your `web_search` query.
 
-\(sourceContents)
+\(resultsText)
 """
         }
     )
