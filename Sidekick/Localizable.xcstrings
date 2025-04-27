@@ -233,6 +233,7 @@
       }
     },
     "An error occurred while generating the diagram." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -258,6 +259,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "分析"
+          }
+        }
+      }
+    },
+    "Animal Classification" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "动物分类"
           }
         }
       }
@@ -538,6 +549,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "检查耗时任务的进度，例如新添资源的扫描进度。"
+          }
+        }
+      }
+    },
+    "Chores" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "家务表"
           }
         }
       }
@@ -922,6 +943,26 @@
         }
       }
     },
+    "Create a kanban board for organizing household chores with 'Todo', 'In progress', and 'Done' columns." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请创建一个看板来组织家务，其中包含“待办事项”、“进行中”和“已完成”列。"
+          }
+        }
+      }
+    },
+    "Create a mindmap showing different genres of world literature." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "创建一个显示世界文学不同体裁的思维导图。"
+          }
+        }
+      }
+    },
     "Create a presentation explaining the principles of supply and demand." : {
       "localizations" : {
         "zh-Hans" : {
@@ -1272,22 +1313,12 @@
         }
       }
     },
-    "Draw a diagram of the eutrophication cycle and how it forms a positive feedback loop." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "绘制富营养化循环图以及它如何形成正反馈回路。"
-          }
-        }
-      }
-    },
     "Draw a diagram of the human circulatory system." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "绘制人体循环系统图。"
+            "value" : "请画出人体循环系统图。"
           }
         }
       }
@@ -1297,7 +1328,17 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "绘制水循环及其主要组成部分的图表。"
+            "value" : "请绘制水循环及其关键组成部分的图示。绘制水循环及其关键组成部分的图示。"
+          }
+        }
+      }
+    },
+    "Draw a left-to-right flowchart showing the steps in the scientific method." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请绘制从左到右的流程图，显示科学方法的步骤。"
           }
         }
       }
@@ -1521,16 +1562,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "图片加载出错"
-          }
-        }
-      }
-    },
-    "Eutrophication Cycle" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "富营养化循环"
           }
         }
       }
@@ -1815,12 +1846,12 @@
         }
       }
     },
-    "Florence's System" : {
+    "Foods" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "佛罗伦萨的政制"
+            "value" : "食物"
           }
         }
       }
@@ -1915,72 +1946,12 @@
         }
       }
     },
-    "Generate a diagram illustrating how plastics are recycled." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "生成一个图表来说明塑料如何被回收。"
-          }
-        }
-      }
-    },
-    "Generate a diagram illustrating the life cycle of salmon." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "生成一张图表来说明鲑鱼的生命周期。"
-          }
-        }
-      }
-    },
-    "Generate a diagram illustrating the process of photosynthesis." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "生成一个图表来说明光合作用的过程。"
-          }
-        }
-      }
-    },
-    "Generate a diagram illustrating the process of plate tectonics." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "生成一个说明板块构造过程的图表。"
-          }
-        }
-      }
-    },
-    "Generate a diagram illustrating the stages of mitosis." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "生成一个说明有丝分裂阶段的图表。"
-          }
-        }
-      }
-    },
-    "Generate a diagram modelling Florence's political system in the 15th century." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "生成一个模拟佛罗伦萨 15 世纪政治体系的图表。"
-          }
-        }
-      }
-    },
     "Generate a diagram showing the structure and functions of a neuron." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "生成一个显示神经元结构和功能的图表。"
+            "value" : "请生成显示神经元结构和功能的图表。"
           }
         }
       }
@@ -2081,6 +2052,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "正在生成标题…"
+          }
+        }
+      }
+    },
+    "Genres" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文学门类"
           }
         }
       }
@@ -2536,22 +2517,22 @@
         }
       }
     },
-    "Mitosis Stages" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "有丝分裂"
-          }
-        }
-      }
-    },
     "Model" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "模型"
+          }
+        }
+      }
+    },
+    "Model a binary tree representing animal classification (e.g., vertebrates and invertebrates)." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请绘制代表动物分类（例如脊椎动物和无脊椎动物）的二叉树模型。"
           }
         }
       }
@@ -2682,12 +2663,12 @@
         }
       }
     },
-    "Neuron Structure" : {
+    "Neuron" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "神经元结构"
+            "value" : "神经元"
           }
         }
       }
@@ -2942,32 +2923,12 @@
         }
       }
     },
-    "Photosynthesis" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "光合作用"
-          }
-        }
-      }
-    },
     "Pie Chart" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "饼图"
-          }
-        }
-      }
-    },
-    "Plate Tectonics" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "板块构造"
           }
         }
       }
@@ -3108,16 +3069,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "推荐温度数值："
-          }
-        }
-      }
-    },
-    "Recycling" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "回收"
           }
         }
       }
@@ -3382,16 +3333,6 @@
         }
       }
     },
-    "Salmon Life Cycle" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "鲑鱼生命周期"
-          }
-        }
-      }
-    },
     "Save" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3438,6 +3379,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "散点图"
+          }
+        }
+      }
+    },
+    "Scientific Method" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "科学方法"
           }
         }
       }
@@ -3708,6 +3659,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "快捷键"
+          }
+        }
+      }
+    },
+    "Show a line chart of average monthly temperatures in a city. Use hypothetical data." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请展示某城市月平均气温的条形图和折线图。请使用假设的数据。"
+          }
+        }
+      }
+    },
+    "Show a pie chart of favorite foods among students in a classroom. Use hypothetical data." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "展示一个班级学生中最喜爱食物的饼图。"
           }
         }
       }
@@ -3991,6 +3962,16 @@
         }
       }
     },
+    "Temperatures" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "温度变化"
+          }
+        }
+      }
+    },
     "Text" : {
       "localizations" : {
         "zh-Hans" : {
@@ -4257,6 +4238,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "这是用于推测性解码的本地模型。它的参数量应该比主模型少。"
+          }
+        }
+      }
+    },
+    "Timetable" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "时间表"
           }
         }
       }
@@ -4597,6 +4588,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "查看资源"
+          }
+        }
+      }
+    },
+    "Visualize a student's daily activities with a journey chart." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请使用旅程图表可视化学生的日常活动。用旅程图表可视化学生的日常活动。"
           }
         }
       }

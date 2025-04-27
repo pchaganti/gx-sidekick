@@ -35,12 +35,14 @@ struct DiagrammerPreviewEditorView: View {
 				Rectangle()
 					.fill(Color.clear)
 					.frame(width: 1, height: .greedy)
-				self.diagrammerViewController.preview
-					.overlay(alignment: .topTrailing) {
-						refreshButton
-							.padding([.top, .trailing], 6)
-					}
-					.id(previewId)
+                ZoomablePannableView {
+                    self.diagrammerViewController.preview
+                        .id(previewId)
+                }
+                .overlay(alignment: .topTrailing) {
+                    refreshButton
+                        .padding([.top, .trailing], 6)
+                }
 			}
 			.frame(minWidth: 300)
 		}
@@ -103,8 +105,7 @@ struct DiagrammerPreviewEditorView: View {
 	var refreshButton: some View {
 		Button {
 			// Restart server
-			self.diagrammerViewController.stopPreview()
-			self.diagrammerViewController.startPreview()
+            try? self.diagrammerViewController.render(attemptsRemaining: 0)
 			// Reset id to redraw view
 			self.previewId = UUID()
 		} label: {
@@ -122,7 +123,6 @@ struct DiagrammerPreviewEditorView: View {
 	}
 	
 	private func resetDiagram() {
-		self.diagrammerViewController.stopPreview()
 		self.diagrammerViewController.mermaidCode = ""
 		self.diagrammerViewController.saveMermaidCode()
 		self.diagrammerViewController.currentStep = .prompt

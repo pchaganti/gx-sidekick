@@ -33,8 +33,25 @@ Use Mermaid markup language to draw a highly detailed diagram for the topic belo
 
 \(self.prompt)
 """
+        // Get cheatsheet text
+        guard let cheatsheetURL: URL = Bundle.main.url(
+            forResource: "mermaidCheatsheet",
+            withExtension: "md"
+        ) else {
+            return prompt
+        }
+        let cheatsheetText: String = try! String(
+            contentsOf: cheatsheetURL,
+            encoding: .utf8
+        )
 		// Return full prompt
-        return prompt
+        return """
+\(prompt)
+
+Cheatsheet:
+
+\(cheatsheetText)
+"""
 	}
 	
 	/// The mermaid child process to serve the preview
@@ -102,24 +119,29 @@ Use Mermaid markup language to draw a highly detailed diagram for the topic belo
 		}
 	}
 	
-	/// Function to start the preview from the mermaid code
-	public func startPreview() {
-		// Save the code
+    /// Function to render the preview from the mermaid code
+    public func render(
+        attemptsRemaining: Int = 3
+    ) throws {
+        // Save the code
         self.saveMermaidCode()
-		// Start the mermaid child process
-		self.mermaidPreviewServerProcess = Process()
-		self.mermaidPreviewServerProcess.executableURL = Bundle.main.resourceURL?.appendingPathComponent("mermaid-cli")
-		let arguments = [
-			"-watch",
-			self.mermaidFileUrl.posixPath
-		]
-		self.mermaidPreviewServerProcess.arguments = arguments
-		self.mermaidPreviewServerProcess.standardInput = FileHandle.nullDevice
-        let pipe: Pipe = Pipe()
-		self.mermaidPreviewServerProcess.standardOutput = pipe
-		self.mermaidPreviewServerProcess.standardError =  FileHandle.nullDevice
-		// Run the process
-		do {
+        // Start the mermaid child process
+        self.mermaidPreviewServerProcess = Process()
+        self.mermaidPreviewServerProcess.executableURL = Bundle.main.resourceURL?.appendingPathComponent("mermaid-cli")
+        let arguments = [
+            "-log",
+            self.mermaidFileUrl.posixPath
+        ]
+        self.mermaidPreviewServerProcess.arguments = arguments
+        self.mermaidPreviewServerProcess.standardInput = FileHandle.nullDevice
+        // Capture stdout and stderr
+        let outputPipe = Pipe()
+        let errorPipe = Pipe()
+        self.mermaidPreviewServerProcess.standardOutput = outputPipe
+        self.mermaidPreviewServerProcess.standardError = errorPipe
+        var renderError: String?
+        let renderErrorSemaphore = DispatchSemaphore(value: 0)
+        do {
             // Setup monitor
             let id: UUID = self.previewId
             self.fileMonitor = try? FileMonitor(
@@ -134,40 +156,88 @@ Use Mermaid markup language to draw a highly detailed diagram for the topic belo
                 }
             }
             try self.mermaidPreviewServerProcess.run()
-			Self.logger.notice("Started diagrammer preview server")
-            // If file not updated, trigger error
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                if self.previewId == id {
-                    self.handleRenderError()
+            Self.logger.notice("Started diagrammer preview server")
+            // Read error output asynchronously
+            errorPipe.fileHandleForReading.readabilityHandler = { handle in
+                let data = handle.availableData
+                if !data.isEmpty, let output = String(data: data, encoding: .utf8), !output.isEmpty {
+                    // Detect error lines (simple check for "error:" or "Parse error")
+                    if output.lowercased().contains("error:") || output.lowercased().contains("parse error") {
+                        Self.logger.error("`mermaid-cli` error: \(output)")
+                        renderError = output
+                        // Signal that an error was detected
+                        renderErrorSemaphore.signal()
+                    }
                 }
             }
-		} catch {
-			// Print error
+            // Wait for possible error or file update for a short duration
+            let timeout: DispatchTime = .now() + 3
+            let result = renderErrorSemaphore.wait(timeout: timeout)
+            if result == .success, let errorOutput = renderError {
+                // Error detected
+                if attemptsRemaining > 0 {
+                    throw RenderError.error(errorOutput)
+                } else {
+                    DispatchQueue.main.async {
+                        self.displayRenderError(errorMessage: errorOutput)
+                    }
+                    return
+                }
+            } else {
+                // If file not updated, trigger error if last attempt
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    if self.previewId == id {
+                        if attemptsRemaining > 0 {
+                            do {
+                                try self.render(attemptsRemaining: attemptsRemaining - 1)
+                            } catch {
+                                // If re-throwing, pass error up
+                                if let err = error as? RenderError {
+                                    switch err {
+                                        case .error(let msg):
+                                            self.displayRenderError(errorMessage: msg)
+                                    }
+                                }
+                            }
+                        } else {
+                            self.displayRenderError()
+                        }
+                    }
+                }
+            }
+        } catch {
+            // Print error
             Self.logger.error("Error generating diagram: \(error)")
-            self.handleRenderError()
-		}
-	}
+            if attemptsRemaining > 0 {
+                throw error
+            } else {
+                self.displayRenderError(errorMessage: error.localizedDescription)
+            }
+        }
+    }
     
-    public func handleRenderError() {
+    private enum RenderError: LocalizedError {
+        case error(String)
+        public var errorDescription: String? {
+            switch self {
+                case .error(let string):
+                    return string
+            }
+        }
+    }
+    
+    public func displayRenderError(
+        errorMessage: String? = nil
+    ) {
+        let message: String = errorMessage ?? String(localized: "Could not render the diagram within reasonable time.")
         // Return to first step
         Task { @MainActor in
             Dialogs.showAlert(
                 title: String(localized: "Error"),
-                message: String(localized: "Could not render the diagram within reasonable time.")
+                message: message
             )
-            self.stopPreview()
         }
     }
-	
-	/// Function to stop the preview
-	public func stopPreview() {
-		// Exit if not running
-		if self.mermaidPreviewServerProcess.executableURL == nil { return }
-		// Else, terminate and reinit
-		Self.logger.notice("Stopping diagrammer preview server")
-		self.mermaidPreviewServerProcess.terminate()
-		self.mermaidPreviewServerProcess = Process()
-	}
 	
 	/// Function to save an image of the diagram
 	@MainActor
@@ -214,46 +284,76 @@ Use Mermaid markup language to draw a highly detailed diagram for the topic belo
 			text: self.fullPrompt,
 			sender: .user
 		)
+        var messages: [Message] = [systemPromptMessage, commandMessage]
+        // Reset prompt
+        self.prompt = ""
 		// Generate the mermaid code
 		Task { @MainActor in
-			do {
-				let _ = try await Model.shared.listenThinkRespond(
-					messages: [
-						systemPromptMessage,
-						commandMessage
-                    ],
-                    modelType: .regular,
-					mode: .default, handleResponseFinish:  { fullMessage, pendingMessage, _ in
-						// On finish
-						// Remove markdown code tags and thinking process
-						let mermaidCode: String = fullMessage.reasoningRemoved.replacingOccurrences(
-							of: "```mermaid",
-							with: ""
-						).replacingOccurrences(
-							of: "```",
-							with: ""
-						).replacingOccurrences(
-							of: "_",
-							with: " "
-						).trimmingWhitespaceAndNewlines()
-						// Set the mermaid code
-						self.mermaidCode = mermaidCode
-						self.startPreview()
-						// Move to next step
-						self.currentStep.nextCase()
-					})
-			} catch {
-				// If failed, show error
-				Dialogs.showAlert(
-					title: String(localized: "Error"),
-					message: String(localized: "An error occurred while generating the diagram.")
-				)
-				// Restart the process
-				self.stopPreview()
-			}
-		}
-		// Reset prompt
-		self.prompt = ""
+            // Init attempts remaining
+            var attemptsRemaining: Int = 3
+            var responseText: String? = nil
+            // Loop
+            while attemptsRemaining >= 0 {
+                do {
+                    let response = try await Model.shared.listenThinkRespond(
+                        messages: messages,
+                        modelType: .regular,
+                        mode: .`default`
+                    )
+                    // On finish
+                    let fullResponse: String = response.text
+                    responseText = fullResponse
+                    // Remove markdown code tags and thinking process
+                    let mermaidCode: String = fullResponse.reasoningRemoved.replacingOccurrences(
+                        of: "```mermaid",
+                        with: ""
+                    ).replacingOccurrences(
+                        of: "```",
+                        with: ""
+                    ).replacingOccurrences(
+                        of: "_",
+                        with: " "
+                    ).trimmingWhitespaceAndNewlines()
+                    // Set the mermaid code
+                    self.mermaidCode = mermaidCode
+                    try self.render(
+                        attemptsRemaining: attemptsRemaining
+                    )
+                    // Move to next step
+                    self.currentStep.nextCase()
+                    // Exit
+                    return
+                } catch {
+                    // Try to get response text
+                    guard let responseText = responseText else {
+                        self.displayRenderError()
+                        return
+                    }
+                    let responseMessage: Message = Message(
+                        text: responseText,
+                        sender: .assistant
+                    )
+                    messages.append(responseMessage)
+                    // Try again with error message
+                    let errorText: String = """
+The following error output was returned when rendering the diagram:
+
+\(error.localizedDescription)
+
+Fix the error. Respond with ONLY the corrected Mermaid code.
+"""
+                    let iterateMessage: Message = Message(
+                        text: errorText,
+                        sender: .user
+                    )
+                    messages.append(iterateMessage)
+                    // Increment attempts
+                    attemptsRemaining -= 1
+                    // Log
+                    Self.logger.warning("Diagram render failed. Iterating with the error \"\(error.localizedDescription)\"")
+                }
+            }
+        }
 	}
 	
 	/// The steps to generate the mermaid diagram

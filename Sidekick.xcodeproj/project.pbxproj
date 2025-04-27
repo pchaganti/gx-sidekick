@@ -248,6 +248,8 @@
 		20ADCE512DBA271C00B13C98 /* libllama.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 20ADCE322DBA26F300B13C98 /* libllama.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		20ADCE522DBA271C00B13C98 /* libllava_shared.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 20ADCE332DBA26F300B13C98 /* libllava_shared.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		20ADCE532DBA271C00B13C98 /* libmtmd_shared.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 20ADCE342DBA26F300B13C98 /* libmtmd_shared.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		20ADCEC42DBE1CBA00B13C98 /* mermaidCheatsheet.md in Resources */ = {isa = PBXBuildFile; fileRef = 20ADCEC32DBE1CBA00B13C98 /* mermaidCheatsheet.md */; };
+		20ADCEC62DBE390B00B13C98 /* ZoomablePannableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20ADCEC52DBE390B00B13C98 /* ZoomablePannableView.swift */; };
 		20AF0A0A2CDC6339007780FE /* MarkdownCodeBlockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20AF0A092CDC6339007780FE /* MarkdownCodeBlockView.swift */; };
 		20AF90F42D73DBDD00E23C68 /* marp in Resources */ = {isa = PBXBuildFile; fileRef = 20AF90F32D73DBDD00E23C68 /* marp */; };
 		20B22E252CD9BC8B0030A8D3 /* ExportButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B22E242CD9BC8B0030A8D3 /* ExportButton.swift */; };
@@ -621,6 +623,8 @@
 		20ADCE342DBA26F300B13C98 /* libmtmd_shared.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libmtmd_shared.dylib; sourceTree = "<group>"; };
 		20ADCE352DBA26F300B13C98 /* llama-perplexity */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llama-perplexity"; sourceTree = "<group>"; };
 		20ADCE362DBA26F300B13C98 /* llama-server */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llama-server"; sourceTree = "<group>"; };
+		20ADCEC32DBE1CBA00B13C98 /* mermaidCheatsheet.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = mermaidCheatsheet.md; sourceTree = "<group>"; };
+		20ADCEC52DBE390B00B13C98 /* ZoomablePannableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomablePannableView.swift; sourceTree = "<group>"; };
 		20AF0A092CDC6339007780FE /* MarkdownCodeBlockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownCodeBlockView.swift; sourceTree = "<group>"; };
 		20AF90F32D73DBDD00E23C68 /* marp */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = marp; sourceTree = "<group>"; };
 		20B22E242CD9BC8B0030A8D3 /* ExportButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportButton.swift; sourceTree = "<group>"; };
@@ -1368,6 +1372,7 @@
 		207E5EED2D6F636200A8F6FA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				20ADCEC32DBE1CBA00B13C98 /* mermaidCheatsheet.md */,
 				200619A62D6756DF001949EF /* bin */,
 			);
 			path = Resources;
@@ -1878,6 +1883,7 @@
 				204AE3BC2CEB56750086B42D /* WrappingHStack.swift */,
 				204D9CBE2CF4ABCF0052B6F4 /* StatusLabelView.swift */,
 				2030D6212D6C7F8C00F18BF4 /* CircularProgressView.swift */,
+				20ADCEC52DBE390B00B13C98 /* ZoomablePannableView.swift */,
 				20457D2F2D92778A00954892 /* SetupCompleteView.swift */,
 				208C5FD22D79CA4400D82AA6 /* Orb */,
 				20B9B11F2CDF91A900B66D4D /* Buttons */,
@@ -2191,6 +2197,7 @@
 				20ADCE452DBA270800B13C98 /* libggml-cpu.dylib in Resources */,
 				20ADCE462DBA270800B13C98 /* libggml-metal.dylib in Resources */,
 				20ADCE472DBA270800B13C98 /* libggml-rpc.dylib in Resources */,
+				20ADCEC42DBE1CBA00B13C98 /* mermaidCheatsheet.md in Resources */,
 				20ADCE482DBA270800B13C98 /* libllama.dylib in Resources */,
 				20ADCE492DBA270800B13C98 /* libllava_shared.dylib in Resources */,
 				20ADCE4A2DBA270800B13C98 /* libmtmd_shared.dylib in Resources */,
@@ -2333,6 +2340,7 @@
 				20457D322D927AB400954892 /* CompletionsExclusionList.swift in Sources */,
 				20B97CD02CAFEC37009A0A5D /* Model.swift in Sources */,
 				20457D2A2D9250AD00954892 /* CompletionsTutorialView.swift in Sources */,
+				20ADCEC62DBE390B00B13C98 /* ZoomablePannableView.swift in Sources */,
 				20571F792CBD6019004F3344 /* GeneralSettingsView.swift in Sources */,
 				200FBFEE2CB6477400A92A74 /* LlamaServer.swift in Sources */,
 				207E5EEF2D6F663B00A8F6FA /* SlideStudioViewController.swift in Sources */,

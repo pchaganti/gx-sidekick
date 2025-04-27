@@ -24,14 +24,6 @@ struct DiagrammerView: View {
 			}
 		}
 		.environmentObject(diagrammerViewController)
-		.onReceive(
-			NotificationCenter.default.publisher(
-				for: NSApplication.willTerminateNotification
-			)
-		) { output in
-			// Stop server before app is quit
-			self.diagrammerViewController.stopPreview()
-		}
     }
 	
 }
