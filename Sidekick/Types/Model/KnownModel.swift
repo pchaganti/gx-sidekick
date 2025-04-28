@@ -178,7 +178,7 @@ public struct KnownModel: Identifiable, Codable {
         // Qwen3
         
         KnownModel(
-            primaryName: "qwen3-0.6b-instruct",
+            primaryName: "qwen3-0.6b",
             organization: .alibaba,
             modalities: [
                 .text
@@ -187,7 +187,7 @@ public struct KnownModel: Identifiable, Codable {
             hybridReasoningStyle: .qwen3
         ),
         KnownModel(
-            primaryName: "qwen3-1.7b-instruct",
+            primaryName: "qwen3-1.7b",
             organization: .alibaba,
             modalities: [
                 .text
@@ -196,7 +196,7 @@ public struct KnownModel: Identifiable, Codable {
             hybridReasoningStyle: .qwen3
         ),
         KnownModel(
-            primaryName: "qwen3-4b-instruct",
+            primaryName: "qwen3-4b",
             organization: .alibaba,
             modalities: [
                 .text
@@ -205,7 +205,7 @@ public struct KnownModel: Identifiable, Codable {
             hybridReasoningStyle: .qwen3
         ),
         KnownModel(
-            primaryName: "qwen3-8b-instruct",
+            primaryName: "qwen3-8b",
             organization: .alibaba,
             modalities: [
                 .text
@@ -214,7 +214,7 @@ public struct KnownModel: Identifiable, Codable {
             hybridReasoningStyle: .qwen3
         ),
         KnownModel(
-            primaryName: "qwen3-14b-instruct",
+            primaryName: "qwen3-14b",
             organization: .alibaba,
             modalities: [
                 .text
@@ -223,7 +223,7 @@ public struct KnownModel: Identifiable, Codable {
             hybridReasoningStyle: .qwen3
         ),
         KnownModel(
-            primaryName: "qwen3-15b-a2b-instruct",
+            primaryName: "qwen3-15b-a2b",
             organization: .alibaba,
             modalities: [
                 .text
@@ -232,7 +232,7 @@ public struct KnownModel: Identifiable, Codable {
             hybridReasoningStyle: .qwen3
         ),
         KnownModel(
-            primaryName: "qwen3-30b-a3b-instruct",
+            primaryName: "qwen3-30b-a3b",
             organization: .alibaba,
             modalities: [
                 .text
@@ -241,7 +241,7 @@ public struct KnownModel: Identifiable, Codable {
             hybridReasoningStyle: .qwen3
         ),
         KnownModel(
-            primaryName: "qwen3-235b-a22b-instruct",
+            primaryName: "qwen3-235b-a22b",
             organization: .alibaba,
             modalities: [
                 .text
