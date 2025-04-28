@@ -30,7 +30,9 @@ public struct KnownModel: Identifiable, Codable {
     ) {
         // Find model containing identifier
         for model in Self.popularModels {
-            if model.primaryName.lowercased().contains(identifier.lowercased()) {
+            let idContainsName: Bool = identifier.lowercased().contains(model.primaryName.lowercased())
+            let nameContainsId: Bool = model.primaryName.lowercased().contains(identifier.lowercased())
+            if idContainsName || nameContainsId {
                 self = model
                 return
             }
