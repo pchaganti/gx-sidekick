@@ -149,9 +149,11 @@ Cheatsheet:
             ) {
                 // Render
                 DispatchQueue.main.asyncAfter(
-                    deadline: .now() + 1
+                    deadline: .now() + 0.5
                 ) {
                     self.previewId = UUID()
+                    self.fileMonitor = nil
+                    errorPipe.fileHandleForReading.readabilityHandler = nil
                     Self.logger.notice("Updated diagrammer preview")
                 }
             }
@@ -160,7 +162,9 @@ Cheatsheet:
             // Read error output asynchronously
             errorPipe.fileHandleForReading.readabilityHandler = { handle in
                 let data = handle.availableData
-                if !data.isEmpty, let output = String(data: data, encoding: .utf8), !output.isEmpty {
+                if !data.isEmpty,
+                    let output = String(data: data, encoding: .utf8),
+                    !output.isEmpty {
                     // Detect error lines (simple check for "error:" or "Parse error")
                     if output.lowercased().contains("error:") || output.lowercased().contains("parse error") {
                         Self.logger.error("`mermaid-cli` error: \(output)")
@@ -171,10 +175,12 @@ Cheatsheet:
                 }
             }
             // Wait for possible error or file update for a short duration
-            let timeout: DispatchTime = .now() + 3
+            let timeout: DispatchTime = .now() + 1.5
             let result = renderErrorSemaphore.wait(timeout: timeout)
             if result == .success, let errorOutput = renderError {
                 // Error detected
+                self.fileMonitor = nil
+                errorPipe.fileHandleForReading.readabilityHandler = nil
                 if attemptsRemaining > 0 {
                     throw RenderError.error(errorOutput)
                 } else {
@@ -185,29 +191,19 @@ Cheatsheet:
                 }
             } else {
                 // If file not updated, trigger error if last attempt
-                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                    if self.previewId == id {
-                        if attemptsRemaining > 0 {
-                            do {
-                                try self.render(attemptsRemaining: attemptsRemaining - 1)
-                            } catch {
-                                // If re-throwing, pass error up
-                                if let err = error as? RenderError {
-                                    switch err {
-                                        case .error(let msg):
-                                            self.displayRenderError(errorMessage: msg)
-                                    }
-                                }
-                            }
-                        } else {
-                            self.displayRenderError()
-                        }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    if self.previewId == id, attemptsRemaining == 0 {
+                        errorPipe.fileHandleForReading.readabilityHandler = nil
+                        self.fileMonitor = nil
+                        self.displayRenderError()
                     }
                 }
             }
         } catch {
             // Print error
             Self.logger.error("Error generating diagram: \(error)")
+            errorPipe.fileHandleForReading.readabilityHandler = nil
+            self.fileMonitor = nil
             if attemptsRemaining > 0 {
                 throw error
             } else {

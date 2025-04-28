@@ -68,6 +68,9 @@ struct DiagrammerPreviewEditorView: View {
 		)
 		.onChange(of: diagrammerViewController.mermaidCode) {
 			self.diagrammerViewController.saveMermaidCode()
+            try? self.diagrammerViewController.render(
+                attemptsRemaining: 0
+            )
 		}
 	}
 	
