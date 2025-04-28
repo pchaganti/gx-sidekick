@@ -81,8 +81,10 @@ struct ChatParameters: Codable {
         // Tell the LLM to use functions when enabled and server does not support native tool calling
         if Settings.useFunctions && useFunctions {
             fullSystemPromptComponents.append(InferenceSettings.useFunctionsPrompt)
-            // Inject function schema if no native tool calling
-            if !InferenceSettings.hasNativeToolCalling {
+            // Inject function schema if no native tool calling or if using local model
+            let canReachServer: Bool = await Model.shared.remoteServerIsReachable()
+            let isUsingLocalModel: Bool = (!canReachServer || !InferenceSettings.useServer)
+            if !InferenceSettings.hasNativeToolCalling || isUsingLocalModel {
                 fullSystemPromptComponents.append(InferenceSettings.functionsSchemaPrompt)
                 let functions: [any AnyFunctionBox] = DefaultFunctions.functions
                 for function in functions {
