@@ -83,6 +83,21 @@ struct PromptInputField: View {
 					}
 				}
 			}
+            .onReceive(
+                NotificationCenter.default.publisher(
+                    for: Notifications.changedInferenceConfig.name
+                )
+            ) { output in
+                // Update reasoning button
+                withAnimation(.linear) {
+                    if let isReasoningModel = Model.shared.selectedModel?.isReasoningModel {
+                        self.promptController.useReasoning = isReasoningModel
+                    } else {
+                        // Default to false
+                        self.promptController.useReasoning = false
+                    }
+                }
+            }
 			.onAppear {
                 self.isFocused = true
 			}
@@ -112,6 +127,9 @@ struct PromptInputField: View {
         }
         .overlay(alignment: .bottomLeading) {
             HStack {
+                UseReasoningButton(
+                    useReasoning: self.$promptController.useReasoning
+                )
                 UseWebSearchButton(
                     useWebSearch: self.$promptController.useWebSearch
                 )
@@ -327,6 +345,7 @@ struct PromptInputField: View {
                 modelType: .regular,
 				mode: .chat,
 				similarityIndex: index,
+                useReasoning: self.promptController.useReasoning,
 				useWebSearch: useWebSearch,
                 useFunctions: self.promptController.useFunctions,
 				useCanvas: self.conversationState.useCanvas,

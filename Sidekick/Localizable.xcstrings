@@ -232,17 +232,6 @@
         }
       }
     },
-    "An error occurred while generating the diagram." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "图表生成出错…"
-          }
-        }
-      }
-    },
     "An error occurred while generating the slides." : {
       "localizations" : {
         "zh-Hans" : {
@@ -2813,6 +2802,16 @@
         }
       }
     },
+    "Not Available" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选项不存在"
+          }
+        }
+      }
+    },
     "Notifications" : {
       "localizations" : {
         "zh-Hans" : {
@@ -4078,6 +4077,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "由于Sidekick 无法找到%@，相关的资源已被清除。"
+          }
+        }
+      }
+    },
+    "The selected model is not a hybrid reasoning model. Reasoning cannot be toggled." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所選模型不是混合推理模型。無法强制打开或关闭推理。"
           }
         }
       }

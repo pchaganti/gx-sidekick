@@ -70,6 +70,35 @@ public class Model: ObservableObject {
     /// A `Date` representing when the remote server was less checked
     private var lastRemoteServerCheck: Date = .distantPast
 	
+    /// A `String` containing the name of the currently selected model
+    public var selectedModelName: String? {
+        // Check if remote model is accessible
+        let useServer: Bool = InferenceSettings.useServer && self.wasRemoteServerAccessible
+        // If using remote
+        if useServer {
+            // Get remote model name
+            let remoteModelName: String = InferenceSettings.serverModelName
+            if !remoteModelName.isEmpty {
+                return remoteModelName
+            }
+        } else {
+            // Else, return local model name
+            if let localModelName: String = Settings.modelUrl?
+                .deletingPathExtension()
+                .lastPathComponent,
+                !localModelName.isEmpty {
+                return localModelName
+            }
+        }
+        // If fell through, return nil
+        return nil
+    }
+    /// The currently selected model
+    public var selectedModel: KnownModel? {
+        guard let identifier = selectedModelName else { return nil }
+        return KnownModel(identifier: identifier)
+    }
+    
 	/// Property for the system prompt given to the LLM
 	private var systemPrompt: String
 	
@@ -124,7 +153,7 @@ public class Model: ObservableObject {
                         modelType: .regular
                     ) {
                         // Determine if is reasoning model
-                        if RemoteModel.popularModels.contains(
+                        if KnownModel.popularModels.contains(
                             where: { model in
                                 let nameMatches: Bool = modelName.contains(
                                     model.primaryName
@@ -240,6 +269,7 @@ public class Model: ObservableObject {
 		modelType: ModelType,
 		mode: Model.Mode,
 		similarityIndex: SimilarityIndex? = nil,
+        useReasoning: Bool = false,
 		useWebSearch: Bool = false,
         useFunctions: Bool = false,
 		useCanvas: Bool = false,
@@ -279,6 +309,7 @@ public class Model: ObservableObject {
                     shouldAddSources: (
                         index == lastIndex
                     ),
+                    useReasoning: useReasoning,
                     useMultimodalContent: LlamaServer.modelHasVision(
                         type: modelType,
                         usingRemoteModel: useServer

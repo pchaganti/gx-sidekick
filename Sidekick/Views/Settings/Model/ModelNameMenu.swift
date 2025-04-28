@@ -66,7 +66,7 @@ struct ModelNameMenu: View {
                 of: self.serverModelName
             ) {
                 // Turn has vision on if model is in list and is multimodal
-                let serverModelHasVision: Bool =  RemoteModel.popularModels.contains { model in
+                let serverModelHasVision: Bool =  KnownModel.popularModels.contains { model in
                     let nameMatches: Bool = self.serverModelName.contains(model.primaryName)
                     return nameMatches && model.isMultimodal
                 }

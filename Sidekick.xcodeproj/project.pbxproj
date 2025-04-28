@@ -297,7 +297,7 @@
 		20C2210B2CC4B88F00A99796 /* SourcesButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C2210A2CC4B88F00A99796 /* SourcesButton.swift */; };
 		20C5CBC62DA3D7310071F5F7 /* Function.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C5CBC52DA3D7310071F5F7 /* Function.swift */; };
 		20C5CBC92DA3D82E0071F5F7 /* DefaultFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C5CBC82DA3D82E0071F5F7 /* DefaultFunctions.swift */; };
-		20C5CBCB2DA4F3BA0071F5F7 /* RemoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C5CBCA2DA4F3BA0071F5F7 /* RemoteModel.swift */; };
+		20C5CBCB2DA4F3BA0071F5F7 /* KnownModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C5CBCA2DA4F3BA0071F5F7 /* KnownModel.swift */; };
 		20C5CBCD2DA52AB40071F5F7 /* FunctionCallRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C5CBCC2DA52AB40071F5F7 /* FunctionCallRecord.swift */; };
 		20C5CBD52DA5F7640071F5F7 /* FunctionCallsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C5CBD42DA5F7640071F5F7 /* FunctionCallsView.swift */; };
 		20C62EBF2D71373500996566 /* SlideStudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C62EBE2D71373500996566 /* SlideStudioView.swift */; };
@@ -311,6 +311,7 @@
 		20CE5E582D5C85D10000A2EC /* LengthyTasksNavigationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CE5E572D5C85D10000A2EC /* LengthyTasksNavigationButton.swift */; };
 		20CEA75B2CE308AD0070579B /* MessageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CEA75A2CE308AD0070579B /* MessageContentView.swift */; };
 		20CEA75E2CE309F10070579B /* MessageOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CEA75D2CE309F10070579B /* MessageOptionsView.swift */; };
+		20D01BFA2DBFAA4A00EE3DF3 /* UseReasoningButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D01BF92DBFAA4A00EE3DF3 /* UseReasoningButton.swift */; };
 		20D65DD52CC0CC6C0052D826 /* StopGenerationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D65DD42CC0CC6C0052D826 /* StopGenerationButton.swift */; };
 		20D9A9732CD2769300171FDE /* MessageShareMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D9A9722CD2769300171FDE /* MessageShareMenu.swift */; };
 		20DAC4422DADF01F0039208E /* WebFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DAC4412DADF01F0039208E /* WebFunctions.swift */; };
@@ -733,7 +734,7 @@
 		20C2210A2CC4B88F00A99796 /* SourcesButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesButton.swift; sourceTree = "<group>"; };
 		20C5CBC52DA3D7310071F5F7 /* Function.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Function.swift; sourceTree = "<group>"; };
 		20C5CBC82DA3D82E0071F5F7 /* DefaultFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFunctions.swift; sourceTree = "<group>"; };
-		20C5CBCA2DA4F3BA0071F5F7 /* RemoteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteModel.swift; sourceTree = "<group>"; };
+		20C5CBCA2DA4F3BA0071F5F7 /* KnownModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownModel.swift; sourceTree = "<group>"; };
 		20C5CBCC2DA52AB40071F5F7 /* FunctionCallRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionCallRecord.swift; sourceTree = "<group>"; };
 		20C5CBD42DA5F7640071F5F7 /* FunctionCallsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionCallsView.swift; sourceTree = "<group>"; };
 		20C62EBE2D71373500996566 /* SlideStudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideStudioView.swift; sourceTree = "<group>"; };
@@ -745,6 +746,7 @@
 		20CE5E572D5C85D10000A2EC /* LengthyTasksNavigationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LengthyTasksNavigationButton.swift; sourceTree = "<group>"; };
 		20CEA75A2CE308AD0070579B /* MessageContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageContentView.swift; sourceTree = "<group>"; };
 		20CEA75D2CE309F10070579B /* MessageOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageOptionsView.swift; sourceTree = "<group>"; };
+		20D01BF92DBFAA4A00EE3DF3 /* UseReasoningButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseReasoningButton.swift; sourceTree = "<group>"; };
 		20D65DD22CC0B8A20052D826 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		20D65DD42CC0CC6C0052D826 /* StopGenerationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopGenerationButton.swift; sourceTree = "<group>"; };
 		20D9A9722CD2769300171FDE /* MessageShareMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageShareMenu.swift; sourceTree = "<group>"; };
@@ -1709,10 +1711,9 @@
 				202E936B2DB54CDE00AB361E /* ChatPromptEditor.swift */,
 				202801F32CC93C80005C1F7D /* DictationButton.swift */,
 				206AB6112CF5F8390010B09A /* AttachmentSelectionButton.swift */,
-				2025E67C2D89197700289E3F /* UseWebSearchButton.swift */,
-				208855CB2DAD078800071F0B /* UseFunctionsButton.swift */,
 				208855C92DAD062A00071F0B /* CapsuleButton.swift */,
 				202E93692DB546EC00AB361E /* MultilineTextEditor.swift */,
+				20D01BF82DBFAA3B00EE3DF3 /* Toggle Button */,
 			);
 			path = "Input Field";
 			sourceTree = "<group>";
@@ -1927,7 +1928,7 @@
 		20C5CBC42DA3D7190071F5F7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				20C5CBCA2DA4F3BA0071F5F7 /* RemoteModel.swift */,
+				20C5CBCA2DA4F3BA0071F5F7 /* KnownModel.swift */,
 				20BF49CA2D649FD700C329F8 /* ModelFamily.swift */,
 				2090A8A52D8995FA0060DC63 /* ModelType.swift */,
 				20FDE29F2DAE50E7000A16F8 /* Provider.swift */,
@@ -1977,6 +1978,16 @@
 				20C5CBD42DA5F7640071F5F7 /* FunctionCallsView.swift */,
 			);
 			path = Message;
+			sourceTree = "<group>";
+		};
+		20D01BF82DBFAA3B00EE3DF3 /* Toggle Button */ = {
+			isa = PBXGroup;
+			children = (
+				2025E67C2D89197700289E3F /* UseWebSearchButton.swift */,
+				208855CB2DAD078800071F0B /* UseFunctionsButton.swift */,
+				20D01BF92DBFAA4A00EE3DF3 /* UseReasoningButton.swift */,
+			);
+			path = "Toggle Button";
 			sourceTree = "<group>";
 		};
 		20DFF4822DB7194500F3F76C /* Expert */ = {
@@ -2265,7 +2276,7 @@
 				209370972D6B5B8100E1AF73 /* DetectorViewController.swift in Sources */,
 				208844332CDDE394003BCB6F /* ModelRowView.swift in Sources */,
 				208C5FD62D79CB8E00D82AA6 /* LiquidView.swift in Sources */,
-				20C5CBCB2DA4F3BA0071F5F7 /* RemoteModel.swift in Sources */,
+				20C5CBCB2DA4F3BA0071F5F7 /* KnownModel.swift in Sources */,
 				20353FF12CF84546002BC78E /* ToggleLaTeXButton.swift in Sources */,
 				2030D6222D6C7F8C00F18BF4 /* CircularProgressView.swift in Sources */,
 				20B97CCE2CAFEC37009A0A5D /* Settings.swift in Sources */,
@@ -2489,6 +2500,7 @@
 				208855CF2DAD1D6F00071F0B /* ArithmeticFunctions.swift in Sources */,
 				2034876D2D67236000A88DA4 /* DiagrammerView.swift in Sources */,
 				204AE3B92CEAF57E0086B42D /* CommandManager.swift in Sources */,
+				20D01BFA2DBFAA4A00EE3DF3 /* UseReasoningButton.swift in Sources */,
 				208855D12DAD1D9900071F0B /* CodeFunctions.swift in Sources */,
 				201A1A9E2CDBBA25001E9BA9 /* MarkdownLineChartView.swift in Sources */,
 				200FBFF32CB66B8300A92A74 /* ServerHealth.swift in Sources */,

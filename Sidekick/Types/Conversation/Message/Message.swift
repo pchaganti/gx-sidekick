@@ -105,8 +105,10 @@ public struct Message: Identifiable, Codable, Hashable {
 	public var hasReasoning: Bool {
 		// Return true if...
 		// a.) There are reasoning tokens
-		// b.) The message does come from a model
-		return (self.reasoningText != nil) && (self.sender == .assistant)
+        // b.) The reasoning process is not nil
+		// c.) The message does come from a model
+        guard let reasoningText = self.reasoningText else { return false }
+        return (!reasoningText.isEmpty) && (self.sender == .assistant)
 	}
 	
 	/// Function returning the message text that is submitted to the LLM
@@ -432,6 +434,7 @@ DO NOT reference sources outside of those provided below. If you did not referen
             similarityIndex: SimilarityIndex? = nil,
             temporaryResources: [TemporaryResource] = [],
             shouldAddSources: Bool = false,
+            useReasoning: Bool = false,
             useMultimodalContent: Bool = false,
             useWebSearch: Bool = false,
             useCanvas: Bool = false,
@@ -504,6 +507,29 @@ Output the full text again with the changes applied. Keep as much of the previou
                 // Else, just use message text
                 let plainText: String = message.text
                 self.content = .textOnly(plainText)
+            }
+            // If message requires reasoning, and can be toggled
+            if let selectedModel = await Model.shared.selectedModel,
+               selectedModel.isHybridReasoningModel,
+               let style: KnownModel.HybridReasoningStyle = selectedModel.hybridReasoningStyle {
+                // Append reasoning toggle tag
+                let toggleTag: String = style.getTag(
+                    useReasoning: useReasoning
+                )
+                switch self.content {
+                    case .textOnly(let string):
+                        self.content = .textOnly(string + toggleTag)
+                    case .multimodal(let array):
+                        let newContents: [Content] = array.map { content in
+                            switch content {
+                                case .text(let string):
+                                    return .text(string + toggleTag)
+                                default:
+                                    return content
+                            }
+                        }
+                        self.content = .multimodal(newContents)
+                }
             }
         }
         
