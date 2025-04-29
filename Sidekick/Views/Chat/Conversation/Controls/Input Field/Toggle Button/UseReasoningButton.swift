@@ -20,6 +20,9 @@ struct UseReasoningButton: View {
         }
         return false
     }
+    var modelDoesReason: Bool {
+        return self.selectedModel?.isReasoningModel ?? false
+    }
     
     var systemImage: String {
         if !self.useReasoning {
@@ -44,7 +47,7 @@ struct UseReasoningButton: View {
         // Check if model is hybrid reasoning model
         if !self.canToggleReasoning {
             // If not, show error and return
-            self.useReasoning.toggle()
+            self.useReasoning = self.modelDoesReason
             Dialogs.showAlert(
                 title: String(localized: "Not Available"),
                 message: String(localized: "The selected model is not a hybrid reasoning model. Reasoning cannot be toggled.")
