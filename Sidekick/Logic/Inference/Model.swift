@@ -44,7 +44,6 @@ public class Model: ObservableObject {
             let canReachRemoteServer: Bool = await self.remoteServerIsReachable()
 			do {
 				if !InferenceSettings.useServer || !canReachRemoteServer {
-                    print("Restarting server in init")
 					try await self.mainModelServer.startServer(
                         canReachRemoteServer: canReachRemoteServer
                     )
@@ -126,7 +125,6 @@ public class Model: ObservableObject {
 		// Load model if needed
 		let canReachRemoteServer: Bool = await self.remoteServerIsReachable()
 		if !InferenceSettings.useServer || !canReachRemoteServer {
-            print("Restarting server in refreshModel")
 			try? await self.mainModelServer.startServer(
                 canReachRemoteServer: canReachRemoteServer
             )
