@@ -248,16 +248,16 @@ public actor LlamaServer {
 		let threadsToUse: Int = InferenceSettings.useGPUAcceleration ? threadsToUseIfGPU : threadsToUseIfCPU
 		let gpuLayersToUse: String = InferenceSettings.useGPUAcceleration ? "\(gpuLayers)" : "0"
 		
-		var arguments: [String] = [
-			"--model", modelPath,
-			"--threads", "\(threadsToUse)",
-			"--threads-batch", "\(threadsToUse)",
-			"--ctx-size", "\(contextLength)",
-			"--port", self.port,
-			"--flash-attn",
-			"--gpu-layers", gpuLayersToUse
+        // Formulate arguments
+        var arguments: [String: String?] = [
+            "--model": modelPath,
+            "--threads": "\(threadsToUse)",
+            "--threads-batch": "\(threadsToUse)",
+            "--ctx-size": "\(contextLength)",
+            "--port": self.port,
+            "--flash-attn": nil,
+            "--gpu-layers": gpuLayersToUse
 		]
-		
 		// If speculative decoding is used and is main model
         if self.modelType == .regular,
 			let speculationModelUrl = InferenceSettings.speculativeDecodingModelUrl {
@@ -266,19 +266,49 @@ public actor LlamaServer {
 				let draft: Int =  16
 				let draftMin: Int = 7
 				let draftPMin: Double = 0.75
-				let speculativeDecodingArguments: [String] = [
-					"--model-draft", speculationModelUrl.posixPath,
-					"--gpu-layers-draft", "\(gpuLayersToUse)",
-					"--draft-p-min", "\(draftPMin)",
-					"--draft", "\(draft)",
-					"--draft-min", "\(draftMin)"
+                let speculativeDecodingArguments: [String: String?] = [
+                    "--model-draft": speculationModelUrl.posixPath,
+                    "--gpu-layers-draft": "\(gpuLayersToUse)",
+                    "--draft-p-min": "\(draftPMin)",
+                    "--draft": "\(draft)",
+                    "--draft-min": "\(draftMin)"
 				]
 				// Append
-				arguments += speculativeDecodingArguments
+                speculativeDecodingArguments.forEach { element in
+                    arguments[element.key] = element.value
+                }
 			}
 		}
-		
-		process.arguments = arguments
+        // Inject custom arguments for main model
+        if self.modelType == .regular {
+            // Remove duplicate arguments
+            let activeArguments: [ServerArgument] = ServerArgumentsManager.shared.activeArguments
+            let activeFlags = activeArguments.map(keyPath: \.flag)
+            arguments = arguments.filter { !activeFlags.contains($0.key) }
+            // Convert dictionary to [String] format with each key and value as separate elements
+            var formattedArguments: [String] = []
+            arguments.forEach { key, value in
+                formattedArguments.append(key)
+                if let value = value {
+                    formattedArguments.append(value)
+                }
+            }
+            // Add custom arguments
+            let allArguments: [String] = ServerArgumentsManager.shared.allArguments
+            formattedArguments += allArguments
+            // Assign arguments
+            process.arguments = formattedArguments
+        } else {
+            // Else, just convert and assign
+            var formattedArguments: [String] = []
+            arguments.forEach { key, value in
+                formattedArguments.append(key)
+                if let value = value {
+                    formattedArguments.append(value)
+                }
+            }
+            process.arguments = formattedArguments
+        }
 		
 		Self.logger.notice("Starting llama.cpp server \(self.process.arguments!.joined(separator: " "), privacy: .public)")
 		

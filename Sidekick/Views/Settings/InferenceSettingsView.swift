@@ -6,6 +6,7 @@
 //
 
 import FSKit_macOS
+import MarkdownUI
 import SwiftUI
 import UniformTypeIdentifiers
 
@@ -20,6 +21,8 @@ struct InferenceSettingsView: View {
 	@State private var isSelectingModel: Bool = false
     @State private var isSelectingWorkerModel: Bool = false
 	@State private var isSelectingSpeculativeDecodingModel: Bool = false
+    
+    @State private var isConfiguringServerArguments: Bool = false
 	
 	@AppStorage("temperature") private var temperature: Double = InferenceSettings.temperature
 	@AppStorage("useGPUAcceleration") private var useGPUAcceleration: Bool = InferenceSettings.useGPUAcceleration
@@ -204,6 +207,7 @@ struct InferenceSettingsView: View {
 			contextLengthEditor
 			temperatureEditor
 			useGPUAccelerationToggle
+            advancedParameters
 		}
 	}
 		
@@ -339,5 +343,39 @@ struct InferenceSettingsView: View {
 			PerformanceGaugeView()
 		}
 	}
+    
+    var advancedParameters: some View {
+        HStack(alignment: .center) {
+            VStack(alignment: .leading) {
+                Text("Advanced Parameters")
+                .font(.title3)
+                .bold()
+                Text("""
+Configure the inference server directly by injecting flags and arguments. Arguments configured here will override other settings if needed.
+
+Find more information [here](https://github.com/ggml-org/llama.cpp/blob/master/examples/server/README.md).
+""")
+                    .font(.caption)
+            }
+            Spacer()
+            Button {
+                self.isConfiguringServerArguments.toggle()
+            } label: {
+                Text("Configure")
+            }
+        }
+        .sheet(isPresented: $isConfiguringServerArguments) {
+            ServerArgumentsEditor(
+                isPresented: self.$isConfiguringServerArguments
+            )
+            .frame(
+                minWidth: 450,
+                maxWidth: 500,
+                minHeight: 300,
+                maxHeight: 350
+            )
+        }
+        .interactiveDismissDisabled(true)
+    }
 	
 }

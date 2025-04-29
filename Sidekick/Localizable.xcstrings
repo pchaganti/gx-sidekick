@@ -142,6 +142,16 @@
         }
       }
     },
+    "Active" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用"
+          }
+        }
+      }
+    },
     "Add" : {
       "localizations" : {
         "zh-Hans" : {
@@ -198,6 +208,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "添加"
+          }
+        }
+      }
+    },
+    "Advanced Parameters" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "高级参数"
           }
         }
       }
@@ -348,6 +368,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "你确定要删除所有记忆吗？"
+          }
+        }
+      }
+    },
+    "Are you sure you want to delete all server arguments?" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你确定要删除所有服务器参数吗？"
           }
         }
       }
@@ -658,6 +688,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "精简"
+          }
+        }
+      }
+    },
+    "Configure" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "配置"
+          }
+        }
+      }
+    },
+    "Configure the inference server directly by injecting flags and arguments. Arguments configured here will override other settings if needed.\n\nFind more information [here](https://github.com/ggml-org/llama.cpp/blob/master/examples/server/README.md)." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通过注入参数直接配置推理服务器。此处配置的参数将在需要时覆盖其他设置。\n\n更多信息请参见[此处](https://github.com/ggml-org/llama.cpp/blob/master/examples/server/README.md)。"
           }
         }
       }
@@ -1112,6 +1162,16 @@
         }
       }
     },
+    "Delete All Server Arguments" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除所有服务器参数"
+          }
+        }
+      }
+    },
     "Delete All Sources" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1188,6 +1248,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "禁用推测解码"
+          }
+        }
+      }
+    },
+    "Docs" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文档"
           }
         }
       }
@@ -1821,6 +1891,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "根据以下错误消息修复错误，然后重试。\n\n%@"
+          }
+        }
+      }
+    },
+    "Flag" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "标志 (e.g. —temp)"
           }
         }
       }
@@ -4567,6 +4647,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "用户名"
+          }
+        }
+      }
+    },
+    "Value" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "参数"
           }
         }
       }

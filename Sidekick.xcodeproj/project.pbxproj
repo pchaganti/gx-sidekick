@@ -206,6 +206,9 @@
 		2099BDAD2CB8222A00E02732 /* ExpertEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2099BDAC2CB8222A00E02732 /* ExpertEditorView.swift */; };
 		2099BDB22CB828A500E02732 /* PopoverButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2099BDB12CB828A500E02732 /* PopoverButton.swift */; };
 		209B200A2D940F8400C79185 /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 209B20092D940F8400C79185 /* LaunchAtLogin */; };
+		209D397A2DC0E49100D1E5E5 /* ServerArgument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209D39792DC0E49100D1E5E5 /* ServerArgument.swift */; };
+		209D397C2DC0E71600D1E5E5 /* ServerArgumentsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209D397B2DC0E71600D1E5E5 /* ServerArgumentsManager.swift */; };
+		209D397E2DC0FA0800D1E5E5 /* ServerArgumentsEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209D397D2DC0FA0800D1E5E5 /* ServerArgumentsEditor.swift */; };
 		20A40C802D71872600A9D9A9 /* SlideStudioPreviewEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A40C7F2D71872600A9D9A9 /* SlideStudioPreviewEditor.swift */; };
 		20A40C832D718D4300A9D9A9 /* CodeEditorView in Frameworks */ = {isa = PBXBuildFile; productRef = 20A40C822D718D4300A9D9A9 /* CodeEditorView */; };
 		20A40C852D718D4300A9D9A9 /* LanguageSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 20A40C842D718D4300A9D9A9 /* LanguageSupport */; };
@@ -602,6 +605,9 @@
 		2099BDA82CB81A1300E02732 /* ExpertListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertListView.swift; sourceTree = "<group>"; };
 		2099BDAC2CB8222A00E02732 /* ExpertEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertEditorView.swift; sourceTree = "<group>"; };
 		2099BDB12CB828A500E02732 /* PopoverButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverButton.swift; sourceTree = "<group>"; };
+		209D39792DC0E49100D1E5E5 /* ServerArgument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerArgument.swift; sourceTree = "<group>"; };
+		209D397B2DC0E71600D1E5E5 /* ServerArgumentsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerArgumentsManager.swift; sourceTree = "<group>"; };
+		209D397D2DC0FA0800D1E5E5 /* ServerArgumentsEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerArgumentsEditor.swift; sourceTree = "<group>"; };
 		20A40C7F2D71872600A9D9A9 /* SlideStudioPreviewEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideStudioPreviewEditor.swift; sourceTree = "<group>"; };
 		20A40C862D7190BA00A9D9A9 /* SlideStudioPromptOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideStudioPromptOptionsView.swift; sourceTree = "<group>"; };
 		20A40C882D72AEE600A9D9A9 /* SlideStudioExportOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideStudioExportOptionsView.swift; sourceTree = "<group>"; };
@@ -1136,6 +1142,7 @@
 				208844302CDDE33F003BCB6F /* ModelListView.swift */,
 				208844322CDDE394003BCB6F /* ModelRowView.swift */,
 				2051FED62D8D7474001B1E0D /* ModelNameMenu.swift */,
+				209D397D2DC0FA0800D1E5E5 /* ServerArgumentsEditor.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1828,6 +1835,7 @@
 				204AE3BA2CEAF5AC0086B42D /* Command.swift */,
 				208388EC2CBF825400C2A9F8 /* Tavily.swift */,
 				204D09822D1166810066B060 /* IntroductionPage.swift */,
+				209D39792DC0E49100D1E5E5 /* ServerArgument.swift */,
 				2030D6232D6D60FB00F18BF4 /* EvaluationDetails.swift */,
 				202801F72CC94938005C1F7D /* Conversation */,
 				20C5CBC42DA3D7190071F5F7 /* Model */,
@@ -1910,6 +1918,7 @@
 				20B97CCA2CAFEC37009A0A5D /* DownloadManager.swift */,
 				20A96F3B2CDDA9D400E31D53 /* ModelManager.swift */,
 				20A8B65C2CB2829500B756FD /* ExpertManager.swift */,
+				209D397B2DC0E71600D1E5E5 /* ServerArgumentsManager.swift */,
 				20C221052CC4B15600A99796 /* SourcesManager.swift */,
 				204AE3B82CEAF57E0086B42D /* CommandManager.swift */,
 			);
@@ -2260,6 +2269,7 @@
 				200619AF2D6766B1001949EF /* DiagrammerGeneratingView.swift in Sources */,
 				20C5CBD52DA5F7640071F5F7 /* FunctionCallsView.swift in Sources */,
 				20C5CBCD2DA52AB40071F5F7 /* FunctionCallRecord.swift in Sources */,
+				209D397A2DC0E49100D1E5E5 /* ServerArgument.swift in Sources */,
 				201BB9A02D8B182800890EE6 /* CanvasVersionSelector.swift in Sources */,
 				20C221062CC4B15600A99796 /* SourcesManager.swift in Sources */,
 				20B4D6B12CC3D72700817E15 /* Extension+IndexItem.swift in Sources */,
@@ -2289,6 +2299,7 @@
 				20A96F3C2CDDA9D400E31D53 /* ModelManager.swift in Sources */,
 				20B97CE32CB00585009A0A5D /* Expert.swift in Sources */,
 				204AE3BD2CEB56750086B42D /* WrappingHStack.swift in Sources */,
+				209D397E2DC0FA0800D1E5E5 /* ServerArgumentsEditor.swift in Sources */,
 				203487642D66FF6700A88DA4 /* SidebarButtonView.swift in Sources */,
 				208388E52CBF526E00C2A9F8 /* RetrievalSettings.swift in Sources */,
 				2041868D2D81E6B2002A5D1C /* NetworkMonitor.swift in Sources */,
@@ -2460,6 +2471,7 @@
 				208388ED2CBF825400C2A9F8 /* Tavily.swift in Sources */,
 				204AE3BB2CEAF5AC0086B42D /* Command.swift in Sources */,
 				20A40CF92D73763500A9D9A9 /* Extension+Date.swift in Sources */,
+				209D397C2DC0E71600D1E5E5 /* ServerArgumentsManager.swift in Sources */,
 				2038CCF32CB6CBC6005AA315 /* PendingMessageView.swift in Sources */,
 				20DFF4812DB718E000F3F76C /* ExpertSetupView.swift in Sources */,
 				20C62EC72D71403A00996566 /* SlideStudioQuickPromptsView.swift in Sources */,
