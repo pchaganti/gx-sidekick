@@ -40,14 +40,13 @@ public class TavilySearch {
                 timeRange: timeRange,
 				resultCount: resultCount
 			)
-			// Get all site content
-			let websiteContent: [Source] = tavilyResults.map { result in
+			let results: [Source] = tavilyResults.map { result in
 				return Source(
-					text: result.content,
+                    text: result.content,
 					source: result.url
 				)
 			}
-			return websiteContent
+			return results
 		} catch {
 			self.logger.error("Tavily Search Error: \(error, privacy: .public)")
 			throw error

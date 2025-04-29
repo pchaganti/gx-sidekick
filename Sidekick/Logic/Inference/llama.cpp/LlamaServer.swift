@@ -226,10 +226,12 @@ public actor LlamaServer {
 			Self.logger.error("Main model or draft model is missing")
 			throw LlamaServerError.modelError
 		}
-		// If server is running, exit
-		guard !process.isRunning, let modelPath = self.modelUrl?.posixPath else {
-			return
-		}
+		// If server is running, or is starting server, or no model, exit
+        guard !process.isRunning,
+                !self.isStartingServer,
+                let modelPath = self.modelUrl?.posixPath else {
+            return
+        }
 		// Signal beginning of server initialization
 		self.isStartingServer = true
 		// Stop server if running
@@ -350,16 +352,16 @@ public actor LlamaServer {
 		// Start server if remote server is not used & local server is inactive
 		if !rawUrl.usingRemoteServer {
 			Self.logger.info("Using local model for inference...")
-			try await startServer(
+            try await self.startServer(
                 canReachRemoteServer: canReachRemoteServer
             )
 		} else {
 			Self.logger.info("Using remote model for inference...")
 		}
-		// Get start time
-		let start: CFAbsoluteTime = CFAbsoluteTimeGetCurrent()
-		// Formulate parameters
-		async let params = {
+        // Get start time
+        let start: CFAbsoluteTime = CFAbsoluteTimeGetCurrent()
+        // Formulate parameters
+        async let params = {
 			switch mode {
 				case .chat:
 					return await ChatParameters(
@@ -633,7 +635,7 @@ public actor LlamaServer {
 	) async throws -> Int {
 		// Start server if not active
 		if !self.process.isRunning && !self.isStartingServer {
-			try await startServer(
+            try await self.startServer(
                 canReachRemoteServer: canReachRemoteServer
             )
 		}
