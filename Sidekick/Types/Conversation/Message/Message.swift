@@ -430,11 +430,12 @@ DO NOT reference sources outside of those provided below. If you did not referen
     public struct MessageSubset: Codable {
         
         init(
+            modelType: ModelType = .regular,
             message: Message,
             similarityIndex: SimilarityIndex? = nil,
             temporaryResources: [TemporaryResource] = [],
             shouldAddSources: Bool = false,
-            useReasoning: Bool = false,
+            useReasoning: Bool = true,
             useMultimodalContent: Bool = false,
             useWebSearch: Bool = false,
             useCanvas: Bool = false,
@@ -509,13 +510,25 @@ Output the full text again with the changes applied. Keep as much of the previou
                 self.content = .textOnly(plainText)
             }
             // If message requires reasoning, and can be toggled
-            if let selectedModel = await Model.shared.selectedModel,
+            let knownModel: KnownModel? = await {
+                switch modelType {
+                    case .regular:
+                        return await Model.shared.selectedModel
+                    case .worker:
+                        return await Model.shared.selectedWorkerModel
+                    case .completions:
+                        return nil
+                }
+            }()
+            if let selectedModel = knownModel,
                selectedModel.isHybridReasoningModel,
                let style: KnownModel.HybridReasoningStyle = selectedModel.hybridReasoningStyle {
                 // Append reasoning toggle tag
                 let toggleTag: String = style.getTag(
                     useReasoning: useReasoning
                 )
+                print("toggleTag is \(toggleTag) for message \(message.text)")
+                print("useReasoning is \(toggleTag) for message \(message.text)")
                 switch self.content {
                     case .textOnly(let string):
                         self.content = .textOnly(string + toggleTag)

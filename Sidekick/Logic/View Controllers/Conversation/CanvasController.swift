@@ -78,7 +78,8 @@ Extract the content that the assistant generated based on the instruction. DO NO
 		guard let response: LlamaServer.CompleteResponse = try? await Model.shared.listenThinkRespond(
 			messages: messages,
 			modelType: .worker,
-			mode: .default
+            mode: .default,
+            useReasoning: false
 		) else {
 			withAnimation(.linear) {
 				self.isExtractingSnapshot = false

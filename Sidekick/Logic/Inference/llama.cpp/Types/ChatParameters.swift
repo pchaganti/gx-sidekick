@@ -30,7 +30,8 @@ struct ChatParameters: Codable {
                 sender: .system
             )
             let systemPromptMsgSubset: Message.MessageSubset = await Message.MessageSubset(
-                message: systemPromptMsg
+                message: systemPromptMsg,
+                useReasoning: modelType == .regular
             )
             self.messages = [systemPromptMsgSubset] + messages
         } else {
@@ -103,6 +104,7 @@ struct ChatParameters: Codable {
 			message: systemPromptMsg,
             temporaryResources: [],
             shouldAddSources: false,
+            useReasoning: modelType == .regular,
             useWebSearch: false
 		)
 		let messagesWithSystemPrompt: [Message.MessageSubset] = [systemPromptMsgSubset] + messages

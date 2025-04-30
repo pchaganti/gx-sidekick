@@ -253,7 +253,8 @@ Example responses:
                 commandMessage
             ],
             modelType: .worker,
-            mode: .default
+            mode: .default,
+            useReasoning: false
         ))?.text {
             // Check if format is correct & length is acceptable
             let formatPass: Bool = response.hasPrefix(

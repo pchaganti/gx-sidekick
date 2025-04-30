@@ -122,7 +122,8 @@ struct InlineAssistantView: View {
 					commandMessage
 				],
 				modelType: .worker,
-				mode: .default,
+                mode: .default,
+                useReasoning: false,
 				handleResponseUpdate: { pendingMessage, partialResponse in
 					if !didExit {
 						didExit = !self.handleResponseUpdate(

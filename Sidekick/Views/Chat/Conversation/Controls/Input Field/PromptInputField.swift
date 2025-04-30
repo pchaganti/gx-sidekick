@@ -426,7 +426,8 @@ A user is chatting with an assistant and they have sent the message below. Gener
 		let title: String = try await model.listenThinkRespond(
 			messages: messages,
 			modelType: .worker,
-			mode: .default
+			mode: .default,
+            useReasoning: false
 		).text
 		// Reset pending message text
         self.model.pendingMessage = nil

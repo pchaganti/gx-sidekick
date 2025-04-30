@@ -86,6 +86,29 @@ public class Model: ObservableObject {
             if let localModelName: String = Settings.modelUrl?
                 .deletingPathExtension()
                 .lastPathComponent,
+               !localModelName.isEmpty {
+                return localModelName
+            }
+        }
+        // If fell through, return nil
+        return nil
+    }
+    /// A `String` containing the name of the currently selected worker model
+    public var selectedWorkerModelName: String? {
+        // Check if remote model is accessible
+        let useServer: Bool = InferenceSettings.useServer && self.wasRemoteServerAccessible
+        // If using remote
+        if useServer {
+            // Get remote model name
+            let remoteModelName: String = InferenceSettings.serverWorkerModelName
+            if !remoteModelName.isEmpty {
+                return remoteModelName
+            }
+        } else {
+            // Else, return local model name
+            if let localModelName: String = InferenceSettings.workerModelUrl?
+                .deletingPathExtension()
+                .lastPathComponent,
                 !localModelName.isEmpty {
                 return localModelName
             }
@@ -96,6 +119,11 @@ public class Model: ObservableObject {
     /// The currently selected model
     public var selectedModel: KnownModel? {
         guard let identifier = selectedModelName else { return nil }
+        return KnownModel(identifier: identifier)
+    }
+    /// The currently selected worker model
+    public var selectedWorkerModel: KnownModel? {
+        guard let identifier = selectedWorkerModelName else { return nil }
         return KnownModel(identifier: identifier)
     }
     
@@ -269,7 +297,7 @@ public class Model: ObservableObject {
 		modelType: ModelType,
 		mode: Model.Mode,
 		similarityIndex: SimilarityIndex? = nil,
-        useReasoning: Bool = false,
+        useReasoning: Bool = true,
 		useWebSearch: Bool = false,
         useFunctions: Bool = false,
 		useCanvas: Bool = false,
@@ -303,6 +331,7 @@ public class Model: ObservableObject {
             .enumerated()
             .asyncMap { index, message in
                 return await Message.MessageSubset(
+                    modelType: modelType,
                     message: message,
                     similarityIndex: similarityIndex,
                     temporaryResources: temporaryResources,
