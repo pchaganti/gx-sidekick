@@ -223,7 +223,7 @@ public struct KnownModel: Identifiable, Codable {
             hybridReasoningStyle: .qwen3
         ),
         KnownModel(
-            primaryName: "qwen3-15b-a2b",
+            primaryName: "qwen3-30b-a3b",
             organization: .alibaba,
             modalities: [
                 .text
@@ -232,7 +232,7 @@ public struct KnownModel: Identifiable, Codable {
             hybridReasoningStyle: .qwen3
         ),
         KnownModel(
-            primaryName: "qwen3-30b-a3b",
+            primaryName: "qwen3-32b",
             organization: .alibaba,
             modalities: [
                 .text
