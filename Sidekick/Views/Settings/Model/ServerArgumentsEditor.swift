@@ -17,7 +17,7 @@ struct ServerArgumentsEditor: View {
     var body: some View {
         VStack {
             table
-                .padding(.horizontal, 12)
+                .padding(.horizontal, 10)
             Divider()
             bottomBar
         }
@@ -78,15 +78,31 @@ struct ServerArgumentsEditor: View {
                 Toggle(isOn: argument.isActive, label: {})
                     .toggleStyle(.checkbox)
             }
-            .width(max: 65)
+            .width(max: 37.5)
             // Field for value
             TableColumn("Flag") { argument in
-                TextField(text: argument.flag, label: {})
+                if let commonArgument = ServerArgument.CommonArgument(
+                    flag: argument.wrappedValue.flag
+                ) {
+                    commonArgument.label
+                } else {
+                    TextField(text: argument.flag, label: {})
+                }
             }
             // Field for value
             TableColumn("Value") { argument in
-                TextField(text: argument.value, label: {})
+                if let commonArgument = ServerArgument.CommonArgument(
+                    flag: argument.wrappedValue.flag
+                ) {
+                    ServerArgument.ArgumentSliderView(
+                        argument: commonArgument,
+                        stringValue: argument.value
+                    )
+                } else {
+                    TextField(text: argument.value, label: {})
+                }
             }
+            .width(min: 300)
         } rows: {
             ForEach(
                 self.$serverArgumentsManager.serverArguments

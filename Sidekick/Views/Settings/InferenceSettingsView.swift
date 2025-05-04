@@ -369,10 +369,10 @@ Find more information [here](https://github.com/ggml-org/llama.cpp/blob/master/t
                 isPresented: self.$isConfiguringServerArguments
             )
             .frame(
-                minWidth: 450,
-                maxWidth: 500,
-                minHeight: 300,
-                maxHeight: 350
+                minWidth: 575,
+                maxWidth: 600,
+                minHeight: 350,
+                maxHeight: 400
             )
         }
         .interactiveDismissDisabled(true)
