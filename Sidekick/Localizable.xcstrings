@@ -702,12 +702,12 @@
         }
       }
     },
-    "Configure the inference server directly by injecting flags and arguments. Arguments configured here will override other settings if needed.\n\nFind more information [here](https://github.com/ggml-org/llama.cpp/blob/master/examples/server/README.md)." : {
+    "Configure the inference server directly by injecting flags and arguments. Arguments configured here will override other settings if needed.\n\nFind more information [here](https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md)." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "通过注入参数直接配置推理服务器。此处配置的参数将在需要时覆盖其他设置。\n\n更多信息请参见[此处](https://github.com/ggml-org/llama.cpp/blob/master/examples/server/README.md)。"
+            "value" : "通过注入参数直接配置推理服务器。此处配置的参数将在需要时覆盖其他设置。\n\n更多信息请参见[此处](https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md)。"
           }
         }
       }

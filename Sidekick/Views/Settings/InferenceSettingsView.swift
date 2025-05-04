@@ -353,7 +353,7 @@ struct InferenceSettingsView: View {
                 Text("""
 Configure the inference server directly by injecting flags and arguments. Arguments configured here will override other settings if needed.
 
-Find more information [here](https://github.com/ggml-org/llama.cpp/blob/master/examples/server/README.md).
+Find more information [here](https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md).
 """)
                     .font(.caption)
             }

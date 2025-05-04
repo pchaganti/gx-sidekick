@@ -29,7 +29,7 @@ struct ServerArgumentsEditor: View {
             Link(
                 "Docs",
                 destination: URL(
-                    string: "https://github.com/ggml-org/llama.cpp/blob/master/examples/server/README.md"
+                    string: "https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md"
                 )!
             )
             Spacer()
