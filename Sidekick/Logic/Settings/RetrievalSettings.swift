@@ -114,7 +114,6 @@ public class RetrievalSettings {
             UserDefaults.standard.set(newValue, forKey: "defaultSearchProvider")
         }
     }
-    
     /// Search providers supported by Sidekick
     public enum SearchProvider: Int, CaseIterable {
         

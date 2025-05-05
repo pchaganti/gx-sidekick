@@ -209,6 +209,7 @@
 		209D397A2DC0E49100D1E5E5 /* ServerArgument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209D39792DC0E49100D1E5E5 /* ServerArgument.swift */; };
 		209D397C2DC0E71600D1E5E5 /* ServerArgumentsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209D397B2DC0E71600D1E5E5 /* ServerArgumentsManager.swift */; };
 		209D397E2DC0FA0800D1E5E5 /* ServerArgumentsEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209D397D2DC0FA0800D1E5E5 /* ServerArgumentsEditor.swift */; };
+		209D39802DC88C3000D1E5E5 /* FunctionCallResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209D397F2DC88C3000D1E5E5 /* FunctionCallResult.swift */; };
 		20A40C802D71872600A9D9A9 /* SlideStudioPreviewEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A40C7F2D71872600A9D9A9 /* SlideStudioPreviewEditor.swift */; };
 		20A40C832D718D4300A9D9A9 /* CodeEditorView in Frameworks */ = {isa = PBXBuildFile; productRef = 20A40C822D718D4300A9D9A9 /* CodeEditorView */; };
 		20A40C852D718D4300A9D9A9 /* LanguageSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 20A40C842D718D4300A9D9A9 /* LanguageSupport */; };
@@ -608,6 +609,7 @@
 		209D39792DC0E49100D1E5E5 /* ServerArgument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerArgument.swift; sourceTree = "<group>"; };
 		209D397B2DC0E71600D1E5E5 /* ServerArgumentsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerArgumentsManager.swift; sourceTree = "<group>"; };
 		209D397D2DC0FA0800D1E5E5 /* ServerArgumentsEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerArgumentsEditor.swift; sourceTree = "<group>"; };
+		209D397F2DC88C3000D1E5E5 /* FunctionCallResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionCallResult.swift; sourceTree = "<group>"; };
 		20A40C7F2D71872600A9D9A9 /* SlideStudioPreviewEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideStudioPreviewEditor.swift; sourceTree = "<group>"; };
 		20A40C862D7190BA00A9D9A9 /* SlideStudioPromptOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideStudioPromptOptionsView.swift; sourceTree = "<group>"; };
 		20A40C882D72AEE600A9D9A9 /* SlideStudioExportOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideStudioExportOptionsView.swift; sourceTree = "<group>"; };
@@ -1951,6 +1953,7 @@
 				20C5CBC52DA3D7310071F5F7 /* Function.swift */,
 				20FDE2A12DAE726E000A16F8 /* OpenAIFunction.swift */,
 				20C5CBCC2DA52AB40071F5F7 /* FunctionCallRecord.swift */,
+				209D397F2DC88C3000D1E5E5 /* FunctionCallResult.swift */,
 				20FDE2A32DAE73BF000A16F8 /* AnyFunctionBox.swift */,
 				208855CD2DAD1D5A00071F0B /* Default Functions */,
 			);
@@ -2363,6 +2366,7 @@
 				20B97CD02CAFEC37009A0A5D /* Model.swift in Sources */,
 				20457D2A2D9250AD00954892 /* CompletionsTutorialView.swift in Sources */,
 				20ADCEC62DBE390B00B13C98 /* ZoomablePannableView.swift in Sources */,
+				209D39802DC88C3000D1E5E5 /* FunctionCallResult.swift in Sources */,
 				20571F792CBD6019004F3344 /* GeneralSettingsView.swift in Sources */,
 				200FBFEE2CB6477400A92A74 /* LlamaServer.swift in Sources */,
 				207E5EEF2D6F663B00A8F6FA /* SlideStudioViewController.swift in Sources */,

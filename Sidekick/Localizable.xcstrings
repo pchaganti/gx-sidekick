@@ -562,6 +562,26 @@
         }
       }
     },
+    "Check Functions Completion" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "检查完成情况"
+          }
+        }
+      }
+    },
+    "Check if functions have reached the initial target. Useful for staying on task after long chains of function calls." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "检查函数是否已达到初始目标。这有助于在长时间的函数调用后继续执行任务。"
+          }
+        }
+      }
+    },
     "Check progress of lengthy tasks, like updating your expert with new resources." : {
       "localizations" : {
         "zh-Hans" : {

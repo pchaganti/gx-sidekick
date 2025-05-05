@@ -527,8 +527,6 @@ Output the full text again with the changes applied. Keep as much of the previou
                 let toggleTag: String = style.getTag(
                     useReasoning: useReasoning
                 )
-                print("toggleTag is \(toggleTag) for message \(message.text)")
-                print("useReasoning is \(toggleTag) for message \(message.text)")
                 switch self.content {
                     case .textOnly(let string):
                         self.content = .textOnly(string + toggleTag)

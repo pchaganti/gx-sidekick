@@ -23,7 +23,6 @@ public class DefaultFunctions {
         RemindersFunctions.functions,
         WebFunctions.functions,
         [
-            DefaultFunctions.plan,
             DefaultFunctions.fetchContacts
         ]
     ].flatMap { $0 }
@@ -171,65 +170,6 @@ Returns JSON objects for each contact containing the person's name, emails, phon
         var name: String?
         var email: String?
         var phone: String?
-    }
-    
-    /// A ``Function`` to plan the course of execution
-    static let plan = Function<PlanParams, String>(
-        name: "plan",
-        description: """
-Plan the course of execution for complex user requests that require tool calling. This should be the first tool called for complex user requests that require tool calling.
-
-Returns a step by step plan.
-""",
-        params: [
-            FunctionParameter(
-                label: "request",
-                description: "The request provided by the user to the assistant.",
-                datatype: .string,
-                isRequired: true
-            )
-        ],
-        run: { params in
-            // Formulate message
-            var messageComponents: [String] = []
-            messageComponents.append("Below is a list of functions.\n")
-            // Inject functions
-            let functions: [any AnyFunctionBox] = DefaultFunctions.functions
-            for (index, function) in functions.enumerated() {
-                messageComponents.append(
-                    "\(index + 1). \(function.name): \(function.description)."
-                )
-            }
-            // Inject instructions
-            messageComponents.append("\nThe user has given you the mission below. Plan out all steps required, in the context of function calls. Think about dependencies that each step has, and order the steps in the most reasonable way. Respond with the steps and associated potential function calls ONLY.\n")
-            // Inject user mission
-            messageComponents.append("\n\"\(params.request)\"")
-            // Put together prompt
-            let messageText = messageComponents.joined(separator: "\n")
-            // Formulate message
-            let systemPromptMessage: Message = Message(
-                text: InferenceSettings.systemPrompt,
-                sender: .system
-            )
-            let commandMessage: Message = Message(
-                text: messageText,
-                sender: .user
-            )
-            // Get response
-            let response: LlamaServer.CompleteResponse = try await Model.shared.listenThinkRespond(
-                messages: [
-                    systemPromptMessage,
-                    commandMessage
-                ],
-                modelType: .regular,
-                mode: .`default`
-            )
-            // Return response
-            return response.text.reasoningRemoved
-        }
-    )
-    struct PlanParams: FunctionParams {
-        var request: String
     }
     
 }

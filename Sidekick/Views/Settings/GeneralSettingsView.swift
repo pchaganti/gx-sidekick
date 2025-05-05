@@ -19,6 +19,7 @@ struct GeneralSettingsView: View {
     @AppStorage("voiceId") private var voiceId: String = ""
     
     @AppStorage("useFunctions") private var useFunctions: Bool = Settings.useFunctions
+    @AppStorage("checkFunctionsCompletion") private var checkFunctionsCompletion: Int = 0
 
     @StateObject private var speechSynthesizer: SpeechSynthesizer = .shared
 	
@@ -40,6 +41,7 @@ struct GeneralSettingsView: View {
             }
             Section {
                 useFunctionsToggle
+                checkFunctionsCompletionPicker
             } header: {
                 Text("Functions")
             }
@@ -149,6 +151,30 @@ struct GeneralSettingsView: View {
 				.toggleStyle(.switch)
 		}
 	}
+    
+    var checkFunctionsCompletionPicker: some View {
+        HStack(alignment: .top) {
+            VStack(alignment: .leading) {
+                Text("Check Functions Completion")
+                    .font(.title3)
+                    .bold()
+                Text("Check if functions have reached the initial target. Useful for staying on task after long chains of function calls.")
+                    .font(.caption)
+            }
+            Spacer()
+            Picker(
+                selection: $checkFunctionsCompletion.animation(.linear)
+            ) {
+                ForEach(
+                    Settings.FunctionCompletionCheckMode.allCases
+                ) { mode in
+                    Text(mode.description)
+                        .tag(mode.rawValue)
+                }
+            }
+            .pickerStyle(.menu)
+        }
+    }
 	
 	var voice: some View {
 		HStack(alignment: .center) {

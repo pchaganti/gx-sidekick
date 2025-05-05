@@ -122,6 +122,68 @@ public class Settings {
 			UserDefaults.standard.set(newValue, forKey: "useFunctions")
 		}
 	}
+    
+    /// A `Bool` representing whether completion if checked in the midst of a function call
+    static var checkFunctionsCompletion: Int {
+        get {
+            // Default to none
+            if !UserDefaults.standard.exists(key: "checkFunctionsCompletion") {
+                Self.checkFunctionsCompletion = 0
+            }
+            return UserDefaults.standard.integer(
+                forKey: "checkFunctionsCompletion"
+            )
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "checkFunctionsCompletion")
+        }
+    }
+    /// An enum for the selected send shortcut
+    public enum FunctionCompletionCheckMode: Int, CaseIterable, Identifiable {
+        
+        public init(
+            _ checkFunctionsCompletion: Int
+        ) {
+            // Check for mode
+            for mode in Self.allCases {
+                if mode.rawValue == checkFunctionsCompletion {
+                    self = mode
+                    return
+                }
+            }
+            // Default to none
+            self = .none
+        }
+        
+        public var id: Int { return self.rawValue }
+        
+        case none = 0
+        case useRegularModel = 1
+        case useWorkerModel = 2
+        
+        var modelType: ModelType? {
+            switch self {
+                case .none:
+                    return nil
+                case .useRegularModel:
+                    return .regular
+                case .useWorkerModel:
+                    return .worker
+            }
+        }
+        
+        var description: String {
+            switch self {
+                case .none:
+                    return "None"
+                case .useRegularModel:
+                    return "Use Regular Model"
+                case .useWorkerModel:
+                    return "Use Worker Model"
+            }
+        }
+        
+    }
 	
 	/// A `Bool` representing whether the app is in debug mode
 	static var isDebugMode: Bool {

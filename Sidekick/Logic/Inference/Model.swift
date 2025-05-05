@@ -416,6 +416,7 @@ public class Model: ObservableObject {
                     modelType: modelType,
                     canReachRemoteServer: canReachRemoteServer,
                     messagesWithSources: messagesWithSources,
+                    useReasoning: useReasoning,
                     useWebSearch: useWebSearch,
                     useFunctions: useFunctions,
                     similarityIndex: similarityIndex,
@@ -451,7 +452,8 @@ public class Model: ObservableObject {
 		mode: Model.Mode,
 		modelType: ModelType,
         canReachRemoteServer: Bool,
-		messagesWithSources: [Message.MessageSubset],
+        messagesWithSources: [Message.MessageSubset],
+        useReasoning: Bool,
         useWebSearch: Bool,
         useFunctions: Bool,
 		similarityIndex: SimilarityIndex? = nil,
@@ -483,8 +485,8 @@ public class Model: ObservableObject {
             canReachRemoteServer: canReachRemoteServer,
 			initialResponse: initialResponse,
 			messages: messagesWithSources,
+            useReasoning: useReasoning,
             useWebSearch: useWebSearch,
-            useFunctions: useFunctions,
 			similarityIndex: similarityIndex,
 			handleResponseUpdate: handleResponseUpdate,
 			increment: increment
@@ -534,8 +536,8 @@ public class Model: ObservableObject {
         canReachRemoteServer: Bool,
 		initialResponse: LlamaServer.CompleteResponse,
 		messages: [Message.MessageSubset],
+        useReasoning: Bool,
         useWebSearch: Bool,
-        useFunctions: Bool,
 		similarityIndex: SimilarityIndex?,
 		handleResponseUpdate: @escaping (
 			String, // Full message
@@ -549,9 +551,10 @@ public class Model: ObservableObject {
         var maxIterations: Int = 15
         var response: LlamaServer.CompleteResponse? = initialResponse
         var messages: [Message.MessageSubset] = messages
+        // Capture results
+        var results: [FunctionCallResult] = []
         while maxIterations > 0, let functionCalls = response?.functionCalls {
             // Execute each call
-            var messageStringComponents: [String] = []
             var functionCallRecords = self.pendingMessage?.functionCallRecords ?? []
             for index in functionCalls.indices {
                 var functionCall = functionCalls[index]
@@ -576,14 +579,13 @@ public class Model: ObservableObject {
                         status: .succeeded,
                         result: result
                     )
-                    // Formulate callback message
-                    messageStringComponents.append("""
-Below is the result produced by the tool call: `\(callJsonSchema)`. If the tool call provides enough information to solve the user's query, organize the information into an answer. If the tool call did not provide enough information, try breaking down the user's query and finding information about its constituent parts. Else, call another tool to obtain more information or execute more actions.
-
-```tool_call_result
-\(result)
-```
-""")
+                    // Record tools called
+                    let newResult: FunctionCallResult = FunctionCallResult(
+                        call: callJsonSchema,
+                        result: result,
+                        type: .result
+                    )
+                    results.append(newResult)
                 } catch {
                     // Get error description
                     let errorDescription: String = error.localizedDescription
@@ -592,35 +594,68 @@ Below is the result produced by the tool call: `\(callJsonSchema)`. If the tool 
                         status: .succeeded,
                         result: errorDescription
                     )
-                    // Formulate callback message
-                    messageStringComponents.append("""
-The function call `\(callJsonSchema)` failed, producing the error below.
-
-```tool_call_error
-\(errorDescription)
-```
-""")
+                    // Record tools called
+                    let newResult: FunctionCallResult = FunctionCallResult(
+                        call: callJsonSchema,
+                        result: errorDescription,
+                        type: .error
+                    )
+                    results.append(newResult)
                 }
                 withAnimation(.linear) {
                     functionCallRecords += [functionCallRecord]
                     self.pendingMessage?.functionCallRecords = functionCallRecords
                 }
             }
-            // Add response messages
+            // Add assistant response message
             let responseMessage: Message = Message(
-                text: initialResponse.text,
+                text: response?.text ?? "",
                 sender: .assistant
             )
             let responseMessageSubset: Message.MessageSubset = await Message.MessageSubset(
                 message: responseMessage
             )
             messages.append(responseMessageSubset)
+            // Check if further tool call is needed
+            var hasMadeSufficientCalls: Bool = false
+            let checkMode = Settings.FunctionCompletionCheckMode(
+                Settings.checkFunctionsCompletion
+            )
+            print("checkMode: ", checkMode)
+            if checkMode != .none,
+                let modelType = checkMode.modelType {
+                hasMadeSufficientCalls = await self.sufficientFunctionCalls(
+                    modelType: modelType,
+                    messages: messages,
+                    canReachRemoteServer: canReachRemoteServer,
+                    useReasoning: useReasoning,
+                    results: results
+                )
+            }
+            // Formulate user message
+            var messageStringComponents: [String] = results.map(
+                \.description
+            )
+            // Add prompt
+            let changePrompt: String = {
+                if hasMadeSufficientCalls {
+                    return """
+Organize the information above into a response to the user's query.
+"""
+                } else {
+                    return """
+Call another tool to obtain more information or execute more actions. Try breaking down the user's query into steps, and find information about its constituent parts.
+"""
+                }
+            }()
+            messageStringComponents.append(changePrompt)
             let changeMessage = Message(
                 text: messageStringComponents.joined(separator: "\n\n"),
                 sender: .user
             )
             let changeMessageSubset = await Message.MessageSubset(
-                message: changeMessage
+                message: changeMessage,
+                useReasoning: useReasoning
             )
             messages.append(changeMessageSubset)
             // Declare variable for incremental update
@@ -632,7 +667,7 @@ The function call `\(callJsonSchema)` failed, producing the error below.
                 canReachRemoteServer: canReachRemoteServer,
                 messages: messages,
                 useWebSearch: useWebSearch,
-                useFunctions: useFunctions,
+                useFunctions: true,
                 updateStatusHandler: { status in
                     await self.updateStatus(status)
                 },
@@ -701,6 +736,77 @@ The function call `\(callJsonSchema)` failed, producing the error below.
             case noFunctionCall, maxIterationsReached
         }
 	}
+    
+    /// Function to check if enough calls were made
+    private func sufficientFunctionCalls(
+        modelType: ModelType,
+        messages: [Message.MessageSubset],
+        canReachRemoteServer: Bool,
+        useReasoning: Bool,
+        results: [FunctionCallResult]
+    ) async -> Bool {
+        // Formulate prompt
+        let resultPrompts: [String] = results.map { result in
+            return result.description
+        }
+        let checkPrompt: String = """
+\(resultPrompts.joined(separator: "\n\n"))
+
+Have the tool calls above obtained enough information to solve the user's query?
+Have the maximum number of tools been called to best fulfill the user's request?
+Have all tool calls in your initial plan been executed successfully?
+
+Respond with YES if ALL 3 criteria above have been met. Respond with YES or NO only.
+"""
+        let message: Message = Message(
+            text: checkPrompt,
+            sender: .user
+        )
+        let messageSubset: Message.MessageSubset = await Message.MessageSubset(
+            message: message,
+            useReasoning: useReasoning
+        )
+        // Add to messages
+        var messages: [Message.MessageSubset] = messages
+        messages.append(messageSubset)
+        // Check with model for a maximum of 3 tries
+        for _ in 0..<3 {
+            do {
+                // Get response
+                let response = try await {
+                    switch modelType {
+                        case .regular:
+                            try await self.mainModelServer.getChatCompletion(
+                                mode: .chat,
+                                canReachRemoteServer: canReachRemoteServer,
+                                messages: messages,
+                                useWebSearch: false,
+                                useFunctions: true
+                            )
+                        default:
+                            try await self.workerModelServer.getChatCompletion(
+                                mode: .chat,
+                                canReachRemoteServer: canReachRemoteServer,
+                                messages: messages,
+                                useWebSearch: false,
+                                useFunctions: true
+                            )
+                    }
+                }()
+                let responseText: String = response.text.reasoningRemoved
+                // Validate response
+                let possibleResponses: [String] = ["YES", "NO"]
+                if possibleResponses.contains(responseText) {
+                    return responseText == "YES"
+                }
+            } catch {
+                // Try again
+                continue
+            }
+        }
+        // If fell through, return false
+        return false
+    }
 	
 	/// Function to handle response update
 	func handleCompletionProgress(
