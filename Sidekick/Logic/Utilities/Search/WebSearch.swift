@@ -12,6 +12,7 @@ public class WebSearch {
     /// Function to search the web for sources
     public static func search(
         query: String,
+        site: String? = nil,
         resultCount: Int
     ) async throws -> [Source] {
         // Get provider
@@ -25,18 +26,21 @@ public class WebSearch {
                 // Search with DuckDuckGo
                 results = try await DuckDuckGoSearch.search(
                     query: query,
+                    site: site,
                     resultCount: resultCount
                 )
             case .tavily:
                 // Try with first key
                 results = try? await TavilySearch.search(
                     query: query,
+                    site: site,
                     resultCount: resultCount
                 )
                 if results == nil {
                     // Try with backup key
                     results = try await TavilySearch.search(
                         query: query,
+                        site: site,
                         resultCount: resultCount,
                         useBackupApi: true
                     )

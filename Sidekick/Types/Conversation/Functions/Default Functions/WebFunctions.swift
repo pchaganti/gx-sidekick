@@ -78,6 +78,12 @@ public class WebFunctions {
                 isRequired: true
             ),
             FunctionParameter(
+                label: "site",
+                description: "Search within this specific site (optional, example: openai.com, default: nil)",
+                datatype: .string,
+                isRequired: false
+            ),
+            FunctionParameter(
                 label: "num_results",
                 description: "The maximum number of search results (optional, default: 10)",
                 datatype: .integer,
@@ -98,6 +104,7 @@ public class WebFunctions {
             // Conduct search
             let sources: [Source] = try await TavilySearch.search(
                 query: params.query,
+                site: params.site,
                 resultCount: params.num_results ?? 10,
                 timeRange: params.time_range
             )
@@ -123,6 +130,7 @@ The content from each site here is an incomplete except. Use the `get_website_co
     )
     struct TavilyWebSearchParams: FunctionParams {
         let query: String
+        let site: String?
         let num_results: Int?
         let time_range: TavilySearch.TimeRange?
     }
@@ -137,6 +145,12 @@ The content from each site here is an incomplete except. Use the `get_website_co
                 description: "The topic to look up online",
                 datatype: .string,
                 isRequired: true
+            ),
+            FunctionParameter(
+                label: "site",
+                description: "Search within this specific site (optional, example: openai.com, default: nil)",
+                datatype: .string,
+                isRequired: false
             ),
             FunctionParameter(
                 label: "num_results",
@@ -183,6 +197,7 @@ The content from each site here is an incomplete except. Use the `get_website_co
             let numResults: Int = params.num_results ?? 3
             let sources: [Source] = try await DuckDuckGoSearch.search(
                 query: params.query,
+                site: params.site,
                 resultCount: 5,
                 startDate: startDate,
                 endDate: endDate
@@ -234,6 +249,7 @@ Below are the sites and corresponding content returned from your `web_search` qu
     )
     struct DuckDuckGoSearchParams: FunctionParams {
         let query: String
+        let site: String?
         let num_results: Int?
         let start_date: String?
         let end_date: String?

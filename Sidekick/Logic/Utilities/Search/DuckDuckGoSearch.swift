@@ -90,17 +90,25 @@ public class DuckDuckGoSearch {
     /// Function to search DuckDuckGo for sources
     public static func search(
         query: String,
+        site: String? = nil,
         resultCount: Int,
         startDate: Date? = nil,
         endDate: Date? = nil
     ) async throws -> [Source] {
-        // Formulate parameters
-        let maxCount = min(max(resultCount, 1), 5)
-        guard let query = query.addingPercentEncoding(
+        // Complete query
+        var query: String = query
+        if let site = site {
+            query += " site:\(site)"
+        }
+        if let encodedQuery = query.addingPercentEncoding(
             withAllowedCharacters: .urlQueryAllowed
-        ) else {
+        ) {
+            query = encodedQuery
+        } else {
             return []
         }
+        // Formulate parameters
+        let maxCount = min(max(resultCount, 1), 5)
         var urlString = "https://html.duckduckgo.com/html/?q=\(query)"
         // Add date parameter to URL if needed
         let dateFormatter: DateFormatter = DateFormatter(

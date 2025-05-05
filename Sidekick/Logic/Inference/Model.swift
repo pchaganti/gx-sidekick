@@ -621,7 +621,6 @@ public class Model: ObservableObject {
             let checkMode = Settings.FunctionCompletionCheckMode(
                 Settings.checkFunctionsCompletion
             )
-            print("checkMode: ", checkMode)
             if checkMode != .none,
                 let modelType = checkMode.modelType {
                 hasMadeSufficientCalls = await self.sufficientFunctionCalls(

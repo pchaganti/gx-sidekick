@@ -19,6 +19,7 @@ public class TavilySearch {
 	/// Function to search tavily for sources
 	public static func search(
 		query: String,
+        site: String? = nil,
 		resultCount: Int,
         timeRange: TimeRange? = nil,
         useBackupApi: Bool = false
@@ -27,12 +28,17 @@ public class TavilySearch {
         if RetrievalSettings.tavilyApiKey.isEmpty {
             throw TavilySearchError.noApiKey
 		}
-		// Get results from Tavily
-		let apiKey: String = !useBackupApi ? RetrievalSettings.tavilyApiKey : RetrievalSettings.tavilyBackupApiKey
-		if apiKey.isEmpty {
-			self.logger.error("No API key provided for Tavily")
-			throw TavilySearchError.invalidApiKey
-		}
+        // Formulate full query
+        var query: String = query
+        if let site = site {
+            query += " site:\(site)"
+        }
+        // Get results from Tavily
+        let apiKey: String = !useBackupApi ? RetrievalSettings.tavilyApiKey : RetrievalSettings.tavilyBackupApiKey
+        if apiKey.isEmpty {
+            self.logger.error("No API key provided for Tavily")
+            throw TavilySearchError.invalidApiKey
+        }
 		do {
 			let tavilyResults: [Tavily.Response.Result] = try await Self.hitTavilyApi(
 				query: query,
