@@ -53,10 +53,11 @@ In addition to its core local-first capabilities, Sidekick now offers an option 
 
 ### Reasoning Model Support
 
-Sidekick supports a variety of reasoning models, including Alibaba Cloud's QwQ-32B and DeepSeek's DeepSeek-R1.
+Sidekick supports a variety of reasoning models, including DeepSeek's DeepSeek-R1 and *hybrid* reasoning models such as Alibaba Cloud's Qwen3.
 
 ![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/Docs%20Images/Features/Conversations/reasoningModelSupport.png)
 
+When using hybrid reasoning models such as Qwen3, reasoning can be toggled on/off. As you type your prompt, Sidekick automatically analyses it and determines if reasoning is needed. To explicitly toggle reasoning, click the `Reason` button in the prompt bar.
 
 ### Function Calling
 
