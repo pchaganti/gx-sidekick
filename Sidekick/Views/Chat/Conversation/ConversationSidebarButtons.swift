@@ -34,6 +34,7 @@ struct ConversationSidebarButtons: View {
 				ToolboxLibraryView(
 					isPresented: $isViewingToolbox
 				)
+                .frame(maxWidth: 500, minHeight: 600)
 			}
 			.popoverTip(tryToolsTip)
 			SidebarButtonView(

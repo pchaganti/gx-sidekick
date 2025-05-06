@@ -1123,6 +1123,16 @@
         }
       }
     },
+    "Deep Research" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "深度调查"
+          }
+        }
+      }
+    },
     "Default" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2225,6 +2235,9 @@
           }
         }
       }
+    },
+    "Hello, World!" : {
+
     },
     "Help" : {
       "localizations" : {
@@ -4481,6 +4494,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "正在扫描新添加到“%@”的资源"
+          }
+        }
+      }
+    },
+    "Use AI to synthesize information from experts and the web for complex research" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用AI综合专家和网络的信息进行深度调查"
           }
         }
       }

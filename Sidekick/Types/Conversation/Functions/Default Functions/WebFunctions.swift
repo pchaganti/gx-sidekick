@@ -203,7 +203,12 @@ The content from each site here is an incomplete except. Use the `get_website_co
                 endDate: endDate
             )
             // Get full content
-            var remainingTokens: Int = 80_000 // Max 80K tokens
+            var remainingTokens: Int = {
+                if InferenceSettings.useServer {
+                    return 80_000 // Max 80K tokens
+                }
+                return InferenceSettings.contextLength
+            }()
             var sourceContents: [Source.SourceContent] = await sources.concurrentMap { source in
                 // Trim to fit max input tokens
                 let result = try? await source.getContent()

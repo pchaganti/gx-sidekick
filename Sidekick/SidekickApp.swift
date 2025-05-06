@@ -79,6 +79,16 @@ struct SidekickApp: App {
             ModelExplorerView()
         }
         
+        // Window for Tool: Deep Research
+        SwiftUI.Window("Deep Research", id: "deepResearch") {
+            DeepResearchView()
+        }
+        
+        // Window for Tool: Detector
+        SwiftUI.Window("Detector", id: "detector") {
+            DetectorView()
+        }
+        
         // Window for Tool: Diagrammer
         SwiftUI.Window("Diagrammer", id: "diagrammer") {
             DiagrammerView()
@@ -87,11 +97,6 @@ struct SidekickApp: App {
         // Window for Tool: Slide Studio
         SwiftUI.Window("Slide Studio", id: "slideStudio") {
             SlideStudioView()
-        }
-        
-        // Window for Tool: Detector
-        SwiftUI.Window("Detector", id: "detector") {
-            DetectorView()
         }
         
 		// Settings window

@@ -8,16 +8,11 @@
 import SwiftUI
 
 struct ToolboxLibraryView: View {
-	
+    
 	@Environment(\.openWindow) var openWindow
 	
 	@Binding var isPresented: Bool
 	@State private var showAssistantInstructionSheet: Bool = false
-	
-	let columns: [GridItem] = Array(
-		repeating: GridItem(.fixed(192.5)),
-		count: 2
-	)
 	
     var body: some View {
 		VStack(
@@ -29,27 +24,33 @@ struct ToolboxLibraryView: View {
 				}
 				Spacer()
 			}
+            .padding(.top, 8)
 			tools
-				.padding(.horizontal, 5)
 		}
-		.padding(8)
-		.padding(.bottom, 8)
+        .padding(.horizontal, 8)
     }
 	
-	var tools: some View {
-		ScrollView {
-			LazyVGrid(
-				columns: columns,
-				spacing: 7.5
-			) {
-				self.diagrammerCard
-				self.slideStudioCard
-				self.inlineAssistantCard
-				self.detectorCard
-			}
-		}
-	}
+    var tools: some View {
+        List {
+            self.deepResearchCard
+            self.detectorCard
+            self.diagrammerCard
+            self.inlineAssistantCard
+            self.slideStudioCard
+        }
+    }
 	
+    var deepResearchCard: some View {
+        ToolCardButton(
+            name: String(localized: "Deep Research"),
+            description: String(localized: "Use AI to synthesize information from experts and the web for complex research")
+        ) {
+            Image(systemName: "magnifyingglass")
+        } action: {
+            self.openToolWindow(id: "deepResearch")
+        }
+    }
+    
 	var diagrammerCard: some View {
 		ToolCardButton(
 			name: String(localized: "Diagrammer"),
@@ -93,13 +94,13 @@ struct ToolboxLibraryView: View {
 			)
 		}
 	}
-	
+    
 	var detectorCard: some View {
 		ToolCardButton(
 			name: String(localized: "Detector"),
 			description: String(localized: "Stay one step ahead of Turnitin")
 		) {
-			Image(systemName: "doc.text.magnifyingglass")
+			Image(systemName: "checkmark.seal.text.page")
 		} action: {
 			self.openToolWindow(id: "detector")
 		}

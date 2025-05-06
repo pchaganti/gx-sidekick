@@ -37,29 +37,36 @@ struct ToolCardButton: View {
 		.onHover { hover in
 			self.isHovering = hover
 		}
+        .listRowSeparator(.hidden)
     }
 	
 	var label: some View {
-		VStack {
+		HStack {
 			image()
 				.resizable()
 				.aspectRatio(contentMode: .fit)
-				.frame(width: 75, height: 75)
+				.frame(width: 60, height: 60)
 				.foregroundColor(.primary)
 				.if(isSvg && isDarkMode) { view in
 					view
 						.colorInvert()
 				}
-				.padding(.bottom, 5)
-			Text(name)
-				.font(.headline)
-				.bold()
-				.foregroundColor(.primary)
-			Text(description)
-				.font(.subheadline)
-				.foregroundColor(.secondary)
+                .padding(.trailing)
+            VStack(
+                alignment: .leading,
+                spacing: 6
+            ) {
+                Text(name)
+                    .font(.title3)
+                    .bold()
+                    .foregroundColor(.primary)
+                Text(description)
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.leading)
+            }
+            Spacer()
 		}
-		.frame(width: 160, height: 160)
 		.multilineTextAlignment(.center)
 		.padding()
 		.background {
