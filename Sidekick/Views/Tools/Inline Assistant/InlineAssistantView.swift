@@ -167,8 +167,8 @@ struct InlineAssistantView: View {
 			of: pendingMessage,
 			with: ""
 		)
-		// If delta is reasonable
-		if delta.count < 40 {
+		// If delta is reasonable for 1 token
+		if delta.count < 6 {
 			let _ = Accessibility.shared.simulateTyping(for: delta)
 		}
 	}

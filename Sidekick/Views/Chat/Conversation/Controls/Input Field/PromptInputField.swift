@@ -166,8 +166,8 @@ struct PromptInputField: View {
             self.keyEventMonitor = NSEvent.addLocalMonitorForEvents(
                 matching: [.keyDown]
             ) { event in
-                // Only process if this view is focused
-                if self.isFocused, event.window?.isMainWindow == true {
+                // Only process if this view and window is focused
+                if self.isFocused, event.window?.isMainWindow == true && event.window?.title.isEmpty == true {
                     if self.handleKeyDownEvent(event) {
                         return nil // handled, suppress
                     }
