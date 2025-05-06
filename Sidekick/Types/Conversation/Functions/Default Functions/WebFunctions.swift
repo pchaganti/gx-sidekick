@@ -79,7 +79,7 @@ public class WebFunctions {
             ),
             FunctionParameter(
                 label: "site",
-                description: "Search within this specific site (optional, example: openai.com, default: nil)",
+                description: "Search within this specific site (optional, example: wikipedia.org, default: nil)",
                 datatype: .string,
                 isRequired: false
             ),
@@ -148,7 +148,7 @@ The content from each site here is an incomplete except. Use the `get_website_co
             ),
             FunctionParameter(
                 label: "site",
-                description: "Search within this specific site (optional, example: openai.com, default: nil)",
+                description: "Search within this specific site (optional, example: wikipedia.org, default: nil)",
                 datatype: .string,
                 isRequired: false
             ),

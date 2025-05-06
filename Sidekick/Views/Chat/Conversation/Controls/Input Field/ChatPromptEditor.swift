@@ -9,13 +9,15 @@ import SwiftUI
 
 struct ChatPromptEditor: View {
     
-    @EnvironmentObject private var promptController: PromptController
     @Environment(\.colorScheme) var colorScheme
     
     @AppStorage("useCommandReturn") private var useCommandReturn: Bool = Settings.useCommandReturn
     var sendDescription: String {
         return String(localized: "Enter a message. Press ") + Settings.SendShortcut(self.useCommandReturn).rawValue + String(localized: " to send.")
     }
+    
+    @Binding var prompt: String
+    @Binding var insertionPoint: Int
     
     @FocusState var isFocused: Bool
     @Binding var isRecording: Bool
@@ -42,8 +44,8 @@ struct ChatPromptEditor: View {
     
     var body: some View {
         MultilineTextField(
-            text: self.$promptController.prompt.animation(.linear),
-            insertionPoint: self.$promptController.insertionPoint,
+            text: self.$prompt.animation(.linear),
+            insertionPoint: self.$insertionPoint,
             prompt: sendDescription
         )
         .textFieldStyle(.plain)

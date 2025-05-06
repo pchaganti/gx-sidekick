@@ -68,6 +68,7 @@ struct MultilineTextField: NSViewRepresentable {
     }
     
     class Coordinator: NSObject, NSTextViewDelegate {
+        
         var parent: MultilineTextField
         var isProgrammaticUpdate = false
         

@@ -413,10 +413,6 @@ DO NOT reference sources outside of those provided below. If you did not referen
 		) {
 			self.snapshot = Snapshot(site: site)
 			self.snapshot?.site?.saveToCache()
-		} else if let code = Snapshot.extractCode(
-			from: self.responseText
-		) {
-			self.snapshot = code
 		}
 	}
 		

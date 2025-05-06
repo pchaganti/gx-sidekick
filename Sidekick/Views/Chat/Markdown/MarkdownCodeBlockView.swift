@@ -12,23 +12,23 @@ struct MarkdownCodeBlockView: View {
 	
 	var configuration: CodeBlockConfiguration
 	
+    var languageName: String? {
+        guard let langName: String = configuration.language?.capitalized else {
+            return nil
+        }
+        if langName.isEmpty {
+            return nil
+        }
+        return langName
+    }
+    
     var body: some View {
 		VStack {
 			HStack {
-				Text({
-					guard let langName: String = configuration.language?.capitalized else {
-						return String(
-							localized: "Unknown Language"
-						)
-					}
-					if langName.isEmpty {
-						return String(
-							localized: "Unknown Language"
-						)
-					}
-					return langName
-				}())
-				.bold()
+                if let languageName {
+                    Text(languageName)
+                        .bold()
+                }
 				Spacer()
 				ExportButton(
 					text: configuration.content,

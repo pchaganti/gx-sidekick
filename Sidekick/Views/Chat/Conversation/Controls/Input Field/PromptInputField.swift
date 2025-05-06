@@ -106,6 +106,8 @@ struct PromptInputField: View {
 	
 	var textField: some View {
         ChatPromptEditor(
+            prompt: self.$promptController.prompt,
+            insertionPoint: self.$promptController.insertionPoint,
             isFocused: self._isFocused,
             isRecording: self.$promptController.isRecording,
             useAttachments: true,
