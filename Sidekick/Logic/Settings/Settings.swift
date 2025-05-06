@@ -9,6 +9,7 @@ import AppKit
 import DefaultModels
 import Foundation
 import FSKit_macOS
+import SwiftUI
 import UniformTypeIdentifiers
 
 public class Settings {
@@ -380,11 +381,25 @@ public class Settings {
     }
     /// An enum for the selected send shortcut
     public enum SendShortcut: String, CaseIterable {
+        
         public init(_ useCommandReturn: Bool) {
             self = useCommandReturn ? .commandReturn : .`return`
         }
-        case `return` = "Return 􀅇"
-        case commandReturn = "Command ⌘ + Return 􀅇"
+        
+        case `return` = "Return"
+        case commandReturn = "Command + Return"
+        
+        var label: some View {
+            Group {
+                switch self {
+                    case .return:
+                        Text("Return \(Image(systemName: "return"))")
+                    case .commandReturn:
+                        Text("Command \(Image(systemName: "command")) + Return \(Image(systemName: "return"))")
+                }
+            }
+        }
+        
     }
 	
 }

@@ -672,6 +672,17 @@
         }
       }
     },
+    "Command %@ + Return %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Command %1$@ + Return %2$@"
+          }
+        }
+      },
+      "shouldTranslate" : false
+    },
     "Commands" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3401,6 +3412,9 @@
           }
         }
       }
+    },
+    "Return %@" : {
+      "shouldTranslate" : false
     },
     "Rewrite" : {
       "localizations" : {

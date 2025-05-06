@@ -97,9 +97,9 @@ struct GeneralSettingsView: View {
             Picker(
                 selection: self.$useCommandReturn
             ) {
-                Text(Settings.SendShortcut(true).rawValue)
+                Settings.SendShortcut(true).label
                     .tag(true)
-                Text(Settings.SendShortcut(false).rawValue)
+                Settings.SendShortcut(false).label
                     .tag(false)
             }
         }

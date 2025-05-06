@@ -5,11 +5,18 @@
 //  Created by Bean John on 10/23/24.
 //
 
+import OSLog
 import SimilaritySearchKit
 import SwiftUI
 
 struct PromptInputField: View {
 	
+    /// A `Logger` object for the `PromptInputField` object
+    private static let logger: Logger = .init(
+        subsystem: Bundle.main.bundleIdentifier!,
+        category: String(describing: PromptInputField.self)
+    )
+    
     @AppStorage("useCommandReturn") private var useCommandReturn: Bool = Settings.useCommandReturn
     var sendShortcutDescription: Text {
         return Text(
@@ -113,10 +120,10 @@ struct PromptInputField: View {
             bottomOptions: true,
             cornerRadius: 22
         )
-        .onKeyPress { press in
+        .focused(self.$isFocused)
+        .onKeyPress() { press in
             return self.handleKeyPress(press)
         }
-        .focused(self.$isFocused)
         .submitLabel(.send)
         .overlay(alignment: .leading) {
             AttachmentSelectionButton { url in
@@ -149,10 +156,19 @@ struct PromptInputField: View {
     private func handleKeyPress(
         _ press: KeyPress
     ) -> KeyPress.Result {
+        // Indicate key press received
+        let character: String = press.key.character.asciiValue?.description ?? "Not ASCII"
+        Self.logger.info("Received key press with key \"\(character, privacy: .public)\" and modifiers \"\(press.modifiers.rawValue, privacy: .public)\"")
         // If return key is down
-        if press.key == .return {
-            if press.modifiers.contains(.command) && self.useCommandReturn {
+        let isReturnKeyDown: Bool = [10, 13].contains(press.key.character.asciiValue)
+        if isReturnKeyDown {
+            let isCommandKeyDown: Bool = press.modifiers.rawValue == 16 || press.modifiers.contains(.command)
+            if isCommandKeyDown && self.useCommandReturn {
                 // Send if command key is down and required
+                self.onSubmit()
+                return .handled
+            } else if !self.useCommandReturn && press.modifiers.isEmpty {
+                // Else, if command key is not required, send
                 self.onSubmit()
                 return .handled
             } else if press.modifiers == .shift || press.modifiers == .option || self.useCommandReturn && press.modifiers.isEmpty {
@@ -169,10 +185,6 @@ struct PromptInputField: View {
                         self.promptController.insertionPoint += 1
                     }
                 }
-                return .handled
-            } else if !self.useCommandReturn {
-                // Else, if command key is not required, send
-                self.onSubmit()
                 return .handled
             }
         }
