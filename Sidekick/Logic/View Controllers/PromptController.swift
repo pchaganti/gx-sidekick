@@ -28,6 +28,7 @@ public class PromptController: ObservableObject, DropDelegate {
 	@Published var imageConcept: String? = nil
 	
     @Published var useReasoning: Bool = Model.shared.selectedModel?.isReasoningModel ?? true
+    @Published var didManuallyToggleReasoning: Bool = false
     
 	@Published var useWebSearch: Bool = false
     @Published var useFunctions: Bool = Settings.useFunctions

@@ -9,6 +9,8 @@ import SwiftUI
 
 struct UseReasoningButton: View {
     
+    @EnvironmentObject private var promptController: PromptController
+    
     @Binding var useReasoning: Bool
     
     var selectedModel: KnownModel? {
@@ -54,6 +56,8 @@ struct UseReasoningButton: View {
             )
             return
         }
+        // If can toggle, signal toggled
+        self.promptController.didManuallyToggleReasoning = true
     }
     
 }

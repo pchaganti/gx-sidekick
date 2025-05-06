@@ -10,17 +10,18 @@ import SwiftUI
 struct ChatPromptEditor: View {
     
     @Environment(\.colorScheme) var colorScheme
+    @EnvironmentObject private var promptController: PromptController
     
     @AppStorage("useCommandReturn") private var useCommandReturn: Bool = Settings.useCommandReturn
     var sendDescription: String {
         return String(localized: "Enter a message. Press ") + Settings.SendShortcut(self.useCommandReturn).rawValue + String(localized: " to send.")
     }
     
-    @Binding var prompt: String
-    @Binding var insertionPoint: Int
-    
     @FocusState var isFocused: Bool
     @Binding var isRecording: Bool
+    
+    /// Store a debouncing work item that we can cancel
+    @State private var debouncedTask: DispatchWorkItem?
     
     var useAttachments: Bool = true
     var useDictation: Bool = true
@@ -44,8 +45,8 @@ struct ChatPromptEditor: View {
     
     var body: some View {
         MultilineTextField(
-            text: self.$prompt.animation(.linear),
-            insertionPoint: self.$insertionPoint,
+            text: self.$promptController.prompt.animation(.linear),
+            insertionPoint: self.$promptController.insertionPoint,
             prompt: sendDescription
         )
         .textFieldStyle(.plain)
@@ -91,6 +92,56 @@ struct ChatPromptEditor: View {
                 .foregroundStyle(outlineColor)
         )
         .animation(isFocused ? .easeIn(duration: 0.2) : .easeOut(duration: 0.0), value: isFocused)
+        .onChange(of: self.promptController.prompt) {
+            self.scheduleDebouncedAction()
+        }
+    }
+    
+    private func scheduleDebouncedAction() {
+        // Cancel any existing scheduled work
+        self.debouncedTask?.cancel()
+        // Exit if prompt is empty
+        if self.promptController.prompt.isEmpty {
+            self.handleEmptyPrompt()
+            return
+        }
+        // Create a new work item to run after a 1-second delay
+        let task: DispatchWorkItem = DispatchWorkItem {
+            self.determineIfReasoningNeeded()
+        }
+        // Store the new work item in our state variable
+        self.debouncedTask = task
+        // Schedule the work item. It will be executed in 1 second unless cancelled by another keystroke.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: task)
+    }
+    
+    private func determineIfReasoningNeeded() {
+        // Exit if prompt is empty
+        if self.promptController.prompt.isEmpty {
+            self.handleEmptyPrompt()
+            return
+        }
+        // Exit if did manually toggle reasoning
+        if self.promptController.didManuallyToggleReasoning {
+            return
+        }
+        // Determine if reasoning is needed
+        if let useReasoning = PromptAnalyzer.isReasoningRequired(
+            self.promptController.prompt
+        ) {
+            withAnimation(.linear) {
+                self.promptController.useReasoning = useReasoning
+            }
+        }
+    }
+    
+    private func handleEmptyPrompt() {
+        // Reset reasoning status
+        self.promptController.didManuallyToggleReasoning = false
+        guard let model = Model.shared.selectedModel else { return }
+        withAnimation(.linear) {
+            self.promptController.useReasoning = model.isReasoningModel
+        }
     }
     
 }

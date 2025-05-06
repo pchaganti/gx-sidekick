@@ -70,6 +70,7 @@ struct PromptInputField: View {
 				of: conversationState.selectedConversationId
 			) {
                 self.isFocused = true
+                self.promptController.didManuallyToggleReasoning = false
 			}
 			.onChange(
 				of: conversationState.selectedExpertId
@@ -106,8 +107,6 @@ struct PromptInputField: View {
 	
 	var textField: some View {
         ChatPromptEditor(
-            prompt: self.$promptController.prompt,
-            insertionPoint: self.$promptController.insertionPoint,
             isFocused: self._isFocused,
             isRecording: self.$promptController.isRecording,
             useAttachments: true,
@@ -213,7 +212,7 @@ struct PromptInputField: View {
 			SoundEffects.send.play()
 		}
 		// Get prompt expected result type
-		let resultType: PromptAnalyzer.ResultType = PromptAnalyzer.analyzePrompt(
+		let resultType: PromptAnalyzer.ResultType = PromptAnalyzer.getExpectedResultType(
 			promptController.prompt
 		)
 		// Check web search
@@ -241,6 +240,7 @@ struct PromptInputField: View {
 			case .text:
 				self.startTextGeneration(
 					prompt: promptController.prompt,
+                    useReasoning: promptController.useReasoning,
 					tempResources: tempResources
 				)
 			case .image:
@@ -251,6 +251,7 @@ struct PromptInputField: View {
 					// Else, fall back to text
 					self.startTextGeneration(
 						prompt: promptController.prompt,
+                        useReasoning: promptController.useReasoning,
 						tempResources: tempResources
 					)
 				}
@@ -264,12 +265,14 @@ struct PromptInputField: View {
 	
 	private func startTextGeneration(
 		prompt: String,
+        useReasoning: Bool,
 		tempResources: [TemporaryResource]
 	) {
 		// Get response
 		Task {
 			await self.generateChatResponse(
 				prompt: prompt,
+                useReasoning: useReasoning,
 				tempResources: tempResources
 			)
 		}
@@ -287,12 +290,14 @@ struct PromptInputField: View {
 	
 	private func clearInputs() {
         DispatchQueue.main.async {
+            self.promptController.didManuallyToggleReasoning = false
             self.promptController.prompt.removeAll()
         }
 	}
 	
 	private func generateChatResponse(
 		prompt: String,
+        useReasoning: Bool,
 		tempResources: [TemporaryResource]
 	) async {
 		// If processing, use recursion to update
@@ -303,6 +308,7 @@ struct PromptInputField: View {
 					try? await Task.sleep(for: .seconds(1))
 					await generateChatResponse(
 						prompt: prompt,
+                        useReasoning: useReasoning,
 						tempResources: tempResources
 					)
 				}
@@ -347,7 +353,7 @@ struct PromptInputField: View {
                 modelType: .regular,
 				mode: .chat,
 				similarityIndex: index,
-                useReasoning: self.promptController.useReasoning,
+                useReasoning: useReasoning,
 				useWebSearch: useWebSearch,
                 useFunctions: self.promptController.useFunctions,
 				useCanvas: self.conversationState.useCanvas,

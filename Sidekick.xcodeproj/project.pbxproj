@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2000EDF52DC99FCA006F9A95 /* ReasoningClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 2000EDF42DC99FCA006F9A95 /* ReasoningClassifier.mlmodel */; };
 		200363292D769AC700770391 /* JavaScriptRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200363282D769AC700770391 /* JavaScriptRunner.swift */; };
 		2004D7642CBC9DA2009F294E /* ConversationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2004D7632CBC9DA2009F294E /* ConversationState.swift */; };
 		200619A22D6750D9001949EF /* DiagrammerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200619A12D6750D9001949EF /* DiagrammerViewController.swift */; };
@@ -418,6 +419,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2000EDF42DC99FCA006F9A95 /* ReasoningClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = ReasoningClassifier.mlmodel; sourceTree = "<group>"; };
 		200363282D769AC700770391 /* JavaScriptRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptRunner.swift; sourceTree = "<group>"; };
 		2004D7632CBC9DA2009F294E /* ConversationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationState.swift; sourceTree = "<group>"; };
 		200549732CAFA67B00A3DCF2 /* Sidekick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sidekick.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1972,6 +1974,7 @@
 			isa = PBXGroup;
 			children = (
 				20CB7ABF2D1457B10013E30C /* PromptAnalyzer.swift */,
+				2000EDF42DC99FCA006F9A95 /* ReasoningClassifier.mlmodel */,
 				20CB7AC72D145E320013E30C /* UserRequestClassifier.mlmodel */,
 			);
 			path = Router;
@@ -2452,6 +2455,7 @@
 				2034876B2D67202D00A88DA4 /* AssistantInstructionView.swift in Sources */,
 				2051FEDB2D8E53CB001B1E0D /* Extension+AVSpeechSynthesisVoice.swift in Sources */,
 				20457D2C2D92511600954892 /* CompletionsSetupViewModel.swift in Sources */,
+				2000EDF52DC99FCA006F9A95 /* ReasoningClassifier.mlmodel in Sources */,
 				20D65DD52CC0CC6C0052D826 /* StopGenerationButton.swift in Sources */,
 				204AEDA92D8170D0004028FF /* ServerModelNameEditor.swift in Sources */,
 				2083AEA42D8853E40049C139 /* EmailSelectionView.swift in Sources */,
