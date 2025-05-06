@@ -4441,16 +4441,6 @@
         }
       }
     },
-    "Unknown Language" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "未知编程语言"
-          }
-        }
-      }
-    },
     "Unknown Source" : {
       "localizations" : {
         "zh-Hans" : {

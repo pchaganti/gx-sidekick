@@ -20,7 +20,7 @@ struct CapsuleButton: View {
     }
     
     var bubbleColor: Color {
-        return self.isActivated ? .accentColor.opacity(0.3) : .clear
+        return self.isActivated ? .accentColor.opacity(0.3) : .white.opacity(0.0001)
     }
     
     var bubbleBorderColor: Color {
@@ -44,10 +44,8 @@ struct CapsuleButton: View {
     
     var capsule: some View {
         ZStack {
-            if self.isActivated {
-                Capsule()
-                    .fill(self.bubbleColor)
-            }
+            Capsule()
+                .fill(self.bubbleColor)
             Capsule()
                 .stroke(
                     style: .init(
