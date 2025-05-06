@@ -4491,6 +4491,16 @@
         }
       }
     },
+    "Use Defaults" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复默认设置"
+          }
+        }
+      }
+    },
     "Use Functions" : {
       "localizations" : {
         "zh-Hans" : {

@@ -111,8 +111,9 @@ struct ChatPromptEditor: View {
         }
         // Store the new work item in our state variable
         self.debouncedTask = task
-        // Schedule the work item. It will be executed in 1 second unless cancelled by another keystroke.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: task)
+        // Schedule the work item
+        // It will be executed in 0.33 seconds unless cancelled by another keystroke
+        DispatchQueue.main.asyncAfter(deadline: .now() + (1/3), execute: task)
     }
     
     private func determineIfReasoningNeeded() {

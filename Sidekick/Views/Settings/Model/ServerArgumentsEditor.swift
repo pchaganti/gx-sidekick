@@ -11,12 +11,15 @@ struct ServerArgumentsEditor: View {
     
     @Binding var isPresented: Bool
     
+    @State private var tableId: UUID = UUID()
+    
     @StateObject private var serverArgumentsManager: ServerArgumentsManager = .shared
     @State private var selections = Set<ServerArgument.ID>()
     
     var body: some View {
         VStack {
             table
+                .id(tableId)
                 .padding(.horizontal, 10)
             Divider()
             bottomBar
@@ -33,11 +36,23 @@ struct ServerArgumentsEditor: View {
                 )!
             )
             Spacer()
+            resetButton
             addButton
             doneButton
         }
         .controlSize(.large)
         .padding(.horizontal, 12)
+    }
+    
+    var resetButton: some View {
+        Button {
+            withAnimation(.linear) {
+                self.serverArgumentsManager.resetDatastore()
+                self.tableId = UUID()
+            }
+        } label: {
+            Text("Use Defaults")
+        }
     }
     
     var addButton: some View {
@@ -94,15 +109,14 @@ struct ServerArgumentsEditor: View {
                 if let commonArgument = ServerArgument.CommonArgument(
                     flag: argument.wrappedValue.flag
                 ) {
-                    ServerArgument.ArgumentSliderView(
-                        argument: commonArgument,
+                    commonArgument.getEditor(
                         stringValue: argument.value
                     )
                 } else {
                     TextField(text: argument.value, label: {})
                 }
             }
-            .width(min: 300)
+            .width(min: 250)
         } rows: {
             ForEach(
                 self.$serverArgumentsManager.serverArguments

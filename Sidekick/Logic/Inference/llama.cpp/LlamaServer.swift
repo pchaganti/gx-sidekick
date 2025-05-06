@@ -255,7 +255,6 @@ public actor LlamaServer {
             "--threads-batch": "\(threadsToUse)",
             "--ctx-size": "\(contextLength)",
             "--port": self.port,
-            "--flash-attn": nil,
             "--gpu-layers": gpuLayersToUse
 		]
 		// If speculative decoding is used and is main model
@@ -289,7 +288,7 @@ public actor LlamaServer {
             var formattedArguments: [String] = []
             arguments.forEach { key, value in
                 formattedArguments.append(key)
-                if let value = value {
+                if let value = value, !value.isEmpty {
                     formattedArguments.append(value)
                 }
             }
@@ -303,7 +302,7 @@ public actor LlamaServer {
             var formattedArguments: [String] = []
             arguments.forEach { key, value in
                 formattedArguments.append(key)
-                if let value = value {
+                if let value = value, !value.isEmpty  {
                     formattedArguments.append(value)
                 }
             }
