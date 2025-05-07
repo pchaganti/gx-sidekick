@@ -67,6 +67,11 @@ public struct Provider: Identifiable {
             name: "OpenRouter",
             endpointUrl: URL(string: "https://openrouter.ai/api/v1")!,
             supportsToolCalling: true
+        ),
+        Provider(
+            name: "xAI",
+            endpointUrl: URL(string: "https://api.x.ai/v1")!,
+            supportsToolCalling: true
         )
     ]
 }
