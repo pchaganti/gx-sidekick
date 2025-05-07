@@ -12,6 +12,7 @@
 		2000EDFA2DC9B971006F9A95 /* ArgumentPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2000EDF92DC9B971006F9A95 /* ArgumentPickerView.swift */; };
 		2000EE902DCA4B4B006F9A95 /* DeepResearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2000EE8F2DCA4B4B006F9A95 /* DeepResearchView.swift */; };
 		2000EE922DCADB0E006F9A95 /* WebScrape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2000EE912DCADB0E006F9A95 /* WebScrape.swift */; };
+		2000EEE62DCB0372006F9A95 /* MermaidRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2000EEE52DCB0372006F9A95 /* MermaidRenderer.swift */; };
 		200363292D769AC700770391 /* JavaScriptRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200363282D769AC700770391 /* JavaScriptRunner.swift */; };
 		2004D7642CBC9DA2009F294E /* ConversationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2004D7632CBC9DA2009F294E /* ConversationState.swift */; };
 		200619A22D6750D9001949EF /* DiagrammerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200619A12D6750D9001949EF /* DiagrammerViewController.swift */; };
@@ -492,6 +493,7 @@
 		2000EEDF2DCAE3FA006F9A95 /* setupSheet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setupSheet.png; sourceTree = "<group>"; };
 		2000EEE12DCAE3FA006F9A95 /* appIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon.png; sourceTree = "<group>"; };
 		2000EEE22DCAE3FA006F9A95 /* demoScreenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = demoScreenshot.png; sourceTree = "<group>"; };
+		2000EEE52DCB0372006F9A95 /* MermaidRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MermaidRenderer.swift; sourceTree = "<group>"; };
 		200363282D769AC700770391 /* JavaScriptRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptRunner.swift; sourceTree = "<group>"; };
 		2004D7632CBC9DA2009F294E /* ConversationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationState.swift; sourceTree = "<group>"; };
 		200549732CAFA67B00A3DCF2 /* Sidekick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sidekick.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1073,6 +1075,15 @@
 			path = "Docs Images";
 			sourceTree = "<group>";
 		};
+		2000EEE42DCB0361006F9A95 /* MermaidRenderer */ = {
+			isa = PBXGroup;
+			children = (
+				2000EEE52DCB0372006F9A95 /* MermaidRenderer.swift */,
+				207E5EED2D6F636200A8F6FA /* Resources */,
+			);
+			path = MermaidRenderer;
+			sourceTree = "<group>";
+		};
 		2005496A2CAFA67B00A3DCF2 = {
 			isa = PBXGroup;
 			children = (
@@ -1112,7 +1123,6 @@
 			isa = PBXGroup;
 			children = (
 				200619A12D6750D9001949EF /* DiagrammerViewController.swift */,
-				207E5EED2D6F636200A8F6FA /* Resources */,
 			);
 			path = Diagrammer;
 			sourceTree = "<group>";
@@ -1626,6 +1636,7 @@
 				20457D332D92827900954892 /* CompletionsController.swift */,
 				20DFF4852DB741D900F3F76C /* FileMonitor.swift */,
 				20B9E60D2CB1414100BA0AD2 /* DockMenuCommands.swift */,
+				2000EEE42DCB0361006F9A95 /* MermaidRenderer */,
 				20457D152D918FFD00954892 /* Accessibility */,
 			);
 			path = Tools;
@@ -2311,6 +2322,7 @@
 				20B4D6B12CC3D72700817E15 /* Extension+IndexItem.swift in Sources */,
 				201BB99A2D8AFDE000890EE6 /* Snapshot.swift in Sources */,
 				20573F1F2CB5274E004C19FE /* MessagesView.swift in Sources */,
+				2000EEE62DCB0372006F9A95 /* MermaidRenderer.swift in Sources */,
 				20FDE2A02DAE50E7000A16F8 /* Provider.swift in Sources */,
 				20457D272D924F0C00954892 /* CompletionsSetupView.swift in Sources */,
 				20B97CE72CB0066A009A0A5D /* Extension+String.swift in Sources */,

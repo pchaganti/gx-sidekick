@@ -302,7 +302,34 @@ public extension String {
         ["<thought>", "</thought>"]
     ]
     
-    /// Computed property returning text with the resoning process removed
+    /// A `String` containing the reasoning process
+    var reasoningProcess: String? {
+        // List special reasoning tokens
+        let specialTokenSets: [[String]] = String.specialReasoningTokens
+        // Extract text between tokens
+        // For each set of tokens
+        for specialTokenSet in specialTokenSets {
+            // Get range of start token
+            if let startRange = self.range(
+                of: specialTokenSet.first!
+            ) {
+                // Get range of end token
+                if let endRange = self.range(
+                    of: specialTokenSet.last!,
+                    range: startRange.upperBound..<self.endIndex
+                ) {
+                    // Return text
+                    return String(
+                        self[startRange.upperBound..<endRange.lowerBound]
+                    ).trimmingCharacters(in: .whitespacesAndNewlines)
+                }
+            }
+        }
+        // If failed to locate reasoning text, return nil
+        return nil
+    }
+    
+    /// A `String` containing the text with the reasoning process removed
     var reasoningRemoved: String {
         // List special reasoning tokens
         let specialTokenSets: [[String]] = Self.specialReasoningTokens

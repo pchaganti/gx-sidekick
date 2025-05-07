@@ -18,25 +18,33 @@ struct MarkdownImageProvider: ImageProvider {
 	public func makeImage(
 		url: URL?
 	) -> some View {
-		Group {
-			if let url: URL = url {
-				if url.isWebURL {
-					// If network image
-					self.networkImage(url: url)
-				} else if url.absoluteString.hasPrefix("latex://"),
-						  let latexStr = url.withoutSchema.removingPercentEncoding {
-					// If url is LaTeX
-					LaTeX(latexStr)
-						.blockMode(.blockViews)
-						.errorMode(.original)
-						.renderingStyle(.original)
-				} else {
-					imageLoadError
-				}
-			} else {
-				imageLoadError
-			}
-		}
+        return Group {
+            if let url: URL = url {
+                if url.isWebURL {
+                    // If network image
+                    self.networkImage(url: url)
+                } else if url.isFileURL {
+                    // If file image
+                    self.fileImage(url: url)
+                } else if url.absoluteString.hasPrefix("latex://"),
+                          let latexStr = url.withoutSchema.removingPercentEncoding {
+                    // If url is LaTeX
+                    LaTeX(latexStr)
+                        .blockMode(.blockViews)
+                        .errorMode(.original)
+                        .renderingStyle(.original)
+                } else {
+                    // Try converting to absolute path
+                    let fileUrl: URL = URL(
+                        fileURLWithPath: url.posixPath
+                    )
+                    // If file image
+                    self.fileImage(url: fileUrl)
+                }
+            } else {
+                imageLoadError
+            }
+        }
 	}
 	
 	private func networkImage(
@@ -62,6 +70,27 @@ struct MarkdownImageProvider: ImageProvider {
 			}
 		}
 	}
+    
+    private func fileImage(
+        url: URL?
+    ) -> some View {
+        Group {
+            if let url,
+               let nsImage: NSImage = NSImage(
+                contentsOf: url
+               ) {
+                Image(nsImage: nsImage)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .draggable(
+                        nsImage
+                    )
+                    .padding(.leading, 1)
+            } else {
+                imageLoadError
+            }
+        }
+    }
 	
 	var imageLoadError: some View {
 		Label(

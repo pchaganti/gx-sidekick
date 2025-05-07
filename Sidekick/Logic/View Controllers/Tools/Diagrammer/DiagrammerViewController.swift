@@ -54,184 +54,36 @@ Cheatsheet:
 """
 	}
 	
-	/// The mermaid child process to serve the preview
-	var mermaidPreviewServerProcess: Process = Process()
-	
 	/// The mermaid code, of type `String`
 	@Published public var mermaidCode: String = ""
     
-    /// A file monitor to watch for changes in the preview
-    private var fileMonitor: FileMonitor?
     /// The preview's ID
     @Published private var previewId: UUID = UUID()
     
 	/// A preview of the diagram
 	public var preview: some View {
 		WebView(
-            url: Self.previewFileUrl
+            url: MermaidRenderer.previewFileUrl
 		)
         .id(previewId)
 	}
-	
-	/// The URL of the mermaid code file, of type `URL`
-	private var mermaidFileUrl: URL {
-		let mermaidDirUrl: URL = Settings
-			.cacheUrl
-            .appendingPathComponent("Diagrammer")
-        if !mermaidDirUrl.fileExists {
-            FileManager.createDirectory(
-                at: mermaidDirUrl,
-                withIntermediateDirectories: true
-            )
-        }
-        return mermaidDirUrl.appendingPathComponent(
-            "newDiagram.mmd"
-        )
-	}
     
-    /// The URL of the previewed file, of type `URL`
-    private static var previewFileUrl: URL {
-        let mermaidDirUrl: URL = Settings
-            .cacheUrl
-            .appendingPathComponent("Diagrammer")
-        if !mermaidDirUrl.fileExists {
-            FileManager.createDirectory(
-                at: mermaidDirUrl,
-                withIntermediateDirectories: true
-            )
-        }
-        return mermaidDirUrl.appendingPathComponent(
-            "newDiagram.svg"
-        )
-    }
-	
-	/// Function to save the mermaid code
-	public func saveMermaidCode() {
-		// Save mermaid text to file
-		do {
-			try self.mermaidCode.write(
-				to: self.mermaidFileUrl,
-				atomically: true,
-				encoding: .utf8
-			)
-		} catch {
-			Self.logger.error("Error saving mermaid code: \(error, privacy: .public)")
-		}
-	}
-	
-    /// Function to render the preview from the mermaid code
+    /// Function to render the diagram from the mermaid code
     public func render(
         attemptsRemaining: Int = 3
     ) throws {
-        // Save the code
-        self.saveMermaidCode()
-        // Start the mermaid child process
-        self.mermaidPreviewServerProcess = Process()
-        self.mermaidPreviewServerProcess.executableURL = Bundle.main.resourceURL?.appendingPathComponent("mermaid-cli")
-        let arguments = [
-            "-log",
-            self.mermaidFileUrl.posixPath
-        ]
-        self.mermaidPreviewServerProcess.arguments = arguments
-        self.mermaidPreviewServerProcess.standardInput = FileHandle.nullDevice
-        // Capture stdout and stderr
-        let outputPipe = Pipe()
-        let errorPipe = Pipe()
-        self.mermaidPreviewServerProcess.standardOutput = outputPipe
-        self.mermaidPreviewServerProcess.standardError = errorPipe
-        var renderError: String?
-        let renderErrorSemaphore = DispatchSemaphore(value: 0)
-        do {
-            // Setup monitor
-            let id: UUID = self.previewId
-            self.fileMonitor = try? FileMonitor(
-                url: Self.previewFileUrl
-            ) {
-                // Render
-                DispatchQueue.main.asyncAfter(
-                    deadline: .now() + 0.5
-                ) {
-                    self.previewId = UUID()
-                    self.fileMonitor = nil
-                    errorPipe.fileHandleForReading.readabilityHandler = nil
-                    Self.logger.notice("Updated diagrammer preview")
-                }
-            }
-            try self.mermaidPreviewServerProcess.run()
-            Self.logger.notice("Started diagrammer preview server")
-            // Read error output asynchronously
-            errorPipe.fileHandleForReading.readabilityHandler = { handle in
-                let data = handle.availableData
-                if !data.isEmpty,
-                    let output = String(data: data, encoding: .utf8),
-                    !output.isEmpty {
-                    // Detect error lines (simple check for "error:" or "Parse error")
-                    if output.lowercased().contains("error:") || output.lowercased().contains("parse error") {
-                        Self.logger.error("`mermaid-cli` error: \(output)")
-                        renderError = output
-                        // Signal that an error was detected
-                        renderErrorSemaphore.signal()
-                    }
-                }
-            }
-            // Wait for possible error or file update for a short duration
-            let timeout: DispatchTime = .now() + 1.5
-            let result = renderErrorSemaphore.wait(timeout: timeout)
-            if result == .success, let errorOutput = renderError {
-                // Error detected
-                self.fileMonitor = nil
-                errorPipe.fileHandleForReading.readabilityHandler = nil
-                if attemptsRemaining > 0 {
-                    throw RenderError.error(errorOutput)
-                } else {
-                    DispatchQueue.main.async {
-                        self.displayRenderError(errorMessage: errorOutput)
-                    }
-                    return
-                }
-            } else {
-                // If file not updated, trigger error if last attempt
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                    if self.previewId == id, attemptsRemaining == 0 {
-                        errorPipe.fileHandleForReading.readabilityHandler = nil
-                        self.fileMonitor = nil
-                        self.displayRenderError()
-                    }
-                }
-            }
-        } catch {
-            // Print error
-            Self.logger.error("Error generating diagram: \(error)")
-            errorPipe.fileHandleForReading.readabilityHandler = nil
-            self.fileMonitor = nil
-            if attemptsRemaining > 0 {
-                throw error
-            } else {
-                self.displayRenderError(errorMessage: error.localizedDescription)
-            }
-        }
-    }
-    
-    private enum RenderError: LocalizedError {
-        case error(String)
-        public var errorDescription: String? {
-            switch self {
-                case .error(let string):
-                    return string
-            }
-        }
-    }
-    
-    public func displayRenderError(
-        errorMessage: String? = nil
-    ) {
-        let message: String = errorMessage ?? String(localized: "Could not render the diagram within reasonable time.")
-        // Return to first step
-        Task { @MainActor in
-            Dialogs.showAlert(
-                title: String(localized: "Error"),
-                message: message
-            )
+        // Save preview id
+        let id: UUID = self.previewId
+        // Init renderer
+        let renderer: MermaidRenderer = MermaidRenderer()
+        // Save mermaid code
+        MermaidRenderer.saveMermaidCode(code: self.mermaidCode)
+        // Render
+        try renderer.render(
+            attemptsRemaining: attemptsRemaining
+        ) {
+            self.previewId = UUID()
+            Self.logger.notice("Updated diagrammer preview")
         }
     }
 	
@@ -248,7 +100,7 @@ Cheatsheet:
                 Self.logger.notice("Started diagrammer render")
                 // Relocate file
                 try FileManager.default.moveItem(
-                    at: Self.previewFileUrl,
+                    at: MermaidRenderer.previewFileUrl,
                     to: url.appendingPathComponent(
                         "newDiagram.svg"
                     )
@@ -322,7 +174,7 @@ Cheatsheet:
                 } catch {
                     // Try to get response text
                     guard let responseText = responseText else {
-                        self.displayRenderError()
+                        MermaidRenderer().displayRenderError()
                         return
                     }
                     let responseMessage: Message = Message(

@@ -67,7 +67,6 @@ struct DiagrammerPreviewEditorView: View {
 			\.codeEditorTheme, colorScheme == .dark ? Theme.defaultDark : Theme.defaultLight
 		)
 		.onChange(of: diagrammerViewController.mermaidCode) {
-			self.diagrammerViewController.saveMermaidCode()
             try? self.diagrammerViewController.render(
                 attemptsRemaining: 0
             )
@@ -127,7 +126,7 @@ struct DiagrammerPreviewEditorView: View {
 	
 	private func resetDiagram() {
 		self.diagrammerViewController.mermaidCode = ""
-		self.diagrammerViewController.saveMermaidCode()
+        MermaidRenderer.resetMermaidCode()
 		self.diagrammerViewController.currentStep = .prompt
 	}
 	
