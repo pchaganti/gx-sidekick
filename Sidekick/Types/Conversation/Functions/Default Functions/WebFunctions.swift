@@ -102,7 +102,7 @@ public class WebFunctions {
                 throw WebSearchError.notConfigured
             }
             // Conduct search
-            let sources: [Source] = try await TavilySearch.search(
+            let sources: [Source] = try await Tavily.search(
                 query: params.query,
                 site: params.site,
                 resultCount: params.num_results ?? 10,
@@ -132,7 +132,7 @@ The content from each site here is an incomplete except. Use the `get_website_co
         let query: String
         let site: String?
         let num_results: Int?
-        let time_range: TavilySearch.TimeRange?
+        let time_range: Tavily.TimeRange?
     }
     
     /// A ``Function`` to conduct a web search with DuckDuckGo
@@ -273,38 +273,13 @@ Below are the sites and corresponding content returned from your `web_search` qu
             )
         ],
         run: { params in
-            return try await WebFunctions.scrapeWebsite(
-                url: params.url
-            )
+            return try await WebScrape.scrape(url: params.url)
         }
     )
     struct GetWebsiteContentParams: FunctionParams {
         let url: String
     }
-    
-    /// Function to scrape the contents of a website
-    static func scrapeWebsite(url: String) async throws -> String {
-        // Check URL
-        guard let url: URL = URL(string: url) else {
-            throw GetWebsiteContentError.invalidUrl
-        }
-        // Extract text
-        return try await ExtractKit.shared.extractText(
-            url: url,
-            contentType: .website
-        )
-        // Custom error for Web Search function
-        enum GetWebsiteContentError: LocalizedError {
-            case invalidUrl
-            var errorDescription: String? {
-                switch self {
-                    case .invalidUrl:
-                        return "The provided website URL is invalid."
-                }
-            }
-        }
-    }
-    
+
     /// A function to create an email draft
     static let draftEmail = Function<DraftEmailParams, String>(
         name: "draft_email",

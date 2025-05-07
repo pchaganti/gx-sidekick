@@ -75,6 +75,7 @@
 		2000EE8A2DC9D4D9006F9A95 /* chatSettings.png in Resources */ = {isa = PBXBuildFile; fileRef = 2000EE002DC9D4D9006F9A95 /* chatSettings.png */; };
 		2000EE8B2DC9D4D9006F9A95 /* inlineWritingAssistantEditingCommand.png in Resources */ = {isa = PBXBuildFile; fileRef = 2000EE342DC9D4D9006F9A95 /* inlineWritingAssistantEditingCommand.png */; };
 		2000EE902DCA4B4B006F9A95 /* DeepResearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2000EE8F2DCA4B4B006F9A95 /* DeepResearchView.swift */; };
+		2000EE922DCADB0E006F9A95 /* WebScrape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2000EE912DCADB0E006F9A95 /* WebScrape.swift */; };
 		200363292D769AC700770391 /* JavaScriptRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200363282D769AC700770391 /* JavaScriptRunner.swift */; };
 		2004D7642CBC9DA2009F294E /* ConversationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2004D7632CBC9DA2009F294E /* ConversationState.swift */; };
 		200619A22D6750D9001949EF /* DiagrammerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200619A12D6750D9001949EF /* DiagrammerViewController.swift */; };
@@ -233,11 +234,11 @@
 		207A9F622CB94B0000E727DE /* WindowCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207A9F612CB94B0000E727DE /* WindowCommands.swift */; };
 		207E5EEF2D6F663B00A8F6FA /* SlideStudioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207E5EEE2D6F663B00A8F6FA /* SlideStudioViewController.swift */; };
 		207E5EF22D6FDEEF00A8F6FA /* ImageSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207E5EF12D6FDEEF00A8F6FA /* ImageSearch.swift */; };
-		208388DA2CBF4DF500C2A9F8 /* TavilySearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208388D92CBF4DF500C2A9F8 /* TavilySearch.swift */; };
+		208388DA2CBF4DF500C2A9F8 /* Tavily.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208388D92CBF4DF500C2A9F8 /* Tavily.swift */; };
 		208388DD2CBF4E8A00C2A9F8 /* SecureDefaults in Frameworks */ = {isa = PBXBuildFile; productRef = 208388DC2CBF4E8A00C2A9F8 /* SecureDefaults */; };
 		208388E22CBF51F900C2A9F8 /* RetrievalSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208388E12CBF51F900C2A9F8 /* RetrievalSettingsView.swift */; };
 		208388E52CBF526E00C2A9F8 /* RetrievalSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208388E42CBF526E00C2A9F8 /* RetrievalSettings.swift */; };
-		208388ED2CBF825400C2A9F8 /* Tavily.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208388EC2CBF825400C2A9F8 /* Tavily.swift */; };
+		208388ED2CBF825400C2A9F8 /* Extension+Tavily.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208388EC2CBF825400C2A9F8 /* Extension+Tavily.swift */; };
 		208388EF2CBF86A100C2A9F8 /* Extension+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208388EE2CBF86A100C2A9F8 /* Extension+UserDefaults.swift */; };
 		2083AEA22D8853DD0049C139 /* WebsiteSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2083AEA12D8853DD0049C139 /* WebsiteSelectionView.swift */; };
 		2083AEA42D8853E40049C139 /* EmailSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2083AEA32D8853E40049C139 /* EmailSelectionView.swift */; };
@@ -554,6 +555,7 @@
 		2000EE492DC9D4D9006F9A95 /* appIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon.png; sourceTree = "<group>"; };
 		2000EE4A2DC9D4D9006F9A95 /* demoScreenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = demoScreenshot.png; sourceTree = "<group>"; };
 		2000EE8F2DCA4B4B006F9A95 /* DeepResearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepResearchView.swift; sourceTree = "<group>"; };
+		2000EE912DCADB0E006F9A95 /* WebScrape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebScrape.swift; sourceTree = "<group>"; };
 		200363282D769AC700770391 /* JavaScriptRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptRunner.swift; sourceTree = "<group>"; };
 		2004D7632CBC9DA2009F294E /* ConversationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationState.swift; sourceTree = "<group>"; };
 		200549732CAFA67B00A3DCF2 /* Sidekick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sidekick.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -703,10 +705,10 @@
 		207E5EEE2D6F663B00A8F6FA /* SlideStudioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideStudioViewController.swift; sourceTree = "<group>"; };
 		207E5EF12D6FDEEF00A8F6FA /* ImageSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSearch.swift; sourceTree = "<group>"; };
 		207E5EF42D70584500A8F6FA /* marpCheatsheet.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = marpCheatsheet.md; sourceTree = "<group>"; };
-		208388D92CBF4DF500C2A9F8 /* TavilySearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TavilySearch.swift; sourceTree = "<group>"; };
+		208388D92CBF4DF500C2A9F8 /* Tavily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tavily.swift; sourceTree = "<group>"; };
 		208388E12CBF51F900C2A9F8 /* RetrievalSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrievalSettingsView.swift; sourceTree = "<group>"; };
 		208388E42CBF526E00C2A9F8 /* RetrievalSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrievalSettings.swift; sourceTree = "<group>"; };
-		208388EC2CBF825400C2A9F8 /* Tavily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tavily.swift; sourceTree = "<group>"; };
+		208388EC2CBF825400C2A9F8 /* Extension+Tavily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Tavily.swift"; sourceTree = "<group>"; };
 		208388EE2CBF86A100C2A9F8 /* Extension+UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UserDefaults.swift"; sourceTree = "<group>"; };
 		2083AEA12D8853DD0049C139 /* WebsiteSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteSelectionView.swift; sourceTree = "<group>"; };
 		2083AEA32D8853E40049C139 /* EmailSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSelectionView.swift; sourceTree = "<group>"; };
@@ -1187,14 +1189,14 @@
 			path = bin;
 			sourceTree = "<group>";
 		};
-		200B23662DB1213C00127D48 /* Search */ = {
+		200B23662DB1213C00127D48 /* Web */ = {
 			isa = PBXGroup;
 			children = (
 				200B23672DB1214800127D48 /* WebSearch.swift */,
 				200B23692DB1227A00127D48 /* DuckDuckGoSearch.swift */,
-				208388D92CBF4DF500C2A9F8 /* TavilySearch.swift */,
+				2000EE912DCADB0E006F9A95 /* WebScrape.swift */,
 			);
-			path = Search;
+			path = Web;
 			sourceTree = "<group>";
 		};
 		200C3E2B2CD8B0A40033909F /* UI */ = {
@@ -1555,7 +1557,8 @@
 				2051FED82D8E51FA001B1E0D /* SpeechService.swift */,
 				2041868C2D81E6B2002A5D1C /* NetworkMonitor.swift */,
 				206AB9662DB09BB800385510 /* Location.swift */,
-				200B23662DB1213C00127D48 /* Search */,
+				208388D92CBF4DF500C2A9F8 /* Tavily.swift */,
+				200B23662DB1213C00127D48 /* Web */,
 				207E5EF02D6FDEBE00A8F6FA /* Tools */,
 			);
 			path = Utilities;
@@ -1914,6 +1917,7 @@
 				2075220A2D7FDF6C00A1CA60 /* Extension+SecureDefaults.swift */,
 				20FB0D882CBA8327006D062A /* Extension+SimilarityIndex.swift */,
 				20B97CE62CB0066A009A0A5D /* Extension+String.swift */,
+				208388EC2CBF825400C2A9F8 /* Extension+Tavily.swift */,
 				20B97CEA2CB00912009A0A5D /* Extension+URL.swift */,
 				200C3E2C2CD8B1380033909F /* AppKit */,
 				200C3E2B2CD8B0A40033909F /* UI */,
@@ -1928,7 +1932,6 @@
 				20B97CEC2CB00A28009A0A5D /* Favicon.swift */,
 				2099BD9C2CB7B8E700E02732 /* Notifications.swift */,
 				204AE3BA2CEAF5AC0086B42D /* Command.swift */,
-				208388EC2CBF825400C2A9F8 /* Tavily.swift */,
 				204D09822D1166810066B060 /* IntroductionPage.swift */,
 				209D39792DC0E49100D1E5E5 /* ServerArgument.swift */,
 				2030D6232D6D60FB00F18BF4 /* EvaluationDetails.swift */,
@@ -2476,6 +2479,7 @@
 				202801FA2CC949F2005C1F7D /* TemporaryResource.swift in Sources */,
 				205E3F2A2D87288400128D67 /* Extension+NSAttributedString.swift in Sources */,
 				20573F162CB505DC004C19FE /* ConversationListView.swift in Sources */,
+				2000EE922DCADB0E006F9A95 /* WebScrape.swift in Sources */,
 				2000EDF82DC9B868006F9A95 /* ArgumentSliderView.swift in Sources */,
 				2030D6242D6D60FB00F18BF4 /* EvaluationDetails.swift in Sources */,
 				20B97CCF2CAFEC37009A0A5D /* DownloadManager.swift in Sources */,
@@ -2592,7 +2596,7 @@
 				20B97CB62CAFE86C009A0A5D /* SidekickApp.swift in Sources */,
 				2040DBA52D85CB2200A8F6BD /* MarkdownImageProvider.swift in Sources */,
 				200363292D769AC700770391 /* JavaScriptRunner.swift in Sources */,
-				208388DA2CBF4DF500C2A9F8 /* TavilySearch.swift in Sources */,
+				208388DA2CBF4DF500C2A9F8 /* Tavily.swift in Sources */,
 				2099BDA52CB8069800E02732 /* ConversationNameEditor.swift in Sources */,
 				206FBB212D54B40700A045FF /* MessageReasoningProcessView.swift in Sources */,
 				208AA3F12CC9E42F00A0891F /* ScrollMask.swift in Sources */,
@@ -2633,7 +2637,7 @@
 				200B23652DB0D31A00127D48 /* ReminderFunctions.swift in Sources */,
 				20B9E60C2CB140A000BA0AD2 /* AppDelegate.swift in Sources */,
 				2075220B2D7FDF6C00A1CA60 /* Extension+SecureDefaults.swift in Sources */,
-				208388ED2CBF825400C2A9F8 /* Tavily.swift in Sources */,
+				208388ED2CBF825400C2A9F8 /* Extension+Tavily.swift in Sources */,
 				204AE3BB2CEAF5AC0086B42D /* Command.swift in Sources */,
 				20A40CF92D73763500A9D9A9 /* Extension+Date.swift in Sources */,
 				209D397C2DC0E71600D1E5E5 /* ServerArgumentsManager.swift in Sources */,

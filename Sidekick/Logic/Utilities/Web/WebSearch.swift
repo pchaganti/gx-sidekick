@@ -31,18 +31,18 @@ public class WebSearch {
                 )
             case .tavily:
                 // Try with first key
-                results = try? await TavilySearch.search(
+                results = try? await Tavily.search(
                     query: query,
                     site: site,
                     resultCount: resultCount
                 )
                 if results == nil {
                     // Try with backup key
-                    results = try await TavilySearch.search(
+                    results = try await Tavily.search(
                         query: query,
                         site: site,
                         resultCount: resultCount,
-                        useBackupApi: true
+                        useBackupKey: true
                     )
                 }
         }

@@ -28,7 +28,7 @@ public struct Source: Identifiable, Codable, Hashable {
         transform: (String) -> String = { return $0 }
     ) async throws -> SourceContent {
         // Get content
-        var content: String = try await WebFunctions.scrapeWebsite(
+        var content: String = try await WebScrape.scrape(
             url: self.source
         ).removingBase64Images()
         content = transform(content)
