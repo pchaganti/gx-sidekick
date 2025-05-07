@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol AnyFunctionBox {
+public protocol AnyFunctionBox {
     
     var name: String { get }
     var description: String { get }

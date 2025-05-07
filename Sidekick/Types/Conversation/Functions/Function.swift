@@ -399,7 +399,7 @@ Do you wish to permit this?
         /// Function to call the function
         mutating public func call() async throws -> String? {
             // Locate the function by name
-            guard let function = DefaultFunctions.functions.first(
+            guard let function = DefaultFunctions.allFunctions.first(
                 where: { $0.name == self.config.name }
             ) else {
                 throw FunctionCallError.functionNotFound

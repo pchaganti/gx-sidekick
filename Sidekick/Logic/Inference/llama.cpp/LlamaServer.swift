@@ -369,6 +369,7 @@ public actor LlamaServer {
 		messages: [Message.MessageSubset],
         useWebSearch: Bool = false,
         useFunctions: Bool = false,
+        functions: [AnyFunctionBox]? = nil,
         updateStatusHandler: (@Sendable (Model.Status) async -> Void)? = nil,
         progressHandler: (@Sendable (String) -> Void)? = nil
 	) async throws -> CompleteResponse {
@@ -398,7 +399,8 @@ public actor LlamaServer {
                         systemPrompt: self.systemPrompt,
                         messages: messages,
                         useWebSearch: useWebSearch,
-                        useFunctions: useFunctions
+                        useFunctions: useFunctions,
+                        functions: functions
 					)
 				case .default:
 					return await ChatParameters(

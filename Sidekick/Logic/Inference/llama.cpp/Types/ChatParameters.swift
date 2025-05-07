@@ -46,7 +46,8 @@ struct ChatParameters: Codable {
         systemPrompt: String,
         messages: [Message.MessageSubset],
         useWebSearch: Bool = false,
-        useFunctions: Bool = false
+        useFunctions: Bool = false,
+        functions: [AnyFunctionBox]? = nil
 	) async {
 		// Formulate messages
 		// Formulate system prompt
@@ -80,6 +81,7 @@ struct ChatParameters: Codable {
         // Tell the LLM to use sources
         fullSystemPromptComponents.append(InferenceSettings.useSourcesPrompt)
         // Tell the LLM to use functions when enabled and server does not support native tool calling
+        let functions: [any AnyFunctionBox] = functions ?? DefaultFunctions.chatFunctions
         if Settings.useFunctions && useFunctions {
             fullSystemPromptComponents.append(InferenceSettings.useFunctionsPrompt)
             // Inject function schema if no native tool calling or if using local model
@@ -87,7 +89,7 @@ struct ChatParameters: Codable {
             let isUsingLocalModel: Bool = (!canReachServer || !InferenceSettings.useServer)
             if !InferenceSettings.hasNativeToolCalling || isUsingLocalModel {
                 fullSystemPromptComponents.append(InferenceSettings.functionsSchemaPrompt)
-                let functions: [any AnyFunctionBox] = DefaultFunctions.functions
+                let functions: [any AnyFunctionBox] = functions
                 for function in functions {
                     fullSystemPromptComponents.append(function.getJsonSchema())
                 }
@@ -110,7 +112,7 @@ struct ChatParameters: Codable {
 		let messagesWithSystemPrompt: [Message.MessageSubset] = [systemPromptMsgSubset] + messages
 		self.messages = messagesWithSystemPrompt
 		self.model = Self.getModelName(modelType: modelType) ?? ""
-        self.tools = !useFunctions ? [] : DefaultFunctions.functions.map(keyPath: \.openAiFunctionCall)
+        self.tools = !useFunctions ? [] : functions.map(keyPath: \.openAiFunctionCall)
 	}
 	
 	var model: String

@@ -14,7 +14,21 @@ public protocol FunctionParams: Codable, Hashable {}
 
 public class DefaultFunctions {
     
-    static var functions: [AnyFunctionBox] = [
+    /// An list of all functions available
+    static var allFunctions: [AnyFunctionBox] = [
+        DefaultFunctions.chatFunctions
+    ].flatMap { $0 }
+    
+    /// An sorted list of all functions available
+    static var sortedFunctions: [AnyFunctionBox] {
+        return DefaultFunctions.allFunctions.sorted(
+            by: \.params.count,
+            order: .reverse
+        )
+    }
+    
+    /// An list of functions available in chat
+    static var chatFunctions: [AnyFunctionBox] = [
         ArithmeticFunctions.functions,
         CalendarFunctions.functions,
         CodeFunctions.functions,
@@ -26,13 +40,6 @@ public class DefaultFunctions {
             DefaultFunctions.fetchContacts
         ]
     ].flatMap { $0 }
-    
-    static var sortedFunctions: [AnyFunctionBox] {
-        return DefaultFunctions.functions.sorted(
-            by: \.params.count,
-            order: .reverse
-        )
-    }
     
     /// A function to get all contacts
     static let fetchContacts = Function<FetchContactsParams, String>(

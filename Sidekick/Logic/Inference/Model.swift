@@ -300,6 +300,7 @@ public class Model: ObservableObject {
         useReasoning: Bool = true,
 		useWebSearch: Bool = false,
         useFunctions: Bool = false,
+        functions: [AnyFunctionBox]? = nil,
 		useCanvas: Bool = false,
 		canvasSelection: String? = nil,
 		temporaryResources: [TemporaryResource] = [],
@@ -419,6 +420,7 @@ public class Model: ObservableObject {
                     useReasoning: useReasoning,
                     useWebSearch: useWebSearch,
                     useFunctions: useFunctions,
+                    functions: functions,
                     similarityIndex: similarityIndex,
                     handleResponseUpdate: handleResponseUpdate
                 )
@@ -456,6 +458,7 @@ public class Model: ObservableObject {
         useReasoning: Bool,
         useWebSearch: Bool,
         useFunctions: Bool,
+        functions: [AnyFunctionBox]? = nil,
 		similarityIndex: SimilarityIndex? = nil,
 		handleResponseUpdate: @escaping (String, String) -> Void
 	) async throws -> LlamaServer.CompleteResponse {
@@ -468,6 +471,7 @@ public class Model: ObservableObject {
 			messages: messagesWithSources,
             useWebSearch: useWebSearch,
             useFunctions: useFunctions,
+            functions: functions,
 			handleResponseUpdate: handleResponseUpdate,
 			increment: increment
 		)
@@ -487,6 +491,7 @@ public class Model: ObservableObject {
 			messages: messagesWithSources,
             useReasoning: useReasoning,
             useWebSearch: useWebSearch,
+            functions: functions,
 			similarityIndex: similarityIndex,
 			handleResponseUpdate: handleResponseUpdate,
 			increment: increment
@@ -500,6 +505,7 @@ public class Model: ObservableObject {
 		messages: [Message.MessageSubset],
         useWebSearch: Bool,
         useFunctions: Bool,
+        functions: [AnyFunctionBox]? = nil,
 		handleResponseUpdate: @escaping (String, String) -> Void,
 		increment: Int
     ) async throws -> LlamaServer.CompleteResponse {
@@ -511,6 +517,7 @@ public class Model: ObservableObject {
             messages: messages,
             useWebSearch: useWebSearch,
             useFunctions: useFunctions,
+            functions: functions,
             updateStatusHandler: { status in
                 await self.updateStatus(status)
             },
@@ -538,6 +545,7 @@ public class Model: ObservableObject {
 		messages: [Message.MessageSubset],
         useReasoning: Bool,
         useWebSearch: Bool,
+        functions: [AnyFunctionBox]? = nil,
 		similarityIndex: SimilarityIndex?,
 		handleResponseUpdate: @escaping (
 			String, // Full message
@@ -548,7 +556,7 @@ public class Model: ObservableObject {
 		// Set status
 		self.status = .usingFunctions
         // Execute functions on a loop
-        var maxIterations: Int = 15
+        var maxIterations: Int = 20
         var response: LlamaServer.CompleteResponse? = initialResponse
         var messages: [Message.MessageSubset] = messages
         // Capture results
@@ -667,6 +675,7 @@ Call another tool to obtain more information or execute more actions. Try breaki
                 messages: messages,
                 useWebSearch: useWebSearch,
                 useFunctions: true,
+                functions: functions,
                 updateStatusHandler: { status in
                     await self.updateStatus(status)
                 },
