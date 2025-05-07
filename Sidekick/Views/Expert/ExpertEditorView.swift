@@ -78,7 +78,7 @@ struct ExpertEditorView: View {
 			Section {
 				webSearch
 			} header: {
-				Text("Web Search")
+				Text("Search")
 			}
 			Section {
 				systemPromptEditor
@@ -169,7 +169,7 @@ struct ExpertEditorView: View {
 			if RetrievalSettings.canUseWebSearch {
 				HStack(alignment: .center) {
 					VStack(alignment: .leading) {
-						Text("Use Web Search")
+						Text("Use Search")
 							.font(.title3)
 							.bold()
 						Text("Controls whether this expert searches the web before answering. Note that when enabled, this feature may lead to slower responses.")

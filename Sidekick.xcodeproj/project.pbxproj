@@ -10,9 +10,11 @@
 		2000EDF52DC99FCA006F9A95 /* ReasoningClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 2000EDF42DC99FCA006F9A95 /* ReasoningClassifier.mlmodel */; };
 		2000EDF82DC9B868006F9A95 /* ArgumentSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2000EDF72DC9B868006F9A95 /* ArgumentSliderView.swift */; };
 		2000EDFA2DC9B971006F9A95 /* ArgumentPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2000EDF92DC9B971006F9A95 /* ArgumentPickerView.swift */; };
-		2000EE902DCA4B4B006F9A95 /* DeepResearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2000EE8F2DCA4B4B006F9A95 /* DeepResearchView.swift */; };
 		2000EE922DCADB0E006F9A95 /* WebScrape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2000EE912DCADB0E006F9A95 /* WebScrape.swift */; };
 		2000EEE62DCB0372006F9A95 /* MermaidRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2000EEE52DCB0372006F9A95 /* MermaidRenderer.swift */; };
+		2000EF382DCB7888006F9A95 /* CapsuleMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2000EF372DCB7888006F9A95 /* CapsuleMenuButton.swift */; };
+		2000EF3A2DCB7950006F9A95 /* SearchMenuToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2000EF392DCB7950006F9A95 /* SearchMenuToggleButton.swift */; };
+		2000EF3C2DCB7986006F9A95 /* SearchState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2000EF3B2DCB7986006F9A95 /* SearchState.swift */; };
 		200363292D769AC700770391 /* JavaScriptRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200363282D769AC700770391 /* JavaScriptRunner.swift */; };
 		2004D7642CBC9DA2009F294E /* ConversationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2004D7632CBC9DA2009F294E /* ConversationState.swift */; };
 		200619A22D6750D9001949EF /* DiagrammerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200619A12D6750D9001949EF /* DiagrammerViewController.swift */; };
@@ -50,7 +52,7 @@
 		201BB9A72D8BA9CA00890EE6 /* IfFits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201BB9A62D8BA9CA00890EE6 /* IfFits.swift */; };
 		201BB9C72D8BDCA800890EE6 /* SnapshotTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201BB9C62D8BDCA800890EE6 /* SnapshotTextEditor.swift */; };
 		201BB9C92D8C1CA000890EE6 /* SnapshotExportButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201BB9C82D8C1CA000890EE6 /* SnapshotExportButton.swift */; };
-		2025E67D2D89197700289E3F /* UseWebSearchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2025E67C2D89197700289E3F /* UseWebSearchButton.swift */; };
+		2025E67D2D89197700289E3F /* ToggleWebSearchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2025E67C2D89197700289E3F /* ToggleWebSearchButton.swift */; };
 		2025E67F2D894DFC00289E3F /* MessageCopyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2025E67E2D894DFC00289E3F /* MessageCopyButton.swift */; };
 		202801F42CC93C80005C1F7D /* DictationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202801F32CC93C80005C1F7D /* DictationButton.swift */; };
 		202801F62CC93CD5005C1F7D /* PromptInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202801F52CC93CD5005C1F7D /* PromptInputField.swift */; };
@@ -427,7 +429,6 @@
 		2000EDF42DC99FCA006F9A95 /* ReasoningClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = ReasoningClassifier.mlmodel; sourceTree = "<group>"; };
 		2000EDF72DC9B868006F9A95 /* ArgumentSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArgumentSliderView.swift; sourceTree = "<group>"; };
 		2000EDF92DC9B971006F9A95 /* ArgumentPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArgumentPickerView.swift; sourceTree = "<group>"; };
-		2000EE8F2DCA4B4B006F9A95 /* DeepResearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepResearchView.swift; sourceTree = "<group>"; };
 		2000EE912DCADB0E006F9A95 /* WebScrape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebScrape.swift; sourceTree = "<group>"; };
 		2000EE932DCAE3FA006F9A95 /* canvasDataVisualization.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = canvasDataVisualization.png; sourceTree = "<group>"; };
 		2000EE942DCAE3FA006F9A95 /* canvasExport.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = canvasExport.png; sourceTree = "<group>"; };
@@ -494,6 +495,9 @@
 		2000EEE12DCAE3FA006F9A95 /* appIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon.png; sourceTree = "<group>"; };
 		2000EEE22DCAE3FA006F9A95 /* demoScreenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = demoScreenshot.png; sourceTree = "<group>"; };
 		2000EEE52DCB0372006F9A95 /* MermaidRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MermaidRenderer.swift; sourceTree = "<group>"; };
+		2000EF372DCB7888006F9A95 /* CapsuleMenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleMenuButton.swift; sourceTree = "<group>"; };
+		2000EF392DCB7950006F9A95 /* SearchMenuToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMenuToggleButton.swift; sourceTree = "<group>"; };
+		2000EF3B2DCB7986006F9A95 /* SearchState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchState.swift; sourceTree = "<group>"; };
 		200363282D769AC700770391 /* JavaScriptRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptRunner.swift; sourceTree = "<group>"; };
 		2004D7632CBC9DA2009F294E /* ConversationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationState.swift; sourceTree = "<group>"; };
 		200549732CAFA67B00A3DCF2 /* Sidekick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sidekick.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -531,7 +535,7 @@
 		201BB9A62D8BA9CA00890EE6 /* IfFits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IfFits.swift; sourceTree = "<group>"; };
 		201BB9C62D8BDCA800890EE6 /* SnapshotTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotTextEditor.swift; sourceTree = "<group>"; };
 		201BB9C82D8C1CA000890EE6 /* SnapshotExportButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotExportButton.swift; sourceTree = "<group>"; };
-		2025E67C2D89197700289E3F /* UseWebSearchButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseWebSearchButton.swift; sourceTree = "<group>"; };
+		2025E67C2D89197700289E3F /* ToggleWebSearchButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleWebSearchButton.swift; sourceTree = "<group>"; };
 		2025E67E2D894DFC00289E3F /* MessageCopyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCopyButton.swift; sourceTree = "<group>"; };
 		202801F32CC93C80005C1F7D /* DictationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictationButton.swift; sourceTree = "<group>"; };
 		202801F52CC93CD5005C1F7D /* PromptInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptInputField.swift; sourceTree = "<group>"; };
@@ -866,14 +870,6 @@
 				2000EDF92DC9B971006F9A95 /* ArgumentPickerView.swift */,
 			);
 			path = Arguments;
-			sourceTree = "<group>";
-		};
-		2000EE8E2DCA4B32006F9A95 /* Deep Research */ = {
-			isa = PBXGroup;
-			children = (
-				2000EE8F2DCA4B4B006F9A95 /* DeepResearchView.swift */,
-			);
-			path = "Deep Research";
 			sourceTree = "<group>";
 		};
 		2000EE972DCAE3FA006F9A95 /* Canvas */ = {
@@ -1284,6 +1280,7 @@
 		202801F72CC94938005C1F7D /* Conversation */ = {
 			isa = PBXGroup;
 			children = (
+				2000EF3B2DCB7986006F9A95 /* SearchState.swift */,
 				20B97CE02CB001E0009A0A5D /* Conversation.swift */,
 				2099BD9E2CB7E9CE00E02732 /* QuickPrompt.swift */,
 				202801F92CC949F2005C1F7D /* TemporaryResource.swift */,
@@ -1318,7 +1315,6 @@
 			isa = PBXGroup;
 			children = (
 				203487692D671F9600A88DA4 /* Library */,
-				2000EE8E2DCA4B32006F9A95 /* Deep Research */,
 				2030D6162D6C4D9B00F18BF4 /* Detector */,
 				203487682D6702CC00A88DA4 /* Diagrammer */,
 				204AE3B72CEAF4D30086B42D /* Inline Assistant */,
@@ -1764,8 +1760,9 @@
 				202801F32CC93C80005C1F7D /* DictationButton.swift */,
 				206AB6112CF5F8390010B09A /* AttachmentSelectionButton.swift */,
 				208855C92DAD062A00071F0B /* CapsuleButton.swift */,
+				2000EF372DCB7888006F9A95 /* CapsuleMenuButton.swift */,
 				202E93692DB546EC00AB361E /* MultilineTextEditor.swift */,
-				20D01BF82DBFAA3B00EE3DF3 /* Toggle Button */,
+				20D01BF82DBFAA3B00EE3DF3 /* Toggle Buttons */,
 			);
 			path = "Input Field";
 			sourceTree = "<group>";
@@ -2036,14 +2033,15 @@
 			path = Message;
 			sourceTree = "<group>";
 		};
-		20D01BF82DBFAA3B00EE3DF3 /* Toggle Button */ = {
+		20D01BF82DBFAA3B00EE3DF3 /* Toggle Buttons */ = {
 			isa = PBXGroup;
 			children = (
-				2025E67C2D89197700289E3F /* UseWebSearchButton.swift */,
+				2025E67C2D89197700289E3F /* ToggleWebSearchButton.swift */,
+				2000EF392DCB7950006F9A95 /* SearchMenuToggleButton.swift */,
 				208855CB2DAD078800071F0B /* UseFunctionsButton.swift */,
 				20D01BF92DBFAA4A00EE3DF3 /* UseReasoningButton.swift */,
 			);
-			path = "Toggle Button";
+			path = "Toggle Buttons";
 			sourceTree = "<group>";
 		};
 		20DFF4822DB7194500F3F76C /* Expert */ = {
@@ -2392,6 +2390,7 @@
 				208855D32DAD1E1400071F0B /* FileFunctions.swift in Sources */,
 				20D9A9732CD2769300171FDE /* MessageShareMenu.swift in Sources */,
 				200619A22D6750D9001949EF /* DiagrammerViewController.swift in Sources */,
+				2000EF3C2DCB7986006F9A95 /* SearchState.swift in Sources */,
 				20B53D0C2D5B053E00D1AE79 /* CheckForUpdatesView.swift in Sources */,
 				20573F322CB53172004C19FE /* InferenceSettings.swift in Sources */,
 				2031B9902CEAE33900627D53 /* InlineAssistantController.swift in Sources */,
@@ -2432,7 +2431,7 @@
 				20B9B1212CDF91CD00B66D4D /* PerformanceGaugeView.swift in Sources */,
 				20571F7B2CBD602B004F3344 /* InferenceSettingsView.swift in Sources */,
 				20B97CDF2CAFFE6A009A0A5D /* Sender.swift in Sources */,
-				2025E67D2D89197700289E3F /* UseWebSearchButton.swift in Sources */,
+				2025E67D2D89197700289E3F /* ToggleWebSearchButton.swift in Sources */,
 				204D09872D1182EC0066B060 /* IntroductionPageView.swift in Sources */,
 				20A7E8FC2D8304AB00223D47 /* HelpCommands.swift in Sources */,
 				20457D2E2D92616E00954892 /* CompletionsDownloadView.swift in Sources */,
@@ -2459,7 +2458,6 @@
 				20CE5E582D5C85D10000A2EC /* LengthyTasksNavigationButton.swift in Sources */,
 				205E3F2C2D872E4200128D67 /* Extension+NSMutableAttributedString.swift in Sources */,
 				202801F62CC93CD5005C1F7D /* PromptInputField.swift in Sources */,
-				2000EE902DCA4B4B006F9A95 /* DeepResearchView.swift in Sources */,
 				204D09832D1166810066B060 /* IntroductionPage.swift in Sources */,
 				201BB9942D8AF77F00890EE6 /* ConversationSidebarButtons.swift in Sources */,
 				20457D142D91768300954892 /* ActiveApplicationInspector.swift in Sources */,
@@ -2470,6 +2468,7 @@
 				20457D1C2D91901A00954892 /* Origin.swift in Sources */,
 				20457D1D2D91901A00954892 /* CursorBounds.swift in Sources */,
 				20FDE2A22DAE726E000A16F8 /* OpenAIFunction.swift in Sources */,
+				2000EF382DCB7888006F9A95 /* CapsuleMenuButton.swift in Sources */,
 				20457D1E2D91901A00954892 /* ScreenModes.swift in Sources */,
 				20457D1F2D91901A00954892 /* Extension+AXUIElement.swift in Sources */,
 				20457D202D91901A00954892 /* ErrorExtensions.swift in Sources */,
@@ -2557,6 +2556,7 @@
 				201A1A8E2CDB7C1C001E9BA9 /* MarkdownDataView.swift in Sources */,
 				202E93662DB22D3000AB361E /* InputFunctions.swift in Sources */,
 				20A8B65B2CB2709100B756FD /* Resources.swift in Sources */,
+				2000EF3A2DCB7950006F9A95 /* SearchMenuToggleButton.swift in Sources */,
 				208C5FDA2D7A771F00D82AA6 /* RetryButton.swift in Sources */,
 				204D9CBF2CF4ABCF0052B6F4 /* StatusLabelView.swift in Sources */,
 				20CEA75B2CE308AD0070579B /* MessageContentView.swift in Sources */,

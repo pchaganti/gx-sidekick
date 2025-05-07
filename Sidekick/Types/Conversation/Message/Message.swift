@@ -134,7 +134,7 @@ public struct Message: Identifiable, Codable, Hashable {
 		) ?? []
 		let resourcesResults: [Source] = resourcesSearchResults.map { result in
 			// If search result context is not being used, skip
-			if !RetrievalSettings.useSearchResultContext {
+			if !RetrievalSettings.useWebSearchResultContext {
 				return Source(
 					text: result.text,
 					source: result.sourceUrlText!

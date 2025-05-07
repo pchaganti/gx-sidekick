@@ -29,8 +29,8 @@ enum IntroductionPage: CaseIterable {
 			case .webSearch:
 				return Content(
 					image: Image(.webSearch),
-					title: String(localized: "Web Search"),
-					description: String(localized: "Use Web Search to find up to date information about a topic.")
+					title: String(localized: "Search"),
+					description: String(localized: "Search the web to find up to date information about a topic.")
 				)
             case .functionUse:
 				return Content(

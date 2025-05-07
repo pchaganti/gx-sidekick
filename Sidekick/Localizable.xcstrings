@@ -2236,9 +2236,6 @@
         }
       }
     },
-    "Hello, World!" : {
-
-    },
     "Help" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3176,6 +3173,16 @@
         }
       }
     },
+    "Reason" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "深度思考"
+          }
+        }
+      }
+    },
     "Reasoning Process" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3605,6 +3612,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "搜索结果"
+          }
+        }
+      }
+    },
+    "Search the web to find up to date information about a topic." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在互联网上搜索，以找到最新相关信息。"
           }
         }
       }
@@ -4498,16 +4515,6 @@
         }
       }
     },
-    "Use AI to synthesize information from experts and the web for complex research" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "用AI综合专家和网络的信息进行深度调查"
-          }
-        }
-      }
-    },
     "Use Completions" : {
       "localizations" : {
         "zh-Hans" : {
@@ -4608,6 +4615,16 @@
         }
       }
     },
+    "Use Search" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启用搜索"
+          }
+        }
+      }
+    },
     "Use Speculative Decoding" : {
       "localizations" : {
         "zh-Hans" : {
@@ -4674,16 +4691,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "启用网络搜索，让聊天机器人利用最新信息。"
-          }
-        }
-      }
-    },
-    "Use Web Search to find up to date information about a topic." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "启用网络搜索，让聊天机器人使用最新信息。"
           }
         }
       }
@@ -4794,16 +4801,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "水循环"
-          }
-        }
-      }
-    },
-    "Web Search" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "网络搜索"
           }
         }
       }

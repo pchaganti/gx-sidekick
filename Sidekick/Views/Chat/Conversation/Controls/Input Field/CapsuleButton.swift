@@ -11,16 +11,17 @@ struct CapsuleButton: View {
     
     var label: String
     var systemImage: String
+    var activatedFillColor: Color = .accentColor
     
     @Binding var isActivated: Bool
     var onToggle: (Bool) -> Void
     
     var textColor: Color {
-        return self.isActivated ? .accentColor : .secondary
+        return self.isActivated ? self.activatedFillColor : .secondary
     }
     
     var bubbleColor: Color {
-        return self.isActivated ? .accentColor.opacity(0.3) : .white.opacity(0.0001)
+        return self.isActivated ? self.activatedFillColor.opacity(0.3) : .white.opacity(0.0001)
     }
     
     var bubbleBorderColor: Color {

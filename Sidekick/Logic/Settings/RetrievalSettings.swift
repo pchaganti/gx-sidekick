@@ -67,19 +67,19 @@ public class RetrievalSettings {
 	}
 	
 	/// Computed property for whether the context of a search result is used
-	static var useSearchResultContext: Bool {
+	static var useWebSearchResultContext: Bool {
 		get {
 			// Set default
-			if !UserDefaults.standard.exists(key: "useSearchResultContext") {
+			if !UserDefaults.standard.exists(key: "useWebSearchResultContext") {
 				// Default to true for more content
-				Self.useSearchResultContext = true
+				Self.useWebSearchResultContext = true
 			}
 			return UserDefaults.standard.bool(
-				forKey: "useSearchResultContext"
+				forKey: "useWebSearchResultContext"
 			)
 		}
 		set {
-			UserDefaults.standard.set(newValue, forKey: "useSearchResultContext")
+			UserDefaults.standard.set(newValue, forKey: "useWebSearchResultContext")
 		}
 	}
 	

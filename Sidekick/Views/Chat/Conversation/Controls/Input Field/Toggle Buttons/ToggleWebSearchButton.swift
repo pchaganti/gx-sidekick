@@ -1,5 +1,5 @@
 //
-//  UseWebSearchButton.swift
+//  ToggleWebSearchButton.swift
 //  Sidekick
 //
 //  Created by John Bean on 3/18/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct UseWebSearchButton: View {
+struct ToggleWebSearchButton: View {
 	
 	@Binding var useWebSearch: Bool
 	
@@ -15,8 +15,8 @@ struct UseWebSearchButton: View {
 	
     var body: some View {
         CapsuleButton(
-            label: "Web Search",
-            systemImage: "globe",
+            label: String(localized: "Search"),
+            systemImage: "magnifyingglass",
             isActivated: self.$useWebSearch
         ) { newValue in
             self.onToggle(newValue: newValue)

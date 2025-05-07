@@ -79,11 +79,6 @@ struct SidekickApp: App {
             ModelExplorerView()
         }
         
-        // Window for Tool: Deep Research
-        SwiftUI.Window("Deep Research", id: "deepResearch") {
-            DeepResearchView()
-        }
-        
         // Window for Tool: Detector
         SwiftUI.Window("Detector", id: "detector") {
             DetectorView()

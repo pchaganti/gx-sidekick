@@ -64,6 +64,10 @@ struct PromptInputField: View {
     
     var addFilesTip: AddFilesTip = .init()
     
+    var buttonFillColor: Color {
+        return self.promptController.isRecording ? Color.red : Color.accentColor
+    }
+    
     var body: some View {
         textField
             .onExitCommand {
@@ -141,12 +145,16 @@ struct PromptInputField: View {
         .overlay(alignment: .bottomLeading) {
             HStack {
                 UseReasoningButton(
+                    activatedFillColor: self.buttonFillColor,
                     useReasoning: self.$promptController.useReasoning
                 )
-                UseWebSearchButton(
-                    useWebSearch: self.$promptController.useWebSearch
+                SearchMenuToggleButton(
+                    activatedFillColor: self.buttonFillColor,
+                    useWebSearch: self.$promptController.useWebSearch,
+                    selectedSearchState: self.$promptController.selectedSearchState
                 )
                 UseFunctionsButton(
+                    activatedFillColor: self.buttonFillColor,
                     useFunctions: self.$promptController.useFunctions
                 )
             }

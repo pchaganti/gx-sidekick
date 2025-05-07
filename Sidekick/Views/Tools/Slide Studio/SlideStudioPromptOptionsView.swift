@@ -15,7 +15,7 @@ struct SlideStudioPromptOptionsView: View {
 	
     var body: some View {
 		HStack {
-			UseWebSearchButton(
+			ToggleWebSearchButton(
 				useWebSearch: $slideStudioViewController.useWebSearch
 			)
 			Divider()

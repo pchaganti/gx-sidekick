@@ -32,22 +32,10 @@ struct ToolboxLibraryView: View {
 	
     var tools: some View {
         List {
-            self.deepResearchCard
             self.detectorCard
             self.diagrammerCard
             self.inlineAssistantCard
             self.slideStudioCard
-        }
-    }
-	
-    var deepResearchCard: some View {
-        ToolCardButton(
-            name: String(localized: "Deep Research"),
-            description: String(localized: "Use AI to synthesize information from experts and the web for complex research")
-        ) {
-            Image(systemName: "magnifyingglass")
-        } action: {
-            self.openToolWindow(id: "deepResearch")
         }
     }
     

@@ -19,7 +19,7 @@ struct RetrievalSettingsView: View {
 	@State private var tavilyBackupApiKey: String = RetrievalSettings.tavilyBackupApiKey
 	
     @AppStorage("searchResultsMultiplier") private var searchResultsMultiplier: Int = RetrievalSettings.searchResultsMultiplier
-	@State private var useSearchResultContext: Bool = RetrievalSettings.useSearchResultContext
+	@State private var useWebSearchResultContext: Bool = RetrievalSettings.useWebSearchResultContext
 
     var body: some View {
 		Form {
@@ -41,7 +41,7 @@ struct RetrievalSettingsView: View {
                     tavilySearch
                 }
 			} header: {
-				Text("Web Search")
+				Text("Search")
 			}
 		}
 		.formStyle(.grouped)
@@ -212,10 +212,10 @@ struct RetrievalSettingsView: View {
 			}
 			.frame(minWidth: 250)
 			Spacer()
-			Toggle("", isOn: $useSearchResultContext)
+			Toggle("", isOn: $useWebSearchResultContext)
 		}
-		.onChange(of: useSearchResultContext) {
-			RetrievalSettings.useSearchResultContext = self.useSearchResultContext
+		.onChange(of: useWebSearchResultContext) {
+			RetrievalSettings.useWebSearchResultContext = self.useWebSearchResultContext
 		}
 	}
 	

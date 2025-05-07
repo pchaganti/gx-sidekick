@@ -31,6 +31,8 @@ public class PromptController: ObservableObject, DropDelegate {
     @Published var didManuallyToggleReasoning: Bool = false
     
 	@Published var useWebSearch: Bool = false
+    @Published var selectedSearchState: SearchState = .search
+    
     @Published var useFunctions: Bool = Settings.useFunctions
 	
     @Published var prompt: String = ""
@@ -92,7 +94,9 @@ public class PromptController: ObservableObject, DropDelegate {
 		setupRecognitionTask()
 		startAudioEngine()
 		DispatchQueue.main.sync {
-			self.isRecording = true
+            withAnimation(.linear) {
+                self.isRecording = true
+            }
 		}
 	}
 	
@@ -105,7 +109,9 @@ public class PromptController: ObservableObject, DropDelegate {
 		recognitionRequest?.endAudio()
 		recognitionTask?.cancel()
 		DispatchQueue.main.async {
-			self.isRecording = false
+            withAnimation(.linear) {
+                self.isRecording = false
+            }
 		}
 	}
 	

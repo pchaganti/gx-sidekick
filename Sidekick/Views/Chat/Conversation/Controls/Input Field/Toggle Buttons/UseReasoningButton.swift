@@ -11,6 +11,8 @@ struct UseReasoningButton: View {
     
     @EnvironmentObject private var promptController: PromptController
     
+    var activatedFillColor: Color
+    
     @Binding var useReasoning: Bool
     
     var selectedModel: KnownModel? {
@@ -35,8 +37,9 @@ struct UseReasoningButton: View {
     
     var body: some View {
         CapsuleButton(
-            label: "Reason",
+            label: String(localized: "Reason"),
             systemImage: self.systemImage,
+            activatedFillColor: self.activatedFillColor,
             isActivated: self.$useReasoning
         ) { newValue in
             self.onToggle(newValue: newValue)

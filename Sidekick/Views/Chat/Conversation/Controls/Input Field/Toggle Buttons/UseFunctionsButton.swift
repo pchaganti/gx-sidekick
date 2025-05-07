@@ -9,14 +9,17 @@ import SwiftUI
 
 struct UseFunctionsButton: View {
     
+    var activatedFillColor: Color
+    
     @Binding var useFunctions: Bool
     
     var useFunctionsTip: UseFunctionsTip = .init()
     
     var body: some View {
         CapsuleButton(
-            label: "Functions",
+            label: String(localized: "Functions"),
             systemImage: "function",
+            activatedFillColor: activatedFillColor,
             isActivated: self.$useFunctions
         ) { newValue in
             self.onToggle(newValue: newValue)
