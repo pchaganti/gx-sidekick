@@ -23,6 +23,8 @@ struct CapsuleMenuButton<Options: MenuOptions>: View {
     @Binding var isActivated: Bool
     @Binding var selectedOption: Options
     
+    @State private var anchorView: NSView?
+    
     var onToggle: (Bool) -> Void
     var onSelectionChange: ((Options) -> Void) = { _ in }
     
@@ -50,6 +52,8 @@ struct CapsuleMenuButton<Options: MenuOptions>: View {
         HStack(
             spacing: 0
         ) {
+            AnchorRepresentable(view: self.$anchorView)
+                .frame(width: 0.1, height: 0.1)
             buttonLeft
             Rectangle()
                 .fill(self.bubbleBorderColor)
@@ -84,6 +88,9 @@ struct CapsuleMenuButton<Options: MenuOptions>: View {
                 options: self.options
             ) { option in
                 self.changeSelection(newSelection: option)
+            },
+            anchorViewProvider: {
+                self.anchorView
             }
         )
         .frame(width: 20, height: 20)
@@ -121,8 +128,16 @@ struct CapsuleMenuButton<Options: MenuOptions>: View {
         withAnimation(
             .linear(duration: 0.15)
         ) {
+            // Check if did change
+            let didChange: Bool = self.selectedOption != newSelection
             self.selectedOption = newSelection
-            self.isActivated = true
+            // If did change
+            if didChange {
+                self.isActivated = true
+            } else {
+                // Else, toggle
+                self.isActivated.toggle()
+            }
         }
         // Run handler
         self.onSelectionChange(newSelection)
@@ -130,7 +145,7 @@ struct CapsuleMenuButton<Options: MenuOptions>: View {
     
 }
 
-protocol MenuOptions: Identifiable, CaseIterable {
+protocol MenuOptions: Identifiable, Equatable, CaseIterable {
     var description: String { get }
 }
 
@@ -139,6 +154,7 @@ struct MenuIcon: NSViewRepresentable {
     let iconName: String
     let color: NSColor
     let menu: NSMenu
+    let anchorViewProvider: () -> NSView?
     
     func makeNSView(
         context: Context
@@ -159,6 +175,7 @@ struct MenuIcon: NSViewRepresentable {
         button.contentTintColor = color
         button.target = context.coordinator
         button.action = #selector(Coordinator.showMenu(_:))
+        button.sendAction(on: [.leftMouseDown])
         return button
     }
     
@@ -172,18 +189,43 @@ struct MenuIcon: NSViewRepresentable {
     }
     
     func makeCoordinator() -> Coordinator {
-        Coordinator(menu: menu)
+        Coordinator(
+            menu: menu,
+            anchorViewProvider: anchorViewProvider
+        )
     }
     
     class Coordinator: NSObject {
         
         let menu: NSMenu
-        init(menu: NSMenu) { self.menu = menu }
+        let anchorViewProvider: () -> NSView?
         
-        @objc func showMenu(_ sender: NSButton) {
+        init(
+            menu: NSMenu,
+            anchorViewProvider: @escaping () -> NSView?
+        ) {
+            self.menu = menu
+            self.anchorViewProvider = anchorViewProvider
+        }
+        
+        @objc func showMenu(
+            _ sender: NSButton
+        ) {
             // Present the menu just below the button
             let buttonRect = sender.bounds
-            let menuOrigin = NSPoint(x: 0, y: buttonRect.height)
+            guard let anchor = self.anchorViewProvider() else {
+                return
+            }
+            let anchorOriginInSender: CGPoint = sender.convert(
+                anchor.bounds.origin,
+                from: anchor
+            )
+            let xOffset: CGFloat = anchorOriginInSender.x
+            let yOffset: CGFloat = buttonRect.midY + (buttonRect.height + 15) / 2
+            let menuOrigin: NSPoint = NSPoint(
+                x: xOffset,
+                y: yOffset
+            )
             menu.popUp(positioning: nil, at: menuOrigin, in: sender)
         }
         
@@ -236,4 +278,20 @@ fileprivate class MenuHandler: NSObject {
             wrapper.handler(wrapper.option)
         }
     }
+}
+
+struct AnchorRepresentable: NSViewRepresentable {
+    
+    @Binding var view: NSView?
+    
+    func makeNSView(
+        context: Context
+    ) -> NSView {
+        let view = NSView()
+        DispatchQueue.main.async { self.view = view }
+        return view
+    }
+    
+    func updateNSView(_ nsView: NSView, context: Context) {}
+    
 }
