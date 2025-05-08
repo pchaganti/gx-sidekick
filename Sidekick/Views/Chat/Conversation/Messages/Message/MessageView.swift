@@ -10,24 +10,7 @@ import MarkdownUI
 import Splash
 import SwiftUI
 
-struct MessageView: View, Equatable {
-	
-    static func == (lhs: MessageView, rhs: MessageView) -> Bool {
-        lhs.message.id == rhs.message.id &&
-        lhs.message.text == rhs.message.text &&
-        lhs.message.functionCallRecords == rhs.message.functionCallRecords
-    }
-    
-	init(
-		message: Message,
-		canEdit: Bool = true,
-        shimmer: Bool = false
-	) {
-		self.messageText = message.text
-		self.message = message
-		self.canEdit = canEdit
-        self.shimmer = shimmer
-	}
+struct MessageView: View {
 	
     @Environment(\.openWindow) var openWindow
     
@@ -36,32 +19,26 @@ struct MessageView: View, Equatable {
 	@EnvironmentObject private var conversationState: ConversationState
 	@EnvironmentObject private var promptController: PromptController
     @EnvironmentObject private var memories: Memories
-	
-	@State private var isEditing: Bool = false
-	@State private var messageText: String
     
+    @State private var isEditing: Bool = false
 	@State private var isShowingSources: Bool = false
 	
-    var shimmer: Bool
-	var viewReferenceTip: ViewReferenceTip = .init()
-	
-	var selectedConversation: Conversation? {
-		guard let selectedConversationId = conversationState.selectedConversationId else {
-			return nil
-		}
-		return self.conversationManager.getConversation(
-			id: selectedConversationId
-		)
-	}
-	
-	var message: Message
-	
-	private var isGenerating: Bool {
-		return !message.outputEnded && message.getSender() == .assistant
-	}
-	
-	var canEdit: Bool
-	
+    var message: Message
+    var shimmer: Bool = false
+    
+    private var isGenerating: Bool {
+        return !message.outputEnded && message.getSender() == .assistant
+    }
+    
+    var selectedConversation: Conversation? {
+        guard let selectedConversationId = conversationState.selectedConversationId else {
+            return nil
+        }
+        return self.conversationManager.getConversation(
+            id: selectedConversationId
+        )
+    }
+    
 	var sources: Sources? {
 		SourcesManager.shared.getSources(
 			id: message.id
@@ -142,7 +119,7 @@ struct MessageView: View, Equatable {
             MessageOptionsView(
                 isEditing: $isEditing,
                 message: message,
-                canEdit: canEdit
+                canEdit: !self.isGenerating
             )
             if self.isGenerating {
                 stopButton
@@ -197,12 +174,11 @@ struct MessageView: View, Equatable {
                 .labelStyle(.titleAndIcon)
 				.padding(11)
 			} else {
-				switch message.contentType {
-					case .text:
-						textContent
-					case .image:
-						imageContent
-				}
+                MessageContentView(
+                    message: self.message,
+                    isEditing: self.$isEditing,
+                    shimmer: self.shimmer
+                )
 			}
 		}
 		.background {
@@ -210,85 +186,6 @@ struct MessageView: View, Equatable {
 				.contextMenu {
 					copyButton
 				}
-		}
-	}
-	
-	var imageContent: some View {
-		message.image
-			.padding(0.5)
-	}
-	
-	var textContent: some View {
-		Group {
-            if self.isEditing {
-				contentEditor
-            } else {
-                VStack(
-                    alignment: .leading,
-                    spacing: 4
-                ) {
-                    // Show function calls if availible
-                    if self.message.hasFunctionCallRecords {
-                        FunctionCallsView(message: self.message)
-                            .if(
-                                !self.message.text
-                                    .isEmpty || (self.message.functionCallRecords?.count ?? 0) > 1
-                            ) { view in
-                                view.padding(.bottom, 5)
-                            }
-                    }
-                    // Show reasoning process if availible
-                    if self.message.hasReasoning {
-                        MessageReasoningProcessView(message: self.message)
-                            .if(!self.message.responseText.isEmpty) { view in
-                                view.padding(.bottom, 5)
-                            }
-                    }
-                    // Show message response
-                    MessageContentView(text: self.message.responseText)
-                        .if(shimmer) { view in
-                            view.shimmering()
-                        }
-                    // Show references if needed
-                    if !self.message.referencedURLs.isEmpty {
-                        messageReferences
-                    }
-                }
-			}
-		}
-		.padding(11)
-	}
-    
-	var contentEditor: some View {
-		VStack {
-            TextEditor(
-                text: self.$messageText
-            )
-            .frame(minWidth: 0, maxWidth: .infinity)
-            .font(.title3)
-			HStack {
-                Spacer()
-                Button {
-                    withAnimation(
-                        .linear(duration: 0.5)
-                    ) {
-                        self.isEditing.toggle()
-                    }
-                } label: {
-                    Text("Cancel")
-                }
-                Button {
-                    self.updateMessage()
-                    withAnimation(
-                        .linear(duration: 0.5)
-                    ) {
-                        self.isEditing.toggle()
-                    }
-                } label: {
-                    Text("Save")
-                }
-                .keyboardShortcut("s", modifiers: .command)
-			}
 		}
 	}
 	
@@ -315,36 +212,6 @@ struct MessageView: View, Equatable {
 			self.message.text.copyWithFormatting()
 		} label: {
 			Text("Copy to Clipboard")
-		}
-	}
-	
-	var messageReferences: some View {
-		VStack(
-			alignment: .leading
-		) {
-			Text("References:")
-				.bold()
-				.font(.body)
-				.foregroundStyle(Color.secondary)
-			ForEach(
-				self.message.referencedURLs.indices,
-				id: \.self
-			) { index in
-				self.message.referencedURLs[index].openButton
-					.if(index == 0) { view in
-						view.popoverTip(
-							viewReferenceTip,
-							arrowEdge: .top
-						) { action in
-							// Open reference
-							self.message.referencedURLs[index].open()
-						}
-					}
-			}
-		}
-		.padding(.top, 8)
-		.onAppear {
-			ViewReferenceTip.hasReference = true
 		}
 	}
 	
@@ -382,14 +249,6 @@ struct MessageView: View, Equatable {
         self.promptController.prompt = prevMessage?.text ?? ""
         // Delete messages
         conversation.messages = conversation.messages.dropLast(count)
-		conversationManager.update(conversation)
-	}
-	
-	private func updateMessage() {
-		guard var conversation = selectedConversation else { return }
-		var message: Message = self.message
-		message.text = messageText
-		conversation.updateMessage(message)
 		conversationManager.update(conversation)
 	}
 	

@@ -159,7 +159,7 @@ struct UseWebSearchTip: Tip {
 	}
 	
 	var image: Image? {
-		Image(systemName: "globe")
+		Image(systemName: "magnifyingglass")
 	}
 	
 }

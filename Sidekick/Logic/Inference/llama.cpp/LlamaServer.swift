@@ -402,6 +402,15 @@ public actor LlamaServer {
                         useFunctions: useFunctions,
                         functions: functions
 					)
+                case .deepResearch:
+                    return await ChatParameters(
+                        modelType: self.modelType,
+                        systemPrompt: self.systemPrompt,
+                        messages: messages,
+                        useWebSearch: useWebSearch,
+                        useFunctions: useFunctions,
+                        functions: functions
+                    )
 				case .default:
 					return await ChatParameters(
                         modelType: self.modelType,
@@ -434,6 +443,8 @@ public actor LlamaServer {
                     } else {
                         return []
                     }
+                case .deepResearch:
+                    return []
                 case .`default`:
                     return [.tools]
             }

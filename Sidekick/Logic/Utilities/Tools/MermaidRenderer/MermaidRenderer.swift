@@ -54,20 +54,6 @@ public class MermaidRenderer {
         category: String(describing: MermaidRenderer.self)
     )
     
-    /// Function to display render error
-    public func displayRenderError(
-        errorMessage: String? = nil
-    ) {
-        let message: String = errorMessage ?? String(localized: "Could not render the diagram within reasonable time.")
-        // Return to first step
-        Task { @MainActor in
-            Dialogs.showAlert(
-                title: String(localized: "Error"),
-                message: message
-            )
-        }
-    }
-    
     /// Function to reset mermaid code
     public static func resetMermaidCode() {
         Self.saveMermaidCode(code: "")
@@ -92,7 +78,8 @@ public class MermaidRenderer {
     /// Function to render the preview from the mermaid code
     public func render(
         attemptsRemaining: Int = 3,
-        onFinish: (() -> Void)? = nil
+        onFinish: (() -> Void) = {},
+        onError: @escaping ((String?) -> Void) = { _ in }
     ) throws {
         // Add flag for finished rendering
         var didFinishRendering: Bool = false
@@ -127,7 +114,7 @@ public class MermaidRenderer {
                 }
             }
             try self.mermaidRenderProcess.run()
-            Self.logger.notice("Started diagrammer preview server")
+            Self.logger.notice("Started mermaid diagram renderer")
             // Read error output asynchronously
             errorPipe.fileHandleForReading.readabilityHandler = { handle in
                 let data = handle.availableData
@@ -154,7 +141,7 @@ public class MermaidRenderer {
                     throw RenderError.error(errorOutput)
                 } else {
                     DispatchQueue.main.async {
-                        self.displayRenderError(errorMessage: errorOutput)
+                        onError(errorOutput)
                     }
                     return
                 }
@@ -162,9 +149,9 @@ public class MermaidRenderer {
                 // If file not updated, trigger error if last attempt
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                     if !didFinishRendering, attemptsRemaining == 0 {
-                        errorPipe.fileHandleForReading.readabilityHandler = nil
                         self.fileMonitor = nil
-                        self.displayRenderError()
+                        errorPipe.fileHandleForReading.readabilityHandler = nil
+                        onError(nil)
                     }
                 }
             }
@@ -176,7 +163,7 @@ public class MermaidRenderer {
             if attemptsRemaining > 0 {
                 throw error
             } else {
-                self.displayRenderError(errorMessage: error.localizedDescription)
+                onError(error.localizedDescription)
             }
         }
     }

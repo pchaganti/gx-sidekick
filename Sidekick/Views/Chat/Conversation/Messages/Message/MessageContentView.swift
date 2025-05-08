@@ -2,103 +2,172 @@
 //  MessageContentView.swift
 //  Sidekick
 //
-//  Created by Bean John on 11/12/24.
+//  Created by John Bean on 5/8/25.
 //
 
-import LaTeXSwiftUI
-import MarkdownUI
-import Splash
 import SwiftUI
 
 struct MessageContentView: View {
+        
+    init(
+        message: Message,
+        isEditing: Binding<Bool>,
+        shimmer: Bool = false
+    ) {
+        self.messageText = message.text
+        self.message = message
+        self._isEditing = isEditing
+        self.shimmer = shimmer
+    }
+
+    @EnvironmentObject private var conversationManager: ConversationManager
+    @EnvironmentObject private var conversationState: ConversationState
     
-    @Environment(\.colorScheme) private var colorScheme
+    @Binding private var isEditing: Bool
+    @State private var messageText: String
     
-    @State private var cachedMarkdown: AnyView? = nil
-    @State private var processedText: String = ""
-    @State private var lastUpdate: Date = Date()
-    @State private var throttleTimer: Timer?
+    var message: Message
+    var shimmer: Bool
     
-    var text: String
-    private let imageScaleFactor: CGFloat = 1.0
-    private let throttleInterval: TimeInterval = 0.4
-    
-    private var theme: Splash.Theme {
-        switch colorScheme {
-            case .dark:
-                return .wwdc17(withFont: .init(size: 16))
-            default:
-                return .sunset(withFont: .init(size: 16))
+    var selectedConversation: Conversation? {
+        guard let selectedConversationId = conversationState.selectedConversationId else {
+            return nil
         }
+        return self.conversationManager.getConversation(
+            id: selectedConversationId
+        )
+    }
+    
+    var viewReferenceTip: ViewReferenceTip = .init()
+    
+    private var isGenerating: Bool {
+        return !message.outputEnded && message.getSender() == .assistant
     }
     
     var body: some View {
-        VStack(alignment: .leading) {
-            if let cached = cachedMarkdown {
-                cached
+        switch message.contentType {
+            case .text:
+                textContent
+            case .image:
+                imageContent
+        }
+    }
+    
+    var imageContent: some View {
+        message.image
+            .padding(0.5)
+    }
+    
+    var textContent: some View {
+        Group {
+            if self.isEditing {
+                contentEditor
             } else {
-                markdownView(processedText.isEmpty ? text.convertLaTeX() : processedText)
+                VStack(
+                    alignment: .leading,
+                    spacing: 4
+                ) {
+                    // Show function calls if availible
+                    if self.message.hasFunctionCallRecords {
+                        FunctionCallsView(message: self.message)
+                            .if(
+                                !self.message.text
+                                    .isEmpty || (self.message.functionCallRecords?.count ?? 0) > 1
+                            ) { view in
+                                view.padding(.bottom, 5)
+                            }
+                    }
+                    // Show reasoning process if availible
+                    if self.message.hasReasoning {
+                        MessageReasoningProcessView(message: self.message)
+                            .if(!self.message.responseText.isEmpty) { view in
+                                view.padding(.bottom, 5)
+                            }
+                    }
+                    // Show message response
+                    MessageTextContentView(text: self.message.responseText)
+                        .if(shimmer) { view in
+                            view.shimmering()
+                        }
+                    // Show references if needed
+                    if !self.message.referencedURLs.isEmpty {
+                        messageReferences
+                    }
+                }
             }
         }
-        .onAppear {
-            updateProcessedTextAndMarkdown(text)
-        }
-        .onChange(of: self.text) { _, newText in
-            updateProcessedTextAndMarkdown(newText)
-        }
-        .onDisappear {
-            throttleTimer?.invalidate()
-        }
+        .padding(11)
     }
     
-    @ViewBuilder
-    private func markdownView(
-        _ text: String
-    ) -> some View {
-        Markdown(MarkdownContent(text))
-            .markdownTheme(.gitHub)
-            .markdownCodeSyntaxHighlighter(.splash(theme: theme))
-            .markdownImageProvider(MarkdownImageProvider(scaleFactor: imageScaleFactor))
-            .markdownInlineImageProvider(MarkdownInlineImageProvider(scaleFactor: imageScaleFactor))
-            .textSelection(.enabled)
-    }
-    
-    private func updateProcessedTextAndMarkdown(
-        _ newText: String
-    ) {
-        let converted = newText.convertLaTeX()
-        processedText = converted
-        
-        let now = Date()
-        let timeSinceLast = now.timeIntervalSince(lastUpdate)
-        if timeSinceLast >= throttleInterval {
-            lastUpdate = now
-            updateCachedMarkdown(with: converted)
-        } else {
-            throttleTimer?.invalidate()
-            throttleTimer = Timer.scheduledTimer(withTimeInterval: throttleInterval - timeSinceLast, repeats: false) { _ in
-                lastUpdate = Date()
-                updateCachedMarkdown(with: converted)
-            }
-        }
-    }
-    
-    private func updateCachedMarkdown(
-        with text: String
-    ) {
-        DispatchQueue.global(qos: .userInitiated).async {
-            let rendered = AnyView(
-                Markdown(MarkdownContent(text))
-                    .markdownTheme(.gitHub)
-                    .markdownCodeSyntaxHighlighter(.splash(theme: self.theme))
-                    .markdownImageProvider(MarkdownImageProvider(scaleFactor: self.imageScaleFactor))
-                    .markdownInlineImageProvider(MarkdownInlineImageProvider(scaleFactor: self.imageScaleFactor))
-                    .textSelection(.enabled)
+    var contentEditor: some View {
+        VStack {
+            TextEditor(
+                text: self.$messageText
             )
-            DispatchQueue.main.async {
-                self.cachedMarkdown = rendered
+            .frame(minWidth: 0, maxWidth: .infinity)
+            .font(.title3)
+            HStack {
+                Spacer()
+                Button {
+                    withAnimation(
+                        .linear(duration: 0.5)
+                    ) {
+                        self.isEditing.toggle()
+                    }
+                } label: {
+                    Text("Cancel")
+                }
+                Button {
+                    self.updateMessage()
+                    withAnimation(
+                        .linear(duration: 0.5)
+                    ) {
+                        self.isEditing.toggle()
+                    }
+                } label: {
+                    Text("Save")
+                }
+                .keyboardShortcut("s", modifiers: .command)
             }
         }
+    }
+    
+    var messageReferences: some View {
+        VStack(
+            alignment: .leading
+        ) {
+            Text("References:")
+                .bold()
+                .font(.body)
+                .foregroundStyle(Color.secondary)
+            ForEach(
+                self.message.referencedURLs.indices,
+                id: \.self
+            ) { index in
+                self.message.referencedURLs[index].openButton
+                    .if(index == 0) { view in
+                        view.popoverTip(
+                            viewReferenceTip,
+                            arrowEdge: .top
+                        ) { action in
+                            // Open reference
+                            self.message.referencedURLs[index].open()
+                        }
+                    }
+            }
+        }
+        .padding(.top, 8)
+        .onAppear {
+            ViewReferenceTip.hasReference = true
+        }
+    }
+    
+    private func updateMessage() {
+        guard var conversation = selectedConversation else { return }
+        var message: Message = self.message
+        message.text = messageText
+        conversation.updateMessage(message)
+        conversationManager.update(conversation)
     }
     
 }

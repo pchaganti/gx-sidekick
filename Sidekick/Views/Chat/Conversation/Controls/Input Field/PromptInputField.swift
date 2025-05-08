@@ -104,22 +104,17 @@ struct PromptInputField: View {
                     for: Notifications.changedInferenceConfig.name
                 )
             ) { output in
-                // Update reasoning button
                 withAnimation(.linear) {
-                    if let isReasoningModel = Model.shared.selectedModel?.isReasoningModel {
-                        self.promptController.useReasoning = isReasoningModel
-                    } else {
-                        // Default to false
-                        self.promptController.useReasoning = false
-                    }
+                    // Handle model change
+                    self.handleModelChange()
                 }
             }
             .onAppear {
                 self.isFocused = true
-                setupKeyEventMonitor()
+                self.setupKeyEventMonitor()
             }
             .onDisappear {
-                removeKeyEventMonitor()
+                self.removeKeyEventMonitor()
             }
             .popoverTip(addFilesTip)
     }
@@ -403,10 +398,13 @@ struct PromptInputField: View {
                 index?.indexItems.isEmpty
             ) ?? true)
             didUseSources = useWebSearch || hasIndexItems || !tempResources.isEmpty
+            // Get mode
+            let mode: Model.Mode = self.promptController.isUsingDeepResearch ? .deepResearch : .chat
+            // Get response
             response = try await model.listenThinkRespond(
                 messages: self.messages,
                 modelType: .regular,
-                mode: .chat,
+                mode: mode,
                 similarityIndex: index,
                 useReasoning: useReasoning,
                 useWebSearch: useWebSearch,
@@ -541,6 +539,27 @@ A user is chatting with an assistant and they have sent the message below. Gener
             self.promptController.useWebSearch = false
         }
         return success
+    }
+    
+    private func handleModelChange() {
+        // Get selected model
+        if let model = Model.shared.selectedModel {
+            let isReasoningModel: Bool = model.isReasoningModel
+            // Update reasoning
+            self.promptController.useReasoning = isReasoningModel
+            // Update search
+            if !isReasoningModel && self.promptController.isUsingDeepResearch {
+                self.promptController.useWebSearch = false
+                self.promptController.selectedSearchState = .search
+            }
+        } else {
+            // Default to false
+            self.promptController.useReasoning = false
+            if self.promptController.isUsingDeepResearch {
+                self.promptController.useWebSearch = false
+                self.promptController.selectedSearchState = .search
+            }
+        }
     }
     
 }

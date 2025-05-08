@@ -32,6 +32,9 @@ public class PromptController: ObservableObject, DropDelegate {
     
 	@Published var useWebSearch: Bool = false
     @Published var selectedSearchState: SearchState = .search
+    var isUsingDeepResearch: Bool {
+        return self.useWebSearch && self.selectedSearchState == .deepResearch
+    }
     
     @Published var useFunctions: Bool = Settings.useFunctions
 	

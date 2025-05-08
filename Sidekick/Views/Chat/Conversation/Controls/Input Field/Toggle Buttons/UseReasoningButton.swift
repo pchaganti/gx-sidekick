@@ -59,6 +59,16 @@ struct UseReasoningButton: View {
             )
             return
         }
+        // Check if deep research is activated
+        if self.promptController.isUsingDeepResearch {
+            // If true, force reasoning
+            self.useReasoning = true
+            Dialogs.showAlert(
+                title: String(localized: "Not Available"),
+                message: String(localized: "Reasoning must be turned on to use Deep Research.")
+            )
+            return
+        }
         // If can toggle, signal toggled
         self.promptController.didManuallyToggleReasoning = true
     }

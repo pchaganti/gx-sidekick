@@ -126,6 +126,10 @@ struct ChatPromptEditor: View {
         if self.promptController.didManuallyToggleReasoning {
             return
         }
+        // Exit if using Deep Research
+        if self.promptController.isUsingDeepResearch {
+            return
+        }
         // Determine if reasoning is needed
         if let useReasoning = PromptAnalyzer.isReasoningRequired(
             self.promptController.prompt

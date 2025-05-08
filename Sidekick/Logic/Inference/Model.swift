@@ -162,6 +162,9 @@ public class Model: ObservableObject {
 		}
 	}
 	
+    /// The current active  ``Agent``
+    var agent: (any Agent)?
+    
 	/// The message being generated
 	@Published var pendingMessage: Message? = nil
     /// The pending message displayed to users
@@ -205,6 +208,8 @@ public class Model: ObservableObject {
                     !pendingText.isEmpty {
                     text = pendingText
                 }
+            case .deepResearch:
+                text = String(localized: "Preparing Deep Research...")
         }
         if var pendingMessage: Message = self.pendingMessage {
             pendingMessage.text = text
@@ -217,8 +222,23 @@ public class Model: ObservableObject {
             )
         }
     }
+    /// A `View` containing the pending message
+    public var pendingMessageView: some View {
+        Group {
+            switch self.displayedContentType {
+                case .text, .indicator:
+                    MessageView(
+                        message: self.displayedPendingMessage,
+                        shimmer: self.displayedContentType == .indicator
+                    )
+                    .id(self.displayedPendingMessage.id)
+                case .preview:
+                    self.agent?.preview ?? AnyView(EmptyView())
+            }
+        }
+    }
     /// A `Bool` representing whether the text or an indicator is shown
-    public var textIsIndicator: Bool {
+    public var displayedContentType: DisplayedContentType {
         let hasText: Bool = {
             if let text = self.pendingMessage?.text {
                 return !text.isEmpty
@@ -226,17 +246,26 @@ public class Model: ObservableObject {
             return false
         }()
         switch self.status {
-            case .cold, .coldProcessing, .processing, .backgroundTask, .ready:
-                return !hasText
-            case .usingFunctions:
-                return !hasText
-            default:
-                return true
+            case .cold, .coldProcessing, .processing, .backgroundTask, .ready, .usingFunctions:
+                return !hasText ? .indicator : .text
+            case .deepResearch:
+                return self.agent == nil ? .indicator : .preview
+            case .querying, .generatingTitle:
+                return .indicator
         }
+    }
+    /// Enum for content displayed
+    public enum DisplayedContentType: CaseIterable {
+        case indicator, text, preview
     }
     
 	/// The status of `llama-server`, of type ``Model.Status``
 	@Published var status: Status = .cold
+    /// Function to mutate the status
+    public func setStatus(_ newStatus: Status) {
+        self.status = newStatus
+    }
+    
 	/// The id of the conversation where the message was sent, of type `UUID`
 	@Published var sentConversationId: UUID? = nil
 	
@@ -288,6 +317,13 @@ public class Model: ObservableObject {
 		self.pendingMessage = nil
 		self.status = .querying
 	}
+    
+    /// Function to flag that Deep Research has begun
+    func indicateStartedDeepResearch() {
+        // Reset pending message
+        self.pendingMessage = nil
+        self.status = .deepResearch
+    }
 	
 	// Function for the main loop
 	// listen -> respond -> update mental model and save checkpoint
@@ -321,7 +357,9 @@ public class Model: ObservableObject {
 		// Set flag
 		let preQueryStatus: Status = self.status
 		if preQueryStatus.isForegroundTask {
-			self.status = .querying
+            let modeIsDeepResearch: Bool = mode == .deepResearch
+            let isDeepResearching: Bool = self.status == .deepResearch
+            self.status = (modeIsDeepResearch || isDeepResearching) ? .deepResearch : .querying
 		}
         // Check if remote server is reachable
         let canReachRemoteServer: Bool = await self.remoteServerIsReachable()
@@ -350,7 +388,7 @@ public class Model: ObservableObject {
                 )
             }
         // Respond to prompt
-        if self.status.isForegroundTask {
+        if self.status.isForegroundTask && self.status != .deepResearch {
             if preQueryStatus == .cold {
                 self.status = .coldProcessing
             } else {
@@ -424,6 +462,14 @@ public class Model: ObservableObject {
                     similarityIndex: similarityIndex,
                     handleResponseUpdate: handleResponseUpdate
                 )
+            case .deepResearch:
+                // Indicate started Deep Research
+                self.indicateStartedDeepResearch()
+                // TODO: Init and run deep research workflow
+                self.agent = DeepResearchAgent(
+                    messages: messages
+                )
+                response = try await self.agent?.run()
         }
 		// Handle response finish
 		handleResponseFinish(
@@ -432,7 +478,7 @@ public class Model: ObservableObject {
 			response!.usage?.total_tokens
 		)
 		// Update display
-        if preQueryStatus.isForegroundTask {
+        if preQueryStatus.isForegroundTask && preQueryStatus != .deepResearch {
             self.pendingMessage = nil
             self.status = .ready
         }
@@ -785,7 +831,7 @@ Respond with YES if ALL 3 criteria above have been met. Respond with YES or NO o
                     switch modelType {
                         case .regular:
                             try await self.mainModelServer.getChatCompletion(
-                                mode: .chat,
+                                mode: .`default`,
                                 canReachRemoteServer: canReachRemoteServer,
                                 messages: messages,
                                 useWebSearch: false,
@@ -793,7 +839,7 @@ Respond with YES if ALL 3 criteria above have been met. Respond with YES or NO o
                             )
                         default:
                             try await self.workerModelServer.getChatCompletion(
-                                mode: .chat,
+                                mode: .`default`,
                                 canReachRemoteServer: canReachRemoteServer,
                                 messages: messages,
                                 useWebSearch: false,
@@ -919,6 +965,8 @@ Respond with YES if ALL 3 criteria above have been met. Respond with YES or NO o
 		case backgroundTask
 		/// The system is using a function
 		case usingFunctions
+        /// The system is doing deep research
+        case deepResearch
 		/// The inference server is awaiting a prompt
 		case ready
 		
@@ -949,6 +997,8 @@ Respond with YES if ALL 3 criteria above have been met. Respond with YES or NO o
 		
 		/// Indicates the LLM is used as a chatbot, with extra features like resource lookup and code interpreter
 		case chat
+        /// Indicates the LLM is used as an Deep Research agent
+        case deepResearch
 		/// Indicates the LLM is used for simple chat completion
 		case `default`
 		

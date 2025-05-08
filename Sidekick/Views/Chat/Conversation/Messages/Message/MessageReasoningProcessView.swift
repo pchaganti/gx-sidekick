@@ -32,7 +32,7 @@ struct MessageReasoningProcessView: View {
 			toggleReasoningButton
 			// Show reasoning if needed
 			if self.showReasoning {
-				MessageContentView(text: self.message.reasoningText!)
+				MessageTextContentView(text: self.message.reasoningText!)
 					.italic()
 					.padding([.horizontal, .vertical], 10)
 					.padding(.leading, 10)

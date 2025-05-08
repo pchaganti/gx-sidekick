@@ -13,15 +13,23 @@ struct ModelView: View {
 	var model: HuggingFaceModel
 	
 	var paramsDescription: String {
-		let count: Float = round(model.params * 10.0) / 10
+        let count: Float = _math.round(model.params * 10) / 10
 		if Float(Int(count)) == count {
 			return "\(Int(count))"
 		}
-		return "\(count)"
+		return self.round(count)
 	}
 	
 	var benchmarkDescription: String {
-		return "\(round(model.mmluScore * 10.0) / 10)"
+        var descriptionComponents: [String] = []
+        if let mmluScore = self.model.mmluScore {
+            descriptionComponents.append("MMLU: \(self.round(mmluScore))")
+        }
+        if let intelligenceScore = self.model.intelligenceScore {
+            descriptionComponents
+                .append("Intelligence Score: \(self.round(intelligenceScore))")
+        }
+        return descriptionComponents.joined(separator: "\n")
 	}
 	
     var body: some View {
@@ -54,8 +62,9 @@ struct ModelView: View {
 	
 	var properties: some View {
 		Group {
-			Text("Parameters: \(paramsDescription)B")
-			Text("Benchmark Score (MMLU): \(benchmarkDescription)")
+			Text("**Parameters**: \(paramsDescription)B")
+			Text("**Benchmark Scores:**")
+            Text(benchmarkDescription)
 			specializations
 		}
 		.font(.subheadline)
@@ -103,5 +112,11 @@ struct ModelView: View {
 			message: String(localized: "Downloading \(model.name). When complete, the model will be available for selection in `Settings -> Inference`.")
 		)
 	}
+    
+    private func round(
+        _ number: Float
+    ) -> String {
+        return String(format: "%.1f", number)
+    }
 	
 }

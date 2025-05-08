@@ -66,11 +66,13 @@ struct DiagrammerPreviewEditorView: View {
 		.environment(
 			\.codeEditorTheme, colorScheme == .dark ? Theme.defaultDark : Theme.defaultLight
 		)
-		.onChange(of: diagrammerViewController.mermaidCode) {
+		.onChange(
+            of: diagrammerViewController.mermaidCode
+        ) {
             try? self.diagrammerViewController.render(
                 attemptsRemaining: 0
             )
-		}
+        }
 	}
 	
 	var saveButton: some View {

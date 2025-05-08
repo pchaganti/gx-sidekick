@@ -72,8 +72,10 @@ Cheatsheet:
     public func render(
         attemptsRemaining: Int = 3
     ) throws {
-        // Save preview id
-        let id: UUID = self.previewId
+        // Return if code is empty
+        guard !self.mermaidCode.isEmpty else {
+            return
+        }
         // Init renderer
         let renderer: MermaidRenderer = MermaidRenderer()
         // Save mermaid code
@@ -82,8 +84,12 @@ Cheatsheet:
         try renderer.render(
             attemptsRemaining: attemptsRemaining
         ) {
+            // On render finish
             self.previewId = UUID()
             Self.logger.notice("Updated diagrammer preview")
+        } onError: { error in
+            // On render error
+            self.displayRenderError(errorMessage: error)
         }
     }
 	
@@ -174,7 +180,7 @@ Cheatsheet:
                 } catch {
                     // Try to get response text
                     guard let responseText = responseText else {
-                        MermaidRenderer().displayRenderError()
+                        self.displayRenderError()
                         return
                     }
                     let responseMessage: Message = Message(
@@ -203,6 +209,20 @@ Fix the error. Respond with ONLY the corrected Mermaid code.
             }
         }
 	}
+    
+    /// Function to display render error
+    public func displayRenderError(
+        errorMessage: String? = nil
+    ) {
+        let message: String = errorMessage ?? String(localized: "Could not render the diagram within reasonable time.")
+        // Return to first step
+        Task { @MainActor in
+            Dialogs.showAlert(
+                title: String(localized: "Error"),
+                message: message
+            )
+        }
+    }
 	
 	/// The steps to generate the mermaid diagram
 	public enum DiagrammerStep: CaseIterable {

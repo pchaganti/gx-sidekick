@@ -1,5 +1,5 @@
 //
-//  ToggleWebSearchButton.swift
+//  ToggleSearchButton.swift
 //  Sidekick
 //
 //  Created by John Bean on 3/18/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ToggleWebSearchButton: View {
+struct ToggleSearchButton: View {
 	
 	@Binding var useWebSearch: Bool
 	

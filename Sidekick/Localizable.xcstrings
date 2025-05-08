@@ -27,6 +27,26 @@
     "." : {
       "shouldTranslate" : false
     },
+    "**Benchmark Scores:**" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**基准测试**："
+          }
+        }
+      }
+    },
+    "**Parameters**: %@B" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**参数**: %@B"
+          }
+        }
+      }
+    },
     "**Setup Complete**" : {
       "localizations" : {
         "zh-Hans" : {
@@ -118,6 +138,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "已选定一种新的远端模型，该模型可能不拥有视觉输入。您是否要为该模型关闭视觉输入？"
+          }
+        }
+      }
+    },
+    "A reasoning model is required to use Deep Research." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开展深度调查需要借助推理模型。"
           }
         }
       }
@@ -268,6 +298,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "分析"
+          }
+        }
+      }
+    },
+    "Analyze the request" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "理解研究问题"
           }
         }
       }
@@ -462,15 +502,8 @@
         }
       }
     },
-    "Benchmark Score (MMLU): %@" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "基准测试分数（MMLU）：%@"
-          }
-        }
-      }
+    "Blah" : {
+
     },
     "Brainstorm" : {
       "localizations" : {
@@ -578,6 +611,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "检查函数是否已达到初始目标。这有助于在长时间的函数调用后继续执行任务。"
+          }
+        }
+      }
+    },
+    "Check information" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "检查信息完整性"
           }
         }
       }
@@ -1073,6 +1116,16 @@
         }
       }
     },
+    "Create diagrams" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "绘制图表"
+          }
+        }
+      }
+    },
     "Create experts that **customise** chatbot behaviour, making it **reply with context from your files**." : {
       "localizations" : {
         "zh-Hans" : {
@@ -1289,6 +1342,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "禁用推测解码"
+          }
+        }
+      }
+    },
+    "Divide into sections" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "分割研究任务"
           }
         }
       }
@@ -1806,6 +1869,16 @@
         }
       }
     },
+    "Failed to extract prompt." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "提示词提取失败..."
+          }
+        }
+      }
+    },
     "Failed to extract text" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1822,6 +1895,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "打开 %@ 时出现错误"
+          }
+        }
+      }
+    },
+    "Failed to parse sections." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "JSON 解码失败"
           }
         }
       }
@@ -2032,6 +2115,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "已关闭函数"
+          }
+        }
+      }
+    },
+    "Functions must be turned on to use Deep Research." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开展深度调查需要借助函数。"
           }
         }
       }
@@ -2883,6 +2976,16 @@
         }
       }
     },
+    "No prompt provided." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用户没有提供提示词。"
+          }
+        }
+      }
+    },
     "No resources" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3003,16 +3106,6 @@
         }
       }
     },
-    "Parameters: %@B" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "参数量：%@B"
-          }
-        }
-      }
-    },
     "Paraphrase" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3093,12 +3186,32 @@
         }
       }
     },
+    "Polish and finalize" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完善并打磨"
+          }
+        }
+      }
+    },
     "Popular Providers" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "热门端点"
+          }
+        }
+      }
+    },
+    "Preparing Deep Research..." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在准备开展深度调查…"
           }
         }
       }
@@ -3153,6 +3266,16 @@
         }
       }
     },
+    "Progress: %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "进度：%@"
+          }
+        }
+      }
+    },
     "Prompt" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3179,6 +3302,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "深度思考"
+          }
+        }
+      }
+    },
+    "Reasoning must be turned on to use Deep Research." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开展深度调查需要借助深度撕开。"
           }
         }
       }
@@ -3309,6 +3442,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "硬件要求"
+          }
+        }
+      }
+    },
+    "Research each section" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "研究每一部分"
           }
         }
       }
@@ -4891,6 +5034,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "写邮件"
+          }
+        }
+      }
+    },
+    "Write initial draft" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "撰写初稿"
           }
         }
       }

@@ -58,12 +58,12 @@ struct SlideStudioQuickPromptsView: View {
 		}
 		.mask {
 			Rectangle()
-				.overlay(alignment: .leading) {
-					ScrollMask(isLeading: true)
-				}
-				.overlay(alignment: .trailing) {
-					ScrollMask(isLeading: false)
-				}
+                .overlay(alignment: .leading) {
+                    ScrollMask(edge: .leading)
+                }
+                .overlay(alignment: .trailing) {
+                    ScrollMask(edge: .trailing)
+                }
 		}
     }
 	

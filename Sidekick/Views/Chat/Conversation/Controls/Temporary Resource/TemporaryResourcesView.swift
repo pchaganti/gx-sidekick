@@ -35,10 +35,10 @@ struct TemporaryResourcesView: View {
 		.mask {
 			Rectangle()
 				.overlay(alignment: .leading) {
-					ScrollMask(isLeading: true)
+                    ScrollMask(edge: .leading)
 				}
 				.overlay(alignment: .trailing) {
-					ScrollMask(isLeading: false)
+                    ScrollMask(edge: .trailing)
 				}
 		}
 		.padding(.horizontal, 10)

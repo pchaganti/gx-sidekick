@@ -9,6 +9,8 @@ import SwiftUI
 
 struct UseFunctionsButton: View {
     
+    @EnvironmentObject private var promptController: PromptController
+    
     var activatedFillColor: Color
     
     @Binding var useFunctions: Bool
@@ -33,12 +35,21 @@ struct UseFunctionsButton: View {
         // Check if functions is configured
         if !Settings.useFunctions {
             // If not, show error and return
+            self.useFunctions = false // Set back to false
             Dialogs.showAlert(
                 title: String(localized: "Functions Disabled"),
                 message: String(localized: "Functions are disabled in Settings. Please configure it in \"Settings\" -> \"General\" -> \"Functions\".")
             )
-            // Set back to false
-            self.useFunctions = false
+            return
+        }
+        // Check if deep research is activated
+        if self.promptController.isUsingDeepResearch {
+            // If true, force functions
+            self.useFunctions = true
+            Dialogs.showAlert(
+                title: String(localized: "Not Available"),
+                message: String(localized: "Functions must be turned on to use Deep Research.")
+            )
             return
         }
     }
