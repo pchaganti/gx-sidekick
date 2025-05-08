@@ -100,10 +100,10 @@ public class DeepResearchAgent: Agent {
                             currentStep: self.currentStep,
                             step: step
                         )
-                        .id(self.currentStep)
                     }
                 }
                 .padding(.vertical, 8)
+                .id(self.currentStep)
             }
             .mask {
                 Rectangle()
@@ -126,13 +126,15 @@ public class DeepResearchAgent: Agent {
         }
         // Get clarification if needed
         let informationIsSufficient: Bool = await self.haveSufficientInformation()
-        if !informationIsSufficient,
-           let response = await self.writeClarificationQuestions() {
-            Self.logger.info("DeepResearchAgent: Did not have sufficient information, presenting clarification questions")
-            // Switch status back
+        if !informationIsSufficient {
+            // Switch status back to display clarifying process
             await Model.shared.setStatus(.ready)
-            // Return
-            return response
+            // Write clarifying questions
+            if let response = await self.writeClarificationQuestions() {
+                Self.logger.info("DeepResearchAgent: Did not have sufficient information, presenting clarification questions")
+                // Return
+                return response
+            }
         }
         Self.logger.info("DeepResearchAgent: No clarification questions needed, proceeding with research")
         self.currentStep.nextCase()
@@ -358,6 +360,7 @@ Respond with the array of JSON objects ONLY.
                 return sections
             } catch {
                 // Try again
+                Self.logger.warning("DeepResearch: Failed to parse report sections JSON. Retrying...")
                 continue
             }
         }
