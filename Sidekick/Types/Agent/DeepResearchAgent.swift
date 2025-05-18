@@ -108,7 +108,7 @@ public class DeepResearchAgent: Agent {
         Self.logger.info("DeepResearchAgent: Extracted sections:\n\n\(sectionsDescription)")
         self.currentStep.nextCase()
         // Do research for each section
-//        try await self.researchAllSections()
+        try await self.researchAllSections()
         self.currentStep.nextCase()
         // Rewrite into draft report
         var draftResponse: LlamaServer.CompleteResponse? = nil
