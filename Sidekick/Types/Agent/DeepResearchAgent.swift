@@ -345,10 +345,10 @@ Respond with the array of JSON objects ONLY.
                 let section: Section = self.sections[index]
                 // If should research and no results
                 if section.isSearchNeeded && section.results.isNilOrEmpty {
-                    if let results: [Section.Result] = try? await self.researchSection(
+                    if let sectionResult: Section = try? await self.researchSection(
                         section: section
                     ) {
-                        self.sections[index].results = results
+                        self.sections[index] = sectionResult
                     }
                 }
             }
@@ -358,12 +358,29 @@ Respond with the array of JSON objects ONLY.
     /// Function to conduct research for a section of the report
     private func researchSection(
         section: Section
-    ) async throws -> [Section.Result] {
+    ) async throws -> Section {
+        let keyFindings: String = self.sections.map(
+            keyPath: \.keyFinding
+        ).compactMap({ $0 }).joined(separator: "\n")
         let researchPrompt: Message = Message(
             text: """
-You are researching information for a section of a research report. Here are the notes you made on this section.
+You are researching information for a section of a research report. This was the user's instruction regarding the overall report.
 
+```user_instruction
+\(self.prompt)
+```
+
+Here are the notes you made on this section.
+
+```section_notes
 \(section.getPromptDescription())
+```
+
+Here are prior key findings for earlier sections of the report.
+
+```key_findings
+\(keyFindings)
+```
 
 Call tools in a loop, reading and researching in websites and vector databases, until you have 7-10 sources for this section of the report. Do not stop until AT LEAST 7 tool calls are made.
 
@@ -386,6 +403,8 @@ Respond with the list of sources only.
             useFunctions: true,
             functions: DeepResearchFunctions.functions
         ).text.reasoningRemoved
+        // Copy section
+        var section: Section = section
         // Convert to JSON
         let jsonPrompt: String = """
 ```
@@ -449,7 +468,7 @@ Respond with the array of JSON objects ONLY.
                 if results.isEmpty {
                     throw ResultDecodeError.isEmpty
                 }
-                return results
+                section.results = results
                 enum ResultDecodeError: Error {
                     case isEmpty
                 }
@@ -459,85 +478,44 @@ Respond with the array of JSON objects ONLY.
                 continue
             }
         }
-        return []
-    }
-    
-    /// Function to write search queries for a section of the report
-    private func writeSearchQueries(
-        for section: Section,
-        previousQueries: [String] = []
-    ) async throws -> [String] {
-        let writePrompt: String = """
-You are currently writing a research report for the user, and are conducting research for a section in the report. This is a description of the section and its contents.
+        // Summarize findings into 1 line
+        let summarizePrompt: String = """
+You are researching information for a section of a research report. This was the user's instruction regarding the overall report.
 
-\(section.description)
+```user_instruction
+\(self.prompt)
+```
 
-Write 5-10 search queries for this section, each on a new line. Respond with the queries ONLY, no numbering, no descriptions. 
+Here are the notes you made on this section.
+
+```section_notes
+\(section.getPromptDescription())
+```
+
+Here are the sites and content you found on the web.
+
+```section_research
+\(researchResponse)
+```
+
+Synthesize and summarize key findings from the research above, and write it into 2-3 sentences.
+
+Respond with the key findings ONLY.
 """
-        let message: Message = Message(
-            text: writePrompt,
+        let summarizeMessage: Message = Message(
+            text: summarizePrompt,
             sender: .user
         )
-        // Add to messages
-        let messages: [Message] = self.messages + [message]
         // Get response
-        let response = try await Model.shared.listenThinkRespond(
-            messages: messages,
+        let summarizeResponse = try await Model.shared.listenThinkRespond(
+            messages: [jsonMessage],
             modelType: .regular,
-            mode: .`default`,
-            useReasoning: true
+            mode: .agent,
+            useReasoning: true,
+            useFunctions: false
         )
-        // Return
-        return response.text.reasoningRemoved
-            .split(separator: "\n")
-            .map { substring in
-                return String(substring)
-                    .trimmingWhitespaceAndNewlines()
-            }
-    }
-    
-    /// Function to write RAG queries for a section of the report
-    private func getRagQueries(
-        for section: Section,
-        queries: [String]
-    ) async throws -> [String] {
-        let writePrompt: String = """
-You are currently writing a research report for the user, and are conducting research for a section in the report. This is a description of the section and its contents.
-
-\(section.description)
-
-You have written the \(queries.count) queries below:
-
-\(queries.joined(separator: "\n"))
-
-These queries will be used with a RAG system, not Google Search. RAG systems use semantic search, meaning search queries work best when semantically similar to the search results.
-
-Example:
-Google Search query: "apple average weight"
-RAG query: "the average apple weighs 100 grams"
-
-Rewrite these queries to work well with RAG. Respond with the rewritten queries ONLY, each on a new line, with no numbering and no descriptions.
-"""
-        let message: Message = Message(
-            text: writePrompt,
-            sender: .user
-        )
-        // Add to messages
-        let messages: [Message] = self.messages + [message]
-        // Get response
-        let response = try await Model.shared.listenThinkRespond(
-            messages: messages,
-            modelType: .regular,
-            mode: .`default`,
-            useReasoning: true
-        )
-        // Return
-        return response.text.reasoningRemoved
-            .split(separator: "\n")
-            .map { substring in
-                return String(substring)
-                    .trimmingWhitespaceAndNewlines()
-       }
+        section.keyFinding = summarizeResponse.text.reasoningRemoved
+        return section
     }
     
     /// Function to create a first draft
@@ -593,7 +571,7 @@ Now, write the report, citing sources in Markdown links.
         let listDiagramsPrompt: String = """
 Read the research report above, and determine if and where diagrams should be added to the report. 
 
-Respond with a list (or an empty) list of ideas for 0-5 diagrams that should be added, where each diagram has a filename and description.
+Respond with a list (or an empty) list of ideas for 0-5 diagrams that should be added, where each diagram has a filename and description. The description should include any data and figures needed for the chart.
 
 Examples:
 
@@ -602,6 +580,9 @@ Description: A mindmap showing different genres of world literature, including A
 
 Filename: scientific_method
 Description: A left-to-right flowchart showing the steps in the scientific method.
+
+Filename: headphone market share
+Description: A pie chart showing the market share of major headphone brands by revenue, with Apple at 40%, Samsung at 30%, Sony at 20% and other players making up the remaining 10% of the market. 
 """
         let listDiagramsMessage: Message = Message(
             text: listDiagramsPrompt,
@@ -641,7 +622,7 @@ Respond with an array of JSON objects, where each object corresponds to a sectio
         },
         "description": {
           "type": "string", 
-          "description": "A brief, 1-2 sentence description of this diagram's topic and content."
+          "description": "A brief, 1-3 sentence description of this diagram's topic and content. If needed for the diagram, this should include specific figures and data."
         }
       }
       "required": [
@@ -871,7 +852,7 @@ These diagrams are available for the research report:
 
 \(diagramsDescription)
 
-Insert them into the report as Markdown images where neccessary, using percent encoding. (e.g. ![](/Users/\(NSUserName())/path/to/image/new%20diagram.svg)
+Insert them into the report as Markdown images where neccessary, using percent encoding. (e.g. ![](/Users/\(NSUserName())/path/to/image/new%20diagram.svg). DO NOT precede the links with a schema such as "https://" or "file://".
 """
             finalizePromptComponents += [diagramsPrompt]
         }
@@ -928,6 +909,8 @@ Insert them into the report as Markdown images where neccessary, using percent e
         var description: String
         /// A `Bool` representing if external information is needed
         var isSearchNeeded: Bool
+        /// A `String` containing any key findings
+        var keyFinding: String? = nil
         /// An array of search results for the section
         var results: [Section.Result]? = nil
         
