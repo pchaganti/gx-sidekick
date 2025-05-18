@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SimilaritySearchKit
 
 public struct Source: Identifiable, Codable, Hashable {
 	
@@ -46,6 +47,32 @@ public struct Source: Identifiable, Codable, Hashable {
         public var content: String
     }
 	
+    /// Function to append previous and next items to a source
+    public static func appendSourceContext(
+        index: Int,
+        text: String,
+        sourceUrlText: String,
+        similarityIndex: SimilarityIndex
+    ) -> Source {
+        // Get items in the same file
+        let sameFileItems: [IndexItem] = similarityIndex.indexItems.filter {
+            $0.sourceUrlText == sourceUrlText
+        }
+        // Get pre & post content
+        let preContent: String = sameFileItems.filter({
+            $0.itemIndex == index - 1
+        }).first?.text ?? ""
+        let postContent: String = sameFileItems.filter({
+            $0.itemIndex == index + 1
+        }).first?.text ?? ""
+        // Make final text
+        let fullText: String = [preContent, text, postContent].joined(separator: " ")
+        return Source(
+            text: fullText,
+            source: sourceUrlText
+        )
+    }
+    
 }
 
 public struct Sources: Identifiable, Codable, Hashable {

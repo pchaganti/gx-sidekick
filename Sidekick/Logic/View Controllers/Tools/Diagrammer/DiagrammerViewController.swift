@@ -69,9 +69,10 @@ Cheatsheet:
 	}
     
     /// Function to render the diagram from the mermaid code
+    @MainActor
     public func render(
         attemptsRemaining: Int = 3
-    ) throws {
+    ) async throws {
         // Return if code is empty
         guard !self.mermaidCode.isEmpty else {
             return
@@ -81,16 +82,11 @@ Cheatsheet:
         // Save mermaid code
         MermaidRenderer.saveMermaidCode(code: self.mermaidCode)
         // Render
-        try renderer.render(
+        try await renderer.render(
             attemptsRemaining: attemptsRemaining
-        ) {
-            // On render finish
-            self.previewId = UUID()
-            Self.logger.notice("Updated diagrammer preview")
-        } onError: { error in
-            // On render error
-            self.displayRenderError(errorMessage: error)
-        }
+        )
+        // Update preview
+        self.previewId = UUID()
     }
 	
 	/// Function to save an image of the diagram
@@ -130,15 +126,11 @@ Cheatsheet:
 		// Set step to generating
 		self.currentStep.nextCase()
 		// Formulate message
-		let systemPromptMessage: Message = Message(
-			text: InferenceSettings.systemPrompt,
-			sender: .system
-		)
 		let commandMessage: Message = Message(
 			text: self.fullPrompt,
 			sender: .user
 		)
-        var messages: [Message] = [systemPromptMessage, commandMessage]
+        var messages: [Message] = [commandMessage]
         // Reset prompt
         self.prompt = ""
 		// Generate the mermaid code
@@ -170,7 +162,7 @@ Cheatsheet:
                     ).trimmingWhitespaceAndNewlines()
                     // Set the mermaid code
                     self.mermaidCode = mermaidCode
-                    try self.render(
+                    try await self.render(
                         attemptsRemaining: attemptsRemaining
                     )
                     // Move to next step

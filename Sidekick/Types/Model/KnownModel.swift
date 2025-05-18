@@ -83,6 +83,7 @@ public struct KnownModel: Identifiable, Codable {
         case mistral = "Mistral"
         case openAi = "OpenAI"
         case xAi = "xAI"
+        case zhipu = "Zhipu"
     }
     
     /// Modalities supported by models
@@ -303,6 +304,26 @@ public struct KnownModel: Identifiable, Codable {
             organization: .alibaba,
             modalities: [
                 .text
+            ],
+            capabilities: [.reasoning]
+        ),
+        
+        // Zhipu
+        
+        KnownModel(
+            primaryName: "glm-4v",
+            organization: .zhipu,
+            modalities: [
+                .text,
+                .image
+            ]
+        ),
+        KnownModel(
+            primaryName: "glm-z1",
+            organization: .zhipu,
+            modalities: [
+                .text,
+                .image
             ],
             capabilities: [.reasoning]
         ),

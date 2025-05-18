@@ -12,6 +12,8 @@ import FSKit_macOS
 
 public protocol FunctionParams: Codable, Hashable {}
 
+struct BlankParams: FunctionParams {}
+
 public class DefaultFunctions {
     
     /// An list of all functions available
@@ -32,12 +34,14 @@ public class DefaultFunctions {
         ArithmeticFunctions.functions,
         CalendarFunctions.functions,
         CodeFunctions.functions,
+        ExpertFunctions.functions,
         FileFunctions.functions,
         InputFunctions.functions,
         RemindersFunctions.functions,
         WebFunctions.functions,
         [
-            DefaultFunctions.fetchContacts
+            DefaultFunctions.fetchContacts,
+            DefaultFunctions.drawDiagram
         ]
     ].flatMap { $0 }
     
@@ -178,5 +182,124 @@ Returns JSON objects for each contact containing the person's name, emails, phon
         var email: String?
         var phone: String?
     }
+    
+    /// A function to draw a diagram
+    static let drawDiagram = Function<DrawDiagramParams, String>(
+        name: "draw_diagram",
+        description: "Renders a diagram from provided MermaidJS code, then saves it as an SVG file. Returns the path of the SVG file to be displayed as a Markdown image or moved to another location.",
+        params: [
+            FunctionParameter(
+                label: "diagram_name",
+                description: "The name of the diagram file to save.",
+                datatype: .string,
+                isRequired: true
+            ),
+            FunctionParameter(
+                label: "mermaid_code",
+                description: """
+The MermaidJS code to render as a diagram.
+
+Check if ALL text in nodes is correctly wrapped with double quotes.
+Examples:
+A["Start"] ==> B{"Is it?"};
+E --> F{"Is arr[j] < arr[min_index]?"}
+""",
+                datatype: .string,
+                isRequired: true
+            )
+        ],
+        run: { params in
+            // Save code
+            let code: String = params.mermaid_code.replacingOccurrences(
+                of: "```mermaid",
+                with: ""
+            ).replacingOccurrences(
+                of: "```",
+                with: ""
+            ).replacingOccurrences(
+                of: "_",
+                with: " "
+            ).trimmingWhitespaceAndNewlines()
+            MermaidRenderer.saveMermaidCode(code: code)
+            // Init renderer
+            let renderer = MermaidRenderer()
+            // Render
+            do {
+                try await renderer.render(
+                    attemptsRemaining: 0
+                )
+            } catch {
+                throw DrawDiagramError.renderingFailed(error.localizedDescription)
+            }
+            // Move diagram
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd-HH-mm-ss"
+            // Check if date can be extracted
+            let dateStr = dateFormatter.string(from: Date.now)
+            let name: String = params.diagram_name.dropSuffixIfPresent(
+                ".svg"
+            )
+            let newUrl: URL = Settings
+                .containerUrl
+                .appendingPathComponent("Generated Images")
+                .appendingPathComponent("\(name)-\(dateStr).svg")
+            FileManager.copyItem(
+                from: MermaidRenderer.previewFileUrl,
+                to: newUrl
+            )
+            return """
+The rendered diagram was saved to "\(newUrl.posixPath)".
+
+Display it to the user using Markdown image syntax. e.g. ![](\(newUrl.path(percentEncoded: true)))
+"""
+            enum DrawDiagramError: Error,
+ LocalizedError {
+                
+                case renderingFailed(String?)
+                
+                var errorDescription: String? {
+                    switch self {
+                        case .renderingFailed(let message):
+                            if let message,
+                               let cheatsheetURL: URL = Bundle.main.url(
+                                forResource: "mermaidCheatsheet",
+                                withExtension: "md"
+                               ) {
+                                // Get cheatsheet text
+                                let cheatsheetText: String = try! String(
+                                    contentsOf: cheatsheetURL,
+                                    encoding: .utf8
+                                )
+                                return """
+The diagram failed to render with the error output below:
+
+```error_output
+\(message)
+
+Check if ALL text in nodes is correctly wrapped with double quotes.
+Examples:
+A["Start"] ==> B{"Is it?"};
+E --> F{"Is arr[j] < arr[min_index]?"}
+```
+
+Use the MermaidJS syntax cheatsheet below.
+
+```mermaid_syntax
+\(cheatsheetText)
+```
+"""
+                            } else {
+                                return "Failed to render the diagram."
+                            }
+                    }
+                }
+            }
+        }
+    )
+    struct DrawDiagramParams: FunctionParams {
+        let diagram_name: String
+        let mermaid_code: String
+    }
+        
     
 }

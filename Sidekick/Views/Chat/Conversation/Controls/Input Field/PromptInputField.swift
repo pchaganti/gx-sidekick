@@ -402,7 +402,7 @@ struct PromptInputField: View {
             let mode: Model.Mode = self.promptController.isUsingDeepResearch ? .deepResearch : .chat
             // Get response
             response = try await model.listenThinkRespond(
-                messages: self.messages,
+                messages: conversation.messages,
                 modelType: .regular,
                 mode: mode,
                 similarityIndex: index,
@@ -411,7 +411,8 @@ struct PromptInputField: View {
                 useFunctions: self.promptController.useFunctions,
                 useCanvas: self.conversationState.useCanvas,
                 canvasSelection: self.canvasController.selection,
-                temporaryResources: tempResources
+                temporaryResources: tempResources,
+                showPreview: true
             )
         } catch let error as LlamaServerError {
             await model.interrupt()
@@ -423,10 +424,6 @@ struct PromptInputField: View {
         }
         // Update UI
         await MainActor.run {
-            // Exit if conversation is inactive
-            if self.selectedConversation?.id != conversation.id {
-                return
-            }
             // Output final output to debug console
             // Make response message
             var responseMessage: Message = Message(
@@ -456,8 +453,8 @@ struct PromptInputField: View {
         }
         // Memorize content if needed
         if RetrievalSettings.useMemory,
-           let assistantMessage: Message = self.messages.last,
-           let userMessage: Message = self.messages.dropLast(1).last,
+           let assistantMessage: Message = conversation.messages.last,
+           let userMessage: Message = conversation.messages.dropLast(1).last,
            assistantMessage.getSender() == .assistant,
            userMessage.getSender() == .user {
             await Memories.shared.rememberIfNeeded(

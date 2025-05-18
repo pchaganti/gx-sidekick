@@ -23,7 +23,10 @@ public struct Favicon {
 	}
 	
 	/// Function to get the favicon of a website
-	public func getFavicon(size: Size, width: CGFloat) -> some View {
+	public func getFavicon(
+        size: Size,
+        width: CGFloat
+    ) -> some View {
 		Group {
 			if let domain = self.domain {
 				let urlStr: String = "https://www.gogle.com/s2/favicons?sz=\(size.rawValue)&domain=\(domain)"

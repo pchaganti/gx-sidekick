@@ -72,6 +72,11 @@ public struct Provider: Identifiable {
             name: "xAI",
             endpointUrl: URL(string: "https://api.x.ai/v1")!,
             supportsToolCalling: true
-        )
+        ),
+        Provider(
+            name: "Zhipu",
+            endpointUrl: URL(string: "https://open.bigmodel.cn/api/paas/v4/")!,
+            supportsToolCalling: true
+        ),
     ]
 }

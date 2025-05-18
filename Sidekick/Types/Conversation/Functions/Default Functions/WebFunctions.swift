@@ -202,51 +202,21 @@ The content from each site here is an incomplete except. Use the `get_website_co
                 startDate: startDate,
                 endDate: endDate
             )
-            // Get full content
-            var remainingTokens: Int = {
-                if InferenceSettings.useServer {
-                    return 80_000 // Max 80K tokens
-                }
-                return InferenceSettings.contextLength
-            }()
-            var sourceContents: [Source.SourceContent] = await sources.concurrentMap { source in
-                // Trim to fit max input tokens
-                let result = try? await source.getContent()
-                return result
-            }.compactMap {
-                $0
-            }
-            // Sort and drop
-            sourceContents = sourceContents.dropLast(
-                max(sourceContents.count - numResults, 0)
-            ).sorted(
-                by: \.content.estimatedTokenCount
+            // Convert to JSON
+            let sourcesInfo: [Source.SourceInfo] = sources.map(
+                \.info
             )
-            // Trim
-            sourceContents = sourceContents
-                .enumerated()
-                .map { (index, content) in
-                    // Trim
-                    var content: Source.SourceContent = content
-                    let result = content.content.trimmingSuffixToTokens(
-                        maxTokens: remainingTokens
-                    )
-                    // Mutate variables to track
-                    content.content = result.trimmed
-                    remainingTokens -= result.usedTokens
-                    return content
-                }
             let jsonEncoder: JSONEncoder = JSONEncoder()
             jsonEncoder.outputFormatting = [.prettyPrinted]
-            let jsonData: Data = try! jsonEncoder.encode(
-                sourceContents
-            )
+            let jsonData: Data = try! jsonEncoder.encode(sourcesInfo)
             let resultsText: String = String(
                 data: jsonData,
                 encoding: .utf8
             )!
             return """
 Below are the sites and corresponding content returned from your `web_search` query.
+
+The content from each site here is an incomplete except. Use the `get_website_content` function to get the full content from a website.
 
 \(resultsText)
 """
@@ -384,6 +354,5 @@ Below are the sites and corresponding content returned from your `web_search` qu
             return try await IPLocation.getLocation()
         }
     )
-    struct BlankParams: FunctionParams {}
     
 }

@@ -10,11 +10,13 @@ import LaTeXSwiftUI
 import MarkdownUI
 import NetworkImage
 import SwiftUI
+import WebKit
+import WebViewKit
 
 struct MarkdownImageProvider: ImageProvider {
 	
 	let scaleFactor: CGFloat
-	
+    
 	public func makeImage(
 		url: URL?
 	) -> some View {
@@ -74,20 +76,37 @@ struct MarkdownImageProvider: ImageProvider {
     private func fileImage(
         url: URL?
     ) -> some View {
-        Group {
-            if let url,
-               let nsImage: NSImage = NSImage(
+        return Group {
+            if let url, let nsImage: NSImage = NSImage(
                 contentsOf: url
-               ) {
-                Image(nsImage: nsImage)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .draggable(
-                        nsImage
-                    )
-                    .padding(.leading, 1)
+            ) {
+                if url.pathExtension == "svg" {
+                    ScrollView(
+                        .horizontal
+                    ) {
+                        WebView(
+                            url: url
+                        ) { view in
+                            view.setValue(false, forKeyPath: "drawsBackground")
+                        }
+                        .frame(
+                            width: nsImage.size.width * 0.5,
+                            height: nsImage.size.height * 0.5
+                        )
+                        .allowsHitTesting(false)
+                    }
+                    .padding(.horizontal, 5)
+                } else {
+                    Image(nsImage: nsImage)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .draggable(
+                            nsImage
+                        )
+                        .padding(.leading, 1)
+                }
             } else {
-                imageLoadError
+                self.imageLoadError
             }
         }
     }

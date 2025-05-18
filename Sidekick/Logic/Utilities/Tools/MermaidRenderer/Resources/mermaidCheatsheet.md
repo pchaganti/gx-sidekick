@@ -10,10 +10,10 @@ C-->D;
 ### Simple Graph to Mark Chapters
 ```mermaid
 flowchart LR
-    a[Chapter 1] --> b[Chapter 2] --> c[Chapter 3]
-    c-->d[Using Ledger]
-    c-->e[Using Trezor]
-    d-->f[Chapter 4]
+    a["Chapter 1"] --> b["Chapter 2"] --> c["Chapter 3"]
+    c-->d["Using Ledger"]
+    c-->e["Using Trezor"]
+    d-->f["Chapter 4"]
     e-->f
 ```
 
@@ -49,38 +49,38 @@ graph TB
 ### Graph Shape & Link Variants
 ```mermaid
 graph LR
-    A[Square Rect] -- Link text --> B((Circle))
+    A["Square Rect"] -- Link text --> B((Circle))
     A --> C(Round Rect)
-    B --> D{Rhombus}
+    B --> D{"Rhombus"}
     C --> D
 ```
 
 ### Basic Flowchart
 ```mermaid
 graph TB
-    A[Start] ==> B{Is it?};
-    B -->|Yes| C[OK];
-    C --> D[Rethink];
+    A["Start"] ==> B{"Is it?"};
+    B -->|Yes| C["OK"];
+    C --> D["Rethink"];
     D -.-> B;
-    B ---->|No| E[End];
+    B ---->|No| E["End"];
 ```
 
 ### Complex Flowchart "Coffee Machine Not Working?"
 ```mermaid
 graph TD
-   A(Coffee machine <br>not working) --> B{Machine has power?}
+   A(Coffee machine <br>not working) --> B{"Machine has power?"}
    B -->|No| H(Plug in and turn on)
-   B -->|Yes| C{Out of beans or water?} -->|Yes| G(Refill beans and water)
-   C -->|No| D{Filter warning?} -->|Yes| I(Replace or clean filter)
+   B -->|Yes| C{"Out of beans or water?"} -->|Yes| G(Refill beans and water)
+   C -->|No| D{"Filter warning?"} -->|Yes| I(Replace or clean filter)
    D -->|No| F(Send for repair)
 ```
 
 ### Flowchart with Hyperlinks
 ```mermaid
 flowchart LR;
-    A-->B[\"B#dagger; (internal link)\"];
+    A-->B["\"B#dagger; (internal link)\""];
     B-->C;
-    C-->D[\"D#ddagger; (external link)\"];
+    C-->D["\"D#ddagger; (external link)\""];
     click B \"https:\/\/gist.github.com\/ChristopherA\/bffddfdf7b1502215e44cec9fb766dfd\/#flowchart-with-hyperlinks\"
     click D \"https:\/\/gist.github.com\/ChristopherA\/\"
 ```
@@ -88,28 +88,28 @@ flowchart LR;
 ### More Complex Example
 ```mermaid
   flowchart LR;
-      A[CI MULTI CHAPTCHA]-->B{Select captcha service by developer?};
+      A["CI MULTI CHAPTCHA"]-->B{Select captcha service by developer?"};
       classDef green color:#022e1f,fill:#00f500;
       classDef red color:#022e1f,fill:#f11111;
       classDef white color:#022e1f,fill:#fff;
       classDef black color:#fff,fill:#000;
-      B--YES-->C[How to use?]:::green;
+      B--YES-->C["How to use?"]:::green;
       
-      C-->U[I choose recaptcha.]:::green;
-      U--Views-->Q[\"echo CIMC_JS('recaptcha');\\n echo CIMC_HTML(['captcha_name'=>'recaptcha']);\"]:::green;
-      U--Controller-->W[\"CIMC_RULE('recaptcha');\"]:::green;
+      C-->U["I choose recaptcha."]:::green;
+      U--Views-->Q["\"echo CIMC_JS('recaptcha');\\n echo CIMC_HTML(['captcha_name'=>'recaptcha']);\""]:::green;
+      U--Controller-->W["\"CIMC_RULE('recaptcha');\""]:::green;
       
-      C-->I[I choose arcaptcha.]:::white;
-      I--Views-->O[\"echo CIMC_JS('arcaptcha');\\n echo CIMC_HTML(['captcha_name'=>'arcaptcha']);\"]:::white;
-      I--Controller-->P[\"CIMC_RULE('arcaptcha');\"]:::white;
+      C-->I["I choose arcaptcha."]:::white;
+      I--Views-->O["\"echo CIMC_JS('arcaptcha');\\n echo CIMC_HTML(['captcha_name'=>'arcaptcha']);\""]:::white;
+      I--Controller-->P["\"CIMC_RULE('arcaptcha');\""]:::white;
       
-      C-->X[I choose bibot.]:::red;
-      X--Views-->V[\"echo CIMC_JS('bibot');\\n echo CIMC_HTML(['captcha_name'=>'bibot']);\"]:::red;
-      X--Controller-->N[\"CIMC_RULE('bibot');\"]:::red;
+      C-->X["I choose bibot."]:::red;
+      X--Views-->V["\"echo CIMC_JS('bibot');\\n echo CIMC_HTML(['captcha_name'=>'bibot']);\""]:::red;
+      X--Controller-->N["\"CIMC_RULE('bibot');\""]:::red;
       
-      B--NO-->D[How to use?]:::black;
-      D---Views:::black-->F[\"echo CIMC_JS('randomcaptcha');\\n echo CIMC_HTML(['captcha_name'=>'randomcaptcha']);\"]:::black; 
-      D---Controller:::black-->T[\"CIMC_RULE('archaptcha,recaptcha,bibot');\"]:::black;
+      B--NO-->D["How to use?"]:::black;
+      D---Views:::black-->F["\"echo CIMC_JS('randomcaptcha');\\n echo CIMC_HTML(['captcha_name'=>'randomcaptcha']);\""]:::black; 
+      D---Controller:::black-->T["\"CIMC_RULE('archaptcha,recaptcha,bibot');\""]:::black;
 ```
 
 ### Subgraph
@@ -130,15 +130,15 @@ graph TB
 ### Themed Subgraph
 ```mermaid
 graph LR
-    subgraph 1[System Flow]
-        CP([Command Palette])
-        subgraph 2[Black Box]
+    subgraph 1["System Flow"]
+        CP(["Command Palette"])
+        subgraph 2["Black Box"]
             QA(Quick Addition)
             QM(Macro)
         end
-        B[Call Script]
-        C[Open URI]
-        D[Load Workspace]
+        B["Call Script"]
+        C["Open URI"]
+        D["Load Workspace"]
         CP --> QA --> QM --> B --> C --> D
     end
 style 1 fill:#333333,stroke:#FFFFFF,stroke-width:2px
@@ -148,11 +148,11 @@ style 2 fill:#222222,stroke:#FFFFFF,stroke-width:1px
 ### Flowchart with Styling
 ```mermaid
 graph TB
-    sq[Square shape] --> ci((Circle shape))
+    sq["Square shape"] --> ci((Circle shape))
 
     subgraph A
         od>Odd shape]-- Two line<br/>edge comment --> ro
-        di{Diamond with <br/> line break} -.-> ro(Rounded<br>square<br>shape)
+        di{"Diamond with <br/> line break"} -.-> ro(Rounded<br>square<br>shape)
         di==>ro2(Rounded square shape)
     end
 
@@ -162,7 +162,7 @@ graph TB
     %% Comments after double percent signs
     e((Inner \/ circle<br>and some odd <br>special characters)) --> f(,.?!+-*ز)
 
-    cyr[Cyrillic]-->cyr2((Circle shape Начало));
+    cyr["Cyrillic"]-->cyr2((Circle shape Начало));
 
      classDef green fill:#9f6,stroke:#333,stroke-width:2px;
      classDef orange fill:#f96,stroke:#333,stroke-width:4px;
@@ -177,8 +177,8 @@ A(\"Do you think online service\nlearning is right for you?\")
 B(\"Do you have time to design\na service learning component?\")
 C(\"What is the civic or public purpose of your discipline?\nHow do you teach that without service learning?\")
 D(\"Do you have departmental or school\nsupport to plan and implement service learning?\")
-E[\"Are you willing to be a trailblazer?\"] 
-F[\"What type of service learning to you want to plan?\"]
+E["\"Are you willing to be a trailblazer?\""] 
+F["\"What type of service learning to you want to plan?\""]
 
 A==Yes==>B
 A--No-->C
@@ -196,12 +196,12 @@ graph TD
     Bat(fa:fa-car-battery Batteries) -->|150a 50mm| ShutOff
     Bat -->|150a 50mm| Shunt
 
-    ShutOff[Shut Off] -->|150a 50mm| BusPos[Bus Bar +]
+    ShutOff["Shut Off"] -->|150a 50mm| BusPos[Bus Bar +]
 
     Shunt -->|150a 50mm| BusNeg[Bus Bar -]
 
-    BusPos -->|40a| Fuse[Fuse Box]
-    BusPos -->|?a| Old{Old Wiring}
+    BusPos -->|40a| Fuse["Fuse Box"]
+    BusPos -->|?a| Old{"Old Wiring"}
 
     BusNeg -->|40a| Fuse
 
@@ -211,15 +211,15 @@ graph TD
 
     Wifi -->|1.5a| Fuse
 
-    Fuse -->|10a| Cig1[Cigarette Lighter]
+    Fuse -->|10a| Cig1["Cigarette Lighter"]
     Fuse -->|10a| Cig1 
     
-    Fuse -->|10a| Cig2[Cigarette Lighter Near Bed]
+    Fuse -->|10a| Cig2["Cigarette Lighter Near Bed"]
     Fuse -->|10a| Cig2 
     
     BusNeg -->|?a| Old
 
-    Solar --> SolarCont[Solar Controller]
+    Solar --> SolarCont["Solar Controller"]
     Solar --> SolarCont
 
     SolarCont --> BusNeg
@@ -242,17 +242,17 @@ graph TD
 ### Styled Flowchart with Titles
 ```mermaid
 graph TD%% Adding a title to the flowchart using the SubGraph feature
-subgraph SGTitle [\"WHAT IS THE ROOT CAUSE OF THE PROBLEM? ____\"]
+subgraph SGTitle ["\"WHAT IS THE ROOT CAUSE OF THE PROBLEM? ____\""]
 
 %% Nodes
-    0[Key Variable<br>Target: 100, Actual: 80]
-    1[Top Variable 1<br>Tgt: 20, Act: 20]
-    2[Top Variable 2<br>Tgt: 30, Act: 30]
-    3[Top Variable 3<br>Tgt: 50, Act: 30]
-    31[Sub Variable 1<br>Tgt: 25, Act: 25]
-    32[Sub Variable 2<br>Tgt: 25, Act: 5]
-    321[Element 1<br>Tgt: 20, Act: 1]
-    322[Element 2<br>Tgt: 5, Act: 4]
+    0["Key Variable<br>Target: 100, Actual: 80"]
+    1["Top Variable 1<br>Tgt: 20, Act: 20"]
+    2["Top Variable 2<br>Tgt: 30, Act: 30"]
+    3["Top Variable 3<br>Tgt: 50, Act: 30"]
+    31["Sub Variable 1<br>Tgt: 25, Act: 25"]
+    32["Sub Variable 2<br>Tgt: 25, Act: 5"]
+    321["Element 1<br>Tgt: 20, Act: 1"]
+    322["Element 2<br>Tgt: 5, Act: 4"]
     
 %% Close title subgraph
 end
@@ -417,33 +417,33 @@ config:
 ---
 kanban
   Todo
-    [Create Documentation]
-    docs[Create Blog about the new diagram]
-  [In progress]
-    id6[Create renderer so that it works in all cases. We also add som extra text here for testing purposes. And some more just for the extra flare.]
-  id9[Ready for deploy]
-    id8[Design grammar]@{ assigned: 'knsv' }
-  id10[Ready for test]
-    id4[Create parsing tests]@{ ticket: MC-2038, assigned: 'K.Sveidqvist', priority: 'High' }
-    id66[last item]@{ priority: 'Very Low', assigned: 'knsv' }
-  id11[Done]
-    id5[define getData]
-    id2[Title of diagram is more than 100 chars when user duplicates diagram with 100 char]@{ ticket: MC-2036, priority: 'Very High'}
-    id3[Update DB function]@{ ticket: MC-2037, assigned: knsv, priority: 'High' }
+    ["Create Documentation"]
+    docs["Create Blog about the new diagram"]
+  ["In progress"]
+    id6["Create renderer so that it works in all cases. We also add som extra text here for testing purposes. And some more just for the extra flare."]
+  id9["Ready for deploy"]
+    id8["Design grammar"]@{ assigned: 'knsv' }
+  id10["Ready for test"]
+    id4["Create parsing tests"]@{ ticket: MC-2038, assigned: 'K.Sveidqvist', priority: 'High' }
+    id66["last item"]@{ priority: 'Very Low', assigned: 'knsv' }
+  id11["Done"]
+    id5["define getData"]
+    id2["Title of diagram is more than 100 chars when user duplicates diagram with 100 char"]@{ ticket: MC-2036, priority: 'Very High'}
+    id3["Update DB function"]@{ ticket: MC-2037, assigned: knsv, priority: 'High' }
 
-  id12[Can't reproduce]
-    id3[Weird flickering in Firefox]
+  id12["Can't reproduce"]
+    id3["Weird flickering in Firefox"]
 ```
 
 ### Architecture Diagram
 ```mermaid
 architecture-beta
-    group api(cloud)[API]
+    group api(cloud)["API"]
 
-    service db(database)[Database] in api
-    service disk1(disk)[Storage] in api
-    service disk2(disk)[Storage] in api
-    service server(server)[Server] in api
+    service db(database)["Database"] in api
+    service disk1(disk)["Storage"] in api
+    service disk2(disk)["Storage"] in api
+    service server(server)["Server"] in api
 
     db:L -- R:server
     disk1:T -- B:server

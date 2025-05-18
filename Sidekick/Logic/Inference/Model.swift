@@ -325,9 +325,9 @@ public class Model: ObservableObject {
         self.status = .deepResearch
     }
 	
-	// Function for the main loop
-	// listen -> respond -> update mental model and save checkpoint
-	// we respond before updating to avoid a long delay after user input
+	/// Function for the main loop
+	/// Listen -> respond -> update mental model and save checkpoint
+	/// Stream response  to avoid a long delay after user input
 	func listenThinkRespond(
 		messages: [Message],
 		modelType: ModelType,
@@ -340,6 +340,7 @@ public class Model: ObservableObject {
 		useCanvas: Bool = false,
 		canvasSelection: String? = nil,
 		temporaryResources: [TemporaryResource] = [],
+        showPreview: Bool = false,
 		handleResponseUpdate: @escaping (
 			String, // Full message
 			String // Delta
@@ -351,15 +352,14 @@ public class Model: ObservableObject {
 		) -> Void = { _, _, _ in }
 	) async throws -> LlamaServer.CompleteResponse {
 		// Reset pending message
-        if self.status.isForegroundTask {
+        if showPreview {
             self.pendingMessage = nil
         }
 		// Set flag
 		let preQueryStatus: Status = self.status
 		if preQueryStatus.isForegroundTask {
-            let modeIsDeepResearch: Bool = mode == .deepResearch
             let isDeepResearching: Bool = self.status == .deepResearch
-            self.status = (modeIsDeepResearch || isDeepResearching) ? .deepResearch : .querying
+            self.status = (mode.isAgent || isDeepResearching) ? .deepResearch : .querying
 		}
         // Check if remote server is reachable
         let canReachRemoteServer: Bool = await self.remoteServerIsReachable()
@@ -409,7 +409,7 @@ public class Model: ObservableObject {
                                 DispatchQueue.main.async {
                                     // Update response
                                     self.handleCompletionProgress(
-                                        updateUI: false,
+                                        showPreview: showPreview,
                                         partialResponse: partialResponse,
                                         handleResponseUpdate: handleResponseUpdate
                                     )
@@ -425,7 +425,7 @@ public class Model: ObservableObject {
                                 DispatchQueue.main.async {
                                     // Update response
                                     self.handleCompletionProgress(
-                                        updateUI: false,
+                                        showPreview: showPreview,
                                         partialResponse: partialResponse,
                                         handleResponseUpdate: handleResponseUpdate
                                     )
@@ -442,6 +442,7 @@ public class Model: ObservableObject {
                             DispatchQueue.main.async {
                                 // Update response
                                 self.handleCompletionProgress(
+                                    showPreview: showPreview,
                                     partialResponse: partialResponse,
                                     handleResponseUpdate: handleResponseUpdate
                                 )
@@ -449,7 +450,7 @@ public class Model: ObservableObject {
                         }
                     )
                 }
-            case .chat:
+            case .chat, .agent:
                 response = try await self.getChatResponse(
                     mode: mode,
                     modelType: modelType,
@@ -460,16 +461,19 @@ public class Model: ObservableObject {
                     useFunctions: useFunctions,
                     functions: functions,
                     similarityIndex: similarityIndex,
+                    showPreview: showPreview,
                     handleResponseUpdate: handleResponseUpdate
                 )
             case .deepResearch:
                 // Indicate started Deep Research
                 self.indicateStartedDeepResearch()
-                // TODO: Init and run deep research workflow
+                // Init and run deep research workflow
                 self.agent = DeepResearchAgent(
-                    messages: messages
+                    messages: messages,
+                    similarityIndex: similarityIndex
                 )
                 response = try await self.agent?.run()
+                self.agent = nil
         }
 		// Handle response finish
 		handleResponseFinish(
@@ -478,7 +482,7 @@ public class Model: ObservableObject {
 			response!.usage?.total_tokens
 		)
 		// Update display
-        if preQueryStatus.isForegroundTask && preQueryStatus != .deepResearch {
+        if showPreview && self.agent == nil {
             self.pendingMessage = nil
             self.status = .ready
         }
@@ -490,7 +494,7 @@ public class Model: ObservableObject {
     private func updateStatus(
         _ status: Status
     ) {
-        if self.status != status {
+        if self.status != status && self.status != .deepResearch {
             self.status = status
         }
     }
@@ -506,6 +510,7 @@ public class Model: ObservableObject {
         useFunctions: Bool,
         functions: [AnyFunctionBox]? = nil,
 		similarityIndex: SimilarityIndex? = nil,
+        showPreview: Bool,
 		handleResponseUpdate: @escaping (String, String) -> Void
 	) async throws -> LlamaServer.CompleteResponse {
         // Define increment for update
@@ -518,6 +523,7 @@ public class Model: ObservableObject {
             useWebSearch: useWebSearch,
             useFunctions: useFunctions,
             functions: functions,
+            showPreview: showPreview,
 			handleResponseUpdate: handleResponseUpdate,
 			increment: increment
 		)
@@ -539,6 +545,7 @@ public class Model: ObservableObject {
             useWebSearch: useWebSearch,
             functions: functions,
 			similarityIndex: similarityIndex,
+            showPreview: showPreview,
 			handleResponseUpdate: handleResponseUpdate,
 			increment: increment
 		)
@@ -552,6 +559,7 @@ public class Model: ObservableObject {
         useWebSearch: Bool,
         useFunctions: Bool,
         functions: [AnyFunctionBox]? = nil,
+        showPreview: Bool,
 		handleResponseUpdate: @escaping (String, String) -> Void,
 		increment: Int
     ) async throws -> LlamaServer.CompleteResponse {
@@ -574,6 +582,7 @@ public class Model: ObservableObject {
                     (self.pendingMessage?.text.count ?? 0 < increment)
                     if shouldUpdate {
                         self.handleCompletionProgress(
+                            showPreview: showPreview,
                             partialResponse: updateResponse,
                             handleResponseUpdate: handleResponseUpdate
                         )
@@ -593,6 +602,7 @@ public class Model: ObservableObject {
         useWebSearch: Bool,
         functions: [AnyFunctionBox]? = nil,
 		similarityIndex: SimilarityIndex?,
+        showPreview: Bool,
 		handleResponseUpdate: @escaping (
 			String, // Full message
 			String // Delta
@@ -600,7 +610,9 @@ public class Model: ObservableObject {
 		increment: Int
 	) async throws -> LlamaServer.CompleteResponse {
 		// Set status
-		self.status = .usingFunctions
+        if self.status != .deepResearch {
+            self.status = .usingFunctions
+        }
         // Execute functions on a loop
         var maxIterations: Int = 20
         var response: LlamaServer.CompleteResponse? = initialResponse
@@ -645,7 +657,7 @@ public class Model: ObservableObject {
                     let errorDescription: String = error.localizedDescription
                     // Mark as failed
                     functionCallRecord.markAsFinished(
-                        status: .succeeded,
+                        status: .failed,
                         result: errorDescription
                     )
                     // Record tools called
@@ -734,6 +746,7 @@ Call another tool to obtain more information or execute more actions. Try breaki
                         )
                         if shouldUpdate {
                             self.handleCompletionProgress(
+                                showPreview: showPreview,
                                 partialResponse: updateResponse,
                                 handleResponseUpdate: handleResponseUpdate
                             )
@@ -772,6 +785,7 @@ Call another tool to obtain more information or execute more actions. Try breaki
                         )
                         if shouldUpdate {
                             self.handleCompletionProgress(
+                                showPreview: showPreview,
                                 partialResponse: updateResponse,
                                 handleResponseUpdate: handleResponseUpdate
                             )
@@ -864,7 +878,7 @@ Respond with YES if ALL 3 criteria above have been met. Respond with YES or NO o
 	
 	/// Function to handle response update
 	func handleCompletionProgress(
-        updateUI: Bool = true,
+        showPreview: Bool = true,
 		partialResponse: String,
 		handleResponseUpdate: @escaping (
 			String, // Full message
@@ -872,7 +886,7 @@ Respond with YES if ALL 3 criteria above have been met. Respond with YES or NO o
 		) -> Void
 	) {
         // Assign if nil
-        if self.pendingMessage == nil && updateUI {
+        if self.pendingMessage == nil && showPreview {
             self.pendingMessage = Message(text: "", sender: .assistant)
         }
         let fullMessage: String = (self.pendingMessage?.text ?? "") + partialResponse
@@ -880,7 +894,7 @@ Respond with YES if ALL 3 criteria above have been met. Respond with YES or NO o
 			fullMessage,
 			partialResponse
 		)
-        if updateUI {
+        if showPreview {
             self.pendingMessage?.text = fullMessage
         }
 	}
@@ -997,11 +1011,23 @@ Respond with YES if ALL 3 criteria above have been met. Respond with YES or NO o
 		
 		/// Indicates the LLM is used as a chatbot, with extra features like resource lookup and code interpreter
 		case chat
+        /// Indicates the LLM is used as an agent
+        case agent
         /// Indicates the LLM is used as an Deep Research agent
         case deepResearch
 		/// Indicates the LLM is used for simple chat completion
 		case `default`
 		
+        /// A `Bool` indiciating whether the mode is an agent
+        var isAgent: Bool {
+            switch self {
+                case .agent, .deepResearch:
+                    return true
+                default:
+                    return false
+            }
+        }
+        
 	}
 	
 }

@@ -8,7 +8,7 @@
 import Foundation
 import OSLog
 
-public class MermaidRenderer {
+public class MermaidRenderer: @unchecked Sendable {
     
     /// The mermaid child process to render the preview
     var mermaidRenderProcess: Process = Process()
@@ -77,10 +77,8 @@ public class MermaidRenderer {
     
     /// Function to render the preview from the mermaid code
     public func render(
-        attemptsRemaining: Int = 3,
-        onFinish: (() -> Void) = {},
-        onError: @escaping ((String?) -> Void) = { _ in }
-    ) throws {
+        attemptsRemaining: Int = 3
+    ) async throws {
         // Add flag for finished rendering
         var didFinishRendering: Bool = false
         // Start the mermaid child process
@@ -97,83 +95,81 @@ public class MermaidRenderer {
         let errorPipe = Pipe()
         self.mermaidRenderProcess.standardOutput = outputPipe
         self.mermaidRenderProcess.standardError = errorPipe
+        
         var renderError: String?
-        let renderErrorSemaphore = DispatchSemaphore(value: 0)
-        do {
-            // Setup monitor
-            self.fileMonitor = try? FileMonitor(
-                url: Self.previewFileUrl
-            ) {
-                didFinishRendering = true
-                // Render
-                DispatchQueue.main.asyncAfter(
-                    deadline: .now() + 0.5
-                ) {
+        
+        try await withTaskCancellationHandler(operation: {
+            try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+                // Ensure we only resume the continuation once
+                var didResume = false
+                func resumeOnce(_ block: (CheckedContinuation<Void, Error>) -> Void) {
+                    guard !didResume else { return }
+                    didResume = true
+                    block(continuation)
+                }
+                
+                do {
+                    // Setup monitor
+                    self.fileMonitor = try? FileMonitor(
+                        url: Self.previewFileUrl
+                    ) {
+                        didFinishRendering = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            self.fileMonitor = nil
+                            errorPipe.fileHandleForReading.readabilityHandler = nil
+                            if !Task.isCancelled {
+                                resumeOnce { $0.resume() }
+                            }
+                        }
+                    }
+                    try self.mermaidRenderProcess.run()
+                    // Read error output asynchronously
+                    errorPipe.fileHandleForReading.readabilityHandler = { handle in
+                        let data = handle.availableData
+                        if !data.isEmpty,
+                           let output = String(data: data, encoding: .utf8),
+                           !output.isEmpty,
+                           output.lowercased().contains("error:") || output.lowercased().contains("parse error") {
+                            renderError = output
+                            self.fileMonitor = nil
+                            errorPipe.fileHandleForReading.readabilityHandler = nil
+                            if !Task.isCancelled {
+                                resumeOnce { $0.resume(throwing: RenderError.error(output)) }
+                            }
+                        }
+                    }
+                    // Timeout
+                    Task {
+                        try? await Task.sleep(nanoseconds: 1_500_000_000)
+                        if !didFinishRendering, renderError == nil {
+                            self.fileMonitor = nil
+                            errorPipe.fileHandleForReading.readabilityHandler = nil
+                            resumeOnce { $0.resume(throwing: RenderError.error(nil)) }
+                        }
+                    }
+                } catch {
                     self.fileMonitor = nil
                     errorPipe.fileHandleForReading.readabilityHandler = nil
+                    resumeOnce { $0.resume(throwing: error) }
                 }
             }
-            try self.mermaidRenderProcess.run()
-            Self.logger.notice("Started mermaid diagram renderer")
-            // Read error output asynchronously
-            errorPipe.fileHandleForReading.readabilityHandler = { handle in
-                let data = handle.availableData
-                if !data.isEmpty,
-                   let output = String(data: data, encoding: .utf8),
-                   !output.isEmpty {
-                    // Detect error lines (simple check for "error:" or "Parse error")
-                    if output.lowercased().contains("error:") || output.lowercased().contains("parse error") {
-                        Self.logger.error("`mermaid-cli` error: \(output)")
-                        renderError = output
-                        // Signal that an error was detected
-                        renderErrorSemaphore.signal()
-                    }
-                }
-            }
-            // Wait for possible error or file update for a short duration
-            let timeout: DispatchTime = .now() + 1.5
-            let result = renderErrorSemaphore.wait(timeout: timeout)
-            if result == .success, let errorOutput = renderError {
-                // Error detected
-                self.fileMonitor = nil
-                errorPipe.fileHandleForReading.readabilityHandler = nil
-                if attemptsRemaining > 0 {
-                    throw RenderError.error(errorOutput)
-                } else {
-                    DispatchQueue.main.async {
-                        onError(errorOutput)
-                    }
-                    return
-                }
-            } else {
-                // If file not updated, trigger error if last attempt
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                    if !didFinishRendering, attemptsRemaining == 0 {
-                        self.fileMonitor = nil
-                        errorPipe.fileHandleForReading.readabilityHandler = nil
-                        onError(nil)
-                    }
-                }
-            }
-        } catch {
-            // Print error
-            Self.logger.error("Error generating diagram: \(error)")
-            errorPipe.fileHandleForReading.readabilityHandler = nil
+        }, onCancel: {
+            // Only synchronous, non-throwing cleanup here
             self.fileMonitor = nil
-            if attemptsRemaining > 0 {
-                throw error
-            } else {
-                onError(error.localizedDescription)
-            }
-        }
+            errorPipe.fileHandleForReading.readabilityHandler = nil
+        })
     }
     
     private enum RenderError: LocalizedError {
-        case error(String)
+        case error(String?)
         public var errorDescription: String? {
             switch self {
                 case .error(let string):
-                    return string
+                    if let string {
+                        return string
+                    } else {
+                        return "An error occurred while rendering the diagram."
+                    }
             }
         }
     }

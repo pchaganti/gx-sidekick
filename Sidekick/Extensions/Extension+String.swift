@@ -511,15 +511,13 @@ public extension String {
     }
     
     /// Function to returns a new string by trimming the suffix so that the estimatedTokenCount is at most `maxTokens`
-    func trimmingSuffixToTokens(
+    mutating func trimmingSuffixToTokens(
         maxTokens: Int
-    ) -> (
-        trimmed: String,
-        usedTokens: Int
     ) {
+        // Exit if no trim needed
         let currentTokens = self.estimatedTokenCount
         if currentTokens <= maxTokens {
-            return (self, currentTokens)
+            return
         }
         // Estimate how many characters to keep based on language heuristic
         let keepLength: Int
@@ -539,8 +537,7 @@ public extension String {
         while trimmed.estimatedTokenCount > maxTokens && !trimmed.isEmpty {
             trimmed.removeLast()
         }
-        let tokensUsed = trimmed.estimatedTokenCount
-        return (trimmed, tokensUsed)
+        self = trimmed
     }
     
 }

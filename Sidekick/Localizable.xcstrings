@@ -77,6 +77,17 @@
         }
       }
     },
+    "%lld: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld: %2$@"
+          }
+        }
+      },
+      "shouldTranslate" : false
+    },
     "%lld%%" : {
       "shouldTranslate" : false
     },
@@ -501,9 +512,6 @@
           }
         }
       }
-    },
-    "Blah" : {
-
     },
     "Brainstorm" : {
       "localizations" : {
@@ -1865,6 +1873,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "图像生成失败"
+          }
+        }
+      }
+    },
+    "Failed to draft report." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "深度调查报告撰写失败。"
           }
         }
       }
@@ -3452,6 +3470,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "研究每一部分"
+          }
+        }
+      }
+    },
+    "Research Report Sections" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "研究报告章节"
+          }
+        }
+      }
+    },
+    "Researched Section \"%@\"" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已调查 \"%@\""
           }
         }
       }

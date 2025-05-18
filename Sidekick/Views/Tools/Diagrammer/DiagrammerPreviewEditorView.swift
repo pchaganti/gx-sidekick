@@ -69,9 +69,11 @@ struct DiagrammerPreviewEditorView: View {
 		.onChange(
             of: diagrammerViewController.mermaidCode
         ) {
-            try? self.diagrammerViewController.render(
-                attemptsRemaining: 0
-            )
+            Task { @MainActor in
+                try? await self.diagrammerViewController.render(
+                    attemptsRemaining: 0
+                )
+            }
         }
 	}
 	
@@ -109,9 +111,11 @@ struct DiagrammerPreviewEditorView: View {
 	var refreshButton: some View {
 		Button {
 			// Restart server
-            try? self.diagrammerViewController.render(attemptsRemaining: 0)
-			// Reset id to redraw view
-			self.previewId = UUID()
+            Task { @MainActor in
+                try? await self.diagrammerViewController.render(attemptsRemaining: 0)
+                // Reset id to redraw view
+                self.previewId = UUID()
+            }
 		} label: {
 			Label("Refresh", systemImage: refreshButtonSymbolName)
 				.labelStyle(.iconOnly)

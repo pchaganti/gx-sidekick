@@ -132,44 +132,31 @@ public struct Message: Identifiable, Codable, Hashable {
 			query: text,
 			maxResults: searchResultsMultiplier
 		) ?? []
-		let resourcesResults: [Source] = resourcesSearchResults.map { result in
-			// If search result context is not being used, skip
-			if !RetrievalSettings.useWebSearchResultContext {
-				return Source(
-					text: result.text,
-					source: result.sourceUrlText!
-				)
-			}
-			// Get item index
-			guard let index: Int = result.itemIndex else {
-				return Source(
-					text: result.text,
-					source: result.sourceUrlText!
-				)
-			}
-			// Get items in the same file
-			guard let sameFileItems: [IndexItem] = similarityIndex?.indexItems.filter({
-				$0.sourceUrlText == result.sourceUrlText
-			}) else {
-				return Source(
-					text: result.text,
-					source: result.sourceUrlText!
-				)
-			}
-			// Get pre & post content
-			let preContent: String = sameFileItems.filter({
-				$0.itemIndex == index - 1
-			}).first?.text ?? ""
-			let postContent: String = sameFileItems.filter({
-				$0.itemIndex == index + 1
-			}).first?.text ?? ""
-			// Make final text
-			let fullText: String = [preContent, result.text, postContent].joined(separator: " ")
-			return Source(
-				text: fullText,
-				source: result.sourceUrlText!
-			)
-		}
+        let resourcesResults: [Source] = resourcesSearchResults.map { result in
+            // If search result context is not being used, skip
+            if !RetrievalSettings.useWebSearchResultContext {
+                return Source(
+                    text: result.text,
+                    source: result.sourceUrlText!
+                )
+            }
+            // Get item index and source url
+            guard let index: Int = result.itemIndex,
+                  let sourceUrl: String = result.sourceUrlText,
+                  let similarityIndex: SimilarityIndex = similarityIndex else {
+                return Source(
+                    text: result.text,
+                    source: result.sourceUrlText!
+                )
+            }
+            // Get items in the same file
+            return Source.appendSourceContext(
+                index: index,
+                text: result.text,
+                sourceUrlText: sourceUrl,
+                similarityIndex: similarityIndex
+            )
+        }
 		// Search Tavily
 		var resultCount: Int = (hasResources && !resourcesResults.isEmpty) ? 1 : 2
 		resultCount = resultCount * searchResultsMultiplier

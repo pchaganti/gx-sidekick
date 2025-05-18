@@ -16,7 +16,7 @@ struct StopGenerationButton: View {
 		Button {
 			self.action()
 		} label: {
-			Image(systemName: "stop.circle")
+			Image(systemName: "stop.circle.fill")
 				.foregroundStyle(.secondary)
 		}
 		.buttonStyle(.plain)

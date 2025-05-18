@@ -150,5 +150,42 @@ public extension URL {
 		// Extract the substring starting after the "://"
 		return String(self.absoluteString[schemeEnd...])
 	}
+    
+    /// Function to fetch the `<title>` tag content from the URL's HTML.
+    func fetchTitle(
+        timeout: TimeInterval = 3.0
+    ) async throws -> String? {
+        // Return if not web url
+        if !self.isWebURL {
+            return nil
+        }
+        // Try fetching data with timeout
+        do {
+            let (data, _) = try await withThrowingTaskGroup(of: (Data, URLResponse).self) { group -> (Data, URLResponse) in
+                group.addTask { try await URLSession.shared.data(from: self) }
+                group.addTask {
+                    try await Task.sleep(nanoseconds: UInt64(timeout * 1_000_000_000))
+                    throw URLError(.timedOut)
+                }
+                let result = try await group.next()!
+                group.cancelAll()
+                return result
+            }
+            guard let htmlString = String(data: data, encoding: .utf8) else { return nil }
+            // Find title
+            let pattern = "<title>(.*?)</title>"
+            let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive)
+            let range = NSRange(location: 0, length: htmlString.utf16.count)
+            if let match = regex?.firstMatch(in: htmlString, options: [], range: range),
+               let titleRange = Range(match.range(at: 1), in: htmlString) {
+                return String(htmlString[titleRange])
+            }
+            return nil
+        } catch let error as URLError where error.code == .timedOut {
+            return self.host(percentEncoded: false)
+        } catch {
+            throw error
+        }
+    }
 
 }

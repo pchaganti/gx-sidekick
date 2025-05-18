@@ -393,7 +393,7 @@ public actor LlamaServer {
         // Formulate parameters
         async let params = {
 			switch mode {
-				case .chat:
+                case .chat, .agent:
 					return await ChatParameters(
                         modelType: self.modelType,
                         systemPrompt: self.systemPrompt,
@@ -437,7 +437,7 @@ public actor LlamaServer {
         // Formulate request JSON
         let omittedParams: [ChatParameters.ParamKey] = {
             switch mode {
-                case .chat:
+                case .chat, .agent:
                     if !useFunctions {
                         return [.tools]
                     } else {
@@ -593,7 +593,7 @@ public actor LlamaServer {
 			onFinish(text: cleanText)
 		}
 		// Return info
-		let tokens: Int = stopResponse?.usage?.completion_tokens ?? (
+        let tokens: Int = stopResponse?.usage.completion_tokens ?? (
 			usage?.completion_tokens ?? tokenCount
 		)
 		let generationTime: CFTimeInterval = CFAbsoluteTimeGetCurrent() - start - responseDiff
@@ -867,7 +867,7 @@ public actor LlamaServer {
 	
 	struct StopResponse: Codable {
 		
-		let usage: Usage?
+		let usage: Usage
 		
 	}
 	
