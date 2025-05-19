@@ -313,6 +313,7 @@
 		20C221062CC4B15600A99796 /* SourcesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C221052CC4B15600A99796 /* SourcesManager.swift */; };
 		20C221092CC4B5A800A99796 /* SourcesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C221082CC4B5A800A99796 /* SourcesView.swift */; };
 		20C2210B2CC4B88F00A99796 /* SourcesButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C2210A2CC4B88F00A99796 /* SourcesButton.swift */; };
+		20C3B2372DDB163300555320 /* DragModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C3B2362DDB163300555320 /* DragModifier.swift */; };
 		20C5CBC62DA3D7310071F5F7 /* Function.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C5CBC52DA3D7310071F5F7 /* Function.swift */; };
 		20C5CBC92DA3D82E0071F5F7 /* DefaultFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C5CBC82DA3D82E0071F5F7 /* DefaultFunctions.swift */; };
 		20C5CBCB2DA4F3BA0071F5F7 /* KnownModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C5CBCA2DA4F3BA0071F5F7 /* KnownModel.swift */; };
@@ -772,6 +773,7 @@
 		20C221052CC4B15600A99796 /* SourcesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesManager.swift; sourceTree = "<group>"; };
 		20C221082CC4B5A800A99796 /* SourcesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesView.swift; sourceTree = "<group>"; };
 		20C2210A2CC4B88F00A99796 /* SourcesButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesButton.swift; sourceTree = "<group>"; };
+		20C3B2362DDB163300555320 /* DragModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragModifier.swift; sourceTree = "<group>"; };
 		20C5CBC52DA3D7310071F5F7 /* Function.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Function.swift; sourceTree = "<group>"; };
 		20C5CBC82DA3D82E0071F5F7 /* DefaultFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFunctions.swift; sourceTree = "<group>"; };
 		20C5CBCA2DA4F3BA0071F5F7 /* KnownModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownModel.swift; sourceTree = "<group>"; };
@@ -1452,13 +1454,6 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		2048941B2CE76ABD00473107 /* View Modifiers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "View Modifiers";
-			sourceTree = "<group>";
-		};
 		204AE3B72CEAF4D30086B42D /* Inline Assistant */ = {
 			isa = PBXGroup;
 			children = (
@@ -1868,7 +1863,6 @@
 				20DFF48E2DB7AB5100F3F76C /* Memories */,
 				20B9E6132CB1458500BA0AD2 /* Misc */,
 				20E48C272CB560A30085E7D6 /* Styles */,
-				2048941B2CE76ABD00473107 /* View Modifiers */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1977,6 +1971,7 @@
 				2030D6212D6C7F8C00F18BF4 /* CircularProgressView.swift */,
 				20ADCEC52DBE390B00B13C98 /* ZoomablePannableView.swift */,
 				20457D2F2D92778A00954892 /* SetupCompleteView.swift */,
+				20C3B2362DDB163300555320 /* DragModifier.swift */,
 				208C5FD22D79CA4400D82AA6 /* Orb */,
 				20B9B11F2CDF91A900B66D4D /* Buttons */,
 			);
@@ -2615,6 +2610,7 @@
 				20DFF4902DB7AB6D00F3F76C /* MemoriesManagerView.swift in Sources */,
 				202801FC2CC9C5C2005C1F7D /* TemporaryResourceView.swift in Sources */,
 				20573F182CB50743004C19FE /* ConversationView.swift in Sources */,
+				20C3B2372DDB163300555320 /* DragModifier.swift in Sources */,
 				208855CF2DAD1D6F00071F0B /* ArithmeticFunctions.swift in Sources */,
 				2034876D2D67236000A88DA4 /* DiagrammerView.swift in Sources */,
 				204AE3B92CEAF57E0086B42D /* CommandManager.swift in Sources */,

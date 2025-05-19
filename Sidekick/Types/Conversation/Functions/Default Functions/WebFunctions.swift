@@ -22,7 +22,9 @@ public class WebFunctions {
             rawValue: RetrievalSettings.defaultSearchProvider
         ) ?? .duckDuckGo
         if provider == .tavily {
-            functions.append(WebFunctions.tavilyWebSearch())
+            functions.append(
+                WebFunctions.tavilyWebSearch()
+            )
         } else {
             functions.append(WebFunctions.duckDuckGoWebSearch)
         }

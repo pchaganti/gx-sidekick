@@ -83,7 +83,6 @@ struct MarkdownImageProvider: ImageProvider {
                 .containerUrl
                 .appendingPathComponent("Generated Images")
                 .appendingPathComponent(url.lastPathComponent)
-            print("correctedPath: ", url.posixPath)
         }
         return Group {
             if let nsImage: NSImage = NSImage(
@@ -105,6 +104,18 @@ struct MarkdownImageProvider: ImageProvider {
                         .allowsHitTesting(false)
                     }
                     .padding(.horizontal, 5)
+                    .draggable(
+                        FilePromise(
+                            name: url.lastPathComponent,
+                            type: .fileURL
+                        ) { destUrl in
+                            await FileManager.copyItem(
+                                from: url,
+                                to: destUrl
+                            )
+                        },
+                        preview: NSImage(contentsOf: url) ?? NSImage(named: "questionmark.app.fill")!
+                    )
                 } else {
                     Image(nsImage: nsImage)
                         .resizable()
