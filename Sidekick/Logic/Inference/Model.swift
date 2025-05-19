@@ -474,6 +474,8 @@ public class Model: ObservableObject {
                 )
                 response = try await self.agent?.run()
                 self.agent = nil
+                self.pendingMessage = nil
+                self.status = .ready
         }
 		// Handle response finish
 		handleResponseFinish(
@@ -958,6 +960,7 @@ Respond with YES if ALL 3 criteria above have been met. Respond with YES or NO o
 			return
 		}
 		await self.mainModelServer.interrupt()
+        self.agent = nil
         self.pendingMessage = nil
 		self.status = .ready
 	}

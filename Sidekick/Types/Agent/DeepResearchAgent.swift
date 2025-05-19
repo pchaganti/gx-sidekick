@@ -130,8 +130,7 @@ public class DeepResearchAgent: Agent {
                 )
             }
         }
-        // Switch back state and return
-        await Model.shared.setStatus(.ready)
+        // Return
         if let finalResponse {
             return finalResponse
         } else {

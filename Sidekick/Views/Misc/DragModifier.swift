@@ -9,11 +9,13 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 struct FileDragProvider: NSViewRepresentable {
+    
     var filePromise: FilePromise
     
     var preview: NSImage
     
     class NSViewType: NSView, NSFilePromiseProviderDelegate, NSDraggingSource {
+        
         var filePromise: FilePromise
         var preview: NSImage
         
@@ -71,6 +73,7 @@ struct FileDragProvider: NSViewRepresentable {
                 }
             }
         }
+        
     }
     
     func makeNSView(context: Context) -> NSViewType {
@@ -81,16 +84,29 @@ struct FileDragProvider: NSViewRepresentable {
         nsView.filePromise = filePromise
         nsView.preview = preview
     }
+    
 }
 
 extension View {
-    func draggable(_ filePromise: FilePromise, preview: NSImage) -> some View {
-        overlay(FileDragProvider(filePromise: filePromise, preview: preview))
+    
+    func draggable(
+        _ filePromise: FilePromise,
+        preview: NSImage
+    ) -> some View {
+        self.overlay(
+            FileDragProvider(
+                filePromise: filePromise,
+                preview: preview
+            )
+        )
     }
+    
 }
 
 struct FilePromise {
+    
     var name: String
     var type: UTType
     var writeToURL: (URL) async throws -> Void
+    
 }
