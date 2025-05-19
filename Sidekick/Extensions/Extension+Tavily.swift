@@ -13,9 +13,14 @@ public extension Tavily {
 		
 		var query: String
 		var max_results: Int = 3
+        
+        var search_depth: Tavily.SearchRequest.SearchDepth = .basic
+        
         var time_range: Tavily.TimeRange? = nil
+        
 		var include_answer: Bool = true
 		var include_raw_content: Bool = false
+        
 		var include_domains: [String] = []
 		var exclude_domains: [String] = []
 		
@@ -25,6 +30,11 @@ public extension Tavily {
             encoder.outputFormatting = .prettyPrinted
             let jsonData = try? encoder.encode(self)
             return String(data: jsonData!, encoding: .utf8)!
+        }
+        
+        public enum SearchDepth: String, Codable {
+            case basic
+            case advanced
         }
 		
 	}

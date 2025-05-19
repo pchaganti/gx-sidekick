@@ -262,9 +262,12 @@ struct PromptInputField: View {
             SoundEffects.send.play()
         }
         // Get prompt expected result type
-        let resultType: PromptAnalyzer.ResultType = PromptAnalyzer.getExpectedResultType(
-            promptController.prompt
-        )
+        var resultType: PromptAnalyzer.ResultType = .text
+        if !self.promptController.isUsingDeepResearch {
+            resultType = PromptAnalyzer.getExpectedResultType(
+                promptController.prompt
+            )
+        }
         // Check web search
         if !self.checkWebSearch() {
             return

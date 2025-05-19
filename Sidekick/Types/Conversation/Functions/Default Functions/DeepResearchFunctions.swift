@@ -11,7 +11,6 @@ public class DeepResearchFunctions {
     
     static var functions: [AnyFunctionBox] {
         var functions: [AnyFunctionBox] = [
-            DeepResearchFunctions.getWebsiteContent,
             WebFunctions.getLocation
         ]
         // Add web search function
@@ -19,9 +18,15 @@ public class DeepResearchFunctions {
             rawValue: RetrievalSettings.defaultSearchProvider
         ) ?? .duckDuckGo
         if provider == .tavily {
-            functions.append(WebFunctions.tavilyWebSearch)
+            functions.append(
+                WebFunctions.tavilyWebSearch(searchDepth: .advanced)
+            )
         } else {
             functions.append(WebFunctions.duckDuckGoWebSearch)
+        }
+        // Allow get website content if using server
+        if InferenceSettings.useServer {
+            functions += [DeepResearchFunctions.getWebsiteContent]
         }
         // Add vector search functions
         functions += ExpertFunctions.functions

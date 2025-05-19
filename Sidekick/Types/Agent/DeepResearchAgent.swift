@@ -149,7 +149,9 @@ Have you been given enough information to conduct further research on the user's
 Do you need extra context to better conduct research on the user's query?
 Do you need the user to clarify the requirements to better conduct research on the user's query?
 
-Respond with YES if ALL 3 criteria above have been met. Respond with YES or NO only.
+Respond with YES if ALL 3 criteria above have been met. Alternatively, if the user has already responded to a set of follow up questions, or if they have declined a request for clarification, respond with YES. Else, respond with NO.
+
+Respond with YES or NO only.
 """
         let message: Message = Message(
             text: checkPrompt,

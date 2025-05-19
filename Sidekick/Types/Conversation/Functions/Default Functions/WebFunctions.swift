@@ -22,7 +22,7 @@ public class WebFunctions {
             rawValue: RetrievalSettings.defaultSearchProvider
         ) ?? .duckDuckGo
         if provider == .tavily {
-            functions.append(WebFunctions.tavilyWebSearch)
+            functions.append(WebFunctions.tavilyWebSearch())
         } else {
             functions.append(WebFunctions.duckDuckGoWebSearch)
         }
@@ -67,67 +67,72 @@ public class WebFunctions {
     }
     
     /// A ``Function`` to conduct a web search with Tavily
-    static let tavilyWebSearch = Function<TavilyWebSearchParams, String>(
-        name: "web_search",
-        description: "Retrieves information from the web with the provided query, instead of estimating it.",
-        params: [
-            FunctionParameter(
-                label: "query",
-                description: "The topic to look up online",
-                datatype: .string,
-                isRequired: true
-            ),
-            FunctionParameter(
-                label: "site",
-                description: "Search within this specific site (optional, example: wikipedia.org, default: nil)",
-                datatype: .string,
-                isRequired: false
-            ),
-            FunctionParameter(
-                label: "num_results",
-                description: "The maximum number of search results (optional, default: 10)",
-                datatype: .integer,
-                isRequired: false
-            ),
-            FunctionParameter(
-                label: "time_range",
-                description: "The time range back from the current date to filter results. (optional, options: day, week, month, year, default: nil)",
-                datatype: .string,
-                isRequired: false
-            )
-        ],
-        run: { params in
-            // Check if enabled
-            if !RetrievalSettings.canUseWebSearch {
-                throw WebSearchError.notConfigured
-            }
-            // Conduct search
-            let sources: [Source] = try await Tavily.search(
-                query: params.query,
-                site: params.site,
-                resultCount: params.num_results ?? 10,
-                timeRange: params.time_range
-            )
-            // Convert to JSON
-            let sourcesInfo: [Source.SourceInfo] = sources.map(
-                \.info
-            )
-            let jsonEncoder: JSONEncoder = JSONEncoder()
-            jsonEncoder.outputFormatting = [.prettyPrinted]
-            let jsonData: Data = try! jsonEncoder.encode(sourcesInfo)
-            let resultsText: String = String(
-                data: jsonData,
-                encoding: .utf8
-            )!
-            return """
+    static func tavilyWebSearch(
+        searchDepth: Tavily.SearchRequest.SearchDepth = .basic
+    ) -> Function<TavilyWebSearchParams, String> {
+        return Function<TavilyWebSearchParams, String>(
+            name: "web_search",
+            description: "Retrieves information from the web with the provided query, instead of estimating it.",
+            params: [
+                FunctionParameter(
+                    label: "query",
+                    description: "The topic to look up online",
+                    datatype: .string,
+                    isRequired: true
+                ),
+                FunctionParameter(
+                    label: "site",
+                    description: "Search within this specific site (optional, example: wikipedia.org, default: nil)",
+                    datatype: .string,
+                    isRequired: false
+                ),
+                FunctionParameter(
+                    label: "num_results",
+                    description: "The maximum number of search results (optional, default: 10)",
+                    datatype: .integer,
+                    isRequired: false
+                ),
+                FunctionParameter(
+                    label: "time_range",
+                    description: "The time range back from the current date to filter results. (optional, options: day, week, month, year, default: nil)",
+                    datatype: .string,
+                    isRequired: false
+                )
+            ],
+            run: { params in
+                // Check if enabled
+                if !RetrievalSettings.canUseWebSearch {
+                    throw WebSearchError.notConfigured
+                }
+                // Conduct search
+                let sources: [Source] = try await Tavily.search(
+                    query: params.query,
+                    site: params.site,
+                    resultCount: params.num_results ?? 10,
+                    searchDepth: searchDepth,
+                    timeRange: params.time_range
+                )
+                // Convert to JSON
+                let sourcesInfo: [Source.SourceInfo] = sources.map(
+                    \.info
+                )
+                let jsonEncoder: JSONEncoder = JSONEncoder()
+                jsonEncoder.outputFormatting = [.prettyPrinted]
+                let jsonData: Data = try! jsonEncoder.encode(sourcesInfo)
+                let resultsText: String = String(
+                    data: jsonData,
+                    encoding: .utf8
+                )!
+                return """
 Below are the sites and corresponding content returned from your `web_search` query.
 
 The content from each site here is an incomplete except. Use the `get_website_content` function to get the full content from a website.
 
 \(resultsText)
 """
-        }
-    )
+            }
+        )
+    }
     struct TavilyWebSearchParams: FunctionParams {
         let query: String
         let site: String?

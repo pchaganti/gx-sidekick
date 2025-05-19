@@ -21,6 +21,7 @@ public class Tavily {
 		query: String,
         site: String? = nil,
 		resultCount: Int,
+        searchDepth: Tavily.SearchRequest.SearchDepth = .basic,
         timeRange: TimeRange? = nil,
         useBackupKey: Bool = false
 	) async throws -> [Source] {
@@ -46,8 +47,9 @@ public class Tavily {
             let tavilyResults: [Tavily.SearchResponse.Result] = try await Self.hitSearchApi(
 				query: query,
 				apiKey: apiKey,
-                timeRange: timeRange,
-				resultCount: resultCount
+                resultCount: resultCount,
+                searchDepth: searchDepth,
+                timeRange: timeRange
 			)
 			let results: [Source] = tavilyResults.map { result in
 				return Source(
@@ -66,14 +68,16 @@ public class Tavily {
 	public static func hitSearchApi(
 		query: String,
 		apiKey: String,
-        timeRange: TimeRange?,
-		resultCount: Int
+        resultCount: Int,
+        searchDepth: Tavily.SearchRequest.SearchDepth = .basic,
+        timeRange: TimeRange?
 	) async throws -> [Tavily.SearchResponse.Result] {
 		// Set up query params
 		let startTime: Date = .now
 		let params = Tavily.SearchRequest(
 			query: query,
             max_results: resultCount,
+            search_depth: searchDepth,
             time_range: timeRange
 		)
 		let tavilyEndpoint: URL = URL(string: "https://api.tavily.com/search")!
