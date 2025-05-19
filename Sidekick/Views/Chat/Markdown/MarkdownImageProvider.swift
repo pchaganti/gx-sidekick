@@ -50,7 +50,7 @@ struct MarkdownImageProvider: ImageProvider {
 	}
 	
 	private func networkImage(
-		url: URL?
+		url: URL
 	) -> some View {
 		AsyncImage(
 			url: url
@@ -74,10 +74,19 @@ struct MarkdownImageProvider: ImageProvider {
 	}
     
     private func fileImage(
-        url: URL?
+        url: URL
     ) -> some View {
+        var url: URL = url
+        // Try to correct url
+        if !url.fileExists && url.pathComponents.count <= 2 {
+            url = Settings
+                .containerUrl
+                .appendingPathComponent("Generated Images")
+                .appendingPathComponent(url.lastPathComponent)
+            print("correctedPath: ", url.posixPath)
+        }
         return Group {
-            if let url, let nsImage: NSImage = NSImage(
+            if let nsImage: NSImage = NSImage(
                 contentsOf: url
             ) {
                 if url.pathExtension == "svg" {
@@ -137,7 +146,10 @@ struct MarkdownInlineImageProvider: InlineImageProvider {
 				label: Text(label)
 			)
 			return image.renderingMode(.template).resizable()
-		} else if url.absoluteString.hasPrefix("latex://"),
+        } else if url.isFileURL {
+            // If file image
+            return self.fileImage(url: url)
+        } else if url.absoluteString.hasPrefix("latex://"),
 			let latexStr = url.withoutSchema.removingPercentEncoding,
 				let latexImage: Image = LaTeX(latexStr)
 					.blockMode(.alwaysInline)
@@ -150,8 +162,47 @@ struct MarkdownInlineImageProvider: InlineImageProvider {
 			return latexImage
 				.renderingMode(.template)
 				.resizable()
-		}
-		return Image(systemName: "questionmark.square.fill")
+        } else {
+            // Try converting to absolute path
+            let fileUrl: URL = URL(
+                fileURLWithPath: url.posixPath
+            )
+            // If file image
+            return self.fileImage(url: fileUrl)
+        }
 	}
-	
+
+    private func fileImage(
+        url: URL
+    ) -> Image {
+        var url: URL = url
+        // Try to correct url
+        if !url.fileExists && url.pathComponents.count <= 2 {
+            url = Settings
+                .containerUrl
+                .appendingPathComponent("Generated Images")
+                .appendingPathComponent(url.lastPathComponent)
+        }
+        if let nsImage: NSImage = NSImage(
+            contentsOf: url
+        ) {
+            if url.pathExtension == "svg" {
+                let configuration = NSImage.SymbolConfiguration(textStyle: .body, scale: .large)
+                if let nsImage = NSImage(contentsOf: url)?.withSymbolConfiguration(
+                    configuration
+                ) {
+                    return Image(nsImage: nsImage)
+                }
+            } else {
+                return Image(nsImage: nsImage)
+                    .resizable()
+            }
+        }
+        return self.imageLoadError
+    }
+    
+    var imageLoadError: Image {
+        Image(systemName: "questionmark.square.fill")
+    }
+    
 }
