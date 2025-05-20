@@ -3294,6 +3294,16 @@
         }
       }
     },
+    "Projector Model: %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "投影器： %@"
+          }
+        }
+      }
+    },
     "Prompt" : {
       "localizations" : {
         "zh-Hans" : {
@@ -4576,6 +4586,16 @@
         }
       }
     },
+    "This is the multimodal projector corresponding to the selected local model, which handles image encoding and projection." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这是对应于选定的本地模型的多模态投影器，处理图像编码和投影。"
+          }
+        }
+      }
+    },
     "Timetable" : {
       "localizations" : {
         "zh-Hans" : {
@@ -4692,6 +4712,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "正在扫描新添加到“%@”的资源"
+          }
+        }
+      }
+    },
+    "Use a vision capable local model." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用具备视觉能力的本地模型。"
           }
         }
       }
@@ -4846,6 +4876,16 @@
         }
       }
     },
+    "Use Vision" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用视觉"
+          }
+        }
+      }
+    },
     "Use Vision Capabilities" : {
       "localizations" : {
         "zh-Hans" : {
@@ -4932,6 +4972,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "查看资源"
+          }
+        }
+      }
+    },
+    "Vision" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "视觉"
           }
         }
       }

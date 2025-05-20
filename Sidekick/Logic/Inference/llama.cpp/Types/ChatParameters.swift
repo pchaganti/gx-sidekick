@@ -20,6 +20,7 @@ struct ChatParameters: Codable {
 	/// Init for non-chat
 	init(
         modelType: ModelType,
+        usingRemoteModel: Bool,
         systemPrompt: String,
         messages: [Message.MessageSubset]
 	) async {
@@ -30,6 +31,7 @@ struct ChatParameters: Codable {
                 sender: .system
             )
             let systemPromptMsgSubset: Message.MessageSubset = await Message.MessageSubset(
+                usingRemoteModel: usingRemoteModel,
                 message: systemPromptMsg,
                 useReasoning: modelType == .regular
             )
@@ -43,6 +45,7 @@ struct ChatParameters: Codable {
 	/// Init for chat & context aware agent
 	init(
 		modelType: ModelType,
+        usingRemoteModel: Bool,
         systemPrompt: String,
         messages: [Message.MessageSubset],
         useWebSearch: Bool = false,
@@ -103,7 +106,8 @@ struct ChatParameters: Codable {
 			sender: .system
 		)
 		let systemPromptMsgSubset: Message.MessageSubset = await Message.MessageSubset(
-			message: systemPromptMsg,
+            usingRemoteModel: usingRemoteModel,
+            message: systemPromptMsg,
             temporaryResources: [],
             shouldAddSources: false,
             useReasoning: modelType == .regular,

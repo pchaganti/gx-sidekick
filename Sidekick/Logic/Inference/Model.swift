@@ -366,11 +366,16 @@ public class Model: ObservableObject {
         // Formulate message subset
         let useServer: Bool = canReachRemoteServer && InferenceSettings.useServer
         let lastIndex: Int = messages.count - 1
+        let hasVision: Bool = LlamaServer.modelHasVision(
+            type: modelType,
+            usingRemoteModel: useServer
+        )
         let messagesWithSources: [Message.MessageSubset] = await messages
             .enumerated()
             .asyncMap { index, message in
                 return await Message.MessageSubset(
                     modelType: modelType,
+                    usingRemoteModel: useServer,
                     message: message,
                     similarityIndex: similarityIndex,
                     temporaryResources: temporaryResources,
@@ -378,10 +383,7 @@ public class Model: ObservableObject {
                         index == lastIndex
                     ),
                     useReasoning: useReasoning,
-                    useMultimodalContent: LlamaServer.modelHasVision(
-                        type: modelType,
-                        usingRemoteModel: useServer
-                    ),
+                    useVisionContent: hasVision,
                     useWebSearch: useWebSearch,
                     useCanvas: useCanvas,
                     canvasSelection: canvasSelection
@@ -681,6 +683,7 @@ public class Model: ObservableObject {
                 sender: .assistant
             )
             let responseMessageSubset: Message.MessageSubset = await Message.MessageSubset(
+                usingRemoteModel: self.wasRemoteServerAccessible,
                 message: responseMessage
             )
             messages.append(responseMessageSubset)
@@ -721,6 +724,7 @@ Call another tool to obtain more information or execute more actions. Try breaki
                 sender: .user
             )
             let changeMessageSubset = await Message.MessageSubset(
+                usingRemoteModel: self.wasRemoteServerAccessible,
                 message: changeMessage,
                 useReasoning: useReasoning
             )
@@ -833,6 +837,7 @@ Respond with YES if ALL 3 criteria above have been met. Respond with YES or NO o
             sender: .user
         )
         let messageSubset: Message.MessageSubset = await Message.MessageSubset(
+            usingRemoteModel: self.wasRemoteServerAccessible,
             message: message,
             useReasoning: useReasoning
         )

@@ -53,7 +53,7 @@ public struct KnownModel: Identifiable, Codable {
     /// An array of supported ``Modality``
     public var modalities: [Modality]
     /// A `Bool` representing whethe the model is multimodal
-    public var isMultimodal: Bool {
+    public var isVision: Bool {
         return modalities.count > 1
     }
     

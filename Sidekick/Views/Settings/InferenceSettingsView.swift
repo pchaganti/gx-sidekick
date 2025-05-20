@@ -15,6 +15,7 @@ struct InferenceSettingsView: View {
 	@AppStorage("modelUrl") private var modelUrl: URL?
     @AppStorage("workerModelUrl") private var workerModelUrl: URL?
 	@AppStorage("specularDecodingModelUrl") private var specularDecodingModelUrl: URL?
+    @AppStorage("projectorModelUrl") private var projectorModelUrl: URL?
 	
 	@State private var isEditingSystemPrompt: Bool = false
     
@@ -27,6 +28,9 @@ struct InferenceSettingsView: View {
 	@AppStorage("temperature") private var temperature: Double = InferenceSettings.temperature
 	@AppStorage("useGPUAcceleration") private var useGPUAcceleration: Bool = InferenceSettings.useGPUAcceleration
 	@AppStorage("useSpeculativeDecoding") private var useSpeculativeDecoding: Bool = InferenceSettings.useSpeculativeDecoding
+    
+    @AppStorage("localModelUseVision") private var localModelUseVision: Bool = InferenceSettings.localModelUseVision
+    
 	@AppStorage("contextLength") private var contextLength: Int = InferenceSettings.contextLength
 	
     var body: some View {
@@ -38,6 +42,11 @@ struct InferenceSettingsView: View {
 			} header: {
 				Text("Models")
 			}
+            Section {
+                multimodal
+            } header: {
+                Text("Vision")
+            }
 			Section {
 				parameters
 			} header: {
@@ -201,6 +210,72 @@ struct InferenceSettingsView: View {
 		}
 	}
 	
+    var multimodal: some View {
+        Group {
+            useVisionToggle
+            projectorModelSelector
+        }
+    }
+    
+    var useVisionToggle: some View {
+        HStack(
+            alignment: .top
+        ) {
+            VStack(
+                alignment: .leading
+            ) {
+                HStack {
+                    Text("Use Vision")
+                        .font(.title3)
+                        .bold()
+                }
+                Text("Use a vision capable local model.")
+                    .font(.caption)
+            }
+            Spacer()
+            Toggle(
+                "",
+                isOn: $localModelUseVision.animation(.linear)
+            )
+        }
+    }
+    
+    var projectorModelSelector: some View {
+        HStack(alignment: .center) {
+            VStack(alignment: .leading) {
+                Text(
+                    "Projector Model: \(projectorModelUrl?.lastPathComponent ?? String(localized: "No Model Selected"))"
+                )
+                .font(.title3)
+                .bold()
+                Text("This is the multimodal projector corresponding to the selected local model, which handles image encoding and projection.")
+                    .font(.caption)
+            }
+            Spacer()
+            Button {
+                if let url = try? FileManager.selectFile(
+                        dialogTitle: "Select a Model",
+                        canSelectDirectories: false,
+                        allowedContentTypes: [Settings.ggufType]
+                ).first {
+                    self.projectorModelUrl = url
+                }
+            } label: {
+                Text("Select")
+            }
+        }
+        .contextMenu {
+            Button {
+                guard let modelUrl: URL = InferenceSettings.projectorModelUrl else {
+                    return
+                }
+                FileManager.showItemInFinder(url: modelUrl)
+            } label: {
+                Text("Show in Finder")
+            }
+        }
+    }
+        
 	var parameters: some View {
 		Group {
 			systemPromptEditor

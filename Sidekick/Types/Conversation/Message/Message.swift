@@ -414,12 +414,13 @@ DO NOT reference sources outside of those provided below. If you did not referen
         
         init(
             modelType: ModelType = .regular,
+            usingRemoteModel: Bool,
             message: Message,
             similarityIndex: SimilarityIndex? = nil,
             temporaryResources: [TemporaryResource] = [],
             shouldAddSources: Bool = false,
             useReasoning: Bool = true,
-            useMultimodalContent: Bool = false,
+            useVisionContent: Bool = false,
             useWebSearch: Bool = false,
             useCanvas: Bool = false,
             canvasSelection: String? = nil
@@ -452,8 +453,8 @@ Output the full text again with the changes applied. Keep as much of the previou
             }
             // Add sources if needed
             if shouldAddSources {
-                // Initialize the content based on the useMultimodalContent flag.
-                if useMultimodalContent {
+                // Initialize the content based on the useVisionContent flag.
+                if useVisionContent {
                     var contentArr: [Content] = []
                     // Add text content, stripping images
                     let textContentStr: String = await message.textWithSources(
@@ -464,15 +465,43 @@ Output the full text again with the changes applied. Keep as much of the previou
                     let textContentItem: Content = .text(textContentStr)
                     contentArr.append(textContentItem)
                     // Add image content
+                    let maxEdge: CGFloat = 900 / 2
                     let imageUrls: [URL] = temporaryResources.filter({ $0.isImage }).map(\.url)
-                    let encodedImages: [String] = imageUrls.map { url in
-                        guard let data = try? Data(contentsOf: url) else {
-                            return nil // Return nil if file can't be read
+                    let encodedImages: [String] = imageUrls.compactMap { url in
+                        guard let image = NSImage(contentsOf: url) else {
+                            return nil // Return nil if file can't be read as image
                         }
-                        let encoding: String = data.base64EncodedString()
-                        let type: String = url.pathExtension
-                        return "data:image/\(type);base64,\(encoding)"
-                    }.compactMap({ $0 })
+                        let originalSize = image.size
+                        let maxOriginalEdge = max(originalSize.width, originalSize.height)
+                        var resizedImage = image
+                        // Only resize if one of the dimensions is larger than maxEdge
+                        if maxOriginalEdge > maxEdge {
+                            let scale = maxEdge / maxOriginalEdge
+                            let newSize = NSSize(width: originalSize.width * scale, height: originalSize.height * scale)
+                            let newImage = NSImage(size: newSize)
+                            newImage.lockFocus()
+                            // Set high interpolation quality to ensure sharp resized image
+                            NSGraphicsContext.current?.imageInterpolation = .default
+                            image.draw(
+                                in: NSRect(origin: .zero, size: newSize),
+                                from: NSRect(origin: .zero, size: originalSize),
+                                operation: .copy,
+                                fraction: 1.0
+                            )
+                            newImage.unlockFocus()
+                            resizedImage = newImage
+                        }
+                        guard let tiffData = resizedImage.tiffRepresentation,
+                              let bitmap = NSBitmapImageRep(data: tiffData),
+                              let pngData = bitmap.representation(
+                                using: .png,
+                                properties: [.compressionFactor: 0.95]
+                              ) else {
+                            return nil // Return nil if image can't be encoded
+                        }
+                        let encoding: String = pngData.base64EncodedString()
+                        return "data:image/png;base64,\(encoding)"
+                    }
                     let imageContentItems: [Content] = encodedImages.map { encodedImage in
                         return .imageURL(ImageURL(url: encodedImage))
                     }
@@ -611,12 +640,6 @@ Output the full text again with the changes applied. Keep as much of the previou
         }
            
     }
-	
-	private enum JSONType: String, CaseIterable {
-		case unknown
-		case empty
-		case references
-	}
 	
 	public enum ContentType: String, CaseIterable {
 		case text

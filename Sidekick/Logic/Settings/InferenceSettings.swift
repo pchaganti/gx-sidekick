@@ -395,6 +395,43 @@ You recall the following information about the user from prior interactions:
 			UserDefaults.standard.set(newValue, forKey: "useGPUAcceleration")
 		}
 	}
+    
+    /// Computed property for whether the LLM uses multimodal capabilities
+    static var localModelUseVision: Bool {
+        get {
+            // Set default
+            if !UserDefaults.standard.exists(key: "localModelUseVision") {
+                // Default to true
+                Self.localModelUseVision = false
+            }
+            return UserDefaults.standard.bool(
+                forKey: "localModelUseVision"
+            )
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "localModelUseVision")
+        }
+    }
+    
+    /// Computed property for the location of the VLM multimodal projector
+    static var projectorModelUrl: URL? {
+        get {
+            return UserDefaults.standard.url(
+                forKey: "projectorModelUrl"
+            )
+        }
+        set {
+            UserDefaults.standard.set(
+                newValue,
+                forKey: "projectorModelUrl"
+            )
+        }
+    }
+    
+    /// Computed property for whether the local model has vision
+    static var localModelHasVision: Bool {
+        return Self.localModelUseVision || Self.projectorModelUrl == nil
+    }
 	
 	/// Function that sets default values
 	public static func setDefaults() {

@@ -91,11 +91,13 @@ public actor LlamaServer {
         type: ModelType,
         usingRemoteModel: Bool
     ) -> Bool {
-        // Return false if...
-        // Using local model since `llama-server` does not yet support VLMs
-        // Using non-regular model
-        if !usingRemoteModel || type != .regular {
+        // Return false if using non-regular model
+        if type != .regular {
             return false
+        }
+        // Using local model and has vision enabled, and has projector
+        if !usingRemoteModel && InferenceSettings.localModelHasVision {
+            return true
         }
         // Else, get toggle value
         return InferenceSettings.serverModelHasVision
@@ -257,10 +259,11 @@ public actor LlamaServer {
             "--port": self.port,
             "--gpu-layers": gpuLayersToUse
 		]
-		// If speculative decoding is used and is main model
-        if self.modelType == .regular,
-			let speculationModelUrl = InferenceSettings.speculativeDecodingModelUrl {
-			if InferenceSettings.useSpeculativeDecoding {
+		// Extra options for main model
+        if self.modelType == .regular {
+            // Use speculative decoding
+			if InferenceSettings.useSpeculativeDecoding,
+                let speculationModelUrl = InferenceSettings.speculativeDecodingModelUrl {
 				// Formulate arguments
 				let draft: Int =  16
 				let draftMin: Int = 7
@@ -277,6 +280,18 @@ public actor LlamaServer {
                     arguments[element.key] = element.value
                 }
 			}
+            // Use multimodal
+            if InferenceSettings.localModelUseVision,
+               let multimodalModelUrl = InferenceSettings.projectorModelUrl {
+                // Formulate argument
+                let multimodalArguments: [String: String] = [
+                    "--mmproj": multimodalModelUrl.posixPath
+                ]
+                // Append
+                multimodalArguments.forEach { element in
+                    arguments[element.key] = element.value
+                }
+            }
 		}
         // Inject custom arguments for main model
         if self.modelType == .regular {
@@ -396,6 +411,7 @@ public actor LlamaServer {
                 case .chat, .agent:
 					return await ChatParameters(
                         modelType: self.modelType,
+                        usingRemoteModel: canReachRemoteServer,
                         systemPrompt: self.systemPrompt,
                         messages: messages,
                         useWebSearch: useWebSearch,
@@ -405,6 +421,7 @@ public actor LlamaServer {
                 case .deepResearch:
                     return await ChatParameters(
                         modelType: self.modelType,
+                        usingRemoteModel: canReachRemoteServer,
                         systemPrompt: self.systemPrompt,
                         messages: messages,
                         useWebSearch: useWebSearch,
@@ -414,6 +431,7 @@ public actor LlamaServer {
 				case .default:
 					return await ChatParameters(
                         modelType: self.modelType,
+                        usingRemoteModel: canReachRemoteServer,
                         systemPrompt: self.systemPrompt,
                         messages: messages
 					)
