@@ -5,15 +5,21 @@
 //  Created by Bean John on 9/22/24.
 //
 
+import DefaultModels
 import Foundation
 import OSLog
 import SwiftUI
-import DefaultModels
 
 @MainActor
 /// Controls the download of LLMs
 public class DownloadManager: NSObject, ObservableObject {
 	
+    /// A `Logger` object for the `PromptInputField` object
+    private static let logger: Logger = .init(
+        subsystem: Bundle.main.bundleIdentifier!,
+        category: String(describing: DownloadManager.self)
+    )
+    
 	/// Global instance of `DownloadManager`
 	static var shared: DownloadManager = DownloadManager()
 	
@@ -92,31 +98,33 @@ public class DownloadManager: NSObject, ObservableObject {
 		self.shouldAddModel = true
 		// Get default model
 		let model: HuggingFaceModel = await DefaultModels.recommendedModel
-		print("Trying to download \(model.name)")
+        Self.logger.info("Trying to download \(model.name, privacy: .public)")
 		// Download model
 		await self.downloadModel(model: model)
 	}
 	
 	/// Function to download the default completions model
 	@MainActor
-	public func downloadDefaultCompletionsModel() async {
-		// Set to not add model
-		self.shouldAddModel = false
-		// Get default model
-		let modelUrl: URL = URL(string: "https://huggingface.co/mradermacher/Qwen3-1.7B-Base-GGUF/resolve/main/Qwen3-1.7B-Base.Q4_K_M.gguf")!
-		print("Trying to download \(modelUrl.deletingLastPathComponent().lastPathComponent)")
-		// Download model
-		await self.downloadModel(url: modelUrl)
-		// Add download location to settings
-		let fileName: String = modelUrl.lastPathComponent
-		let destinationUrl: URL = Settings.dirUrl.appendingPathComponent(
-			fileName
-		)
-		InferenceSettings.completionsModelUrl = destinationUrl
-	}
+    public func downloadDefaultCompletionsModel() async {
+        // Set to not add model
+        self.shouldAddModel = false
+        // Get default model
+        let modelUrl: URL = URL(string: "https://huggingface.co/mradermacher/Qwen3-1.7B-Base-GGUF/resolve/main/Qwen3-1.7B-Base.Q4_K_M.gguf")!
+        Self.logger.info("Trying to download \(modelUrl.deletingLastPathComponent().lastPathComponent, privacy: .public)")
+        // Download model
+        await self.downloadModel(url: modelUrl)
+        // Add download location to settings
+        let fileName: String = modelUrl.lastPathComponent
+        let destinationUrl: URL = Settings.dirUrl.appendingPathComponent(
+            fileName
+        )
+        InferenceSettings.completionsModelUrl = destinationUrl
+    }
 	
-	private func startDownload(url: URL) {
-		print("Starting download ", url)
+	private func startDownload(
+        url: URL
+    ) {
+        Self.logger.info("Starting download for resource \"\(url, privacy: .public)\"")
 		// Ignore download if it's already in progress
 		if self.tasks.contains(where: {
 			$0.originalRequest?.url == url
@@ -180,7 +188,6 @@ extension DownloadManager: URLSessionDelegate, URLSessionDownloadDelegate {
 		downloadTask: URLSessionDownloadTask,
 		didFinishDownloadingTo location: URL
 	) {
-		print("Download complete")
 		// Move file to app resources
 		let fileName = downloadTask.originalRequest?.url?.lastPathComponent ?? "defaultModel.gguf"
 		let destinationURL = Settings.dirUrl.appending(

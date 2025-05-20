@@ -615,11 +615,24 @@ public actor LlamaServer {
 			usage?.completion_tokens ?? tokenCount
 		)
 		let generationTime: CFTimeInterval = CFAbsoluteTimeGetCurrent() - start - responseDiff
+        let tokensPerSecond: Double = Double(tokens) / generationTime
 		let modelName: String = rawUrl.usingRemoteServer ? InferenceSettings.serverModelName : self.modelName
+        // Log use
+        let url: URL? = rawUrl.usingRemoteServer ? rawUrl.url : nil
+        let record: InferenceRecord = .init(
+            name: modelName,
+            startTime: Date(timeIntervalSinceReferenceDate: start),
+            endpoint: url,
+            inputTokens: usage?.prompt_tokens,
+            outputTokens: usage?.completion_tokens,
+            tokensPerSecond: tokensPerSecond
+        )
+        InferenceRecords.shared.add(record)
+        // Return response
 		return CompleteResponse(
 			text: cleanText,
 			responseStartSeconds: responseDiff,
-			predictedPerSecond: Double(tokens) / generationTime,
+            predictedPerSecond: tokensPerSecond,
 			modelName: modelName,
 			usage: stopResponse?.usage,
             usedServer: rawUrl.usingRemoteServer,
@@ -636,10 +649,11 @@ public actor LlamaServer {
 		maxTokenNumber: Int
 	) async -> [Token]? {
 		// Formulate request
+        let url: URL = URL(
+            string: "\(self.scheme)://\(self.host):\(self.port)/v1/completions"
+        )!
 		var request = URLRequest(
-			url: URL(
-				string: "\(self.scheme)://\(self.host):\(self.port)/v1/completions"
-			)!
+			url: url
 		)
 		request.httpMethod = "POST"
 		request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -657,11 +671,13 @@ public actor LlamaServer {
 			encoding: .utf8
 		)!
 		request.httpBody = requestJson.data(using: .utf8)
-		// Send request
+		// Formulate session
 		let urlSession: URLSession = URLSession.shared
 		urlSession.configuration.waitsForConnectivity = false
 		urlSession.configuration.timeoutIntervalForRequest = 10
 		urlSession.configuration.timeoutIntervalForResource = 10
+        // Log start time
+        let startTime: Date = Date.now
 		// Get JSON response
 		guard let (data, _): (Data, URLResponse) = try? await URLSession.shared.data(
 			for: request
@@ -678,8 +694,24 @@ public actor LlamaServer {
 			Self.logger.error("Failed to decode completion response.")
 			return nil
 		}
+        // Log
+        let timeElapsed: Double = Date.now.timeIntervalSince(
+            startTime
+        )
+        let tokensPerSecond: Double = Double(
+            response.usage.completion_tokens ?? 0
+        ) / timeElapsed
+        let record: InferenceRecord = .init(
+            name: modelName,
+            startTime: startTime,
+            inputTokens: response.usage.prompt_tokens,
+            outputTokens: response.usage.completion_tokens,
+            tokensPerSecond: tokensPerSecond
+        )
+        InferenceRecords.shared.add(record)
 		// Extract and return
-		return response.choices.first?.logprobs.content
+		let content = response.choices.first?.logprobs.content
+        return content
 	}
 	
 	/// Function executed when output finishes
@@ -1045,6 +1077,8 @@ public actor LlamaServer {
 		}
 		
 		var choices: [Choice]
+        
+        var usage: Usage
 		
 		struct Choice: Codable {
 			

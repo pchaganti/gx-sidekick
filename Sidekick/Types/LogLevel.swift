@@ -1,13 +1,6 @@
 import SwiftUI
 import OSLog
 
-
-//      .debug: For detailed information during successful operations.
-//      .info: For steps where an alternative approach is attempted.
-//      .warning: For intermediate failures that are non-critical.
-//      .error: For complete failures after all attempts.
-
-
 /// User-defined logging levels
 public enum LogLevel {
 	
