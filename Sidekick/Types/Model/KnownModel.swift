@@ -328,7 +328,41 @@ public struct KnownModel: Identifiable, Codable {
             capabilities: [.reasoning]
         ),
         
+        // DeepSeek
+        
+        KnownModel(
+            primaryName: "deepseek-r1",
+            organization: .deepSeek,
+            modalities: [
+                .text
+            ],
+            capabilities: [.reasoning]
+        ),
+        KnownModel(
+            primaryName: "deepseek-v3",
+            organization: .deepSeek,
+            modalities: [
+                .text
+            ]
+        ),
+        KnownModel(
+            primaryName: "deepseek-reasoner",
+            organization: .deepSeek,
+            modalities: [
+                .text
+            ],
+            capabilities: [.reasoning]
+        ),
+        KnownModel(
+            primaryName: "deepseek-chat",
+            organization: .deepSeek,
+            modalities: [
+                .text
+            ]
+        ),
+        
         // Amazon
+        
         KnownModel(
             primaryName: "nova-lite-v1",
             organization: .amazon,
@@ -492,6 +526,15 @@ public struct KnownModel: Identifiable, Codable {
                 .text,
                 .image
             ]
+        ),
+        KnownModel(
+            primaryName: "phi-4-reasoning",
+            organization: .microsoft,
+            modalities: [
+                .text,
+                .image
+            ],
+            capabilities: [.reasoning]
         ),
         
         // Meta
