@@ -885,6 +885,7 @@ public actor LlamaServer {
 	
 	struct StopResponse: Codable {
 		
+        let model: String
 		let usage: Usage
 		
 	}

@@ -63,6 +63,12 @@ public class MermaidRenderer: @unchecked Sendable {
     public static func saveMermaidCode(
         code: String
     ) {
+        // If config not prefixed, add
+        var code: String = code
+        let config: String = "%%{init: {\"flowchart\": { \"htmlLabels\": false}} }%%"
+        if !code.hasPrefix(config) {
+            code = config + "\n" + code
+        }
         // Save mermaid text to file
         do {
             try code.write(
