@@ -21,6 +21,7 @@ struct IntroductionView: View {
             switch introductionViewController.page {
                 case .setupExpert:
                     ExpertSetupView()
+                        .padding(.horizontal)
                 case .done:
                     SetupCompleteView(
                         description: String(localized: "Sidekick is ready to use.")
@@ -29,29 +30,46 @@ struct IntroductionView: View {
                         self.showSetup = false
                     }
                     .frame(maxHeight: 400)
+                    .padding(.horizontal)
                 default:
                     page
-                        .padding(.vertical)
             }
         }
-        .frame(maxHeight: 500)
+        .frame(maxHeight: 600)
         .environmentObject(introductionViewController)
     }
     
     var page: some View {
-        HStack {
-            introductionViewController.prevPage
-            VStack {
-                IntroductionPageView(
-                    content: introductionViewController.page.content!
-                )
-                .padding()
-                // Progress indicator
-                if introductionViewController.page.hasNext {
-                    introductionViewController.progress
+        VStack {
+            HStack {
+                introductionViewController.prevPage
+                VStack {
+                    IntroductionPageView(
+                        content: introductionViewController.page.content!
+                    )
+                    .padding()
+                    // Progress indicator
+                    if introductionViewController.page.hasNext {
+                        introductionViewController.progress
+                    }
                 }
+                introductionViewController.nextPage
             }
-            introductionViewController.nextPage
+            .padding(.horizontal)
+            Divider()
+            HStack {
+                Spacer()
+                Button {
+                    Settings.finishSetup()
+                    self.showSetup = false
+                } label: {
+                    Text("Skip")
+                }
+                .buttonStyle(.link)
+            }
+            .padding(.horizontal)
+            .padding(.top, 3)
+            .padding(.bottom)
         }
     }
 

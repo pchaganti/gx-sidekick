@@ -25,7 +25,7 @@ struct IntroductionPageView: View {
             Markdown(MarkdownContent(content.description))
                 .font(.title2)
         }
-        .frame(minWidth: 700, minHeight: 700)
+        .frame(minWidth: 700, minHeight: 550)
     }
 	
 }

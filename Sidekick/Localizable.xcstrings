@@ -4143,6 +4143,16 @@
         }
       }
     },
+    "Skip" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "掠过教程"
+          }
+        }
+      }
+    },
     "Slide Studio" : {
       "localizations" : {
         "zh-Hans" : {
