@@ -470,6 +470,7 @@ Respond with the array of JSON objects ONLY.
                     throw ResultDecodeError.isEmpty
                 }
                 section.results = results
+                break
                 enum ResultDecodeError: Error {
                     case isEmpty
                 }
@@ -509,7 +510,7 @@ Respond with the key findings ONLY.
         )
         // Get response
         let summarizeResponse = try await Model.shared.listenThinkRespond(
-            messages: [jsonMessage],
+            messages: [summarizeMessage],
             modelType: .regular,
             mode: .agent,
             useReasoning: true,
