@@ -494,7 +494,7 @@ Here are the notes you made on this section.
 \(section.getPromptDescription())
 ```
 
-Synthesize and summarize key findings from the research above, and write it into 2-3 sentences.
+Synthesize and summarize key findings from the research above, and write it into 4-5 sentences.
 
 Respond with the key findings ONLY.
 """

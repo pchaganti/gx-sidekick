@@ -26,7 +26,7 @@ public struct InferenceRecord: Identifiable, Codable {
     }
     
     /// The `Type` of inference use
-    public var type: `Type` = .chatCompletions
+    public var type: `Type`
     /// A `URL` for the endpoint used
     public var endpoint: URL? = nil
     /// A `Bool` representing whether a remote server was used

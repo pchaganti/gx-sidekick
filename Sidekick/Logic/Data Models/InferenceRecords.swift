@@ -27,15 +27,22 @@ public class InferenceRecords: ObservableObject {
             self.save()
         }
     }
-    
-    /// The currently selected model
-    @Published public var selectedModel: String? = nil
-    /// The currently selected timeframe
-    @Published public var selectedTimeframe: Timeframe = .today
+    // Table config
+    @Published public var selections = Set<InferenceRecord.ID>()
+    private var selectedRecords: [InferenceRecord] {
+        return self.records.filter { record in
+            return self.selections.contains(record.id)
+        }
+    }
     
     /// All records within the timeframe & with the selected model
     public var filteredRecords: [InferenceRecord] {
-        let timelyRecords = self.records.filter{ record in
+        // Return selection if selected
+        if !self.selectedRecords.isEmpty {
+            return self.selectedRecords
+        }
+        // Else, filter
+        let timelyRecords = self.records.filter { record in
             return self.selectedTimeframe.range.contains(record.startTime) || self.selectedTimeframe.range.contains(record.endTime)
         }
         if let selectedModel {
@@ -47,11 +54,16 @@ public class InferenceRecords: ObservableObject {
         }
     }
     
+    /// The currently selected model
+    @Published public var selectedModel: String? = nil
+    /// The currently selected timeframe
+    @Published public var selectedTimeframe: Timeframe = .today
+    
     public var intervalUsage: [IntervalUse] {
         let calendar = Calendar.current
         let timeframe: Timeframe = self.selectedTimeframe
         // Filter records based on whether the start or end time is within the timeframe's range.
-        let timelyRecords = records.filter { record in
+        let timelyRecords = self.filteredRecords.filter { record in
             timeframe.range.contains(record.startTime) || timeframe.range.contains(record.endTime)
         }
         // Determine the grouping based on the timeframe.
@@ -122,10 +134,34 @@ public class InferenceRecords: ObservableObject {
     }
     
     public var modelUsage: [ModelUse] {
-        return self.models.map { model in
-            let usage: Int = self.records.filter({ $0.name == model }).count
-            return ModelUse(model: model, usage: usage)
-        }.sorted(by: \.usage)
+        let modelUses: [
+            (totalTokens: Int, uses: [ModelUse])
+        ] = self.models.map { model in
+            let records: [InferenceRecord] = self.filteredRecords.filter { record in
+                return record.name == model
+            }
+            let totalInputTokens: Int = records.map(keyPath: \.inputTokens).reduce(0, +)
+            let totalOutputTokens: Int = records.map(keyPath: \.outputTokens).reduce(0, +)
+            return (
+                totalInputTokens + totalOutputTokens,
+                [
+                    ModelUse(
+                        model: model,
+                        tokens: totalInputTokens,
+                        type: .input
+                    ),
+                    ModelUse(
+                        model: model,
+                        tokens: totalOutputTokens,
+                        type: .output
+                    )
+                ]
+            )
+        }
+        return modelUses
+            .sorted(by: \.totalTokens)
+            .flatMap({ $0.uses })
+            .filter({ $0.tokens > 0 })
     }
     
     /// An array of `String` containing all models used
@@ -304,10 +340,6 @@ public class InferenceRecords: ObservableObject {
         public var tokens: Int
         public var type: TokenType
         
-        public enum TokenType: String, CaseIterable, Plottable {
-            case input, output
-        }
-        
     }
     
     public struct ModelUse: Identifiable {
@@ -317,8 +349,14 @@ public class InferenceRecords: ObservableObject {
         }
         
         public var model: String
-        public var usage: Int
         
+        public var tokens: Int
+        public var type: TokenType
+        
+    }
+    
+    public enum TokenType: String, CaseIterable, Plottable {
+        case input, output
     }
     
 }

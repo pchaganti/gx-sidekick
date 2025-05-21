@@ -635,6 +635,7 @@ public actor LlamaServer {
         let record: InferenceRecord = .init(
             name: modelName,
             startTime: Date(timeIntervalSinceReferenceDate: start),
+            type: .chatCompletions,
             endpoint: url,
             inputTokens: usage?.prompt_tokens ?? 0,
             outputTokens: usage?.completion_tokens ?? 0,
@@ -717,6 +718,7 @@ public actor LlamaServer {
         let record: InferenceRecord = .init(
             name: modelName,
             startTime: startTime,
+            type: .completions,
             inputTokens: response.usage.prompt_tokens ?? 0,
             outputTokens: response.usage.completion_tokens ?? 0,
             tokensPerSecond: tokensPerSecond

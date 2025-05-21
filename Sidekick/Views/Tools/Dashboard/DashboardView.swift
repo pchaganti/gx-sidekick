@@ -12,9 +12,6 @@ struct DashboardView: View {
     
     @StateObject private var inferenceRecords: InferenceRecords = .shared
     
-    // Table config
-    @State private var selections = Set<InferenceRecord.ID>()
-    
     var totalTokens: Int {
         return self.inferenceRecords.filteredRecords.map { record in
             record.totalTokens
@@ -35,6 +32,14 @@ struct DashboardView: View {
     
     var totalUsage: Int {
         return self.inferenceRecords.filteredRecords.count
+    }
+    
+    var timeframeDescription: String {
+        if self.inferenceRecords.selections.isEmpty {
+            return " " + self.inferenceRecords.selectedTimeframe.description.lowercased()
+        } else {
+            return ""
+        }
     }
     
     var body: some View {
@@ -82,7 +87,7 @@ struct DashboardView: View {
                 .contentTransition(
                     .numericText(value: Double(self.totalTokens))
                 )
-            Text("tokens used \(self.inferenceRecords.selectedTimeframe.description.lowercased())")
+            Text("tokens used\(self.timeframeDescription)")
                 .font(.body)
                 .contentTransition(.numericText())
             VStack {
@@ -185,7 +190,13 @@ struct DashboardView: View {
             ) { usage in
                 BarMark(
                     x: .value("Model", usage.model),
-                    y: .value("Usage", usage.usage)
+                    y: .value("Tokens", usage.tokens)
+                )
+                .foregroundStyle(
+                    by: .value(
+                        "Type",
+                        usage.type.rawValue.capitalized
+                    )
                 )
             }
         }
@@ -200,8 +211,8 @@ struct DashboardView: View {
     
     var table: some View {
         Table(
-            self.inferenceRecords.filteredRecords,
-            selection: self.$selections
+            self.inferenceRecords.records,
+            selection: self.$inferenceRecords.selections
         ) {
             TableColumn("Start Time") { record in
                 Text(record.startTime.formatted(.dateTime))
