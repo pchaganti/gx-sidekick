@@ -494,12 +494,6 @@ Here are the notes you made on this section.
 \(section.getPromptDescription())
 ```
 
-Here are the sites and content you found on the web.
-
-```section_research
-\(researchResponse)
-```
-
 Synthesize and summarize key findings from the research above, and write it into 2-3 sentences.
 
 Respond with the key findings ONLY.
