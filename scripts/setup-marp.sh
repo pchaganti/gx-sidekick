@@ -23,9 +23,13 @@ tar -xzf marp-cli-v4.1.2-mac.tar.gz || { echo "Error extracting marp"; exit 1; }
 # Sign marp so it can be executed from Sidekick
 codesign --force --options runtime --entitlements entitlements-marp.plist --sign "$CODE_SIGNING_IDENTITY" ./marp
 
+# Create the target directory if it doesn't exist
+TARGET_DIR="../Sidekick/Logic/View Controllers/Tools/Slide Studio/Resources/bin"
+mkdir -p "$TARGET_DIR" || { echo "Error creating target directory"; exit 1; }
+
 # Move the extracted Marp CLI binary to the specified directory
-# This directory seems to be part of the Sidekick project resources
-if [ -f marp ]; then mv marp ../Sidekick/Logic/View\ Controllers/Tools/Slide\ Studio/Resources/bin/marp || { echo "Error moving marp"; exit 1; }; fi
+# This directory is part of the Sidekick project resources
+if [ -f marp ]; then mv marp "$TARGET_DIR/marp" || { echo "Error moving marp"; exit 1; }; fi
 
 # Remove the downloaded tar.gz file to clean up
 rm marp-cli-v4.1.2-mac.tar.gz || { echo "Error removing marp archive. You may need to manually remove the marp-cli-v4.1.2-mac.tar.gz file."; }
