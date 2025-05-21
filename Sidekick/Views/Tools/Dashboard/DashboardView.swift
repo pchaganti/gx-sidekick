@@ -211,7 +211,7 @@ struct DashboardView: View {
     
     var table: some View {
         Table(
-            self.inferenceRecords.records,
+            self.inferenceRecords.displayedRecords,
             selection: self.$inferenceRecords.selections
         ) {
             TableColumn("Start Time") { record in
@@ -274,7 +274,11 @@ struct DashboardView: View {
             Text("All Models")
                 .tag(String?(nil))
             ForEach(
-                self.inferenceRecords.models,
+                self.inferenceRecords.models.filter { model in
+                    return self.inferenceRecords.displayedRecords.contains { record in
+                        record.name == model
+                    }
+                },
                 id: \.self
             ) { model in
                 Text(model)

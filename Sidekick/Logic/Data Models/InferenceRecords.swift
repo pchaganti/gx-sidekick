@@ -36,13 +36,29 @@ public class InferenceRecords: ObservableObject {
     }
     
     /// All records within the timeframe & with the selected model
+    public var displayedRecords: [InferenceRecord] {
+        // Filter and return
+        let timelyRecords = self.records.filter { record in
+            return self.selectedTimeframe.range.contains(record.startTime) || self.selectedTimeframe.range.contains(record.endTime)
+        }
+        if let selectedModel {
+            return timelyRecords.filter { record in
+                return record.name == selectedModel
+            }
+        } else {
+            return timelyRecords
+        }
+    }
+    
+    /// All records within the timeframe & with the selected model
     public var filteredRecords: [InferenceRecord] {
         // Return selection if selected
+        var records = self.records
         if !self.selectedRecords.isEmpty {
-            return self.selectedRecords
+            records = self.selectedRecords
         }
         // Else, filter
-        let timelyRecords = self.records.filter { record in
+        let timelyRecords = records.filter { record in
             return self.selectedTimeframe.range.contains(record.startTime) || self.selectedTimeframe.range.contains(record.endTime)
         }
         if let selectedModel {
