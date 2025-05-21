@@ -5,6 +5,7 @@
 //  Created by John Bean on 5/20/25.
 //
 
+import Charts
 import Foundation
 
 public struct InferenceRecord: Identifiable, Codable {
@@ -34,15 +35,30 @@ public struct InferenceRecord: Identifiable, Codable {
     }
     
     /// An `Int` for the number for input tokens
-    public var inputTokens: Int?
+    public var inputTokens: Int
     /// An `Int` for the number for output tokens
-    public var outputTokens: Int?
+    public var outputTokens: Int
+    /// An `Int` for the total number of tokens
+    public var totalTokens: Int {
+        return self.inputTokens + self.outputTokens
+    }
     /// A `Double` for the tokens per second, or generation speed
     public var tokensPerSecond: Double
     
     public enum `Type`: String, Codable {
+        
         case completions // Used for chat with an instruct tuned model
         case chatCompletions // Used for completions with a foundation model
+        
+        var description: String {
+            switch self {
+                case .completions:
+                    return String(localized: "Completions")
+                case .chatCompletions:
+                    return String(localized: "Chat Completions")
+            }
+        }
+        
     }
     
 }

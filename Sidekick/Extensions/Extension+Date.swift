@@ -17,5 +17,41 @@ public extension Date {
 			)
 		return String(subString).replacingOccurrences(of: "-", with: " ")
 	}
+    
+    /// A `Date` representing the date one day ago
+    var oneDayAgo: Date {
+        return Calendar.current.date(
+            byAdding: .day,
+            value: -1,
+            to: self
+        )!
+    }
+    
+    /// A `Date` representing the same day of the previous week
+    var oneWeekAgo: Date {
+        return Calendar.current.date(
+            byAdding: .day,
+            value: -7,
+            to: self
+        )!
+    }
+    
+    /// A `Date` representing the same day of the previous month
+    var oneMonthAgo: Date {
+        return Calendar.current.date(
+            byAdding: .month,
+            value: -1,
+            to: self
+        )!
+    }
+    
+    /// A `Date` representing the same day of the previous year
+    var oneYearAgo: Date {
+        return Calendar.current.date(
+            byAdding: .year,
+            value: -1,
+            to: self
+        )!
+    }
 	
 }

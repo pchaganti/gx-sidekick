@@ -32,6 +32,7 @@ struct ToolboxLibraryView: View {
 	
     var tools: some View {
         List {
+            self.dashboardCard
             self.detectorCard
             self.diagrammerCard
             self.inlineAssistantCard
@@ -39,7 +40,18 @@ struct ToolboxLibraryView: View {
         }
     }
     
-	var diagrammerCard: some View {
+    var dashboardCard: some View {
+        ToolCardButton(
+            name: String(localized: "Dashboard"),
+            description: String(localized: "View usage statistics and trends")
+        ) {
+            Image(systemName: "chart.line.uptrend.xyaxis")
+        } action: {
+            self.openToolWindow(id: "dashboard")
+        }
+    }
+    
+    var diagrammerCard: some View {
 		ToolCardButton(
 			name: String(localized: "Diagrammer"),
 			description: String(localized: "Generate diagrams with AI"),

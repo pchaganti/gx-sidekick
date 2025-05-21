@@ -77,6 +77,56 @@
         }
       }
     },
+    "%@ s" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ 秒"
+          }
+        }
+      }
+    },
+    "%@ t/s" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        }
+      }
+    },
+    "%lld input" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld 输入"
+          }
+        }
+      }
+    },
+    "%lld output" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld 输出"
+          }
+        }
+      }
+    },
+    "%lld uses" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld 使用次数"
+          }
+        }
+      }
+    },
     "%lld: %@" : {
       "localizations" : {
         "en" : {
@@ -269,6 +319,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "AI 概率"
+          }
+        }
+      }
+    },
+    "All Models" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全部模型"
+          }
+        }
+      }
+    },
+    "All Time" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全部"
           }
         }
       }
@@ -593,6 +663,16 @@
         }
       }
     },
+    "Chat Completions" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "聊天"
+          }
+        }
+      }
+    },
     "Check for Updates" : {
       "localizations" : {
         "zh-Hans" : {
@@ -740,6 +820,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "指令"
+          }
+        }
+      }
+    },
+    "Completions" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "续写"
           }
         }
       }
@@ -1164,12 +1254,32 @@
         }
       }
     },
+    "Dashboard" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用数据"
+          }
+        }
+      }
+    },
     "Data Cleaning / Data Analysis" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "数据清洗 / 数据分析"
+          }
+        }
+      }
+    },
+    "Date" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日期"
           }
         }
       }
@@ -1527,6 +1637,16 @@
         }
       }
     },
+    "Duration" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "时长"
+          }
+        }
+      }
+    },
     "e.g. Create a presentation explaining the Von Neumann architecture." : {
       "localizations" : {
         "zh-Hans" : {
@@ -1623,6 +1743,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "明末清初"
+          }
+        }
+      }
+    },
+    "End Time" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "结束时间"
           }
         }
       }
@@ -2527,6 +2657,16 @@
         }
       }
     },
+    "Input Tokens" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "输入"
+          }
+        }
+      }
+    },
     "Just a moment..." : {
       "localizations" : {
         "zh-Hans" : {
@@ -2614,6 +2754,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "加载中"
+          }
+        }
+      }
+    },
+    "Local Inference" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本地推理"
           }
         }
       }
@@ -3114,6 +3264,16 @@
         }
       }
     },
+    "Output Tokens" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "输出"
+          }
+        }
+      }
+    },
     "Parameters" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3380,6 +3540,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "刷新"
+          }
+        }
+      }
+    },
+    "Remote Inference" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "远端推理"
           }
         }
       }
@@ -4183,6 +4353,26 @@
         }
       }
     },
+    "Speed (t/s)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "速度（每秒令牌数）"
+          }
+        }
+      }
+    },
+    "Start Time" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开始时间"
+          }
+        }
+      }
+    },
     "Stats for Nerds" : {
       "localizations" : {
         "zh-Hans" : {
@@ -4606,6 +4796,36 @@
         }
       }
     },
+    "This Month" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本月"
+          }
+        }
+      }
+    },
+    "This Week" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本周"
+          }
+        }
+      }
+    },
+    "This Year" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本年"
+          }
+        }
+      }
+    },
     "Timetable" : {
       "localizations" : {
         "zh-Hans" : {
@@ -4646,6 +4866,16 @@
         }
       }
     },
+    "Today" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今天"
+          }
+        }
+      }
+    },
     "Toggle LaTeX" : {
       "localizations" : {
         "zh-Hans" : {
@@ -4656,12 +4886,42 @@
         }
       }
     },
+    "Tokens" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "令牌"
+          }
+        }
+      }
+    },
+    "tokens used %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@已使用令牌"
+          }
+        }
+      }
+    },
     "Toolbox" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "工具箱"
+          }
+        }
+      }
+    },
+    "Total Tokens" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "总令牌数"
           }
         }
       }
@@ -4682,6 +4942,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "试用工具"
+          }
+        }
+      }
+    },
+    "Type" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "类别"
           }
         }
       }
@@ -4722,6 +4992,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "正在扫描新添加到“%@”的资源"
+          }
+        }
+      }
+    },
+    "Usage" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用次数"
           }
         }
       }
@@ -4946,6 +5226,16 @@
         }
       }
     },
+    "Uses" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用次数"
+          }
+        }
+      }
+    },
     "Value" : {
       "localizations" : {
         "zh-Hans" : {
@@ -4982,6 +5272,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "查看资源"
+          }
+        }
+      }
+    },
+    "View usage statistics and trends" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查看使用情况统计数据和趋势"
           }
         }
       }

@@ -79,6 +79,11 @@ struct SidekickApp: App {
             ModelExplorerView()
         }
         
+        // Window for Tool: Dashboard
+        SwiftUI.Window("Dashboard", id: "dashboard") {
+            DashboardView()
+        }
+        
         // Window for Tool: Detector
         SwiftUI.Window("Detector", id: "detector") {
             DetectorView()

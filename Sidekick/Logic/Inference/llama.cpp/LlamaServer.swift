@@ -616,18 +616,31 @@ public actor LlamaServer {
 		)
 		let generationTime: CFTimeInterval = CFAbsoluteTimeGetCurrent() - start - responseDiff
         let tokensPerSecond: Double = Double(tokens) / generationTime
-		let modelName: String = rawUrl.usingRemoteServer ? InferenceSettings.serverModelName : self.modelName
+        let modelName: String = {
+            // If not using remote server, return name
+            if !rawUrl.usingRemoteServer {
+                return self.modelName
+            }
+            switch self.modelType {
+                case .regular:
+                    return stopResponse?.model ?? InferenceSettings.serverModelName
+                case .worker:
+                    return stopResponse?.model ?? InferenceSettings.serverWorkerModelName
+                case .completions:
+                    return InferenceSettings.completionsModelUrl?.deletingPathExtension().lastPathComponent ?? "Unknown Model"
+            }
+        }()
         // Log use
         let url: URL? = rawUrl.usingRemoteServer ? rawUrl.url : nil
         let record: InferenceRecord = .init(
             name: modelName,
             startTime: Date(timeIntervalSinceReferenceDate: start),
             endpoint: url,
-            inputTokens: usage?.prompt_tokens,
-            outputTokens: usage?.completion_tokens,
+            inputTokens: usage?.prompt_tokens ?? 0,
+            outputTokens: usage?.completion_tokens ?? 0,
             tokensPerSecond: tokensPerSecond
         )
-        InferenceRecords.shared.add(record)
+        await InferenceRecords.shared.add(record)
         // Return response
 		return CompleteResponse(
 			text: cleanText,
@@ -704,11 +717,11 @@ public actor LlamaServer {
         let record: InferenceRecord = .init(
             name: modelName,
             startTime: startTime,
-            inputTokens: response.usage.prompt_tokens,
-            outputTokens: response.usage.completion_tokens,
+            inputTokens: response.usage.prompt_tokens ?? 0,
+            outputTokens: response.usage.completion_tokens ?? 0,
             tokensPerSecond: tokensPerSecond
         )
-        InferenceRecords.shared.add(record)
+        await InferenceRecords.shared.add(record)
 		// Extract and return
 		let content = response.choices.first?.logprobs.content
         return content

@@ -5,6 +5,7 @@
 //  Created by John Bean on 5/20/25.
 //
 
+import Charts
 import Foundation
 import FSKit_macOS
 import os.log
@@ -25,6 +26,111 @@ public class InferenceRecords: ObservableObject {
         didSet {
             self.save()
         }
+    }
+    
+    /// The currently selected model
+    @Published public var selectedModel: String? = nil
+    /// The currently selected timeframe
+    @Published public var selectedTimeframe: Timeframe = .today
+    
+    /// All records within the timeframe & with the selected model
+    public var filteredRecords: [InferenceRecord] {
+        let timelyRecords = self.records.filter{ record in
+            return self.selectedTimeframe.range.contains(record.startTime) || self.selectedTimeframe.range.contains(record.endTime)
+        }
+        if let selectedModel {
+            return timelyRecords.filter { record in
+                return record.name == selectedModel
+            }
+        } else {
+            return timelyRecords
+        }
+    }
+    
+    public var intervalUsage: [IntervalUse] {
+        let calendar = Calendar.current
+        let timeframe: Timeframe = self.selectedTimeframe
+        // Filter records based on whether the start or end time is within the timeframe's range.
+        let timelyRecords = records.filter { record in
+            timeframe.range.contains(record.startTime) || timeframe.range.contains(record.endTime)
+        }
+        // Determine the grouping based on the timeframe.
+        let grouping: (Date) -> Date = { date in
+            switch timeframe {
+                case .today:
+                    // Group by hour.
+                    return calendar.dateInterval(of: .hour, for: date)!.start
+                case .thisWeek, .thisMonth:
+                    // Group by day.
+                    return calendar.startOfDay(for: date)
+                case .thisYear:
+                    // Group by month.
+                    let components = calendar.dateComponents([.year, .month], from: date)
+                    return calendar.date(from: components)!
+                case .allTime:
+                    // Group by year.
+                    let components = calendar.dateComponents([.year], from: date)
+                    return calendar.date(from: components)!
+            }
+        }
+        // Group records based on the computed grouping date from the record's startTime.
+        let groupedRecords = Dictionary(grouping: timelyRecords) { record in
+            grouping(record.startTime)
+        }
+        // Prepare a date formatter for generating a description.
+        let formatter = DateFormatter()
+        // Set the date format based on the timeframe.
+        switch timeframe {
+            case .today:
+                // e.g., "2 PM"
+                formatter.dateFormat = "ha"
+            case .thisWeek, .thisMonth:
+                // e.g., "May 21"
+                formatter.dateFormat = "MMM d"
+            case .thisYear:
+                // e.g., "May", "June"
+                formatter.dateFormat = "MMMM"
+            case .allTime:
+                // e.g., "2025"
+                formatter.dateFormat = "yyyy"
+        }
+        // Map each group to a single IntervalUse object.
+        let usageData = groupedRecords.map { (groupDate, records) -> [IntervalUse] in
+            let requests = records.count
+            let inputTokens = records.reduce(0) { $0 + $1.inputTokens }
+            let outputTokens = records.reduce(0) { $0 + $1.outputTokens }
+            let description = formatter.string(from: groupDate)
+            return [
+                IntervalUse(
+                    date: groupDate,
+                    description: description,
+                    uses: requests,
+                    tokens: inputTokens,
+                    type: .input
+                ),
+                IntervalUse(
+                    date: groupDate,
+                    description: description,
+                    uses: requests,
+                    tokens: outputTokens,
+                    type: .output
+                )
+            ]
+        }
+        // Return the IntervalUse objects sorted by date in ascending order.
+        return usageData.flatMap({ $0 }).sorted { $0.date < $1.date }
+    }
+    
+    public var modelUsage: [ModelUse] {
+        return self.models.map { model in
+            let usage: Int = self.records.filter({ $0.name == model }).count
+            return ModelUse(model: model, usage: usage)
+        }.sorted(by: \.usage)
+    }
+    
+    /// An array of `String` containing all models used
+    public var models: [String] {
+        return Set(self.records.map(\.name)).sorted()
     }
     
     /// Function to save records to disk
@@ -86,13 +192,14 @@ public class InferenceRecords: ObservableObject {
     }
     
     /// Function to add a record
+    @MainActor
     public func add(
         _ record: InferenceRecord
     ) {
         // Add to records
         withAnimation(.linear) {
             self.records.append(record)
-            self.records.sort(by: { $0.startTime < $1.startTime })
+            self.records.sort(by: { $0.startTime > $1.startTime })
         }
     }
     
@@ -137,6 +244,81 @@ public class InferenceRecords: ObservableObject {
     /// Computed property returning if datastore exists
     private var datastoreExists: Bool {
         return self.datastoreUrl.fileExists
+    }
+    
+    public enum Timeframe: CaseIterable {
+        
+        case today
+        case thisWeek
+        case thisMonth
+        case thisYear
+        case allTime
+        
+        var description: String {
+            switch self {
+                case .today:
+                    return String(localized: "Today")
+                case .thisWeek:
+                    return String(localized: "This Week")
+                case .thisMonth:
+                    return String(localized: "This Month")
+                case .thisYear:
+                    return String(localized: "This Year")
+                case .allTime:
+                    return String(localized: "All Time")
+            }
+        }
+        
+        private var startDate: Date {
+            switch self {
+                case .today:
+                    return Date.now.oneDayAgo
+                case .thisWeek:
+                    return Date.now.oneWeekAgo
+                case .thisMonth:
+                    return Date.now.oneMonthAgo
+                case .thisYear:
+                    return Date.now.oneMonthAgo
+                case .allTime:
+                    return Date.distantPast
+            }
+        }
+        
+        var range: ClosedRange<Date> {
+            return self.startDate...Date.now
+        }
+        
+    }
+    
+    public struct IntervalUse: Identifiable {
+        
+        public var id: String {
+            return self.date.ISO8601Format()
+        }
+        
+        public var date: Date
+        public var description: String
+        
+        public var uses: Int
+        
+        public var tokens: Int
+        public var type: TokenType
+        
+        public enum TokenType: String, CaseIterable, Plottable {
+            case input, output
+        }
+        
+    }
+    
+    public struct ModelUse: Identifiable {
+        
+        public var id: String {
+            return self.model
+        }
+        
+        public var model: String
+        public var usage: Int
+        
     }
     
 }
