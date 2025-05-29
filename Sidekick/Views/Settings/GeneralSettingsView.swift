@@ -149,6 +149,13 @@ struct GeneralSettingsView: View {
 			Spacer()
             Toggle("", isOn: $useFunctions)
 				.toggleStyle(.switch)
+                .onChange(of: useFunctions) {
+                    // Send notification to reload model with jinja
+                    NotificationCenter.default.post(
+                        name: Notifications.changedInferenceConfig.name,
+                        object: nil
+                    )
+                }
 		}
 	}
     

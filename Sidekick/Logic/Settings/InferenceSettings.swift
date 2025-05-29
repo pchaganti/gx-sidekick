@@ -87,11 +87,11 @@ You recall the following information about the user from prior interactions:
 	/// Static constant for the default context length
 	private static var defaultContextLength: Int {
 		if self.unifiedMemorySize < 16 {
-			return 8_192
+			return 16_000
 		} else if (16...32).contains(self.unifiedMemorySize) {
-			return 16_384
+			return 48_000
 		} else {
-			return 24_576
+            return 51_200
 		}
 	}
 	

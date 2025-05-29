@@ -33,7 +33,8 @@ public struct Provider: Identifiable {
         ),
         Provider(
             name: "DeepSeek",
-            endpointUrl: URL(string: "https://api.deepseek.com/v1")!
+            endpointUrl: URL(string: "https://api.deepseek.com/v1")!,
+            supportsToolCalling: true
         ),
         Provider(
             name: "Google AI Studio",

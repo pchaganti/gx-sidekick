@@ -87,10 +87,8 @@ struct ChatParameters: Codable {
         let functions: [any AnyFunctionBox] = functions ?? DefaultFunctions.chatFunctions
         if Settings.useFunctions && useFunctions {
             fullSystemPromptComponents.append(InferenceSettings.useFunctionsPrompt)
-            // Inject function schema if no native tool calling or if using local model
-            let canReachServer: Bool = await Model.shared.remoteServerIsReachable()
-            let isUsingLocalModel: Bool = (!canReachServer || !InferenceSettings.useServer)
-            if !InferenceSettings.hasNativeToolCalling || isUsingLocalModel {
+            // Inject function schema if no native tool calling
+            if !InferenceSettings.hasNativeToolCalling {
                 fullSystemPromptComponents.append(InferenceSettings.functionsSchemaPrompt)
                 let functions: [any AnyFunctionBox] = functions
                 for function in functions {
@@ -137,7 +135,7 @@ struct ChatParameters: Codable {
     ) -> String {
         // Omit tools if non-regular, or has no native tool calling
         var omittedParams = omittedParams
-        if modelType != .regular || !InferenceSettings.hasNativeToolCalling || !usingRemoteModel {
+        if modelType != .regular || !InferenceSettings.hasNativeToolCalling {
             omittedParams.append(.tools)
         }
         // If is remote model, omit temperature to use provider reccomended params

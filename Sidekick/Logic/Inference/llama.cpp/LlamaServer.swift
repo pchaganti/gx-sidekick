@@ -251,16 +251,20 @@ public actor LlamaServer {
 		let gpuLayersToUse: String = InferenceSettings.useGPUAcceleration ? "\(gpuLayers)" : "0"
 		
         // Formulate arguments
-        var arguments: [String: String?] = [
+        var arguments: [String: String] = [
             "--model": modelPath,
             "--threads": "\(threadsToUse)",
             "--threads-batch": "\(threadsToUse)",
-            "--ctx-size": "\(contextLength)",
+            "--ctx-size": "\(self.contextLength)",
             "--port": self.port,
             "--gpu-layers": gpuLayersToUse
 		]
 		// Extra options for main model
         if self.modelType == .regular {
+            // Use jinja chat template if tools are used
+            if Settings.useFunctions {
+                arguments["--jinja"] = ""
+            }
             // Use speculative decoding
 			if InferenceSettings.useSpeculativeDecoding,
                 let speculationModelUrl = InferenceSettings.speculativeDecodingModelUrl {
@@ -268,7 +272,7 @@ public actor LlamaServer {
 				let draft: Int =  16
 				let draftMin: Int = 7
 				let draftPMin: Double = 0.75
-                let speculativeDecodingArguments: [String: String?] = [
+                let speculativeDecodingArguments: [String: String] = [
                     "--model-draft": speculationModelUrl.posixPath,
                     "--gpu-layers-draft": "\(gpuLayersToUse)",
                     "--draft-p-min": "\(draftPMin)",
@@ -292,9 +296,6 @@ public actor LlamaServer {
                     arguments[element.key] = element.value
                 }
             }
-		}
-        // Inject custom arguments for main model
-        if self.modelType == .regular {
             // Remove duplicate arguments
             let activeArguments: [ServerArgument] = ServerArgumentsManager.shared.activeArguments
             let activeFlags = activeArguments.map(keyPath: \.flag)
@@ -303,7 +304,7 @@ public actor LlamaServer {
             var formattedArguments: [String] = []
             arguments.forEach { key, value in
                 formattedArguments.append(key)
-                if let value = value, !value.isEmpty {
+                if !value.isEmpty {
                     formattedArguments.append(value)
                 }
             }
@@ -317,7 +318,7 @@ public actor LlamaServer {
             var formattedArguments: [String] = []
             arguments.forEach { key, value in
                 formattedArguments.append(key)
-                if let value = value, !value.isEmpty  {
+                if !value.isEmpty  {
                     formattedArguments.append(value)
                 }
             }
