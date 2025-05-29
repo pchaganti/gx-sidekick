@@ -55,11 +55,19 @@ public class CodeFunctions {
             )
         ],
         run: { params in
+            // Check if Homebrew is installed
+            var command: String = params.command
+            if FileManager.default.fileExists(atPath: "/opt/homebrew/bin/brew") {
+                // If yes, add it to the PATH
+                let homebrewPath = "/opt/homebrew/bin"
+                command = "export PATH=\"\(homebrewPath):$PATH\"; \(command)"
+            }
+            // Setup process and pipe
             let process = Process()
             let pipe = Pipe()
             // Configure the process
             process.executableURL = URL(fileURLWithPath: "/bin/zsh")
-            process.arguments = ["-c", params.command]
+            process.arguments = ["-c", command]
             // Set working directory if provided
             if let workingDir = params.workingDirectory {
                 process.currentDirectoryURL = URL(fileURLWithPath: workingDir)

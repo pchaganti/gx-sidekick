@@ -146,7 +146,20 @@ public class InferenceRecords: ObservableObject {
             ]
         }
         // Return the IntervalUse objects sorted by date in ascending order.
-        return usageData.flatMap({ $0 }).sorted { $0.date < $1.date }
+        return usageData
+            .flatMap({ $0 })
+            .sorted { data0, data1 in
+                let calendar: Calendar = .current
+                let data0Value: Int = calendar.component(
+                    timeframe.calendarComponent,
+                    from: data0.date
+                )
+                let data1Value: Int = calendar.component(
+                    timeframe.calendarComponent,
+                    from: data1.date
+                )
+                return data0Value < data1Value
+            }
     }
     
     public var modelUsage: [ModelUse] {
@@ -318,6 +331,19 @@ public class InferenceRecords: ObservableObject {
                     return String(localized: "This Year")
                 case .allTime:
                     return String(localized: "All Time")
+            }
+        }
+        
+        var calendarComponent: Calendar.Component {
+            switch self {
+                case .today:
+                    return .hour
+                case .thisWeek, .thisMonth:
+                    return .day
+                case .thisYear:
+                    return .month
+                case .allTime:
+                    return .year
             }
         }
         

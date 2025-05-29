@@ -67,11 +67,11 @@ struct DashboardView: View {
             HStack {
                 self.tokenUsage
                 self.tokenChart
-                    .frame(minWidth: 300)
+                    .frame(minWidth: 400)
                 self.requestChart
-                    .frame(minWidth: 300)
+                    .frame(minWidth: 400)
                 self.modelChart
-                    .frame(minWidth: 300)
+                    .frame(minWidth: 400)
             }
             .padding([.vertical, .leading], 10)
         }
@@ -274,11 +274,7 @@ struct DashboardView: View {
             Text("All Models")
                 .tag(String?(nil))
             ForEach(
-                self.inferenceRecords.models.filter { model in
-                    return self.inferenceRecords.displayedRecords.contains { record in
-                        record.name == model
-                    }
-                },
+                self.inferenceRecords.models,
                 id: \.self
             ) { model in
                 Text(model)
