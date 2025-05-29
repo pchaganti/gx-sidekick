@@ -192,8 +192,8 @@
 		20692A052DE8A27900152345 /* libllama.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 206929E42DE8A24F00152345 /* libllama.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		20692A062DE8A27900152345 /* libmtmd_helper_shared.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 206929E52DE8A24F00152345 /* libmtmd_helper_shared.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		20692A072DE8A27900152345 /* libmtmd_shared.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 206929E62DE8A24F00152345 /* libmtmd_shared.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		20692A092DE91FC700152345 /* conversationExportTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 20692A082DE91FC700152345 /* conversationExportTemplate.html */; };
 		206934902D5CC87E006619FD /* Credits.html in Resources */ = {isa = PBXBuildFile; fileRef = 2069348E2D5CC7FE006619FD /* Credits.html */; };
-		206934932D5CCDF1006619FD /* conversationExportTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 206934922D5CCDF1006619FD /* conversationExportTemplate.html */; };
 		206990C32DACA68000114EB8 /* Extension+LSContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206990C22DACA68000114EB8 /* Extension+LSContext.swift */; };
 		206A2FDB2DD9A38E00040F55 /* SVGValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206A2FDA2DD9A38E00040F55 /* SVGValidator.swift */; };
 		206AB6122CF5F8390010B09A /* AttachmentSelectionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206AB6112CF5F8390010B09A /* AttachmentSelectionButton.swift */; };
@@ -661,8 +661,8 @@
 		206929E62DE8A24F00152345 /* libmtmd_shared.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libmtmd_shared.dylib; sourceTree = "<group>"; };
 		206929E72DE8A24F00152345 /* llama-perplexity */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llama-perplexity"; sourceTree = "<group>"; };
 		206929E82DE8A24F00152345 /* llama-server */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llama-server"; sourceTree = "<group>"; };
+		20692A082DE91FC700152345 /* conversationExportTemplate.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = conversationExportTemplate.html; sourceTree = "<group>"; };
 		2069348E2D5CC7FE006619FD /* Credits.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = Credits.html; sourceTree = "<group>"; };
-		206934922D5CCDF1006619FD /* conversationExportTemplate.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = conversationExportTemplate.html; sourceTree = "<group>"; };
 		206990C22DACA68000114EB8 /* Extension+LSContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+LSContext.swift"; sourceTree = "<group>"; };
 		206A2FDA2DD9A38E00040F55 /* SVGValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGValidator.swift; sourceTree = "<group>"; };
 		206AB6112CF5F8390010B09A /* AttachmentSelectionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentSelectionButton.swift; sourceTree = "<group>"; };
@@ -1592,7 +1592,7 @@
 		206934912D5CCDD1006619FD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				206934922D5CCDF1006619FD /* conversationExportTemplate.html */,
+				20692A082DE91FC700152345 /* conversationExportTemplate.html */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -2329,8 +2329,8 @@
 				20ADCEC42DBE1CBA00B13C98 /* mermaidCheatsheet.md in Resources */,
 				20DFF47F2DB7187C00F3F76C /* Markdown in Resources */,
 				20DFF4842DB73C9000F3F76C /* mermaid-cli in Resources */,
-				206934932D5CCDF1006619FD /* conversationExportTemplate.html in Resources */,
 				206934902D5CC87E006619FD /* Credits.html in Resources */,
+				20692A092DE91FC700152345 /* conversationExportTemplate.html in Resources */,
 				20AF90F42D73DBDD00E23C68 /* marp in Resources */,
 				20B97CB32CAFE86C009A0A5D /* Preview Assets.xcassets in Resources */,
 				20F2D5122CC1F33B004CE730 /* Localizable.xcstrings in Resources */,

@@ -222,7 +222,7 @@ DO NOT reference sources outside of those provided below. If you did not referen
 	/// The model's name, of type `String`
 	public let model: String
 	
-	/// The ``Sender`` of the message (either `user` or `system`)
+	/// The ``Sender`` of the message (`user`, `system` or `assistant`)
 	private var sender: Sender
 	
 	/// The `UUID` of the expert used

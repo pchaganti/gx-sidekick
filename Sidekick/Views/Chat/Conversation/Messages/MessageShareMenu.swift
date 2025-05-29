@@ -97,28 +97,55 @@ struct MessageShareMenu: View {
 		guard let templatePath = Bundle.main.path(
 			forResource: "conversationExportTemplate",
 			ofType: "html"
-		),
-			  var htmlTemplate = try? String(
+		), var htmlTemplate = try? String(
 				contentsOfFile: templatePath,
 				encoding: .utf8
-			  ) else {
-			// If failed to load the template, show error and exit
-			self.showSaveErrorDialog()
-			return
-		}
+        ) else {
+            // If failed to load the template, show error and exit
+            self.showSaveErrorDialog()
+            return
+        }
 		// Generate the message HTML
-		let messagesHTML = messages.map { message in
-			let senderClass = message.getSender().rawValue
-			return "<div class=\"message \(senderClass)\">\(message.text)</div>"
-		}.joined(separator: "\n")
-		// Replace the placeholder in the HTML
-		htmlTemplate = htmlTemplate.replacingOccurrences(of: "{{messages}}", with: messagesHTML)
+        let chatDataJS: String = self.generateChatDataJS(from: messages)
+        htmlTemplate = htmlTemplate.replacingOccurrences(
+            of: "// CHAT_DATA_PLACEHOLDER",
+            with: chatDataJS
+        )
 		// Save the HTML to a file
 		self.saveToFile(
 			string: htmlTemplate,
 			fileName: "\(self.conversationName).html"
 		)
 	}
+    
+    /// Function to produce JS code for message objects
+    private func generateChatDataJS(from messages: [Message]) -> String {
+        var js = "const chatData = [\n"
+        for (index, message) in messages.enumerated() {
+            let sender = message.getSender().rawValue
+            let escapedContent = self.escapeJSString(message.responseText)
+            let escapedReasoning = self.escapeJSString(message.reasoningText ?? "")
+            js += """
+        {
+            id: \(index + 1),
+            role: '\(sender)',
+            content: `\(escapedContent)`,
+            reasoning: `\(escapedReasoning)`,
+            timestamp: ""
+        },
+        """
+        }
+        js += "];"
+        return js
+    }
+    
+    /// Function to apply escapes for special symbols in JS string
+    private func escapeJSString(_ string: String) -> String {
+        return string
+            .replacingOccurrences(of: "\\", with: "\\\\")
+            .replacingOccurrences(of: "`", with: "\\`")
+            .replacingOccurrences(of: "$", with: "\\$")
+    }
 	
 	/// Function to save text to file
 	private func saveToFile(

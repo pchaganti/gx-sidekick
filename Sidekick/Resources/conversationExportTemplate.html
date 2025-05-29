@@ -1,54 +1,441 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-			<meta name="viewport" content="width=device-width, initial-scale=1.0">
-				<title>Chat History</title>
-				<style>
-					body {
-						font-family: Arial, sans-serif;
-						padding: 20px;
-						background-color: #f5f5f5;
-						color: #000;
-						transition: background-color 0.3s, color 0.3s;
-					}
-					.message-container { max-width: 600px; margin: auto; }
-					.chat { display: flex; flex-direction: column; gap: 10px; }
-					.message {
-						padding: 12px;
-						margin: 5px 0;
-						border-radius: 10px;
-						width: fit-content;
-						max-width: 80%;
-						word-wrap: break-word;
-					}
-					.user {
-						background-color: #007bff;
-						color: white;
-						align-self: flex-end;
-					}
-					.assistant {
-						background-color: #e0e0e0;
-						color: black;
-						align-self: flex-start;
-					}
-					
-					/* Dark mode styles */
-					@media (prefers-color-scheme: dark) {
-						body {
-							background-color: #121212;
-							color: #fff;
-						}
-						.user { background-color: #1e88e5; }
-						.assistant { background-color: #333; color: white; }
-					}
-				</style>
-	</head>
-	<body>
-		<div class="message-container">
-			<div class="chat">
-				{{messages}}
-			</div>
-		</div>
-	</body>
+    <head>
+        <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Messages</title>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+                    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css">
+                        <style>
+                            * {
+                                margin: 0;
+                                padding: 0;
+                                box-sizing: border-box;
+                                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                            }
+   
+                            :root {
+                                --bg-primary: #ffffff;
+                                --bg-secondary: #f7f7f8;
+                                --bg-tertiary: #ececf1;
+                                --bg-reasoning: #f7f7f8;
+                                --border-color: #e5e5e5;
+                                --text-primary: #343541;
+                                --text-secondary: #6e6e80;
+                                --user-bubble: #e9f5ff;
+                                --assistant-bubble: #f0f0f0;
+                                --copy-btn: #ececf1;
+                                --copy-btn-hover: #e0e0e0;
+                                --shadow: rgba(0, 0, 0, 0.05);
+                            }
+                            
+                            @media (prefers-color-scheme: dark) {
+                                :root {
+                                    --bg-primary: #343541;
+                                    --bg-secondary: #444654;
+                                    --bg-tertiary: #343541;
+                                    --bg-reasoning: #2d2d39;
+                                    --border-color: #4d4d4f;
+                                    --text-primary: #ececf1;
+                                    --text-secondary: #acacbe;
+                                    --user-bubble: #2b2c3f;
+                                    --assistant-bubble: #40414f;
+                                    --copy-btn: #4d4d4f;
+                                    --copy-btn-hover: #565869;
+                                    --shadow: rgba(0, 0, 0, 0.2);
+                                }
+                            }
+                            
+                            body {
+                                background-color: var(--bg-primary);
+                                color: var(--text-primary);
+                                display: flex;
+                                flex-direction: column;
+                                height: 100vh;
+                                transition: background-color 0.3s, color 0.3s;
+                                overflow: hidden;
+                            }
+                            
+                            .container {
+                                max-width: 1000px;
+                                margin: 0 auto;
+                                width: 100%;
+                                padding: 20px;
+                                height: 100%;
+                                display: flex;
+                                flex-direction: column;
+                            }
+                            
+                            .chat-history {
+                                flex: 1;
+                                overflow-y: auto;
+                                padding: 10px 0;
+                                margin-bottom: 20px;
+                                /* Hide scrollbar for all browsers */
+                                scrollbar-width: none; /* Firefox */
+                                -ms-overflow-style: none; /* IE and Edge */
+                            }
+                            
+                            /* Hide scrollbar for Chrome, Safari and Opera */
+                            .chat-history::-webkit-scrollbar {
+                                display: none;
+                            }
+                            
+                            .message {
+                                display: flex;
+                                gap: 20px;
+                                padding: 24px 0;
+                                border-bottom: 1px solid var(--border-color);
+                            }
+                            
+                            .message:last-child {
+                                border-bottom: none;
+                            }
+                            
+                            .icon {
+                                width: 36px;
+                                height: 36px;
+                                border-radius: 50%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                flex-shrink: 0;
+                                font-weight: bold;
+                                margin-top: 6px;
+                            }
+                            
+                            .user .icon {
+                                background: linear-gradient(135deg, #19c37d, #10a2f2);
+                                color: white;
+                            }
+                            
+                            .assistant .icon {
+                                background: linear-gradient(135deg, #ab68ff, #ff6b6b);
+                                color: white;
+                            }
+                            
+                            .content {
+                                flex: 1;
+                                display: flex;
+                                flex-direction: column;
+                                gap: 12px;
+                            }
+                            
+                            .message-body {
+                                line-height: 1.6;
+                                font-size: 16px;
+                            }
+                            
+                            .message-body p {
+                                margin-bottom: 12px;
+                            }
+                            
+                            .message-body ul, .message-body ol {
+                                padding-left: 24px;
+                                margin-bottom: 12px;
+                            }
+                            
+                            .message-body li {
+                                margin-bottom: 6px;
+                            }
+                            
+                            .message-body code {
+                                background-color: var(--bg-tertiary);
+                                padding: 2px 6px;
+                                border-radius: 4px;
+                                font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+                                font-size: 14px;
+                            }
+                            
+                            .message-body pre {
+                                background-color: var(--bg-tertiary);
+                                border-radius: 8px;
+                                padding: 16px;
+                                overflow-x: auto;
+                                margin: 16px 0;
+                                font-size: 14px;
+                                position: relative;
+                            }
+                            
+                            .message-body pre .copy-icon {
+                                position: absolute;
+                                top: 8px;
+                                right: 8px;
+                                background: var(--copy-btn);
+                                border-radius: 4px;
+                                padding: 4px;
+                                cursor: pointer;
+                                opacity: 0.6;
+                                transition: opacity 0.2s;
+                            }
+                            
+                            .message-body pre .copy-icon:hover {
+                                opacity: 1;
+                            }
+                            
+                            .message-body blockquote {
+                                border-left: 4px solid var(--text-secondary);
+                                padding-left: 16px;
+                                margin: 16px 0;
+                                color: var(--text-secondary);
+                            }
+                            
+                            .reasoning-toggle {
+                                background-color: var(--bg-reasoning);
+                                border-radius: 8px;
+                                padding: 12px 16px;
+                                cursor: pointer;
+                                display: flex;
+                                align-items: center;
+                                gap: 10px;
+                                margin-bottom: 15px;
+                                transition: all 0.3s;
+                                user-select: none;
+                            }
+                            
+                            .reasoning-toggle:hover {
+                                background-color: var(--bg-tertiary);
+                            }
+                            
+                            .reasoning-toggle i {
+                                font-size: 18px;
+                                transition: transform 0.3s;
+                            }
+                            
+                            .reasoning-container {
+                                overflow: hidden;
+                                max-height: 0;
+                                transition: max-height 0.5s ease;
+                            }
+                            
+                            .reasoning-content {
+                                background-color: var(--bg-reasoning);
+                                border-radius: 8px;
+                                padding: 16px;
+                                margin-top: 5px;
+                                font-size: 14px;
+                                line-height: 1.5;
+                                color: var(--text-secondary);
+                                opacity: 0;
+                                transform: translateY(-10px);
+                                transition: opacity 0.3s ease, transform 0.3s ease;
+                            }
+                            
+                            .reasoning-container.expanded {
+                                max-height: 500px;
+                            }
+                            
+                            .reasoning-container.expanded .reasoning-content {
+                                opacity: 1;
+                                transform: translateY(0);
+                            }
+                            
+                            .actions {
+                                display: flex;
+                                justify-content: flex-end;
+                                margin-top: 10px;
+                            }
+                            
+                            .copy-btn {
+                                background-color: var(--copy-btn);
+                                border: none;
+                                border-radius: 4px;
+                                padding: 8px 12px;
+                                cursor: pointer;
+                                display: flex;
+                                align-items: center;
+                                gap: 6px;
+                                font-size: 14px;
+                                color: var(--text-secondary);
+                                transition: all 0.2s;
+                            }
+                            
+                            .copy-btn:hover {
+                                background-color: var(--copy-btn-hover);
+                            }
+                            
+                            .copy-btn.copied {
+                                background: linear-gradient(135deg, #19c37d, #10a2f2);
+                                color: white;
+                            }
+                            
+                            .copy-btn.copied i {
+                                animation: bounce 0.5s;
+                            }
+                            
+                            @keyframes bounce {
+                                0%, 100% { transform: scale(1); }
+                                50% { transform: scale(1.2); }
+                            }
+                            
+                            @media (max-width: 768px) {
+                                .message {
+                                    gap: 12px;
+                                    padding: 20px 0;
+                                }
+                                
+                                .icon {
+                                    width: 32px;
+                                    height: 32px;
+                                    font-size: 14px;
+                                }
+                                
+                                .container {
+                                    padding: 15px;
+                                }
+                            }
+                        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="chat-history" id="chatHistory">
+                <!-- Messages will be inserted here -->
+            </div>
+        </div>
+        
+        <script>
+            // CHAT_DATA_PLACEHOLDER
+            
+            // Initialize Marked with highlight.js for code formatting
+            marked.setOptions({
+                highlight: function(code, lang) {
+                    const language = hljs.getLanguage(lang) ? lang : 'plaintext';
+                    return hljs.highlight(code, { language }).value;
+                },
+                langPrefix: 'hljs language-',
+                gfm: true,
+                breaks: true
+            });
+            
+            // Render chat messages
+            function renderChat() {
+                const chatHistory = document.getElementById('chatHistory');
+                chatHistory.innerHTML = '';
+                
+                chatData.forEach(message => {
+                    const messageElement = document.createElement('div');
+                    messageElement.className = `message ${message.role}`;
+                    
+                    // Only show reasoning toggle if reasoning content exists
+                    const showReasoning = message.role === 'assistant' && message.reasoning && message.reasoning.trim() !== '';
+                    
+                    // Message content
+                    messageElement.innerHTML = `
+                        <div class="icon">${message.role === 'user' ? '👤' : '🤖'}</div>
+                        <div class="content">
+                        ${showReasoning ? `
+                        <div class="reasoning-toggle" data-id="${message.id}">
+                        <i class="fas fa-brain"></i>
+                        <span>Reasoning Process</span>
+                        <i class="fas fa-chevron-down" style="margin-left: auto; font-size: 14px;"></i>
+                        </div>
+                        <div class="reasoning-container" id="reasoning-container-${message.id}">
+                        <div class="reasoning-content" id="reasoning-${message.id}">
+                        ${message.reasoning}
+                        </div>
+                        </div>
+                        ` : ''}
+                        <div class="message-body" id="message-${message.id}">
+                            ${marked.parse(message.content)}
+                        </div>
+                        <div class="actions">
+                            <button class="copy-btn" data-id="${message.id}">
+                                <i class="far fa-copy"></i>
+                                <span>Copy</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                chatHistory.appendChild(messageElement);
+                });
+                
+                // Add event listeners after rendering
+                document.querySelectorAll('.copy-btn').forEach(button => {
+                    button.addEventListener('click', handleCopy);
+                });
+                
+                document.querySelectorAll('.reasoning-toggle').forEach(button => {
+                    button.addEventListener('click', toggleReasoning);
+                });
+                
+                // Add copy buttons to code blocks
+                document.querySelectorAll('pre').forEach(pre => {
+                    const copyIcon = document.createElement('div');
+                    copyIcon.className = 'copy-icon';
+                    copyIcon.innerHTML = '<i class="far fa-copy"></i>';
+                    copyIcon.addEventListener('click', () => {
+                        const code = pre.querySelector('code').innerText;
+                        navigator.clipboard.writeText(code).then(() => {
+                            copyIcon.innerHTML = '<i class="fas fa-check"></i>';
+                            setTimeout(() => {
+                                copyIcon.innerHTML = '<i class="far fa-copy"></i>';
+                            }, 2000);
+                        });
+                    });
+                    pre.appendChild(copyIcon);
+                });
+                
+                // Apply syntax highlighting
+                hljs.highlightAll();
+                
+                // Scroll to bottom
+                chatHistory.scrollTop = chatHistory.scrollHeight;
+            }
+            
+            // Copy message content to clipboard
+            function handleCopy(event) {
+                const button = event.currentTarget;
+                const messageId = button.getAttribute('data-id');
+                const message = chatData.find(m => m.id == messageId);
+                
+                // Create text representation (strip HTML tags)
+                const tempElement = document.createElement('div');
+                tempElement.innerHTML = marked.parse(message.content);
+                const textToCopy = tempElement.textContent || tempElement.innerText;
+                
+                // Copy to clipboard
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    // Visual feedback
+                    button.innerHTML = '<i class="fas fa-check"></i><span>Copied!</span>';
+                    button.classList.add('copied');
+                    
+                    // Reset after 2 seconds
+                    setTimeout(() => {
+                        button.innerHTML = '<i class="far fa-copy"></i><span>Copy</span>';
+                        button.classList.remove('copied');
+                    }, 2000);
+                });
+            }
+            
+            // Toggle reasoning content with animation
+            function toggleReasoning(event) {
+                const button = event.currentTarget;
+                const messageId = button.getAttribute('data-id');
+                const reasoningContainer = document.getElementById(`reasoning-container-${messageId}`);
+                const chevron = button.querySelector('.fa-chevron-down');
+                const brainIcon = button.querySelector('.fa-brain');
+                
+                // Toggle expanded state
+                const isExpanded = reasoningContainer.classList.toggle('expanded');
+                
+                // Rotate the chevron
+                chevron.classList.toggle('fa-rotate-180');
+                
+                // Update the brain icon and background
+                if (isExpanded) {
+                    brainIcon.style.color = '#ab68ff';
+                    button.style.background = 'linear-gradient(135deg, rgba(171, 104, 255, 0.1), rgba(255, 107, 107, 0.1))';
+                } else {
+                    brainIcon.style.color = '';
+                    button.style.background = '';
+                }
+            }
+            
+            // Initialize the chat interface
+            document.addEventListener('DOMContentLoaded', renderChat);
+        </script>
+    </body>
 </html>
