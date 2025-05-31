@@ -700,6 +700,10 @@ public actor LlamaServer {
 			Self.logger.error("Failed to generate completion.")
 			return nil
 		}
+        // Log response object
+        if let responseStr = String(data: data, encoding: .utf8) {
+            Self.logger.info("Received response object: \(responseStr, privacy: .public)")
+        }
 		// Decode response
 		let decoder: JSONDecoder = .init()
 		guard let response: CompletionResponse = try? decoder.decode(

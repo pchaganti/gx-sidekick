@@ -824,6 +824,16 @@
         }
       }
     },
+    "Completion Suggestion Threshold" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文本续写阈值"
+          }
+        }
+      }
+    },
     "Completions" : {
       "localizations" : {
         "zh-Hans" : {
@@ -840,6 +850,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "已启用文本续写！"
+          }
+        }
+      }
+    },
+    "Completions Model: %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文本续写模型：%@"
           }
         }
       }
@@ -2497,6 +2517,16 @@
         }
       }
     },
+    "High" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "高"
+          }
+        }
+      }
+    },
     "Hit" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2778,6 +2808,16 @@
         }
       }
     },
+    "Low" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "低"
+          }
+        }
+      }
+    },
     "Make bullet points" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2844,6 +2884,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "管理Sidekick的记忆。"
+          }
+        }
+      }
+    },
+    "Medium" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "中"
           }
         }
       }
@@ -4007,6 +4057,16 @@
         }
       }
     },
+    "Select a Base Model" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择基座模型"
+          }
+        }
+      }
+    },
     "Select a family of models from the sidebar" : {
       "localizations" : {
         "zh-Hans" : {
@@ -4656,6 +4716,16 @@
         }
       }
     },
+    "The threshold for displayed completion suggestions." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示文本续写建议的阈值。"
+          }
+        }
+      }
+    },
     "The voice used to read responses aloud. Download voices in [System Settings -> Accessibility](x-apple.systempreferences:com.apple.preference.universalaccess?SpeakableItems) -> Spoken Content -> System Voice -> Manage Voices." : {
       "localizations" : {
         "zh-Hans" : {
@@ -4792,6 +4862,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "这是对应于选定的本地模型的多模态投影器，处理图像编码和投影。"
+          }
+        }
+      }
+    },
+    "This is the selected base model, which handles text completions." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这是用于文本续写的基座模型。"
           }
         }
       }

@@ -12,9 +12,12 @@ struct InlineWritingAssistantSettingsView: View {
 	
 	@State private var isSettingUpCompletions: Bool = false
 	@State private var isManagingExcludedApps: Bool = false
-	
+    
 	@AppStorage("useCompletions") private var useCompletions: Bool = false
 	@AppStorage("didSetUpCompletions") private var didSetUpCompletions: Bool = false
+    
+    @AppStorage("completionsModelUrl") private var completionsModelUrl: URL?
+    @AppStorage("completionSuggestionThreshold") private var completionSuggestionThreshold: Int = Settings.completionSuggestionThreshold
 	
 	var completionsIsReady: Bool {
 		return useCompletions && didSetUpCompletions
@@ -25,6 +28,8 @@ struct InlineWritingAssistantSettingsView: View {
 			commandsShortcut
 			completionsConfig
 			if self.completionsIsReady {
+                completionsModelSelector
+                completionSuggestionThresholdPicker
 				nextTokenShortcut
 				allTokensShortcut
 				excludedAppsConfig
@@ -110,7 +115,72 @@ struct InlineWritingAssistantSettingsView: View {
 			.toggleStyle(.switch)
 			.disabled(!didSetUpCompletions)
 	}
-	
+    
+    var completionsModelSelector: some View {
+        HStack(alignment: .center) {
+            VStack(alignment: .leading) {
+                Text(
+                    "Completions Model: \(completionsModelUrl?.lastPathComponent ?? String(localized: "No Model Selected"))"
+                )
+                .font(.title3)
+                .bold()
+                Text("This is the selected base model, which handles text completions.")
+                    .font(.caption)
+            }
+            Spacer()
+            Button {
+                if let url = try? FileManager.selectFile(
+                    rootUrl: self.completionsModelUrl?.deletingLastPathComponent(),
+                    dialogTitle: String(localized: "Select a Base Model"),
+                    canSelectDirectories: false,
+                    allowedContentTypes: [Settings.ggufType]
+                ).first {
+                    self.completionsModelUrl = url
+                    // Reload model
+                    CompletionsController.shared.stop()
+                    CompletionsController.shared.setup()
+                }
+            } label: {
+                Text("Select")
+            }
+        }
+        .contextMenu {
+            Button {
+                guard let modelUrl: URL = InferenceSettings.completionsModelUrl else {
+                    return
+                }
+                FileManager.showItemInFinder(url: modelUrl)
+            } label: {
+                Text("Show in Finder")
+            }
+        }
+    }
+    
+    var completionSuggestionThresholdPicker: some View {
+        HStack(alignment: .top) {
+            VStack(alignment: .leading) {
+                Text("Completion Suggestion Threshold")
+                    .font(.title3)
+                    .bold()
+                Text("The threshold for displayed completion suggestions.")
+                    .font(.caption)
+            }
+            Spacer()
+            Picker(
+                selection: $completionSuggestionThreshold.animation(.linear)
+            ) {
+                ForEach(
+                    Settings.CompletionSuggestionThreshold.allCases,
+                    id: \.self
+                ) { mode in
+                    Text(mode.description)
+                        .tag(mode.rawValue)
+                }
+            }
+            .pickerStyle(.menu)
+        }
+    }
+    
 	var nextTokenShortcut: some View {
 		HStack {
 			VStack(alignment: .leading) {

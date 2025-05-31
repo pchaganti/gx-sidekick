@@ -216,7 +216,8 @@ public class CompletionsController: ObservableObject {
 	
 	/// Function to generate a completion for focused text field's text
 	private func generateCompletion(
-		text: String
+		text: String,
+        threshold: Settings.CompletionSuggestionThreshold? = nil
 	) async -> String? {
 		// Generate tokens
 		guard let tokens = await self.server?.getCompletion(
@@ -226,7 +227,11 @@ public class CompletionsController: ObservableObject {
 			return nil
 		}
 		// Filter tokens
-		let confidenceThreshold: Double = -2.5
+        let threshold: Settings.CompletionSuggestionThreshold = threshold ?? (Settings.CompletionSuggestionThreshold(
+            rawValue: Settings.completionSuggestionThreshold
+        ) ?? .medium)
+        let thresholdOffset: Int = threshold.rawValue
+        let confidenceThreshold: Double = -2.5 + Double(thresholdOffset) * 2
 		let maxSpecialCharacters: Double = 0.5
 		var failCount = tokens.count
 		for token in tokens {

@@ -254,7 +254,7 @@ struct InferenceSettingsView: View {
             Spacer()
             Button {
                 if let url = try? FileManager.selectFile(
-                        dialogTitle: "Select a Model",
+                        dialogTitle: String(localized: "Select a Model"),
                         canSelectDirectories: false,
                         allowedContentTypes: [Settings.ggufType]
                 ).first {
