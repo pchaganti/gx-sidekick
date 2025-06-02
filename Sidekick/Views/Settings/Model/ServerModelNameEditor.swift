@@ -17,9 +17,9 @@ struct ServerModelNameEditor: View {
 	var editorTitle: String {
 		switch self.modelType {
             case .worker:
-                return String(localized: "Remote Worker Model Name")
+                return String(localized: "Remote Worker Model")
             default:
-                return String(localized: "Remote Model Name")
+                return String(localized: "Remote Model")
 		}
 	}
 	

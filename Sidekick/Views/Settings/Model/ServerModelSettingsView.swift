@@ -19,7 +19,7 @@ struct ServerModelSettingsView: View {
     @AppStorage("serverModelHasVision") private var serverModelHasVision: Bool = InferenceSettings.serverModelHasVision
     @AppStorage("hasNativeToolCalling") private var hasNativeToolCalling: Bool = InferenceSettings.hasNativeToolCalling
     
-	@AppStorage("serverWorkerModelName") private var serverWorkerModelName: String = ""
+	@AppStorage("serverWorkerModelName") private var serverWorkerModelName: String = InferenceSettings.serverWorkerModelName
 	
     var popularEndpointsTip: PopularEndpointsTip = .init()
     

@@ -423,7 +423,41 @@ public struct KnownModel: Identifiable, Codable {
             ]
         ),
         KnownModel(
-            primaryName: "claude-3.7-sonnet-thinking",
+            primaryName: "claude-3.7-sonnet:thinking",
+            organization: .anthropic,
+            modalities: [
+                .text,
+                .image
+            ],
+            capabilities: [.reasoning]
+        ),
+        KnownModel(
+            primaryName: "claude-sonnet-4",
+            organization: .anthropic,
+            modalities: [
+                .text,
+                .image
+            ]
+        ),
+        KnownModel(
+            primaryName: "claude-sonnet-4:thinking",
+            organization: .anthropic,
+            modalities: [
+                .text,
+                .image
+            ],
+            capabilities: [.reasoning]
+        ),
+        KnownModel(
+            primaryName: "claude-opus-4",
+            organization: .anthropic,
+            modalities: [
+                .text,
+                .image
+            ]
+        ),
+        KnownModel(
+            primaryName: "claude-opus-4:thinking",
             organization: .anthropic,
             modalities: [
                 .text,

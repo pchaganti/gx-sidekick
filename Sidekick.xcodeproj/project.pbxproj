@@ -339,7 +339,6 @@
 		20D65DD52CC0CC6C0052D826 /* StopGenerationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D65DD42CC0CC6C0052D826 /* StopGenerationButton.swift */; };
 		20D9A9732CD2769300171FDE /* MessageShareMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D9A9722CD2769300171FDE /* MessageShareMenu.swift */; };
 		20DAC4422DADF01F0039208E /* WebFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DAC4412DADF01F0039208E /* WebFunctions.swift */; };
-		20DAC4482DAE049C0039208E /* MCP in Frameworks */ = {isa = PBXBuildFile; productRef = 20DAC4472DAE049C0039208E /* MCP */; };
 		20DEABED2CC4D68A0046447C /* Extension+CGImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DEABEC2CC4D68A0046447C /* Extension+CGImage.swift */; };
 		20DFF47F2DB7187C00F3F76C /* Markdown in Resources */ = {isa = PBXBuildFile; fileRef = 20DFF47E2DB7187C00F3F76C /* Markdown */; };
 		20DFF4812DB718E000F3F76C /* ExpertSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DFF4802DB718E000F3F76C /* ExpertSetupView.swift */; };
@@ -861,7 +860,6 @@
 				20CB50382D828CB60064D460 /* LaTeXSwiftUI in Frameworks */,
 				20573F282CB52F84004C19FE /* Splash in Frameworks */,
 				200619BA2D678694001949EF /* WebViewKit in Frameworks */,
-				20DAC4482DAE049C0039208E /* MCP in Frameworks */,
 				20573F2A2CB52F84004C19FE /* SplashMarkdown in Frameworks */,
 				20B97CA82CAFE830009A0A5D /* FSKit-macOS in Frameworks */,
 				20B97CC92CAFEBEA009A0A5D /* MarkdownUI in Frameworks */,
@@ -2173,7 +2171,6 @@
 				209B20092D940F8400C79185 /* LaunchAtLogin */,
 				203786372DA76EBB003975CC /* SimilaritySearchKit */,
 				203786392DA76EBB003975CC /* SimilaritySearchKitDistilbert */,
-				20DAC4472DAE049C0039208E /* MCP */,
 				200B236C2DB15AA800127D48 /* Shimmer */,
 			);
 			productName = Sidekick;
@@ -2294,7 +2291,6 @@
 				20457D372D92A5FB00954892 /* XCRemoteSwiftPackageReference "AXSwift" */,
 				209B20082D940F8400C79185 /* XCRemoteSwiftPackageReference "LaunchAtLogin-Modern" */,
 				203786362DA76EBB003975CC /* XCRemoteSwiftPackageReference "similarity-search-kit" */,
-				20DAC4462DAE049C0039208E /* XCRemoteSwiftPackageReference "swift-sdk" */,
 				200B236B2DB15AA800127D48 /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */,
 			);
 			preferredProjectObjectVersion = 77;
@@ -3241,14 +3237,6 @@
 				kind = branch;
 			};
 		};
-		20DAC4462DAE049C0039208E /* XCRemoteSwiftPackageReference "swift-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/modelcontextprotocol/swift-sdk";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.7.1;
-			};
-		};
 		20F84B972D1CFED400F44990 /* XCRemoteSwiftPackageReference "Default-Models" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/johnbean393/Default-Models";
@@ -3372,11 +3360,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 20CC0C2D2CE2401600A3BC40 /* XCRemoteSwiftPackageReference "ExtractKit-macOS" */;
 			productName = "ExtractKit-macOS";
-		};
-		20DAC4472DAE049C0039208E /* MCP */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 20DAC4462DAE049C0039208E /* XCRemoteSwiftPackageReference "swift-sdk" */;
-			productName = MCP;
 		};
 		20F84B982D1CFED400F44990 /* DefaultModels */ = {
 			isa = XCSwiftPackageProductDependency;

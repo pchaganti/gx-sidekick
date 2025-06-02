@@ -13,7 +13,10 @@ struct BubbleAnimationView: View {
 	
 	var body: some View {
 		ZStack {
-			ForEach(bubbles.indices, id: \.self) { index in
+			ForEach(
+                self.bubbles.indices,
+                id: \.self
+            ) { index in
 				Circle()
 					.frame(width: bubbles[index].size, height: bubbles[index].size)
 					.position(x: bubbles[index].positionX, y: bubbles[index].yOffset)

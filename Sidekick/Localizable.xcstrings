@@ -3614,16 +3614,6 @@
         }
       }
     },
-    "Remote Model Name" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "远端模型名称"
-          }
-        }
-      }
-    },
     "Remote Models" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3634,12 +3624,12 @@
         }
       }
     },
-    "Remote Worker Model Name" : {
+    "Remote Worker Model" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "远端极速模型名称"
+            "value" : "远端极速模型"
           }
         }
       }
