@@ -50,6 +50,11 @@ struct DashboardView: View {
         }
         .toolbar {
             ToolbarItemGroup(
+                placement: .principal
+            ) {
+                self.typePicker
+            }
+            ToolbarItemGroup(
                 placement: .primaryAction
             ) {
                 self.modelPicker
@@ -263,6 +268,23 @@ struct DashboardView: View {
                 Text("\(String(format: "%.1f", record.tokensPerSecond)) t/s")
             }
         }
+    }
+    
+    var typePicker: some View {
+        Picker(
+            selection: self.$inferenceRecords.selectedType.animation(
+                .linear
+            )
+        ) {
+            ForEach(
+                InferenceRecord.UsageType.allCases,
+                id: \.self
+            ) { type in
+                Text(type.description)
+                    .tag(type)
+            }
+        }
+        .pickerStyle(.segmented)
     }
     
     var modelPicker: some View {

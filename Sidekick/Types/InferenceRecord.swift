@@ -5,7 +5,6 @@
 //  Created by John Bean on 5/20/25.
 //
 
-import Charts
 import Foundation
 
 public struct InferenceRecord: Identifiable, Codable {
@@ -26,7 +25,7 @@ public struct InferenceRecord: Identifiable, Codable {
     }
     
     /// The `Type` of inference use
-    public var type: `Type`
+    public var type: UsageType
     /// A `URL` for the endpoint used
     public var endpoint: URL? = nil
     /// A `Bool` representing whether a remote server was used
@@ -45,7 +44,7 @@ public struct InferenceRecord: Identifiable, Codable {
     /// A `Double` for the tokens per second, or generation speed
     public var tokensPerSecond: Double
     
-    public enum `Type`: String, Codable {
+    public enum UsageType: String, Codable, CaseIterable {
         
         case completions // Used for chat with an instruct tuned model
         case chatCompletions // Used for completions with a foundation model

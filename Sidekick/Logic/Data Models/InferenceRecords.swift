@@ -27,10 +27,20 @@ public class InferenceRecords: ObservableObject {
             self.save()
         }
     }
+    
+    /// The selected record type
+    @Published public var selectedType: InferenceRecord.UsageType = .chatCompletions
+    /// All records belonging to the selected type
+    var typeRecords: [InferenceRecord] {
+        return records.filter { record in
+            record.type == self.selectedType
+        }
+    }
+    
     // Table config
     @Published public var selections = Set<InferenceRecord.ID>()
     private var selectedRecords: [InferenceRecord] {
-        return self.records.filter { record in
+        return self.typeRecords.filter { record in
             return self.selections.contains(record.id)
         }
     }
@@ -38,7 +48,7 @@ public class InferenceRecords: ObservableObject {
     /// All records within the timeframe & with the selected model
     public var displayedRecords: [InferenceRecord] {
         // Filter and return
-        let timelyRecords = self.records.filter { record in
+        let timelyRecords = self.typeRecords.filter { record in
             return self.selectedTimeframe.range.contains(record.startTime) || self.selectedTimeframe.range.contains(record.endTime)
         }
         if let selectedModel {
@@ -53,7 +63,7 @@ public class InferenceRecords: ObservableObject {
     /// All records within the timeframe & with the selected model
     public var filteredRecords: [InferenceRecord] {
         // Return selection if selected
-        var records = self.records
+        var records = self.typeRecords
         if !self.selectedRecords.isEmpty {
             records = self.selectedRecords
         }
@@ -195,7 +205,7 @@ public class InferenceRecords: ObservableObject {
     
     /// An array of `String` containing all models used
     public var models: [String] {
-        return Set(self.records.map(\.name)).sorted()
+        return Set(self.typeRecords.map(\.name)).sorted()
     }
     
     /// Function to save records to disk

@@ -108,11 +108,14 @@ public actor LlamaServer {
 	
 	/// The context length used in chat completion
 	var contextLength: Int = InferenceSettings.contextLength
-	
+    
 	/// Property for `llama-server-watchdog` process
 	private var monitor: Process = Process()
 	/// Property for `llama-server` process
 	private var process: Process = Process()
+    
+    /// The current url session
+    private var session: URLSession?
 	
 	/// Function to set system prompt
 	/// - Parameter systemPrompt: The system prompt, of type `String`
@@ -364,10 +367,11 @@ public actor LlamaServer {
 	}
 	
 	/// Function showing if connection was interrupted
-	@EventSourceActor
 	public func interrupt() async {
-		if let dataTask = await self.dataTask, dataTask.readyState != .closed {
-			dataTask.cancel()
+        if let dataTask = self.dataTask,
+            dataTask.readyState != .closed,
+            let session = self.session {
+            dataTask.cancel(urlSession: session)
 		}
 	}
 	
@@ -478,9 +482,12 @@ public actor LlamaServer {
 		self.eventSource = EventSource(
 			timeoutInterval: 6000 // Timeout after 100 minutes, enough for even reasoning models
 		)
-		self.dataTask = await eventSource!.dataTask(
+        self.dataTask = self.eventSource!.dataTask(
 			for: request
 		)
+        self.session = URLSession(
+            configuration: .default
+        )
         // Init variables for content
 		var pendingMessage: String = ""
 		var responseDiff: Double = 0.0
@@ -495,7 +502,7 @@ public actor LlamaServer {
         // Init variables for control
         var stopResponse: StopResponse? = nil
 		// Start streaming completion events
-		listenLoop: for await event in await dataTask!.events() {
+        listenLoop: for await event in self.dataTask!.events() {
 			switch event {
 				case .open:
 					continue listenLoop
