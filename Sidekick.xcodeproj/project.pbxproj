@@ -29,7 +29,6 @@
 		200619AF2D6766B1001949EF /* DiagrammerGeneratingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200619AE2D6766B1001949EF /* DiagrammerGeneratingView.swift */; };
 		200619B22D6768F6001949EF /* SwiftfulLoadingIndicators in Frameworks */ = {isa = PBXBuildFile; productRef = 200619B12D6768F6001949EF /* SwiftfulLoadingIndicators */; };
 		200619B42D676DCE001949EF /* DiagrammerPreviewEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200619B32D676DCE001949EF /* DiagrammerPreviewEditorView.swift */; };
-		200619BA2D678694001949EF /* WebViewKit in Frameworks */ = {isa = PBXBuildFile; productRef = 200619B92D678694001949EF /* WebViewKit */; };
 		200B23652DB0D31A00127D48 /* ReminderFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200B23642DB0D31A00127D48 /* ReminderFunctions.swift */; };
 		200B23682DB1214800127D48 /* WebSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200B23672DB1214800127D48 /* WebSearch.swift */; };
 		200B236A2DB1227A00127D48 /* DuckDuckGoSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200B23692DB1227A00127D48 /* DuckDuckGoSearch.swift */; };
@@ -92,6 +91,7 @@
 		20353FF12CF84546002BC78E /* ToggleLaTeXButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20353FF02CF84546002BC78E /* ToggleLaTeXButton.swift */; };
 		203786382DA76EBB003975CC /* SimilaritySearchKit in Frameworks */ = {isa = PBXBuildFile; productRef = 203786372DA76EBB003975CC /* SimilaritySearchKit */; };
 		2037863A2DA76EBB003975CC /* SimilaritySearchKitDistilbert in Frameworks */ = {isa = PBXBuildFile; productRef = 203786392DA76EBB003975CC /* SimilaritySearchKitDistilbert */; };
+		203E6B192DFAB8AD00A3F6D0 /* WebViewKit in Frameworks */ = {isa = PBXBuildFile; productRef = 203E6B182DFAB8AD00A3F6D0 /* WebViewKit */; };
 		2040DAD42D85BFD000A8F6BD /* QuickPromptButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2040DAD32D85BFD000A8F6BD /* QuickPromptButton.swift */; };
 		2040DBA52D85CB2200A8F6BD /* MarkdownImageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2040DBA42D85CB2200A8F6BD /* MarkdownImageProvider.swift */; };
 		2041868D2D81E6B2002A5D1C /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2041868C2D81E6B2002A5D1C /* NetworkMonitor.swift */; };
@@ -331,7 +331,6 @@
 		20CB50382D828CB60064D460 /* LaTeXSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 20CB50372D828CB60064D460 /* LaTeXSwiftUI */; };
 		20CB7AC02D1457B10013E30C /* PromptAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CB7ABF2D1457B10013E30C /* PromptAnalyzer.swift */; };
 		20CB7AC82D145E320013E30C /* UserRequestClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 20CB7AC72D145E320013E30C /* UserRequestClassifier.mlmodel */; };
-		20CC0C2F2CE2401600A3BC40 /* ExtractKit-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = 20CC0C2E2CE2401600A3BC40 /* ExtractKit-macOS */; };
 		20CE5E582D5C85D10000A2EC /* LengthyTasksNavigationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CE5E572D5C85D10000A2EC /* LengthyTasksNavigationButton.swift */; };
 		20CEA75B2CE308AD0070579B /* MessageTextContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CEA75A2CE308AD0070579B /* MessageTextContentView.swift */; };
 		20CEA75E2CE309F10070579B /* MessageOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CEA75D2CE309F10070579B /* MessageOptionsView.swift */; };
@@ -354,6 +353,7 @@
 		20E48C292CB560B50085E7D6 /* ConversationControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E48C282CB560B50085E7D6 /* ConversationControlsView.swift */; };
 		20E48C2B2CB560E30085E7D6 /* Extension+CGKeyCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E48C2A2CB560E30085E7D6 /* Extension+CGKeyCode.swift */; };
 		20F2D5122CC1F33B004CE730 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 20F2D5112CC1F33B004CE730 /* Localizable.xcstrings */; };
+		20F4525C2DFAA6CC00983A22 /* ExtractKit-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = 20F4525B2DFAA6CC00983A22 /* ExtractKit-macOS */; };
 		20F84B992D1CFED400F44990 /* DefaultModels in Frameworks */ = {isa = PBXBuildFile; productRef = 20F84B982D1CFED400F44990 /* DefaultModels */; };
 		20FB0D892CBA8327006D062A /* Extension+SimilarityIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FB0D882CBA8327006D062A /* Extension+SimilarityIndex.swift */; };
 		20FB0D8B2CBA8828006D062A /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FB0D8A2CBA8828006D062A /* SearchResult.swift */; };
@@ -839,6 +839,7 @@
 				206929F22DE8A24F00152345 /* libmtmd_helper_shared.dylib in Frameworks */,
 				206929EF2DE8A24F00152345 /* libmtmd_shared.dylib in Frameworks */,
 				206929F42DE8A26000152345 /* llama-perplexity in Frameworks */,
+				20F4525C2DFAA6CC00983A22 /* ExtractKit-macOS in Frameworks */,
 				206929F52DE8A26000152345 /* llama-server in Frameworks */,
 				20457D392D92A5FB00954892 /* AXSwift in Frameworks */,
 				20A40C832D718D4300A9D9A9 /* CodeEditorView in Frameworks */,
@@ -855,13 +856,12 @@
 				208388DD2CBF4E8A00C2A9F8 /* SecureDefaults in Frameworks */,
 				2064353A2D905D2300020CC0 /* SimilaritySearchKitDistilbert in Frameworks */,
 				200B236D2DB15AA800127D48 /* Shimmer in Frameworks */,
-				20CC0C2F2CE2401600A3BC40 /* ExtractKit-macOS in Frameworks */,
 				209B200A2D940F8400C79185 /* LaunchAtLogin in Frameworks */,
 				20CB50382D828CB60064D460 /* LaTeXSwiftUI in Frameworks */,
 				20573F282CB52F84004C19FE /* Splash in Frameworks */,
-				200619BA2D678694001949EF /* WebViewKit in Frameworks */,
 				20573F2A2CB52F84004C19FE /* SplashMarkdown in Frameworks */,
 				20B97CA82CAFE830009A0A5D /* FSKit-macOS in Frameworks */,
+				203E6B192DFAB8AD00A3F6D0 /* WebViewKit in Frameworks */,
 				20B97CC92CAFEBEA009A0A5D /* MarkdownUI in Frameworks */,
 				200619B22D6768F6001949EF /* SwiftfulLoadingIndicators in Frameworks */,
 			);
@@ -1222,9 +1222,9 @@
 		200FBFD62CB627B100A92A74 /* llama.cpp */ = {
 			isa = PBXGroup;
 			children = (
-				20896B362D54B0F0006F9368 /* build */,
 				200FBFED2CB6477400A92A74 /* LlamaServer.swift */,
 				200FBFF22CB66B8300A92A74 /* ServerHealth.swift */,
+				20896B362D54B0F0006F9368 /* build */,
 				200FBFE62CB6384400A92A74 /* llama-server-watchdog */,
 				200FBFF82CB68CFC00A92A74 /* Types */,
 			);
@@ -2155,12 +2155,10 @@
 				200FBFF02CB64CB400A92A74 /* EventSource */,
 				207A9F522CB82D9600E727DE /* SymbolPicker */,
 				208388DC2CBF4E8A00C2A9F8 /* SecureDefaults */,
-				20CC0C2E2CE2401600A3BC40 /* ExtractKit-macOS */,
 				2031B9942CEAE66400627D53 /* KeyboardShortcuts */,
 				20F84B982D1CFED400F44990 /* DefaultModels */,
 				20B53D062D5B03B900D1AE79 /* Sparkle */,
 				200619B12D6768F6001949EF /* SwiftfulLoadingIndicators */,
-				200619B92D678694001949EF /* WebViewKit */,
 				20A40C822D718D4300A9D9A9 /* CodeEditorView */,
 				20A40C842D718D4300A9D9A9 /* LanguageSupport */,
 				20CB50372D828CB60064D460 /* LaTeXSwiftUI */,
@@ -2172,6 +2170,8 @@
 				203786372DA76EBB003975CC /* SimilaritySearchKit */,
 				203786392DA76EBB003975CC /* SimilaritySearchKitDistilbert */,
 				200B236C2DB15AA800127D48 /* Shimmer */,
+				20F4525B2DFAA6CC00983A22 /* ExtractKit-macOS */,
+				203E6B182DFAB8AD00A3F6D0 /* WebViewKit */,
 			);
 			productName = Sidekick;
 			productReference = 200549732CAFA67B00A3DCF2 /* Sidekick.app */;
@@ -2279,12 +2279,10 @@
 				200FBFEF2CB64CB400A92A74 /* XCRemoteSwiftPackageReference "EventSource" */,
 				207A9F512CB82D9600E727DE /* XCRemoteSwiftPackageReference "SymbolPicker" */,
 				208388DB2CBF4E8A00C2A9F8 /* XCRemoteSwiftPackageReference "SecureDefaults" */,
-				20CC0C2D2CE2401600A3BC40 /* XCRemoteSwiftPackageReference "ExtractKit-macOS" */,
 				2031B9932CEAE66400627D53 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
 				20F84B972D1CFED400F44990 /* XCRemoteSwiftPackageReference "Default-Models" */,
 				20B53D052D5B03B900D1AE79 /* XCRemoteSwiftPackageReference "Sparkle" */,
 				200619B02D6768F6001949EF /* XCRemoteSwiftPackageReference "SwiftfulLoadingIndicators" */,
-				200619B82D678694001949EF /* XCRemoteSwiftPackageReference "WebViewKit" */,
 				20A40C812D718D4300A9D9A9 /* XCRemoteSwiftPackageReference "CodeEditorView" */,
 				20CB50362D828CB60064D460 /* XCRemoteSwiftPackageReference "LaTeXSwiftUI" */,
 				205E3F262D8723AB00128D67 /* XCRemoteSwiftPackageReference "Highlightr" */,
@@ -2292,6 +2290,8 @@
 				209B20082D940F8400C79185 /* XCRemoteSwiftPackageReference "LaunchAtLogin-Modern" */,
 				203786362DA76EBB003975CC /* XCRemoteSwiftPackageReference "similarity-search-kit" */,
 				200B236B2DB15AA800127D48 /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */,
+				20F4525A2DFAA6CC00983A22 /* XCRemoteSwiftPackageReference "ExtractKit-macOS" */,
+				203E6B172DFAB8AD00A3F6D0 /* XCRemoteSwiftPackageReference "WebViewKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 200549742CAFA67B00A3DCF2 /* Products */;
@@ -3101,14 +3101,6 @@
 				minimumVersion = 0.0.4;
 			};
 		};
-		200619B82D678694001949EF /* XCRemoteSwiftPackageReference "WebViewKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/danielsaidi/WebViewKit";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.5.0;
-			};
-		};
 		200B236B2DB15AA800127D48 /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/markiv/SwiftUI-Shimmer";
@@ -3139,6 +3131,14 @@
 			requirement = {
 				branch = main;
 				kind = branch;
+			};
+		};
+		203E6B172DFAB8AD00A3F6D0 /* XCRemoteSwiftPackageReference "WebViewKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielsaidi/WebViewKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.5.0;
 			};
 		};
 		20457D372D92A5FB00954892 /* XCRemoteSwiftPackageReference "AXSwift" */ = {
@@ -3229,7 +3229,7 @@
 				kind = branch;
 			};
 		};
-		20CC0C2D2CE2401600A3BC40 /* XCRemoteSwiftPackageReference "ExtractKit-macOS" */ = {
+		20F4525A2DFAA6CC00983A22 /* XCRemoteSwiftPackageReference "ExtractKit-macOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/johnbean393/ExtractKit-macOS";
 			requirement = {
@@ -3252,11 +3252,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 200619B02D6768F6001949EF /* XCRemoteSwiftPackageReference "SwiftfulLoadingIndicators" */;
 			productName = SwiftfulLoadingIndicators;
-		};
-		200619B92D678694001949EF /* WebViewKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 200619B82D678694001949EF /* XCRemoteSwiftPackageReference "WebViewKit" */;
-			productName = WebViewKit;
 		};
 		200B236C2DB15AA800127D48 /* Shimmer */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -3282,6 +3277,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 203786362DA76EBB003975CC /* XCRemoteSwiftPackageReference "similarity-search-kit" */;
 			productName = SimilaritySearchKitDistilbert;
+		};
+		203E6B182DFAB8AD00A3F6D0 /* WebViewKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 203E6B172DFAB8AD00A3F6D0 /* XCRemoteSwiftPackageReference "WebViewKit" */;
+			productName = WebViewKit;
 		};
 		20457D382D92A5FB00954892 /* AXSwift */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -3356,9 +3356,9 @@
 			package = 20CB50362D828CB60064D460 /* XCRemoteSwiftPackageReference "LaTeXSwiftUI" */;
 			productName = LaTeXSwiftUI;
 		};
-		20CC0C2E2CE2401600A3BC40 /* ExtractKit-macOS */ = {
+		20F4525B2DFAA6CC00983A22 /* ExtractKit-macOS */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 20CC0C2D2CE2401600A3BC40 /* XCRemoteSwiftPackageReference "ExtractKit-macOS" */;
+			package = 20F4525A2DFAA6CC00983A22 /* XCRemoteSwiftPackageReference "ExtractKit-macOS" */;
 			productName = "ExtractKit-macOS";
 		};
 		20F84B982D1CFED400F44990 /* DefaultModels */ = {

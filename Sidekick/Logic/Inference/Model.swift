@@ -518,7 +518,7 @@ public class Model: ObservableObject {
 		handleResponseUpdate: @escaping (String, String) -> Void
 	) async throws -> LlamaServer.CompleteResponse {
         // Define increment for update
-        let increment: Int = 3
+        let increment: Int = 8
 		// Handle initial response
 		let initialResponse = try await getInitialResponse(
 			mode: mode,
