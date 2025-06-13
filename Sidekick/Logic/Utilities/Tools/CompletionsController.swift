@@ -59,7 +59,8 @@ public class CompletionsController: ObservableObject {
 	public func setup() {
 		// Start server
 		self.server = LlamaServer(
-            modelType: .completions
+            modelType: .completions,
+            contextLength: 4096
 		)
 		Task { [weak self] in
 			guard let self = self else { return }

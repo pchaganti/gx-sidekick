@@ -28,10 +28,12 @@ public actor LlamaServer {
     ///   - port: The port on which a local server is made available
 	init(
         modelType: ModelType,
-		systemPrompt: String = InferenceSettings.systemPrompt
+		systemPrompt: String = InferenceSettings.systemPrompt,
+        contextLength: Int = InferenceSettings.contextLength
     ) {
         self.modelType = modelType
         self.systemPrompt = systemPrompt
+        self.contextLength = contextLength
         self.port = {
             switch modelType {
                 case .regular:
@@ -107,7 +109,7 @@ public actor LlamaServer {
 	var systemPrompt: String
 	
 	/// The context length used in chat completion
-	var contextLength: Int = InferenceSettings.contextLength
+	var contextLength: Int
     
 	/// Property for `llama-server-watchdog` process
 	private var monitor: Process = Process()

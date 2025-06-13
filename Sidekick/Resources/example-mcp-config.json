@@ -1,0 +1,31 @@
+{
+  "servers": [
+    {
+      "name": "filesystem",
+      "connectionType": {
+        "type": "stdio",
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-filesystem", "/Users"]
+      }
+    },
+    {
+      "name": "fetch",
+      "connectionType": {
+        "type": "stdio",
+        "command": "uvx",
+        "args": ["mcp-server-fetch"]
+      }
+    },
+    {
+      "name": "brave-search",
+      "connectionType": {
+        "type": "stdio",
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-brave-search"],
+        "env": {
+          "BRAVE_API_KEY": "${BRAVE_API_KEY}"
+        }
+      }
+    }
+  ]
+} 
