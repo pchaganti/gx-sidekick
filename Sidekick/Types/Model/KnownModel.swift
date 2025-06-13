@@ -725,6 +725,26 @@ public struct KnownModel: Identifiable, Codable {
                 .image
             ]
         ),
+        
+        // Mistral
+        
+        KnownModel(
+            primaryName: "magistral-small",
+            organization: .mistral,
+            modalities: [
+                .text,
+                .image
+            ]
+        ),
+        KnownModel(
+            primaryName: "magistral-medium",
+            organization: .mistral,
+            modalities: [
+                .text,
+                .image
+            ]
+        ),
+        
     ]
     
 }
