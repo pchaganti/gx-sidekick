@@ -143,12 +143,14 @@ struct ChatPromptEditor: View {
     private func handleEmptyPrompt() {
         // Reset reasoning status
         self.promptController.didManuallyToggleReasoning = false
-        guard let model = Model.shared.selectedModel else { return }
+        guard let isReasoningModel = Model.shared.selectedModelCanReason else {
+            return
+        }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             // If prompt is still empty
             withAnimation(.linear) {
                 if self.promptController.prompt.isEmpty {
-                    self.promptController.useReasoning = model.isReasoningModel
+                    self.promptController.useReasoning = isReasoningModel
                 }
             }
         }

@@ -23,6 +23,7 @@ public struct KnownModel: Identifiable, Codable {
         self.modalities = modalities
         self.capabilities = capabilities
         self.hybridReasoningStyle = hybridReasoningStyle
+        self.isReasoningModel = capabilities.contains(.reasoning)
     }
     
     init?(
@@ -63,9 +64,7 @@ public struct KnownModel: Identifiable, Codable {
     /// The model's hybrid reasoning style
     public var hybridReasoningStyle: HybridReasoningStyle? = nil
     /// A `Bool` representing whethe the model is capable of reasoning
-    public var isReasoningModel: Bool {
-        return self.capabilities.contains(.reasoning)
-    }
+    public var isReasoningModel: Bool
     /// A `Bool` representing whethe the model is capable of toggling reasoning
     public var isHybridReasoningModel: Bool {
         return self.hybridReasoningStyle != nil && self.capabilities.contains(.reasoning)

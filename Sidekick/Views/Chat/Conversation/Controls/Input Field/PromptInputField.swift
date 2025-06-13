@@ -543,8 +543,7 @@ A user is chatting with an assistant and they have sent the message below. Gener
     
     private func handleModelChange() {
         // Get selected model
-        if let model = Model.shared.selectedModel {
-            let isReasoningModel: Bool = model.isReasoningModel
+        if let isReasoningModel: Bool = Model.shared.selectedModelCanReason {
             // Update reasoning
             self.promptController.useReasoning = isReasoningModel
             // Update search

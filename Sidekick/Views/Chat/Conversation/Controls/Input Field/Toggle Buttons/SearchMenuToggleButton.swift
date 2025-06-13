@@ -19,9 +19,6 @@ struct SearchMenuToggleButton: View {
     var selectedModel: KnownModel? {
         return Model.shared.selectedModel
     }
-    var modelDoesReason: Bool {
-        return self.selectedModel?.isReasoningModel ?? false
-    }
     
     var body: some View {
         CapsuleMenuButton(
@@ -80,7 +77,7 @@ struct SearchMenuToggleButton: View {
         // Check if reasoning is activated
         if !self.promptController.useReasoning {
             // Check if can reason
-            if !self.modelDoesReason {
+            if !(Model.shared.selectedModelCanReason ?? false) {
                 // If not, show error and return
                 Dialogs.showAlert(
                     title: String(localized: "Not Available"),

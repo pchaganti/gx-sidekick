@@ -118,13 +118,29 @@ public class Model: ObservableObject {
     }
     /// The currently selected model
     public var selectedModel: KnownModel? {
-        guard let identifier = selectedModelName else { return nil }
-        return KnownModel(identifier: identifier)
+        guard let identifier = self.selectedModelName else { return nil }
+        var model = KnownModel(identifier: identifier)
+        if identifier.hasSuffix(":thinking") {
+            model?.isReasoningModel = true
+        }
+        return model
+    }
+    /// A `Bool` representing whether the selected model can reason
+    public var selectedModelCanReason: Bool? {
+        return self.selectedModel?.isReasoningModel ?? selectedModelName?.hasSuffix(":thinking")
     }
     /// The currently selected worker model
     public var selectedWorkerModel: KnownModel? {
-        guard let identifier = selectedWorkerModelName else { return nil }
-        return KnownModel(identifier: identifier)
+        guard let identifier = self.selectedWorkerModelName else { return nil }
+        var model = KnownModel(identifier: identifier)
+        if identifier.hasSuffix(":thinking") {
+            model?.isReasoningModel = true
+        }
+        return model
+    }
+    /// A `Bool` representing whether the selected worker model can reason
+    public var selectedWorkerModelCanReason: Bool? {
+        return self.selectedWorkerModel?.isReasoningModel ?? selectedWorkerModelName?.hasSuffix(":thinking")
     }
     
 	/// Property for the system prompt given to the LLM

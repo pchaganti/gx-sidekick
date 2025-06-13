@@ -25,7 +25,7 @@ struct UseReasoningButton: View {
         return false
     }
     var modelDoesReason: Bool {
-        return self.selectedModel?.isReasoningModel ?? false
+        return Model.shared.selectedModelCanReason ?? false
     }
     
     var systemImage: String {
