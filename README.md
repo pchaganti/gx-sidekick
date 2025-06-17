@@ -73,6 +73,16 @@ When telling Sidekick to draft an invitation email for a birthday celebration to
 
 This enables agents running fully locally. 
 
+### Deep Research
+
+Deep Research is a specific agent implemented in Sidekick to handle long horizon, multi-step research tasks.
+
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/Docs%20Images/Features/Deep%20Research/deepResearchProgress.png)
+
+Specify a research topic, and let Sidekick do the rest –– reading 50-80 webpages, and synthesizing information to prepare a research report.
+
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/Docs%20Images/Features/Deep%20Research/deepResearchReport.png)
+
 ### Memory
 
 Sidekick can now remember helpful information between conversations, making its responses more relevant and personalized. Whether you're typing, speaking, or generating images in Sidekick, it can recall details and preferences you’ve shared and use them to tailor its responses. The more you use it, the more useful it becomes, and you’ll start to notice improvements over time.
