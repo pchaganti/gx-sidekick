@@ -79,6 +79,7 @@ public struct KnownModel: Identifiable, Codable {
         case google = "Google"
         case meta = "Meta"
         case microsoft = "Microsoft"
+        case minimax = "Minimax"
         case mistral = "Mistral"
         case openAi = "OpenAI"
         case xAi = "xAI"
@@ -323,6 +324,17 @@ public struct KnownModel: Identifiable, Codable {
             modalities: [
                 .text,
                 .image
+            ],
+            capabilities: [.reasoning]
+        ),
+        
+        // Minimax
+        
+        KnownModel(
+            primaryName: "minimax-m1",
+            organization: .minimax,
+            modalities: [
+                .text
             ],
             capabilities: [.reasoning]
         ),

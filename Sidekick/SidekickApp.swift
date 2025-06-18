@@ -10,6 +10,7 @@ import Foundation
 import FSKit_macOS
 import Sparkle
 import SwiftUI
+import TipKit
 
 @main
 struct SidekickApp: App {
@@ -31,6 +32,11 @@ struct SidekickApp: App {
 		updaterDelegate: nil,
 		userDriverDelegate: nil
 	)
+    
+    init() {
+        // Hide all tips for now
+        Tips.hideAllTipsForTesting()
+    }
 	
 	var body: some Scene {
 		

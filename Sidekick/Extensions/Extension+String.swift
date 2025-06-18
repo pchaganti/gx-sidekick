@@ -355,6 +355,30 @@ public extension String {
         return processedResponse.trimmingCharacters(in: .whitespacesAndNewlines)
     }
     
+    /// Computed property to extract the first top‐level JSON object or array (including all nested content), dropping any surrounding text
+    var extractedJson: String? {
+        // 1. Locate the first opener
+        guard let start = firstIndex(where: { $0 == "{" || $0 == "[" }) else {
+            return nil
+        }
+        let openChar = self[start]
+        let closeChar: Character = (openChar == "{") ? "}" : "]"
+        // 2. Locate the last closer of the same type
+        guard let end = lastIndex(where: { $0 == closeChar }), end > start else {
+            return nil
+        }
+        // 3. Extract the candidate JSON substring
+        let candidate = String(self[start...end])
+        // 4. Validate by round‐tripping through JSONSerialization
+        guard
+            let data = candidate.data(using: .utf8),
+            (try? JSONSerialization.jsonObject(with: data, options: [])) != nil
+        else {
+            return nil
+        }
+        return candidate
+    }
+    
     /// Function to convert LaTeX within a string into a Markdown image block containing a URL-encoded version
     func convertLaTeX() -> String {
         // Updated regex pattern:

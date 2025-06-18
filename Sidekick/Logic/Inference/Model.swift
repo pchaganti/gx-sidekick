@@ -634,7 +634,7 @@ public class Model: ObservableObject {
             self.status = .usingFunctions
         }
         // Execute functions on a loop
-        var maxIterations: Int = 20
+        var maxIterations: Int = 30 // Max 30 tool calls
         var response: LlamaServer.CompleteResponse? = initialResponse
         var messages: [Message.MessageSubset] = messages
         // Capture results

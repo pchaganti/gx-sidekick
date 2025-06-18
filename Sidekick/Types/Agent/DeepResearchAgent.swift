@@ -309,8 +309,8 @@ Respond with the array of JSON objects ONLY.
         )
         // Add to messages
         messages += [jsonMessage]
-        // Check with model for a maximum of 3 tries
-        for _ in 0..<3 {
+        // Check with model for a maximum of 5 tries
+        for _ in 0..<5 {
             do {
                 // Get response
                 let jsonResponse = try await Model.shared.listenThinkRespond(
@@ -319,7 +319,8 @@ Respond with the array of JSON objects ONLY.
                     mode: .`default`,
                     useReasoning: true
                 )
-                let responseText: String = jsonResponse.text.reasoningRemoved
+                var responseText: String = jsonResponse.text.reasoningRemoved
+                responseText = responseText.extractedJson ?? responseText
                 // Decode response
                 let decoder: JSONDecoder = JSONDecoder()
                 let sections: [Section] = try decoder.decode(
@@ -458,7 +459,8 @@ Respond with the array of JSON objects ONLY.
                     useReasoning: true,
                     useFunctions: false
                 )
-                let responseText: String = jsonResponse.text.reasoningRemoved
+                var responseText: String = jsonResponse.text.reasoningRemoved
+                responseText = responseText.extractedJson ?? responseText
                 // Decode response
                 let decoder: JSONDecoder = JSONDecoder()
                 let results: [Section.Result] = try decoder.decode(
@@ -637,9 +639,9 @@ Respond with the array of JSON objects ONLY.
         )
         // Add to messages
         messages += [jsonMessage]
-        // Check with model for a maximum of 3 tries
+        // Check with model for a maximum of 4 tries
         var diagrams: [Diagram] = []
-        for _ in 0..<3 {
+        for _ in 0..<4 {
             do {
                 // Get response
                 let jsonResponse = try await Model.shared.listenThinkRespond(
@@ -648,7 +650,8 @@ Respond with the array of JSON objects ONLY.
                     mode: .`default`,
                     useReasoning: true
                 )
-                let responseText: String = jsonResponse.text.reasoningRemoved
+                var responseText: String = jsonResponse.text.reasoningRemoved
+                responseText = responseText.extractedJson ?? responseText
                 // Decode response and exit loop
                 let decoder: JSONDecoder = JSONDecoder()
                 diagrams = try decoder.decode(

@@ -38,7 +38,7 @@ public struct Provider: Identifiable {
         ),
         Provider(
             name: "Google AI Studio",
-            endpointUrl: URL(string: "https://generativelanguage.googleapis.com/v1beta")!
+            endpointUrl: URL(string: "https://generativelanguage.googleapis.com/v1beta/openai")!
         ),
         Provider(
             name: "Groq",

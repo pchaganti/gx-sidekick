@@ -24,6 +24,8 @@ public class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
 	public func applicationDidFinishLaunching(
 		_ notification: Notification
 	) {
+        Tips.hideAllTipsForTesting()
+        print("Hid all tips")
 		// Relocate legacy resources if setup finished
 		if Settings.setupComplete {
 			Refactorer.refactor()
