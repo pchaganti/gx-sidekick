@@ -126,6 +126,8 @@ struct ChatParameters: Codable {
 	
 	var stream: Bool = true
 	var stream_options: StreamOptions = .init()
+    
+    var provider: ProviderRoutingOptions = .init()
 	
     /// Function to convert chat parameters to JSON
     public func toJSON(
@@ -153,6 +155,7 @@ struct ChatParameters: Codable {
             let stream: Bool?
             let stream_options: StreamOptions?
             let tools: [OpenAIFunction]?
+            let provider: ProviderRoutingOptions?
             
             init(
                 from parent: ChatParameters,
@@ -164,7 +167,9 @@ struct ChatParameters: Codable {
                 self.stream = omitted.contains(.stream) ? nil : parent.stream
                 self.stream_options = omitted.contains(.stream_options) ? nil : parent.stream_options
                 self.tools = omitted.contains(.tools) ? nil : parent.tools
+                self.provider = omitted.contains(.provider) ? nil : parent.provider
             }
+            
             // Remove nils from JSON
             func encode(to encoder: Encoder) throws {
                 var container = encoder.container(keyedBy: ParamKey.self)
@@ -174,7 +179,11 @@ struct ChatParameters: Codable {
                 if let stream = stream      { try container.encode(stream, forKey: .stream) }
                 if let stream_options = stream_options { try container.encode(stream_options, forKey: .stream_options) }
                 if let tools = tools        { try container.encode(tools, forKey: .tools) }
+                if let provider = provider {
+                    try container.encode(provider, forKey: .provider)
+                }
             }
+            
         }
         let wrapper = OmitWrapper(from: self, omitted: omittedParams)
         // Encode and return
@@ -198,6 +207,7 @@ struct ChatParameters: Codable {
         case stream
         case stream_options
         case tools
+        case provider
     }
 	
 	/// Function to get the name of the model that will be used
@@ -253,4 +263,16 @@ struct ChatParameters: Codable {
 		var include_usage: Bool = true
 	}
 	
+    struct ProviderRoutingOptions: Codable {
+        
+        var sort: SortOrder = .throughput
+        
+        enum SortOrder: String, Codable {
+            case throughput
+            case latency
+            case price
+        }
+        
+    }
+    
 }
