@@ -68,8 +68,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/johnbean393/ExtractKit-macOS",
       "state" : {
-        "branch" : "main",
-        "revision" : "6ecc1199823426ff1a1579da03bfde6ad94a5c36"
+        "revision" : "1dec0f9f1097f0f0a690d63c051e3df3881c47a6"
       }
     },
     {

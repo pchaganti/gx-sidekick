@@ -102,12 +102,15 @@ public struct KnownModel: Identifiable, Codable {
     public enum HybridReasoningStyle: String, Codable, CaseIterable {
         
         case qwen3
+        case glm4pt5
         
         /// Tag to trigger thinking
         public var triggerThinkingTag: String {
             switch self {
                 case .qwen3:
                     return "/think"
+                case .glm4pt5:
+                    return ""
             }
         }
         
@@ -116,6 +119,8 @@ public struct KnownModel: Identifiable, Codable {
             switch self {
                 case .qwen3:
                     return "/no_think"
+                case .glm4pt5:
+                    return ""
             }
         }
         
@@ -326,6 +331,24 @@ public struct KnownModel: Identifiable, Codable {
                 .image
             ],
             capabilities: [.reasoning]
+        ),
+        KnownModel(
+            primaryName: "glm-4.5",
+            organization: .zhipu,
+            modalities: [
+                .text
+            ],
+            capabilities: [.reasoning],
+            hybridReasoningStyle: .glm4pt5
+        ),
+        KnownModel(
+            primaryName: "glm-4.5-air",
+            organization: .zhipu,
+            modalities: [
+                .text
+            ],
+            capabilities: [.reasoning],
+            hybridReasoningStyle: .glm4pt5
         ),
         
         // Minimax
