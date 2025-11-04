@@ -92,68 +92,6 @@ struct ChatPromptEditor: View {
                 .foregroundStyle(outlineColor)
         )
         .animation(isFocused ? .easeIn(duration: 0.2) : .easeOut(duration: 0.0), value: isFocused)
-        .onChange(of: self.promptController.prompt) {
-            self.scheduleDebouncedAction()
-        }
-    }
-    
-    private func scheduleDebouncedAction() {
-        // Cancel any existing scheduled work
-        self.debouncedTask?.cancel()
-        // Exit if prompt is empty
-        if self.promptController.prompt.isEmpty {
-            self.handleEmptyPrompt()
-            return
-        }
-        // Create a new work item to run after a 1-second delay
-        let task: DispatchWorkItem = DispatchWorkItem {
-            self.determineIfReasoningNeeded()
-        }
-        // Store the new work item in our state variable
-        self.debouncedTask = task
-        // Schedule the work item
-        // It will be executed in 0.33 seconds unless cancelled by another keystroke
-        DispatchQueue.main.asyncAfter(deadline: .now() + (1/3), execute: task)
-    }
-    
-    private func determineIfReasoningNeeded() {
-        // Exit if prompt is empty
-        if self.promptController.prompt.isEmpty {
-            self.handleEmptyPrompt()
-            return
-        }
-        // Exit if did manually toggle reasoning
-        if self.promptController.didManuallyToggleReasoning {
-            return
-        }
-        // Exit if using Deep Research
-        if self.promptController.isUsingDeepResearch {
-            return
-        }
-        // Determine if reasoning is needed
-        if let useReasoning = PromptAnalyzer.isReasoningRequired(
-            self.promptController.prompt
-        ) {
-            withAnimation(.linear) {
-                self.promptController.useReasoning = useReasoning
-            }
-        }
-    }
-    
-    private func handleEmptyPrompt() {
-        // Reset reasoning status
-        self.promptController.didManuallyToggleReasoning = false
-        guard let isReasoningModel = Model.shared.selectedModelCanReason else {
-            return
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            // If prompt is still empty
-            withAnimation(.linear) {
-                if self.promptController.prompt.isEmpty {
-                    self.promptController.useReasoning = isReasoningModel
-                }
-            }
-        }
     }
     
 }

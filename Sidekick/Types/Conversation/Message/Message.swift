@@ -421,7 +421,6 @@ DO NOT reference sources outside of those provided below. If you did not referen
             similarityIndex: SimilarityIndex? = nil,
             temporaryResources: [TemporaryResource] = [],
             shouldAddSources: Bool = false,
-            useReasoning: Bool = true,
             useVisionContent: Bool = false,
             useWebSearch: Bool = false,
             useCanvas: Bool = false,
@@ -522,39 +521,6 @@ Output the full text again with the changes applied. Keep as much of the previou
                 // Else, just use message text
                 let plainText: String = message.text
                 self.content = .textOnly(plainText)
-            }
-            // If message requires reasoning, and can be toggled
-            let knownModel: KnownModel? = await {
-                switch modelType {
-                    case .regular:
-                        return await Model.shared.selectedModel
-                    case .worker:
-                        return await Model.shared.selectedWorkerModel
-                    case .completions:
-                        return nil
-                }
-            }()
-            if let selectedModel = knownModel,
-               selectedModel.isHybridReasoningModel,
-               let style: KnownModel.HybridReasoningStyle = selectedModel.hybridReasoningStyle {
-                // Append reasoning toggle tag
-                let toggleTag: String = style.getTag(
-                    useReasoning: useReasoning
-                )
-                switch self.content {
-                    case .textOnly(let string):
-                        self.content = .textOnly(string + toggleTag)
-                    case .multimodal(let array):
-                        let newContents: [Content] = array.map { content in
-                            switch content {
-                                case .text(let string):
-                                    return .text(string + toggleTag)
-                                default:
-                                    return content
-                            }
-                        }
-                        self.content = .multimodal(newContents)
-                }
             }
         }
         

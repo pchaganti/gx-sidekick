@@ -165,8 +165,7 @@ Respond with YES or NO only.
                 let response = try await Model.shared.listenThinkRespond(
                     messages: messages,
                     modelType: .regular,
-                    mode: .`default`,
-                    useReasoning: true
+                    mode: .`default`
                 )
                 let responseText: String = response.text.reasoningRemoved
                 // Validate response
@@ -202,7 +201,6 @@ Ask the user for more information and context. Respond with the questions ONLY.
             messages: messages,
             modelType: .regular,
             mode: .`default`,
-            useReasoning: true,
             showPreview: true
         )
         // Return
@@ -229,8 +227,7 @@ Respond with the prompt ONLY.
         let response = try? await Model.shared.listenThinkRespond(
             messages: messages,
             modelType: .regular,
-            mode: .`default`,
-            useReasoning: true
+            mode: .`default`
         )
         // Return
         return response?.text.reasoningRemoved
@@ -259,7 +256,6 @@ DO NOT try to directly provide an answer. ONLY think and plan.
             messages: messages,
             modelType: .regular,
             mode: .`default`,
-            useReasoning: true
         )
         // Append to messages
         let planResponseMessage: Message = Message(
@@ -316,8 +312,7 @@ Respond with the array of JSON objects ONLY.
                 let jsonResponse = try await Model.shared.listenThinkRespond(
                     messages: messages,
                     modelType: .regular,
-                    mode: .`default`,
-                    useReasoning: true
+                    mode: .`default`
                 )
                 var responseText: String = jsonResponse.text.reasoningRemoved
                 responseText = responseText.extractedJson ?? responseText
@@ -456,7 +451,6 @@ Respond with the array of JSON objects ONLY.
                     messages: [jsonMessage],
                     modelType: .regular,
                     mode: .agent,
-                    useReasoning: true,
                     useFunctions: false
                 )
                 var responseText: String = jsonResponse.text.reasoningRemoved
@@ -509,7 +503,6 @@ Respond with the key findings ONLY.
             messages: [summarizeMessage],
             modelType: .regular,
             mode: .agent,
-            useReasoning: true,
             useFunctions: false
         )
         section.keyFinding = summarizeResponse.text.reasoningRemoved
@@ -549,8 +542,7 @@ Now, write the report, citing sources in Markdown links.
         let response = try await Model.shared.listenThinkRespond(
             messages: self.messages,
             modelType: .regular,
-            mode: .`default`,
-            useReasoning: true
+            mode: .`default`
         )
         // Add response to messages
         let draftResponse: Message = Message(
@@ -592,9 +584,7 @@ Description: A pie chart showing the market share of major headphone brands by r
         let listDiagramsResponse = try await Model.shared.listenThinkRespond(
             messages: messages,
             modelType: .regular,
-            mode: .`default`,
-            useReasoning: true,
-            showPreview: true
+            mode: .`default`
         )
         // Append to messages
         let listDiagramsResponseMessage: Message = Message(
@@ -648,7 +638,6 @@ Respond with the array of JSON objects ONLY.
                     messages: messages,
                     modelType: .regular,
                     mode: .`default`,
-                    useReasoning: true
                 )
                 var responseText: String = jsonResponse.text.reasoningRemoved
                 responseText = responseText.extractedJson ?? responseText
@@ -869,7 +858,6 @@ Insert them into the report as Markdown images where neccessary, using percent e
             messages: self.messages,
             modelType: .regular,
             mode: .`default`,
-            useReasoning: true,
             showPreview: true
         )
         // Return

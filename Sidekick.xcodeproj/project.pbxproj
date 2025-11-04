@@ -176,6 +176,32 @@
 		206AB9672DB09BB800385510 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206AB9662DB09BB800385510 /* Location.swift */; };
 		206FBB212D54B40700A045FF /* MessageReasoningProcessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206FBB202D54B40700A045FF /* MessageReasoningProcessView.swift */; };
 		2075220B2D7FDF6C00A1CA60 /* Extension+SecureDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2075220A2D7FDF6C00A1CA60 /* Extension+SecureDefaults.swift */; };
+		2075FE922EBAC06100EA6131 /* llama-server in Resources */ = {isa = PBXBuildFile; fileRef = 2075FE912EBAC06100EA6131 /* llama-server */; };
+		2075FE932EBAC06100EA6131 /* llama-perplexity in Resources */ = {isa = PBXBuildFile; fileRef = 2075FE902EBAC06100EA6131 /* llama-perplexity */; };
+		2075FE942EBAC06100EA6131 /* libggml-rpc.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2075FE8D2EBAC06100EA6131 /* libggml-rpc.dylib */; };
+		2075FE952EBAC06100EA6131 /* libggml-base.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2075FE892EBAC06100EA6131 /* libggml-base.dylib */; };
+		2075FE962EBAC06100EA6131 /* libggml-blas.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2075FE8A2EBAC06100EA6131 /* libggml-blas.dylib */; };
+		2075FE972EBAC06100EA6131 /* libggml.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2075FE882EBAC06100EA6131 /* libggml.dylib */; };
+		2075FE982EBAC06100EA6131 /* libggml-cpu.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2075FE8B2EBAC06100EA6131 /* libggml-cpu.dylib */; };
+		2075FE992EBAC06100EA6131 /* libllama.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2075FE8E2EBAC06100EA6131 /* libllama.dylib */; };
+		2075FE9A2EBAC06100EA6131 /* libmtmd.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2075FE8F2EBAC06100EA6131 /* libmtmd.dylib */; };
+		2075FE9B2EBAC06100EA6131 /* libggml-metal.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2075FE8C2EBAC06100EA6131 /* libggml-metal.dylib */; };
+		2075FE9C2EBAC2D600EA6131 /* libggml.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2075FE882EBAC06100EA6131 /* libggml.dylib */; };
+		2075FE9D2EBAC2D600EA6131 /* libggml-base.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2075FE892EBAC06100EA6131 /* libggml-base.dylib */; };
+		2075FE9E2EBAC2D600EA6131 /* libggml-blas.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2075FE8A2EBAC06100EA6131 /* libggml-blas.dylib */; };
+		2075FE9F2EBAC2D600EA6131 /* libggml-cpu.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2075FE8B2EBAC06100EA6131 /* libggml-cpu.dylib */; };
+		2075FEA02EBAC2D600EA6131 /* libggml-metal.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2075FE8C2EBAC06100EA6131 /* libggml-metal.dylib */; };
+		2075FEA12EBAC2D600EA6131 /* libggml-rpc.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2075FE8D2EBAC06100EA6131 /* libggml-rpc.dylib */; };
+		2075FEA22EBAC2D600EA6131 /* libllama.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2075FE8E2EBAC06100EA6131 /* libllama.dylib */; };
+		2075FEA32EBAC2D600EA6131 /* libmtmd.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2075FE8F2EBAC06100EA6131 /* libmtmd.dylib */; };
+		2075FEAE2EBAC37B00EA6131 /* libggml.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 2075FE882EBAC06100EA6131 /* libggml.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		2075FEAF2EBAC37B00EA6131 /* libggml-base.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 2075FE892EBAC06100EA6131 /* libggml-base.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		2075FEB02EBAC37B00EA6131 /* libggml-blas.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 2075FE8A2EBAC06100EA6131 /* libggml-blas.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		2075FEB12EBAC37B00EA6131 /* libggml-cpu.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 2075FE8B2EBAC06100EA6131 /* libggml-cpu.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		2075FEB22EBAC37B00EA6131 /* libggml-metal.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 2075FE8C2EBAC06100EA6131 /* libggml-metal.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		2075FEB32EBAC37B00EA6131 /* libggml-rpc.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 2075FE8D2EBAC06100EA6131 /* libggml-rpc.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		2075FEB42EBAC37B00EA6131 /* libllama.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 2075FE8E2EBAC06100EA6131 /* libllama.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		2075FEB52EBAC37B00EA6131 /* libmtmd.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 2075FE8F2EBAC06100EA6131 /* libmtmd.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		207A9F532CB82D9600E727DE /* SymbolPicker in Frameworks */ = {isa = PBXBuildFile; productRef = 207A9F522CB82D9600E727DE /* SymbolPicker */; };
 		207A9F552CB8A96F00E727DE /* ExpertNavigationRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207A9F542CB8A96F00E727DE /* ExpertNavigationRowView.swift */; };
 		207A9F592CB8F4AF00E727DE /* ResourceSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207A9F582CB8F4AF00E727DE /* ResourceSelectionView.swift */; };
@@ -326,32 +352,6 @@
 		20E48C292CB560B50085E7D6 /* ConversationControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E48C282CB560B50085E7D6 /* ConversationControlsView.swift */; };
 		20E48C2B2CB560E30085E7D6 /* Extension+CGKeyCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E48C2A2CB560E30085E7D6 /* Extension+CGKeyCode.swift */; };
 		20F2D5122CC1F33B004CE730 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 20F2D5112CC1F33B004CE730 /* Localizable.xcstrings */; };
-		20F7CAF52E1C508C0021B325 /* libllama.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 20F7CAF12E1C508C0021B325 /* libllama.dylib */; };
-		20F7CAF62E1C508C0021B325 /* libggml-base.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 20F7CAEC2E1C508C0021B325 /* libggml-base.dylib */; };
-		20F7CAF72E1C508C0021B325 /* libggml-blas.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 20F7CAED2E1C508C0021B325 /* libggml-blas.dylib */; };
-		20F7CAF82E1C508C0021B325 /* libggml-rpc.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 20F7CAF02E1C508C0021B325 /* libggml-rpc.dylib */; };
-		20F7CAF92E1C508C0021B325 /* libggml.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 20F7CAEB2E1C508C0021B325 /* libggml.dylib */; };
-		20F7CAFA2E1C508C0021B325 /* libggml-metal.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 20F7CAEF2E1C508C0021B325 /* libggml-metal.dylib */; };
-		20F7CAFB2E1C508C0021B325 /* libggml-cpu.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 20F7CAEE2E1C508C0021B325 /* libggml-cpu.dylib */; };
-		20F7CAFC2E1C508C0021B325 /* libmtmd.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 20F7CAF22E1C508C0021B325 /* libmtmd.dylib */; };
-		20F7CAFD2E1C508C0021B325 /* llama-perplexity in Resources */ = {isa = PBXBuildFile; fileRef = 20F7CAF32E1C508C0021B325 /* llama-perplexity */; };
-		20F7CAFE2E1C508C0021B325 /* llama-server in Resources */ = {isa = PBXBuildFile; fileRef = 20F7CAF42E1C508C0021B325 /* llama-server */; };
-		20F7CB012E1C50DE0021B325 /* libggml.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 20F7CAEB2E1C508C0021B325 /* libggml.dylib */; };
-		20F7CB022E1C50DE0021B325 /* libggml-base.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 20F7CAEC2E1C508C0021B325 /* libggml-base.dylib */; };
-		20F7CB032E1C50DE0021B325 /* libggml-blas.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 20F7CAED2E1C508C0021B325 /* libggml-blas.dylib */; };
-		20F7CB042E1C50DE0021B325 /* libggml-cpu.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 20F7CAEE2E1C508C0021B325 /* libggml-cpu.dylib */; };
-		20F7CB052E1C50DE0021B325 /* libggml-metal.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 20F7CAEF2E1C508C0021B325 /* libggml-metal.dylib */; };
-		20F7CB062E1C50DE0021B325 /* libggml-rpc.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 20F7CAF02E1C508C0021B325 /* libggml-rpc.dylib */; };
-		20F7CB072E1C50DE0021B325 /* libllama.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 20F7CAF12E1C508C0021B325 /* libllama.dylib */; };
-		20F7CB082E1C50DE0021B325 /* libmtmd.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 20F7CAF22E1C508C0021B325 /* libmtmd.dylib */; };
-		20F7CB092E1C51360021B325 /* libggml.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 20F7CAEB2E1C508C0021B325 /* libggml.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		20F7CB0A2E1C51360021B325 /* libggml-base.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 20F7CAEC2E1C508C0021B325 /* libggml-base.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		20F7CB0B2E1C51360021B325 /* libggml-blas.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 20F7CAED2E1C508C0021B325 /* libggml-blas.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		20F7CB0C2E1C51360021B325 /* libggml-cpu.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 20F7CAEE2E1C508C0021B325 /* libggml-cpu.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		20F7CB0D2E1C51360021B325 /* libggml-metal.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 20F7CAEF2E1C508C0021B325 /* libggml-metal.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		20F7CB0E2E1C51360021B325 /* libggml-rpc.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 20F7CAF02E1C508C0021B325 /* libggml-rpc.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		20F7CB0F2E1C51360021B325 /* libllama.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 20F7CAF12E1C508C0021B325 /* libllama.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		20F7CB102E1C51360021B325 /* libmtmd.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 20F7CAF22E1C508C0021B325 /* libmtmd.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		20F84B992D1CFED400F44990 /* DefaultModels in Frameworks */ = {isa = PBXBuildFile; productRef = 20F84B982D1CFED400F44990 /* DefaultModels */; };
 		20FB0D892CBA8327006D062A /* Extension+SimilarityIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FB0D882CBA8327006D062A /* Extension+SimilarityIndex.swift */; };
 		20FB0D8B2CBA8828006D062A /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FB0D8A2CBA8828006D062A /* SearchResult.swift */; };
@@ -422,14 +422,14 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				20F7CB092E1C51360021B325 /* libggml.dylib in Embed Libraries */,
-				20F7CB0A2E1C51360021B325 /* libggml-base.dylib in Embed Libraries */,
-				20F7CB0B2E1C51360021B325 /* libggml-blas.dylib in Embed Libraries */,
-				20F7CB0C2E1C51360021B325 /* libggml-cpu.dylib in Embed Libraries */,
-				20F7CB0D2E1C51360021B325 /* libggml-metal.dylib in Embed Libraries */,
-				20F7CB0E2E1C51360021B325 /* libggml-rpc.dylib in Embed Libraries */,
-				20F7CB0F2E1C51360021B325 /* libllama.dylib in Embed Libraries */,
-				20F7CB102E1C51360021B325 /* libmtmd.dylib in Embed Libraries */,
+				2075FEAE2EBAC37B00EA6131 /* libggml.dylib in Embed Libraries */,
+				2075FEAF2EBAC37B00EA6131 /* libggml-base.dylib in Embed Libraries */,
+				2075FEB02EBAC37B00EA6131 /* libggml-blas.dylib in Embed Libraries */,
+				2075FEB12EBAC37B00EA6131 /* libggml-cpu.dylib in Embed Libraries */,
+				2075FEB22EBAC37B00EA6131 /* libggml-metal.dylib in Embed Libraries */,
+				2075FEB32EBAC37B00EA6131 /* libggml-rpc.dylib in Embed Libraries */,
+				2075FEB42EBAC37B00EA6131 /* libllama.dylib in Embed Libraries */,
+				2075FEB52EBAC37B00EA6131 /* libmtmd.dylib in Embed Libraries */,
 			);
 			name = "Embed Libraries";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -595,6 +595,16 @@
 		206AB9662DB09BB800385510 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		206FBB202D54B40700A045FF /* MessageReasoningProcessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageReasoningProcessView.swift; sourceTree = "<group>"; };
 		2075220A2D7FDF6C00A1CA60 /* Extension+SecureDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+SecureDefaults.swift"; sourceTree = "<group>"; };
+		2075FE882EBAC06100EA6131 /* libggml.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libggml.dylib; sourceTree = "<group>"; };
+		2075FE892EBAC06100EA6131 /* libggml-base.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-base.dylib"; sourceTree = "<group>"; };
+		2075FE8A2EBAC06100EA6131 /* libggml-blas.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-blas.dylib"; sourceTree = "<group>"; };
+		2075FE8B2EBAC06100EA6131 /* libggml-cpu.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-cpu.dylib"; sourceTree = "<group>"; };
+		2075FE8C2EBAC06100EA6131 /* libggml-metal.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-metal.dylib"; sourceTree = "<group>"; };
+		2075FE8D2EBAC06100EA6131 /* libggml-rpc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-rpc.dylib"; sourceTree = "<group>"; };
+		2075FE8E2EBAC06100EA6131 /* libllama.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libllama.dylib; sourceTree = "<group>"; };
+		2075FE8F2EBAC06100EA6131 /* libmtmd.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libmtmd.dylib; sourceTree = "<group>"; };
+		2075FE902EBAC06100EA6131 /* llama-perplexity */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llama-perplexity"; sourceTree = "<group>"; };
+		2075FE912EBAC06100EA6131 /* llama-server */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llama-server"; sourceTree = "<group>"; };
 		207A9F542CB8A96F00E727DE /* ExpertNavigationRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertNavigationRowView.swift; sourceTree = "<group>"; };
 		207A9F582CB8F4AF00E727DE /* ResourceSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceSelectionView.swift; sourceTree = "<group>"; };
 		207A9F5C2CB8FD0900E727DE /* ResourceSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceSectionView.swift; sourceTree = "<group>"; };
@@ -808,16 +818,6 @@
 		20EE520D2E01AF02003C974F /* demoScreenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = demoScreenshot.png; sourceTree = "<group>"; };
 		20F2D5112CC1F33B004CE730 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		20F7CAE92E17CFB90021B325 /* marp */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = marp; sourceTree = "<group>"; };
-		20F7CAEB2E1C508C0021B325 /* libggml.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libggml.dylib; sourceTree = "<group>"; };
-		20F7CAEC2E1C508C0021B325 /* libggml-base.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-base.dylib"; sourceTree = "<group>"; };
-		20F7CAED2E1C508C0021B325 /* libggml-blas.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-blas.dylib"; sourceTree = "<group>"; };
-		20F7CAEE2E1C508C0021B325 /* libggml-cpu.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-cpu.dylib"; sourceTree = "<group>"; };
-		20F7CAEF2E1C508C0021B325 /* libggml-metal.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-metal.dylib"; sourceTree = "<group>"; };
-		20F7CAF02E1C508C0021B325 /* libggml-rpc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libggml-rpc.dylib"; sourceTree = "<group>"; };
-		20F7CAF12E1C508C0021B325 /* libllama.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libllama.dylib; sourceTree = "<group>"; };
-		20F7CAF22E1C508C0021B325 /* libmtmd.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libmtmd.dylib; sourceTree = "<group>"; };
-		20F7CAF32E1C508C0021B325 /* llama-perplexity */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llama-perplexity"; sourceTree = "<group>"; };
-		20F7CAF42E1C508C0021B325 /* llama-server */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "llama-server"; sourceTree = "<group>"; };
 		20FB0D882CBA8327006D062A /* Extension+SimilarityIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+SimilarityIndex.swift"; sourceTree = "<group>"; };
 		20FB0D8A2CBA8828006D062A /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 		20FDE29F2DAE50E7000A16F8 /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
@@ -833,14 +833,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				203224332EBAA9EB0003E1A8 /* SwiftUIX in Frameworks */,
-				20F7CAF62E1C508C0021B325 /* libggml-base.dylib in Frameworks */,
-				20F7CAF72E1C508C0021B325 /* libggml-blas.dylib in Frameworks */,
-				20F7CAFB2E1C508C0021B325 /* libggml-cpu.dylib in Frameworks */,
-				20F7CAFA2E1C508C0021B325 /* libggml-metal.dylib in Frameworks */,
-				20F7CAF82E1C508C0021B325 /* libggml-rpc.dylib in Frameworks */,
-				20F7CAF92E1C508C0021B325 /* libggml.dylib in Frameworks */,
-				20F7CAF52E1C508C0021B325 /* libllama.dylib in Frameworks */,
-				20F7CAFC2E1C508C0021B325 /* libmtmd.dylib in Frameworks */,
 				20457D392D92A5FB00954892 /* AXSwift in Frameworks */,
 				20A40C832D718D4300A9D9A9 /* CodeEditorView in Frameworks */,
 				203786382DA76EBB003975CC /* SimilaritySearchKit in Frameworks */,
@@ -856,6 +848,14 @@
 				20B53D072D5B03B900D1AE79 /* Sparkle in Frameworks */,
 				208388DD2CBF4E8A00C2A9F8 /* SecureDefaults in Frameworks */,
 				2064353A2D905D2300020CC0 /* SimilaritySearchKitDistilbert in Frameworks */,
+				2075FE942EBAC06100EA6131 /* libggml-rpc.dylib in Frameworks */,
+				2075FE952EBAC06100EA6131 /* libggml-base.dylib in Frameworks */,
+				2075FE962EBAC06100EA6131 /* libggml-blas.dylib in Frameworks */,
+				2075FE972EBAC06100EA6131 /* libggml.dylib in Frameworks */,
+				2075FE982EBAC06100EA6131 /* libggml-cpu.dylib in Frameworks */,
+				2075FE992EBAC06100EA6131 /* libllama.dylib in Frameworks */,
+				2075FE9A2EBAC06100EA6131 /* libmtmd.dylib in Frameworks */,
+				2075FE9B2EBAC06100EA6131 /* libggml-metal.dylib in Frameworks */,
 				200B236D2DB15AA800127D48 /* Shimmer in Frameworks */,
 				209B200A2D940F8400C79185 /* LaunchAtLogin in Frameworks */,
 				20CB50382D828CB60064D460 /* LaTeXSwiftUI in Frameworks */,
@@ -1521,16 +1521,16 @@
 		20896B352D54B0F0006F9368 /* bin */ = {
 			isa = PBXGroup;
 			children = (
-				20F7CAEB2E1C508C0021B325 /* libggml.dylib */,
-				20F7CAEC2E1C508C0021B325 /* libggml-base.dylib */,
-				20F7CAED2E1C508C0021B325 /* libggml-blas.dylib */,
-				20F7CAEE2E1C508C0021B325 /* libggml-cpu.dylib */,
-				20F7CAEF2E1C508C0021B325 /* libggml-metal.dylib */,
-				20F7CAF02E1C508C0021B325 /* libggml-rpc.dylib */,
-				20F7CAF12E1C508C0021B325 /* libllama.dylib */,
-				20F7CAF22E1C508C0021B325 /* libmtmd.dylib */,
-				20F7CAF32E1C508C0021B325 /* llama-perplexity */,
-				20F7CAF42E1C508C0021B325 /* llama-server */,
+				2075FE882EBAC06100EA6131 /* libggml.dylib */,
+				2075FE892EBAC06100EA6131 /* libggml-base.dylib */,
+				2075FE8A2EBAC06100EA6131 /* libggml-blas.dylib */,
+				2075FE8B2EBAC06100EA6131 /* libggml-cpu.dylib */,
+				2075FE8C2EBAC06100EA6131 /* libggml-metal.dylib */,
+				2075FE8D2EBAC06100EA6131 /* libggml-rpc.dylib */,
+				2075FE8E2EBAC06100EA6131 /* libllama.dylib */,
+				2075FE8F2EBAC06100EA6131 /* libmtmd.dylib */,
+				2075FE902EBAC06100EA6131 /* llama-perplexity */,
+				2075FE912EBAC06100EA6131 /* llama-server */,
 			);
 			path = bin;
 			sourceTree = "<group>";
@@ -2328,16 +2328,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				20F7CB012E1C50DE0021B325 /* libggml.dylib in Resources */,
-				20F7CB022E1C50DE0021B325 /* libggml-base.dylib in Resources */,
-				20F7CB032E1C50DE0021B325 /* libggml-blas.dylib in Resources */,
-				20F7CB042E1C50DE0021B325 /* libggml-cpu.dylib in Resources */,
-				20F7CB052E1C50DE0021B325 /* libggml-metal.dylib in Resources */,
-				20F7CB062E1C50DE0021B325 /* libggml-rpc.dylib in Resources */,
-				20F7CB072E1C50DE0021B325 /* libllama.dylib in Resources */,
-				20F7CB082E1C50DE0021B325 /* libmtmd.dylib in Resources */,
-				20F7CAFD2E1C508C0021B325 /* llama-perplexity in Resources */,
-				20F7CAFE2E1C508C0021B325 /* llama-server in Resources */,
+				2075FE9C2EBAC2D600EA6131 /* libggml.dylib in Resources */,
+				2075FE9D2EBAC2D600EA6131 /* libggml-base.dylib in Resources */,
+				2075FE9E2EBAC2D600EA6131 /* libggml-blas.dylib in Resources */,
+				2075FE9F2EBAC2D600EA6131 /* libggml-cpu.dylib in Resources */,
+				2075FEA02EBAC2D600EA6131 /* libggml-metal.dylib in Resources */,
+				2075FEA12EBAC2D600EA6131 /* libggml-rpc.dylib in Resources */,
+				2075FEA22EBAC2D600EA6131 /* libllama.dylib in Resources */,
+				2075FEA32EBAC2D600EA6131 /* libmtmd.dylib in Resources */,
+				2075FE922EBAC06100EA6131 /* llama-server in Resources */,
+				2075FE932EBAC06100EA6131 /* llama-perplexity in Resources */,
 				20ADCEC42DBE1CBA00B13C98 /* mermaidCheatsheet.md in Resources */,
 				20DFF47F2DB7187C00F3F76C /* Markdown in Resources */,
 				20DFF4842DB73C9000F3F76C /* mermaid-cli in Resources */,
@@ -2860,7 +2860,7 @@
 		200549992CAFA67D00A3DCF2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = Sidekick;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Sidekick/Sidekick.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -2907,7 +2907,7 @@
 		2005499A2CAFA67D00A3DCF2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = Sidekick;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Sidekick/Sidekick.entitlements;
 				CODE_SIGN_STYLE = Automatic;

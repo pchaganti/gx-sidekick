@@ -1,5 +1,5 @@
 {
-  "originHash" : "eedb1e30b575ad4b292da4115136c4ed335d5f0eae177278f278829a48f89f22",
+  "originHash" : "755d99141ea8cbc0027709aff6f25914411484a209163ec0e745df5e968efd8d",
   "pins" : [
     {
       "identity" : "axswift",
@@ -34,7 +34,7 @@
       "location" : "https://github.com/johnbean393/Default-Models",
       "state" : {
         "branch" : "main",
-        "revision" : "8b330a75b6b0604676f77462da129d0724cc3c69"
+        "revision" : "6bcd60143cc1b661eac2f128b033d0c7e1ba8eea"
       }
     },
     {

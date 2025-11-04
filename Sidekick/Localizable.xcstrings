@@ -203,16 +203,6 @@
         }
       }
     },
-    "A reasoning model is required to use Deep Research." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "开展深度调查需要借助推理模型。"
-          }
-        }
-      }
-    },
     "Accept All Suggestions" : {
       "localizations" : {
         "zh-Hans" : {

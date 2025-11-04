@@ -123,7 +123,6 @@ struct InlineAssistantView: View {
 				],
 				modelType: .worker,
                 mode: .default,
-                useReasoning: false,
 				handleResponseUpdate: { pendingMessage, partialResponse in
 					if !didExit {
 						didExit = !self.handleResponseUpdate(

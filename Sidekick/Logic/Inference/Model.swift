@@ -349,7 +349,6 @@ public class Model: ObservableObject {
 		modelType: ModelType,
 		mode: Model.Mode,
 		similarityIndex: SimilarityIndex? = nil,
-        useReasoning: Bool = true,
 		useWebSearch: Bool = false,
         useFunctions: Bool = false,
         functions: [AnyFunctionBox]? = nil,
@@ -398,7 +397,6 @@ public class Model: ObservableObject {
                     shouldAddSources: (
                         index == lastIndex
                     ),
-                    useReasoning: useReasoning,
                     useVisionContent: hasVision,
                     useWebSearch: useWebSearch,
                     useCanvas: useCanvas,
@@ -474,7 +472,6 @@ public class Model: ObservableObject {
                     modelType: modelType,
                     canReachRemoteServer: canReachRemoteServer,
                     messagesWithSources: messagesWithSources,
-                    useReasoning: useReasoning,
                     useWebSearch: useWebSearch,
                     useFunctions: useFunctions,
                     functions: functions,
@@ -525,7 +522,6 @@ public class Model: ObservableObject {
 		modelType: ModelType,
         canReachRemoteServer: Bool,
         messagesWithSources: [Message.MessageSubset],
-        useReasoning: Bool,
         useWebSearch: Bool,
         useFunctions: Bool,
         functions: [AnyFunctionBox]? = nil,
@@ -561,7 +557,6 @@ public class Model: ObservableObject {
             canReachRemoteServer: canReachRemoteServer,
 			initialResponse: initialResponse,
 			messages: messagesWithSources,
-            useReasoning: useReasoning,
             useWebSearch: useWebSearch,
             functions: functions,
 			similarityIndex: similarityIndex,
@@ -618,7 +613,6 @@ public class Model: ObservableObject {
         canReachRemoteServer: Bool,
 		initialResponse: LlamaServer.CompleteResponse,
 		messages: [Message.MessageSubset],
-        useReasoning: Bool,
         useWebSearch: Bool,
         functions: [AnyFunctionBox]? = nil,
 		similarityIndex: SimilarityIndex?,
@@ -714,7 +708,6 @@ public class Model: ObservableObject {
                     modelType: modelType,
                     messages: messages,
                     canReachRemoteServer: canReachRemoteServer,
-                    useReasoning: useReasoning,
                     results: results
                 )
             }
@@ -741,8 +734,7 @@ Call another tool to obtain more information or execute more actions. Try breaki
             )
             let changeMessageSubset = await Message.MessageSubset(
                 usingRemoteModel: self.wasRemoteServerAccessible,
-                message: changeMessage,
-                useReasoning: useReasoning
+                message: changeMessage
             )
             messages.append(changeMessageSubset)
             // Declare variable for incremental update
@@ -832,7 +824,6 @@ Call another tool to obtain more information or execute more actions. Try breaki
         modelType: ModelType,
         messages: [Message.MessageSubset],
         canReachRemoteServer: Bool,
-        useReasoning: Bool,
         results: [FunctionCallResult]
     ) async -> Bool {
         // Formulate prompt
@@ -854,8 +845,7 @@ Respond with YES if ALL 3 criteria above have been met. Respond with YES or NO o
         )
         let messageSubset: Message.MessageSubset = await Message.MessageSubset(
             usingRemoteModel: self.wasRemoteServerAccessible,
-            message: message,
-            useReasoning: useReasoning
+            message: message
         )
         // Add to messages
         var messages: [Message.MessageSubset] = messages

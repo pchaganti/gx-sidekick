@@ -74,22 +74,6 @@ struct SearchMenuToggleButton: View {
             // If functions can be used, force on
             self.promptController.useFunctions = true
         }
-        // Check if reasoning is activated
-        if !self.promptController.useReasoning {
-            // Check if can reason
-            if !(Model.shared.selectedModelCanReason ?? false) {
-                // If not, show error and return
-                Dialogs.showAlert(
-                    title: String(localized: "Not Available"),
-                    message: String(localized: "A reasoning model is required to use Deep Research.")
-                )
-                self.resetSearchState()
-                return
-            } else {
-                // Force reasoning
-                self.promptController.useReasoning = true
-            }
-        }
     }
     
     /// Function to reset search state

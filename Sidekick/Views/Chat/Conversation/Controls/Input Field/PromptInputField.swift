@@ -139,10 +139,6 @@ struct PromptInputField: View {
         }
         .overlay(alignment: .bottomLeading) {
             HStack {
-                UseReasoningButton(
-                    activatedFillColor: self.buttonFillColor,
-                    useReasoning: self.$promptController.useReasoning
-                )
                 SearchMenuToggleButton(
                     activatedFillColor: self.buttonFillColor,
                     useWebSearch: self.$promptController.useWebSearch,
@@ -293,7 +289,6 @@ struct PromptInputField: View {
             case .text:
                 self.startTextGeneration(
                     prompt: promptController.prompt,
-                    useReasoning: promptController.useReasoning,
                     tempResources: tempResources
                 )
             case .image:
@@ -304,7 +299,6 @@ struct PromptInputField: View {
                     // Else, fall back to text
                     self.startTextGeneration(
                         prompt: promptController.prompt,
-                        useReasoning: promptController.useReasoning,
                         tempResources: tempResources
                     )
                 }
@@ -318,14 +312,12 @@ struct PromptInputField: View {
     
     private func startTextGeneration(
         prompt: String,
-        useReasoning: Bool,
         tempResources: [TemporaryResource]
     ) {
         // Get response
         Task {
             await self.generateChatResponse(
                 prompt: prompt,
-                useReasoning: useReasoning,
                 tempResources: tempResources
             )
         }
@@ -350,7 +342,6 @@ struct PromptInputField: View {
     
     private func generateChatResponse(
         prompt: String,
-        useReasoning: Bool,
         tempResources: [TemporaryResource]
     ) async {
         // If processing, use recursion to update
@@ -361,7 +352,6 @@ struct PromptInputField: View {
                     try? await Task.sleep(for: .seconds(1))
                     await generateChatResponse(
                         prompt: prompt,
-                        useReasoning: useReasoning,
                         tempResources: tempResources
                     )
                 }
@@ -409,7 +399,6 @@ struct PromptInputField: View {
                 modelType: .regular,
                 mode: mode,
                 similarityIndex: index,
-                useReasoning: useReasoning,
                 useWebSearch: useWebSearch,
                 useFunctions: self.promptController.useFunctions,
                 useCanvas: self.conversationState.useCanvas,
@@ -487,8 +476,7 @@ A user is chatting with an assistant and they have sent the message below. Gener
         let title: String = try await model.listenThinkRespond(
             messages: messages,
             modelType: .worker,
-            mode: .default,
-            useReasoning: false
+            mode: .default
         ).text
         // Reset pending message text
         self.model.pendingMessage = nil
@@ -542,23 +530,8 @@ A user is chatting with an assistant and they have sent the message below. Gener
     }
     
     private func handleModelChange() {
-        // Get selected model
-        if let isReasoningModel: Bool = Model.shared.selectedModelCanReason {
-            // Update reasoning
-            self.promptController.useReasoning = isReasoningModel
-            // Update search
-            if !isReasoningModel && self.promptController.isUsingDeepResearch {
-                self.promptController.useWebSearch = false
-                self.promptController.selectedSearchState = .search
-            }
-        } else {
-            // Default to false
-            self.promptController.useReasoning = false
-            if self.promptController.isUsingDeepResearch {
-                self.promptController.useWebSearch = false
-                self.promptController.selectedSearchState = .search
-            }
-        }
+        // Function to be filled in
+        return
     }
     
 }
