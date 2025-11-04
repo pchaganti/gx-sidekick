@@ -39,6 +39,6 @@ public struct Command: Identifiable, Codable {
 			name: String(localized: "Simplify"),
 			prompt: String(localized: "Simplify the text below for a general audience, removing techinical jargon and hard-to-grasp ideas. Respond in the same language as the original text.")
 		)
-	].sorted(by: \.name)
+    ].sorted(by: { $0.name < $1.name })
 	
 }

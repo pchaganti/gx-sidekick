@@ -564,6 +564,42 @@ public extension String {
         self = trimmed
     }
     
+    func dropPrefixIfPresent(
+        _ prefix: String
+    ) -> String {
+        if self.hasPrefix(prefix) {
+            return String(self.dropFirst(prefix.count))
+        }
+        return self
+    }
+    
+    func dropSuffixIfPresent(
+        _ suffix: String
+    ) -> String {
+        if self.hasSuffix(suffix) {
+            return String(self.dropLast(suffix.count))
+        }
+        return self
+    }
+    
+    func trim(
+        prefix: String,
+        suffix: String
+    ) -> String {
+        var result = self
+        if result.hasPrefix(prefix) {
+            result = String(result.dropFirst(prefix.count))
+        }
+        if result.hasSuffix(suffix) {
+            result = String(result.dropLast(suffix.count))
+        }
+        return result
+    }
+    
+    func index(atDistance distance: Int) -> String.Index {
+        return index(startIndex, offsetBy: distance)
+    }
+    
 }
     
 enum DetectedLanguage {

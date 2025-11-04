@@ -36,7 +36,9 @@ public class ServerArgumentsManager: ObservableObject {
     }
     /// A `String` for all the arguments that need to be appended
     public var allArguments: [String] {
-        return self.activeArguments.map(keyPath: \.arguments).reduce([], +)
+        return self.activeArguments.map { argument in
+            return argument.arguments
+        }.reduce([], +)
     }
     
     /// Function to save serverArguments to disk

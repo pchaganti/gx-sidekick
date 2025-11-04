@@ -159,7 +159,7 @@ Cheatsheet:
                     ).replacingOccurrences(
                         of: "_",
                         with: " "
-                    ).trimmingWhitespaceAndNewlines()
+                    ).trimmingCharacters(in: .whitespacesAndNewlines)
                     // Set the mermaid code
                     self.mermaidCode = mermaidCode
                     try await self.render(

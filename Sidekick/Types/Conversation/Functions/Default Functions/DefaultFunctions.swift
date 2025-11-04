@@ -23,10 +23,9 @@ public class DefaultFunctions {
     
     /// An sorted list of all functions available
     static var sortedFunctions: [AnyFunctionBox] {
-        return DefaultFunctions.allFunctions.sorted(
-            by: \.params.count,
-            order: .reverse
-        )
+        return DefaultFunctions.allFunctions.sorted(by: {
+            $0.params.count > $1.params.count
+        })
     }
     
     /// An list of functions available in chat
@@ -219,7 +218,7 @@ E --> F{"Is arr[j] < arr[min_index]?"}
             ).replacingOccurrences(
                 of: "_",
                 with: " "
-            ).trimmingWhitespaceAndNewlines()
+            ).trimmingCharacters(in: .whitespacesAndNewlines)
             MermaidRenderer.saveMermaidCode(code: code)
             // Init renderer
             let renderer = MermaidRenderer()

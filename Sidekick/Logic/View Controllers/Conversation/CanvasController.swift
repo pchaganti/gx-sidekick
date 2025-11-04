@@ -88,7 +88,7 @@ Extract the content that the assistant generated based on the instruction. DO NO
 		}
 		// Formulate snapshot
 		let snapshot: Snapshot = Snapshot(
-			text: response.text.reasoningRemoved.trimmingWhitespaceAndNewlines()
+			text: response.text.reasoningRemoved.trimmingCharacters(in: .whitespacesAndNewlines)
 		)
 		// Update message and conversation
 		assistantMessage.snapshot = snapshot

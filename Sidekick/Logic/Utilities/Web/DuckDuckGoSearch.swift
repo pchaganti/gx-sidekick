@@ -111,17 +111,10 @@ public class DuckDuckGoSearch {
         let maxCount = min(max(resultCount, 1), 5)
         var urlString = "https://html.duckduckgo.com/html/?q=\(query)"
         // Add date parameter to URL if needed
-        let dateFormatter: DateFormatter = DateFormatter(
-            dateFormat: "yyyy-MM-dd"
-        )
         if let startDate,
            let endDate {
-            let startDateString = dateFormatter.string(
-                from: startDate
-            )
-            let endDateString = dateFormatter.string(
-                from: endDate
-            )
+            let startDateString = startDate.toString(dateFormat: "yyyy-MM-dd")
+            let endDateString = endDate.toString(dateFormat: "yyyy-MM-dd")
             urlString += "&df=\(startDateString)..\(endDateString)"
         }
         // Formulate URL

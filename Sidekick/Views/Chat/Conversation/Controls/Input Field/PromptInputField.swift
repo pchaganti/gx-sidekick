@@ -495,7 +495,7 @@ A user is chatting with an assistant and they have sent the message below. Gener
         // Return
         return title
             .reasoningRemoved
-            .trimmingWhitespaceAndNewlines()
+            .trimmingCharacters(in: .whitespacesAndNewlines)
             .capitalizeEachWord
             .dropPrefixIfPresent("\"")
             .dropSuffixIfPresent("\"")

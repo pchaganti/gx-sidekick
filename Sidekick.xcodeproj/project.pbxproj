@@ -83,6 +83,11 @@
 		2031B9952CEAE66400627D53 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 2031B9942CEAE66400627D53 /* KeyboardShortcuts */; };
 		2031B9982CEAE78F00627D53 /* ShortcutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2031B9972CEAE78F00627D53 /* ShortcutController.swift */; };
 		2031B99A2CEAE7A900627D53 /* Extension+KeyboardShortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2031B9992CEAE7A900627D53 /* Extension+KeyboardShortcut.swift */; };
+		203224302EBAA8280003E1A8 /* ExtractKit-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = 2032242F2EBAA8280003E1A8 /* ExtractKit-macOS */; };
+		203224332EBAA9EB0003E1A8 /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = 203224322EBAA9EB0003E1A8 /* SwiftUIX */; };
+		203224352EBAAC0A0003E1A8 /* Extension+Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203224342EBAAC0A0003E1A8 /* Extension+Sequence.swift */; };
+		203224372EBAAE130003E1A8 /* Extension+Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203224362EBAAE130003E1A8 /* Extension+Optional.swift */; };
+		203224392EBAB4400003E1A8 /* Sidekick.icon in Resources */ = {isa = PBXBuildFile; fileRef = 203224382EBAB4400003E1A8 /* Sidekick.icon */; };
 		203487642D66FF6700A88DA4 /* SidebarButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203487632D66FF6700A88DA4 /* SidebarButtonView.swift */; };
 		2034876B2D67202D00A88DA4 /* AssistantInstructionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2034876A2D67202D00A88DA4 /* AssistantInstructionView.swift */; };
 		2034876D2D67236000A88DA4 /* DiagrammerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2034876C2D67236000A88DA4 /* DiagrammerView.swift */; };
@@ -179,7 +184,6 @@
 		207A9F622CB94B0000E727DE /* WindowCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207A9F612CB94B0000E727DE /* WindowCommands.swift */; };
 		207E5EEF2D6F663B00A8F6FA /* SlideStudioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207E5EEE2D6F663B00A8F6FA /* SlideStudioViewController.swift */; };
 		207E5EF22D6FDEEF00A8F6FA /* ImageSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207E5EF12D6FDEEF00A8F6FA /* ImageSearch.swift */; };
-		2080078C2E33FCD100C28018 /* ExtractKit-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = 2080078B2E33FCD100C28018 /* ExtractKit-macOS */; };
 		208388DA2CBF4DF500C2A9F8 /* Tavily.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208388D92CBF4DF500C2A9F8 /* Tavily.swift */; };
 		208388DD2CBF4E8A00C2A9F8 /* SecureDefaults in Frameworks */ = {isa = PBXBuildFile; productRef = 208388DC2CBF4E8A00C2A9F8 /* SecureDefaults */; };
 		208388E22CBF51F900C2A9F8 /* RetrievalSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208388E12CBF51F900C2A9F8 /* RetrievalSettingsView.swift */; };
@@ -509,6 +513,9 @@
 		2031B9912CEAE3CC00627D53 /* Extension+NSWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+NSWindow.swift"; sourceTree = "<group>"; };
 		2031B9972CEAE78F00627D53 /* ShortcutController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutController.swift; sourceTree = "<group>"; };
 		2031B9992CEAE7A900627D53 /* Extension+KeyboardShortcut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+KeyboardShortcut.swift"; sourceTree = "<group>"; };
+		203224342EBAAC0A0003E1A8 /* Extension+Sequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Sequence.swift"; sourceTree = "<group>"; };
+		203224362EBAAE130003E1A8 /* Extension+Optional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Optional.swift"; sourceTree = "<group>"; };
+		203224382EBAB4400003E1A8 /* Sidekick.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = Sidekick.icon; sourceTree = "<group>"; };
 		203487632D66FF6700A88DA4 /* SidebarButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarButtonView.swift; sourceTree = "<group>"; };
 		2034876A2D67202D00A88DA4 /* AssistantInstructionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssistantInstructionView.swift; sourceTree = "<group>"; };
 		2034876C2D67236000A88DA4 /* DiagrammerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagrammerView.swift; sourceTree = "<group>"; };
@@ -825,6 +832,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				203224332EBAA9EB0003E1A8 /* SwiftUIX in Frameworks */,
 				20F7CAF62E1C508C0021B325 /* libggml-base.dylib in Frameworks */,
 				20F7CAF72E1C508C0021B325 /* libggml-blas.dylib in Frameworks */,
 				20F7CAFB2E1C508C0021B325 /* libggml-cpu.dylib in Frameworks */,
@@ -844,7 +852,7 @@
 				20A40C852D718D4300A9D9A9 /* LanguageSupport in Frameworks */,
 				2037863A2DA76EBB003975CC /* SimilaritySearchKitDistilbert in Frameworks */,
 				205E3F282D8723AB00128D67 /* Highlightr in Frameworks */,
-				2080078C2E33FCD100C28018 /* ExtractKit-macOS in Frameworks */,
+				203224302EBAA8280003E1A8 /* ExtractKit-macOS in Frameworks */,
 				20B53D072D5B03B900D1AE79 /* Sparkle in Frameworks */,
 				208388DD2CBF4E8A00C2A9F8 /* SecureDefaults in Frameworks */,
 				2064353A2D905D2300020CC0 /* SimilaritySearchKitDistilbert in Frameworks */,
@@ -1635,6 +1643,7 @@
 				206934912D5CCDD1006619FD /* Resources */,
 				20B97CAD2CAFE86C009A0A5D /* Preview Content */,
 				20B97CAE2CAFE86C009A0A5D /* Assets.xcassets */,
+				203224382EBAB4400003E1A8 /* Sidekick.icon */,
 				20B97CB02CAFE86C009A0A5D /* Sidekick.entitlements */,
 				2069348E2D5CC7FE006619FD /* Credits.html */,
 			);
@@ -1701,8 +1710,10 @@
 				209370A22D6C05B900E1AF73 /* Extension+Double.swift */,
 				20B4D6B02CC3D72700817E15 /* Extension+IndexItem.swift */,
 				2031B9992CEAE7A900627D53 /* Extension+KeyboardShortcut.swift */,
+				203224362EBAAE130003E1A8 /* Extension+Optional.swift */,
 				2099BD9A2CB7B8C800E02732 /* Extension+RawRepresentable.swift */,
 				2075220A2D7FDF6C00A1CA60 /* Extension+SecureDefaults.swift */,
+				203224342EBAAC0A0003E1A8 /* Extension+Sequence.swift */,
 				20FB0D882CBA8327006D062A /* Extension+SimilarityIndex.swift */,
 				20B97CE62CB0066A009A0A5D /* Extension+String.swift */,
 				208388EC2CBF825400C2A9F8 /* Extension+Tavily.swift */,
@@ -2175,7 +2186,8 @@
 				203786392DA76EBB003975CC /* SimilaritySearchKitDistilbert */,
 				200B236C2DB15AA800127D48 /* Shimmer */,
 				203E6B182DFAB8AD00A3F6D0 /* WebViewKit */,
-				2080078B2E33FCD100C28018 /* ExtractKit-macOS */,
+				2032242F2EBAA8280003E1A8 /* ExtractKit-macOS */,
+				203224322EBAA9EB0003E1A8 /* SwiftUIX */,
 			);
 			productName = Sidekick;
 			productReference = 200549732CAFA67B00A3DCF2 /* Sidekick.app */;
@@ -2295,7 +2307,8 @@
 				203786362DA76EBB003975CC /* XCRemoteSwiftPackageReference "similarity-search-kit" */,
 				200B236B2DB15AA800127D48 /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */,
 				203E6B172DFAB8AD00A3F6D0 /* XCRemoteSwiftPackageReference "WebViewKit" */,
-				2080078A2E33FCD100C28018 /* XCRemoteSwiftPackageReference "ExtractKit-macOS" */,
+				2032242E2EBAA8280003E1A8 /* XCRemoteSwiftPackageReference "ExtractKit-macOS" */,
+				203224312EBAA9EB0003E1A8 /* XCRemoteSwiftPackageReference "SwiftUIX" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 200549742CAFA67B00A3DCF2 /* Products */;
@@ -2328,6 +2341,7 @@
 				20ADCEC42DBE1CBA00B13C98 /* mermaidCheatsheet.md in Resources */,
 				20DFF47F2DB7187C00F3F76C /* Markdown in Resources */,
 				20DFF4842DB73C9000F3F76C /* mermaid-cli in Resources */,
+				203224392EBAB4400003E1A8 /* Sidekick.icon in Resources */,
 				206934902D5CC87E006619FD /* Credits.html in Resources */,
 				20692A092DE91FC700152345 /* conversationExportTemplate.html in Resources */,
 				20B97CB32CAFE86C009A0A5D /* Preview Assets.xcassets in Resources */,
@@ -2379,6 +2393,7 @@
 				201BB99A2D8AFDE000890EE6 /* Snapshot.swift in Sources */,
 				20573F1F2CB5274E004C19FE /* MessagesView.swift in Sources */,
 				2000EEE62DCB0372006F9A95 /* MermaidRenderer.swift in Sources */,
+				203224372EBAAE130003E1A8 /* Extension+Optional.swift in Sources */,
 				20FDE2A02DAE50E7000A16F8 /* Provider.swift in Sources */,
 				20457D272D924F0C00954892 /* CompletionsSetupView.swift in Sources */,
 				20B97CE72CB0066A009A0A5D /* Extension+String.swift in Sources */,
@@ -2623,6 +2638,7 @@
 				2000EF3F2DCC3A72006F9A95 /* Agent.swift in Sources */,
 				2000EDFA2DC9B971006F9A95 /* ArgumentPickerView.swift in Sources */,
 				201A1A8E2CDB7C1C001E9BA9 /* MarkdownDataView.swift in Sources */,
+				203224352EBAAC0A0003E1A8 /* Extension+Sequence.swift in Sources */,
 				202E93662DB22D3000AB361E /* InputFunctions.swift in Sources */,
 				20A8B65B2CB2709100B756FD /* Resources.swift in Sources */,
 				2000EF3A2DCB7950006F9A95 /* SearchMenuToggleButton.swift in Sources */,
@@ -3121,10 +3137,26 @@
 		};
 		2031B9932CEAE66400627D53 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/sindresorhus/KeyboardShortcuts/";
+			repositoryURL = "https://github.com/sindresorhus/KeyboardShortcuts";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 2.2.4;
+			};
+		};
+		2032242E2EBAA8280003E1A8 /* XCRemoteSwiftPackageReference "ExtractKit-macOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/johnbean393/ExtractKit-macOS";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		203224312EBAA9EB0003E1A8 /* XCRemoteSwiftPackageReference "SwiftUIX" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftUIX/SwiftUIX";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.4;
 			};
 		};
 		203786362DA76EBB003975CC /* XCRemoteSwiftPackageReference "similarity-search-kit" */ = {
@@ -3173,14 +3205,6 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.5.3;
-			};
-		};
-		2080078A2E33FCD100C28018 /* XCRemoteSwiftPackageReference "ExtractKit-macOS" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/johnbean393/ExtractKit-macOS";
-			requirement = {
-				kind = revision;
-				revision = 1dec0f9f1097f0f0a690d63c051e3df3881c47a6;
 			};
 		};
 		208388DB2CBF4E8A00C2A9F8 /* XCRemoteSwiftPackageReference "SecureDefaults" */ = {
@@ -3270,6 +3294,16 @@
 			package = 2031B9932CEAE66400627D53 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
 			productName = KeyboardShortcuts;
 		};
+		2032242F2EBAA8280003E1A8 /* ExtractKit-macOS */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2032242E2EBAA8280003E1A8 /* XCRemoteSwiftPackageReference "ExtractKit-macOS" */;
+			productName = "ExtractKit-macOS";
+		};
+		203224322EBAA9EB0003E1A8 /* SwiftUIX */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 203224312EBAA9EB0003E1A8 /* XCRemoteSwiftPackageReference "SwiftUIX" */;
+			productName = SwiftUIX;
+		};
 		203786372DA76EBB003975CC /* SimilaritySearchKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 203786362DA76EBB003975CC /* XCRemoteSwiftPackageReference "similarity-search-kit" */;
@@ -3317,11 +3351,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 207A9F512CB82D9600E727DE /* XCRemoteSwiftPackageReference "SymbolPicker" */;
 			productName = SymbolPicker;
-		};
-		2080078B2E33FCD100C28018 /* ExtractKit-macOS */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 2080078A2E33FCD100C28018 /* XCRemoteSwiftPackageReference "ExtractKit-macOS" */;
-			productName = "ExtractKit-macOS";
 		};
 		208388DC2CBF4E8A00C2A9F8 /* SecureDefaults */ = {
 			isa = XCSwiftPackageProductDependency;

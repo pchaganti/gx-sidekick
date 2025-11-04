@@ -711,7 +711,7 @@ Respond with the array of JSON objects ONLY.
                 ).replacingOccurrences(
                     of: "_",
                     with: " "
-                ).trimmingWhitespaceAndNewlines()
+                ).trimmingCharacters(in: .whitespacesAndNewlines)
                 // Set the mermaid code
                 code = mermaidCode
                 try await self.render(

@@ -541,7 +541,7 @@ public actor LlamaServer {
                                             return false
                                         }
                                         return pendingMessage
-                                            .trimmingWhitespaceAndNewlines()
+                                            .trimmingCharacters(in: .whitespacesAndNewlines)
                                             .contains(
                                                 endReasoningToken
                                             )

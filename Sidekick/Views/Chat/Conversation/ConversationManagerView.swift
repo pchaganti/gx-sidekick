@@ -80,6 +80,7 @@ struct ConversationManagerView: View {
 					.bold()
 					.foregroundStyle(toolbarTextColor)
 					.contentTransition(.numericText())
+                    .padding(.horizontal, 7)
 			}
 			ToolbarItemGroup(
 				placement: .principal

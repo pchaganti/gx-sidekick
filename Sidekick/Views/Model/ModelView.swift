@@ -13,7 +13,7 @@ struct ModelView: View {
 	var model: HuggingFaceModel
 	
 	var paramsDescription: String {
-        let count: Float = _math.round(model.params * 10) / 10
+        let count: Float = (model.params * 10).rounded() / 10
 		if Float(Int(count)) == count {
 			return "\(Int(count))"
 		}

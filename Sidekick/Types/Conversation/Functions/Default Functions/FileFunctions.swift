@@ -32,9 +32,7 @@ public class FileFunctions {
         ],
         run: { params in
             // Check URL
-            guard let url: URL = URL(filePath: params.posixPath) else {
-                throw ListDirectoryError.invalidPath
-            }
+            let url: URL = URL(filePath: params.posixPath)
             if !url.fileExists {
                 throw ListDirectoryError.pathNotFound
             }
@@ -83,9 +81,7 @@ public class FileFunctions {
         ],
         run: { params in
             // Check URL
-            guard let url: URL = URL(filePath: params.posixPath) else {
-                throw ExtractFileTextError.invalidPath
-            }
+            let url: URL = URL(filePath: params.posixPath)
             if !url.fileExists {
                 throw ExtractFileTextError.pathNotFound
             }
@@ -140,9 +136,7 @@ public class FileFunctions {
         ],
         run: { params in
             // Check URL
-            guard let url: URL = URL(filePath: params.posixPath) else {
-                throw WriteToTxtFileError.invalidPath
-            }
+            let url: URL = URL(filePath: params.posixPath)
             // Write text
             try params.text.write(to: url, atomically: true, encoding: .utf8)
             return "The text was written successfully to the file at \(params.posixPath)."
@@ -177,9 +171,7 @@ public class FileFunctions {
         ],
         run: { params in
             // Check URL
-            guard let url: URL = URL(filePath: params.posixPath) else {
-                throw ExtractFileTextError.invalidPath
-            }
+            let url: URL = URL(filePath: params.posixPath)
             if !url.fileExists {
                 throw ExtractFileTextError.pathNotFound
             }

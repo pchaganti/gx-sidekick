@@ -359,8 +359,7 @@ Respond with the Markdown ONLY. Do not include comments.
 			).replacingOccurrences(
 				of: "# ",
 				with: "## "
-			)
-			.trimmingWhitespaceAndNewlines()
+			).trimmingCharacters(in: .whitespacesAndNewlines)
 		} catch {
 			throw GenerationError.generatingContentFailed
 		}

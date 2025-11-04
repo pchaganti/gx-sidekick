@@ -38,16 +38,16 @@ struct DetectorEvaluationResultView: View {
     }
 	
 	var text: some View {
-		Group {
-			self.chunks.map { chunk in
-				Text(chunk.text)
-					.foregroundStyle(
-						chunk.state.highlightColor
-					)
-			}.reduce(+)
-		}
-		.font(.title3)
-		.textSelection(.enabled)
+        Group {
+            ForEach(chunks) { chunk in
+                Text(chunk.text)
+                    .foregroundStyle(
+                        chunk.state.highlightColor
+                    )
+            }
+        }
+        .font(.title3)
+        .textSelection(.enabled)
 	}
 	
 	var editButton: some View {

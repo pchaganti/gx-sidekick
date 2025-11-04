@@ -345,7 +345,7 @@ DO NOT reference sources outside of those provided below. If you did not referen
 				delimiter,
 				options: .backwards
 			)
-				.trimmingWhitespaceAndNewlines()
+                .trimmingCharacters(in: .whitespacesAndNewlines)
 				.dropSuffixIfPresent(
 					"Sources"
 				).dropSuffixIfPresent(
@@ -371,14 +371,16 @@ DO NOT reference sources outside of those provided below. If you did not referen
 				).dropSuffixIfPresent(
 					"List of Filepaths and URLs:"
 				)
-				.trimmingWhitespaceAndNewlines()
+                .trimmingCharacters(in: .whitespacesAndNewlines)
 			let jsonText: String = text.dropPrecedingSubstring(
 				delimiter,
 				options: .backwards,
 				includeCharacter: true
 			)
 			// Decode references if needed
-			if includeReferences, let data: Data = try? jsonText.data() {
+            if includeReferences, let data: Data = jsonText.data(
+                using: .utf8
+            ) {
 				// Decode data
 				if let references = ReferencedURL.fromData(
 					data: data

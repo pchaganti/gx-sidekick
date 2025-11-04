@@ -64,10 +64,10 @@ public class ConversationCommands {
 					.keyboardShortcut(
 						KeyEquivalent(
 							Character(
-								stringValue: String(
+                                String(
 									(index % 10)
 								)
-							)!
+							)
 						),
 						modifiers: .command
 					)

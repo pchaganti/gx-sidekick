@@ -25,7 +25,7 @@ public extension URL {
 		// Enumerate directory
 		var files = [URL]()
 		if let enumerator = FileManager.default.enumerator(
-			at: url,
+			at: self,
 			includingPropertiesForKeys: [],
 			options: [
 				.skipsHiddenFiles,
@@ -57,7 +57,7 @@ public extension URL {
         // Enumerate directory
         var files = [URL]()
         if let enumerator = FileManager.default.enumerator(
-            at: url,
+            at: self,
             includingPropertiesForKeys: [],
             options: options
         ) {

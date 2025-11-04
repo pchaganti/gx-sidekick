@@ -53,5 +53,12 @@ public extension Date {
             to: self
         )!
     }
+    
+    /// Function to convert date to a `String` in a given format
+    func toString(dateFormat: String) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = dateFormat
+        return formatter.string(from: self)
+    }
 	
 }

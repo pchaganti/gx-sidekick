@@ -50,7 +50,7 @@
           "name" : "bubble.left.and.text.bubble.right.fill@10x",
           "opacity-specializations" : [
             {
-              "value" : 0.9
+              "value" : 0.85
             },
             {
               "appearance" : "dark",

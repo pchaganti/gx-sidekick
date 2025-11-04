@@ -103,9 +103,7 @@ public extension ReferencedURL {
 		) {
 			// Decode JSON
 			let uniqueReferences: [ReferencedURL] = Array(Set(references))
-			return uniqueReferences.sorted(
-				by: \.displayName
-			)
+            return uniqueReferences.sorted(by: { $0.displayName < $1.displayName })
 		} else if let referencesString = try? decoder.decode(
 			[String].self,
 			from: data
@@ -118,9 +116,7 @@ public extension ReferencedURL {
 					return nil
 				}
 			}.compactMap({ $0 })
-			return uniqueReferences.sorted(
-				by: \.displayName
-			)
+			return uniqueReferences.sorted(by: { $0.displayName < $1.displayName })
 		}
 		// If failed to decode, return nil
 		return nil

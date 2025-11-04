@@ -57,13 +57,19 @@ struct DetectorEntitySentencesView: View {
 				.font(.headline)
 			GroupBox {
 				ForEach(
-					self.chunks
+					self.chunks,
+                    id: \.id
 				) { chunk in
 					HStack {
 						RoundedRectangle(cornerRadius: 2.5)
 							.fill(self.color.opacity(0.5))
 							.frame(width: 5)
-						Text(chunk.text.trimmingWhitespaceAndNewlines())
+                        Text(
+                            chunk.text
+                                .trimmingCharacters(
+                                    in: .whitespacesAndNewlines
+                                )
+                        )
 							.font(.subheadline)
 						Spacer()
 					}
