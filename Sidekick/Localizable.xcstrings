@@ -1454,6 +1454,16 @@
         }
       }
     },
+    "Disable Remote" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "停用远端模型"
+          }
+        }
+      }
+    },
     "Disable Remote Model" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1733,6 +1743,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "邮件（只支持“邮件.app”）"
+          }
+        }
+      }
+    },
+    "Enable Remote" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启用远端模型"
           }
         }
       }
@@ -3180,6 +3200,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "请选择模型"
+          }
+        }
+      }
+    },
+    "No models found" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无可用模型"
           }
         }
       }
@@ -4992,6 +5022,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "翻译"
+          }
+        }
+      }
+    },
+    "Try a different search term" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请编辑搜索关键词"
           }
         }
       }

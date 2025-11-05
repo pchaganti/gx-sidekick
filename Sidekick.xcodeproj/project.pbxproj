@@ -174,6 +174,7 @@
 		206AB9632DB0889F00385510 /* CalendarFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206AB9622DB0889F00385510 /* CalendarFunctions.swift */; };
 		206AB9652DB096C100385510 /* Extension+EKEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206AB9642DB096C100385510 /* Extension+EKEvent.swift */; };
 		206AB9672DB09BB800385510 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206AB9662DB09BB800385510 /* Location.swift */; };
+		206E95452EBC0BDC008C49B4 /* ModelSelectorDropdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206E95442EBC0BDC008C49B4 /* ModelSelectorDropdown.swift */; };
 		206FBB212D54B40700A045FF /* MessageReasoningProcessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206FBB202D54B40700A045FF /* MessageReasoningProcessView.swift */; };
 		2075220B2D7FDF6C00A1CA60 /* Extension+SecureDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2075220A2D7FDF6C00A1CA60 /* Extension+SecureDefaults.swift */; };
 		2075FE922EBAC06100EA6131 /* llama-server in Resources */ = {isa = PBXBuildFile; fileRef = 2075FE912EBAC06100EA6131 /* llama-server */; };
@@ -593,6 +594,7 @@
 		206AB9622DB0889F00385510 /* CalendarFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarFunctions.swift; sourceTree = "<group>"; };
 		206AB9642DB096C100385510 /* Extension+EKEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+EKEvent.swift"; sourceTree = "<group>"; };
 		206AB9662DB09BB800385510 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		206E95442EBC0BDC008C49B4 /* ModelSelectorDropdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelSelectorDropdown.swift; sourceTree = "<group>"; };
 		206FBB202D54B40700A045FF /* MessageReasoningProcessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageReasoningProcessView.swift; sourceTree = "<group>"; };
 		2075220A2D7FDF6C00A1CA60 /* Extension+SecureDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+SecureDefaults.swift"; sourceTree = "<group>"; };
 		2075FE882EBAC06100EA6131 /* libggml.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libggml.dylib; sourceTree = "<group>"; };
@@ -1261,6 +1263,7 @@
 				2047357F2D642BE5000740F9 /* ModelExplorerView.swift */,
 				20BF49D02D64A89300C329F8 /* ModelView.swift */,
 				20BF4A082D64C6ED00C329F8 /* SpecialtyView.swift */,
+				206E95442EBC0BDC008C49B4 /* ModelSelectorDropdown.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2392,6 +2395,7 @@
 				20B4D6B12CC3D72700817E15 /* Extension+IndexItem.swift in Sources */,
 				201BB99A2D8AFDE000890EE6 /* Snapshot.swift in Sources */,
 				20573F1F2CB5274E004C19FE /* MessagesView.swift in Sources */,
+				206E95452EBC0BDC008C49B4 /* ModelSelectorDropdown.swift in Sources */,
 				2000EEE62DCB0372006F9A95 /* MermaidRenderer.swift in Sources */,
 				203224372EBAAE130003E1A8 /* Extension+Optional.swift in Sources */,
 				20FDE2A02DAE50E7000A16F8 /* Provider.swift in Sources */,

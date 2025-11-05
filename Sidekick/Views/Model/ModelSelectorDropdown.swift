@@ -1,0 +1,491 @@
+//
+//  ModelSelectorDropdown.swift
+//  Sidekick
+//
+//  Created by John Bean on 11/5/25.
+//
+
+import SwiftUI
+
+struct ModelSelectorDropdown: View {
+    
+    @Environment(\.colorScheme) private var colorScheme
+    
+    @EnvironmentObject private var expertManager: ExpertManager
+    @EnvironmentObject private var conversationState: ConversationState
+    
+    @AppStorage("endpoint") private var serverEndpoint: String = InferenceSettings.endpoint
+    @Binding var serverModelName: String
+    @AppStorage("serverModelHasVision") private var serverModelHasVision: Bool = InferenceSettings.serverModelHasVision
+    
+    @State private var remoteModelNames: [String] = []
+    @State private var customModelNames: [String] = InferenceSettings.customModelNames
+    @State private var isManagingCustomModel: Bool = false
+    @State private var showingDropdown: Bool = false
+    @State private var searchText: String = ""
+    @State private var localModelsListId: UUID = UUID()
+    
+    @StateObject private var modelManager: ModelManager = .shared
+    @EnvironmentObject private var model: Model
+    
+    var selectedExpert: Expert? {
+        guard let selectedExpertId = conversationState.selectedExpertId else {
+            return nil
+        }
+        return expertManager.getExpert(id: selectedExpertId)
+    }
+    
+    var toolbarTextColor: Color {
+        if #available(macOS 26, *) {
+            return colorScheme == .dark ? .white : .black
+        } else {
+            guard let luminance = selectedExpert?.color.luminance else {
+                return .primary
+            }
+            // For light backgrounds (luminance > 0.5), use dark text
+            // For dark backgrounds (luminance < 0.5), use light text
+            // But also consider the color scheme since buttons are trans-white in light mode
+            // and trans-black in dark mode
+            if luminance > 0.5 {
+                // Light expert background
+                return colorScheme == .dark ? .white : .toolbarText
+            } else {
+                // Dark expert background
+                return .white
+            }
+        }
+    }
+    
+    // Get the current model name for display
+    var currentModelName: String {
+        if let selectedModelName = model.selectedModelName {
+            return formatModelName(selectedModelName)
+        } else if InferenceSettings.useServer {
+            return serverModelName.isEmpty ? "No Model Selected" : formatModelName(serverModelName)
+        } else {
+            return "No Model Selected"
+        }
+    }
+    
+    // Format model name for toolbar display
+    private func formatModelName(_ name: String) -> String {
+        var formattedName = name
+        var provider: String? = nil
+        
+        // Extract provider prefix (e.g., "openai/", "anthropic/", "qwen/")
+        if let slashIndex = formattedName.firstIndex(of: "/") {
+            provider = String(formattedName[..<slashIndex])
+            formattedName = String(formattedName[formattedName.index(after: slashIndex)...])
+        }
+        
+        // Extract variant (text after colon)
+        var variant: String? = nil
+        if let colonIndex = formattedName.firstIndex(of: ":") {
+            variant = String(formattedName[formattedName.index(after: colonIndex)...])
+            formattedName = String(formattedName[..<colonIndex])
+        }
+        
+        // Replace common separators with spaces first
+        let result = formattedName
+            .replacingOccurrences(of: "-", with: " ")
+            .replacingOccurrences(of: "_", with: " ")
+        
+        // Now add spaces for camelCase only (uppercase following lowercase)
+        var spacedResult = ""
+        for (index, char) in result.enumerated() {
+            // Add space before uppercase letter that follows a lowercase letter
+            if char.isUppercase && index > 0 {
+                let prevChar = result[result.index(result.startIndex, offsetBy: index - 1)]
+                if prevChar.isLowercase {
+                    spacedResult += " "
+                }
+            }
+            spacedResult.append(char)
+        }
+        
+        // Clean up multiple spaces
+        spacedResult = spacedResult.components(separatedBy: .whitespaces)
+            .filter { !$0.isEmpty }
+            .joined(separator: " ")
+        
+        // Format provider name (capitalize first letter)
+        var finalResult = ""
+        if let provider = provider {
+            let capitalizedProvider = (provider.prefix(1).uppercased() + provider.dropFirst().lowercased())
+                .replacingOccurrences(of: "Openai", with: "OpenAI")
+                .replacingOccurrences(of: "Deepseek", with: "DeepSeek")
+                .replacingOccurrences(of: "X-ai", with: "xAI")
+                .replacingOccurrences(of: "Minimax", with: "MiniMax")
+                .replacingOccurrences(of: "Z.ai", with: "Z.AI")
+            finalResult = "\(capitalizedProvider): "
+        }
+        
+        // Add the model name (lowercase for readability)
+        finalResult += spacedResult.lowercased()
+        
+        // Add variant if present (without parentheses)
+        if let variant = variant {
+            finalResult += " \(variant)"
+        }
+        
+        return finalResult
+    }
+    
+    // Fuzzy search matching - more strict version
+    private func fuzzyMatch(_ text: String, query: String) -> Bool {
+        if query.isEmpty {
+            return true
+        }
+        
+        // Normalize both strings: lowercase and remove special characters
+        let normalizedText = text.lowercased()
+            .replacingOccurrences(of: "-", with: " ")
+            .replacingOccurrences(of: "_", with: " ")
+            .replacingOccurrences(of: "/", with: " ")
+            .replacingOccurrences(of: ":", with: " ")
+        
+        let normalizedQuery = query.lowercased()
+            .replacingOccurrences(of: "-", with: " ")
+            .replacingOccurrences(of: "_", with: " ")
+        
+        // Split into tokens
+        let textTokens = normalizedText.components(separatedBy: .whitespaces)
+            .filter { !$0.isEmpty }
+        let queryTokens = normalizedQuery.components(separatedBy: .whitespaces)
+            .filter { !$0.isEmpty }
+        
+        // Check if all query tokens are found in text tokens with stricter matching
+        for queryToken in queryTokens {
+            let found = textTokens.contains { textToken in
+                // Match if:
+                // 1. Text token starts with query token (prefix match)
+                // 2. Query token is at least 3 chars and text token contains it
+                // 3. Exact match
+                if textToken.hasPrefix(queryToken) {
+                    return true
+                }
+                if queryToken.count >= 3 && textToken.contains(queryToken) {
+                    return true
+                }
+                // Also check if query token starts with text token (for partial typing)
+                if queryToken.count >= 3 && queryToken.hasPrefix(textToken) {
+                    return true
+                }
+                return false
+            }
+            if !found {
+                return false
+            }
+        }
+        
+        return true
+    }
+    
+    // Filter models based on fuzzy search
+    var filteredLocalModels: [ModelManager.ModelFile] {
+        if searchText.isEmpty {
+            return modelManager.models
+        }
+        return modelManager.models.filter { model in
+            fuzzyMatch(model.name, query: searchText)
+        }
+    }
+    
+    var filteredRemoteModels: [String] {
+        let allRemoteModels = (remoteModelNames + customModelNames).sorted()
+        if searchText.isEmpty {
+            return allRemoteModels
+        }
+        return allRemoteModels.filter { modelName in
+            fuzzyMatch(modelName, query: searchText)
+        }
+    }
+    
+    var body: some View {
+        Button {
+            showingDropdown.toggle()
+        } label: {
+            HStack(spacing: 4) {
+                Text(currentModelName)
+                    .font(.body)
+                    .fontWeight(.medium)
+                    .lineLimit(1)
+                Image(systemName: "chevron.down")
+                    .font(.caption)
+                    .fontWeight(.medium)
+            }
+            .foregroundStyle(toolbarTextColor)
+            .padding(.horizontal, 12)
+        }
+        .buttonStyle(.plain)
+        .popover(isPresented: $showingDropdown) {
+            dropdownContent
+                .frame(width: 320, height: 480)
+                .onAppear {
+                    // Reset search when opening
+                    searchText = ""
+                }
+        }
+        .sheet(
+            isPresented: self.$isManagingCustomModel
+        ) {
+            ModelNameMenu.CustomModelsEditor(
+                customModelNames: self.$customModelNames,
+                isPresented: self.$isManagingCustomModel
+            )
+            .frame(minWidth: 400)
+        }
+        .task {
+            await self.refreshModelNames()
+        }
+        .onChange(of: serverEndpoint) {
+            Task { @MainActor in
+                await self.refreshModelNames()
+            }
+        }
+        .onReceive(
+            NotificationCenter.default.publisher(
+                for: Notifications.changedInferenceConfig.name
+            )
+        ) { output in
+            // Refresh selection
+            self.localModelsListId = UUID()
+        }
+        .onChange(
+            of: self.serverModelName
+        ) {
+            // Turn has vision on if model is in list and is multimodal
+            let serverModelHasVision: Bool = KnownModel.popularModels.contains { model in
+                let nameMatches: Bool = self.serverModelName.contains(model.primaryName)
+                return nameMatches && model.isVision
+            }
+            // If no change, exit
+            if serverModelHasVision == self.serverModelHasVision {
+                return
+            }
+            // Get message
+            let message: String = serverModelHasVision ? String(localized: "A new remote model has been selected, which has been identified as having vision capabilities. Would you like to turn on vision for this model?") : String(localized: "A new remote model has been selected, which might not include vision capabilities. Would you like to turn off vision for this model?")
+            // Confirm with user
+            if Dialogs.dichotomy(
+                title: String(localized: "Model Changed"),
+                message: message,
+                option1: String(localized: "Yes"),
+                option2: String(localized: "No")
+            ) {
+                withAnimation(.linear) {
+                    self.serverModelHasVision = serverModelHasVision
+                }
+            }
+        }
+    }
+    
+    var dropdownContent: some View {
+        VStack(spacing: 0) {
+            // Search bar
+            HStack {
+                Image(systemName: "magnifyingglass")
+                    .foregroundStyle(.secondary)
+                    .font(.body)
+                TextField("Search", text: $searchText)
+                    .textFieldStyle(.plain)
+            }
+            .padding(10)
+            .background(Color(.controlBackgroundColor))
+            .cornerRadius(6)
+            .padding([.horizontal, .top], 12)
+            .padding(.bottom, 8)
+            
+            Divider()
+            
+            // Models list
+            ScrollView {
+                VStack(alignment: .leading, spacing: 0) {
+                    // Local Models Section
+                    if !filteredLocalModels.isEmpty {
+                        sectionHeader(title: "Local Models")
+                        ForEach(filteredLocalModels, id: \.name) { modelFile in
+                            LocalModelRow(
+                                modelFile: modelFile,
+                                isSelected: Settings.modelUrl == modelFile.url,
+                                onSelect: {
+                                    selectLocalModel(modelFile)
+                                }
+                            )
+                        }
+                        .id(localModelsListId)
+                    }
+                    
+                    // Remote Models Section
+                    if !filteredRemoteModels.isEmpty {
+                        if !filteredLocalModels.isEmpty {
+                            Divider()
+                                .padding(.vertical, 8)
+                        }
+                        sectionHeader(title: "Remote Models")
+                        ForEach(filteredRemoteModels, id: \.self) { modelName in
+                            RemoteModelRow(
+                                modelName: modelName,
+                                isSelected: modelName == serverModelName && InferenceSettings.useServer,
+                                onSelect: {
+                                    selectRemoteModel(modelName)
+                                }
+                            )
+                        }
+                    }
+                    
+                    // Empty state
+                    if filteredLocalModels.isEmpty && filteredRemoteModels.isEmpty {
+                        VStack(spacing: 8) {
+                            Text("No models found")
+                                .font(.headline)
+                                .foregroundStyle(.secondary)
+                            if !searchText.isEmpty {
+                                Text("Try a different search term")
+                                    .font(.caption)
+                                    .foregroundStyle(.tertiary)
+                            }
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 40)
+                    }
+                }
+                .padding(.horizontal, 8)
+                .padding(.vertical, 4)
+            }
+            
+            Divider()
+            
+            // Bottom actions
+            HStack(spacing: 8) {
+                Button {
+                    self.isManagingCustomModel = true
+                } label: {
+                    Text("Manage Custom Models")
+                        .font(.caption)
+                }
+                .buttonStyle(.plain)
+                .foregroundStyle(.secondary)
+                
+                Spacer()
+                
+                Button {
+                    InferenceSettings.useServer.toggle()
+                    NotificationCenter.default.post(
+                        name: Notifications.changedInferenceConfig.name,
+                        object: nil
+                    )
+                } label: {
+                    Text(InferenceSettings.useServer ? "Disable Remote" : "Enable Remote")
+                        .font(.caption)
+                }
+                .buttonStyle(.plain)
+                .foregroundStyle(.secondary)
+            }
+            .padding([.horizontal, .bottom], 12)
+            .padding(.top, 8)
+        }
+    }
+    
+    private func sectionHeader(title: String) -> some View {
+        Text(title)
+            .font(.caption)
+            .fontWeight(.semibold)
+            .foregroundStyle(.secondary)
+            .textCase(.uppercase)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 8)
+    }
+    
+    private func selectLocalModel(_ modelFile: ModelManager.ModelFile) {
+        Settings.modelUrl = modelFile.url
+        NotificationCenter.default.post(
+            name: Notifications.changedInferenceConfig.name,
+            object: nil
+        )
+        showingDropdown = false
+    }
+    
+    private func selectRemoteModel(_ modelName: String) {
+        self.serverModelName = modelName
+        // Enable remote server if not already enabled
+        if !InferenceSettings.useServer {
+            InferenceSettings.useServer = true
+        }
+        NotificationCenter.default.post(
+            name: Notifications.changedInferenceConfig.name,
+            object: nil
+        )
+        showingDropdown = false
+    }
+    
+    private func refreshModelNames() async {
+        self.remoteModelNames = await LlamaServer.getAvailableModels()
+    }
+}
+
+// MARK: - Model Row Views
+
+struct LocalModelRow: View {
+    let modelFile: ModelManager.ModelFile
+    let isSelected: Bool
+    let onSelect: () -> Void
+    
+    var body: some View {
+        Button(action: onSelect) {
+            HStack {
+                Text(modelFile.name)
+                    .font(.body)
+                    .foregroundStyle(.primary)
+                Spacer()
+                if isSelected {
+                    Image(systemName: "checkmark")
+                        .font(.body)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.blue)
+                }
+            }
+            .contentShape(Rectangle())
+            .padding(.horizontal, 8)
+            .padding(.vertical, 6)
+        }
+        .buttonStyle(.plain)
+        .background(
+            RoundedRectangle(cornerRadius: 4)
+                .fill(isSelected ? Color.blue.opacity(0.1) : Color.clear)
+        )
+    }
+}
+
+struct RemoteModelRow: View {
+    let modelName: String
+    let isSelected: Bool
+    let onSelect: () -> Void
+    
+    var body: some View {
+        Button(action: onSelect) {
+            HStack {
+                Text(modelName)
+                    .font(.body)
+                    .foregroundStyle(.primary)
+                Spacer()
+                if isSelected {
+                    Image(systemName: "checkmark")
+                        .font(.body)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.blue)
+                }
+            }
+            .contentShape(Rectangle())
+            .padding(.horizontal, 8)
+            .padding(.vertical, 6)
+        }
+        .buttonStyle(.plain)
+        .background(
+            RoundedRectangle(cornerRadius: 4)
+                .fill(isSelected ? Color.blue.opacity(0.1) : Color.clear)
+        )
+    }
+}
+
+
