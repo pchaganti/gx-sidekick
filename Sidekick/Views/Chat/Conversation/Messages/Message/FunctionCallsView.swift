@@ -98,7 +98,8 @@ struct FunctionCallsView: View {
         var details: some View {
             VStack(alignment: .leading) {
                 if let result = functionCall.result {
-                    Text("Result: ").bold() + Text(result).italic()
+                    Text("Result: ").bold() + Text(self.truncateMiddle(result))
+                        .italic()
                 }
             }
             .textSelection(.enabled)
@@ -106,6 +107,41 @@ struct FunctionCallsView: View {
             .padding(.horizontal, 9)
             .padding(.vertical, 9)
         }
+        
+        func truncateMiddle(
+            _ text: String,
+            maxLength: Int = 200,
+            indicator: String = "...",
+            preserveWords: Bool = false
+        ) -> String {
+            guard text.count > maxLength else {
+                return text
+            }
+            
+            guard maxLength >= indicator.count + 2 else {
+                return String(text.prefix(maxLength))
+            }
+            
+            let availableLength = maxLength - indicator.count
+            let leftLength = (availableLength + 1) / 2
+            let rightLength = availableLength / 2
+            
+            var leftPart = String(text.prefix(leftLength))
+            var rightPart = String(text.suffix(rightLength))
+            
+            // Optionally preserve word boundaries
+            if preserveWords {
+                if let lastSpace = leftPart.lastIndex(where: { $0.isWhitespace }) {
+                    leftPart = String(leftPart[..<lastSpace])
+                }
+                if let firstSpace = rightPart.firstIndex(where: { $0.isWhitespace }) {
+                    rightPart = String(rightPart[rightPart.index(after: firstSpace)...])
+                }
+            }
+            
+            return "\(leftPart)\(indicator)\(rightPart)"
+        }
+
         
     }
     

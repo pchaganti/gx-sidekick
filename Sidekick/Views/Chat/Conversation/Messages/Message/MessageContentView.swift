@@ -85,10 +85,18 @@ struct MessageContentView: View {
                             }
                     }
                     // Show message response
-                    MessageTextContentView(text: self.message.responseText)
-                        .if(shimmer) { view in
-                            view.shimmering()
+                    Group {
+                        if self.message.getSender() != .user {
+                            MessageTextContentView(text: self.message.responseText)
+                        } else {
+                            Text(self.message.responseText)
+                                .font(.system(size: NSFont.systemFontSize + 1.0))
+                                .lineSpacing(4)
                         }
+                    }
+                    .if(shimmer) { view in
+                        view.shimmering()
+                    }
                     // Show references if needed
                     if !self.message.referencedURLs.isEmpty {
                         messageReferences
