@@ -13,7 +13,7 @@ public struct ServerArgument: Identifiable, Codable, Equatable {
     public var id: UUID = UUID()
     
     /// A `Bool` representing whether the argument is active
-    public var isActive: Bool = true
+    public var isActive: Bool = false
     /// A `String` containing the flag
     public var flag: String
     /// A `String` containing a value corresponding to the flag
