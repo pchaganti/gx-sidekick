@@ -27,9 +27,9 @@ struct ServerModelNameEditor: View {
 	var editorDescription: String {
 		switch self.modelType {
             case .worker:
-                return String(localized: "The worker model's name. (e.g. gpt-4o-mini) The worker model is used for simpler tasks like generating chat titles.\n\nLeave this blank to use the main model for all tasks.")
+                return String(localized: "The worker model's name. (e.g. gpt-5-mini) The worker model is used for simpler tasks like generating chat titles.\n\nLeave this blank to use the main model for all tasks.")
             default:
-                return String(localized: "The model's name. (e.g. gpt-4o)")
+                return String(localized: "The model's name. (e.g. gpt-5)")
 		}
 	}
 	

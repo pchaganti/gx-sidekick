@@ -578,16 +578,28 @@ public actor LlamaServer {
                                 }
                                 // Extract tool call
                                 if let name = functionName,
-                                   let args = functionArguments,
-                                   let function = StreamMessage.OpenAIToolCall.Function.getFunctionCall(
-                                    name: name,
-                                    arguments: args
-                                   ){
-                                    // Append and reset
-                                    blockFunctionCalls.append(function)
-                                    functionName = nil
-                                    functionArguments = nil
+                                   var args = functionArguments {
+                                    // Handle double-wrapped arguments from some APIs
+                                    if let data = args.data(using: .utf8),
+                                       let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+                                       let innerArgs = json["arguments"],
+                                       let unwrappedData = try? JSONSerialization.data(withJSONObject: innerArgs),
+                                       let unwrappedString = String(data: unwrappedData, encoding: .utf8) {
+                                        args = unwrappedString
+                                    }
+                                    if let function = StreamMessage.OpenAIToolCall.Function.getFunctionCall(
+                                        name: name,
+                                        arguments: args
+                                    ) {
+                                        // Append and reset
+                                        blockFunctionCalls.append(function)
+                                        functionName = nil
+                                        functionArguments = nil
+                                    } else {
+                                        print("Failed to decode function call: \(name) with args: \(args)")
+                                    }
                                 }
+
                             }
 							// Document usage
 							tokenCount += 1
@@ -596,13 +608,13 @@ public actor LlamaServer {
 								responseDiff = CFAbsoluteTimeGetCurrent() - start
 							}
                             if responseObj.choices.first?.finish_reason != nil {
-								do {
-									stopResponse = try decoder.decode(StopResponse.self, from: data)
-									break listenLoop
-								} catch {
-									print("Error decoding stopResponse, listenLoop will continue", error as Any, data)
-								}
-							}
+                                do {
+                                    stopResponse = try decoder.decode(StopResponse.self, from: data)
+                                } catch {
+                                    print("Error decoding stopResponse, listenLoop will continue", error, data.count, "bytes")
+                                }
+                                break listenLoop
+                            }
 						} catch {
 							Self.logger.error("Error decoding response object \(error, privacy: .public)")
 							Self.logger.error("responseObj: \(String(decoding: data, as: UTF8.self), privacy: .public)")

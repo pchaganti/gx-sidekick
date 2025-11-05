@@ -711,7 +711,7 @@ public struct KnownModel: Identifiable, Codable {
             ]
         ),
         KnownModel(
-            primaryName: "gpt-4o-mini",
+            primaryName: "gpt-5-mini",
             organization: .openAi,
             modalities: [
                 .text,
@@ -719,7 +719,7 @@ public struct KnownModel: Identifiable, Codable {
             ]
         ),
         KnownModel(
-            primaryName: "gpt-4o",
+            primaryName: "gpt-5",
             organization: .openAi,
             modalities: [
                 .text,

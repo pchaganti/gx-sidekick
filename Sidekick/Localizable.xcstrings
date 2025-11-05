@@ -4616,12 +4616,12 @@
         }
       }
     },
-    "The model's name. (e.g. gpt-4o)" : {
+    "The model's name. (e.g. gpt-5)" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "模型名称（如：gpt-4o）"
+            "value" : "模型名称（如：gpt-5）"
           }
         }
       }
@@ -4716,12 +4716,12 @@
         }
       }
     },
-    "The worker model's name. (e.g. gpt-4o-mini) The worker model is used for simpler tasks like generating chat titles.\n\nLeave this blank to use the main model for all tasks." : {
+    "The worker model's name. (e.g. gpt-5-mini) The worker model is used for simpler tasks like generating chat titles.\n\nLeave this blank to use the main model for all tasks." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "极速模型的名称。（如：gpt-4o-mini）极速模型用于生成聊天标题等较简单的任务。\n\n将此栏目留空，以使用主模型执行所有任务。"
+            "value" : "极速模型的名称。（如：gpt-5-mini）极速模型用于生成聊天标题等较简单的任务。\n\n将此栏目留空，以使用主模型执行所有任务。"
           }
         }
       }
