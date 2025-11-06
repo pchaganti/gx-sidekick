@@ -14,27 +14,27 @@ import SwiftUI
 /// An object which abstracts LLM inference
 @MainActor
 public class Model: ObservableObject {
-	
-	/// A `Logger` object for the `Model` object
-	private static let logger: Logger = .init(
-		subsystem: Bundle.main.bundleIdentifier!,
-		category: String(describing: Model.self)
-	)
-	
-	/// Initializes the ``Model`` object
-	/// - Parameter systemPrompt: The system prompt given to the model
-	init(
-		systemPrompt: String
-	) {
-		// Make sure bookmarks are loaded
-		let _ = Bookmarks.shared
-		// Set system prompt
-		self.systemPrompt = systemPrompt
-		// Init LlamaServer objects
-		self.mainModelServer = LlamaServer(
+    
+    /// A `Logger` object for the `Model` object
+    private static let logger: Logger = .init(
+        subsystem: Bundle.main.bundleIdentifier!,
+        category: String(describing: Model.self)
+    )
+    
+    /// Initializes the ``Model`` object
+    /// - Parameter systemPrompt: The system prompt given to the model
+    init(
+        systemPrompt: String
+    ) {
+        // Make sure bookmarks are loaded
+        let _ = Bookmarks.shared
+        // Set system prompt
+        self.systemPrompt = systemPrompt
+        // Init LlamaServer objects
+        self.mainModelServer = LlamaServer(
             modelType: .regular,
             systemPrompt: systemPrompt
-		)
+        )
         self.workerModelServer = LlamaServer(
             modelType: .worker
         )
@@ -42,34 +42,34 @@ public class Model: ObservableObject {
         Task { [weak self] in
             guard let self = self else { return }
             let canReachRemoteServer: Bool = await self.remoteServerIsReachable()
-			do {
-				if !InferenceSettings.useServer || !canReachRemoteServer {
-					try await self.mainModelServer.startServer(
+            do {
+                if !InferenceSettings.useServer || !canReachRemoteServer {
+                    try await self.mainModelServer.startServer(
                         canReachRemoteServer: canReachRemoteServer
                     )
                     try await self.workerModelServer.startServer(
                         canReachRemoteServer: canReachRemoteServer
                     )
-				}
-			} catch {
-				print("Error starting `llama-server`: \(error)")
-			}
-		}
-	}
-	
-	/// Task where `llama-server` is launched
-	private var startupTask: Task<Void, Never>?
-
-	/// Static constant for the global ``Model`` object
-	static public let shared: Model = .init(
-		systemPrompt: InferenceSettings.systemPrompt
-	)
+                }
+            } catch {
+                print("Error starting `llama-server`: \(error)")
+            }
+        }
+    }
+    
+    /// Task where `llama-server` is launched
+    private var startupTask: Task<Void, Never>?
+    
+    /// Static constant for the global ``Model`` object
+    static public let shared: Model = .init(
+        systemPrompt: InferenceSettings.systemPrompt
+    )
     
     /// A `Bool` representing whether the remote server is accessible
-    public var wasRemoteServerAccessible: Bool = false
+    @Published public var wasRemoteServerAccessible: Bool = false
     /// A `Date` representing when the remote server was less checked
     private var lastRemoteServerCheck: Date = .distantPast
-	
+    
     /// A `String` containing the name of the currently selected model
     public var selectedModelName: String? {
         // Check if remote model is accessible
@@ -109,7 +109,7 @@ public class Model: ObservableObject {
             if let localModelName: String = InferenceSettings.workerModelUrl?
                 .deletingPathExtension()
                 .lastPathComponent,
-                !localModelName.isEmpty {
+               !localModelName.isEmpty {
                 return localModelName
             }
         }
@@ -143,46 +143,46 @@ public class Model: ObservableObject {
         return self.selectedWorkerModel?.isReasoningModel ?? selectedWorkerModelName?.hasSuffix(":thinking")
     }
     
-	/// Property for the system prompt given to the LLM
-	private var systemPrompt: String
-	
-	/// Function to set new system prompt, which controls model behaviour
-	/// - Parameter systemPrompt: The system prompt to be set
-	public func setSystemPrompt(
-		_ systemPrompt: String
-	) async {
-		self.systemPrompt = systemPrompt
-		await self.mainModelServer.setSystemPrompt(systemPrompt)
-	}
-	
-	/// Function to refresh `llama-server` with the newly selected model
-	public func refreshModel() async {
-		// Restart servers if needed
+    /// Property for the system prompt given to the LLM
+    private var systemPrompt: String
+    
+    /// Function to set new system prompt, which controls model behaviour
+    /// - Parameter systemPrompt: The system prompt to be set
+    public func setSystemPrompt(
+        _ systemPrompt: String
+    ) async {
+        self.systemPrompt = systemPrompt
+        await self.mainModelServer.setSystemPrompt(systemPrompt)
+    }
+    
+    /// Function to refresh `llama-server` with the newly selected model
+    public func refreshModel() async {
+        // Restart servers if needed
         await self.stopServers()
-		self.mainModelServer = LlamaServer(
+        self.mainModelServer = LlamaServer(
             modelType: .regular,
-			systemPrompt: self.systemPrompt
-		)
+            systemPrompt: self.systemPrompt
+        )
         self.workerModelServer = LlamaServer(
             modelType: .worker
         )
-		// Load model if needed
-		let canReachRemoteServer: Bool = await self.remoteServerIsReachable()
-		if !InferenceSettings.useServer || !canReachRemoteServer {
-			try? await self.mainModelServer.startServer(
+        // Load model if needed
+        let canReachRemoteServer: Bool = await self.remoteServerIsReachable()
+        if !InferenceSettings.useServer || !canReachRemoteServer {
+            try? await self.mainModelServer.startServer(
                 canReachRemoteServer: canReachRemoteServer
             )
             try? await self.workerModelServer.startServer(
                 canReachRemoteServer: canReachRemoteServer
             )
-		}
-	}
-	
+        }
+    }
+    
     /// The current active  ``Agent``
     var agent: (any Agent)?
     
-	/// The message being generated
-	@Published var pendingMessage: Message? = nil
+    /// The message being generated
+    @Published var pendingMessage: Message? = nil
     /// The pending message displayed to users
     @MainActor
     public var displayedPendingMessage: Message {
@@ -221,7 +221,7 @@ public class Model: ObservableObject {
                 text = String(localized: "Calling functions...")
                 // Show progress
                 if let pendingText = self.pendingMessage?.text,
-                    !pendingText.isEmpty {
+                   !pendingText.isEmpty {
                     text = pendingText
                 }
             case .deepResearch:
@@ -275,64 +275,64 @@ public class Model: ObservableObject {
         case indicator, text, preview
     }
     
-	/// The status of `llama-server`, of type ``Model.Status``
-	@Published var status: Status = .cold
+    /// The status of `llama-server`, of type ``Model.Status``
+    @Published var status: Status = .cold
     /// Function to mutate the status
     public func setStatus(_ newStatus: Status) {
         self.status = newStatus
     }
     
-	/// The id of the conversation where the message was sent, of type `UUID`
-	@Published var sentConversationId: UUID? = nil
-	
-	/// A server fro the main model, of type ``LlamaServer``
-	var mainModelServer: LlamaServer
+    /// The id of the conversation where the message was sent, of type `UUID`
+    @Published var sentConversationId: UUID? = nil
+    
+    /// A server fro the main model, of type ``LlamaServer``
+    var mainModelServer: LlamaServer
     /// A server for the worker model, of type ``LlamaServer``
     var workerModelServer: LlamaServer
-	
-	/// Computed property returning if the model is processing, of type `Bool`
-	var isProcessing: Bool {
-		return status == .processing || status == .coldProcessing
-	}
-	
-	/// Function to calculate the number of tokens in a piece of text
-	public func countTokens(
-		in text: String
-	) async -> Int? {
+    
+    /// Computed property returning if the model is processing, of type `Bool`
+    var isProcessing: Bool {
+        return status == .processing || status == .coldProcessing
+    }
+    
+    /// Function to calculate the number of tokens in a piece of text
+    public func countTokens(
+        in text: String
+    ) async -> Int? {
         let canReachRemoteServer: Bool = await self.remoteServerIsReachable()
-		return try? await self.mainModelServer.tokenCount(
+        return try? await self.mainModelServer.tokenCount(
             in: text,
             canReachRemoteServer: canReachRemoteServer
         )
-	}
-	
-	/// Function to set sent conversation ID
-	func setSentConversationId(_ id: UUID) {
-		// Reset pending message
-		self.pendingMessage = nil
-		self.sentConversationId = id
-	}
-	
-	/// Function to flag that conversaion naming has begun
-	func indicateStartedNamingConversation() {
-		// Reset pending message
-		self.pendingMessage = nil
-		self.status = .generatingTitle
-	}
-	
-	/// Function to flag that a background task has begun
-	func indicateStartedBackgroundTask() {
-		// Reset pending message
-		self.pendingMessage = nil
-		self.status = .backgroundTask
-	}
-	
-	/// Function to flag that querying has begun
-	func indicateStartedQuerying() {
-		// Reset pending message
-		self.pendingMessage = nil
-		self.status = .querying
-	}
+    }
+    
+    /// Function to set sent conversation ID
+    func setSentConversationId(_ id: UUID) {
+        // Reset pending message
+        self.pendingMessage = nil
+        self.sentConversationId = id
+    }
+    
+    /// Function to flag that conversaion naming has begun
+    func indicateStartedNamingConversation() {
+        // Reset pending message
+        self.pendingMessage = nil
+        self.status = .generatingTitle
+    }
+    
+    /// Function to flag that a background task has begun
+    func indicateStartedBackgroundTask() {
+        // Reset pending message
+        self.pendingMessage = nil
+        self.status = .backgroundTask
+    }
+    
+    /// Function to flag that querying has begun
+    func indicateStartedQuerying() {
+        // Reset pending message
+        self.pendingMessage = nil
+        self.status = .querying
+    }
     
     /// Function to flag that Deep Research has begun
     func indicateStartedDeepResearch() {
@@ -340,42 +340,42 @@ public class Model: ObservableObject {
         self.pendingMessage = nil
         self.status = .deepResearch
     }
-	
-	/// Function for the main loop
-	/// Listen -> respond -> update mental model and save checkpoint
-	/// Stream response  to avoid a long delay after user input
-	func listenThinkRespond(
-		messages: [Message],
-		modelType: ModelType,
-		mode: Model.Mode,
-		similarityIndex: SimilarityIndex? = nil,
-		useWebSearch: Bool = false,
+    
+    /// Function for the main loop
+    /// Listen -> respond -> update mental model and save checkpoint
+    /// Stream response  to avoid a long delay after user input
+    func listenThinkRespond(
+        messages: [Message],
+        modelType: ModelType,
+        mode: Model.Mode,
+        similarityIndex: SimilarityIndex? = nil,
+        useWebSearch: Bool = false,
         useFunctions: Bool = false,
         functions: [AnyFunctionBox]? = nil,
-		useCanvas: Bool = false,
-		canvasSelection: String? = nil,
-		temporaryResources: [TemporaryResource] = [],
+        useCanvas: Bool = false,
+        canvasSelection: String? = nil,
+        temporaryResources: [TemporaryResource] = [],
         showPreview: Bool = false,
-		handleResponseUpdate: @escaping (
-			String, // Full message
-			String // Delta
-		) -> Void = { _, _ in },
-		handleResponseFinish: @escaping (
-			String, // Pending message
-			String,  // Final message
-			Int? // Tokens used
-		) -> Void = { _, _, _ in }
-	) async throws -> LlamaServer.CompleteResponse {
-		// Reset pending message
+        handleResponseUpdate: @escaping (
+            String, // Full message
+            String // Delta
+        ) -> Void = { _, _ in },
+        handleResponseFinish: @escaping (
+            String, // Pending message
+            String,  // Final message
+            Int? // Tokens used
+        ) -> Void = { _, _, _ in }
+    ) async throws -> LlamaServer.CompleteResponse {
+        // Reset pending message
         if showPreview {
             self.pendingMessage = nil
         }
-		// Set flag
-		let preQueryStatus: Status = self.status
-		if preQueryStatus.isForegroundTask {
+        // Set flag
+        let preQueryStatus: Status = self.status
+        if preQueryStatus.isForegroundTask {
             let isDeepResearching: Bool = self.status == .deepResearch
             self.status = (mode.isAgent || isDeepResearching) ? .deepResearch : .querying
-		}
+        }
         // Check if remote server is reachable
         let canReachRemoteServer: Bool = await self.remoteServerIsReachable()
         // Formulate message subset
@@ -411,8 +411,8 @@ public class Model: ObservableObject {
                 self.status = .processing
             }
         }
-		// Send different response based on mode
-		var response: LlamaServer.CompleteResponse? = nil
+        // Send different response based on mode
+        var response: LlamaServer.CompleteResponse? = nil
         switch mode {
             case .`default`:
                 if modelType == .worker {
@@ -492,20 +492,20 @@ public class Model: ObservableObject {
                 self.pendingMessage = nil
                 self.status = .ready
         }
-		// Handle response finish
-		handleResponseFinish(
-			response!.text,
+        // Handle response finish
+        handleResponseFinish(
+            response!.text,
             self.pendingMessage?.text ?? "",
-			response!.usage?.total_tokens
-		)
-		// Update display
+            response!.usage?.total_tokens
+        )
+        // Update display
         if showPreview && self.agent == nil {
             self.pendingMessage = nil
             self.status = .ready
         }
-		Self.logger.notice("Finished responding to prompt")
-		return response!
-	}
+        Self.logger.notice("Finished responding to prompt")
+        return response!
+    }
     
     /// A function to update the inference status
     private func updateStatus(
@@ -515,68 +515,68 @@ public class Model: ObservableObject {
             self.status = status
         }
     }
-	
-	/// Function to get response for chat
-	private func getChatResponse(
-		mode: Model.Mode,
-		modelType: ModelType,
+    
+    /// Function to get response for chat
+    private func getChatResponse(
+        mode: Model.Mode,
+        modelType: ModelType,
         canReachRemoteServer: Bool,
         messagesWithSources: [Message.MessageSubset],
         useWebSearch: Bool,
         useFunctions: Bool,
         functions: [AnyFunctionBox]? = nil,
-		similarityIndex: SimilarityIndex? = nil,
+        similarityIndex: SimilarityIndex? = nil,
         showPreview: Bool,
-		handleResponseUpdate: @escaping (String, String) -> Void
-	) async throws -> LlamaServer.CompleteResponse {
+        handleResponseUpdate: @escaping (String, String) -> Void
+    ) async throws -> LlamaServer.CompleteResponse {
         // Define increment for update
         let increment: Int = 8
-		// Handle initial response
-		let initialResponse = try await getInitialResponse(
-			mode: mode,
+        // Handle initial response
+        let initialResponse = try await getInitialResponse(
+            mode: mode,
             canReachRemoteServer: canReachRemoteServer,
-			messages: messagesWithSources,
+            messages: messagesWithSources,
             useWebSearch: useWebSearch,
             useFunctions: useFunctions,
             functions: functions,
             showPreview: showPreview,
-			handleResponseUpdate: handleResponseUpdate,
-			increment: increment
-		)
-		// Return if functions are disabled
+            handleResponseUpdate: handleResponseUpdate,
+            increment: increment
+        )
+        // Return if functions are disabled
         if !Settings.useFunctions || !useFunctions {
-			return initialResponse
-		}
-		// Return if no function call
+            return initialResponse
+        }
+        // Return if no function call
         guard let functionCalls = initialResponse.functionCalls,
-                !functionCalls.isEmpty else {
-			return initialResponse
-		}
-		// Run agent in a loop
+              !functionCalls.isEmpty else {
+            return initialResponse
+        }
+        // Run agent in a loop
         return try await self.handleFunctionCall(
             canReachRemoteServer: canReachRemoteServer,
-			initialResponse: initialResponse,
-			messages: messagesWithSources,
+            initialResponse: initialResponse,
+            messages: messagesWithSources,
             useWebSearch: useWebSearch,
             functions: functions,
-			similarityIndex: similarityIndex,
+            similarityIndex: similarityIndex,
             showPreview: showPreview,
-			handleResponseUpdate: handleResponseUpdate,
-			increment: increment
-		)
-	}
-	
-	/// Get the intial response to a chatbot query
-	private func getInitialResponse(
-		mode: Model.Mode,
+            handleResponseUpdate: handleResponseUpdate,
+            increment: increment
+        )
+    }
+    
+    /// Get the intial response to a chatbot query
+    private func getInitialResponse(
+        mode: Model.Mode,
         canReachRemoteServer: Bool,
-		messages: [Message.MessageSubset],
+        messages: [Message.MessageSubset],
         useWebSearch: Bool,
         useFunctions: Bool,
         functions: [AnyFunctionBox]? = nil,
         showPreview: Bool,
-		handleResponseUpdate: @escaping (String, String) -> Void,
-		increment: Int
+        handleResponseUpdate: @escaping (String, String) -> Void,
+        increment: Int
     ) async throws -> LlamaServer.CompleteResponse {
         let canReachRemoteServer: Bool = await self.remoteServerIsReachable()
         var updateResponse = ""
@@ -607,23 +607,23 @@ public class Model: ObservableObject {
             }
         )
     }
-	
-	/// Function to run code if model calls a function
-	private func handleFunctionCall(
+    
+    /// Function to run code if model calls a function
+    private func handleFunctionCall(
         canReachRemoteServer: Bool,
-		initialResponse: LlamaServer.CompleteResponse,
-		messages: [Message.MessageSubset],
+        initialResponse: LlamaServer.CompleteResponse,
+        messages: [Message.MessageSubset],
         useWebSearch: Bool,
         functions: [AnyFunctionBox]? = nil,
-		similarityIndex: SimilarityIndex?,
+        similarityIndex: SimilarityIndex?,
         showPreview: Bool,
-		handleResponseUpdate: @escaping (
-			String, // Full message
-			String // Delta
-		) -> Void = { _, _ in },
-		increment: Int
-	) async throws -> LlamaServer.CompleteResponse {
-		// Set status
+        handleResponseUpdate: @escaping (
+            String, // Full message
+            String // Delta
+        ) -> Void = { _, _ in },
+        increment: Int
+    ) async throws -> LlamaServer.CompleteResponse {
+        // Set status
         if self.status != .deepResearch {
             self.status = .usingFunctions
         }
@@ -703,7 +703,7 @@ public class Model: ObservableObject {
                 Settings.checkFunctionsCompletion
             )
             if checkMode != .none,
-                let modelType = checkMode.modelType {
+               let modelType = checkMode.modelType {
                 hasMadeSufficientCalls = await self.sufficientFunctionCalls(
                     modelType: modelType,
                     messages: messages,
@@ -813,11 +813,11 @@ Call another tool to obtain more information or execute more actions. Try breaki
             }
             return response
         }
-		// An enum of reasons for finishing
+        // An enum of reasons for finishing
         enum FinishReason {
             case noFunctionCall, maxIterationsReached
         }
-	}
+    }
     
     /// Function to check if enough calls were made
     private func sufficientFunctionCalls(
@@ -888,29 +888,29 @@ Respond with YES if ALL 3 criteria above have been met. Respond with YES or NO o
         // If fell through, return false
         return false
     }
-	
-	/// Function to handle response update
-	func handleCompletionProgress(
+    
+    /// Function to handle response update
+    func handleCompletionProgress(
         showPreview: Bool = true,
-		partialResponse: String,
-		handleResponseUpdate: @escaping (
-			String, // Full message
-			String // Delta
-		) -> Void
-	) {
+        partialResponse: String,
+        handleResponseUpdate: @escaping (
+            String, // Full message
+            String // Delta
+        ) -> Void
+    ) {
         // Assign if nil
         if self.pendingMessage == nil && showPreview {
             self.pendingMessage = Message(text: "", sender: .assistant)
         }
         let fullMessage: String = (self.pendingMessage?.text ?? "") + partialResponse
-		handleResponseUpdate(
-			fullMessage,
-			partialResponse
-		)
+        handleResponseUpdate(
+            fullMessage,
+            partialResponse
+        )
         if showPreview {
             self.pendingMessage?.text = fullMessage
         }
-	}
+    }
     
     /// Function to check if the remote server is reachable
     /// - Returns: A `Bool` indicating if the server can be reached
@@ -957,7 +957,7 @@ Respond with YES if ALL 3 criteria above have been met. Respond with YES or NO o
         self.lastRemoteServerCheck = Date.now
         return false
     }
-	
+    
     /// Function to stop servers
     func stopServers() async {
         await self.mainModelServer.stopServer()
@@ -965,73 +965,73 @@ Respond with YES if ALL 3 criteria above have been met. Respond with YES or NO o
         self.status = .cold
     }
     
-	/// Function to interrupt `llama-server` generation
-	func interrupt() async {
+    /// Function to interrupt `llama-server` generation
+    func interrupt() async {
         if !self.status.isWorking {
-			return
-		}
-		await self.mainModelServer.interrupt()
+            return
+        }
+        await self.mainModelServer.interrupt()
         self.agent = nil
         self.pendingMessage = nil
-		self.status = .ready
-	}
-	
-	/// An enum indicating the status of the server
-	public enum Status: String {
-		
-		/// The inference server is inactive
-		case cold
-		/// The inference server is warming up
-		case coldProcessing
-		/// The inference server is currently processing a prompt
-		case processing
-		/// The system is searching in the selected profile's resources.
-		case querying
-		/// The system is generating a title
-		case generatingTitle
-		/// The system is running a background task
-		case backgroundTask
-		/// The system is using a function
-		case usingFunctions
+        self.status = .ready
+    }
+    
+    /// An enum indicating the status of the server
+    public enum Status: String {
+        
+        /// The inference server is inactive
+        case cold
+        /// The inference server is warming up
+        case coldProcessing
+        /// The inference server is currently processing a prompt
+        case processing
+        /// The system is searching in the selected profile's resources.
+        case querying
+        /// The system is generating a title
+        case generatingTitle
+        /// The system is running a background task
+        case backgroundTask
+        /// The system is using a function
+        case usingFunctions
         /// The system is doing deep research
         case deepResearch
-		/// The inference server is awaiting a prompt
-		case ready
-		
-		/// A `Bool` representing if the server is at work
-		public var isWorking: Bool {
-			switch self {
-				case .cold, .ready:
-					return false
-				default:
-					return true
-			}
-		}
-		
-		/// A `Bool` representing if the server is running a foreground task
-		public var isForegroundTask: Bool {
-			switch self {
+        /// The inference server is awaiting a prompt
+        case ready
+        
+        /// A `Bool` representing if the server is at work
+        public var isWorking: Bool {
+            switch self {
+                case .cold, .ready:
+                    return false
+                default:
+                    return true
+            }
+        }
+        
+        /// A `Bool` representing if the server is running a foreground task
+        public var isForegroundTask: Bool {
+            switch self {
                 case .backgroundTask, .generatingTitle, .usingFunctions:
-					return false
-				default:
-					return true
-			}
-		}
-		
-	}
-	
-	/// An enum indicating how the server is to be used
-	public enum Mode: String {
-		
-		/// Indicates the LLM is used as a chatbot, with extra features like resource lookup and code interpreter
-		case chat
+                    return false
+                default:
+                    return true
+            }
+        }
+        
+    }
+    
+    /// An enum indicating how the server is to be used
+    public enum Mode: String {
+        
+        /// Indicates the LLM is used as a chatbot, with extra features like resource lookup and code interpreter
+        case chat
         /// Indicates the LLM is used as an agent
         case agent
         /// Indicates the LLM is used as an Deep Research agent
         case deepResearch
-		/// Indicates the LLM is used for simple chat completion
-		case `default`
-		
+        /// Indicates the LLM is used for simple chat completion
+        case `default`
+        
         /// A `Bool` indiciating whether the mode is an agent
         var isAgent: Bool {
             switch self {
@@ -1042,6 +1042,6 @@ Respond with YES if ALL 3 criteria above have been met. Respond with YES or NO o
             }
         }
         
-	}
-	
+    }
+    
 }

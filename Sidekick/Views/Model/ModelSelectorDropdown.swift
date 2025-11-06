@@ -85,17 +85,12 @@ struct ModelSelectorDropdown: View {
             formattedName = String(formattedName[..<colonIndex])
         }
         
-        // Replace common separators with spaces first
-        let result = formattedName
-            .replacingOccurrences(of: "-", with: " ")
-            .replacingOccurrences(of: "_", with: " ")
-        
         // Now add spaces for camelCase only (uppercase following lowercase)
         var spacedResult = ""
-        for (index, char) in result.enumerated() {
+        for (index, char) in formattedName.enumerated() {
             // Add space before uppercase letter that follows a lowercase letter
             if char.isUppercase && index > 0 {
-                let prevChar = result[result.index(result.startIndex, offsetBy: index - 1)]
+                let prevChar = formattedName[formattedName.index(formattedName.startIndex, offsetBy: index - 1)]
                 if prevChar.isLowercase {
                     spacedResult += " "
                 }
@@ -112,11 +107,16 @@ struct ModelSelectorDropdown: View {
         var finalResult = ""
         if let provider = provider {
             let capitalizedProvider = (provider.prefix(1).uppercased() + provider.dropFirst().lowercased())
+                .replacingOccurrences(of: "Arcee-ai", with: "Arcee-AI")
+                .replacingOccurrences(of: "Bytedance", with: "ByteDance")
                 .replacingOccurrences(of: "Openai", with: "OpenAI")
                 .replacingOccurrences(of: "Deepseek", with: "DeepSeek")
                 .replacingOccurrences(of: "X-ai", with: "xAI")
+                .replacingOccurrences(of: "Meta-llama", with: "Meta-Llama")
+                .replacingOccurrences(of: "Mistralai", with: "MistralAI")
+                .replacingOccurrences(of: "Moonshotai", with: "MoonshotAI")
                 .replacingOccurrences(of: "Minimax", with: "MiniMax")
-                .replacingOccurrences(of: "Z.ai", with: "Z.AI")
+                .replacingOccurrences(of: "Z-ai", with: "Z-AI")
             finalResult = "\(capitalizedProvider): "
         }
         
@@ -237,10 +237,18 @@ struct ModelSelectorDropdown: View {
         }
         .task {
             await self.refreshModelNames()
+            // Check remote server reachability to update the display
+            if InferenceSettings.useServer {
+                let _ = await model.remoteServerIsReachable()
+            }
         }
         .onChange(of: serverEndpoint) {
             Task { @MainActor in
                 await self.refreshModelNames()
+                // Re-check reachability when endpoint changes
+                if InferenceSettings.useServer {
+                    let _ = await model.remoteServerIsReachable()
+                }
             }
         }
         .onReceive(
@@ -250,6 +258,12 @@ struct ModelSelectorDropdown: View {
         ) { output in
             // Refresh selection
             self.localModelsListId = UUID()
+            // Re-check reachability when inference config changes
+            Task { @MainActor in
+                if InferenceSettings.useServer {
+                    let _ = await model.remoteServerIsReachable()
+                }
+            }
         }
         .onChange(
             of: self.serverModelName
@@ -291,7 +305,7 @@ struct ModelSelectorDropdown: View {
             }
             .padding(10)
             .background(Color(.controlBackgroundColor))
-            .cornerRadius(6)
+            .cornerRadius(10)
             .padding([.horizontal, .top], 12)
             .padding(.bottom, 8)
             
@@ -324,7 +338,7 @@ struct ModelSelectorDropdown: View {
                         sectionHeader(title: "Remote Models")
                         ForEach(filteredRemoteModels, id: \.self) { modelName in
                             RemoteModelRow(
-                                modelName: modelName,
+                                modelName: self.formatModelName(modelName),
                                 isSelected: modelName == serverModelName && InferenceSettings.useServer,
                                 onSelect: {
                                     selectRemoteModel(modelName)
@@ -427,6 +441,7 @@ struct ModelSelectorDropdown: View {
 // MARK: - Model Row Views
 
 struct LocalModelRow: View {
+    
     let modelFile: ModelManager.ModelFile
     let isSelected: Bool
     let onSelect: () -> Void
@@ -458,6 +473,7 @@ struct LocalModelRow: View {
 }
 
 struct RemoteModelRow: View {
+    
     let modelName: String
     let isSelected: Bool
     let onSelect: () -> Void
