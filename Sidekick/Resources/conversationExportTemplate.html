@@ -8,6 +8,23 @@
                     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
                     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
                     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css">
+                        
+                        <!-- MathJax Configuration and Library -->
+                        <script>
+                            MathJax = {
+                                tex: {
+                                    inlineMath: [['$', '$'], ['\\(', '\\)']],
+                                    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                                    processEscapes: true,
+                                    processEnvironments: true
+                                },
+                                options: {
+                                    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+                                }
+                            };
+                        </script>
+                        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+                        
                         <style>
                             * {
                                 margin: 0;
@@ -15,36 +32,40 @@
                                 box-sizing: border-box;
                                 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
                             }
-   
+                            
                             :root {
-                                --bg-primary: #ffffff;
-                                --bg-secondary: #f7f7f8;
-                                --bg-tertiary: #ececf1;
-                                --bg-reasoning: #f7f7f8;
-                                --border-color: #e5e5e5;
-                                --text-primary: #343541;
-                                --text-secondary: #6e6e80;
-                                --user-bubble: #e9f5ff;
-                                --assistant-bubble: #f0f0f0;
-                                --copy-btn: #ececf1;
-                                --copy-btn-hover: #e0e0e0;
-                                --shadow: rgba(0, 0, 0, 0.05);
+                                --bg-primary: #fafafa;
+                                --bg-secondary: #ffffff;
+                                --bg-tertiary: #f5f5f5;
+                                --bg-reasoning: #f8f8f8;
+                                --border-color: #e0e0e0;
+                                --text-primary: #1a1a1a;
+                                --text-secondary: #666666;
+                                --user-bg: #f5f5f5;
+                                --assistant-bg: #ffffff;
+                                --accent-primary: #2196F3;
+                                --accent-secondary: #1976D2;
+                                --copy-btn: #f5f5f5;
+                                --copy-btn-hover: #e8e8e8;
+                                --shadow: rgba(0, 0, 0, 0.08);
                             }
                             
                             @media (prefers-color-scheme: dark) {
                                 :root {
-                                    --bg-primary: #343541;
-                                    --bg-secondary: #444654;
-                                    --bg-tertiary: #343541;
-                                    --bg-reasoning: #2d2d39;
-                                    --border-color: #4d4d4f;
-                                    --text-primary: #ececf1;
-                                    --text-secondary: #acacbe;
-                                    --user-bubble: #2b2c3f;
-                                    --assistant-bubble: #40414f;
-                                    --copy-btn: #4d4d4f;
-                                    --copy-btn-hover: #565869;
-                                    --shadow: rgba(0, 0, 0, 0.2);
+                                    --bg-primary: #1a1a1a;
+                                    --bg-secondary: #242424;
+                                    --bg-tertiary: #2a2a2a;
+                                    --bg-reasoning: #212121;
+                                    --border-color: #333333;
+                                    --text-primary: #e8e8e8;
+                                    --text-secondary: #a0a0a0;
+                                    --user-bg: #242424;
+                                    --assistant-bg: #1f1f1f;
+                                    --accent-primary: #4A90E2;
+                                    --accent-secondary: #357ABD;
+                                    --copy-btn: #2a2a2a;
+                                    --copy-btn-hover: #333333;
+                                    --shadow: rgba(0, 0, 0, 0.3);
                                 }
                             }
                             
@@ -54,12 +75,12 @@
                                 display: flex;
                                 flex-direction: column;
                                 height: 100vh;
-                                transition: background-color 0.3s, color 0.3s;
+                                transition: background-color 0.2s, color 0.2s;
                                 overflow: hidden;
                             }
                             
                             .container {
-                                max-width: 1000px;
+                                max-width: 900px;
                                 margin: 0 auto;
                                 width: 100%;
                                 padding: 20px;
@@ -73,20 +94,18 @@
                                 overflow-y: auto;
                                 padding: 10px 0;
                                 margin-bottom: 20px;
-                                /* Hide scrollbar for all browsers */
-                                scrollbar-width: none; /* Firefox */
-                                -ms-overflow-style: none; /* IE and Edge */
+                                scrollbar-width: none;
+                                -ms-overflow-style: none;
                             }
                             
-                            /* Hide scrollbar for Chrome, Safari and Opera */
                             .chat-history::-webkit-scrollbar {
                                 display: none;
                             }
                             
                             .message {
                                 display: flex;
-                                gap: 20px;
-                                padding: 24px 0;
+                                gap: 16px;
+                                padding: 20px 0;
                                 border-bottom: 1px solid var(--border-color);
                             }
                             
@@ -95,24 +114,26 @@
                             }
                             
                             .icon {
-                                width: 36px;
-                                height: 36px;
-                                border-radius: 50%;
+                                width: 32px;
+                                height: 32px;
+                                border-radius: 4px;
                                 display: flex;
                                 align-items: center;
                                 justify-content: center;
                                 flex-shrink: 0;
-                                font-weight: bold;
-                                margin-top: 6px;
+                                font-size: 14px;
+                                font-weight: 600;
+                                margin-top: 2px;
+                                letter-spacing: 0.5px;
                             }
                             
                             .user .icon {
-                                background: linear-gradient(135deg, #19c37d, #10a2f2);
+                                background-color: var(--accent-primary);
                                 color: white;
                             }
                             
                             .assistant .icon {
-                                background: linear-gradient(135deg, #ab68ff, #ff6b6b);
+                                background-color: var(--text-secondary);
                                 color: white;
                             }
                             
@@ -124,8 +145,8 @@
                             }
                             
                             .message-body {
-                                line-height: 1.6;
-                                font-size: 16px;
+                                line-height: 1.7;
+                                font-size: 15px;
                             }
                             
                             .message-body p {
@@ -144,19 +165,27 @@
                             .message-body code {
                                 background-color: var(--bg-tertiary);
                                 padding: 2px 6px;
-                                border-radius: 4px;
+                                border-radius: 3px;
                                 font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-                                font-size: 14px;
+                                font-size: 13px;
+                                border: 1px solid var(--border-color);
                             }
                             
                             .message-body pre {
                                 background-color: var(--bg-tertiary);
-                                border-radius: 8px;
+                                border-radius: 6px;
                                 padding: 16px;
                                 overflow-x: auto;
-                                margin: 16px 0;
-                                font-size: 14px;
+                                margin: 12px 0;
+                                font-size: 13px;
                                 position: relative;
+                                border: 1px solid var(--border-color);
+                            }
+                            
+                            .message-body pre code {
+                                background: none;
+                                border: none;
+                                padding: 0;
                             }
                             
                             .message-body pre .copy-icon {
@@ -165,66 +194,91 @@
                                 right: 8px;
                                 background: var(--copy-btn);
                                 border-radius: 4px;
-                                padding: 4px;
+                                padding: 6px 8px;
                                 cursor: pointer;
-                                opacity: 0.6;
-                                transition: opacity 0.2s;
+                                opacity: 0.5;
+                                transition: opacity 0.2s, background-color 0.2s;
+                                font-size: 12px;
                             }
                             
                             .message-body pre .copy-icon:hover {
                                 opacity: 1;
+                                background-color: var(--copy-btn-hover);
                             }
                             
                             .message-body blockquote {
-                                border-left: 4px solid var(--text-secondary);
+                                border-left: 3px solid var(--text-secondary);
                                 padding-left: 16px;
-                                margin: 16px 0;
+                                margin: 12px 0;
                                 color: var(--text-secondary);
+                                font-style: italic;
                             }
+                            
+                            .message-body h1, .message-body h2, .message-body h3,
+                            .message-body h4, .message-body h5, .message-body h6 {
+                                margin-top: 20px;
+                                margin-bottom: 12px;
+                                font-weight: 600;
+                            }
+                            
+                            .message-body h1 { font-size: 1.8em; }
+                            .message-body h2 { font-size: 1.5em; }
+                            .message-body h3 { font-size: 1.3em; }
                             
                             .reasoning-toggle {
                                 background-color: var(--bg-reasoning);
-                                border-radius: 8px;
-                                padding: 12px 16px;
+                                border: 1px solid var(--border-color);
+                                border-radius: 6px;
+                                padding: 10px 14px;
                                 cursor: pointer;
                                 display: flex;
                                 align-items: center;
                                 gap: 10px;
-                                margin-bottom: 15px;
-                                transition: all 0.3s;
+                                margin-bottom: 12px;
+                                transition: all 0.2s;
                                 user-select: none;
                             }
                             
                             .reasoning-toggle:hover {
                                 background-color: var(--bg-tertiary);
+                                border-color: var(--accent-primary);
                             }
                             
                             .reasoning-toggle i {
-                                font-size: 18px;
-                                transition: transform 0.3s;
+                                font-size: 14px;
+                                transition: transform 0.2s, color 0.2s;
+                                color: var(--text-secondary);
+                            }
+                            
+                            .reasoning-toggle span {
+                                font-size: 14px;
+                                font-weight: 500;
+                                color: var(--text-secondary);
                             }
                             
                             .reasoning-container {
                                 overflow: hidden;
                                 max-height: 0;
-                                transition: max-height 0.5s ease;
+                                transition: max-height 0.3s ease;
                             }
                             
                             .reasoning-content {
                                 background-color: var(--bg-reasoning);
-                                border-radius: 8px;
-                                padding: 16px;
-                                margin-top: 5px;
-                                font-size: 14px;
-                                line-height: 1.5;
+                                border: 1px solid var(--border-color);
+                                border-radius: 6px;
+                                padding: 14px;
+                                margin-bottom: 12px;
+                                font-size: 13px;
+                                line-height: 1.6;
                                 color: var(--text-secondary);
                                 opacity: 0;
-                                transform: translateY(-10px);
-                                transition: opacity 0.3s ease, transform 0.3s ease;
+                                transform: translateY(-5px);
+                                transition: opacity 0.2s ease, transform 0.2s ease;
                             }
                             
                             .reasoning-container.expanded {
-                                max-height: 500px;
+                                max-height: 600px;
+                                overflow-y: auto;
                             }
                             
                             .reasoning-container.expanded .reasoning-content {
@@ -235,59 +289,73 @@
                             .actions {
                                 display: flex;
                                 justify-content: flex-end;
-                                margin-top: 10px;
+                                margin-top: 8px;
                             }
                             
                             .copy-btn {
                                 background-color: var(--copy-btn);
-                                border: none;
+                                border: 1px solid var(--border-color);
                                 border-radius: 4px;
-                                padding: 8px 12px;
+                                padding: 6px 10px;
                                 cursor: pointer;
                                 display: flex;
                                 align-items: center;
                                 gap: 6px;
-                                font-size: 14px;
+                                font-size: 13px;
                                 color: var(--text-secondary);
                                 transition: all 0.2s;
+                                font-weight: 500;
                             }
                             
                             .copy-btn:hover {
                                 background-color: var(--copy-btn-hover);
+                                border-color: var(--accent-primary);
                             }
                             
                             .copy-btn.copied {
-                                background: linear-gradient(135deg, #19c37d, #10a2f2);
+                                background-color: var(--accent-primary);
+                                border-color: var(--accent-primary);
                                 color: white;
                             }
                             
                             .copy-btn.copied i {
-                                animation: bounce 0.5s;
+                                animation: checkmark 0.3s ease;
                             }
                             
-                            @keyframes bounce {
-                                0%, 100% { transform: scale(1); }
-                                50% { transform: scale(1.2); }
+                            @keyframes checkmark {
+                                0% { transform: scale(0.8); opacity: 0; }
+                                50% { transform: scale(1.1); }
+                                100% { transform: scale(1); opacity: 1; }
+                            }
+                            
+                            /* MathJax styling */
+                            mjx-container {
+                                overflow-x: auto;
+                                overflow-y: hidden;
                             }
                             
                             @media (max-width: 768px) {
                                 .message {
                                     gap: 12px;
-                                    padding: 20px 0;
+                                    padding: 16px 0;
                                 }
                                 
                                 .icon {
-                                    width: 32px;
-                                    height: 32px;
-                                    font-size: 14px;
+                                    width: 28px;
+                                    height: 28px;
+                                    font-size: 12px;
                                 }
                                 
                                 .container {
                                     padding: 15px;
                                 }
+                                
+                                .message-body {
+                                    font-size: 14px;
+                                }
                             }
                         </style>
-    </head>
+                    </head>
     <body>
         <div class="container">
             <div class="chat-history" id="chatHistory">
@@ -310,7 +378,7 @@
             });
             
             // Render chat messages
-            function renderChat() {
+            async function renderChat() {
                 const chatHistory = document.getElementById('chatHistory');
                 chatHistory.innerHTML = '';
                 
@@ -321,35 +389,38 @@
                     // Only show reasoning toggle if reasoning content exists
                     const showReasoning = message.role === 'assistant' && message.reasoning && message.reasoning.trim() !== '';
                     
+                    // Determine icon content
+                    const iconContent = message.role === 'user' ? 'U' : 'A';
+                    
                     // Message content
                     messageElement.innerHTML = `
-                        <div class="icon">${message.role === 'user' ? '👤' : '🤖'}</div>
-                        <div class="content">
-                        ${showReasoning ? `
-                        <div class="reasoning-toggle" data-id="${message.id}">
-                        <i class="fas fa-brain"></i>
-                        <span>Reasoning Process</span>
-                        <i class="fas fa-chevron-down" style="margin-left: auto; font-size: 14px;"></i>
+                            <div class="icon">${iconContent}</div>
+                            <div class="content">
+                            ${showReasoning ? `
+                            <div class="reasoning-toggle" data-id="${message.id}">
+                            <i class="fas fa-lightbulb"></i>
+                            <span>Reasoning Process</span>
+                            <i class="fas fa-chevron-down" style="margin-left: auto; font-size: 12px;"></i>
+                            </div>
+                            <div class="reasoning-container" id="reasoning-container-${message.id}">
+                            <div class="reasoning-content" id="reasoning-${message.id}">
+                            ${message.reasoning}
+                            </div>
+                            </div>
+                            ` : ''}
+                            <div class="message-body" id="message-${message.id}">
+                                ${marked.parse(message.content)}
+                            </div>
+                            <div class="actions">
+                                <button class="copy-btn" data-id="${message.id}">
+                                    <i class="far fa-copy"></i>
+                                    <span>Copy</span>
+                                </button>
+                            </div>
                         </div>
-                        <div class="reasoning-container" id="reasoning-container-${message.id}">
-                        <div class="reasoning-content" id="reasoning-${message.id}">
-                        ${message.reasoning}
-                        </div>
-                        </div>
-                        ` : ''}
-                        <div class="message-body" id="message-${message.id}">
-                            ${marked.parse(message.content)}
-                        </div>
-                        <div class="actions">
-                            <button class="copy-btn" data-id="${message.id}">
-                                <i class="far fa-copy"></i>
-                                <span>Copy</span>
-                            </button>
-                        </div>
-                    </div>
-                `;
-                
-                chatHistory.appendChild(messageElement);
+                    `;
+                    
+                    chatHistory.appendChild(messageElement);
                 });
                 
                 // Add event listeners after rendering
@@ -381,6 +452,11 @@
                 // Apply syntax highlighting
                 hljs.highlightAll();
                 
+                // Render LaTeX with MathJax
+                if (window.MathJax) {
+                    await MathJax.typesetPromise();
+                }
+                
                 // Scroll to bottom
                 chatHistory.scrollTop = chatHistory.scrollHeight;
             }
@@ -391,20 +467,19 @@
                 const messageId = button.getAttribute('data-id');
                 const message = chatData.find(m => m.id == messageId);
                 
-                // Create text representation (strip HTML tags)
-                const tempElement = document.createElement('div');
-                tempElement.innerHTML = marked.parse(message.content);
-                const textToCopy = tempElement.textContent || tempElement.innerText;
+                // Copy markdown content directly
+                const textToCopy = message.content;
                 
                 // Copy to clipboard
                 navigator.clipboard.writeText(textToCopy).then(() => {
                     // Visual feedback
-                    button.innerHTML = '<i class="fas fa-check"></i><span>Copied!</span>';
+                    const originalHTML = button.innerHTML;
+                    button.innerHTML = '<i class="fas fa-check"></i><span>Copied</span>';
                     button.classList.add('copied');
                     
                     // Reset after 2 seconds
                     setTimeout(() => {
-                        button.innerHTML = '<i class="far fa-copy"></i><span>Copy</span>';
+                        button.innerHTML = originalHTML;
                         button.classList.remove('copied');
                     }, 2000);
                 });
@@ -416,21 +491,18 @@
                 const messageId = button.getAttribute('data-id');
                 const reasoningContainer = document.getElementById(`reasoning-container-${messageId}`);
                 const chevron = button.querySelector('.fa-chevron-down');
-                const brainIcon = button.querySelector('.fa-brain');
+                const lightbulb = button.querySelector('.fa-lightbulb');
                 
                 // Toggle expanded state
                 const isExpanded = reasoningContainer.classList.toggle('expanded');
                 
                 // Rotate the chevron
-                chevron.classList.toggle('fa-rotate-180');
-                
-                // Update the brain icon and background
                 if (isExpanded) {
-                    brainIcon.style.color = '#ab68ff';
-                    button.style.background = 'linear-gradient(135deg, rgba(171, 104, 255, 0.1), rgba(255, 107, 107, 0.1))';
+                    chevron.style.transform = 'rotate(180deg)';
+                    lightbulb.style.color = 'var(--accent-primary)';
                 } else {
-                    brainIcon.style.color = '';
-                    button.style.background = '';
+                    chevron.style.transform = 'rotate(0deg)';
+                    lightbulb.style.color = '';
                 }
             }
             

@@ -499,10 +499,16 @@ public actor LlamaServer {
         var pendingMessage: String = ""
         var responseDiff: Double = 0.0
         var wasReasoningToken: Bool = false
-        // Init variables for tool use
-        var functionName: String? = nil
-        var functionArguments: String? = nil
+        
+        // Track tool calls by index
+        struct ToolCallAccumulator {
+            var name: String?
+            var arguments: String = ""
+        }
+        var toolCalls: [Int: ToolCallAccumulator] = [:] // Dictionary keyed by tool call index
         var blockFunctionCalls: [(any DecodableFunctionCall)] = []
+        var toolCallInProgress: Bool = false
+        
         // Init variables for usage
         var tokenCount: Int = 0
         var usage: Usage? = nil
@@ -566,46 +572,39 @@ public actor LlamaServer {
                             }.joined()
                             pendingMessage.append(fragment)
                             progressHandler?(fragment)
-                            // Handle tool call (first call only)
+                            
+                            // Handle tool calls properly with multiple indices
                             if let firstChoice = responseObj.choices.first?.delta,
-                               let toolCall = firstChoice.tool_calls?.first {
-                                // Show progress
-                                if let updateStatusHandler {
-                                    await updateStatusHandler(.usingFunctions)
-                                }
-                                // Set function name
-                                if let name = toolCall.function.name {
-                                    functionName = name
-                                }
-                                // Add to arguments if needed
-                                if let argument = toolCall.function.arguments {
-                                    functionArguments = (functionArguments ?? "") + argument
-                                }
-                                // Extract tool call
-                                if let name = functionName,
-                                   var args = functionArguments {
-                                    // Handle double-wrapped arguments from some APIs
-                                    if let data = args.data(using: .utf8),
-                                       let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-                                       let innerArgs = json["arguments"],
-                                       let unwrappedData = try? JSONSerialization.data(withJSONObject: innerArgs),
-                                       let unwrappedString = String(data: unwrappedData, encoding: .utf8) {
-                                        args = unwrappedString
-                                    }
-                                    if let function = StreamMessage.OpenAIToolCall.Function.getFunctionCall(
-                                        name: name,
-                                        arguments: args
-                                    ) {
-                                        // Append and reset
-                                        blockFunctionCalls.append(function)
-                                        functionName = nil
-                                        functionArguments = nil
-                                    } else {
-                                        print("Failed to decode function call: \(name) with args: \(args)")
+                               let toolCallDeltas = firstChoice.tool_calls {
+                                // Show progress (only once when tool call starts)
+                                if !toolCallInProgress {
+                                    toolCallInProgress = true
+                                    if let updateStatusHandler {
+                                        await updateStatusHandler(.usingFunctions)
                                     }
                                 }
                                 
+                                // Process each tool call delta
+                                for toolCall in toolCallDeltas {
+                                    let index = toolCall.index
+                                    
+                                    // Initialize accumulator for this index if needed
+                                    if toolCalls[index] == nil {
+                                        toolCalls[index] = ToolCallAccumulator()
+                                    }
+                                    
+                                    // Accumulate function name
+                                    if let name = toolCall.function.name {
+                                        toolCalls[index]?.name = name
+                                    }
+                                    
+                                    // Accumulate arguments chunks
+                                    if let argument = toolCall.function.arguments {
+                                        toolCalls[index]?.arguments += argument
+                                    }
+                                }
                             }
+                            
                             // Document usage
                             tokenCount += 1
                             usage = responseObj.usage
@@ -630,6 +629,38 @@ public actor LlamaServer {
                     break listenLoop
             }
         }
+        
+        // Decode all accumulated tool calls AFTER streaming is done
+        let sortedIndices = toolCalls.keys.sorted()
+        for index in sortedIndices {
+            guard let toolCall = toolCalls[index],
+                  let name = toolCall.name else {
+                continue
+            }
+            
+            var args = toolCall.arguments
+            Self.logger.info("Decoding tool call  \(index): \(name) with args: \(args, privacy: .public)")
+            
+            // Handle double-wrapped arguments from some APIs
+            if let data = args.data(using: .utf8),
+               let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+               let innerArgs = json["arguments"],
+               let unwrappedData = try? JSONSerialization.data(withJSONObject: innerArgs),
+               let unwrappedString = String(data: unwrappedData, encoding: .utf8) {
+                args = unwrappedString
+            }
+            
+            if let function = StreamMessage.OpenAIToolCall.Function.getFunctionCall(
+                name: name,
+                arguments: args
+            ) {
+                blockFunctionCalls.append(function)
+                Self.logger.info("Successfully decoded tool call #\(index): \(name)")
+            } else {
+                Self.logger.error("Failed to decode tool call #\(index): \(name) with args: \(args, privacy: .public)")
+            }
+        }
+        
         // Adding a trailing quote or space is a common mistake with the smaller model output
         let cleanText: String = pendingMessage.removeUnmatchedTrailingQuote()
         // Indicate response finished
@@ -680,6 +711,8 @@ public actor LlamaServer {
             blockFunctionCalls: blockFunctionCalls
         )
     }
+
+
     
     /// Function to get a completion from the LLM
     /// - Parameter text: The text to complete
