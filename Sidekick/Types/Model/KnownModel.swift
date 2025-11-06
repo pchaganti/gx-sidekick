@@ -72,14 +72,10 @@ public struct KnownModel: Identifiable, Codable {
     init?(
         identifier: String
     ) {
-        // Find model containing identifier in cached models
-        for model in Self.availableModels {
-            let idContainsName: Bool = identifier.lowercased().contains(model.primaryName.lowercased())
-            let nameContainsId: Bool = model.primaryName.lowercased().contains(identifier.lowercased())
-            if idContainsName || nameContainsId {
-                self = model
-                return
-            }
+        // Use the improved findModel method
+        if let found = Self.findModel(byIdentifier: identifier, in: Self.availableModels) {
+            self = found
+            return
         }
         // If fell through, return nil
         return nil
@@ -92,14 +88,10 @@ public struct KnownModel: Identifiable, Codable {
         identifier: String,
         in models: [KnownModel]
     ) {
-        // Find model containing identifier
-        for model in models {
-            let idContainsName: Bool = identifier.lowercased().contains(model.primaryName.lowercased())
-            let nameContainsId: Bool = model.primaryName.lowercased().contains(identifier.lowercased())
-            if idContainsName || nameContainsId {
-                self = model
-                return
-            }
+        // Use the improved findModel method
+        if let found = Self.findModel(byIdentifier: identifier, in: models) {
+            self = found
+            return
         }
         // If fell through, return nil
         return nil
@@ -107,14 +99,52 @@ public struct KnownModel: Identifiable, Codable {
     
     /// Finds a model by identifier from a collection of models
     public static func findModel(byIdentifier identifier: String, in models: [KnownModel]) -> KnownModel? {
+        let normalizedIdentifier = normalizeModelIdentifier(identifier)
+        
+        // First pass: try exact match
         for model in models {
-            let idContainsName = identifier.lowercased().contains(model.primaryName.lowercased())
-            let nameContainsId = model.primaryName.lowercased().contains(identifier.lowercased())
-            if idContainsName || nameContainsId {
+            let normalizedPrimaryName = normalizeModelIdentifier(model.primaryName)
+            if normalizedIdentifier == normalizedPrimaryName {
                 return model
             }
         }
-        return nil
+        
+        // Second pass: try contains match, but prefer longer matches to avoid false positives
+        var bestMatch: KnownModel?
+        var bestMatchLength = 0
+        
+        for model in models {
+            let normalizedPrimaryName = normalizeModelIdentifier(model.primaryName)
+            let idContainsName = normalizedIdentifier.contains(normalizedPrimaryName)
+            let nameContainsId = normalizedPrimaryName.contains(normalizedIdentifier)
+            
+            if idContainsName || nameContainsId {
+                let matchLength = min(normalizedIdentifier.count, normalizedPrimaryName.count)
+                if matchLength > bestMatchLength {
+                    bestMatch = model
+                    bestMatchLength = matchLength
+                }
+            }
+        }
+        
+        return bestMatch
+    }
+    
+    /// Normalizes a model identifier for comparison by removing provider prefix and variant suffix
+    private static func normalizeModelIdentifier(_ identifier: String) -> String {
+        var normalized = identifier.lowercased()
+        
+        // Remove provider prefix (e.g., "anthropic/", "openai/")
+        if let slashIndex = normalized.firstIndex(of: "/") {
+            normalized = String(normalized[normalized.index(after: slashIndex)...])
+        }
+        
+        // Remove variant suffix (e.g., ":free", ":extended")
+        if let colonIndex = normalized.firstIndex(of: ":") {
+            normalized = String(normalized[..<colonIndex])
+        }
+        
+        return normalized
     }
     
     /// Asynchronously finds a model by identifier from OpenRouter API
@@ -140,6 +170,40 @@ public struct KnownModel: Identifiable, Codable {
     /// The ``Organization`` that trained the model
     public var organization: Organization
     
+    /// The full identifier including organization prefix (e.g., "anthropic/claude-sonnet-4.5")
+    public var fullIdentifier: String {
+        let orgPrefix: String
+        switch organization {
+            case .alibaba:
+                orgPrefix = "qwen"
+            case .amazon:
+                orgPrefix = "amazon"
+            case .anthropic:
+                orgPrefix = "anthropic"
+            case .deepSeek:
+                orgPrefix = "deepseek"
+            case .google:
+                orgPrefix = "google"
+            case .meta:
+                orgPrefix = "meta-llama"
+            case .microsoft:
+                orgPrefix = "microsoft"
+            case .minimax:
+                orgPrefix = "minimax"
+            case .mistral:
+                orgPrefix = "mistralai"
+            case .moonshotai:
+                orgPrefix = "moonshotai"
+            case .openAi:
+                orgPrefix = "openai"
+            case .xAi:
+                orgPrefix = "x-ai"
+            case .zhipu:
+                orgPrefix = "thudm"
+        }
+        return "\(orgPrefix)/\(primaryName)"
+    }
+    
     /// An array of supported ``Modality``
     public var modalities: [Modality]
     /// A `Bool` representing whethe the model is multimodal
@@ -152,6 +216,14 @@ public struct KnownModel: Identifiable, Codable {
     
     /// A `Bool` representing whethe the model is capable of reasoning
     public var isReasoningModel: Bool
+    
+    /// Checks if the model needs an explicit reasoning parameter on OpenRouter
+    public var requiresExplicitReasoning: Bool {
+        guard organization == .anthropic else { return false }
+        let lowerName = primaryName.lowercased()
+        let pattern = #"claude-[4-9]|(sonnet|opus|haiku)-[4-9]"#
+        return lowerName.range(of: pattern, options: .regularExpression) != nil
+    }
     
     /// Organizations that train models
     public enum Organization: String, Codable, CaseIterable {

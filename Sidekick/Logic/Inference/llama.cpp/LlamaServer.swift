@@ -158,7 +158,7 @@ public actor LlamaServer {
     public static func getAvailableModels() async -> [String] {
         // Try the cache first
         if let cachedModels = KnownModel.loadModelsFromFile() {
-            return cachedModels.map(keyPath: \.primaryName)
+            return cachedModels.map(keyPath: \.fullIdentifier)
         }
         // Else, set up request
         guard let modelsEndpoint: URL = URL(
