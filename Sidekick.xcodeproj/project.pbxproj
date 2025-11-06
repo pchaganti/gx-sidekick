@@ -67,6 +67,7 @@
 		202D4E762EBC5E95005D6F74 /* PromptAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202D4E742EBC5E95005D6F74 /* PromptAnalyzer.swift */; };
 		202D4E772EBC5E95005D6F74 /* UserRequestClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 202D4E752EBC5E95005D6F74 /* UserRequestClassifier.mlmodel */; };
 		202D4E792EBCDC97005D6F74 /* PythonRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202D4E782EBCDC97005D6F74 /* PythonRunner.swift */; };
+		202D4E7B2EBD371E005D6F74 /* TodoFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202D4E7A2EBD371E005D6F74 /* TodoFunctions.swift */; };
 		202E3EDD2CBB8F7B00AF86C8 /* ReferencedURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202E3EDC2CBB8F7B00AF86C8 /* ReferencedURL.swift */; };
 		202E93662DB22D3000AB361E /* InputFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202E93652DB22D3000AB361E /* InputFunctions.swift */; };
 		202E936A2DB546EC00AB361E /* MultilineTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202E93692DB546EC00AB361E /* MultilineTextEditor.swift */; };
@@ -499,6 +500,7 @@
 		202D4E742EBC5E95005D6F74 /* PromptAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptAnalyzer.swift; sourceTree = "<group>"; };
 		202D4E752EBC5E95005D6F74 /* UserRequestClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = UserRequestClassifier.mlmodel; sourceTree = "<group>"; };
 		202D4E782EBCDC97005D6F74 /* PythonRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PythonRunner.swift; sourceTree = "<group>"; };
+		202D4E7A2EBD371E005D6F74 /* TodoFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoFunctions.swift; sourceTree = "<group>"; };
 		202E3EDC2CBB8F7B00AF86C8 /* ReferencedURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferencedURL.swift; sourceTree = "<group>"; };
 		202E93652DB22D3000AB361E /* InputFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFunctions.swift; sourceTree = "<group>"; };
 		202E93692DB546EC00AB361E /* MultilineTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultilineTextEditor.swift; sourceTree = "<group>"; };
@@ -1527,6 +1529,7 @@
 				202E93652DB22D3000AB361E /* InputFunctions.swift */,
 				200B23642DB0D31A00127D48 /* ReminderFunctions.swift */,
 				20DAC4412DADF01F0039208E /* WebFunctions.swift */,
+				202D4E7A2EBD371E005D6F74 /* TodoFunctions.swift */,
 			);
 			path = "Default Functions";
 			sourceTree = "<group>";
@@ -2649,6 +2652,7 @@
 				2000EF3A2DCB7950006F9A95 /* SearchMenuToggleButton.swift in Sources */,
 				208C5FDA2D7A771F00D82AA6 /* RetryButton.swift in Sources */,
 				204D9CBF2CF4ABCF0052B6F4 /* StatusLabelView.swift in Sources */,
+				202D4E7B2EBD371E005D6F74 /* TodoFunctions.swift in Sources */,
 				20CEA75B2CE308AD0070579B /* MessageTextContentView.swift in Sources */,
 				20DFF4902DB7AB6D00F3F76C /* MemoriesManagerView.swift in Sources */,
 				202801FC2CC9C5C2005C1F7D /* TemporaryResourceView.swift in Sources */,

@@ -382,6 +382,41 @@ public actor LlamaServer {
         }
     }
     
+    /// Function to retry an operation on network failures
+    /// - Parameters:
+    ///   - maxRetries: Maximum number of retry attempts
+    ///   - operation: The async operation to retry
+    /// - Returns: The result of the operation
+    /// - Throws: The last error encountered if all retries fail
+    private func retryOnNetworkError<T>(
+        maxRetries: Int = 3,
+        operation: @escaping () async throws -> T
+    ) async throws -> T {
+        var lastError: Error?
+        
+        for attempt in 0...maxRetries {
+            do {
+                return try await operation()
+            } catch let error as LlamaServerError {
+                lastError = error
+                
+                // Only retry if it's a network error and we haven't exhausted retries
+                if error.isRetryable && attempt < maxRetries {
+                    Self.logger.warning("Network error on attempt \(attempt + 1)/\(maxRetries + 1). Retrying...")
+                    continue
+                } else {
+                    throw error
+                }
+            } catch {
+                // Non-retryable error, throw immediately
+                throw error
+            }
+        }
+        
+        // If we exhausted all retries, throw the last error
+        throw lastError ?? LlamaServerError.errorResponse("Unknown error after retries")
+    }
+    
     /// Function to get a chat completion from the LLM
     /// - Parameters:
     ///   - modelType: The type of model used for completion
@@ -391,6 +426,39 @@ public actor LlamaServer {
     ///   - progressHandler: A handler called after a new token is generated
     /// - Returns: The response returned from the inference server
     public func getChatCompletion(
+        mode: Model.Mode,
+        canReachRemoteServer: Bool,
+        messages: [Message.MessageSubset],
+        useWebSearch: Bool = false,
+        useFunctions: Bool = false,
+        functions: [AnyFunctionBox]? = nil,
+        updateStatusHandler: (@Sendable (Model.Status) async -> Void)? = nil,
+        progressHandler: (@Sendable (String) -> Void)? = nil
+    ) async throws -> CompleteResponse {
+        // Wrap the actual completion call with retry logic
+        return try await retryOnNetworkError {
+            try await self.getChatCompletionInternal(
+                mode: mode,
+                canReachRemoteServer: canReachRemoteServer,
+                messages: messages,
+                useWebSearch: useWebSearch,
+                useFunctions: useFunctions,
+                functions: functions,
+                updateStatusHandler: updateStatusHandler,
+                progressHandler: progressHandler
+            )
+        }
+    }
+    
+    /// Internal function to get a chat completion from the LLM (without retry logic)
+    /// - Parameters:
+    ///   - modelType: The type of model used for completion
+    ///   - mode: The chat completion mode. This controls whether advanced features like resource lookup is used
+    ///   - messages: A list of prior messages
+    ///   - similarityIndex: A similarity index for resource lookup
+    ///   - progressHandler: A handler called after a new token is generated
+    /// - Returns: The response returned from the inference server
+    private func getChatCompletionInternal(
         mode: Model.Mode,
         canReachRemoteServer: Bool,
         messages: [Message.MessageSubset],
@@ -539,6 +607,15 @@ public actor LlamaServer {
                                 StreamResponse.self,
                                 from: data
                             )
+                            // Check for error in response
+                            if let error = responseObj.error {
+                                Self.logger.error("Received error in response: \(error.message, privacy: .public), code: \(error.code ?? -1, privacy: .public)")
+                                if error.isNetworkError {
+                                    throw LlamaServerError.networkError(error.message)
+                                } else {
+                                    throw LlamaServerError.errorResponse(error.message)
+                                }
+                            }
                             // Run completion handler for update
                             let fragment: String = responseObj.choices.map { choice in
                                 // Init variable
@@ -711,8 +788,8 @@ public actor LlamaServer {
             blockFunctionCalls: blockFunctionCalls
         )
     }
-
-
+    
+    
     
     /// Function to get a completion from the LLM
     /// - Parameter text: The text to complete
@@ -983,6 +1060,20 @@ public actor LlamaServer {
         let choices: [StreamChoice]
         let created: Double
         let usage: Usage?
+        let error: ResponseError?
+        
+        /// A structure modeling error information in the response
+        struct ResponseError: Codable {
+            let message: String
+            let code: Int?
+            let metadata: [String: String]?
+            
+            /// Check if this is a network error (5xx status codes)
+            var isNetworkError: Bool {
+                guard let code = code else { return false }
+                return code >= 500 && code < 600
+            }
+        }
         
     }
     

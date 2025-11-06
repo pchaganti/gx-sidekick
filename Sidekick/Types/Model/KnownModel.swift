@@ -55,6 +55,7 @@ public struct KnownModel: Identifiable, Codable {
         primaryName: String,
         displayName: String? = nil,
         organization: Organization,
+        organizationIdentifier: String? = nil,
         modalities: [Modality] = [.text],
         capabilities: [Capability] = [],
     ) {
@@ -62,6 +63,7 @@ public struct KnownModel: Identifiable, Codable {
         self.primaryName = primaryName
         self.displayName = displayName
         self.organization = organization
+        self.organizationIdentifier = organizationIdentifier
         self.modalities = modalities
         self.capabilities = capabilities
         self.isReasoningModel = capabilities.contains(.reasoning)
@@ -170,11 +172,14 @@ public struct KnownModel: Identifiable, Codable {
     /// The ``Organization`` that trained the model
     public var organization: Organization
     
+    /// The original organization identifier string (used for .other organizations)
+    public var organizationIdentifier: String?
+    
     /// The full identifier including organization prefix (e.g., "anthropic/claude-sonnet-4.5")
     public var fullIdentifier: String {
         let orgPrefix: String
         switch organization {
-            case .alibaba:
+            case .qwen:
                 orgPrefix = "qwen"
             case .amazon:
                 orgPrefix = "amazon"
@@ -199,7 +204,16 @@ public struct KnownModel: Identifiable, Codable {
             case .xAi:
                 orgPrefix = "x-ai"
             case .zhipu:
-                orgPrefix = "thudm"
+                orgPrefix = "z-ai"
+            case .bytedance:
+                orgPrefix = "bytedance"
+            case .deepcogito:
+                orgPrefix = "deepcogito"
+            case .nousresearch:
+                orgPrefix = "nousresearch"
+            case .other:
+                // Use the stored organizationIdentifier for unknown organizations
+                orgPrefix = organizationIdentifier ?? "unknown"
         }
         return "\(orgPrefix)/\(primaryName)"
     }
@@ -227,9 +241,10 @@ public struct KnownModel: Identifiable, Codable {
     
     /// Organizations that train models
     public enum Organization: String, Codable, CaseIterable {
-        case alibaba = "Alibaba"
         case amazon = "Amazon"
         case anthropic = "Anthropic"
+        case bytedance = "ByteDance"
+        case deepcogito = "DeepCogito"
         case deepSeek = "DeepSeek"
         case google = "Google"
         case meta = "Meta"
@@ -237,20 +252,27 @@ public struct KnownModel: Identifiable, Codable {
         case minimax = "Minimax"
         case mistral = "Mistral"
         case moonshotai = "Moonshot AI"
+        case nousresearch = "NousResearch"
         case openAi = "OpenAI"
+        case qwen = "Qwen"
         case xAi = "xAI"
         case zhipu = "Zhipu"
+        case other = "Other"
         
         /// Maps a string identifier to an Organization case
         public static func from(string: String) -> Organization? {
             let normalized = string.lowercased()
             switch normalized {
-                case "alibaba", "qwen":
-                    return .alibaba
+                case "qwen", "qwen":
+                    return .qwen
                 case "amazon":
                     return .amazon
                 case "anthropic":
                     return .anthropic
+                case "bytedance":
+                    return .bytedance
+                case "deepcogito":
+                    return .deepcogito
                 case "deepseek":
                     return .deepSeek
                 case "google":
@@ -265,11 +287,13 @@ public struct KnownModel: Identifiable, Codable {
                     return .mistral
                 case "moonshot", "moonshotai":
                     return .moonshotai
+                case "nousresearch":
+                    return .nousresearch
                 case "openai":
                     return .openAi
                 case "xai", "x-ai":
                     return .xAi
-                case "zhipu", "thudm":
+                case "zhipu", "thudm", "z-ai":
                     return .zhipu
                 default:
                     return nil
@@ -423,24 +447,23 @@ public struct KnownModel: Identifiable, Codable {
     }
     
     /// Returns available models from the OpenRouter API
-    /// - Parameter includeOnlyKnownOrganizations: If true, filters out models from unknown organizations
+    /// - Parameter includeOnlyKnownOrganizations: If true, filters out models from unknown organizations (now defaults to false since unknown organizations are supported)
     /// - Returns: An array of KnownModel instances, or throws an error if the API call fails
-    public static func getAvailableModels(includeOnlyKnownOrganizations: Bool = true) async throws -> [KnownModel] {
+    public static func getAvailableModels(includeOnlyKnownOrganizations: Bool = false) async throws -> [KnownModel] {
         var models = try await fetchModelsFromOpenRouter()
         if includeOnlyKnownOrganizations {
-            // Filter to only include models from known organizations
-            let knownOrgNames = Set(Organization.allCases.map { $0.rawValue.lowercased() })
+            // Filter to exclude models from unknown organizations (.other)
             models = models.filter { model in
-                knownOrgNames.contains(model.organization.rawValue.lowercased())
+                model.organization != .other
             }
         }
         return models
     }
     
     /// Returns available models from the OpenRouter API with error handling
-    /// - Parameter includeOnlyKnownOrganizations: If true, filters out models from unknown organizations
+    /// - Parameter includeOnlyKnownOrganizations: If true, filters out models from unknown organizations (now defaults to false since unknown organizations are supported)
     /// - Returns: An array of KnownModel instances, or an empty array if the API call fails
-    public static func getAvailableModelsSafe(includeOnlyKnownOrganizations: Bool = true) async -> [KnownModel] {
+    public static func getAvailableModelsSafe(includeOnlyKnownOrganizations: Bool = false) async -> [KnownModel] {
         do {
             return try await getAvailableModels(includeOnlyKnownOrganizations: includeOnlyKnownOrganizations)
         } catch {
@@ -456,7 +479,8 @@ public struct KnownModel: Identifiable, Codable {
         guard components.count >= 2 else { return nil }
         
         let orgString = String(components[0]).lowercased()
-        guard let org = Organization.from(string: orgString) else { return nil }
+        // Try to map to known organization, otherwise use .other
+        let org = Organization.from(string: orgString) ?? .other
         
         // Extract model name (everything after the first "/")
         let modelName = components.dropFirst().joined(separator: "/")
@@ -509,6 +533,8 @@ public struct KnownModel: Identifiable, Codable {
             primaryName: modelName,
             displayName: openRouterModel.name,
             organization: org,
+            // Store original organization identifier for unknown organizations
+            organizationIdentifier: org == .other ? orgString : nil,
             modalities: modalities,
             capabilities: capabilities
         )

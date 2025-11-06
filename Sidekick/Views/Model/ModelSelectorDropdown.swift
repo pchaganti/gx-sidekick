@@ -81,11 +81,24 @@ struct ModelSelectorDropdown: View {
             if let explicitName = knownModel.displayName?.trimmingCharacters(in: .whitespacesAndNewlines), !explicitName.isEmpty {
                 displayName = explicitName
             } else {
-                let providerSource = components.provider ?? knownModel.organization.rawValue
+                // For unknown organizations, use the stored organizationIdentifier
+                let providerSource: String
+                if knownModel.organization == .other, let orgId = knownModel.organizationIdentifier {
+                    providerSource = orgId
+                } else {
+                    providerSource = components.provider ?? knownModel.organization.rawValue
+                }
                 let baseName = String(knownModel.primaryName.split(separator: ":").first ?? Substring(knownModel.primaryName))
                 displayName = buildDisplayName(provider: providerSource, model: baseName, variant: components.variant)
             }
-            displayName = applyProviderPrefixIfNeeded(displayName, provider: components.provider ?? knownModel.organization.rawValue)
+            // For unknown organizations, use the stored organizationIdentifier
+            let providerForPrefix: String
+            if knownModel.organization == .other, let orgId = knownModel.organizationIdentifier {
+                providerForPrefix = orgId
+            } else {
+                providerForPrefix = components.provider ?? knownModel.organization.rawValue
+            }
+            displayName = applyProviderPrefixIfNeeded(displayName, provider: providerForPrefix)
             displayName = harmonizeVariantDisplay(displayName, expectedVariant: components.variant)
             return displayName
         }
@@ -378,7 +391,11 @@ struct ModelSelectorDropdown: View {
                     LazyVStack(alignment: .leading, spacing: 0, pinnedViews: []) {
                         // Local Models Section
                         if !filteredLocalModels.isEmpty {
-                            sectionHeader(title: "Local Models", id: "LocalHeader")
+                            self.sectionHeader(
+                                title: String(localized: "Local Models"),
+                                id: "LocalHeader",
+                                count: self.filteredLocalModels.count
+                            )
                             ForEach(filteredLocalModels, id: \.name) { modelFile in
                                 let capabilities = getModelCapabilities(modelFile.name)
                                 LocalModelRow(
@@ -402,7 +419,11 @@ struct ModelSelectorDropdown: View {
                                 Divider()
                                     .padding(.vertical, 8)
                             }
-                            sectionHeader(title: "Remote Models", id: "RemoteHeader")
+                            self.sectionHeader(
+                                title: String(localized: "Remote Models"),
+                                id: "RemoteHeader",
+                                count: self.filteredRemoteModels.count
+                            )
                             ForEach(filteredRemoteModels, id: \.self) { modelName in
                                 let capabilities = getModelCapabilities(modelName)
                                 RemoteModelRow(
@@ -493,8 +514,12 @@ struct ModelSelectorDropdown: View {
     }
     
     
-    private func sectionHeader(title: String, id: String) -> some View {
-        Text(title)
+    private func sectionHeader(
+        title: String,
+        id: String,
+        count: Int
+    ) -> some View {
+        Text("\(title) (\(count))")
             .font(.caption)
             .fontWeight(.semibold)
             .foregroundStyle(.secondary)

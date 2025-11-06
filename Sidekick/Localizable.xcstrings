@@ -77,6 +77,17 @@
         }
       }
     },
+    "%@ (%lld)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ (%2$lld)"
+          }
+        }
+      },
+      "shouldTranslate" : false
+    },
     "%@ s" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2167,7 +2178,7 @@
         }
       }
     },
-    "Fix the error according to the server’s error message below, then try again.\n\n%@" : {
+    "Fix the error according to the server's error message below, then try again.\n\n%@" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3064,6 +3075,16 @@
         }
       }
     },
+    "Network Connection Lost" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "网络链接已断开"
+          }
+        }
+      }
+    },
     "Neuron" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3520,28 +3541,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "新端点"
-          }
-        }
-      }
-    },
-    "Reason" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "深度思考"
-          }
-        }
-      }
-    },
-    "Reasoning must be turned on to use Deep Research." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "开展深度调查需要借助深度撕开。"
           }
         }
       }
@@ -4628,12 +4627,12 @@
         }
       }
     },
-    "The local AI model couldn’t be found, and Sidekick could not connect to a remote server. Please verify that the local and server models are configured correctly in Settings." : {
+    "The local AI model couldn't be found, and Sidekick could not connect to a remote server. Please verify that the local and server models are configured correctly in Settings." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sidekick 既找不到AI 模型，又无法连接到服务器。请在“设置”中验证本地和远端模型是否配置正确。"
+            "value" : "未找到本地 AI 模型，且 Sidekick 无法连接远程服务器。请确认本地和服务器模型已在设置中正确配置。"
           }
         }
       }
@@ -4668,23 +4667,22 @@
         }
       }
     },
+    "The network connection was lost. The request will be automatically retried.\n\n%@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "网络连接已断开。系统将自动重试请求。\n\n%@"
+          }
+        }
+      }
+    },
     "The resources %@ were removed because they could not be located." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "由于Sidekick 无法找到%@，相关的资源已被清除。"
-          }
-        }
-      }
-    },
-    "The selected model is not a hybrid reasoning model. Reasoning cannot be toggled." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "所選模型不是混合推理模型。無法强制打开或关闭推理。"
           }
         }
       }

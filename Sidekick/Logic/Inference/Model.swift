@@ -699,22 +699,30 @@ public class Model: ObservableObject {
             messages.append(responseMessageSubset)
             // Check if further tool call is needed
             var hasMadeSufficientCalls: Bool = false
-            let checkMode = Settings.FunctionCompletionCheckMode(
-                Settings.checkFunctionsCompletion
-            )
-            if checkMode != .none,
-               let modelType = checkMode.modelType {
-                hasMadeSufficientCalls = await self.sufficientFunctionCalls(
-                    modelType: modelType,
-                    messages: messages,
-                    canReachRemoteServer: canReachRemoteServer,
-                    results: results
+            // If there are incomplete to-do items, skip the sufficiency check and continue with tools
+            let hasIncompleteTodos: Bool = TodoFunctions.getIncompleteTodoSummary() != nil
+            if !hasIncompleteTodos {
+                let checkMode = Settings.FunctionCompletionCheckMode(
+                    Settings.checkFunctionsCompletion
                 )
+                if checkMode != .none,
+                   let modelType = checkMode.modelType {
+                    hasMadeSufficientCalls = await self.sufficientFunctionCalls(
+                        modelType: modelType,
+                        messages: messages,
+                        canReachRemoteServer: canReachRemoteServer,
+                        results: results
+                    )
+                }
             }
             // Formulate user message
             var messageStringComponents: [String] = results.map(
                 \.description
             )
+            // Add incomplete to-do items if any exist
+            if let todoSummary = TodoFunctions.getIncompleteTodoSummary() {
+                messageStringComponents.append(todoSummary)
+            }
             // Add prompt
             let changePrompt: String = {
                 if hasMadeSufficientCalls {

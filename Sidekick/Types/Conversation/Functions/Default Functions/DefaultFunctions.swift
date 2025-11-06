@@ -37,6 +37,7 @@ public class DefaultFunctions {
         FileFunctions.functions,
         InputFunctions.functions,
         RemindersFunctions.functions,
+        TodoFunctions.functions,
         WebFunctions.functions,
         [
             DefaultFunctions.fetchContacts,
