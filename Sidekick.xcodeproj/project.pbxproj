@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2000EDF52DC99FCA006F9A95 /* ReasoningClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 2000EDF42DC99FCA006F9A95 /* ReasoningClassifier.mlmodel */; };
 		2000EDF82DC9B868006F9A95 /* ArgumentSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2000EDF72DC9B868006F9A95 /* ArgumentSliderView.swift */; };
 		2000EDFA2DC9B971006F9A95 /* ArgumentPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2000EDF92DC9B971006F9A95 /* ArgumentPickerView.swift */; };
 		2000EE922DCADB0E006F9A95 /* WebScrape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2000EE912DCADB0E006F9A95 /* WebScrape.swift */; };
@@ -65,6 +64,8 @@
 		202801FA2CC949F2005C1F7D /* TemporaryResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202801F92CC949F2005C1F7D /* TemporaryResource.swift */; };
 		202801FC2CC9C5C2005C1F7D /* TemporaryResourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202801FB2CC9C5C2005C1F7D /* TemporaryResourceView.swift */; };
 		202D4E722EBC30EA005D6F74 /* CollapsibleUserMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202D4E712EBC30EA005D6F74 /* CollapsibleUserMessageView.swift */; };
+		202D4E762EBC5E95005D6F74 /* PromptAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202D4E742EBC5E95005D6F74 /* PromptAnalyzer.swift */; };
+		202D4E772EBC5E95005D6F74 /* UserRequestClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 202D4E752EBC5E95005D6F74 /* UserRequestClassifier.mlmodel */; };
 		202E3EDD2CBB8F7B00AF86C8 /* ReferencedURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202E3EDC2CBB8F7B00AF86C8 /* ReferencedURL.swift */; };
 		202E93662DB22D3000AB361E /* InputFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202E93652DB22D3000AB361E /* InputFunctions.swift */; };
 		202E936A2DB546EC00AB361E /* MultilineTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202E93692DB546EC00AB361E /* MultilineTextEditor.swift */; };
@@ -330,12 +331,9 @@
 		20C62EC32D713D5100996566 /* SlideStudioPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C62EC22D713D5100996566 /* SlideStudioPromptView.swift */; };
 		20C62EC72D71403A00996566 /* SlideStudioQuickPromptsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C62EC62D71403A00996566 /* SlideStudioQuickPromptsView.swift */; };
 		20CB50382D828CB60064D460 /* LaTeXSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 20CB50372D828CB60064D460 /* LaTeXSwiftUI */; };
-		20CB7AC02D1457B10013E30C /* PromptAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CB7ABF2D1457B10013E30C /* PromptAnalyzer.swift */; };
-		20CB7AC82D145E320013E30C /* UserRequestClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 20CB7AC72D145E320013E30C /* UserRequestClassifier.mlmodel */; };
 		20CE5E582D5C85D10000A2EC /* LengthyTasksNavigationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CE5E572D5C85D10000A2EC /* LengthyTasksNavigationButton.swift */; };
 		20CEA75B2CE308AD0070579B /* MessageTextContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CEA75A2CE308AD0070579B /* MessageTextContentView.swift */; };
 		20CEA75E2CE309F10070579B /* MessageOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CEA75D2CE309F10070579B /* MessageOptionsView.swift */; };
-		20D01BFA2DBFAA4A00EE3DF3 /* UseReasoningButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D01BF92DBFAA4A00EE3DF3 /* UseReasoningButton.swift */; };
 		20D65DD52CC0CC6C0052D826 /* StopGenerationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D65DD42CC0CC6C0052D826 /* StopGenerationButton.swift */; };
 		20D9A9732CD2769300171FDE /* MessageShareMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D9A9722CD2769300171FDE /* MessageShareMenu.swift */; };
 		20DAC4422DADF01F0039208E /* WebFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DAC4412DADF01F0039208E /* WebFunctions.swift */; };
@@ -439,7 +437,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		2000EDF42DC99FCA006F9A95 /* ReasoningClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = ReasoningClassifier.mlmodel; sourceTree = "<group>"; };
 		2000EDF72DC9B868006F9A95 /* ArgumentSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArgumentSliderView.swift; sourceTree = "<group>"; };
 		2000EDF92DC9B971006F9A95 /* ArgumentPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArgumentPickerView.swift; sourceTree = "<group>"; };
 		2000EE912DCADB0E006F9A95 /* WebScrape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebScrape.swift; sourceTree = "<group>"; };
@@ -498,6 +495,8 @@
 		202801F92CC949F2005C1F7D /* TemporaryResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryResource.swift; sourceTree = "<group>"; };
 		202801FB2CC9C5C2005C1F7D /* TemporaryResourceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryResourceView.swift; sourceTree = "<group>"; };
 		202D4E712EBC30EA005D6F74 /* CollapsibleUserMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsibleUserMessageView.swift; sourceTree = "<group>"; };
+		202D4E742EBC5E95005D6F74 /* PromptAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptAnalyzer.swift; sourceTree = "<group>"; };
+		202D4E752EBC5E95005D6F74 /* UserRequestClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = UserRequestClassifier.mlmodel; sourceTree = "<group>"; };
 		202E3EDC2CBB8F7B00AF86C8 /* ReferencedURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferencedURL.swift; sourceTree = "<group>"; };
 		202E93652DB22D3000AB361E /* InputFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFunctions.swift; sourceTree = "<group>"; };
 		202E93692DB546EC00AB361E /* MultilineTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultilineTextEditor.swift; sourceTree = "<group>"; };
@@ -728,12 +727,9 @@
 		20C62EC02D713BC000996566 /* SlideStudioProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideStudioProgressView.swift; sourceTree = "<group>"; };
 		20C62EC22D713D5100996566 /* SlideStudioPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideStudioPromptView.swift; sourceTree = "<group>"; };
 		20C62EC62D71403A00996566 /* SlideStudioQuickPromptsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideStudioQuickPromptsView.swift; sourceTree = "<group>"; };
-		20CB7ABF2D1457B10013E30C /* PromptAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptAnalyzer.swift; sourceTree = "<group>"; };
-		20CB7AC72D145E320013E30C /* UserRequestClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = UserRequestClassifier.mlmodel; sourceTree = "<group>"; };
 		20CE5E572D5C85D10000A2EC /* LengthyTasksNavigationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LengthyTasksNavigationButton.swift; sourceTree = "<group>"; };
 		20CEA75A2CE308AD0070579B /* MessageTextContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTextContentView.swift; sourceTree = "<group>"; };
 		20CEA75D2CE309F10070579B /* MessageOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageOptionsView.swift; sourceTree = "<group>"; };
-		20D01BF92DBFAA4A00EE3DF3 /* UseReasoningButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseReasoningButton.swift; sourceTree = "<group>"; };
 		20D65DD22CC0B8A20052D826 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		20D65DD42CC0CC6C0052D826 /* StopGenerationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopGenerationButton.swift; sourceTree = "<group>"; };
 		20D9A9722CD2769300171FDE /* MessageShareMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageShareMenu.swift; sourceTree = "<group>"; };
@@ -1155,6 +1151,15 @@
 				20B97CE82CB007DF009A0A5D /* Resource.swift */,
 			);
 			path = Expert;
+			sourceTree = "<group>";
+		};
+		202D4E732EBC5E80005D6F74 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				202D4E742EBC5E95005D6F74 /* PromptAnalyzer.swift */,
+				202D4E752EBC5E95005D6F74 /* UserRequestClassifier.mlmodel */,
+			);
+			path = Router;
 			sourceTree = "<group>";
 		};
 		202E021F2CFD914E00149220 /* Chat */ = {
@@ -1809,7 +1814,7 @@
 			isa = PBXGroup;
 			children = (
 				20B97CCC2CAFEC37009A0A5D /* Model.swift */,
-				20CB7ABE2D14579C0013E30C /* Router */,
+				202D4E732EBC5E80005D6F74 /* Router */,
 				200FBFD62CB627B100A92A74 /* llama.cpp */,
 			);
 			path = Inference;
@@ -1864,16 +1869,6 @@
 			path = Functions;
 			sourceTree = "<group>";
 		};
-		20CB7ABE2D14579C0013E30C /* Router */ = {
-			isa = PBXGroup;
-			children = (
-				20CB7ABF2D1457B10013E30C /* PromptAnalyzer.swift */,
-				2000EDF42DC99FCA006F9A95 /* ReasoningClassifier.mlmodel */,
-				20CB7AC72D145E320013E30C /* UserRequestClassifier.mlmodel */,
-			);
-			path = Router;
-			sourceTree = "<group>";
-		};
 		20CEA75C2CE308B50070579B /* Message */ = {
 			isa = PBXGroup;
 			children = (
@@ -1898,7 +1893,6 @@
 				2025E67C2D89197700289E3F /* ToggleSearchButton.swift */,
 				2000EF392DCB7950006F9A95 /* SearchMenuToggleButton.swift */,
 				208855CB2DAD078800071F0B /* UseFunctionsButton.swift */,
-				20D01BF92DBFAA4A00EE3DF3 /* UseReasoningButton.swift */,
 			);
 			path = "Toggle Buttons";
 			sourceTree = "<group>";
@@ -2387,7 +2381,6 @@
 				2030D61C2D6C522D00F18BF4 /* DetectorEvaluationView.swift in Sources */,
 				204592172CD32DEF00DEAA96 /* TypedTextView.swift in Sources */,
 				20571F842CBD71C9004F3344 /* SystemPromptEditor.swift in Sources */,
-				20CB7AC02D1457B10013E30C /* PromptAnalyzer.swift in Sources */,
 				20FDE2A42DAE73BF000A16F8 /* AnyFunctionBox.swift in Sources */,
 				200619AF2D6766B1001949EF /* DiagrammerGeneratingView.swift in Sources */,
 				20C5CBD52DA5F7640071F5F7 /* FunctionCallsView.swift in Sources */,
@@ -2525,7 +2518,6 @@
 				2030D61A2D6C50A000F18BF4 /* DetectorInputView.swift in Sources */,
 				206A2FDB2DD9A38E00040F55 /* SVGValidator.swift in Sources */,
 				202E936A2DB546EC00AB361E /* MultilineTextEditor.swift in Sources */,
-				20CB7AC82D145E320013E30C /* UserRequestClassifier.mlmodel in Sources */,
 				2004D7642CBC9DA2009F294E /* ConversationState.swift in Sources */,
 				20DAC4422DADF01F0039208E /* WebFunctions.swift in Sources */,
 				2086E1712CB036BB00FFCF57 /* ConversationManager.swift in Sources */,
@@ -2590,7 +2582,6 @@
 				2051FEDB2D8E53CB001B1E0D /* Extension+AVSpeechSynthesisVoice.swift in Sources */,
 				20E284432DD5838E007E99AF /* WebsiteRowView.swift in Sources */,
 				20457D2C2D92511600954892 /* CompletionsSetupViewModel.swift in Sources */,
-				2000EDF52DC99FCA006F9A95 /* ReasoningClassifier.mlmodel in Sources */,
 				20D65DD52CC0CC6C0052D826 /* StopGenerationButton.swift in Sources */,
 				204AEDA92D8170D0004028FF /* ServerModelNameEditor.swift in Sources */,
 				2083AEA42D8853E40049C139 /* EmailSelectionView.swift in Sources */,
@@ -2621,6 +2612,8 @@
 				20E48C2B2CB560E30085E7D6 /* Extension+CGKeyCode.swift in Sources */,
 				201BB99E2D8B17C700890EE6 /* CanvasController.swift in Sources */,
 				208844312CDDE33F003BCB6F /* ModelListView.swift in Sources */,
+				202D4E762EBC5E95005D6F74 /* PromptAnalyzer.swift in Sources */,
+				202D4E772EBC5E95005D6F74 /* UserRequestClassifier.mlmodel in Sources */,
 				2099BD9D2CB7B8E700E02732 /* Notifications.swift in Sources */,
 				201BB9A52D8BA0BC00890EE6 /* SnapshotCopyButton.swift in Sources */,
 				20C16E1B2D0EBE500001B3C9 /* IntroductionViewController.swift in Sources */,
@@ -2660,7 +2653,6 @@
 				208855CF2DAD1D6F00071F0B /* ArithmeticFunctions.swift in Sources */,
 				2034876D2D67236000A88DA4 /* DiagrammerView.swift in Sources */,
 				204AE3B92CEAF57E0086B42D /* CommandManager.swift in Sources */,
-				20D01BFA2DBFAA4A00EE3DF3 /* UseReasoningButton.swift in Sources */,
 				208855D12DAD1D9900071F0B /* CodeFunctions.swift in Sources */,
 				201A1A9E2CDBBA25001E9BA9 /* MarkdownLineChartView.swift in Sources */,
 				200FBFF32CB66B8300A92A74 /* ServerHealth.swift in Sources */,

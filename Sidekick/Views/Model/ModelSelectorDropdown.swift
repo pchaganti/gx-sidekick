@@ -74,6 +74,27 @@ struct ModelSelectorDropdown: View {
     
     // Format model name for toolbar display
     private func formatModelName(_ name: String) -> String {
+        // Try to find the model in KnownModel cache first
+        if let knownModel = KnownModel.findModel(byIdentifier: name, in: KnownModel.availableModels) {
+            // Extract variant (text after colon) from original name
+            var variant: String? = nil
+            if let colonIndex = name.firstIndex(of: ":") {
+                variant = String(name[name.index(after: colonIndex)...])
+            }
+            
+            // Format using KnownModel information
+            var result: String
+            if let displayName = knownModel.displayName {
+                // displayName already includes the provider name from OpenRouter API
+                result = displayName
+            } else {
+                // Fallback: construct from organization and primaryName
+                result = "\(knownModel.organization.rawValue): \(knownModel.primaryName.lowercased())"
+            }
+            return result
+        }
+        
+        // Fallback to original implementation
         var formattedName = name
         var provider: String? = nil
         // Extract provider prefix (e.g., "openai/", "anthropic/", "qwen/")
@@ -191,22 +212,33 @@ struct ModelSelectorDropdown: View {
     
     // Filter models based on fuzzy search
     var filteredLocalModels: [ModelManager.ModelFile] {
-        if searchText.isEmpty {
-            return modelManager.models
-        }
-        return modelManager.models.filter { model in
-            fuzzyMatch(model.name, query: searchText)
+        let filtered = searchText.isEmpty
+        ? modelManager.models
+        : modelManager.models.filter { model in fuzzyMatch(model.name, query: searchText) }
+        
+        // Sort by parameter count (largest first)
+        return filtered.sorted { model1, model2 in
+            let params1 = model1.name.modelParameterCount
+            let params2 = model2.name.modelParameterCount
+            
+            if params1 > 0 && params2 > 0 {
+                return params1 > params2
+            }
+            if params1 > 0 { return true }
+            if params2 > 0 { return false }
+            
+            return model1.name.localizedStandardCompare(model2.name) == .orderedAscending
         }
     }
     
     var filteredRemoteModels: [String] {
-        let allRemoteModels = (remoteModelNames + customModelNames).sorted()
-        if searchText.isEmpty {
-            return allRemoteModels
-        }
-        return allRemoteModels.filter { modelName in
-            fuzzyMatch(modelName, query: searchText)
-        }
+        let allRemoteModels = remoteModelNames + customModelNames
+        let filtered = searchText.isEmpty
+        ? allRemoteModels
+        : allRemoteModels.filter { modelName in fuzzyMatch(modelName, query: searchText) }
+        
+        // Sort by parameter count (largest first)
+        return filtered.sortedByModelSize()
     }
     
     var body: some View {
@@ -228,13 +260,13 @@ struct ModelSelectorDropdown: View {
         .buttonStyle(.plain)
         .popover(isPresented: $showingDropdown) {
             dropdownContent
-                .frame(width: 320, height: 480)
+                .frame(width: 360, height: 480)
                 .onAppear {
                     // Reset search when opening
                     searchText = ""
                     
                     // Determine which section to scroll to
-                    if let url = Settings.modelUrl, !InferenceSettings.useServer {
+                    if !InferenceSettings.useServer {
                         // Local model is active
                         scrollToLocal = true
                         scrollToRemote = false
@@ -294,7 +326,7 @@ struct ModelSelectorDropdown: View {
             of: self.serverModelName
         ) {
             // Turn has vision on if model is in list and is multimodal
-            let serverModelHasVision: Bool = KnownModel.popularModels.contains { model in
+            let serverModelHasVision: Bool = KnownModel.availableModels.contains { model in
                 let nameMatches: Bool = self.serverModelName.contains(model.primaryName)
                 return nameMatches && model.isVision
             }
@@ -328,10 +360,13 @@ struct ModelSelectorDropdown: View {
                         if !filteredLocalModels.isEmpty {
                             sectionHeader(title: "Local Models", id: "LocalHeader")
                             ForEach(filteredLocalModels, id: \.name) { modelFile in
+                                let capabilities = getModelCapabilities(modelFile.name)
                                 LocalModelRow(
                                     modelFile: modelFile,
                                     isSelected: Settings.modelUrl == modelFile.url,
                                     isRemoteServerReachable: remoteServerReachable,
+                                    isReasoning: capabilities.isReasoning,
+                                    isVision: capabilities.isVision,
                                     onSelect: {
                                         selectLocalModel(modelFile)
                                     }
@@ -366,10 +401,13 @@ struct ModelSelectorDropdown: View {
                             }
                             sectionHeader(title: "Remote Models", id: "RemoteHeader")
                             ForEach(filteredRemoteModels, id: \.self) { modelName in
+                                let capabilities = getModelCapabilities(modelName)
                                 RemoteModelRow(
                                     modelName: self.formatModelName(modelName),
                                     isSelected: modelName == serverModelName && InferenceSettings.useServer,
                                     isRemoteServerReachable: remoteServerReachable,
+                                    isReasoning: capabilities.isReasoning,
+                                    isVision: capabilities.isVision,
                                     onSelect: {
                                         selectRemoteModel(modelName)
                                     }
@@ -486,6 +524,64 @@ struct ModelSelectorDropdown: View {
     private func refreshModelNames() async {
         self.remoteModelNames = await LlamaServer.getAvailableModels()
     }
+    
+    // Get model capabilities from model name
+    private func getModelCapabilities(_ modelName: String) -> (isReasoning: Bool, isVision: Bool) {
+        // Clean up the model name for better matching
+        var cleanedName = modelName
+        
+        // Remove file extensions (for local models)
+        if cleanedName.hasSuffix(".gguf") {
+            cleanedName = String(cleanedName.dropLast(5))
+        }
+        
+        // Remove quantization suffixes (e.g., Q4_K_M, Q8_0, etc.)
+        let quantizationPatterns = [
+            "-Q4_K_M", "-Q4_K_S", "-Q5_K_M", "-Q5_K_S", "-Q6_K", "-Q8_0",
+            "_Q4_K_M", "_Q4_K_S", "_Q5_K_M", "_Q5_K_S", "_Q6_K", "_Q8_0",
+            "-q4_k_m", "-q4_k_s", "-q5_k_m", "-q5_k_s", "-q6_k", "-q8_0",
+            "_q4_k_m", "_q4_k_s", "_q5_k_m", "_q5_k_s", "_q6_k", "_q8_0"
+        ]
+        for pattern in quantizationPatterns {
+            if cleanedName.hasSuffix(pattern) {
+                cleanedName = String(cleanedName.dropLast(pattern.count))
+                break
+            }
+        }
+        
+        // Try direct lookup first
+        if let knownModel = KnownModel(identifier: cleanedName) {
+            return (knownModel.isReasoningModel, knownModel.isVision)
+        }
+        
+        // If direct lookup fails, try with original name
+        if cleanedName != modelName, let knownModel = KnownModel(identifier: modelName) {
+            return (knownModel.isReasoningModel, knownModel.isVision)
+        }
+        
+        // If still no match, try fuzzy matching with normalized names
+        let normalizedSearch = cleanedName
+            .lowercased()
+            .replacingOccurrences(of: "-", with: "")
+            .replacingOccurrences(of: "_", with: "")
+            .replacingOccurrences(of: ".", with: "")
+        
+        for model in KnownModel.availableModels {
+            let normalizedModelName = model.primaryName
+                .lowercased()
+                .replacingOccurrences(of: "-", with: "")
+                .replacingOccurrences(of: "_", with: "")
+                .replacingOccurrences(of: ".", with: "")
+                .replacingOccurrences(of: "/", with: "")
+            
+            // Check if normalized names match closely
+            if normalizedSearch.contains(normalizedModelName) || normalizedModelName.contains(normalizedSearch) {
+                return (model.isReasoningModel, model.isVision)
+            }
+        }
+        
+        return (false, false)
+    }
 }
 
 // MARK: - Model Row Views
@@ -495,6 +591,8 @@ struct LocalModelRow: View {
     let modelFile: ModelManager.ModelFile
     let isSelected: Bool
     let isRemoteServerReachable: Bool
+    let isReasoning: Bool
+    let isVision: Bool
     let onSelect: () -> Void
     
     var shouldHighlight: Bool {
@@ -503,16 +601,29 @@ struct LocalModelRow: View {
     
     var body: some View {
         Button(action: onSelect) {
-            HStack {
+            HStack(spacing: 8) {
                 Text(modelFile.name)
                     .font(.body)
                     .foregroundStyle(.primary)
                 Spacer()
-                if shouldHighlight {
-                    Image(systemName: "checkmark")
-                        .font(.body)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(Color.accentColor)
+                
+                HStack(spacing: 6) {
+                    if shouldHighlight {
+                        Image(systemName: "checkmark")
+                            .font(.body)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(Color.accentColor)
+                    }
+                    if isReasoning {
+                        Image(systemName: "brain")
+                            .font(.caption)
+                            .foregroundStyle(.purple)
+                    }
+                    if isVision {
+                        Image(systemName: "eye")
+                            .font(.caption)
+                            .foregroundStyle(.blue)
+                    }
                 }
             }
             .contentShape(Rectangle())
@@ -534,6 +645,8 @@ struct RemoteModelRow: View {
     let modelName: String
     let isSelected: Bool
     let isRemoteServerReachable: Bool
+    let isReasoning: Bool
+    let isVision: Bool
     let onSelect: () -> Void
     
     var shouldHighlight: Bool {
@@ -542,16 +655,29 @@ struct RemoteModelRow: View {
     
     var body: some View {
         Button(action: onSelect) {
-            HStack {
+            HStack(spacing: 8) {
                 Text(modelName)
                     .font(.body)
                     .foregroundStyle(.primary)
                 Spacer()
-                if shouldHighlight {
-                    Image(systemName: "checkmark")
-                        .font(.body)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(Color.accentColor)
+                
+                HStack(spacing: 6) {
+                    if shouldHighlight {
+                        Image(systemName: "checkmark")
+                            .font(.body)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(Color.accentColor)
+                    }
+                    if isReasoning {
+                        Image(systemName: "brain")
+                            .font(.caption)
+                            .foregroundStyle(.purple)
+                    }
+                    if isVision {
+                        Image(systemName: "eye")
+                            .font(.caption)
+                            .foregroundStyle(.blue)
+                    }
                 }
             }
             .contentShape(Rectangle())

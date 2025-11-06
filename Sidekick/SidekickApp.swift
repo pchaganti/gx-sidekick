@@ -36,6 +36,10 @@ struct SidekickApp: App {
     init() {
         // Hide all tips for now
         Tips.hideAllTipsForTesting()
+        // Initialize model cache
+        Task {
+            await KnownModel.initializeModelCache()
+        }
     }
 	
 	var body: some Scene {

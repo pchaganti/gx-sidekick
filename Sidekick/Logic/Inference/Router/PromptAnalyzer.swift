@@ -11,62 +11,6 @@ import ImagePlayground
 import NaturalLanguage
 
 public class PromptAnalyzer {
-	
-    /// Function to detect if reasoning is required by the prompt
-    /// - Parameter prompt: The user's prompt
-    /// - Returns: A `Bool` representing whether reasoning should be toggled on or off
-    @MainActor
-    public static func isReasoningRequired(
-        _ prompt: String
-    ) -> Bool? {
-        // Check if model is a hybrid reasoning model
-        guard let model = Model.shared.selectedModel,
-                model.isHybridReasoningModel else {
-            return nil
-        }
-        // Init classifier model
-        let mlModelConfig = MLModelConfiguration()
-        mlModelConfig.computeUnits = .all
-        guard let promptClassifier: NLModel = try? NLModel(
-            mlModel: MLModel(
-                contentsOf: Bundle.main.url(
-                    forResource: "ReasoningClassifier",
-                    withExtension: "mlmodelc"
-                )!
-            )
-        ) else {
-            return nil
-        }
-        // Run classifier
-        let hypotheses: [String: Double] = promptClassifier.predictedLabelHypotheses(
-            for: prompt,
-            maximumCount: ReasoningHypothesis.allCases.count
-        )
-        let reasoningScore: Double = hypotheses[ReasoningHypothesis.reasoning.rawValue] ?? 1.0
-        let noReasoningScore: Double = hypotheses[ReasoningHypothesis.noReasoning.rawValue] ?? 1.0
-        // Return result
-        return reasoningScore > noReasoningScore
-    }
-    
-    /// The expected result type of a prompt
-    public enum ReasoningHypothesis: String, CaseIterable {
-        
-        init?(
-            _ rawValue: String
-        ) {
-            if let hypothesis: ReasoningHypothesis = Self.allCases.filter({ type in
-                type.rawValue == rawValue
-            }).first {
-                self = hypothesis
-            } else {
-                return nil
-            }
-        }
-        
-        case reasoning = "reasoning"
-        case noReasoning = "no-reasoning"
-        
-    }
     
 	/// Function to detect what results are expected by the prompt
 	/// - Parameter prompt: The user's prompt

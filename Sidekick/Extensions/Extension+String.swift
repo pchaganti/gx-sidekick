@@ -600,8 +600,220 @@ public extension String {
         return index(startIndex, offsetBy: distance)
     }
     
-}
+    /// Extract parameter count from model name for sorting
+    var modelParameterCount: Double {
+        let lowercased = self.lowercased()
+        
+        // Extract number + unit patterns (e.g., "235b", "8b", "405m")
+        let paramPattern = #"(\d+\.?\d*)\s*([bm])"#
+        if let regex = try? NSRegularExpression(pattern: paramPattern, options: .caseInsensitive) {
+            let nsString = lowercased as NSString
+            let matches = regex.matches(in: lowercased, options: [], range: NSRange(location: 0, length: nsString.length))
+            
+            var maxParams: Double = 0
+            for match in matches {
+                if match.numberOfRanges >= 3 {
+                    let numberRange = match.range(at: 1)
+                    let unitRange = match.range(at: 2)
+                    
+                    if let number = Double(nsString.substring(with: numberRange)) {
+                        let unit = nsString.substring(with: unitRange)
+                        let multiplier: Double = unit == "b" ? 1000 : 1 // billions or millions
+                        let paramCount = number * multiplier
+                        maxParams = max(maxParams, paramCount)
+                    }
+                }
+            }
+            
+            if maxParams > 0 {
+                return maxParams
+            }
+        }
+        
+        // For proprietary models without explicit parameter counts, use version numbers and tiers
+        var score: Double = 0
+        
+        // Extract version numbers (e.g., "4.5", "3.7", "3.5", "4")
+        let versionPattern = #"(\d+)\.?(\d*)"#
+        if let versionRegex = try? NSRegularExpression(pattern: versionPattern, options: []) {
+            let nsString = lowercased as NSString
+            let matches = versionRegex.matches(in: lowercased, options: [], range: NSRange(location: 0, length: nsString.length))
+            
+            for match in matches {
+                if match.numberOfRanges >= 2 {
+                    let majorRange = match.range(at: 1)
+                    if let major = Double(nsString.substring(with: majorRange)) {
+                        var minor: Double = 0
+                        if match.numberOfRanges >= 3 {
+                            let minorRange = match.range(at: 2)
+                            let minorStr = nsString.substring(with: minorRange)
+                            if !minorStr.isEmpty {
+                                minor = Double(minorStr) ?? 0
+                            }
+                        }
+                        let versionScore = (major * 100) + minor
+                        score = max(score, versionScore)
+                    }
+                }
+            }
+        }
+        
+        // Add tier bonuses to ensure proper ordering within versions
+        // (opus > sonnet > haiku)
+        if lowercased.contains("opus") {
+            score += 30
+        } else if lowercased.contains("sonnet") {
+            score += 20
+        } else if lowercased.contains("haiku") {
+            score += 10
+        }
+        
+        // Handle other special named models (for models without version numbers)
+        if score == 0 {
+            if lowercased.contains("ultra") { score = 10000 }
+            else if lowercased.contains("max") { score = 1000 }
+            else if lowercased.contains("pro") { score = 1000 }
+            else if lowercased.contains("plus") { score = 500 }
+            else if lowercased.contains("mini") { score = 500 }
+            else if lowercased.contains("flash") && !lowercased.contains("flash-lite") { score = 500 }
+            else if lowercased.contains("nano") { score = 100 }
+            else if lowercased.contains("flash-lite") { score = 100 }
+        }
+        
+        return score
+    }
     
+    /// Extract model family name (e.g., "qwen3" from "qwen3-235b", "claude-3.5" from "claude-3.5-sonnet")
+    var modelFamily: String {
+        let lowercased = self.lowercased()
+        var family = lowercased
+        
+        // For proprietary models with tier names, remove the tier and date stamps
+        // but keep the base name and version number
+        let tierPattern = #"[-_](opus|sonnet|haiku|ultra|max|pro|plus|mini|flash|nano)(?:[-_]\d{8})?(?:[-_].*)?$"#
+        if let tierRegex = try? NSRegularExpression(pattern: tierPattern, options: .caseInsensitive) {
+            let nsString = family as NSString
+            let range = NSRange(location: 0, length: nsString.length)
+            if let match = tierRegex.firstMatch(in: family, options: [], range: range) {
+                family = nsString.substring(with: NSRange(location: 0, length: match.range.location))
+            }
+        }
+        
+        // Remove date stamps (e.g., "-20241022")
+        let datePattern = #"[-_]\d{8}$"#
+        if let dateRegex = try? NSRegularExpression(pattern: datePattern, options: []) {
+            let nsString = family as NSString
+            let range = NSRange(location: 0, length: nsString.length)
+            family = dateRegex.stringByReplacingMatches(in: family, options: [], range: range, withTemplate: "")
+        }
+        
+        // Pattern to match explicit size indicators (e.g., "235b", "8b", "405m")
+        let sizePattern = #"[-_](\d+\.?\d*\s*[bm])"#
+        if let regex = try? NSRegularExpression(pattern: sizePattern, options: .caseInsensitive) {
+            let nsString = family as NSString
+            let range = NSRange(location: 0, length: nsString.length)
+            
+            // Find the first size indicator and extract everything before it
+            if let match = regex.firstMatch(in: family, options: [], range: range) {
+                let familyRange = NSRange(location: 0, length: match.range.location)
+                family = nsString.substring(with: familyRange)
+            }
+        }
+        
+        // Remove trailing hyphens or underscores
+        family = family.trimmingCharacters(in: CharacterSet(charactersIn: "-_"))
+        
+        return family.isEmpty ? lowercased : family
+    }
+    
+    /// Extract version number from family name for sorting (e.g., "claude-3.5" → 3.5, "llama-3.1" → 3.1)
+    var familyVersion: Double {
+        let lowercased = self.lowercased()
+        
+        // Pattern to extract version numbers like "3.5", "3.7", "4", etc.
+        let versionPattern = #"[-_]?(\d+)\.?(\d*)"#
+        if let regex = try? NSRegularExpression(pattern: versionPattern, options: []) {
+            let nsString = lowercased as NSString
+            let matches = regex.matches(in: lowercased, options: [], range: NSRange(location: 0, length: nsString.length))
+            
+            var maxVersion: Double = 0
+            for match in matches {
+                if match.numberOfRanges >= 2 {
+                    let majorRange = match.range(at: 1)
+                    if let major = Double(nsString.substring(with: majorRange)) {
+                        var version = major
+                        if match.numberOfRanges >= 3 {
+                            let minorRange = match.range(at: 2)
+                            let minorStr = nsString.substring(with: minorRange)
+                            if !minorStr.isEmpty, let minor = Double(minorStr) {
+                                // Handle both "3.5" (minor=5) and "3.5.1" style versions
+                                version += (minor < 10 ? minor / 10.0 : minor / 100.0)
+                            }
+                        }
+                        maxVersion = max(maxVersion, version)
+                    }
+                }
+            }
+            return maxVersion
+        }
+        
+        return 0
+    }
+    
+    /// Extract provider name from model string
+    /// Prioritizes "Provider:" prefix for consistency, then checks OpenRouter cache
+    var modelProvider: String {
+        let trimmed = self.trimmingCharacters(in: .whitespacesAndNewlines)
+        let lowercase = trimmed.lowercased()
+        
+        func normalize(_ value: Substring) -> String {
+            return value.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        }
+        
+        // Prefer an explicit "Provider: model" prefix when the segment before the colon
+        // is not a path (colon used for thinking suffixes, etc.).
+        if let colonIndex = trimmed.firstIndex(of: ":") {
+            let prefix = trimmed[..<colonIndex]
+            let normalizedPrefix = normalize(prefix)
+            if !normalizedPrefix.isEmpty && !prefix.contains("/") {
+                return normalizedPrefix
+            }
+        }
+        
+        // Handle path-style model identifiers like "openrouter/anthropic/claude-3.5-sonnet".
+        let pathComponents = trimmed.split(separator: "/").map { normalize($0) }
+        if !pathComponents.isEmpty {
+            let first = pathComponents[0]
+            let second = pathComponents.count > 1 ? pathComponents[1] : ""
+            if first == "openrouter", !second.isEmpty {
+                return second
+            }
+            if let org = KnownModel.Organization.from(string: first) {
+                return org.rawValue.lowercased()
+            }
+            if !first.isEmpty {
+                return first
+            }
+        }
+        
+        // Fallback: extract from model name using OpenRouter cache when available.
+        if let knownModel = KnownModel(identifier: trimmed) {
+            return knownModel.organization.rawValue.lowercased()
+        }
+        
+        // Final heuristic: scan tokens for a recognizable organization alias.
+        let tokenDelimiters = CharacterSet(charactersIn: "/:_-. ")
+        for token in lowercase.components(separatedBy: tokenDelimiters) where !token.isEmpty {
+            if let org = KnownModel.Organization.from(string: token) {
+                return org.rawValue.lowercased()
+            }
+        }
+        
+        return "unknown"
+    }
+    
+}
+
 enum DetectedLanguage {
     case english
     case chinese

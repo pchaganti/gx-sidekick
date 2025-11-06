@@ -200,7 +200,7 @@ public class Model: ObservableObject {
                         modelType: .regular
                     ) {
                         // Determine if is reasoning model
-                        if KnownModel.popularModels.contains(
+                        if KnownModel.availableModels.contains(
                             where: { model in
                                 let nameMatches: Bool = modelName.contains(
                                     model.primaryName

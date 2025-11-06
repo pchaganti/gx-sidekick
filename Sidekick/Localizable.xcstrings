@@ -3525,6 +3525,7 @@
       }
     },
     "Reason" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3535,6 +3536,7 @@
       }
     },
     "Reasoning must be turned on to use Deep Research." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -4677,6 +4679,7 @@
       }
     },
     "The selected model is not a hybrid reasoning model. Reasoning cannot be toggled." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
