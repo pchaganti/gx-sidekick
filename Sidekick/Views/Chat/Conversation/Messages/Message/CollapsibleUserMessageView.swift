@@ -2,7 +2,7 @@
 //  CollapsibleUserMessageView.swift
 //  Sidekick
 //
-//  Created by John Bean on 11/5/25.
+//  Created by Assistant on 11/6/25.
 //
 
 import SwiftUI
@@ -39,20 +39,20 @@ struct CollapsibleUserMessageView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            ZStack(alignment: .bottom) {
-                // Message text
-                Text(displayedContent)
-                    .font(.system(size: NSFont.systemFontSize + 1.0))
-                    .lineSpacing(4)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .if(!effectiveIsExpanded && shouldShowExpandButton) { view in
-                        view.frame(maxHeight: calculateCollapsedHeight())
-                    }
-                
-                // Bottom overlay with "Show all N lines" button
-                if !effectiveIsExpanded && shouldShowExpandButton {
-                    ZStack(alignment: .bottom) {
-                        // Gradient fade extending through entire overlay
+            if !effectiveIsExpanded && shouldShowExpandButton {
+                // Collapsed state with overlay
+                VStack(alignment: .leading, spacing: 0) {
+                    Text(displayedContent)
+                        .font(.system(size: NSFont.systemFontSize + 1.0))
+                        .lineSpacing(4)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .frame(maxHeight: calculateCollapsedHeight(), alignment: .top)
+                .clipped()
+                .overlay(alignment: .bottom) {
+                    // Gradient and button overlay
+                    VStack(spacing: 0) {
+                        // Gradient fade
                         LinearGradient(
                             gradient: Gradient(stops: [
                                 .init(color: Color(nsColor: .textBackgroundColor).opacity(0), location: 0),
@@ -62,8 +62,9 @@ struct CollapsibleUserMessageView: View {
                             startPoint: .top,
                             endPoint: .bottom
                         )
+                        .frame(height: 50)
                         
-                        // Button centered at bottom
+                        // Button area
                         Button {
                             withAnimation(.easeInOut(duration: 0.2)) {
                                 isExpanded = true
@@ -88,43 +89,45 @@ struct CollapsibleUserMessageView: View {
                             )
                         }
                         .buttonStyle(.plain)
-                        .padding(.bottom, 10)
+                        .padding(.bottom, 8)
                     }
-                    .frame(height: 70)
                 }
+            } else {
+                // Expanded state or short message
+                Text(displayedContent)
+                    .font(.system(size: NSFont.systemFontSize + 1.0))
+                    .lineSpacing(4)
+                    .fixedSize(horizontal: false, vertical: true)
             }
             
             // Collapse button at bottom when expanded
             if effectiveIsExpanded && shouldShowExpandButton {
-                HStack {
-                    Spacer()
-                    Button {
-                        withAnimation(.easeInOut(duration: 0.2)) {
-                            isExpanded = false
-                        }
-                    } label: {
-                        HStack(spacing: 4) {
-                            Image(systemName: "chevron.up")
-                                .font(.system(size: 11, weight: .medium))
-                            Text("Show less")
-                                .font(.system(size: 12, weight: .medium))
-                        }
-                        .foregroundColor(.secondary)
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 5)
-                        .background(
-                            RoundedRectangle(cornerRadius: 5, style: .continuous)
-                                .fill(Color(nsColor: .controlBackgroundColor).opacity(0.8))
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 5, style: .continuous)
-                                        .stroke(Color.secondary.opacity(0.3), lineWidth: 1)
-                                )
-                        )
+                Button {
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        isExpanded = false
                     }
-                    .buttonStyle(.plain)
-                    .padding(.top, 10)
-                    Spacer()
+                } label: {
+                    HStack(spacing: 4) {
+                        Image(systemName: "chevron.up")
+                            .font(.system(size: 11, weight: .medium))
+                        Text("Show less")
+                            .font(.system(size: 12, weight: .medium))
+                    }
+                    .foregroundColor(.secondary)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 5)
+                    .background(
+                        RoundedRectangle(cornerRadius: 5, style: .continuous)
+                            .fill(Color(nsColor: .controlBackgroundColor).opacity(0.8))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 5, style: .continuous)
+                                    .stroke(Color.secondary.opacity(0.3), lineWidth: 1)
+                            )
+                    )
                 }
+                .buttonStyle(.plain)
+                .padding(.top, 10)
+                .frame(maxWidth: .infinity)
             }
         }
         .textSelection(.enabled)
@@ -137,4 +140,5 @@ struct CollapsibleUserMessageView: View {
         return CGFloat(collapsedLineCount) * lineHeight
     }
 }
+
 

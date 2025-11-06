@@ -107,16 +107,19 @@ struct ModelSelectorDropdown: View {
         var finalResult = ""
         if let provider = provider {
             let capitalizedProvider = (provider.prefix(1).uppercased() + provider.dropFirst().lowercased())
-                .replacingOccurrences(of: "Arcee-ai", with: "Arcee-AI")
                 .replacingOccurrences(of: "Bytedance", with: "ByteDance")
-                .replacingOccurrences(of: "Openai", with: "OpenAI")
+                .replacingOccurrences(of: "Openrouter", with: "OpenRouter")
                 .replacingOccurrences(of: "Deepseek", with: "DeepSeek")
+                .replacingOccurrences(of: "Deepcogito", with: "DeepCogito")
                 .replacingOccurrences(of: "X-ai", with: "xAI")
                 .replacingOccurrences(of: "Meta-llama", with: "Meta-Llama")
-                .replacingOccurrences(of: "Mistralai", with: "MistralAI")
-                .replacingOccurrences(of: "Moonshotai", with: "MoonshotAI")
                 .replacingOccurrences(of: "Minimax", with: "MiniMax")
-                .replacingOccurrences(of: "Z-ai", with: "Z-AI")
+                .replacingOccurrences(of: "Z-ai", with: "Zhipu AI")
+                .replacingOccurrences(of: "Nousresearch", with: "NousResearch")
+                .replacingSuffix("ai", with: "AI")
+                .replacingSuffix("org", with: "Org")
+                .replacingSuffix("labs", with: "Labs")
+            
             finalResult = "\(capitalizedProvider): "
         }
         
