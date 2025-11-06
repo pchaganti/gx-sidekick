@@ -24,9 +24,14 @@ struct ModelSelectorDropdown: View {
     @State private var showingDropdown: Bool = false
     @State private var searchText: String = ""
     @State private var localModelsListId: UUID = UUID()
+    @State private var remoteServerReachable: Bool = false
     
     @StateObject private var modelManager: ModelManager = .shared
     @EnvironmentObject private var model: Model
+    
+    // Scroll to active model
+    @State private var scrollToLocal: Bool = false
+    @State private var scrollToRemote: Bool = false
     
     var selectedExpert: Expert? {
         guard let selectedExpertId = conversationState.selectedExpertId else {
@@ -71,20 +76,17 @@ struct ModelSelectorDropdown: View {
     private func formatModelName(_ name: String) -> String {
         var formattedName = name
         var provider: String? = nil
-        
         // Extract provider prefix (e.g., "openai/", "anthropic/", "qwen/")
         if let slashIndex = formattedName.firstIndex(of: "/") {
             provider = String(formattedName[..<slashIndex])
             formattedName = String(formattedName[formattedName.index(after: slashIndex)...])
         }
-        
         // Extract variant (text after colon)
         var variant: String? = nil
         if let colonIndex = formattedName.firstIndex(of: ":") {
             variant = String(formattedName[formattedName.index(after: colonIndex)...])
             formattedName = String(formattedName[..<colonIndex])
         }
-        
         // Now add spaces for camelCase only (uppercase following lowercase)
         var spacedResult = ""
         for (index, char) in formattedName.enumerated() {
@@ -97,12 +99,10 @@ struct ModelSelectorDropdown: View {
             }
             spacedResult.append(char)
         }
-        
         // Clean up multiple spaces
         spacedResult = spacedResult.components(separatedBy: .whitespaces)
             .filter { !$0.isEmpty }
             .joined(separator: " ")
-        
         // Format provider name (capitalize first letter)
         var finalResult = ""
         if let provider = provider {
@@ -123,13 +123,18 @@ struct ModelSelectorDropdown: View {
         // Add the model name (lowercase for readability)
         finalResult += spacedResult.lowercased()
         
-        // Add variant if present (without parentheses)
+        // Add variant if present
         if let variant = variant {
-            finalResult += " \(variant)"
+            if variant.lowercased() == "free" || variant.lowercased() == "exacto" {
+                finalResult += " (\(variant))"
+            } else {
+                finalResult += " \(variant)"
+            }
         }
         
         return finalResult
     }
+    
     
     // Fuzzy search matching - more strict version
     private func fuzzyMatch(_ text: String, query: String) -> Bool {
@@ -224,6 +229,17 @@ struct ModelSelectorDropdown: View {
                 .onAppear {
                     // Reset search when opening
                     searchText = ""
+                    
+                    // Determine which section to scroll to
+                    if let url = Settings.modelUrl, !InferenceSettings.useServer {
+                        // Local model is active
+                        scrollToLocal = true
+                        scrollToRemote = false
+                    } else if InferenceSettings.useServer && !serverModelName.isEmpty {
+                        // Remote model is active
+                        scrollToLocal = false
+                        scrollToRemote = true
+                    }
                 }
         }
         .sheet(
@@ -239,7 +255,9 @@ struct ModelSelectorDropdown: View {
             await self.refreshModelNames()
             // Check remote server reachability to update the display
             if InferenceSettings.useServer {
-                let _ = await model.remoteServerIsReachable()
+                self.remoteServerReachable = await model.remoteServerIsReachable()
+            } else {
+                self.remoteServerReachable = false
             }
         }
         .onChange(of: serverEndpoint) {
@@ -247,7 +265,9 @@ struct ModelSelectorDropdown: View {
                 await self.refreshModelNames()
                 // Re-check reachability when endpoint changes
                 if InferenceSettings.useServer {
-                    let _ = await model.remoteServerIsReachable()
+                    self.remoteServerReachable = await model.remoteServerIsReachable()
+                } else {
+                    self.remoteServerReachable = false
                 }
             }
         }
@@ -261,7 +281,9 @@ struct ModelSelectorDropdown: View {
             // Re-check reachability when inference config changes
             Task { @MainActor in
                 if InferenceSettings.useServer {
-                    let _ = await model.remoteServerIsReachable()
+                    self.remoteServerReachable = await model.remoteServerIsReachable()
+                } else {
+                    self.remoteServerReachable = false
                 }
             }
         }
@@ -273,23 +295,7 @@ struct ModelSelectorDropdown: View {
                 let nameMatches: Bool = self.serverModelName.contains(model.primaryName)
                 return nameMatches && model.isVision
             }
-            // If no change, exit
-            if serverModelHasVision == self.serverModelHasVision {
-                return
-            }
-            // Get message
-            let message: String = serverModelHasVision ? String(localized: "A new remote model has been selected, which has been identified as having vision capabilities. Would you like to turn on vision for this model?") : String(localized: "A new remote model has been selected, which might not include vision capabilities. Would you like to turn off vision for this model?")
-            // Confirm with user
-            if Dialogs.dichotomy(
-                title: String(localized: "Model Changed"),
-                message: message,
-                option1: String(localized: "Yes"),
-                option2: String(localized: "No")
-            ) {
-                withAnimation(.linear) {
-                    self.serverModelHasVision = serverModelHasVision
-                }
-            }
+            self.serverModelHasVision = serverModelHasVision
         }
     }
     
@@ -312,59 +318,99 @@ struct ModelSelectorDropdown: View {
             Divider()
             
             // Models list
-            ScrollView {
-                VStack(alignment: .leading, spacing: 0) {
-                    // Local Models Section
-                    if !filteredLocalModels.isEmpty {
-                        sectionHeader(title: "Local Models")
-                        ForEach(filteredLocalModels, id: \.name) { modelFile in
-                            LocalModelRow(
-                                modelFile: modelFile,
-                                isSelected: Settings.modelUrl == modelFile.url,
-                                onSelect: {
-                                    selectLocalModel(modelFile)
-                                }
-                            )
-                        }
-                        .id(localModelsListId)
-                    }
-                    
-                    // Remote Models Section
-                    if !filteredRemoteModels.isEmpty {
+            ScrollViewReader { proxy in
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 0) {
+                        // Local Models Section
                         if !filteredLocalModels.isEmpty {
-                            Divider()
-                                .padding(.vertical, 8)
-                        }
-                        sectionHeader(title: "Remote Models")
-                        ForEach(filteredRemoteModels, id: \.self) { modelName in
-                            RemoteModelRow(
-                                modelName: self.formatModelName(modelName),
-                                isSelected: modelName == serverModelName && InferenceSettings.useServer,
-                                onSelect: {
-                                    selectRemoteModel(modelName)
+                            sectionHeader(title: "Local Models", id: "LocalHeader")
+                            ForEach(filteredLocalModels, id: \.name) { modelFile in
+                                LocalModelRow(
+                                    modelFile: modelFile,
+                                    isSelected: Settings.modelUrl == modelFile.url,
+                                    isRemoteServerReachable: remoteServerReachable,
+                                    onSelect: {
+                                        selectLocalModel(modelFile)
+                                    }
+                                )
+                                .id("Local:\(modelFile.name)")
+                            }
+                            .id(localModelsListId)
+                            
+                            // Scroll to first selected local model
+                            if scrollToLocal {
+                                ForEach(filteredLocalModels, id: \.name) { modelFile in
+                                    if Settings.modelUrl == modelFile.url {
+                                        ScrollViewReader { _ in
+                                            Text("")
+                                                .id("Local:\(modelFile.name)")
+                                                .onAppear {
+                                                    DispatchQueue.main.async {
+                                                        proxy.scrollTo("Local:\(modelFile.name)", anchor: .top)
+                                                    }
+                                                }
+                                        }
+                                    }
                                 }
-                            )
-                        }
-                    }
-                    
-                    // Empty state
-                    if filteredLocalModels.isEmpty && filteredRemoteModels.isEmpty {
-                        VStack(spacing: 8) {
-                            Text("No models found")
-                                .font(.headline)
-                                .foregroundStyle(.secondary)
-                            if !searchText.isEmpty {
-                                Text("Try a different search term")
-                                    .font(.caption)
-                                    .foregroundStyle(.tertiary)
                             }
                         }
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 40)
+                        
+                        // Remote Models Section
+                        if !filteredRemoteModels.isEmpty {
+                            if !filteredLocalModels.isEmpty {
+                                Divider()
+                                    .padding(.vertical, 8)
+                            }
+                            sectionHeader(title: "Remote Models", id: "RemoteHeader")
+                            ForEach(filteredRemoteModels, id: \.self) { modelName in
+                                RemoteModelRow(
+                                    modelName: self.formatModelName(modelName),
+                                    isSelected: modelName == serverModelName && InferenceSettings.useServer,
+                                    isRemoteServerReachable: remoteServerReachable,
+                                    onSelect: {
+                                        selectRemoteModel(modelName)
+                                    }
+                                )
+                                .id("Remote:\(modelName)")
+                            }
+                            
+                            // Scroll to first selected remote model
+                            if scrollToRemote {
+                                ForEach(filteredRemoteModels, id: \.self) { modelName in
+                                    if modelName == serverModelName && InferenceSettings.useServer {
+                                        ScrollViewReader { _ in
+                                            Text("")
+                                                .id("Remote:\(modelName)")
+                                                .onAppear {
+                                                    DispatchQueue.main.async {
+                                                        proxy.scrollTo("Remote:\(modelName)", anchor: .top)
+                                                    }
+                                                }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                        // Empty state
+                        if filteredLocalModels.isEmpty && filteredRemoteModels.isEmpty {
+                            VStack(spacing: 8) {
+                                Text("No models found")
+                                    .font(.headline)
+                                    .foregroundStyle(.secondary)
+                                if !searchText.isEmpty {
+                                    Text("Try a different search term")
+                                        .font(.caption)
+                                        .foregroundStyle(.tertiary)
+                                }
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 40)
+                        }
                     }
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
                 }
-                .padding(.horizontal, 8)
-                .padding(.vertical, 4)
             }
             
             Divider()
@@ -400,7 +446,7 @@ struct ModelSelectorDropdown: View {
         }
     }
     
-    private func sectionHeader(title: String) -> some View {
+    private func sectionHeader(title: String, id: String) -> some View {
         Text(title)
             .font(.caption)
             .fontWeight(.semibold)
@@ -409,6 +455,7 @@ struct ModelSelectorDropdown: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal, 8)
             .padding(.vertical, 8)
+            .id(id)
     }
     
     private func selectLocalModel(_ modelFile: ModelManager.ModelFile) {
@@ -444,7 +491,12 @@ struct LocalModelRow: View {
     
     let modelFile: ModelManager.ModelFile
     let isSelected: Bool
+    let isRemoteServerReachable: Bool
     let onSelect: () -> Void
+    
+    var shouldHighlight: Bool {
+        isSelected && !isRemoteServerReachable
+    }
     
     var body: some View {
         Button(action: onSelect) {
@@ -453,11 +505,11 @@ struct LocalModelRow: View {
                     .font(.body)
                     .foregroundStyle(.primary)
                 Spacer()
-                if isSelected {
+                if shouldHighlight {
                     Image(systemName: "checkmark")
                         .font(.body)
                         .fontWeight(.semibold)
-                        .foregroundStyle(.blue)
+                        .foregroundStyle(Color.accentColor)
                 }
             }
             .contentShape(Rectangle())
@@ -467,7 +519,9 @@ struct LocalModelRow: View {
         .buttonStyle(.plain)
         .background(
             RoundedRectangle(cornerRadius: 4)
-                .fill(isSelected ? Color.blue.opacity(0.1) : Color.clear)
+                .fill(
+                    shouldHighlight ? Color.accentColor.opacity(0.25) : Color.clear
+                )
         )
     }
 }
@@ -476,7 +530,12 @@ struct RemoteModelRow: View {
     
     let modelName: String
     let isSelected: Bool
+    let isRemoteServerReachable: Bool
     let onSelect: () -> Void
+    
+    var shouldHighlight: Bool {
+        isSelected && isRemoteServerReachable
+    }
     
     var body: some View {
         Button(action: onSelect) {
@@ -485,11 +544,11 @@ struct RemoteModelRow: View {
                     .font(.body)
                     .foregroundStyle(.primary)
                 Spacer()
-                if isSelected {
+                if shouldHighlight {
                     Image(systemName: "checkmark")
                         .font(.body)
                         .fontWeight(.semibold)
-                        .foregroundStyle(.blue)
+                        .foregroundStyle(Color.accentColor)
                 }
             }
             .contentShape(Rectangle())
@@ -499,9 +558,9 @@ struct RemoteModelRow: View {
         .buttonStyle(.plain)
         .background(
             RoundedRectangle(cornerRadius: 4)
-                .fill(isSelected ? Color.blue.opacity(0.1) : Color.clear)
+                .fill(
+                    shouldHighlight ? Color.accentColor.opacity(0.25) : Color.clear
+                )
         )
     }
 }
-
-

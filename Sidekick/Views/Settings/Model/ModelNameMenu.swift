@@ -70,23 +70,7 @@ struct ModelNameMenu: View {
                     let nameMatches: Bool = self.serverModelName.contains(model.primaryName)
                     return nameMatches && model.isVision
                 }
-                // If no change, exit
-                if serverModelHasVision == self.serverModelHasVision {
-                    return
-                }
-                // Get message
-                let message: String = serverModelHasVision ? String(localized: "A new remote model has been selected, which has been identified as having vision capabilities. Would you like to turn on vision for this model?") : String(localized: "A new remote model has been selected, which might not include vision capabilities. Would you like to turn off vision for this model?")
-                // Confirm with user
-                if Dialogs.dichotomy(
-                    title: String(localized: "Model Changed"),
-                    message: message,
-                    option1: String(localized: "Yes"),
-                    option2: String(localized: "No")
-                ) {
-                    withAnimation(.linear) {
-                        self.serverModelHasVision = serverModelHasVision
-                    }
-                }
+                self.serverModelHasVision = serverModelHasVision
             }
 	}
 	

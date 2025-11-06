@@ -89,9 +89,7 @@ struct MessageContentView: View {
                         if self.message.getSender() != .user {
                             MessageTextContentView(text: self.message.responseText)
                         } else {
-                            Text(self.message.responseText)
-                                .font(.system(size: NSFont.systemFontSize + 1.0))
-                                .lineSpacing(4)
+                            CollapsibleUserMessageView(text: self.message.responseText)
                         }
                     }
                     .if(shimmer) { view in

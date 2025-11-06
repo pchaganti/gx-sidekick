@@ -101,6 +101,7 @@ public actor LlamaServer {
         if !usingRemoteModel && InferenceSettings.localModelHasVision {
             return true
         }
+        print("\(InferenceSettings.serverModelName) vision: \(InferenceSettings.serverModelHasVision)")
         // Else, get toggle value
         return InferenceSettings.serverModelHasVision
     }

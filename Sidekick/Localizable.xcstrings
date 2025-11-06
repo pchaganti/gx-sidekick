@@ -183,26 +183,6 @@
         }
       }
     },
-    "A new remote model has been selected, which has been identified as having vision capabilities. Would you like to turn on vision for this model?" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已选定一个接受视觉输入的远端模型。您是否要为该模型打开视觉输入？"
-          }
-        }
-      }
-    },
-    "A new remote model has been selected, which might not include vision capabilities. Would you like to turn off vision for this model?" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已选定一种新的远端模型，该模型可能不拥有视觉输入。您是否要为该模型关闭视觉输入？"
-          }
-        }
-      }
-    },
     "Accept All Suggestions" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2968,16 +2948,6 @@
         }
       }
     },
-    "Model Changed" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "模型已更改"
-          }
-        }
-      }
-    },
     "Model could not be found" : {
       "localizations" : {
         "zh-Hans" : {
@@ -4257,6 +4227,16 @@
         }
       }
     },
+    "Show all %lld lines" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "展开剩余 %lld 行"
+          }
+        }
+      }
+    },
     "Show Container in Finder" : {
       "localizations" : {
         "zh-Hans" : {
@@ -4273,6 +4253,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "在访达中显示"
+          }
+        }
+      }
+    },
+    "Show less" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "收起"
           }
         }
       }
