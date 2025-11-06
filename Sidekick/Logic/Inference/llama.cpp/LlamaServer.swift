@@ -156,7 +156,11 @@ public actor LlamaServer {
     
     /// Function to get a list of available models on the server
     public static func getAvailableModels() async -> [String] {
-        // Set up request
+        // Try the cache first
+        if let cachedModels = KnownModel.loadModelsFromFile() {
+            return cachedModels.map(keyPath: \.primaryName)
+        }
+        // Else, set up request
         guard let modelsEndpoint: URL = URL(
             string: InferenceSettings.endpoint + "/models"
         ) else {

@@ -74,90 +74,132 @@ struct ModelSelectorDropdown: View {
     
     // Format model name for toolbar display
     private func formatModelName(_ name: String) -> String {
-        // Try to find the model in KnownModel cache first
+        let components = parseModelIdentifier(name)
+        
         if let knownModel = KnownModel.findModel(byIdentifier: name, in: KnownModel.availableModels) {
-            // Extract variant (text after colon) from original name
-            var variant: String? = nil
-            if let colonIndex = name.firstIndex(of: ":") {
-                variant = String(name[name.index(after: colonIndex)...])
-            }
-            
-            // Format using KnownModel information
-            var result: String
-            if let displayName = knownModel.displayName {
-                // displayName already includes the provider name from OpenRouter API
-                result = displayName
+            var displayName: String
+            if let explicitName = knownModel.displayName?.trimmingCharacters(in: .whitespacesAndNewlines), !explicitName.isEmpty {
+                displayName = explicitName
             } else {
-                // Fallback: construct from organization and primaryName
-                result = "\(knownModel.organization.rawValue): \(knownModel.primaryName.lowercased())"
+                let providerSource = components.provider ?? knownModel.organization.rawValue
+                let baseName = String(knownModel.primaryName.split(separator: ":").first ?? Substring(knownModel.primaryName))
+                displayName = buildDisplayName(provider: providerSource, model: baseName, variant: components.variant)
             }
-            return result
+            displayName = applyProviderPrefixIfNeeded(displayName, provider: components.provider ?? knownModel.organization.rawValue)
+            displayName = harmonizeVariantDisplay(displayName, expectedVariant: components.variant)
+            return displayName
         }
         
-        // Fallback to original implementation
-        var formattedName = name
+        return buildDisplayName(provider: components.provider, model: components.model, variant: components.variant)
+    }
+    
+    private func parseModelIdentifier(_ name: String) -> (provider: String?, model: String, variant: String?) {
+        var remainder = name
         var provider: String? = nil
-        // Extract provider prefix (e.g., "openai/", "anthropic/", "qwen/")
-        if let slashIndex = formattedName.firstIndex(of: "/") {
-            provider = String(formattedName[..<slashIndex])
-            formattedName = String(formattedName[formattedName.index(after: slashIndex)...])
+        if let slashIndex = remainder.firstIndex(of: "/") {
+            provider = String(remainder[..<slashIndex])
+            remainder = String(remainder[remainder.index(after: slashIndex)...])
         }
-        // Extract variant (text after colon)
         var variant: String? = nil
-        if let colonIndex = formattedName.firstIndex(of: ":") {
-            variant = String(formattedName[formattedName.index(after: colonIndex)...])
-            formattedName = String(formattedName[..<colonIndex])
+        if let colonIndex = remainder.firstIndex(of: ":") {
+            variant = String(remainder[remainder.index(after: colonIndex)...])
+            remainder = String(remainder[..<colonIndex])
         }
-        // Now add spaces for camelCase only (uppercase following lowercase)
+        return (provider, remainder, variant)
+    }
+    
+    private func buildDisplayName(provider: String?, model: String, variant: String?) -> String {
+        let formattedModel = formatModelComponent(model)
+        var result = ""
+        if let provider {
+            result = "\(formatProviderName(provider)): "
+        }
+        result += formattedModel
+        if let variant = variant?.trimmingCharacters(in: .whitespacesAndNewlines), !variant.isEmpty {
+            let lowerVariant = variant.lowercased()
+            if Self.variantSuffixTokens.contains(lowerVariant) {
+                result += " (\(lowerVariant))"
+            } else {
+                result += " \(variant)"
+            }
+        }
+        return result
+    }
+    
+    private func formatProviderName(_ provider: String) -> String {
+        return (provider.prefix(1).uppercased() + provider.dropFirst().lowercased())
+            .replacingOccurrences(of: "Bytedance", with: "ByteDance")
+            .replacingOccurrences(of: "Openrouter", with: "OpenRouter")
+            .replacingOccurrences(of: "Deepseek", with: "DeepSeek")
+            .replacingOccurrences(of: "Deepcogito", with: "DeepCogito")
+            .replacingOccurrences(of: "X-ai", with: "xAI")
+            .replacingOccurrences(of: "Meta-llama", with: "Meta-Llama")
+            .replacingOccurrences(of: "Minimax", with: "MiniMax")
+            .replacingOccurrences(of: "Z-ai", with: "Zhipu AI")
+            .replacingOccurrences(of: "Nousresearch", with: "NousResearch")
+            .replacingSuffix("ai", with: "AI")
+            .replacingSuffix("org", with: "Org")
+            .replacingSuffix("labs", with: "Labs")
+    }
+    
+    private func formatModelComponent(_ model: String) -> String {
         var spacedResult = ""
-        for (index, char) in formattedName.enumerated() {
-            // Add space before uppercase letter that follows a lowercase letter
+        for (index, char) in model.enumerated() {
             if char.isUppercase && index > 0 {
-                let prevChar = formattedName[formattedName.index(formattedName.startIndex, offsetBy: index - 1)]
-                if prevChar.isLowercase {
+                let previousIndex = model.index(model.startIndex, offsetBy: index - 1)
+                if model[previousIndex].isLowercase {
                     spacedResult += " "
                 }
             }
             spacedResult.append(char)
         }
-        // Clean up multiple spaces
-        spacedResult = spacedResult.components(separatedBy: .whitespaces)
+        let condensed = spacedResult.components(separatedBy: .whitespaces)
             .filter { !$0.isEmpty }
             .joined(separator: " ")
-        // Format provider name (capitalize first letter)
-        var finalResult = ""
-        if let provider = provider {
-            let capitalizedProvider = (provider.prefix(1).uppercased() + provider.dropFirst().lowercased())
-                .replacingOccurrences(of: "Bytedance", with: "ByteDance")
-                .replacingOccurrences(of: "Openrouter", with: "OpenRouter")
-                .replacingOccurrences(of: "Deepseek", with: "DeepSeek")
-                .replacingOccurrences(of: "Deepcogito", with: "DeepCogito")
-                .replacingOccurrences(of: "X-ai", with: "xAI")
-                .replacingOccurrences(of: "Meta-llama", with: "Meta-Llama")
-                .replacingOccurrences(of: "Minimax", with: "MiniMax")
-                .replacingOccurrences(of: "Z-ai", with: "Zhipu AI")
-                .replacingOccurrences(of: "Nousresearch", with: "NousResearch")
-                .replacingSuffix("ai", with: "AI")
-                .replacingSuffix("org", with: "Org")
-                .replacingSuffix("labs", with: "Labs")
-            
-            finalResult = "\(capitalizedProvider): "
+        return condensed.lowercased()
+    }
+    
+    private func applyProviderPrefixIfNeeded(_ displayName: String, provider: String?) -> String {
+        guard let provider else { return displayName.trimmingCharacters(in: .whitespacesAndNewlines) }
+        let trimmed = displayName.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmed.contains(":") {
+            return trimmed
         }
-        
-        // Add the model name (lowercase for readability)
-        finalResult += spacedResult.lowercased()
-        
-        // Add variant if present
-        if let variant = variant {
-            if variant.lowercased() == "free" || variant.lowercased() == "exacto" {
-                finalResult += " (\(variant))"
-            } else {
-                finalResult += " \(variant)"
+        return "\(formatProviderName(provider)): \(trimmed)"
+    }
+    
+    private func harmonizeVariantDisplay(_ displayName: String, expectedVariant rawVariant: String?) -> String {
+        let trimmed = displayName.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard let rawVariant = rawVariant?.trimmingCharacters(in: .whitespacesAndNewlines), !rawVariant.isEmpty else {
+            return removeRecognizedVariantSuffix(from: trimmed)
+        }
+        let lowerVariant = rawVariant.lowercased()
+        if Self.variantSuffixTokens.contains(lowerVariant) {
+            if trimmed.range(of: "(\(lowerVariant))", options: .caseInsensitive) != nil {
+                return trimmed
+            }
+            let base = removeRecognizedVariantSuffix(from: trimmed)
+            return base + " (\(lowerVariant))"
+        } else {
+            if trimmed.range(of: rawVariant, options: .caseInsensitive) != nil {
+                return trimmed
+            }
+            return trimmed + " \(rawVariant)"
+        }
+    }
+    
+    private func removeRecognizedVariantSuffix(from displayName: String) -> String {
+        var result = displayName
+        for token in Self.variantSuffixTokens {
+            let suffix = " (\(token))"
+            if result.lowercased().hasSuffix(suffix) {
+                result = String(result.dropLast(suffix.count)).trimmingCharacters(in: .whitespacesAndNewlines)
             }
         }
-        
-        return finalResult
+        return result
     }
+    
+    private static let variantSuffixTokens: Set<String> = ["free", "exacto"]
     
     
     // Fuzzy search matching - more strict version
@@ -261,25 +303,8 @@ struct ModelSelectorDropdown: View {
         .popover(isPresented: $showingDropdown) {
             dropdownContent
                 .frame(width: 360, height: 480)
-                .onAppear {
-                    // Reset search when opening
-                    searchText = ""
-                    
-                    // Determine which section to scroll to
-                    if !InferenceSettings.useServer {
-                        // Local model is active
-                        scrollToLocal = true
-                        scrollToRemote = false
-                    } else if InferenceSettings.useServer && !serverModelName.isEmpty {
-                        // Remote model is active
-                        scrollToLocal = false
-                        scrollToRemote = true
-                    }
-                }
         }
-        .sheet(
-            isPresented: self.$isManagingCustomModel
-        ) {
+        .sheet(isPresented: self.$isManagingCustomModel) {
             ModelNameMenu.CustomModelsEditor(
                 customModelNames: self.$customModelNames,
                 isPresented: self.$isManagingCustomModel
@@ -287,6 +312,7 @@ struct ModelSelectorDropdown: View {
             .frame(minWidth: 400)
         }
         .task {
+            // Get available models
             await self.refreshModelNames()
             // Check remote server reachability to update the display
             if InferenceSettings.useServer {
@@ -298,7 +324,6 @@ struct ModelSelectorDropdown: View {
         .onChange(of: serverEndpoint) {
             Task { @MainActor in
                 await self.refreshModelNames()
-                // Re-check reachability when endpoint changes
                 if InferenceSettings.useServer {
                     self.remoteServerReachable = await model.remoteServerIsReachable()
                 } else {
@@ -311,9 +336,7 @@ struct ModelSelectorDropdown: View {
                 for: Notifications.changedInferenceConfig.name
             )
         ) { output in
-            // Refresh selection
             self.localModelsListId = UUID()
-            // Re-check reachability when inference config changes
             Task { @MainActor in
                 if InferenceSettings.useServer {
                     self.remoteServerReachable = await model.remoteServerIsReachable()
@@ -322,10 +345,7 @@ struct ModelSelectorDropdown: View {
                 }
             }
         }
-        .onChange(
-            of: self.serverModelName
-        ) {
-            // Turn has vision on if model is in list and is multimodal
+        .onChange(of: self.serverModelName) {
             let serverModelHasVision: Bool = KnownModel.availableModels.contains { model in
                 let nameMatches: Bool = self.serverModelName.contains(model.primaryName)
                 return nameMatches && model.isVision
@@ -352,10 +372,10 @@ struct ModelSelectorDropdown: View {
             
             Divider()
             
-            // Models list
+            // Models list - Use LazyVStack for better performance
             ScrollViewReader { proxy in
                 ScrollView {
-                    VStack(alignment: .leading, spacing: 0) {
+                    LazyVStack(alignment: .leading, spacing: 0, pinnedViews: []) {
                         // Local Models Section
                         if !filteredLocalModels.isEmpty {
                             sectionHeader(title: "Local Models", id: "LocalHeader")
@@ -374,23 +394,6 @@ struct ModelSelectorDropdown: View {
                                 .id("Local:\(modelFile.name)")
                             }
                             .id(localModelsListId)
-                            
-                            // Scroll to first selected local model
-                            if scrollToLocal {
-                                ForEach(filteredLocalModels, id: \.name) { modelFile in
-                                    if Settings.modelUrl == modelFile.url {
-                                        ScrollViewReader { _ in
-                                            Text("")
-                                                .id("Local:\(modelFile.name)")
-                                                .onAppear {
-                                                    DispatchQueue.main.async {
-                                                        proxy.scrollTo("Local:\(modelFile.name)", anchor: .top)
-                                                    }
-                                                }
-                                        }
-                                    }
-                                }
-                            }
                         }
                         
                         // Remote Models Section
@@ -414,23 +417,6 @@ struct ModelSelectorDropdown: View {
                                 )
                                 .id("Remote:\(modelName)")
                             }
-                            
-                            // Scroll to first selected remote model
-                            if scrollToRemote {
-                                ForEach(filteredRemoteModels, id: \.self) { modelName in
-                                    if modelName == serverModelName && InferenceSettings.useServer {
-                                        ScrollViewReader { _ in
-                                            Text("")
-                                                .id("Remote:\(modelName)")
-                                                .onAppear {
-                                                    DispatchQueue.main.async {
-                                                        proxy.scrollTo("Remote:\(modelName)", anchor: .top)
-                                                    }
-                                                }
-                                        }
-                                    }
-                                }
-                            }
                         }
                         
                         // Empty state
@@ -451,6 +437,25 @@ struct ModelSelectorDropdown: View {
                     }
                     .padding(.horizontal, 8)
                     .padding(.vertical, 4)
+                }
+                .task {
+                    // Scroll to selected model after view appears
+                    await Task.yield() // Let the view render first
+                    
+                    if !InferenceSettings.useServer {
+                        // Scroll to selected local model
+                        if let selectedModel = filteredLocalModels.first(where: { Settings.modelUrl == $0.url }) {
+                            proxy.scrollTo("Local:\(selectedModel.name)", anchor: .center)
+                        }
+                    } else if InferenceSettings.useServer && !serverModelName.isEmpty {
+                        // Scroll to selected remote model
+                        if filteredRemoteModels.contains(serverModelName) {
+                            proxy.scrollTo("Remote:\(serverModelName)", anchor: .center)
+                        }
+                    }
+                    
+                    // Reset search when opening
+                    searchText = ""
                 }
             }
             
@@ -486,6 +491,7 @@ struct ModelSelectorDropdown: View {
             .padding(.top, 8)
         }
     }
+    
     
     private func sectionHeader(title: String, id: String) -> some View {
         Text(title)

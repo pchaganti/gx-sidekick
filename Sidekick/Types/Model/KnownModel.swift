@@ -258,7 +258,7 @@ public struct KnownModel: Identifiable, Codable {
     private static var cachedModels: [KnownModel]?
     
     /// File URL for persistent cache storage
-    private static var cacheFileURL: URL? {
+    private static var cacheFileURL: URL {
         let cacheDirUrl: URL = Settings.cacheUrl
         if !FileManager.default.fileExists(atPath: cacheDirUrl.path) {
             try? FileManager.default.createDirectory(at: cacheDirUrl, withIntermediateDirectories: true)
@@ -274,14 +274,9 @@ public struct KnownModel: Identifiable, Codable {
     }
     
     /// Loads models from the cached JSON file
-    private static func loadModelsFromFile() -> [KnownModel]? {
-        guard let fileURL = cacheFileURL,
-              FileManager.default.fileExists(atPath: fileURL.path) else {
-            return nil
-        }
-        
+    public static func loadModelsFromFile() -> [KnownModel]? {
         do {
-            let data = try Data(contentsOf: fileURL)
+            let data = try Data(contentsOf: self.cacheFileURL)
             let models = try JSONDecoder().decode([KnownModel].self, from: data)
             return models
         } catch {
@@ -292,16 +287,11 @@ public struct KnownModel: Identifiable, Codable {
     
     /// Saves models to the cached JSON file
     private static func saveModelsToFile(_ models: [KnownModel]) {
-        guard let fileURL = cacheFileURL else {
-            print("⚠️ Unable to determine cache file URL")
-            return
-        }
-        
         do {
             let encoder = JSONEncoder()
             encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
             let data = try encoder.encode(models)
-            try data.write(to: fileURL)
+            try data.write(to: self.cacheFileURL)
         } catch {
             print("Failed to save models to cache file: \(error.localizedDescription)")
         }
@@ -343,78 +333,10 @@ public struct KnownModel: Identifiable, Codable {
     /// Clears the model cache (both in-memory and file)
     public static func clearModelCache() {
         cachedModels = nil
-        
-        if let fileURL = cacheFileURL {
-            try? FileManager.default.removeItem(at: fileURL)
-        }
+        try? FileManager.default.removeItem(at: self.cacheFileURL)
     }
     
     // MARK: - OpenRouter API Integration
-    
-    /*
-     Usage Examples:
-     
-     1. Initialize cache at app startup (REQUIRED - loads from file immediately, then refreshes from API):
-     ```swift
-     // In your App struct or main view
-     Task {
-     await KnownModel.initializeModelCache()
-     }
-     ```
-     
-     2. Access cached models synchronously (available immediately after initializeModelCache):
-     ```swift
-     let models = KnownModel.availableModels
-     if let claudeModel = models.first(where: { $0.primaryName.contains("claude") }) {
-     print("Found: \(claudeModel.primaryName)")
-     }
-     ```
-     
-     3. Manually refresh cache from API:
-     ```swift
-     Task {
-     await KnownModel.refreshModelCache()
-     }
-     ```
-     
-     4. Clear cache (useful for debugging or settings):
-     ```swift
-     KnownModel.clearModelCache()
-     ```
-     
-     5. Fetch all models from OpenRouter API (without caching):
-     ```swift
-     Task {
-     do {
-     let models = try await KnownModel.fetchModelsFromOpenRouter()
-     print("Fetched \(models.count) models from OpenRouter")
-     } catch {
-     print("Error fetching models: \(error)")
-     }
-     }
-     ```
-     
-     6. Get available models (filtered by known organizations):
-     ```swift
-     Task {
-     do {
-     let models = try await KnownModel.getAvailableModels()
-     print("Available models: \(models.count)")
-     } catch {
-     print("Error: \(error)")
-     }
-     }
-     ```
-     
-     7. Find a specific model by identifier:
-     ```swift
-     Task {
-     if let model = await KnownModel.findModel(byIdentifier: "claude-sonnet-4.5") {
-     print("Found model: \(model.primaryName)")
-     }
-     }
-     ```
-     */
     
     /// Fetches models from the OpenRouter API
     /// - Returns: An array of KnownModel instances parsed from the API response
