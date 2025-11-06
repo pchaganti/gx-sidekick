@@ -66,6 +66,7 @@
 		202D4E722EBC30EA005D6F74 /* CollapsibleUserMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202D4E712EBC30EA005D6F74 /* CollapsibleUserMessageView.swift */; };
 		202D4E762EBC5E95005D6F74 /* PromptAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202D4E742EBC5E95005D6F74 /* PromptAnalyzer.swift */; };
 		202D4E772EBC5E95005D6F74 /* UserRequestClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 202D4E752EBC5E95005D6F74 /* UserRequestClassifier.mlmodel */; };
+		202D4E792EBCDC97005D6F74 /* PythonRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202D4E782EBCDC97005D6F74 /* PythonRunner.swift */; };
 		202E3EDD2CBB8F7B00AF86C8 /* ReferencedURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202E3EDC2CBB8F7B00AF86C8 /* ReferencedURL.swift */; };
 		202E93662DB22D3000AB361E /* InputFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202E93652DB22D3000AB361E /* InputFunctions.swift */; };
 		202E936A2DB546EC00AB361E /* MultilineTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202E93692DB546EC00AB361E /* MultilineTextEditor.swift */; };
@@ -497,6 +498,7 @@
 		202D4E712EBC30EA005D6F74 /* CollapsibleUserMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsibleUserMessageView.swift; sourceTree = "<group>"; };
 		202D4E742EBC5E95005D6F74 /* PromptAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptAnalyzer.swift; sourceTree = "<group>"; };
 		202D4E752EBC5E95005D6F74 /* UserRequestClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = UserRequestClassifier.mlmodel; sourceTree = "<group>"; };
+		202D4E782EBCDC97005D6F74 /* PythonRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PythonRunner.swift; sourceTree = "<group>"; };
 		202E3EDC2CBB8F7B00AF86C8 /* ReferencedURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferencedURL.swift; sourceTree = "<group>"; };
 		202E93652DB22D3000AB361E /* InputFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFunctions.swift; sourceTree = "<group>"; };
 		202E93692DB546EC00AB361E /* MultilineTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultilineTextEditor.swift; sourceTree = "<group>"; };
@@ -1351,6 +1353,7 @@
 				2031B9972CEAE78F00627D53 /* ShortcutController.swift */,
 				209370752D6AB36900E1AF73 /* Refactorer.swift */,
 				200363282D769AC700770391 /* JavaScriptRunner.swift */,
+				202D4E782EBCDC97005D6F74 /* PythonRunner.swift */,
 				2051FED82D8E51FA001B1E0D /* SpeechService.swift */,
 				2041868C2D81E6B2002A5D1C /* NetworkMonitor.swift */,
 				206AB9662DB09BB800385510 /* Location.swift */,
@@ -2476,6 +2479,7 @@
 				201A1A9C2CDBB5B1001E9BA9 /* MarkdownScatterPlotView.swift in Sources */,
 				20C62EC32D713D5100996566 /* SlideStudioPromptView.swift in Sources */,
 				208855CC2DAD078800071F0B /* UseFunctionsButton.swift in Sources */,
+				202D4E792EBCDC97005D6F74 /* PythonRunner.swift in Sources */,
 				2034876F2D6723A200A88DA4 /* ToolCardButton.swift in Sources */,
 				204AE3C62CEC7C030086B42D /* NewCommandView.swift in Sources */,
 				204C795C2CB79AB900EED58E /* ExpertManagerView.swift in Sources */,

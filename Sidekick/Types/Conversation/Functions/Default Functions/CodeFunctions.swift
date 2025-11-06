@@ -9,10 +9,17 @@ import Foundation
 
 public class CodeFunctions {
     
-    static var functions: [AnyFunctionBox] = [
-        CodeFunctions.runJavaScript,
-        CodeFunctions.runCommand
-    ]
+    static var functions: [AnyFunctionBox] = {
+        var baseFunctions: [AnyFunctionBox] = [
+            CodeFunctions.runJavaScript,
+            CodeFunctions.runCommand
+        ]
+        // Add runPython if Python is installed
+        if PythonRunner.isPythonInstalled() {
+            baseFunctions.append(CodeFunctions.runPython)
+        }
+        return baseFunctions
+    }()
     
     /// A ``Function`` for running JavaScript
     static let runJavaScript = Function<RunJavaScriptParams, String>(
@@ -34,6 +41,29 @@ public class CodeFunctions {
     struct RunJavaScriptParams: FunctionParams {
         let code: String
     }
+    
+    /// A ``Function`` for running Python
+    static let runPython = Function<RunPythonParams, String>(
+        name: "run_python",
+        description: "Runs Python code and returns the result. Useful for performing calculations with many steps or performing transformations on data.",
+        clearance: .dangerous,
+        params: [
+            FunctionParameter(
+                label: "code",
+                description: "The Python code to run",
+                datatype: .string,
+                isRequired: true
+            )
+        ],
+        run: { params in
+            return try PythonRunner.executePython(params.code)
+        }
+    )
+    
+    struct RunPythonParams: FunctionParams {
+        let code: String
+    }
+
     
     /// A function to run a terminal command
     static let runCommand = Function<RunCommandParams, String>(
@@ -113,5 +143,5 @@ public class CodeFunctions {
         var command: String
         var workingDirectory: String?
     }
-    
+
 }
