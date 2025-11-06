@@ -68,6 +68,9 @@ public actor LlamaServer {
     /// A `Bool` indicating if the server is being started
     private var isStartingServer: Bool = false
     
+    /// A `Bool` indicating if the current generation has been cancelled
+    private var isCancelled: Bool = false
+    
     /// An `EventSource` instance opening a persistent connection to an HTTP server, which sends stream events
     private var eventSource: EventSource?
     ///    An EventSource task handling connecting to the URLRequest and creating an event stream
@@ -375,6 +378,7 @@ public actor LlamaServer {
     
     /// Function showing if connection was interrupted
     public func interrupt() async {
+        self.isCancelled = true
         if let dataTask = self.dataTask,
            dataTask.readyState != .closed,
            let session = self.session {
@@ -399,7 +403,10 @@ public actor LlamaServer {
                 return try await operation()
             } catch let error as LlamaServerError {
                 lastError = error
-                
+                // Never retry if cancelled
+                if case .cancelled = error {
+                    throw error
+                }
                 // Only retry if it's a network error and we haven't exhausted retries
                 if error.isRetryable && attempt < maxRetries {
                     Self.logger.warning("Network error on attempt \(attempt + 1)/\(maxRetries + 1). Retrying...")
@@ -468,6 +475,8 @@ public actor LlamaServer {
         updateStatusHandler: (@Sendable (Model.Status) async -> Void)? = nil,
         progressHandler: (@Sendable (String) -> Void)? = nil
     ) async throws -> CompleteResponse {
+        // Reset cancellation flag at the start of new request
+        self.isCancelled = false
         // Get endpoint url & whether server is used
         let rawUrl = await self.url(
             "/chat/completions",
@@ -706,7 +715,11 @@ public actor LlamaServer {
                     break listenLoop
             }
         }
-        
+        // Check if generation was cancelled
+        if self.isCancelled {
+            Self.logger.notice("Generation was cancelled, not processing tool calls")
+            throw LlamaServerError.cancelled
+        }
         // Decode all accumulated tool calls AFTER streaming is done
         let sortedIndices = toolCalls.keys.sorted()
         for index in sortedIndices {

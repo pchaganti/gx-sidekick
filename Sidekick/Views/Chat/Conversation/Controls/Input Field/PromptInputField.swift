@@ -408,7 +408,12 @@ struct PromptInputField: View {
             )
         } catch let error as LlamaServerError {
             await model.interrupt()
-            self.handleResponseError(error)
+            // Don't show error dialog for user-initiated cancellation
+            if case .cancelled = error {
+                self.handleCancellation()
+            } else {
+                self.handleResponseError(error)
+            }
             return
         } catch {
             print("Agent listen threw unexpected error", error as Any)
@@ -498,6 +503,26 @@ A user is chatting with an assistant and they have sent the message below. Gener
             title: errorDescription,
             message: recoverySuggestion
         )
+        // Restore prompt
+        if let prompt: String = self.promptController.sentConversation?.messages.last?.text {
+            self.promptController.prompt = prompt
+        }
+        // Remove messages
+        if let messages: [Message] = self.promptController.sentConversation?.messages.dropLast(1),
+           var conversation = self.promptController.sentConversation {
+            // Drop message and update
+            conversation.messages = messages
+            self.conversationManager.update(conversation)
+        }
+        // Reset model status
+        self.model.status = .ready
+        self.model.sentConversationId = nil
+    }
+    
+    @MainActor
+    private func handleCancellation() {
+        // Don't show error dialog for user-initiated cancellation
+        // Just clean up the state silently
         // Restore prompt
         if let prompt: String = self.promptController.sentConversation?.messages.last?.text {
             self.promptController.prompt = prompt

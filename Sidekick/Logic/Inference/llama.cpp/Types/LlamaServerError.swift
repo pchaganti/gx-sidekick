@@ -48,5 +48,6 @@ enum LlamaServerError: LocalizedError {
     case modelError
     case errorResponse(String)
     case networkError(String)
+    case cancelled
     
 }
