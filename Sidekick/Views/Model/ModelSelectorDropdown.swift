@@ -88,8 +88,10 @@ struct ModelSelectorDropdown: View {
                 } else {
                     providerSource = components.provider ?? knownModel.organization.rawValue
                 }
+                // Use the matched model's variant, not the original identifier's variant
+                let matchedComponents = parseModelIdentifier(knownModel.primaryName)
                 let baseName = String(knownModel.primaryName.split(separator: ":").first ?? Substring(knownModel.primaryName))
-                displayName = buildDisplayName(provider: providerSource, model: baseName, variant: components.variant)
+                displayName = buildDisplayName(provider: providerSource, model: baseName, variant: matchedComponents.variant)
             }
             // For unknown organizations, use the stored organizationIdentifier
             let providerForPrefix: String
@@ -99,7 +101,9 @@ struct ModelSelectorDropdown: View {
                 providerForPrefix = components.provider ?? knownModel.organization.rawValue
             }
             displayName = applyProviderPrefixIfNeeded(displayName, provider: providerForPrefix)
-            displayName = harmonizeVariantDisplay(displayName, expectedVariant: components.variant)
+            // Use the matched model's variant for harmonization, not the original
+            let matchedComponents = parseModelIdentifier(knownModel.primaryName)
+            displayName = harmonizeVariantDisplay(displayName, expectedVariant: matchedComponents.variant)
             return displayName
         }
         

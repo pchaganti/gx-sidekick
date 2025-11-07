@@ -159,45 +159,74 @@ public actor LlamaServer {
     
     /// Function to get a list of available models on the server
     public static func getAvailableModels() async -> [String] {
-        // Try the cache first
-        if let cachedModels = KnownModel.loadModelsFromFile() {
-            return cachedModels.map(keyPath: \.fullIdentifier)
-        }
-        // Else, set up request
-        guard let modelsEndpoint: URL = URL(
-            string: InferenceSettings.endpoint + "/models"
-        ) else {
+        let rawEndpoint = InferenceSettings.endpoint.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !rawEndpoint.isEmpty else {
             return []
         }
-        var request: URLRequest = URLRequest(
-            url: modelsEndpoint
-        )
+        
+        let normalizedEndpoint = rawEndpoint
+            .replacingSuffix("/chat/completions", with: "")
+            .trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+        let baseEndpoint = "https://openrouter.ai/api/v1"
+        let isOpenRouterEndpoint = normalizedEndpoint.hasPrefix(baseEndpoint)
+        
+        if isOpenRouterEndpoint,
+           let cachedModels = KnownModel.loadModelsFromFile(),
+           !cachedModels.isEmpty {
+            return cachedModels.map(keyPath: \.fullIdentifier)
+        }
+        
+        guard let baseURL = URL(string: normalizedEndpoint) else {
+            Self.logger.error("Invalid inference endpoint '\(normalizedEndpoint, privacy: .public)'")
+            return []
+        }
+        
+        let modelsEndpoint = baseURL.appendingPathComponent("models")
+        var request = URLRequest(url: modelsEndpoint)
         request.httpMethod = "GET"
-        request.setValue(
-            "Bearer \(InferenceSettings.inferenceApiKey)",
-            forHTTPHeaderField: "Authorization"
-        )
+        
+        let apiKey = InferenceSettings.inferenceApiKey.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !apiKey.isEmpty {
+            request.setValue(
+                "Bearer \(apiKey)",
+                forHTTPHeaderField: "Authorization"
+            )
+        }
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        let urlSession: URLSession = URLSession.shared
+        let urlSession = URLSession.shared
         urlSession.configuration.waitsForConnectivity = false
         urlSession.configuration.timeoutIntervalForRequest = 2
         urlSession.configuration.timeoutIntervalForResource = 2
-        // Get JSON response
-        guard let (data, _): (Data, URLResponse) = try? await URLSession.shared.data(
-            for: request
-        ) else {
-            Self.logger.error("Failed to fetch models from endpoint '\(modelsEndpoint.absoluteString, privacy: .public)'")
+        
+        do {
+            let (data, _) = try await urlSession.data(for: request)
+            
+            let decoder = JSONDecoder()
+            let response = try decoder.decode(
+                AvailableModelsResponse.self,
+                from: data
+            )
+            let models = response.data.map(\.id)
+            
+            if models.isEmpty,
+               isOpenRouterEndpoint,
+               let cachedModels = KnownModel.loadModelsFromFile() {
+                return cachedModels.map(keyPath: \.fullIdentifier)
+            }
+            
+            Self.logger.info("Fetched \(models.count, privacy: .public) models from endpoint '\(modelsEndpoint.absoluteString, privacy: .public)'")
+            return models.sortedByModelSize()
+        } catch {
+            Self.logger.error("Failed to fetch models from endpoint '\(modelsEndpoint.absoluteString, privacy: .public)': \(error.localizedDescription, privacy: .public)")
+            
+            if isOpenRouterEndpoint,
+               let cachedModels = KnownModel.loadModelsFromFile(),
+               !cachedModels.isEmpty {
+                return cachedModels.map(keyPath: \.fullIdentifier)
+            }
+            
             return []
         }
-        // Decode and return
-        let decoder: JSONDecoder = JSONDecoder()
-        let response: AvailableModelsResponse? = try? decoder.decode(
-            AvailableModelsResponse.self,
-            from: data
-        )
-        let models: [String] = (response?.data ?? []).map({ $0.id })
-        Self.logger.info("Fetched \(models.count, privacy: .public) models from endpoint '\(modelsEndpoint.absoluteString, privacy: .public)'")
-        return models.sortedByModelSize()
     }
     
     /// Function to start a monitor process that will terminate the server when our app dies

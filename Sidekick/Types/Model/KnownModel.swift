@@ -103,7 +103,7 @@ public struct KnownModel: Identifiable, Codable {
     public static func findModel(byIdentifier identifier: String, in models: [KnownModel]) -> KnownModel? {
         let normalizedIdentifier = normalizeModelIdentifier(identifier)
         
-        // First pass: try exact match
+        // First pass: try exact match on normalized identifier
         for model in models {
             let normalizedPrimaryName = normalizeModelIdentifier(model.primaryName)
             if normalizedIdentifier == normalizedPrimaryName {
@@ -111,28 +111,71 @@ public struct KnownModel: Identifiable, Codable {
             }
         }
         
-        // Second pass: try contains match, but prefer longer matches to avoid false positives
-        var bestMatch: KnownModel?
-        var bestMatchLength = 0
-        
+        // Second pass: try exact match on full identifier (with provider prefix)
+        let normalizedFullIdentifier = identifier.lowercased()
         for model in models {
-            let normalizedPrimaryName = normalizeModelIdentifier(model.primaryName)
-            let idContainsName = normalizedIdentifier.contains(normalizedPrimaryName)
-            let nameContainsId = normalizedPrimaryName.contains(normalizedIdentifier)
-            
-            if idContainsName || nameContainsId {
-                let matchLength = min(normalizedIdentifier.count, normalizedPrimaryName.count)
-                if matchLength > bestMatchLength {
-                    bestMatch = model
-                    bestMatchLength = matchLength
-                }
+            if normalizedFullIdentifier == model.fullIdentifier.lowercased() {
+                return model
             }
         }
         
-        return bestMatch
+        // Third pass: strict substring match with quality scoring
+        // Use a scoring system that rewards token overlap and penalizes mismatches
+        var bestMatch: KnownModel?
+        var bestScore: Double = 0.0
+        let minScoreThreshold = 0.65 // Require 65% quality score
+        
+        for model in models {
+            let normalizedPrimaryName = normalizeModelIdentifier(model.primaryName)
+            
+            // Split into tokens for comparison
+            let modelTokens = Set(normalizedPrimaryName.split(separator: "-").map(String.init))
+            let idTokens = Set(normalizedIdentifier.split(separator: "-").map(String.init))
+            
+            // Calculate match quality score based on token overlap
+            let commonTokens = modelTokens.intersection(idTokens)
+            let allTokens = modelTokens.union(idTokens)
+            
+            guard !commonTokens.isEmpty else { continue }
+            
+            // Jaccard similarity: intersection / union
+            let jaccardScore = Double(commonTokens.count) / Double(allTokens.count)
+            
+            // Additional check: if one is a substring of the other, boost the score
+            let substringBonus: Double
+            if normalizedIdentifier.contains(normalizedPrimaryName) ||
+                normalizedPrimaryName.contains(normalizedIdentifier) {
+                substringBonus = 0.2
+            } else {
+                substringBonus = 0.0
+            }
+            
+            // Penalize if there are conflicting tokens (e.g., different model sizes)
+            // Check for numeric tokens that differ
+            let modelNumericTokens = modelTokens.filter { $0.rangeOfCharacter(from: .decimalDigits) != nil }
+            let idNumericTokens = idTokens.filter { $0.rangeOfCharacter(from: .decimalDigits) != nil }
+            let conflictingNumericTokens = modelNumericTokens.symmetricDifference(idNumericTokens).subtracting(commonTokens)
+            let conflictPenalty = Double(conflictingNumericTokens.count) * 0.15
+            
+            let score = jaccardScore + substringBonus - conflictPenalty
+            
+            // Only consider matches above the threshold and better than previous best
+            if score >= minScoreThreshold && score > bestScore {
+                bestScore = score
+                bestMatch = model
+            }
+        }
+        
+        if let bestMatch {
+            return bestMatch
+        }
+        
+        // No good match found - return nil so the original name is used
+        return nil
     }
     
-    /// Normalizes a model identifier for comparison by removing provider prefix and variant suffix
+    /// Normalizes a model identifier for comparison by removing provider prefix
+    /// Preserves variant information after colon for better matching
     private static func normalizeModelIdentifier(_ identifier: String) -> String {
         var normalized = identifier.lowercased()
         
@@ -141,10 +184,9 @@ public struct KnownModel: Identifiable, Codable {
             normalized = String(normalized[normalized.index(after: slashIndex)...])
         }
         
-        // Remove variant suffix (e.g., ":free", ":extended")
-        if let colonIndex = normalized.firstIndex(of: ":") {
-            normalized = String(normalized[..<colonIndex])
-        }
+        // Convert colon to dash to preserve variant info (e.g., "model:20b" -> "model-20b")
+        // This helps match Ollama-style names to OpenRouter equivalents
+        normalized = normalized.replacingOccurrences(of: ":", with: "-")
         
         return normalized
     }
