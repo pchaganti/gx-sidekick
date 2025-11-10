@@ -633,6 +633,79 @@ public class Model: ObservableObject {
         var messages: [Message.MessageSubset] = messages
         // Capture results
         var results: [FunctionCallResult] = []
+        // Track consecutive malformed call attempts for circuit breaking
+        var consecutiveMalformedAttempts: Int = 0
+        let maxConsecutiveMalformed: Int = 3
+        
+        // Check for malformed tool calls in initial response
+        if let malformedCalls = response?.malformedToolCalls, !malformedCalls.isEmpty {
+            Self.logger.warning("Initial response contains \(malformedCalls.count) malformed tool call(s)")
+            
+            // If ALL tool calls are malformed and there are no valid ones, provide feedback
+            if response?.functionCalls?.isEmpty ?? true {
+                consecutiveMalformedAttempts += 1
+                Self.logger.error("All tool calls in response are malformed. Providing error feedback to model.")
+                
+                // Create error feedback for each malformed call
+                for malformedCall in malformedCalls {
+                    let errorResult = FunctionCallResult(
+                        call: malformedCall.name ?? "unknown_function",
+                        result: malformedCall.getErrorFeedback(),
+                        type: .error
+                    )
+                    results.append(errorResult)
+                }
+                
+                // Check if we should break the circuit
+                if consecutiveMalformedAttempts >= maxConsecutiveMalformed {
+                    Self.logger.error("Maximum consecutive malformed attempts reached. Breaking agentic loop.")
+                    // Create a helpful error message
+                    let errorMessage = """
+                    The model has made \(maxConsecutiveMalformed) consecutive attempts with malformed tool calls.
+                    
+                    Common issues:
+                    1. Invalid JSON syntax in tool arguments
+                    2. Missing required parameters
+                    3. Type mismatches (e.g., string instead of integer)
+                    4. Incorrect parameter names
+                    
+                    Please review the tool schemas and try again with properly formatted tool calls.
+                    """
+                    return LlamaServer.CompleteResponse(
+                        text: errorMessage,
+                        responseStartSeconds: initialResponse.responseStartSeconds,
+                        predictedPerSecond: initialResponse.predictedPerSecond,
+                        modelName: initialResponse.modelName,
+                        usage: initialResponse.usage,
+                        usedServer: initialResponse.usedServer,
+                        blockFunctionCalls: nil,
+                        malformedToolCalls: malformedCalls
+                    )
+                }
+                
+                // Continue to provide feedback and let model retry
+            } else {
+                // Some calls succeeded, some failed - add errors for failed ones
+                Self.logger.info("Some tool calls succeeded, adding error feedback for \(malformedCalls.count) malformed call(s)")
+                for malformedCall in malformedCalls {
+                    let errorResult = FunctionCallResult(
+                        call: malformedCall.name ?? "unknown_function",
+                        result: malformedCall.getErrorFeedback(),
+                        type: .error
+                    )
+                    results.append(errorResult)
+                }
+                // Reset counter since we have some valid calls
+                consecutiveMalformedAttempts = 0
+            }
+        } else if response?.functionCalls?.isEmpty ?? true {
+            // No tool calls at all (valid or malformed) - normal exit condition
+            consecutiveMalformedAttempts = 0
+        } else {
+            // Has valid tool calls - reset counter
+            consecutiveMalformedAttempts = 0
+        }
+        
         while maxIterations > 0, let functionCalls = response?.functionCalls {
             // Execute each call
             var functionCallRecords = self.pendingMessage?.functionCallRecords ?? []
@@ -804,6 +877,71 @@ Call another tool to obtain more information or execute more actions. Try breaki
                 }
             }
             response?.functionCallRecords = functionCallRecords
+            
+            // Check for malformed tool calls in the new response
+            if let malformedCalls = response?.malformedToolCalls, !malformedCalls.isEmpty {
+                Self.logger.warning("Response contains \(malformedCalls.count) malformed tool call(s)")
+                
+                // If ALL tool calls are malformed and there are no valid ones
+                if response?.functionCalls?.isEmpty ?? true {
+                    consecutiveMalformedAttempts += 1
+                    Self.logger.error("All tool calls in iteration are malformed. Providing error feedback to model.")
+                    
+                    // Add error feedback for each malformed call
+                    for malformedCall in malformedCalls {
+                        let errorResult = FunctionCallResult(
+                            call: malformedCall.name ?? "unknown_function",
+                            result: malformedCall.getErrorFeedback(),
+                            type: .error
+                        )
+                        results.append(errorResult)
+                    }
+                    
+                    // Check if we should break the circuit
+                    if consecutiveMalformedAttempts >= maxConsecutiveMalformed {
+                        Self.logger.error("Maximum consecutive malformed attempts (\(maxConsecutiveMalformed)) reached in loop. Breaking.")
+                        // Create a helpful error message
+                        let errorMessage = """
+                        After \(maxConsecutiveMalformed) consecutive attempts, the model continues to produce malformed tool calls.
+                        
+                        Recent errors:
+                        \(malformedCalls.map { "- \($0.name ?? "unknown"): \($0.errorDescription)" }.joined(separator: "\n"))
+                        
+                        Please try rephrasing your request or contact support if the issue persists.
+                        """
+                        return LlamaServer.CompleteResponse(
+                            text: errorMessage,
+                            responseStartSeconds: response?.responseStartSeconds ?? 0,
+                            predictedPerSecond: response?.predictedPerSecond,
+                            modelName: response?.modelName,
+                            usage: response?.usage,
+                            usedServer: response?.usedServer ?? false,
+                            blockFunctionCalls: nil,
+                            malformedToolCalls: malformedCalls
+                        )
+                    }
+                } else {
+                    // Some calls succeeded, some failed - add errors for failed ones
+                    Self.logger.info("Some tool calls succeeded in iteration, adding error feedback for malformed ones")
+                    for malformedCall in malformedCalls {
+                        let errorResult = FunctionCallResult(
+                            call: malformedCall.name ?? "unknown_function",
+                            result: malformedCall.getErrorFeedback(),
+                            type: .error
+                        )
+                        results.append(errorResult)
+                    }
+                    // Reset counter since we have some valid calls
+                    consecutiveMalformedAttempts = 0
+                }
+            } else if response?.functionCalls?.isEmpty ?? true {
+                // No more tool calls - normal loop exit
+                consecutiveMalformedAttempts = 0
+            } else {
+                // Has valid tool calls - reset counter
+                consecutiveMalformedAttempts = 0
+            }
+            
             // Increment counter & reset
             maxIterations -= 1
         }

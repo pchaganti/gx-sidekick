@@ -761,10 +761,22 @@ public actor LlamaServer {
             throw LlamaServerError.cancelled
         }
         // Decode all accumulated tool calls AFTER streaming is done
+        var malformedToolCalls: [MalformedToolCall] = []
         let sortedIndices = toolCalls.keys.sorted()
         for index in sortedIndices {
             guard let toolCall = toolCalls[index],
                   let name = toolCall.name else {
+                // Track tool calls with missing name
+                if let toolCall = toolCalls[index] {
+                    let malformed = MalformedToolCall(
+                        index: index,
+                        name: nil,
+                        rawArguments: toolCall.arguments,
+                        errorDescription: "Tool call is missing a function name"
+                    )
+                    malformedToolCalls.append(malformed)
+                    Self.logger.error("Tool call #\(index) is missing a function name")
+                }
                 continue
             }
             
@@ -787,7 +799,35 @@ public actor LlamaServer {
                 blockFunctionCalls.append(function)
                 Self.logger.info("Successfully decoded tool call #\(index): \(name)")
             } else {
-                Self.logger.error("Failed to decode tool call #\(index): \(name) with args: \(args, privacy: .public)")
+                // Track malformed tool call with detailed error
+                let errorDescription: String
+                
+                // Try to determine the specific error
+                if args.isEmpty {
+                    errorDescription = "Tool call arguments are empty"
+                } else if let data = args.data(using: .utf8) {
+                    // Try to parse as JSON to provide better error message
+                    do {
+                        _ = try JSONSerialization.jsonObject(with: data)
+                        // JSON is valid, so the issue is parameter mismatch
+                        errorDescription = "Arguments do not match the expected parameter schema for function '\(name)'"
+                    } catch {
+                        // JSON is invalid
+                        errorDescription = "Invalid JSON format: \(error.localizedDescription)"
+                    }
+                } else {
+                    errorDescription = "Arguments could not be decoded as UTF-8 string"
+                }
+                
+                let malformed = MalformedToolCall(
+                    index: index,
+                    name: name,
+                    rawArguments: args,
+                    errorDescription: errorDescription
+                )
+                malformedToolCalls.append(malformed)
+                Self.logger.error("Failed to decode tool call #\(index): \(name) - \(errorDescription)")
+                Self.logger.error("Raw args: \(args, privacy: .public)")
             }
         }
         
@@ -838,7 +878,8 @@ public actor LlamaServer {
             modelName: modelName,
             usage: stopResponse?.usage,
             usedServer: rawUrl.usingRemoteServer,
-            blockFunctionCalls: blockFunctionCalls
+            blockFunctionCalls: blockFunctionCalls,
+            malformedToolCalls: malformedToolCalls.isEmpty ? nil : malformedToolCalls
         )
     }
     
@@ -1069,28 +1110,99 @@ public actor LlamaServer {
                         if function.name == name {
                             // Try to formulate arguments
                             let decoder: JSONDecoder = JSONDecoder()
-                            // Convert to data
-                            guard let data = arguments.data(
-                                using: .utf8
-                            ) else {
-                                continue
+                            
+                            // Attempt to decode with original arguments first
+                            if let result = Self.tryDecode(
+                                arguments: arguments,
+                                function: function,
+                                decoder: decoder
+                            ) {
+                                return result
                             }
-                            // Decode
-                            guard let params = try? decoder.decode(
-                                function.paramsType.self,
-                                from: data
-                            ) else {
-                                continue
+                            
+                            // Try automatic recovery for common JSON issues
+                            let recoveryAttempts = Self.getRecoveryAttempts(for: arguments)
+                            for recoveredArgs in recoveryAttempts {
+                                if let result = Self.tryDecode(
+                                    arguments: recoveredArgs,
+                                    function: function,
+                                    decoder: decoder
+                                ) {
+                                    LlamaServer.logger.info("Successfully recovered malformed arguments for '\(name)' using automatic correction")
+                                    return result
+                                }
                             }
-                            // Init function call
-                            return function.functionCallType.init(
-                                name: function.name,
-                                params: params
-                            )
                         }
                     }
                     // If failed to init, return nil
                     return nil
+                }
+                
+                /// Helper to attempt decoding with given arguments
+                private static func tryDecode(
+                    arguments: String,
+                    function: any AnyFunctionBox,
+                    decoder: JSONDecoder
+                ) -> (any DecodableFunctionCall)? {
+                    guard let data = arguments.data(using: .utf8),
+                          let params = try? decoder.decode(function.paramsType.self, from: data) else {
+                        return nil
+                    }
+                    return function.functionCallType.init(name: function.name, params: params)
+                }
+                
+                /// Generate recovery attempts for common JSON errors
+                private static func getRecoveryAttempts(for arguments: String) -> [String] {
+                    var attempts: [String] = []
+                    var cleaned = arguments.trimmingCharacters(in: .whitespacesAndNewlines)
+                    
+                    // 1. Remove trailing commas before closing braces/brackets
+                    let trailingCommaPattern = #",(\s*[}\]])"#
+                    if let regex = try? NSRegularExpression(pattern: trailingCommaPattern) {
+                        let range = NSRange(cleaned.startIndex..., in: cleaned)
+                        let fixed = regex.stringByReplacingMatches(
+                            in: cleaned,
+                            range: range,
+                            withTemplate: "$1"
+                        )
+                        if fixed != cleaned {
+                            attempts.append(fixed)
+                        }
+                    }
+                    
+                    // 2. Wrap in braces if missing (for single-parameter functions)
+                    if !cleaned.hasPrefix("{") {
+                        attempts.append("{\(cleaned)}")
+                    }
+                    
+                    // 3. Fix common boolean representations
+                    let booleanMappings = [
+                        ("True", "true"),
+                        ("False", "false"),
+                        ("None", "null"),
+                        ("nil", "null")
+                    ]
+                    for (wrong, correct) in booleanMappings {
+                        if cleaned.contains(wrong) {
+                            let fixed = cleaned.replacingOccurrences(of: wrong, with: correct)
+                            if fixed != cleaned {
+                                attempts.append(fixed)
+                            }
+                        }
+                    }
+                    
+                    // 4. Fix single quotes to double quotes (common Python-style mistake)
+                    if cleaned.contains("'") {
+                        let fixed = cleaned.replacingOccurrences(of: "'", with: "\"")
+                        attempts.append(fixed)
+                    }
+                    
+                    // 5. Empty object if arguments are completely empty or whitespace
+                    if cleaned.isEmpty {
+                        attempts.append("{}")
+                    }
+                    
+                    return attempts
                 }
                 
             }
@@ -1177,6 +1289,8 @@ public actor LlamaServer {
         }
         /// A function call in the response JSON
         var blockFunctionCalls: [(any DecodableFunctionCall)]?
+        /// Malformed tool calls that failed to parse
+        var malformedToolCalls: [MalformedToolCall]?
         /// All inline function call found in the text
         var inlineFunctionCalls: [(any DecodableFunctionCall)]? {
             // Configure input
