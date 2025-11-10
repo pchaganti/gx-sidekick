@@ -16,19 +16,19 @@ struct BlankParams: FunctionParams {}
 
 public class DefaultFunctions {
     
-    /// An list of all functions available
+    /// An list of all functions available (unfiltered)
     static var allFunctions: [AnyFunctionBox] = [
         DefaultFunctions.chatFunctions
     ].flatMap { $0 }
     
-    /// An sorted list of all functions available
+    /// An sorted list of all functions available (unfiltered)
     static var sortedFunctions: [AnyFunctionBox] {
         return DefaultFunctions.allFunctions.sorted(by: {
             $0.params.count > $1.params.count
         })
     }
     
-    /// An list of functions available in chat
+    /// An list of functions available in chat (unfiltered)
     static var chatFunctions: [AnyFunctionBox] = [
         ArithmeticFunctions.functions,
         CalendarFunctions.functions,
@@ -44,6 +44,19 @@ public class DefaultFunctions {
             DefaultFunctions.drawDiagram
         ]
     ].flatMap { $0 }
+    
+    /// Get enabled functions based on FunctionSelectionManager
+    static func getEnabledFunctions() async -> [AnyFunctionBox] {
+        return await MainActor.run { FunctionSelectionManager.shared.getEnabledFunctions() }
+    }
+    
+    /// Get sorted enabled functions based on FunctionSelectionManager
+    static func getSortedEnabledFunctions() async -> [AnyFunctionBox] {
+        let functions = await getEnabledFunctions()
+        return functions.sorted(by: {
+            $0.params.count > $1.params.count
+        })
+    }
     
     /// A function to get all contacts
     static let fetchContacts = Function<FetchContactsParams, String>(
@@ -253,7 +266,7 @@ The rendered diagram was saved to "\(newUrl.posixPath)".
 Display it to the user using Markdown image syntax. e.g. ![](\(newUrl.path(percentEncoded: true)))
 """
             enum DrawDiagramError: Error,
- LocalizedError {
+                                   LocalizedError {
                 
                 case renderingFailed(String?)
                 
@@ -300,6 +313,6 @@ Use the MermaidJS syntax cheatsheet below.
         let diagram_name: String
         let mermaid_code: String
     }
-        
+    
     
 }

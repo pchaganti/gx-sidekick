@@ -10,6 +10,7 @@ import SwiftUI
 struct UseFunctionsButton: View {
     
     @EnvironmentObject private var promptController: PromptController
+    @ObservedObject var functionSelectionManager = FunctionSelectionManager.shared
     
     var activatedFillColor: Color
     
@@ -18,11 +19,12 @@ struct UseFunctionsButton: View {
     var useFunctionsTip: UseFunctionsTip = .init()
     
     var body: some View {
-        CapsuleButton(
+        CapsuleChecklistMenuButton(
             label: String(localized: "Functions"),
             systemImage: "function",
             activatedFillColor: activatedFillColor,
-            isActivated: self.$useFunctions
+            isActivated: self.$useFunctions,
+            functionSelectionManager: functionSelectionManager
         ) { newValue in
             self.onToggle(newValue: newValue)
         }

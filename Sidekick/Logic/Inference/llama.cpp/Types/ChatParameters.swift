@@ -86,13 +86,19 @@ struct ChatParameters: Codable {
         // Tell the LLM to use sources
         fullSystemPromptComponents.append(InferenceSettings.useSourcesPrompt)
         // Tell the LLM to use functions when enabled and server does not support native tool calling
-        let functions: [any AnyFunctionBox] = functions ?? DefaultFunctions.chatFunctions
+        // Use enabled functions from FunctionSelectionManager if no custom functions provided
+        let enabledFunctions: [any AnyFunctionBox]
+        if let customFunctions = functions {
+            enabledFunctions = customFunctions
+        } else {
+            enabledFunctions = await MainActor.run { FunctionSelectionManager.shared.getEnabledFunctions() }
+        }
         if Settings.useFunctions && useFunctions {
             fullSystemPromptComponents.append(InferenceSettings.useFunctionsPrompt)
             // Inject function schema if no native tool calling
             if !InferenceSettings.hasNativeToolCalling {
                 fullSystemPromptComponents.append(InferenceSettings.functionsSchemaPrompt)
-                let functions: [any AnyFunctionBox] = functions
+                let functions: [any AnyFunctionBox] = enabledFunctions
                 for function in functions {
                     fullSystemPromptComponents.append(function.getJsonSchema())
                 }
@@ -115,7 +121,7 @@ struct ChatParameters: Codable {
         let messagesWithSystemPrompt: [Message.MessageSubset] = [systemPromptMsgSubset] + messages
         self.messages = messagesWithSystemPrompt
         self.model = Self.getModelName(modelType: modelType) ?? ""
-        self.tools = !useFunctions ? [] : functions.map(keyPath: \.openAiFunctionCall)
+        self.tools = !useFunctions ? [] : enabledFunctions.map(keyPath: \.openAiFunctionCall)
         
         // Add reasoning parameter for Claude 4+ on OpenRouter
         self.reasoning = Self.getReasoningOptions(modelType: modelType, usingRemoteModel: usingRemoteModel)

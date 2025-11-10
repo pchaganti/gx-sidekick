@@ -28,6 +28,9 @@
 		200619AF2D6766B1001949EF /* DiagrammerGeneratingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200619AE2D6766B1001949EF /* DiagrammerGeneratingView.swift */; };
 		200619B22D6768F6001949EF /* SwiftfulLoadingIndicators in Frameworks */ = {isa = PBXBuildFile; productRef = 200619B12D6768F6001949EF /* SwiftfulLoadingIndicators */; };
 		200619B42D676DCE001949EF /* DiagrammerPreviewEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200619B32D676DCE001949EF /* DiagrammerPreviewEditorView.swift */; };
+		200AACBD2EC1CE7A000995B7 /* FunctionCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200AACBC2EC1CE7A000995B7 /* FunctionCategory.swift */; };
+		200AACBF2EC1CEAE000995B7 /* FunctionSelectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200AACBE2EC1CEAE000995B7 /* FunctionSelectionManager.swift */; };
+		200AACC12EC1CF23000995B7 /* CapsuleChecklistMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200AACC02EC1CF23000995B7 /* CapsuleChecklistMenuButton.swift */; };
 		200B23652DB0D31A00127D48 /* ReminderFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200B23642DB0D31A00127D48 /* ReminderFunctions.swift */; };
 		200B23682DB1214800127D48 /* WebSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200B23672DB1214800127D48 /* WebSearch.swift */; };
 		200B236A2DB1227A00127D48 /* DuckDuckGoSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200B23692DB1227A00127D48 /* DuckDuckGoSearch.swift */; };
@@ -471,6 +474,9 @@
 		200619AC2D675DB9001949EF /* DiagrammerPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagrammerPromptView.swift; sourceTree = "<group>"; };
 		200619AE2D6766B1001949EF /* DiagrammerGeneratingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagrammerGeneratingView.swift; sourceTree = "<group>"; };
 		200619B32D676DCE001949EF /* DiagrammerPreviewEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagrammerPreviewEditorView.swift; sourceTree = "<group>"; };
+		200AACBC2EC1CE7A000995B7 /* FunctionCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionCategory.swift; sourceTree = "<group>"; };
+		200AACBE2EC1CEAE000995B7 /* FunctionSelectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionSelectionManager.swift; sourceTree = "<group>"; };
+		200AACC02EC1CF23000995B7 /* CapsuleChecklistMenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleChecklistMenuButton.swift; sourceTree = "<group>"; };
 		200B23642DB0D31A00127D48 /* ReminderFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderFunctions.swift; sourceTree = "<group>"; };
 		200B23672DB1214800127D48 /* WebSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSearch.swift; sourceTree = "<group>"; };
 		200B23692DB1227A00127D48 /* DuckDuckGoSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuckDuckGoSearch.swift; sourceTree = "<group>"; };
@@ -1535,6 +1541,7 @@
 				20B97CCD2CAFEC37009A0A5D /* Settings.swift */,
 				208388E42CBF526E00C2A9F8 /* RetrievalSettings.swift */,
 				20573F312CB53172004C19FE /* InferenceSettings.swift */,
+				200AACBE2EC1CEAE000995B7 /* FunctionSelectionManager.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1654,6 +1661,7 @@
 				208855C92DAD062A00071F0B /* CapsuleButton.swift */,
 				2000EF372DCB7888006F9A95 /* CapsuleMenuButton.swift */,
 				202E93692DB546EC00AB361E /* MultilineTextEditor.swift */,
+				200AACC02EC1CF23000995B7 /* CapsuleChecklistMenuButton.swift */,
 				20D01BF82DBFAA3B00EE3DF3 /* Toggle Buttons */,
 			);
 			path = "Input Field";
@@ -1896,6 +1904,7 @@
 				20C5CBCC2DA52AB40071F5F7 /* FunctionCallRecord.swift */,
 				209D397F2DC88C3000D1E5E5 /* FunctionCallResult.swift */,
 				20FDE2A32DAE73BF000A16F8 /* AnyFunctionBox.swift */,
+				200AACBC2EC1CE7A000995B7 /* FunctionCategory.swift */,
 				208855CD2DAD1D5A00071F0B /* Default Functions */,
 			);
 			path = Functions;
@@ -2431,6 +2440,7 @@
 				20FDE2A02DAE50E7000A16F8 /* Provider.swift in Sources */,
 				20457D272D924F0C00954892 /* CompletionsSetupView.swift in Sources */,
 				20B97CE72CB0066A009A0A5D /* Extension+String.swift in Sources */,
+				200AACC12EC1CF23000995B7 /* CapsuleChecklistMenuButton.swift in Sources */,
 				200619AD2D675DB9001949EF /* DiagrammerPromptView.swift in Sources */,
 				200FBFF72CB68ABF00A92A74 /* ChatParameters.swift in Sources */,
 				20B97CB52CAFE86C009A0A5D /* ContentView.swift in Sources */,
@@ -2494,12 +2504,14 @@
 				20AC3CE52CDA700700947FDA /* AppState.swift in Sources */,
 				206AB9672DB09BB800385510 /* Location.swift in Sources */,
 				2099BD9F2CB7E9CE00E02732 /* QuickPrompt.swift in Sources */,
+				200AACBF2EC1CEAE000995B7 /* FunctionSelectionManager.swift in Sources */,
 				20AF0A0A2CDC6339007780FE /* MarkdownCodeBlockView.swift in Sources */,
 				204AE3C02CEB57330086B42D /* CommandButton.swift in Sources */,
 				204AE3B62CEAF4C20086B42D /* InlineAssistantView.swift in Sources */,
 				20457D232D92352900954892 /* InlineWritingAssistantSettingsView.swift in Sources */,
 				207A9F5D2CB8FD0900E727DE /* ResourceSectionView.swift in Sources */,
 				208855D32DAD1E1400071F0B /* FileFunctions.swift in Sources */,
+				200AACBD2EC1CE7A000995B7 /* FunctionCategory.swift in Sources */,
 				20D9A9732CD2769300171FDE /* MessageShareMenu.swift in Sources */,
 				200619A22D6750D9001949EF /* DiagrammerViewController.swift in Sources */,
 				2000EF3C2DCB7986006F9A95 /* SearchState.swift in Sources */,
