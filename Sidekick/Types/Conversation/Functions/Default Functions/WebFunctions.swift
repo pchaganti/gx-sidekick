@@ -8,6 +8,7 @@
 import AppKit
 import ExtractKit_macOS
 import Foundation
+import GoogleSearch
 
 public class WebFunctions {
     
@@ -21,12 +22,15 @@ public class WebFunctions {
         let provider: RetrievalSettings.SearchProvider = RetrievalSettings.SearchProvider(
             rawValue: RetrievalSettings.defaultSearchProvider
         ) ?? .duckDuckGo
-        if provider == .tavily {
-            functions.append(
-                WebFunctions.tavilyWebSearch()
-            )
-        } else {
-            functions.append(WebFunctions.duckDuckGoWebSearch)
+        switch provider {
+            case .tavily:
+                functions.append(
+                    WebFunctions.tavilyWebSearch()
+                )
+            case .google, .duckDuckGo:
+                functions.append(
+                    WebFunctions.standardWebSearch
+                )
         }
         return functions
     }
@@ -142,8 +146,8 @@ The content from each site here is an incomplete except. Use the `get_website_co
         let time_range: Tavily.TimeRange?
     }
     
-    /// A ``Function`` to conduct a web search with DuckDuckGo
-    static let duckDuckGoWebSearch = Function<DuckDuckGoSearchParams, String>(
+    /// A ``Function`` to conduct a web search with DuckDuckGo or Google
+    static let standardWebSearch = Function<StandardSearchParams, String>(
         name: "web_search",
         description: "Retrieves information from the web with the provided query, instead of estimating it.",
         params: [
@@ -202,13 +206,36 @@ The content from each site here is an incomplete except. Use the `get_website_co
             }()
             // Conduct search
             let numResults: Int = params.num_results ?? 3
-            let sources: [Source] = try await DuckDuckGoSearch.search(
-                query: params.query,
-                site: params.site,
-                resultCount: 5,
-                startDate: startDate,
-                endDate: endDate
-            )
+            let provider: RetrievalSettings.SearchProvider = RetrievalSettings.SearchProvider(
+                rawValue: RetrievalSettings.defaultSearchProvider
+            ) ?? .duckDuckGo
+            var sources: [Source] = []
+            switch provider {
+                case .duckDuckGo:
+                    sources = try await DuckDuckGoSearch.search(
+                        query: params.query,
+                        site: params.site,
+                        resultCount: numResults,
+                        startDate: startDate,
+                        endDate: endDate
+                    )
+                case .google:
+                    let searchResults = try await GoogleSearch.search(
+                        query: params.query,
+                        site: params.site,
+                        resultCount: numResults,
+                        startDate: startDate,
+                        endDate: endDate
+                    )
+                    sources = searchResults.map { result in
+                        return Source(
+                            text: result.text,
+                            source: result.url
+                        )
+                    }
+                default:
+                    fatalError("Unable to execute standard search with Tavily")
+            }
             // Convert to JSON
             let sourcesInfo: [Source.SourceInfo] = sources.map(
                 \.info
@@ -229,7 +256,7 @@ The content from each site here is an incomplete except. Use the `get_website_co
 """
         }
     )
-    struct DuckDuckGoSearchParams: FunctionParams {
+    struct StandardSearchParams: FunctionParams {
         let query: String
         let site: String?
         let num_results: Int?

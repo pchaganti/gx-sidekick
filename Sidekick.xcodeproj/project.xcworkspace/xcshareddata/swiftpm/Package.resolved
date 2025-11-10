@@ -1,5 +1,5 @@
 {
-  "originHash" : "755d99141ea8cbc0027709aff6f25914411484a209163ec0e745df5e968efd8d",
+  "originHash" : "20ab19ad8504019745f573daa34ef7877ab673ff9036b116f09d08ef43b9ba50",
   "pins" : [
     {
       "identity" : "axswift",
@@ -62,6 +62,15 @@
       "state" : {
         "branch" : "main",
         "revision" : "85609974f243d1ffe22fcfa670e77a28454571e6"
+      }
+    },
+    {
+      "identity" : "googlesearch",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/johnbean393/GoogleSearch",
+      "state" : {
+        "branch" : "main",
+        "revision" : "8578671e3bc7277cff15949b142375ab581b216c"
       }
     },
     {

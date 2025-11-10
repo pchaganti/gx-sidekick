@@ -2458,6 +2458,16 @@
         }
       }
     },
+    "Google" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "谷歌"
+          }
+        }
+      }
+    },
     "GPU poor" : {
       "localizations" : {
         "zh-Hans" : {

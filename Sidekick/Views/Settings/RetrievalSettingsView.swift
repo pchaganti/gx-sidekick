@@ -105,6 +105,8 @@ struct RetrievalSettingsView: View {
                     .tag(0)
                 Text("Tavily")
                     .tag(1)
+                Text("Google")
+                    .tag(2)
             }
             .pickerStyle(.menu)
         }

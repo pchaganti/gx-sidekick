@@ -110,7 +110,7 @@ struct FunctionCallsView: View {
         
         func truncateMiddle(
             _ text: String,
-            maxLength: Int = 200,
+            maxLength: Int = 400,
             indicator: String = "...",
             preserveWords: Bool = false
         ) -> String {

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import GoogleSearch
 
 public class WebSearch {
     
@@ -29,6 +30,19 @@ public class WebSearch {
                     site: site,
                     resultCount: resultCount
                 )
+            case .google:
+                // Search with Google
+                let searchResults = try await GoogleSearch.search(
+                    query: query,
+                    site: site,
+                    resultCount: resultCount
+                )
+                results = searchResults.map { searchResult in
+                    return Source(
+                        text: searchResult.text,
+                        source: searchResult.url
+                    )
+                }
             case .tavily:
                 // Try with first key
                 results = try? await Tavily.search(

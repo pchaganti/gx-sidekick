@@ -59,7 +59,7 @@ public class RetrievalSettings {
         ) ?? .duckDuckGo
         // Check for each provider
         switch provider {
-            case .duckDuckGo:
+            case .duckDuckGo, .google:
                 return true
             case .tavily:
                 return !Self.tavilyApiKey.isEmpty
@@ -99,7 +99,7 @@ public class RetrievalSettings {
 		}
 	}
     
-    /// The default search provider, where 0 = DuckDuckGo, 1 = Tavily
+    /// The default search provider, where 0 = DuckDuckGo, 1 = Tavily, 2 = Google
     static var defaultSearchProvider: Int {
         get {
             // Default to DuckDuckGo
@@ -119,6 +119,7 @@ public class RetrievalSettings {
         
         case duckDuckGo = 0
         case tavily = 1
+        case google = 2
         
     }
 	

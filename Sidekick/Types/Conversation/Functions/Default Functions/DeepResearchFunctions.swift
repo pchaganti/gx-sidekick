@@ -22,7 +22,7 @@ public class DeepResearchFunctions {
                 WebFunctions.tavilyWebSearch(searchDepth: .advanced)
             )
         } else {
-            functions.append(WebFunctions.duckDuckGoWebSearch)
+            functions.append(WebFunctions.standardWebSearch)
         }
         // Allow get website content if using server
         if InferenceSettings.useServer {
