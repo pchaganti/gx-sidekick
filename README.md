@@ -49,23 +49,15 @@ Sidekick can even respond with the latest information using **web search**, spee
 
 ### Bring Your Own API Key
 
-In addition to its core local-first capabilities, Sidekick now offers an option to bring your own key for OpenAI compatible APIs. This allows you to tap into additional remote models while still preserving a primarily local-first workflow.
-
-### Reasoning Model Support
-
-Sidekick supports a variety of reasoning models, including DeepSeek's DeepSeek-R1 and *hybrid* reasoning models such as Alibaba Cloud's Qwen3.
-
-![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/Docs%20Images/Features/Conversations/reasoningModelSupport.png)
-
-When using hybrid reasoning models such as Qwen3, reasoning can be toggled on/off. As you type your prompt, Sidekick automatically analyses it and determines if reasoning is needed. To explicitly toggle reasoning, click the `Reason` button in the prompt bar.
+In addition to its core local-first capabilities, Sidekick allows you to bring your own key for OpenAI compatible APIs. This allows you to tap into additional remote models while still preserving a primarily local-first workflow.
 
 ### Function Calling
 
 Sidekick can call functions to boost the mathematical and logical capabilities of models, and to execute actions. Functions are called sequentially in a loop until a result is obtained.
 
-For example, when asking Sidekick to reverse a string or do arithmetic operation, it runs tools, then presents the result.
+For example, when asking Sidekick to calculate Q3 2025 financial metrics for Nvidia, it makes **27** tool calls, saves the CSV file and presents the results.
 
-![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/Docs%20Images/Features/Function%20Calling/functionCalling.png)
+![Screenshot](https://raw.githubusercontent.com/johnbean393/Sidekick/refs/heads/main/Docs%20Images/Features/Function%20Calling/functionCallingFinancialMetrics.png)
 
 When telling Sidekick to draft an invitation email for a birthday celebration to my friend Jean, Sidekick finds my birthday and Jean's email address from my contacts book, and creates a draft in my default email client. 
 
