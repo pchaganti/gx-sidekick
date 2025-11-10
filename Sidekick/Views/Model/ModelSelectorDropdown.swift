@@ -316,6 +316,7 @@ struct ModelSelectorDropdown: View {
             .foregroundStyle(toolbarTextColor)
             .padding(.horizontal, 12)
         }
+        .keyboardShortcut("k", modifiers: [.command])
         .buttonStyle(.plain)
         .popover(isPresented: $showingDropdown) {
             dropdownContent

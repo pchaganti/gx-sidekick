@@ -277,8 +277,14 @@ public struct KnownModel: Identifiable, Codable {
     public var requiresExplicitReasoning: Bool {
         guard organization == .anthropic else { return false }
         let lowerName = primaryName.lowercased()
-        let pattern = #"claude-[4-9]|(sonnet|opus|haiku)-[4-9]"#
-        return lowerName.range(of: pattern, options: .regularExpression) != nil
+        let glmPattern = #"glm-[4-9].[5-9]"#
+        let claudePattern = #"claude-[4-9]|(sonnet|opus|haiku)-[4-9]"#
+        for pattern in [glmPattern, claudePattern] {
+            if lowerName.range(of: pattern, options: .regularExpression) != nil {
+                return true
+            }
+        }
+        return false
     }
     
     /// Organizations that train models
