@@ -514,6 +514,16 @@
         }
       }
     },
+    "Automatically compresses tool call results during agentic loops to prevent context window errors." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在智能体循环期间自动压缩工具调用结果，以防止上下文窗口错误。"
+          }
+        }
+      }
+    },
     "Automatically generate and suggest typing suggestions based on your text." : {
       "localizations" : {
         "zh-Hans" : {
@@ -855,6 +865,16 @@
         }
       }
     },
+    "Compression Token Threshold" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "压缩令牌阈值"
+          }
+        }
+      }
+    },
     "Concise" : {
       "localizations" : {
         "zh-Hans" : {
@@ -931,6 +951,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "上下文长度是查询输入的最大信息量。上下文长度越大，模型能够调用的信息越多，但输出速度越慢，内存占用也越多。"
+          }
+        }
+      }
+    },
+    "Context Window Exceeded" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已超出上下文窗口"
           }
         }
       }
@@ -1734,6 +1764,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "邮件（只支持“邮件.app”）"
+          }
+        }
+      }
+    },
+    "Enable Context Compression" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启用上下文压缩"
           }
         }
       }
@@ -4607,6 +4647,16 @@
         }
       }
     },
+    "The context window was exceeded. Sidekick will automatically compress tool results and retry.\n\n%@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上下文窗口已超出。Sidekick 将自动压缩工具结果并重试。\n\n%@"
+          }
+        }
+      }
+    },
     "The endpoint on the server used for inference. This endpoint must be accessible from this device, and provide an OpenAI compatible API. (e.g. http://localhost:8000/v1/, where http://localhost:8000/v1/chat/completions is accessible)\n\nTo ensure privacy and security of your data, host your own server." : {
       "localizations" : {
         "zh-Hans" : {
@@ -4993,6 +5043,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@已使用令牌"
+          }
+        }
+      }
+    },
+    "Tool call results exceeding this token count will be summarized to save context space." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "超过此令牌数的工具调用结果将被汇总以节省上下文空间。"
           }
         }
       }

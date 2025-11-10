@@ -11,34 +11,26 @@ import SimilaritySearchKit
 public class ExpertFunctions {
     
     static var functions: [AnyFunctionBox] = [
-        ExpertFunctions.listVectorDatabases,
         ExpertFunctions.queryVectorDatabase
     ]
-    
-    /// A function to list all available expert vector databases
-    static let listVectorDatabases = Function<BlankParams, String>(
-        name: "list_databases",
-        description: "List the names of all available vector databases.",
-        run: { params in
-            let expertNames: String = ExpertManager.shared.experts.map { expert in
-                return expert.name
-            }.joined(separator: "\n")
-            return """
-Experts:
-
-\(expertNames)
-"""
-        }
-    )
     
     /// A function to query a expert vector database
     static let queryVectorDatabase = Function<QueryVectorDatabaseParams, String>(
         name: "query_database",
-        description: "Query a vector database. Use `list_vector_databases` to see available databases.",
+        description: {
+            let expertNames: String = ExpertManager.shared.experts.map { expert in
+                return expert.name
+            }.joined(separator: "\n")
+            return """
+"Query a vector database. The databases available are listed below:"
+
+\(expertNames)
+"""
+        }(),
         params: [
             FunctionParameter(
                 label: "database",
-                description: "The database to search within. Use `list_databases` to get a list of all databases.",
+                description: "The database to search within.",
                 datatype: .string,
                 isRequired: true
             ),

@@ -628,8 +628,17 @@ public actor LlamaServer {
                 case .error(let error):
                     // Log error
                     Self.logger.error("Inference server error: \(error, privacy: .public)")
+                    // Attempt to detect context window errors from the localized description
+                    let errorMessage: String = error.localizedDescription
+                    let statusCode: Int? = LlamaServerError.extractStatusCode(from: errorMessage)
+                    if LlamaServerError.isContextWindowError(
+                        message: errorMessage,
+                        code: statusCode
+                    ) {
+                        throw LlamaServerError.contextWindowExceeded(errorMessage)
+                    }
                     // Throw error
-                    throw LlamaServerError.errorResponse(error.localizedDescription)
+                    throw LlamaServerError.errorResponse(errorMessage)
                 case .event(let message):
                     // Parse json in message.data string
                     // Then, print the data.content value and append it to response
@@ -648,7 +657,9 @@ public actor LlamaServer {
                             // Check for error in response
                             if let error = responseObj.error {
                                 Self.logger.error("Received error in response: \(error.message, privacy: .public), code: \(error.code ?? -1, privacy: .public)")
-                                if error.isNetworkError {
+                                if LlamaServerError.isContextWindowError(message: error.message, code: error.code, metadata: error.metadata) {
+                                    throw LlamaServerError.contextWindowExceeded(error.message)
+                                } else if error.isNetworkError {
                                     throw LlamaServerError.networkError(error.message)
                                 } else {
                                     throw LlamaServerError.errorResponse(error.message)

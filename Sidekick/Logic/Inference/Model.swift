@@ -715,15 +715,7 @@ public class Model: ObservableObject {
                     )
                 }
             }
-            // Formulate user message
-            var messageStringComponents: [String] = results.map(
-                \.description
-            )
-            // Add incomplete to-do items if any exist
-            if let todoSummary = TodoFunctions.getIncompleteTodoSummary() {
-                messageStringComponents.append(todoSummary)
-            }
-            // Add prompt
+            // Add prompt to steer the next agent step
             let changePrompt: String = {
                 if hasMadeSufficientCalls {
                     return """
@@ -735,48 +727,82 @@ Call another tool to obtain more information or execute more actions. Try breaki
 """
                 }
             }()
-            messageStringComponents.append(changePrompt)
-            let changeMessage = Message(
-                text: messageStringComponents.joined(separator: "\n\n"),
-                sender: .user
-            )
-            let changeMessageSubset = await Message.MessageSubset(
-                usingRemoteModel: self.wasRemoteServerAccessible,
-                message: changeMessage
-            )
-            messages.append(changeMessageSubset)
-            // Declare variable for incremental update
-            var updateResponse: String = ""
-            self.pendingMessage?.text = updateResponse
-            // Get response
-            response = try await self.mainModelServer.getChatCompletion(
-                mode: .chat,
-                canReachRemoteServer: canReachRemoteServer,
-                messages: messages,
-                useWebSearch: useWebSearch,
-                useFunctions: true,
-                functions: functions,
-                updateStatusHandler: { status in
-                    await self.updateStatus(status)
-                },
-                progressHandler: { partialResponse in
-                    DispatchQueue.main.async {
-                        updateResponse += partialResponse
-                        let shouldUpdate = updateResponse.count >= increment ||
-                        (
-                            self.pendingMessage?.text.count ?? 0 < increment
-                        )
-                        if shouldUpdate {
-                            self.handleCompletionProgress(
-                                showPreview: showPreview,
-                                partialResponse: updateResponse,
-                                handleResponseUpdate: handleResponseUpdate
-                            )
-                            updateResponse = ""
+            
+            // We'll append (or replace) this change message while retrying if compression is needed
+            var hasAppendedChangeMessage = false
+            var compressionAttempts = 0
+            
+            retryLoop: while true {
+                var messageStringComponents: [String] = results.map(\.description)
+                if let todoSummary = TodoFunctions.getIncompleteTodoSummary() {
+                    messageStringComponents.append(todoSummary)
+                }
+                messageStringComponents.append(changePrompt)
+                
+                let changeMessage = Message(
+                    text: messageStringComponents.joined(separator: "\n\n"),
+                    sender: .user
+                )
+                let changeMessageSubset = await Message.MessageSubset(
+                    usingRemoteModel: self.wasRemoteServerAccessible,
+                    message: changeMessage
+                )
+                if hasAppendedChangeMessage {
+                    messages[messages.count - 1] = changeMessageSubset
+                } else {
+                    messages.append(changeMessageSubset)
+                    hasAppendedChangeMessage = true
+                }
+                
+                var updateResponse: String = ""
+                self.pendingMessage?.text = updateResponse
+                
+                do {
+                    response = try await self.mainModelServer.getChatCompletion(
+                        mode: .chat,
+                        canReachRemoteServer: canReachRemoteServer,
+                        messages: messages,
+                        useWebSearch: useWebSearch,
+                        useFunctions: true,
+                        functions: functions,
+                        updateStatusHandler: { status in
+                            await self.updateStatus(status)
+                        },
+                        progressHandler: { partialResponse in
+                            DispatchQueue.main.async {
+                                updateResponse += partialResponse
+                                let shouldUpdate = updateResponse.count >= increment ||
+                                (
+                                    self.pendingMessage?.text.count ?? 0 < increment
+                                )
+                                if shouldUpdate {
+                                    self.handleCompletionProgress(
+                                        showPreview: showPreview,
+                                        partialResponse: updateResponse,
+                                        handleResponseUpdate: handleResponseUpdate
+                                    )
+                                    updateResponse = ""
+                                }
+                            }
                         }
+                    )
+                    break retryLoop
+                } catch let error as LlamaServerError {
+                    if case .contextWindowExceeded = error,
+                       InferenceSettings.enableContextCompression,
+                       compressionAttempts < 3 {
+                        compressionAttempts += 1
+                        Self.logger.warning("Context window exceeded (attempt \(compressionAttempts)). Compressing tool results.")
+                        results = try await ContextCompressor.compressFunctionResults(
+                            results,
+                            threshold: InferenceSettings.compressionTokenThreshold
+                        )
+                        continue retryLoop
+                    } else {
+                        throw error
                     }
                 }
-            )
+            }
             response?.functionCallRecords = functionCallRecords
             // Increment counter & reset
             maxIterations -= 1

@@ -242,6 +242,7 @@
 		208C5FD82D79CBA200D82AA6 /* OrbView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208C5FD72D79CBA200D82AA6 /* OrbView.swift */; };
 		208C5FDA2D7A771F00D82AA6 /* RetryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208C5FD92D7A771F00D82AA6 /* RetryButton.swift */; };
 		208E34A22EC19A87009B75C9 /* GoogleSearch in Frameworks */ = {isa = PBXBuildFile; productRef = 208E34A12EC19A87009B75C9 /* GoogleSearch */; };
+		208E34A42EC1B019009B75C9 /* ContextCompressor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208E34A32EC1B019009B75C9 /* ContextCompressor.swift */; };
 		2090A8A62D8995FA0060DC63 /* ModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2090A8A52D8995FA0060DC63 /* ModelType.swift */; };
 		209370762D6AB36900E1AF73 /* Refactorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209370752D6AB36900E1AF73 /* Refactorer.swift */; };
 		209370942D6B598500E1AF73 /* Extension+CaseIterable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209370932D6B598500E1AF73 /* Extension+CaseIterable.swift */; };
@@ -646,6 +647,7 @@
 		208C5FD52D79CB8E00D82AA6 /* LiquidView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiquidView.swift; sourceTree = "<group>"; };
 		208C5FD72D79CBA200D82AA6 /* OrbView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrbView.swift; sourceTree = "<group>"; };
 		208C5FD92D7A771F00D82AA6 /* RetryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryButton.swift; sourceTree = "<group>"; };
+		208E34A32EC1B019009B75C9 /* ContextCompressor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextCompressor.swift; sourceTree = "<group>"; };
 		2090A8A52D8995FA0060DC63 /* ModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelType.swift; sourceTree = "<group>"; };
 		209370752D6AB36900E1AF73 /* Refactorer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Refactorer.swift; sourceTree = "<group>"; };
 		209370932D6B598500E1AF73 /* Extension+CaseIterable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+CaseIterable.swift"; sourceTree = "<group>"; };
@@ -1359,6 +1361,7 @@
 				200363282D769AC700770391 /* JavaScriptRunner.swift */,
 				202D4E782EBCDC97005D6F74 /* PythonRunner.swift */,
 				2051FED82D8E51FA001B1E0D /* SpeechService.swift */,
+				208E34A32EC1B019009B75C9 /* ContextCompressor.swift */,
 				2041868C2D81E6B2002A5D1C /* NetworkMonitor.swift */,
 				206AB9662DB09BB800385510 /* Location.swift */,
 				208388D92CBF4DF500C2A9F8 /* Tavily.swift */,
@@ -2411,6 +2414,7 @@
 				200FBFF72CB68ABF00A92A74 /* ChatParameters.swift in Sources */,
 				20B97CB52CAFE86C009A0A5D /* ContentView.swift in Sources */,
 				200619B42D676DCE001949EF /* DiagrammerPreviewEditorView.swift in Sources */,
+				208E34A42EC1B019009B75C9 /* ContextCompressor.swift in Sources */,
 				20DFF48D2DB76DC800F3F76C /* Memory.swift in Sources */,
 				209370972D6B5B8100E1AF73 /* DetectorViewController.swift in Sources */,
 				208844332CDDE394003BCB6F /* ModelRowView.swift in Sources */,
