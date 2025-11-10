@@ -281,11 +281,11 @@ struct InferenceSettingsView: View {
     var parameters: some View {
         Group {
             systemPromptEditor
-            contextLengthEditor
             temperatureEditor
-            useGPUAccelerationToggle
+            contextLengthEditor
             contextCompressionToggle
             contextCompressionThresholdEditor
+            useGPUAccelerationToggle
             advancedParameters
         }
     }
