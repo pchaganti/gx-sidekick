@@ -89,6 +89,7 @@
       "shouldTranslate" : false
     },
     "%@ s" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -99,6 +100,7 @@
       }
     },
     "%@ t/s" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {

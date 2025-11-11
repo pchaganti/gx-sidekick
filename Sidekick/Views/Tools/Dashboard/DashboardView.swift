@@ -12,22 +12,19 @@ struct DashboardView: View {
     
     @StateObject private var inferenceRecords: InferenceRecords = .shared
     
+    // Cached date formatter for performance
+    private static let dateFormatter: Date.FormatStyle = .dateTime
+    
     var totalTokens: Int {
-        return self.inferenceRecords.filteredRecords.map { record in
-            record.totalTokens
-        }.reduce(0, +)
+        return self.inferenceRecords.filteredRecords.reduce(0) { $0 + $1.totalTokens }
     }
     
     var totalInputTokens: Int {
-        return self.inferenceRecords.filteredRecords.map { record in
-            record.inputTokens
-        }.reduce(0, +)
+        return self.inferenceRecords.filteredRecords.reduce(0) { $0 + $1.inputTokens }
     }
     
     var totalOutputTokens: Int {
-        return self.inferenceRecords.filteredRecords.map { record in
-            record.outputTokens
-        }.reduce(0, +)
+        return self.inferenceRecords.filteredRecords.reduce(0) { $0 + $1.outputTokens }
     }
     
     var totalUsage: Int {
@@ -220,52 +217,31 @@ struct DashboardView: View {
             selection: self.$inferenceRecords.selections
         ) {
             TableColumn("Start Time") { record in
-                Text(record.startTime.formatted(.dateTime))
+                Text(record.startTime.formatted(Self.dateFormatter))
             }
             TableColumn("End Time") { record in
-                Text(record.endTime.formatted(.dateTime))
+                Text(record.endTime.formatted(Self.dateFormatter))
             }
             TableColumn("Duration") { record in
-                Text("\(String(format: "%.1f", record.duration)) s")
+                DurationCell(duration: Double(record.duration))
             }
             TableColumn("Model") { record in
-                HStack {
-                    PopoverButton {
-                        Circle()
-                            .fill(record.usedRemoteServer ? Color.blue : Color.green)
-                            .frame(width: 10, height: 10)
-                    } content: {
-                        Text(record.usedRemoteServer ? String(localized :"Remote Inference") : String(localized :"Local Inference"))
-                            .padding(7)
-                    }
-                    .buttonStyle(.plain)
-                    Text(record.name)
-                }
+                ModelCell(name: record.name, isRemote: record.usedRemoteServer)
             }
-            TableColumn(
-                "Type"
-            ) { record in
+            TableColumn("Type") { record in
                 Text(record.type.description)
             }
-            TableColumn(
-                "Input Tokens"
-            ) { record in
-                Text(String(record.inputTokens))
+            TableColumn("Input Tokens") { record in
+                Text(verbatim: String(record.inputTokens))
             }
-            TableColumn(
-                "Output Tokens"
-            ) { record in
-                Text(String(record.outputTokens))
+            TableColumn("Output Tokens") { record in
+                Text(verbatim: String(record.outputTokens))
             }
-            TableColumn(
-                "Total Tokens"
-            ) { record in
-                Text(String(record.totalTokens))
+            TableColumn("Total Tokens") { record in
+                Text(verbatim: String(record.totalTokens))
             }
-            TableColumn(
-                "Speed (t/s)"
-            ) { record in
-                Text("\(String(format: "%.1f", record.tokensPerSecond)) t/s")
+            TableColumn("Speed (t/s)") { record in
+                SpeedCell(speed: record.tokensPerSecond)
             }
         }
     }
@@ -323,6 +299,52 @@ struct DashboardView: View {
         .pickerStyle(.menu)
     }
     
+}
+
+// MARK: - Optimized Cell Views
+
+private struct DurationCell: View, Equatable {
+    let duration: Double
+    
+    var body: some View {
+        Text(verbatim: String(format: "%.1f", duration) + " s")
+    }
+}
+
+private struct SpeedCell: View, Equatable {
+    let speed: Double
+    
+    var body: some View {
+        Text(verbatim: String(format: "%.1f", speed) + " t/s")
+    }
+}
+
+private struct ModelCell: View, Equatable {
+    let name: String
+    let isRemote: Bool
+    
+    private var indicatorColor: Color {
+        isRemote ? .blue : .green
+    }
+    
+    private var inferenceType: String {
+        isRemote ? String(localized: "Remote Inference") : String(localized: "Local Inference")
+    }
+    
+    var body: some View {
+        HStack(spacing: 6) {
+            PopoverButton {
+                Circle()
+                    .fill(indicatorColor)
+                    .frame(width: 10, height: 10)
+            } content: {
+                Text(inferenceType)
+                    .padding(7)
+            }
+            .buttonStyle(.plain)
+            Text(name)
+        }
+    }
 }
 
 #Preview {
