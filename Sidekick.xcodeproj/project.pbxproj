@@ -108,6 +108,7 @@
 		200AAE072EC2B249000995B7 /* GraphEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200AAE032EC2B249000995B7 /* GraphEntity.swift */; };
 		200AAE082EC2B249000995B7 /* Community.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200AAE022EC2B249000995B7 /* Community.swift */; };
 		200AAE092EC2B249000995B7 /* KnowledgeGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200AAE052EC2B249000995B7 /* KnowledgeGraph.swift */; };
+		200AAE0B2EC3B587000995B7 /* Extension+Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200AAE0A2EC3B587000995B7 /* Extension+Task.swift */; };
 		200B23652DB0D31A00127D48 /* ReminderFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200B23642DB0D31A00127D48 /* ReminderFunctions.swift */; };
 		200B23682DB1214800127D48 /* WebSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200B23672DB1214800127D48 /* WebSearch.swift */; };
 		200B236A2DB1227A00127D48 /* DuckDuckGoSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200B23692DB1227A00127D48 /* DuckDuckGoSearch.swift */; };
@@ -630,6 +631,7 @@
 		200AAE032EC2B249000995B7 /* GraphEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphEntity.swift; sourceTree = "<group>"; };
 		200AAE042EC2B249000995B7 /* GraphRelationship.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphRelationship.swift; sourceTree = "<group>"; };
 		200AAE052EC2B249000995B7 /* KnowledgeGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnowledgeGraph.swift; sourceTree = "<group>"; };
+		200AAE0A2EC3B587000995B7 /* Extension+Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Task.swift"; sourceTree = "<group>"; };
 		200B23642DB0D31A00127D48 /* ReminderFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderFunctions.swift; sourceTree = "<group>"; };
 		200B23672DB1214800127D48 /* WebSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSearch.swift; sourceTree = "<group>"; };
 		200B23692DB1227A00127D48 /* DuckDuckGoSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuckDuckGoSearch.swift; sourceTree = "<group>"; };
@@ -2077,6 +2079,7 @@
 				20FB0D882CBA8327006D062A /* Extension+SimilarityIndex.swift */,
 				20B97CE62CB0066A009A0A5D /* Extension+String.swift */,
 				208388EC2CBF825400C2A9F8 /* Extension+Tavily.swift */,
+				200AAE0A2EC3B587000995B7 /* Extension+Task.swift */,
 				20B97CEA2CB00912009A0A5D /* Extension+URL.swift */,
 				200C3E2C2CD8B1380033909F /* AppKit */,
 				200C3E2B2CD8B0A40033909F /* UI */,
@@ -2851,6 +2854,7 @@
 				202D4E772EBC5E95005D6F74 /* UserRequestClassifier.mlmodel in Sources */,
 				2099BD9D2CB7B8E700E02732 /* Notifications.swift in Sources */,
 				201BB9A52D8BA0BC00890EE6 /* SnapshotCopyButton.swift in Sources */,
+				200AAE0B2EC3B587000995B7 /* Extension+Task.swift in Sources */,
 				20C16E1B2D0EBE500001B3C9 /* IntroductionViewController.swift in Sources */,
 				20BF4A092D64C6ED00C329F8 /* SpecialtyView.swift in Sources */,
 				2051FED92D8E51FA001B1E0D /* SpeechService.swift in Sources */,

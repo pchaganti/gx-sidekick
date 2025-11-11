@@ -43,6 +43,13 @@ public class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         Task { @MainActor in
             await Refactorer.updateEndpoint()
         }
+        // Make sure `Resources` are not indexing
+        for expert in ExpertManager.shared.experts {
+            var modExpert = expert
+            modExpert.resources.graphProgress = nil
+            modExpert.resources.graphStatus = nil
+            ExpertManager.shared.update(modExpert)
+        }
 	}
 	
 	/// Function that runs before the app is terminated

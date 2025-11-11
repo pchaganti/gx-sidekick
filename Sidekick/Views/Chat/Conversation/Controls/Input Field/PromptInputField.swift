@@ -365,9 +365,11 @@ struct PromptInputField: View {
         let isFirstMessage: Bool = conversation.messages.count <= 1
         if Settings.generateConversationTitles && isFirstMessage {
             self.model.indicateStartedNamingConversation()
-            if let title = try? await self.generateConversationTitle(
-                prompt: prompt
-            ), !title.isEmpty {
+            // Use a timeout to prevent blocking when worker model is busy (e.g., during indexing)
+            let title = await withTimeout(seconds: 10.0) {
+                try? await self.generateConversationTitle(prompt: prompt)
+            }
+            if let title = title, let title = title, !title.isEmpty {
                 conversation.title = title
             }
             withAnimation(.linear) {
