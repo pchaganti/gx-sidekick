@@ -468,8 +468,8 @@ extension LlamaServer {
             startTime: Date(timeIntervalSinceReferenceDate: start),
             type: .chatCompletions,
             endpoint: url,
-            inputTokens: usage?.prompt_tokens ?? 0,
-            outputTokens: usage?.completion_tokens ?? 0,
+            inputTokens: stopResponse?.usage.prompt_tokens ?? (usage?.prompt_tokens ?? 0),
+            outputTokens: stopResponse?.usage.completion_tokens ?? (usage?.completion_tokens ?? 0),
             tokensPerSecond: tokensPerSecond
         )
         await InferenceRecords.shared.add(record)
