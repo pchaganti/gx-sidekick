@@ -109,7 +109,7 @@
       }
     },
     "%lld" : {
-
+      "shouldTranslate" : false
     },
     "%lld input" : {
       "localizations" : {
@@ -849,10 +849,24 @@
       }
     },
     "Community Levels" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "社区级别"
+          }
+        }
+      }
     },
     "Completed" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已完成"
+          }
+        }
+      }
     },
     "Completion Suggestion Threshold" : {
       "localizations" : {
@@ -1847,8 +1861,15 @@
         }
       }
     },
-    "Enable Graph RAG" : {
-
+    "Enable Knowledge Graphs" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启用知识图谱"
+          }
+        }
+      }
     },
     "Enable Remote" : {
       "localizations" : {
@@ -2290,12 +2311,12 @@
         }
       }
     },
-    "Files, folders or websites stored in the chatbot's \"conscience\"" : {
+    "Files, folders or websites stored in the chatbot's long-term memory" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "聊天机器人“意识”中存储的文件、文件夹或网站"
+            "value" : "聊天机器人长期记忆中存储的文件、文件夹或网站"
           }
         }
       }
@@ -2311,7 +2332,14 @@
       }
     },
     "Finished processing \"%@\"" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已完成处理\"%@\""
+          }
+        }
+      }
     },
     "Fix the error according to the server's error message below, then try again.\n\n%@" : {
       "localizations" : {
@@ -2634,16 +2662,24 @@
       }
     },
     "Graph indexing progress" : {
-
-    },
-    "Graph RAG" : {
-
-    },
-    "Graph RAG uses knowledge graphs to enhance retrieval by understanding entity relationships and hierarchical themes. Enable this feature per expert in Expert settings." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "图谱索引进度"
+          }
+        }
+      }
     },
     "Graph Status" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "图谱状态"
+          }
+        }
+      }
     },
     "Guessing your email addresses..." : {
       "localizations" : {
@@ -2896,6 +2932,16 @@
         }
       }
     },
+    "Knowledge Graphs" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "知识图谱"
+          }
+        }
+      }
+    },
     "Launch at Login" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3057,10 +3103,24 @@
       }
     },
     "Maximum Entities" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最大实体数"
+          }
+        }
+      }
     },
     "Maximum number of entities to extract per expert. Higher values provide more detail but slower indexing." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "每个专家提取的最大实体数。较高的值提供更多细节，但索引速度较慢。"
+          }
+        }
+      }
     },
     "Medium" : {
       "localizations" : {
@@ -3459,7 +3519,14 @@
       }
     },
     "Number of hierarchical levels for community detection. More levels capture broader themes." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用于社区检测的层级级别数。更多级别可捕获更广泛的主题。"
+          }
+        }
+      }
     },
     "Open" : {
       "localizations" : {
@@ -3632,7 +3699,14 @@
       }
     },
     "Preparing resources" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "准备资源"
+          }
+        }
+      }
     },
     "Press 'Command + Control + I' to access Sidekick's inline writing assistant. For example, use the 'Answer Question' command to do your homework without leaving Microsoft Word!" : {
       "localizations" : {
@@ -3681,6 +3755,12 @@
             "state" : "new",
             "value" : "Processing item %1$lld of %2$lld in \"%3$@\""
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在处理\"%3$@\"中的第 %1$lld 项，共 %2$lld 项"
+          }
         }
       }
     },
@@ -3690,6 +3770,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Processing resource %1$lld of %2$lld"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在处理资源 %1$lld，共 %2$lld"
           }
         }
       }
@@ -3745,7 +3831,14 @@
       }
     },
     "Re-index all resources with graph extraction. This may take several minutes." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用图谱提取重新索引所有资源。这可能需要几分钟时间。"
+          }
+        }
+      }
     },
     "Reasoning Process" : {
       "localizations" : {
@@ -3758,7 +3851,14 @@
       }
     },
     "Rebuild Knowledge Graph" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重建知识图谱"
+          }
+        }
+      }
     },
     "Recommended values:" : {
       "localizations" : {
@@ -3931,7 +4031,6 @@
       }
     },
     "Resources" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3940,9 +4039,6 @@
           }
         }
       }
-    },
-    "Resources & Graph RAG" : {
-
     },
     "Resources Search" : {
       "localizations" : {
@@ -3954,12 +4050,12 @@
         }
       }
     },
-    "Resources: %lld" : {
+    "Resources:" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "资源：%lld"
+            "value" : "资源："
           }
         }
       }
@@ -5326,8 +5422,7 @@
         }
       }
     },
-    "Update" : {
-      "extractionState" : "stale",
+    "Update Index" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -5336,9 +5431,6 @@
           }
         }
       }
-    },
-    "Update Index" : {
-
     },
     "Updating resource index for expert \"%@\"" : {
       "localizations" : {
@@ -5430,11 +5522,35 @@
         }
       }
     },
+    "Use knowledge graphs to enhance retrieval by understanding entity relationships and hierarchical themes. Enable this feature per expert in Expert settings." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用知识图谱通过理解实体关系和层级主题来增强检索。在专家设置中为每个专家启用此功能。"
+          }
+        }
+      }
+    },
     "Use knowledge graphs to enhance retrieval with entity relationships and hierarchical communities. This provides better context but requires re-indexing." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用知识图谱通过实体关系和层级社区来增强检索。这可以提供更好的上下文，但需要重新索引。"
+          }
+        }
+      }
     },
     "Use knowledge graphs to enhance retrieval with entity relationships." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用知识图谱通过实体关系来增强检索。"
+          }
+        }
+      }
     },
     "Use Memory" : {
       "localizations" : {

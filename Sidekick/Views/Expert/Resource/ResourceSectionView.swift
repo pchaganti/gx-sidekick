@@ -45,7 +45,7 @@ struct ResourceSectionView: View {
             }
             .padding(.horizontal, 5)
         } header: {
-            Text("Resources & Graph RAG")
+            Text("Resources")
         }
         .confirmationDialog(
             "Resource Type",
@@ -93,10 +93,10 @@ struct ResourceSectionView: View {
         VStack(alignment: .leading) {
             HStack {
                 VStack(alignment: .leading) {
-                    Text("Resources: \(expert.resources.resources.count)")
+                    Text("Resources:")
                         .font(.title3)
                         .bold()
-                    Text("Files, folders or websites stored in the chatbot's \"conscience\"")
+                    Text("Files, folders or websites stored in the chatbot's long-term memory")
                         .font(.caption)
                 }
                 if isUpdating {
@@ -146,7 +146,7 @@ struct ResourceSectionView: View {
             HStack(alignment: .center) {
                 VStack(alignment: .leading) {
                     HStack {
-                        Text("Enable Graph RAG")
+                        Text("Enable Knowledge Graphs")
                             .font(.title3)
                             .bold()
                         StatusLabelView.experimental
@@ -157,17 +157,6 @@ struct ResourceSectionView: View {
                 Spacer()
                 Toggle("", isOn: $expert.useGraphRAG)
                     .disabled(isUpdating)
-                    .onChange(of: expert.useGraphRAG) { _, newValue in
-                        if newValue {
-                            // If no resources, immediately set to ready
-                            if expert.resources.resources.isEmpty {
-                                expert.resources.graphStatus = .ready
-                            } else if expert.resources.graphStatus == nil {
-                                expert.resources.graphStatus = .building
-                            }
-                        }
-                        expertManager.update(expert)
-                    }
             }
             
             if expert.useGraphRAG {
@@ -335,14 +324,6 @@ struct ResourceSectionView: View {
             var current = expert
             let wasEmpty = current.resources.resources.isEmpty
             current.resources.addResources(resources)
-            
-            // If Graph RAG is enabled and we're adding first resources, update status
-            if wasEmpty && !current.resources.resources.isEmpty && current.useGraphRAG {
-                if current.resources.graphStatus == .ready {
-                    current.resources.graphStatus = .building
-                }
-            }
-            
             expert = current
             expertManager.update(current)
         }
@@ -361,7 +342,6 @@ struct ResourceSectionView: View {
                 updateExpertProgress(expertId: expertId, progress: progress)
             }
         )
-        
         await MainActor.run {
             expert = updatedExpert
             expertManager.update(updatedExpert)

@@ -46,9 +46,9 @@ struct RetrievalSettingsView: View {
                     graphRAGCommunityLevelsSlider
                 }
             } header: {
-                Text("Graph RAG")
+                Text("Knowledge Graphs")
             } footer: {
-                Text("Graph RAG uses knowledge graphs to enhance retrieval by understanding entity relationships and hierarchical themes. Enable this feature per expert in Expert settings.")
+                Text("Use knowledge graphs to enhance retrieval by understanding entity relationships and hierarchical themes. Enable this feature per expert in Expert settings.")
                     .font(.caption)
             }
             Section {
@@ -244,7 +244,7 @@ struct RetrievalSettingsView: View {
         HStack(alignment: .center) {
             VStack(alignment: .leading) {
                 HStack {
-                    Text("Enable Graph RAG")
+                    Text("Enable Knowledge Graphs")
                         .font(.title3)
                         .bold()
                     StatusLabelView.experimental
