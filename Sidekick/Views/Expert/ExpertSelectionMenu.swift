@@ -34,24 +34,11 @@ struct ExpertSelectionMenu: View {
     }
     
     var toolbarTextColor: Color {
-        if #available(macOS 26, *) {
-            return colorScheme == .dark ? .white : .black
-        } else {
-            guard let luminance = selectedExpert?.color.luminance else {
-                return .primary
-            }
-            // For light backgrounds (luminance > 0.5), use dark text
-            // For dark backgrounds (luminance < 0.5), use light text
-            // But also consider the color scheme since buttons are trans-white in light mode
-            // and trans-black in dark mode
-            if luminance > 0.5 {
-                // Light expert background
-                return colorScheme == .dark ? .white : .toolbarText
-            } else {
-                // Dark expert background
-                return .white
-            }
+        guard let selectedExpert = selectedExpert else {
+            return .primary
         }
+        // Use the same logic as expert label/icon for consistency
+        return selectedExpert.color.adaptedTextColor
     }
     
     var inactiveExperts: [Expert] {
@@ -66,9 +53,6 @@ struct ExpertSelectionMenu: View {
         Group {
             prevButton
             menu
-//                .if(isInverted) { view in
-//                    view.colorInvert()
-//                }
                 .popoverTip(
                     createExpertsTip,
                     arrowEdge: .top
@@ -86,7 +70,7 @@ struct ExpertSelectionMenu: View {
         } label: {
             Label("Previous Expert", systemImage: "chevron.backward")
                 .foregroundStyle(toolbarTextColor)
-                .opacity(isDarkColor ? 0.7 : 1.0)
+                .symbolRenderingMode(.monochrome)
         }
         .keyboardShortcut("[", modifiers: [.command])
     }
@@ -97,7 +81,7 @@ struct ExpertSelectionMenu: View {
         } label: {
             Label("Next Expert", systemImage: "chevron.forward")
                 .foregroundStyle(toolbarTextColor)
-                .opacity(isDarkColor ? 0.7 : 1.0)
+                .symbolRenderingMode(.monochrome)
         }
         .keyboardShortcut("]", modifiers: [.command])
     }
@@ -113,6 +97,8 @@ struct ExpertSelectionMenu: View {
             }
         } label: {
             label
+                .foregroundStyle(toolbarTextColor)
+                .symbolRenderingMode(.monochrome)
         }
     }
     
@@ -152,6 +138,7 @@ struct ExpertSelectionMenu: View {
                     .bold()
                     .padding(7)
                     .padding(.horizontal, 2)
+                    .foregroundStyle(toolbarTextColor)
                     .background {
                         RoundedRectangle(cornerRadius: 8)
                             .fill(Color.white)
@@ -163,6 +150,8 @@ struct ExpertSelectionMenu: View {
                     systemImage: self.selectedExpert!.symbolName
                 )
                 .labelStyle(.titleAndIcon)
+                .foregroundStyle(toolbarTextColor)
+                .symbolRenderingMode(.monochrome)
             }
         }
     }

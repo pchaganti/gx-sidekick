@@ -84,6 +84,22 @@ public class EntityExtractor {
         for (batchIndex, batch) in batches.enumerated() {
             let chunkStartIndex = batchIndex * batchSize
             
+            // Check if we should yield to higher-priority tasks (like title generation)
+            let shouldYield = await MainActor.run {
+                Model.shared.status == .generatingTitle
+            }
+            
+            if shouldYield {
+                Self.logger.info("Pausing entity extraction to allow title generation")
+                // Wait for title generation to complete
+                var isGeneratingTitle = await MainActor.run { Model.shared.status == .generatingTitle }
+                while isGeneratingTitle {
+                    try? await Task.sleep(for: .milliseconds(500))
+                    isGeneratingTitle = await MainActor.run { Model.shared.status == .generatingTitle }
+                }
+                Self.logger.info("Resuming entity extraction after title generation")
+            }
+            
             // Update progress
             progressCallback?(
                 batchIndex + 1,

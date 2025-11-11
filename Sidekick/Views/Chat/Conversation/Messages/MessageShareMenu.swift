@@ -17,8 +17,6 @@ struct MessageShareMenu: View {
     @EnvironmentObject private var expertManager: ExpertManager
     @EnvironmentObject private var conversationState: ConversationState
     
-    var toolbarTextColor: Color = .primary
-    
     var messages: [Message] {
         return self.selectedConversation?.messages ?? []
     }
@@ -32,6 +30,28 @@ struct MessageShareMenu: View {
             return nil
         }
         return expertManager.getExpert(id: selectedExpertId)
+    }
+    
+    var toolbarTextColor: Color {
+        guard let selectedExpert = selectedExpert else {
+            return .primary
+        }
+        // Use the same logic as expert label/icon for consistency
+        return selectedExpert.color.adaptedTextColor
+    }
+    
+    var shouldInvert: Bool {
+        guard let luminance = selectedExpert?.color.luminance else {
+            return false
+        }
+        var shouldInvert: Bool = false
+        if colorScheme == .dark { // Primary color is white
+            shouldInvert = !(luminance < 0.5)
+        } else { // Primary color is black
+            shouldInvert = (luminance < 0.5)
+        }
+        print("shouldInvert: \(shouldInvert)")
+        return shouldInvert
     }
     
     var selectedConversation: Conversation? {
@@ -55,7 +75,10 @@ struct MessageShareMenu: View {
             self.saveHTMLButton
         } label: {
             Label("Export", systemImage: "square.and.arrow.up")
-                .foregroundStyle(toolbarTextColor)
+                .symbolRenderingMode(.monochrome)
+                .if(self.shouldInvert) { view in
+                    view.colorInvert()
+                }
         }
         .disabled(isGenerating || self.messages.isEmpty)
     }

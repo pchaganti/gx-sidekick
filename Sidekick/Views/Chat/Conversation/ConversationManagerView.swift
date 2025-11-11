@@ -31,36 +31,11 @@ struct ConversationManagerView: View {
     }
     
     var toolbarTextColor: Color {
-        if #available(macOS 26, *) {
-            return colorScheme == .dark ? .white : .black
-        } else {
-            guard let luminance = selectedExpert?.color.luminance else {
-                return .primary
-            }
-            // For light backgrounds (luminance > 0.5), use dark text
-            // For dark backgrounds (luminance < 0.5), use light text
-            // But also consider the color scheme since buttons are trans-white in light mode
-            // and trans-black in dark mode
-            if luminance > 0.5 {
-                // Light expert background
-                return colorScheme == .dark ? .white : .toolbarText
-            } else {
-                // Dark expert background
-                return .white
-            }
+        guard let selectedExpert = selectedExpert else {
+            return .primary
         }
-    }
-    
-    var isDarkColor: Bool {
-        guard let luminance = selectedExpert?.color.luminance else { return false }
-        return luminance < 0.5
-    }
-    
-    var isInverted: Bool {
-        guard let luminance = selectedExpert?.color.luminance else { return false }
-        let darkModeResult: Bool = luminance > 0.5
-        let lightModeResult: Bool = luminance < 0.5
-        return colorScheme == .dark ? darkModeResult : lightModeResult
+        // Use the same logic as expert label/icon for consistency
+        return selectedExpert.color.adaptedTextColor
     }
     
     var selectedConversation: Conversation? {
@@ -69,12 +44,6 @@ struct ConversationManagerView: View {
         }
         return self.conversationManager.getConversation(
             id: selectedConversationId
-        )
-    }
-    
-    var navTitle: String {
-        return self.selectedConversation?.title ?? String(
-            localized: "Conversations"
         )
     }
     
@@ -115,15 +84,20 @@ struct ConversationManagerView: View {
                 // Button to toggle canvas
                 canvasToggle
                 // Menu to share conversation
-                MessageShareMenu(toolbarTextColor: toolbarTextColor)
+                MessageShareMenu()
             }
         }
         .if(selectedExpert != nil) { view in
-            return view
-                .toolbarBackground(
-                    selectedExpert!.color,
-                    for: .windowToolbar
-                )
+            guard let expert = selectedExpert else {
+                return AnyView(view)
+            }
+            return AnyView(
+                view
+                    .toolbarBackground(
+                        expert.color,
+                        for: .windowToolbar
+                    )
+            )
         }
         .onChange(of: selectedExpert) {
             self.refreshSystemPrompt()
@@ -247,7 +221,7 @@ struct ConversationManagerView: View {
         } label: {
             Label("Canvas", systemImage: "cube")
                 .foregroundStyle(toolbarTextColor)
-                .opacity(isDarkColor ? 0.7 : 1.0)
+                .symbolRenderingMode(.monochrome)
         }
         .disabled({
             let hasAssistantMessages = self.selectedConversation?.messages.contains {

@@ -44,6 +44,22 @@ public class CommunityDetector {
         
         // Generate summaries for base communities
         for (index, var community) in baseCommunities.enumerated() {
+            // Check if we should yield to higher-priority tasks (like title generation)
+            let shouldYield = await MainActor.run {
+                Model.shared.status == .generatingTitle
+            }
+            
+            if shouldYield {
+                Self.logger.info("Pausing community detection to allow title generation")
+                // Wait for title generation to complete
+                var isGeneratingTitle = await MainActor.run { Model.shared.status == .generatingTitle }
+                while isGeneratingTitle {
+                    try? await Task.sleep(for: .milliseconds(500))
+                    isGeneratingTitle = await MainActor.run { Model.shared.status == .generatingTitle }
+                }
+                Self.logger.info("Resuming community detection after title generation")
+            }
+            
             progressCallback?(
                 index + 1,
                 baseCommunities.count,
@@ -85,6 +101,22 @@ public class CommunityDetector {
             
             // Generate summaries for higher-level communities
             for var community in higherLevelCommunities {
+                // Check if we should yield to higher-priority tasks (like title generation)
+                let shouldYield = await MainActor.run {
+                    Model.shared.status == .generatingTitle
+                }
+                
+                if shouldYield {
+                    Self.logger.info("Pausing community detection to allow title generation")
+                    // Wait for title generation to complete
+                    var isGeneratingTitle = await MainActor.run { Model.shared.status == .generatingTitle }
+                    while isGeneratingTitle {
+                        try? await Task.sleep(for: .milliseconds(500))
+                        isGeneratingTitle = await MainActor.run { Model.shared.status == .generatingTitle }
+                    }
+                    Self.logger.info("Resuming community detection after title generation")
+                }
+                
                 let summaryResult = await generateCommunitySummary(
                     for: community,
                     in: graph,

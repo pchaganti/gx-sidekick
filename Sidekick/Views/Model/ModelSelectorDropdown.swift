@@ -41,24 +41,11 @@ struct ModelSelectorDropdown: View {
     }
     
     var toolbarTextColor: Color {
-        if #available(macOS 26, *) {
-            return colorScheme == .dark ? .white : .black
-        } else {
-            guard let luminance = selectedExpert?.color.luminance else {
-                return .primary
-            }
-            // For light backgrounds (luminance > 0.5), use dark text
-            // For dark backgrounds (luminance < 0.5), use light text
-            // But also consider the color scheme since buttons are trans-white in light mode
-            // and trans-black in dark mode
-            if luminance > 0.5 {
-                // Light expert background
-                return colorScheme == .dark ? .white : .toolbarText
-            } else {
-                // Dark expert background
-                return .white
-            }
+        guard let selectedExpert = selectedExpert else {
+            return .primary
         }
+        // Use the same logic as expert label/icon for consistency
+        return selectedExpert.color.adaptedTextColor
     }
     
     // Get the current model name for display
@@ -314,6 +301,7 @@ struct ModelSelectorDropdown: View {
                     .fontWeight(.medium)
             }
             .foregroundStyle(toolbarTextColor)
+            .symbolRenderingMode(.monochrome)
             .padding(.horizontal, 12)
         }
         .keyboardShortcut("k", modifiers: [.command])

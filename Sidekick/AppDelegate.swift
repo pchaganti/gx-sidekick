@@ -46,8 +46,10 @@ public class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         // Make sure `Resources` are not indexing
         for expert in ExpertManager.shared.experts {
             var modExpert = expert
-            modExpert.resources.graphProgress = nil
-            modExpert.resources.graphStatus = nil
+            if modExpert.resources.graphStatus != .ready {
+                modExpert.resources.graphStatus = nil
+                modExpert.resources.graphProgress = nil
+            }
             ExpertManager.shared.update(modExpert)
         }
 	}
