@@ -36,20 +36,13 @@ struct RetrievalSettingsView: View {
             }
             Section {
                 resourcesSearch
-            } header: {
-                Text("Resources Search")
-            }
-            Section {
                 graphRAGToggle
                 if graphRAGEnabled {
                     graphRAGMaxEntitiesSlider
                     graphRAGCommunityLevelsSlider
                 }
             } header: {
-                Text("Knowledge Graphs")
-            } footer: {
-                Text("Use knowledge graphs to enhance retrieval by understanding entity relationships and hierarchical themes. Enable this feature per expert in Expert settings.")
-                    .font(.caption)
+                Text("Resources Search")
             }
             Section {
                 searchProviderPicker
@@ -252,8 +245,8 @@ struct RetrievalSettingsView: View {
                 Text("Use knowledge graphs to enhance retrieval with entity relationships and hierarchical communities. This provides better context but requires re-indexing.")
                     .font(.caption)
             }
+            .frame(minWidth: 275)
             Spacer()
-                .frame(maxWidth: 50)
             Toggle("", isOn: $graphRAGEnabled)
         }
     }
@@ -268,13 +261,17 @@ struct RetrievalSettingsView: View {
                 Text("\(graphRAGMaxEntities)")
                     .foregroundColor(.secondary)
             }
-            Slider(value: Binding(
-                get: { Double(graphRAGMaxEntities) },
-                set: { graphRAGMaxEntities = Int($0) }
-            ), in: 100...1000, step: 50)
-            Text("Maximum number of entities to extract per expert. Higher values provide more detail but slower indexing.")
-                .font(.caption)
-                .foregroundColor(.secondary)
+            HStack {
+                Text("Maximum number of entities to extract per expert. Higher values provide more detail but slower indexing.")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                Spacer()
+                    .frame(maxWidth: 25)
+                Slider(value: Binding(
+                    get: { Double(graphRAGMaxEntities) },
+                    set: { graphRAGMaxEntities = Int($0) }
+                ), in: 100...1000, step: 50)
+            }
         }
     }
     
@@ -288,13 +285,17 @@ struct RetrievalSettingsView: View {
                 Text("\(graphRAGCommunityLevels)")
                     .foregroundColor(.secondary)
             }
-            Slider(value: Binding(
-                get: { Double(graphRAGCommunityLevels) },
-                set: { graphRAGCommunityLevels = Int($0) }
-            ), in: 2...5, step: 1)
-            Text("Number of hierarchical levels for community detection. More levels capture broader themes.")
-                .font(.caption)
-                .foregroundColor(.secondary)
+            HStack {
+                Text("Number of hierarchical levels for community detection. More levels capture broader themes.")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                Spacer()
+                    .frame(maxWidth: 15)
+                Slider(value: Binding(
+                    get: { Double(graphRAGCommunityLevels) },
+                    set: { graphRAGCommunityLevels = Int($0) }
+                ), in: 2...5, step: 1)
+            }
         }
     }
     

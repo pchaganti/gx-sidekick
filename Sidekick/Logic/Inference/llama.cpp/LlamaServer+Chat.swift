@@ -66,6 +66,7 @@ extension LlamaServer {
         useWebSearch: Bool = false,
         useFunctions: Bool = false,
         functions: [AnyFunctionBox]? = nil,
+        expert: Expert? = nil,
         updateStatusHandler: (@Sendable (Model.Status) async -> Void)? = nil,
         progressHandler: (@Sendable (String) -> Void)? = nil
     ) async throws -> CompleteResponse {
@@ -78,6 +79,7 @@ extension LlamaServer {
                 useWebSearch: useWebSearch,
                 useFunctions: useFunctions,
                 functions: functions,
+                expert: expert,
                 updateStatusHandler: updateStatusHandler,
                 progressHandler: progressHandler
             )
@@ -99,6 +101,7 @@ extension LlamaServer {
         useWebSearch: Bool = false,
         useFunctions: Bool = false,
         functions: [AnyFunctionBox]? = nil,
+        expert: Expert? = nil,
         updateStatusHandler: (@Sendable (Model.Status) async -> Void)? = nil,
         progressHandler: (@Sendable (String) -> Void)? = nil
     ) async throws -> CompleteResponse {
@@ -132,7 +135,8 @@ extension LlamaServer {
                         messages: messages,
                         useWebSearch: useWebSearch,
                         useFunctions: useFunctions,
-                        functions: functions
+                        functions: functions,
+                        expert: expert
                     )
                 case .deepResearch:
                     return await ChatParameters(
@@ -142,7 +146,8 @@ extension LlamaServer {
                         messages: messages,
                         useWebSearch: useWebSearch,
                         useFunctions: useFunctions,
-                        functions: functions
+                        functions: functions,
+                        expert: expert
                     )
                 case .default:
                     return await ChatParameters(

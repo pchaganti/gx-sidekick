@@ -42,7 +42,7 @@ struct ExpertNavigationRowView: View {
 			ExpertEditorView(
 				expert: $expert, isEditing: $isEditing
 			)
-			.frame(minWidth: 500, maxHeight: 700)
+			.frame(minWidth: 650, maxHeight: 700)
 		}
 		.contextMenu {
 			deleteButton

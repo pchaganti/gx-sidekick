@@ -23,6 +23,7 @@ extension Model {
         useWebSearch: Bool = false,
         useFunctions: Bool = false,
         functions: [AnyFunctionBox]? = nil,
+        expert: Expert? = nil,
         useCanvas: Bool = false,
         canvasSelection: String? = nil,
         temporaryResources: [TemporaryResource] = [],
@@ -146,6 +147,7 @@ extension Model {
                     useWebSearch: useWebSearch,
                     useFunctions: useFunctions,
                     functions: functions,
+                    expert: expert,
                     similarityIndex: similarityIndex,
                     showPreview: showPreview,
                     handleResponseUpdate: handleResponseUpdate
@@ -196,6 +198,7 @@ extension Model {
         useWebSearch: Bool,
         useFunctions: Bool,
         functions: [AnyFunctionBox]? = nil,
+        expert: Expert? = nil,
         similarityIndex: SimilarityIndex? = nil,
         showPreview: Bool,
         handleResponseUpdate: @escaping (String, String) -> Void
@@ -210,6 +213,7 @@ extension Model {
             useWebSearch: useWebSearch,
             useFunctions: useFunctions,
             functions: functions,
+            expert: expert,
             showPreview: showPreview,
             handleResponseUpdate: handleResponseUpdate,
             increment: increment
@@ -245,6 +249,7 @@ extension Model {
         useWebSearch: Bool,
         useFunctions: Bool,
         functions: [AnyFunctionBox]? = nil,
+        expert: Expert? = nil,
         showPreview: Bool,
         handleResponseUpdate: @escaping (String, String) -> Void,
         increment: Int
@@ -258,6 +263,7 @@ extension Model {
             useWebSearch: useWebSearch,
             useFunctions: useFunctions,
             functions: functions,
+            expert: expert,
             updateStatusHandler: { status in
                 await self.updateStatus(status)
             },

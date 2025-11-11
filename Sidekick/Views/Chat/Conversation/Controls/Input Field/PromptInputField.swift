@@ -401,6 +401,7 @@ struct PromptInputField: View {
                 similarityIndex: index,
                 useWebSearch: useWebSearch,
                 useFunctions: self.promptController.useFunctions,
+                expert: selectedExpert,
                 useCanvas: self.conversationState.useCanvas,
                 canvasSelection: self.canvasController.selection,
                 temporaryResources: tempResources,

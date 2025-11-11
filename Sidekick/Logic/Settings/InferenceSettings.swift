@@ -62,7 +62,7 @@ Here are the functions available in JSON schema format:
     /// Computed property for the part of the system prompt where metadata is fed to the LLM
     public static let metadataPrompt: String = """
 The user's name: \(Settings.username)
-Current date & time: \(Date.now.formatted(date: .complete, time: .shortened))
+Current date & time: \(Date.now.formatted(date: .complete, time: .omitted))
 """
     
     /// Function to obtain the part of the system prompt where memorized information is fed to the LLM

@@ -52,7 +52,8 @@ struct ChatParameters: Codable {
         messages: [Message.MessageSubset],
         useWebSearch: Bool = false,
         useFunctions: Bool = false,
-        functions: [AnyFunctionBox]? = nil
+        functions: [AnyFunctionBox]? = nil,
+        expert: Expert? = nil
     ) async {
         // Formulate messages
         // Formulate system prompt
@@ -92,6 +93,22 @@ struct ChatParameters: Codable {
             enabledFunctions = customFunctions
         } else {
             enabledFunctions = await MainActor.run { FunctionSelectionManager.shared.getEnabledFunctions() }
+        }
+        // Check if we should encourage using query_database function
+        if let expert = expert,
+           !expert.isDefault,
+           expert.resources.resources.count > 0,
+           Settings.useFunctions && useFunctions {
+            // Check if query_database function is enabled
+            let hasQueryDatabaseFunction = enabledFunctions.contains { function in
+                return function.name == "query_database"
+            }
+            if hasQueryDatabaseFunction {
+                let expertDatabasePrompt: String = """
+The `\(expert.name)` is currently active. Use `query_database` to query the `\(expert.name)` database whenever it might help inform your response.
+"""
+                fullSystemPromptComponents.append(expertDatabasePrompt)
+            }
         }
         if Settings.useFunctions && useFunctions {
             fullSystemPromptComponents.append(InferenceSettings.useFunctionsPrompt)

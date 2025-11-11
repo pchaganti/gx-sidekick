@@ -2932,16 +2932,6 @@
         }
       }
     },
-    "Knowledge Graphs" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "知识图谱"
-          }
-        }
-      }
-    },
     "Launch at Login" : {
       "localizations" : {
         "zh-Hans" : {
@@ -5518,16 +5508,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "使用 GPU"
-          }
-        }
-      }
-    },
-    "Use knowledge graphs to enhance retrieval by understanding entity relationships and hierarchical themes. Enable this feature per expert in Expert settings." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "使用知识图谱通过理解实体关系和层级主题来增强检索。在专家设置中为每个专家启用此功能。"
           }
         }
       }
