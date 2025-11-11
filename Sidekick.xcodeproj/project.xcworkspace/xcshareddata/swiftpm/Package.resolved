@@ -1,5 +1,5 @@
 {
-  "originHash" : "50b6945c52066813481cae71dc6b00b2d7a306c8b1be3d72e2f8fa13a0594771",
+  "originHash" : "9da0f6c3a9cf9e83be0bcdb86947e40a20c1fe518f2d319bd1ca7c6418b4313f",
   "pins" : [
     {
       "identity" : "axswift",
@@ -160,7 +160,7 @@
       "location" : "https://github.com/johnbean393/similarity-search-kit",
       "state" : {
         "branch" : "main",
-        "revision" : "e97ebe65375af1899833762d4172340b520c6b4c"
+        "revision" : "9bec54706c8124bb9b20a3a06d566066a9f55712"
       }
     },
     {
