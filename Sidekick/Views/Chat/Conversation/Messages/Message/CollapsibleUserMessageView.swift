@@ -39,15 +39,15 @@ struct CollapsibleUserMessageView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            if !effectiveIsExpanded && shouldShowExpandButton {
+            if !self.effectiveIsExpanded && self.shouldShowExpandButton {
                 // Collapsed state with overlay
                 VStack(alignment: .leading, spacing: 0) {
-                    Text(displayedContent)
+                    Text(self.displayedContent)
                         .font(.system(size: NSFont.systemFontSize + 1.0))
                         .lineSpacing(4)
                         .fixedSize(horizontal: false, vertical: true)
                 }
-                .frame(maxHeight: calculateCollapsedHeight(), alignment: .top)
+                .frame(maxHeight: self.calculateCollapsedHeight(), alignment: .top)
                 .clipped()
                 .overlay(alignment: .bottom) {
                     // Gradient and button overlay
@@ -67,13 +67,13 @@ struct CollapsibleUserMessageView: View {
                         // Button area
                         Button {
                             withAnimation(.easeInOut(duration: 0.2)) {
-                                isExpanded = true
+                                self.isExpanded = true
                             }
                         } label: {
                             HStack(spacing: 4) {
                                 Image(systemName: "chevron.down")
                                     .font(.system(size: 11, weight: .medium))
-                                Text("Show all \(totalLineCount) lines")
+                                Text("Show all \(self.totalLineCount) lines")
                                     .font(.system(size: 12, weight: .medium))
                             }
                             .foregroundColor(.secondary)
@@ -101,10 +101,10 @@ struct CollapsibleUserMessageView: View {
             }
             
             // Collapse button at bottom when expanded
-            if effectiveIsExpanded && shouldShowExpandButton {
+            if self.effectiveIsExpanded && self.shouldShowExpandButton {
                 Button {
                     withAnimation(.easeInOut(duration: 0.2)) {
-                        isExpanded = false
+                        self.isExpanded = false
                     }
                 } label: {
                     HStack(spacing: 4) {
@@ -137,7 +137,7 @@ struct CollapsibleUserMessageView: View {
         let fontSize = NSFont.systemFontSize + 1.0
         let lineSpacing: CGFloat = 4
         let lineHeight = fontSize + lineSpacing
-        return CGFloat(collapsedLineCount) * lineHeight
+        return CGFloat(self.collapsedLineCount) * lineHeight
     }
 }
 

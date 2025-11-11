@@ -660,7 +660,7 @@ extension LlamaServer {
                 /// Generate recovery attempts for common JSON errors
                 private static func getRecoveryAttempts(for arguments: String) -> [String] {
                     var attempts: [String] = []
-                    var cleaned = arguments.trimmingCharacters(in: .whitespacesAndNewlines)
+                    let cleaned = arguments.trimmingCharacters(in: .whitespacesAndNewlines)
                     
                     // 1. Remove trailing commas before closing braces/brackets
                     let trailingCommaPattern = #",(\s*[}\]])"#

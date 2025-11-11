@@ -99,6 +99,15 @@
 		200AADF32EC28395000995B7 /* mainInterfaceAnnotated.png in Resources */ = {isa = PBXBuildFile; fileRef = 200AADAA2EC28395000995B7 /* mainInterfaceAnnotated.png */; };
 		200AADF42EC28395000995B7 /* exportedDiagram.png in Resources */ = {isa = PBXBuildFile; fileRef = 200AAD942EC28395000995B7 /* exportedDiagram.png */; };
 		200AADF52EC28395000995B7 /* newWindow.png in Resources */ = {isa = PBXBuildFile; fileRef = 200AADAC2EC28395000995B7 /* newWindow.png */; };
+		200AADF82EC2AB27000995B7 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 200AADF72EC2AB27000995B7 /* SQLite */; };
+		200AADFE2EC2B1B3000995B7 /* EntityExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200AADFB2EC2B1B3000995B7 /* EntityExtractor.swift */; };
+		200AADFF2EC2B1B3000995B7 /* GraphDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200AADFC2EC2B1B3000995B7 /* GraphDatabase.swift */; };
+		200AAE002EC2B1B3000995B7 /* GraphRetriever.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200AADFD2EC2B1B3000995B7 /* GraphRetriever.swift */; };
+		200AAE012EC2B1B3000995B7 /* CommunityDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200AADFA2EC2B1B3000995B7 /* CommunityDetector.swift */; };
+		200AAE062EC2B249000995B7 /* GraphRelationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200AAE042EC2B249000995B7 /* GraphRelationship.swift */; };
+		200AAE072EC2B249000995B7 /* GraphEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200AAE032EC2B249000995B7 /* GraphEntity.swift */; };
+		200AAE082EC2B249000995B7 /* Community.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200AAE022EC2B249000995B7 /* Community.swift */; };
+		200AAE092EC2B249000995B7 /* KnowledgeGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200AAE052EC2B249000995B7 /* KnowledgeGraph.swift */; };
 		200B23652DB0D31A00127D48 /* ReminderFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200B23642DB0D31A00127D48 /* ReminderFunctions.swift */; };
 		200B23682DB1214800127D48 /* WebSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200B23672DB1214800127D48 /* WebSearch.swift */; };
 		200B236A2DB1227A00127D48 /* DuckDuckGoSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200B23692DB1227A00127D48 /* DuckDuckGoSearch.swift */; };
@@ -613,6 +622,14 @@
 		200AADAD2EC28395000995B7 /* setupSheet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setupSheet.png; sourceTree = "<group>"; };
 		200AADAF2EC28395000995B7 /* appIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon.png; sourceTree = "<group>"; };
 		200AADB02EC28395000995B7 /* demoScreenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = demoScreenshot.png; sourceTree = "<group>"; };
+		200AADFA2EC2B1B3000995B7 /* CommunityDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityDetector.swift; sourceTree = "<group>"; };
+		200AADFB2EC2B1B3000995B7 /* EntityExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityExtractor.swift; sourceTree = "<group>"; };
+		200AADFC2EC2B1B3000995B7 /* GraphDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphDatabase.swift; sourceTree = "<group>"; };
+		200AADFD2EC2B1B3000995B7 /* GraphRetriever.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphRetriever.swift; sourceTree = "<group>"; };
+		200AAE022EC2B249000995B7 /* Community.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Community.swift; sourceTree = "<group>"; };
+		200AAE032EC2B249000995B7 /* GraphEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphEntity.swift; sourceTree = "<group>"; };
+		200AAE042EC2B249000995B7 /* GraphRelationship.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphRelationship.swift; sourceTree = "<group>"; };
+		200AAE052EC2B249000995B7 /* KnowledgeGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnowledgeGraph.swift; sourceTree = "<group>"; };
 		200B23642DB0D31A00127D48 /* ReminderFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderFunctions.swift; sourceTree = "<group>"; };
 		200B23672DB1214800127D48 /* WebSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSearch.swift; sourceTree = "<group>"; };
 		200B23692DB1227A00127D48 /* DuckDuckGoSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuckDuckGoSearch.swift; sourceTree = "<group>"; };
@@ -952,6 +969,7 @@
 				2075FE992EBAC06100EA6131 /* libllama.dylib in Frameworks */,
 				2075FE9A2EBAC06100EA6131 /* libmtmd.dylib in Frameworks */,
 				2075FE9B2EBAC06100EA6131 /* libggml-metal.dylib in Frameworks */,
+				200AADF82EC2AB27000995B7 /* SQLite in Frameworks */,
 				200B236D2DB15AA800127D48 /* Shimmer in Frameworks */,
 				209B200A2D940F8400C79185 /* LaunchAtLogin in Frameworks */,
 				20CB50382D828CB60064D460 /* LaTeXSwiftUI in Frameworks */,
@@ -1289,6 +1307,17 @@
 			path = "Docs Images";
 			sourceTree = "<group>";
 		};
+		200AADF92EC2B17B000995B7 /* GraphRAG */ = {
+			isa = PBXGroup;
+			children = (
+				200AADFA2EC2B1B3000995B7 /* CommunityDetector.swift */,
+				200AADFB2EC2B1B3000995B7 /* EntityExtractor.swift */,
+				200AADFC2EC2B1B3000995B7 /* GraphDatabase.swift */,
+				200AADFD2EC2B1B3000995B7 /* GraphRetriever.swift */,
+			);
+			path = GraphRAG;
+			sourceTree = "<group>";
+		};
 		200B23662DB1213C00127D48 /* Web */ = {
 			isa = PBXGroup;
 			children = (
@@ -1458,8 +1487,12 @@
 			isa = PBXGroup;
 			children = (
 				20B97CE22CB00585009A0A5D /* Expert.swift */,
-				20A8B65A2CB2709100B756FD /* Resources.swift */,
 				20B97CE82CB007DF009A0A5D /* Resource.swift */,
+				20A8B65A2CB2709100B756FD /* Resources.swift */,
+				200AAE022EC2B249000995B7 /* Community.swift */,
+				200AAE032EC2B249000995B7 /* GraphEntity.swift */,
+				200AAE042EC2B249000995B7 /* GraphRelationship.swift */,
+				200AAE052EC2B249000995B7 /* KnowledgeGraph.swift */,
 			);
 			path = Expert;
 			sourceTree = "<group>";
@@ -1668,6 +1701,7 @@
 				2041868C2D81E6B2002A5D1C /* NetworkMonitor.swift */,
 				206AB9662DB09BB800385510 /* Location.swift */,
 				208388D92CBF4DF500C2A9F8 /* Tavily.swift */,
+				200AADF92EC2B17B000995B7 /* GraphRAG */,
 				200B23662DB1213C00127D48 /* Web */,
 				207E5EF02D6FDEBE00A8F6FA /* Tools */,
 			);
@@ -2298,6 +2332,7 @@
 				2032242F2EBAA8280003E1A8 /* ExtractKit-macOS */,
 				203224322EBAA9EB0003E1A8 /* SwiftUIX */,
 				208E34A12EC19A87009B75C9 /* GoogleSearch */,
+				200AADF72EC2AB27000995B7 /* SQLite */,
 			);
 			productName = Sidekick;
 			productReference = 200549732CAFA67B00A3DCF2 /* Sidekick.app */;
@@ -2420,6 +2455,7 @@
 				2032242E2EBAA8280003E1A8 /* XCRemoteSwiftPackageReference "ExtractKit-macOS" */,
 				203224312EBAA9EB0003E1A8 /* XCRemoteSwiftPackageReference "SwiftUIX" */,
 				208E34A02EC19A87009B75C9 /* XCRemoteSwiftPackageReference "GoogleSearch" */,
+				200AADF62EC2AB27000995B7 /* XCRemoteSwiftPackageReference "SQLite" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 200549742CAFA67B00A3DCF2 /* Products */;
@@ -2602,6 +2638,10 @@
 				204AE3BD2CEB56750086B42D /* WrappingHStack.swift in Sources */,
 				209D397E2DC0FA0800D1E5E5 /* ServerArgumentsEditor.swift in Sources */,
 				203487642D66FF6700A88DA4 /* SidebarButtonView.swift in Sources */,
+				200AAE062EC2B249000995B7 /* GraphRelationship.swift in Sources */,
+				200AAE072EC2B249000995B7 /* GraphEntity.swift in Sources */,
+				200AAE082EC2B249000995B7 /* Community.swift in Sources */,
+				200AAE092EC2B249000995B7 /* KnowledgeGraph.swift in Sources */,
 				208388E52CBF526E00C2A9F8 /* RetrievalSettings.swift in Sources */,
 				2041868D2D81E6B2002A5D1C /* NetworkMonitor.swift in Sources */,
 				20E284412DD47576007E99AF /* ExpertFunctions.swift in Sources */,
@@ -2676,6 +2716,10 @@
 				208E34AC2EC1C644009B75C9 /* LlamaServer+ServerLifecycle.swift in Sources */,
 				20457D2A2D9250AD00954892 /* CompletionsTutorialView.swift in Sources */,
 				20ADCEC62DBE390B00B13C98 /* ZoomablePannableView.swift in Sources */,
+				200AADFE2EC2B1B3000995B7 /* EntityExtractor.swift in Sources */,
+				200AADFF2EC2B1B3000995B7 /* GraphDatabase.swift in Sources */,
+				200AAE002EC2B1B3000995B7 /* GraphRetriever.swift in Sources */,
+				200AAE012EC2B1B3000995B7 /* CommunityDetector.swift in Sources */,
 				209D39802DC88C3000D1E5E5 /* FunctionCallResult.swift in Sources */,
 				20571F792CBD6019004F3344 /* GeneralSettingsView.swift in Sources */,
 				200FBFEE2CB6477400A92A74 /* LlamaServer.swift in Sources */,
@@ -3311,6 +3355,14 @@
 				minimumVersion = 0.0.4;
 			};
 		};
+		200AADF62EC2AB27000995B7 /* XCRemoteSwiftPackageReference "SQLite" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stephencelis/SQLite.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.15.4;
+			};
+		};
 		200B236B2DB15AA800127D48 /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/markiv/SwiftUI-Shimmer";
@@ -3478,6 +3530,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 200619B02D6768F6001949EF /* XCRemoteSwiftPackageReference "SwiftfulLoadingIndicators" */;
 			productName = SwiftfulLoadingIndicators;
+		};
+		200AADF72EC2AB27000995B7 /* SQLite */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 200AADF62EC2AB27000995B7 /* XCRemoteSwiftPackageReference "SQLite" */;
+			productName = SQLite;
 		};
 		200B236C2DB15AA800127D48 /* Shimmer */ = {
 			isa = XCSwiftPackageProductDependency;

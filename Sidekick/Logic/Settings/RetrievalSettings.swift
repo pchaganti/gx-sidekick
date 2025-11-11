@@ -9,7 +9,7 @@ import Foundation
 import SecureDefaults
 
 public class RetrievalSettings {
-
+    
     /// A `Bool` representing whether the memory feature is used
     static var useMemory: Bool {
         get {
@@ -27,32 +27,32 @@ public class RetrievalSettings {
         }
     }
     
-	/// Computed property for Tavily API key
-	public static var tavilyApiKey: String {
-		set {
-			let defaults: SecureDefaults = SecureDefaults.defaults()
-			defaults.set(newValue, forKey: "apiKey")
-		}
-		get {
-			let defaults: SecureDefaults = SecureDefaults.defaults()
-			return defaults.string(forKey: "apiKey") ?? ""
-		}
-	}
-	
-	/// Computed property for backup Tavily API key
-	public static var tavilyBackupApiKey: String {
-		set {
-			let defaults: SecureDefaults = SecureDefaults.defaults()
-			defaults.set(newValue, forKey: "backupApiKey")
-		}
-		get {
-			let defaults: SecureDefaults = SecureDefaults.defaults()
-			return defaults.string(forKey: "backupApiKey") ?? ""
-		}
-	}
-	
-	/// A `Bool` representing whether web search can be used
-	static var canUseWebSearch: Bool {
+    /// Computed property for Tavily API key
+    public static var tavilyApiKey: String {
+        set {
+            let defaults: SecureDefaults = SecureDefaults.defaults()
+            defaults.set(newValue, forKey: "apiKey")
+        }
+        get {
+            let defaults: SecureDefaults = SecureDefaults.defaults()
+            return defaults.string(forKey: "apiKey") ?? ""
+        }
+    }
+    
+    /// Computed property for backup Tavily API key
+    public static var tavilyBackupApiKey: String {
+        set {
+            let defaults: SecureDefaults = SecureDefaults.defaults()
+            defaults.set(newValue, forKey: "backupApiKey")
+        }
+        get {
+            let defaults: SecureDefaults = SecureDefaults.defaults()
+            return defaults.string(forKey: "backupApiKey") ?? ""
+        }
+    }
+    
+    /// A `Bool` representing whether web search can be used
+    static var canUseWebSearch: Bool {
         // Get provider
         let provider: SearchProvider = SearchProvider(
             rawValue: Self.defaultSearchProvider
@@ -64,40 +64,40 @@ public class RetrievalSettings {
             case .tavily:
                 return !Self.tavilyApiKey.isEmpty
         }
-	}
-	
-	/// Computed property for whether the context of a search result is used
-	static var useWebSearchResultContext: Bool {
-		get {
-			// Set default
-			if !UserDefaults.standard.exists(key: "useWebSearchResultContext") {
-				// Default to true for more content
-				Self.useWebSearchResultContext = true
-			}
-			return UserDefaults.standard.bool(
-				forKey: "useWebSearchResultContext"
-			)
-		}
-		set {
-			UserDefaults.standard.set(newValue, forKey: "useWebSearchResultContext")
-		}
-	}
-	
-	/// Computed property for how many search results are returned
-	static var searchResultsMultiplier: Int {
-		get {
-			// Set default
-			if !UserDefaults.standard.exists(key: "searchResultsMultiplier") {
-				Self.searchResultsMultiplier = 3
-			}
-			return UserDefaults.standard.integer(
-				forKey: "searchResultsMultiplier"
-			)
-		}
-		set {
-			UserDefaults.standard.set(newValue, forKey: "searchResultsMultiplier")
-		}
-	}
+    }
+    
+    /// Computed property for whether the context of a search result is used
+    static var useWebSearchResultContext: Bool {
+        get {
+            // Set default
+            if !UserDefaults.standard.exists(key: "useWebSearchResultContext") {
+                // Default to true for more content
+                Self.useWebSearchResultContext = true
+            }
+            return UserDefaults.standard.bool(
+                forKey: "useWebSearchResultContext"
+            )
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "useWebSearchResultContext")
+        }
+    }
+    
+    /// Computed property for how many search results are returned
+    static var searchResultsMultiplier: Int {
+        get {
+            // Set default
+            if !UserDefaults.standard.exists(key: "searchResultsMultiplier") {
+                Self.searchResultsMultiplier = 3
+            }
+            return UserDefaults.standard.integer(
+                forKey: "searchResultsMultiplier"
+            )
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "searchResultsMultiplier")
+        }
+    }
     
     /// The default search provider, where 0 = DuckDuckGo, 1 = Tavily, 2 = Google
     static var defaultSearchProvider: Int {
@@ -122,5 +122,46 @@ public class RetrievalSettings {
         case google = 2
         
     }
-	
+    
+    // MARK: - Graph RAG Settings
+    
+    /// Whether Graph RAG feature is enabled globally
+    static var graphRAGEnabled: Bool {
+        get {
+            if !UserDefaults.standard.exists(key: "graphRAGEnabled") {
+                Self.graphRAGEnabled = true  // Default to enabled
+            }
+            return UserDefaults.standard.bool(forKey: "graphRAGEnabled")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "graphRAGEnabled")
+        }
+    }
+    
+    /// Maximum number of entities to extract per expert
+    static var graphRAGMaxEntities: Int {
+        get {
+            if !UserDefaults.standard.exists(key: "graphRAGMaxEntities") {
+                Self.graphRAGMaxEntities = 500  // Default
+            }
+            return UserDefaults.standard.integer(forKey: "graphRAGMaxEntities")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "graphRAGMaxEntities")
+        }
+    }
+    
+    /// Number of hierarchical community levels
+    static var graphRAGCommunityLevels: Int {
+        get {
+            if !UserDefaults.standard.exists(key: "graphRAGCommunityLevels") {
+                Self.graphRAGCommunityLevels = 3  // Default: 0, 1, 2
+            }
+            return UserDefaults.standard.integer(forKey: "graphRAGCommunityLevels")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "graphRAGCommunityLevels")
+        }
+    }
+    
 }

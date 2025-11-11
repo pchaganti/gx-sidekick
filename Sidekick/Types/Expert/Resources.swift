@@ -43,6 +43,72 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
         case ready
     }
     
+    /// Whether Graph RAG is enabled for this expert's resources
+    public var useGraphRAG: Bool = false
+    
+    /// The status of graph indexing
+    public var graphStatus: GraphStatus? = nil
+    
+    /// Progress information for graph indexing
+    public var graphProgress: GraphProgress? = nil
+    
+    public enum GraphStatus: CaseIterable, Codable, Sendable {
+        case building
+        case ready
+        case error
+    }
+    
+    /// Represents progress when building graph indexes
+    public struct GraphProgress: Codable, Hashable, Sendable {
+        public var percentComplete: Double
+        public var stage: String?
+        
+        public init(percentComplete: Double, stage: String? = nil) {
+            self.percentComplete = percentComplete
+            self.stage = stage
+        }
+    }
+    
+    // MARK: - Initialization
+    
+    /// Default initializer
+    public init() {}
+    
+    // MARK: - Codable
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case resources
+        case status
+        case useGraphRAG
+        case graphStatus
+        case graphProgress
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        id = try container.decode(UUID.self, forKey: .id)
+        resources = try container.decode([Resource].self, forKey: .resources)
+        status = try container.decodeIfPresent(Status.self, forKey: .status)
+        
+        // Provide default values for new properties to support existing saved data
+        useGraphRAG = try container.decodeIfPresent(Bool.self, forKey: .useGraphRAG) ?? false
+        graphStatus = try container.decodeIfPresent(GraphStatus.self, forKey: .graphStatus)
+        graphProgress = try container.decodeIfPresent(GraphProgress.self, forKey: .graphProgress)
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(id, forKey: .id)
+        try container.encode(resources, forKey: .resources)
+        try container.encodeIfPresent(status, forKey: .status)
+        try container.encode(useGraphRAG, forKey: .useGraphRAG)
+        try container.encodeIfPresent(graphStatus, forKey: .graphStatus)
+        try container.encodeIfPresent(graphProgress, forKey: .graphProgress)
+    }
+    
     /// Function to load a similarity index of type `SimilarityIndex`, must cache after initial load to improve performance
     /// - Returns: Returns a similarity index of type `SimilarityIndex`
     public func loadIndex() async -> SimilarityIndex {
@@ -65,10 +131,13 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
     }
     
     /// Function to update resources index
-    /// - Parameter expertName: The name of the expert whose resources is being updated
+    /// - Parameters:
+    ///   - expertName: The name of the expert whose resources is being updated
+    ///   - progressUpdate: Optional closure to receive progress updates
     @MainActor
     public mutating func updateResourcesIndex(
-        expertName: String
+        expertName: String,
+        progressUpdate: (@Sendable (GraphProgress) -> Void)? = nil
     ) async {
         // Add to task list
         let taskId: UUID = UUID()
@@ -81,20 +150,97 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
         }
         // Log
         self.status = .indexing
-        Self.logger.notice("Updating resource index for expert \"\(expertName, privacy: .public)\"")
+        if self.useGraphRAG {
+            let initialProgress = GraphProgress(percentComplete: 0.0, stage: String(localized: "Preparing resources"))
+            self.graphStatus = .building
+            self.graphProgress = initialProgress
+            progressUpdate?(initialProgress)
+        } else {
+            self.graphProgress = nil
+        }
+        let useGraphRAG: Bool = self.useGraphRAG
+        Self.logger.notice("Updating resource index for expert \"\(expertName, privacy: .public)\" (Graph RAG: \(useGraphRAG ? "Enabled" : "Disabled"))")
         // Update for each file
         var resources: [Resource] = self.resources
         let indexUrl: URL = self.indexUrl
+        var totalEntities: Int = 0
+        var allGraphsSucceeded = true
+        
+        let totalResourceCount = max(resources.count, 1)
+        
+        var latestProgress: GraphProgress? = self.graphProgress
+        
         for index in resources.indices {
-            await resources[index].updateIndex(
-                resourcesDirUrl: indexUrl
+            // Update progress at start of each resource
+            if useGraphRAG {
+                let progress = GraphProgress(
+                    percentComplete: Double(index) / Double(totalResourceCount),
+                    stage: String(localized: "Processing resource \(index + 1) of \(totalResourceCount)")
+                )
+                self.graphStatus = .building
+                self.graphProgress = progress
+                progressUpdate?(progress)
+                latestProgress = progress
+            }
+            
+            let success = await resources[index].updateIndex(
+                resourcesDirUrl: indexUrl,
+                useGraphRAG: useGraphRAG,
+                progressCallback: { current, total, stage, entities in
+                    totalEntities = entities
+                    // Note: Can't update self here due to escaping closure limitations
+                    // Progress is updated at the resource level instead
+                    guard useGraphRAG else { return }
+                    let stageProgress = total > 0 ? Double(current) / Double(total) : 0.0
+                    let clampedStageProgress = max(0.0, min(stageProgress, 1.0))
+                    let overallProgress = (Double(index) + clampedStageProgress) / Double(totalResourceCount)
+                    let clampedOverall = max(0.0, min(overallProgress, 1.0))
+                    let stageDescription = stage.isEmpty ? String(localized: "Processing resource \(index + 1) of \(totalResourceCount)") : stage
+                    let progressValue = GraphProgress(percentComplete: clampedOverall, stage: stageDescription)
+                    latestProgress = progressValue
+                    progressUpdate?(progressValue)
+                }
             )
+            
+            if useGraphRAG && !success {
+                allGraphsSucceeded = false
+                Self.logger.error("Graph building failed for resource at index \(index)")
+            }
+            
+            if useGraphRAG, let latest = latestProgress {
+                self.graphProgress = latest
+            }
         }
+        
         await MainActor.run {
             self.resources = resources
+            
+            // Update graph status based on results
+            if self.useGraphRAG {
+                self.graphStatus = allGraphsSucceeded ? .ready : .error
+                if allGraphsSucceeded {
+                    let finalProgress = GraphProgress(percentComplete: 1.0, stage: String(localized: "Completed"))
+                    self.graphProgress = finalProgress
+                    progressUpdate?(finalProgress)
+                }
+            } else {
+                self.graphStatus = .ready
+                self.graphProgress = nil
+            }
         }
+        
         // Log
         Self.logger.notice("Updated index for resources in expert \"\(expertName, privacy: .public)\"")
+        if self.useGraphRAG {
+            if allGraphsSucceeded {
+                Self.logger.notice("Built knowledge graph with \(totalEntities) entities")
+            } else {
+                Self.logger.error("Some knowledge graphs failed to build")
+            }
+            
+            // Clear progress now that indexing is complete
+            self.graphProgress = nil
+        }
         // Record removed resources
         let removedResources: [Resource] = self.resources.filter({
             !(!$0.wasMoved || $0.isWebResource)
@@ -125,8 +271,66 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
         // Log
         Self.logger.notice("Finished updating resource index for expert \"\(expertName, privacy: .public)\"")
         self.status = .ready
+        if self.useGraphRAG {
+            self.graphStatus = .ready
+        }
     }
     
+    /// Function to load knowledge graph index
+    /// - Returns: The merged knowledge graph for all resources
+    public func loadGraphIndex() async -> KnowledgeGraph? {
+        guard self.useGraphRAG else {
+            return nil
+        }
+        
+        let startTime: Date = .now
+        let dbPath = self.indexUrl.appendingPathComponent("graph.sqlite").path
+        
+        do {
+            let database = try GraphDatabase(dbPath: dbPath)
+            
+            // Create a merged graph
+            let mergedGraph = KnowledgeGraph(resourceId: self.id)
+            
+            // Load graphs for each resource
+            for resource in self.resources {
+                do {
+                    let graph = try database.loadGraph(resourceId: resource.id)
+                    mergedGraph.merge(graph)
+                } catch {
+                    Self.logger.warning("Failed to load graph for resource \(resource.id): \(error.localizedDescription)")
+                }
+            }
+            
+            Self.logger.info("Loaded knowledge graph in \(Date.now.timeIntervalSince(startTime)) seconds")
+            return mergedGraph
+            
+        } catch {
+            Self.logger.error("Failed to load knowledge graph: \(error.localizedDescription)")
+            return nil
+        }
+    }
+    
+    /// Function to migrate to Graph RAG
+    /// - Parameters:
+    ///   - expertName: The name of the expert
+    ///   - progressUpdate: Optional closure to receive progress updates
+    @MainActor
+    public mutating func migrateToGraphRAG(
+        expertName: String,
+        progressUpdate: (@Sendable (GraphProgress) -> Void)? = nil
+    ) async {
+        // Enable Graph RAG
+        self.useGraphRAG = true
+        self.graphStatus = .building
+        
+        Self.logger.notice("Migrating expert \"\(expertName)\" to Graph RAG")
+        
+        // Trigger full re-index
+        await self.updateResourcesIndex(expertName: expertName, progressUpdate: progressUpdate)
+        
+        Self.logger.notice("Completed migration to Graph RAG for expert \"\(expertName)\"")
+    }
     
     /// Function to initialize directory for the resources's index
     public mutating func setup() async {
@@ -142,36 +346,17 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
     }
     
     
-    /// Function to add a resource
-    /// - Parameters:
-    ///   - resource: The resource that will be added to the expert
-    ///   - expertName: The name of the expert containing the newly added resource
+    /// Function to add a resource without reindexing
     @MainActor
-    public mutating func addResource(
-        _ resource: Resource,
-        expertName: String
-    ) async {
-        // Check if exists
+    public mutating func addResource(_ resource: Resource) {
         if self.resources.map(\.url).contains(resource.url) { return }
-        // Log
         Self.logger.notice("Adding resource \(resource.url, privacy: .public)")
-        // Add to resources list
         self.resources.append(resource)
-        // Reindex
-        await self.updateResourcesIndex(expertName: expertName)
     }
     
-    
-    /// Function to add multiple resources
-    /// - Parameters:
-    ///   - resources: The resources that will be added to the expert
-    ///   - expertName: The name of the the expert containing the newly added resources
+    /// Function to add multiple resources without reindexing
     @MainActor
-    public mutating func addResources(
-        _ resources: [Resource],
-        expertName: String
-    ) async {
-        // Add to resources list
+    public mutating func addResources(_ resources: [Resource]) {
         for resource in resources {
             if self.resources.map(\.url).contains(resource.url) {
                 continue
@@ -179,35 +364,18 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
             Self.logger.notice("Adding resource \(resource.url, privacy: .public)")
             self.resources.append(resource)
         }
-        // Reindex
-        await self.updateResourcesIndex(expertName: expertName)
     }
     
-    
-    /// Function to show index directory in Finder
-    /// - Parameters:
-    ///   - resource: The resource to be removed
-    ///   - expertName: The name of the the expert containing the resource
+    /// Function to remove a resource without reindexing
     @MainActor
-    public mutating func removeResource(
-        _ resource: Resource,
-        expertName: String
-    ) async {
-        // Find matching resource
+    public mutating func removeResource(_ resource: Resource) {
         for index in self.resources.indices  {
             if self.resources[index].id == resource.id {
-                // Clear index
                 self.resources[index].deleteDirectory(
                     resourcesDirUrl: self.indexUrl
                 )
-                // Remove from list
                 self.resources.remove(at: index)
-                // Log
                 Self.logger.notice("Removing resource \(resource.url, privacy: .public)")
-                // Reindex
-                await self.updateResourcesIndex(
-                    expertName: expertName
-                )
                 break
             }
         }

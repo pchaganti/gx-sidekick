@@ -74,30 +74,63 @@ RAG query: "the average apple weighs 100 grams"
                 query: params.query,
                 maxResults: resultsMultiplier
             )
-            // Convert and add context
-            let sources: [Source] = resourcesSearchResults.map { result in
-                // If search result context is not being used, skip
-                if !RetrievalSettings.useWebSearchResultContext {
-                    return Source(
-                        text: result.text,
-                        source: result.sourceUrlText!
-                    )
-                }
-                // Get item index and source url
-                guard let itemIndex: Int = result.itemIndex,
-                      let sourceUrl: String = result.sourceUrlText else {
-                    return Source(
-                        text: result.text,
-                        source: result.sourceUrlText!
-                    )
-                }
-                // Get items in the same file
-                return Source.appendSourceContext(
-                    index: itemIndex,
-                    text: result.text,
-                    sourceUrlText: sourceUrl,
-                    similarityIndex: index
+            
+            // Use graph-enhanced retrieval if enabled
+            var sources: [Source]
+            if expert.useGraphRAG, let graph = await expert.resources.loadGraphIndex() {
+                // Use GraphRetriever for enhanced results
+                let enhancedResults = await GraphRetriever.retrieve(
+                    query: params.query,
+                    vectorResults: resourcesSearchResults,
+                    graph: graph,
+                    maxResults: maxResults
                 )
+                
+                // Convert enhanced results to sources
+                sources = enhancedResults.map { result in
+                    var text = result.text
+                    
+                    // Add entity context if available
+                    if !result.entityContext.isEmpty {
+                        text += "\n\nRelated entities: " + result.entityContext.joined(separator: ", ")
+                    }
+                    
+                    // Add community summary if available
+                    if let summary = result.communitySummary {
+                        text += "\n\nContext: \(summary)"
+                    }
+                    
+                    return Source(
+                        text: text,
+                        source: result.source
+                    )
+                }
+            } else {
+                // Use standard retrieval
+                sources = resourcesSearchResults.map { result in
+                    // If search result context is not being used, skip
+                    if !RetrievalSettings.useWebSearchResultContext {
+                        return Source(
+                            text: result.text,
+                            source: result.sourceUrlText!
+                        )
+                    }
+                    // Get item index and source url
+                    guard let itemIndex: Int = result.itemIndex,
+                          let sourceUrl: String = result.sourceUrlText else {
+                        return Source(
+                            text: result.text,
+                            source: result.sourceUrlText!
+                        )
+                    }
+                    // Get items in the same file
+                    return Source.appendSourceContext(
+                        index: itemIndex,
+                        text: result.text,
+                        sourceUrlText: sourceUrl,
+                        similarityIndex: index
+                    )
+                }
             }
             // Convert to JSON
             let sourcesInfo: [Source.SourceInfo] = sources.map(keyPath: \.info)
