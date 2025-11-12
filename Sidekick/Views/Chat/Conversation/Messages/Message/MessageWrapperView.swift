@@ -90,6 +90,13 @@ struct MessageWrapperView<Content: View>: View {
         // Set prompt
         let lastMessage: Message? = conversation.messages.last
         self.promptController.prompt = lastMessage?.text ?? ""
+        // Set resources
+        let urls: [URL] = lastMessage?.referencedURLs.map(
+            keyPath: \.url
+        ) ?? []
+        self.promptController.tempResources += urls.map { url in
+            return TemporaryResource(url: url)
+        }
         // Delete messages
         conversation.messages = conversation.messages.dropLast(1)
         conversationManager.update(conversation)

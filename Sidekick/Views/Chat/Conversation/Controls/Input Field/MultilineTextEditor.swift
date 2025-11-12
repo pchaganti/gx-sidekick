@@ -30,11 +30,17 @@ struct MultilineTextField: NSViewRepresentable {
         textView.delegate = context.coordinator
         textView.setPrompt(prompt)
         textView.textContainer?.widthTracksTextView = true
+        textView.textContainer?.heightTracksTextView = false
         textView.textContainerInset = NSSize(width: 2, height: 4)
         textView.backgroundColor = .clear
         textView.drawsBackground = false
         textView.isVerticallyResizable = true
         textView.isHorizontallyResizable = false
+        // Set min and max size for proper scrolling
+        let font = NSFont.systemFont(ofSize: NSFont.systemFontSize)
+        let lineHeight = font.ascender - font.descender + font.leading
+        let minHeight = lineHeight + textView.textContainerInset.height * 2
+        textView.minSize = NSSize(width: 0, height: minHeight)
         textView.maxSize = NSSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
         textView.autoresizingMask = [.width]
         textView.onImageDrop = context.coordinator.onImageDrop
@@ -62,6 +68,16 @@ struct MultilineTextField: NSViewRepresentable {
         let coordinator = context.coordinator
         let isFirstResponder = textView.window?.firstResponder == textView
         let hasMarkedText = textView.hasMarkedText()
+        
+        // Save current scroll position
+        let currentScrollPosition = nsView.contentView.bounds.origin
+        
+        // Update the callback
+        textView.onImageDrop = context.coordinator.onImageDrop
+        
+        // Enable scroll position preservation during programmatic updates
+        textView.shouldPreserveScrollPosition = true
+        
         // Only update if not editing (or not composing)
         if !isFirstResponder || !hasMarkedText {
             if textView.string != text {
@@ -76,6 +92,13 @@ struct MultilineTextField: NSViewRepresentable {
         textView.setPrompt(prompt)
         textView.invalidateIntrinsicContentSize()
         nsView.invalidateIntrinsicContentSize()
+        
+        // Restore scroll position after layout update
+        DispatchQueue.main.async {
+            nsView.contentView.scroll(to: currentScrollPosition)
+            // Re-enable automatic scrolling for user interactions
+            textView.shouldPreserveScrollPosition = false
+        }
     }
     
     class Coordinator: NSObject, NSTextViewDelegate {
@@ -130,10 +153,15 @@ struct MultilineTextField: NSViewRepresentable {
 
 class PromptingScrollView: NSScrollView {
     
+    // Maximum height before scrolling kicks in (approximately 10 lines of text)
+    private let maxHeightBeforeScrolling: CGFloat = 200
+    
     override var intrinsicContentSize: NSSize {
         if let docView = self.documentView {
             var size = docView.intrinsicContentSize
             size.width = NSView.noIntrinsicMetric
+            // Cap the height to enable scrolling for long text
+            size.height = min(size.height, maxHeightBeforeScrolling)
             return size
         }
         return super.intrinsicContentSize
@@ -145,6 +173,7 @@ class PromptingTextView: NSTextView {
     
     private var prompt: String = ""
     var onImageDrop: ((URL) -> Void)?
+    var shouldPreserveScrollPosition: Bool = false
     
     private static let logger: Logger = .init(
         subsystem: Bundle.main.bundleIdentifier!,
@@ -165,6 +194,13 @@ class PromptingTextView: NSTextView {
         let neededHeight = max(minHeight, usedRect.height + self.textContainerInset.height * 2)
         let width = self.enclosingScrollView?.frame.width ?? usedRect.width
         return NSSize(width: width, height: neededHeight)
+    }
+    
+    override func scrollRangeToVisible(_ range: NSRange) {
+        // Only allow automatic scrolling if we're not preserving scroll position
+        if !shouldPreserveScrollPosition {
+            super.scrollRangeToVisible(range)
+        }
     }
     
     override func draw(
