@@ -7,12 +7,15 @@
 
 import AppKit
 import SwiftUI
+import UniformTypeIdentifiers
+import OSLog
 
 struct MultilineTextField: NSViewRepresentable {
     
     @Binding var text: String
     @Binding var insertionPoint: Int
     let prompt: String
+    var onImageDrop: ((URL) -> Void)?
     
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
@@ -34,6 +37,14 @@ struct MultilineTextField: NSViewRepresentable {
         textView.isHorizontallyResizable = false
         textView.maxSize = NSSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
         textView.autoresizingMask = [.width]
+        textView.onImageDrop = context.coordinator.onImageDrop
+        // Register for drag types
+        textView.registerForDraggedTypes([
+            .fileURL,
+            .png,
+            .tiff,
+            .URL
+        ])
         scrollView.documentView = textView
         scrollView.hasVerticalScroller = false
         scrollView.hasHorizontalScroller = false
@@ -74,6 +85,10 @@ struct MultilineTextField: NSViewRepresentable {
         
         init(_ parent: MultilineTextField) {
             self.parent = parent
+        }
+        
+        var onImageDrop: ((URL) -> Void)? {
+            return parent.onImageDrop
         }
         
         func textDidChange(
@@ -129,6 +144,12 @@ class PromptingScrollView: NSScrollView {
 class PromptingTextView: NSTextView {
     
     private var prompt: String = ""
+    var onImageDrop: ((URL) -> Void)?
+    
+    private static let logger: Logger = .init(
+        subsystem: Bundle.main.bundleIdentifier!,
+        category: String(describing: PromptingTextView.self)
+    )
     
     override var intrinsicContentSize: NSSize {
         // Get font info
@@ -179,6 +200,128 @@ class PromptingTextView: NSTextView {
             self.insertText(plainText, replacementRange: self.selectedRange())
         } else {
             super.paste(sender)
+        }
+    }
+    
+    // MARK: - Drag and Drop Support
+    
+    override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
+        if canHandleDrag(sender) {
+            return .copy
+        }
+        return []
+    }
+    
+    override func draggingUpdated(_ sender: NSDraggingInfo) -> NSDragOperation {
+        if canHandleDrag(sender) {
+            return .copy
+        }
+        return []
+    }
+    
+    override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
+        Self.logger.info("performDragOperation called")
+        let pasteboard = sender.draggingPasteboard
+        
+        Self.logger.info("Pasteboard types: \(pasteboard.types?.map { $0.rawValue } ?? [], privacy: .public)")
+        
+        // Try to handle image data first (for screenshots)
+        if let imageData = pasteboard.data(forType: .png) ?? pasteboard.data(forType: .tiff) {
+            Self.logger.info("Found image data, handling...")
+            return handleImageData(imageData, pasteboard: pasteboard)
+        }
+        
+        // Try to handle file URLs
+        if let urls = pasteboard.readObjects(forClasses: [NSURL.self], options: nil) as? [URL] {
+            Self.logger.info("Found \(urls.count, privacy: .public) file URLs")
+            for url in urls {
+                Self.logger.info("Dropped file URL: \(url.path, privacy: .public)")
+                DispatchQueue.main.async { [weak self] in
+                    self?.onImageDrop?(url)
+                }
+            }
+            return true
+        }
+        
+        Self.logger.warning("No valid data found in drop")
+        return false
+    }
+    
+    private func canHandleDrag(_ sender: NSDraggingInfo) -> Bool {
+        let pasteboard = sender.draggingPasteboard
+        
+        // Check for image data (screenshots)
+        if pasteboard.data(forType: .png) != nil ||
+            pasteboard.data(forType: .tiff) != nil {
+            return true
+        }
+        
+        // Check for file URLs
+        if let urls = pasteboard.readObjects(forClasses: [NSURL.self], options: nil) as? [URL], !urls.isEmpty {
+            return true
+        }
+        
+        return false
+    }
+    
+    private func handleImageData(_ imageData: Data, pasteboard: NSPasteboard) -> Bool {
+        Self.logger.info("handleImageData called with data size: \(imageData.count, privacy: .public)")
+        
+        guard let image = NSImage(data: imageData) else {
+            Self.logger.error("Failed to create NSImage from dropped data")
+            return false
+        }
+        
+        Self.logger.info("Created NSImage with size: \(image.size.width, privacy: .public)x\(image.size.height, privacy: .public)")
+        
+        // Determine the file extension based on the data type
+        let fileExtension: String
+        if pasteboard.data(forType: .png) != nil {
+            fileExtension = "png"
+        } else {
+            fileExtension = "png" // Default to PNG for TIFF
+        }
+        
+        // Create a temporary file to save the image
+        let tempDirectory = FileManager.default.temporaryDirectory
+        let fileName = "Screenshot-\(UUID().uuidString).\(fileExtension)"
+        let fileURL = tempDirectory.appendingPathComponent(fileName)
+        
+        Self.logger.info("Will save to: \(fileURL.path, privacy: .public)")
+        
+        // Convert image to appropriate format and save
+        guard let tiffData = image.tiffRepresentation else {
+            Self.logger.error("Failed to get TIFF representation of image")
+            return false
+        }
+        
+        let bitmapImageRep = NSBitmapImageRep(data: tiffData)
+        let imageDataToSave: Data?
+        
+        if fileExtension == "png" {
+            imageDataToSave = bitmapImageRep?.representation(using: .png, properties: [:])
+        } else {
+            imageDataToSave = bitmapImageRep?.representation(using: .jpeg, properties: [:])
+        }
+        
+        guard let finalImageData = imageDataToSave else {
+            Self.logger.error("Failed to convert image to \(fileExtension, privacy: .public)")
+            return false
+        }
+        
+        do {
+            try finalImageData.write(to: fileURL)
+            Self.logger.info("Successfully saved dropped image to: \(fileURL.path, privacy: .public)")
+            
+            // Call the callback on the main thread
+            DispatchQueue.main.async { [weak self] in
+                Self.logger.info("Calling onImageDrop callback")
+                self?.onImageDrop?(fileURL)
+            }
+            return true
+        } catch {
+            Self.logger.error("Failed to save image: \(error.localizedDescription, privacy: .public)")
+            return false
         }
     }
 }

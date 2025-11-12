@@ -9,6 +9,7 @@ import OSLog
 import SimilaritySearchKit
 import SwiftUI
 import AppKit
+import UniformTypeIdentifiers
 
 struct PromptInputField: View {
     
@@ -268,22 +269,34 @@ struct PromptInputField: View {
         if !self.checkWebSearch() {
             return
         }
+        // Persist temporary resources to cache so that they remain available for the conversation
+        let persistenceResult: (urls: [URL], resources: [TemporaryResource]) = self.persistTemporaryResources(
+            self.promptController.tempResources,
+            conversationId: conversation.id
+        )
+        let savedResourceURLs: [URL] = persistenceResult.urls
+        let currentMessageResources: [TemporaryResource] = persistenceResult.resources
         // Make request message
         let newUserMessage: Message = Message(
             text: promptController.prompt,
-            sender: .user
+            sender: .user,
+            referencedURLs: savedResourceURLs
         )
-        DispatchQueue.main.async {
-            let _ = conversation.addMessage(newUserMessage)
-            conversationManager.update(conversation)
+        var updatedConversation: Conversation = conversation
+        let didAddMessage: Bool = updatedConversation.addMessage(newUserMessage)
+        if !didAddMessage {
+            Dialogs.showAlert(
+                title: String(localized: "Error"),
+                message: String(localized: "Failed to add message. Please try again.")
+            )
+            return
         }
-        // Store sent properties
-        DispatchQueue.main.async {
-            self.promptController.sentConversation = conversation
-            self.promptController.sentExpertId = self.conversationState.selectedExpertId
-        }
+        conversation = updatedConversation
+        conversationManager.update(updatedConversation)
+        self.promptController.sentConversation = updatedConversation
+        self.promptController.sentExpertId = self.conversationState.selectedExpertId
         // Capture temp resources
-        let tempResources: [TemporaryResource] = self.promptController.tempResources
+        let tempResources: [TemporaryResource] = currentMessageResources
         // If result type is text, send message
         switch resultType {
             case .text:
@@ -302,6 +315,11 @@ struct PromptInputField: View {
                         tempResources: tempResources
                     )
                 }
+        }
+        DispatchQueue.main.async {
+            withAnimation(.linear) {
+                self.promptController.tempResources.removeAll()
+            }
         }
         // Clear prompt
         self.clearInputs()
@@ -340,6 +358,121 @@ struct PromptInputField: View {
         }
     }
     
+    private func persistTemporaryResources(
+        _ resources: [TemporaryResource],
+        conversationId: UUID
+    ) -> (urls: [URL], resources: [TemporaryResource]) {
+        guard !resources.isEmpty else {
+            return ([], [])
+        }
+        let rootDirectory: URL = Settings
+            .cacheUrl
+            .appendingPathComponent("Temporary Resources", isDirectory: true)
+        let conversationDirectory: URL = rootDirectory
+            .appendingPathComponent(conversationId.uuidString, isDirectory: true)
+        do {
+            try FileManager.default.createDirectory(
+                at: conversationDirectory,
+                withIntermediateDirectories: true
+            )
+        } catch {
+            Self.logger.error("Failed to create temporary resources directory: \(error.localizedDescription, privacy: .public)")
+        }
+        var savedUrls: [URL] = []
+        var savedResources: [TemporaryResource] = []
+        for resource in resources {
+            let originalName: String = {
+                let lastPathComponent: String = resource.url.lastPathComponent
+                if lastPathComponent.isEmpty {
+                    return resource.id.uuidString
+                }
+                return lastPathComponent
+            }()
+            var destinationURL: URL = conversationDirectory.appendingPathComponent(originalName, isDirectory: false)
+            if FileManager.default.fileExists(atPath: destinationURL.path) {
+                destinationURL = self.uniqueDestination(
+                    for: originalName,
+                    within: conversationDirectory
+                )
+            }
+            var finalURL: URL = destinationURL
+            if resource.url.isFileURL {
+                do {
+                    try FileManager.default.copyItem(
+                        at: resource.url,
+                        to: destinationURL
+                    )
+                } catch {
+                    Self.logger.error("Failed to persist temporary resource \"\(resource.url.lastPathComponent, privacy: .public)\": \(error.localizedDescription, privacy: .public)")
+                    finalURL = resource.url
+                }
+            } else {
+                finalURL = resource.url
+            }
+            var persistedResource: TemporaryResource = resource
+            persistedResource.url = finalURL
+            savedUrls.append(finalURL)
+            savedResources.append(persistedResource)
+        }
+        return (savedUrls, savedResources)
+    }
+    
+    private func uniqueDestination(
+        for filename: String,
+        within directory: URL
+    ) -> URL {
+        let rawName: String = (filename as NSString).deletingPathExtension
+        let name: String = rawName.isEmpty ? UUID().uuidString : rawName
+        let fileExtension: String = (filename as NSString).pathExtension
+        var attempt: Int = 1
+        var candidate: URL
+        repeat {
+            let suffix: String = "\(name)-\(attempt)"
+            let candidateName: String = fileExtension.isEmpty ? suffix : "\(suffix).\(fileExtension)"
+            candidate = directory.appendingPathComponent(candidateName, isDirectory: false)
+            attempt += 1
+        } while FileManager.default.fileExists(atPath: candidate.path)
+        return candidate
+    }
+    
+    private func conversationTemporaryResources(
+        for conversation: Conversation,
+        currentResources: [TemporaryResource]
+    ) async -> [TemporaryResource] {
+        func normalized(_ url: URL) -> URL {
+            if url.isFileURL {
+                return url.standardizedFileURL
+            }
+            return url
+        }
+        var resourceMap: [URL: TemporaryResource] = [:]
+        var orderedKeys: [URL] = []
+        for resource in currentResources {
+            let key: URL = normalized(resource.url)
+            if resourceMap[key] == nil {
+                orderedKeys.append(key)
+            }
+            resourceMap[key] = resource
+        }
+        for message in conversation.messages where message.getSender() == .user {
+            for referenced in message.referencedURLs {
+                let key: URL = normalized(referenced.url)
+                var resource: TemporaryResource
+                if let existingResource: TemporaryResource = resourceMap[key] {
+                    resource = existingResource
+                } else {
+                    orderedKeys.append(key)
+                    resource = TemporaryResource(url: referenced.url)
+                }
+                if resource.text == nil, resource.url.isFileURL {
+                    let _ = await resource.scan()
+                }
+                resourceMap[key] = resource
+            }
+        }
+        return orderedKeys.compactMap { resourceMap[$0] }
+    }
+    
     private func generateChatResponse(
         prompt: String,
         tempResources: [TemporaryResource]
@@ -360,6 +493,10 @@ struct PromptInputField: View {
         }
         // Get and save conversation
         guard var conversation = self.promptController.sentConversation else { return }
+        let preparedResources: [TemporaryResource] = await self.conversationTemporaryResources(
+            for: conversation,
+            currentResources: tempResources
+        )
         self.model.setSentConversationId(conversation.id)
         // Generate title & update again
         let isFirstMessage: Bool = conversation.messages.count <= 1
@@ -391,7 +528,7 @@ struct PromptInputField: View {
             let hasIndexItems: Bool = !((
                 index?.indexItems.isEmpty
             ) ?? true)
-            didUseSources = useWebSearch || hasIndexItems || !tempResources.isEmpty
+            didUseSources = useWebSearch || hasIndexItems || !preparedResources.isEmpty
             // Get mode
             let mode: Model.Mode = self.promptController.isUsingDeepResearch ? .deepResearch : .chat
             // Get response
@@ -405,7 +542,7 @@ struct PromptInputField: View {
                 expert: selectedExpert,
                 useCanvas: self.conversationState.useCanvas,
                 canvasSelection: self.canvasController.selection,
-                temporaryResources: tempResources,
+                temporaryResources: preparedResources,
                 showPreview: true
             )
         } catch let error as LlamaServerError {

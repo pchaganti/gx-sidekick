@@ -2151,6 +2151,16 @@
         }
       }
     },
+    "Failed to add message. Please try again." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "信息添加失败，请重试。"
+          }
+        }
+      }
+    },
     "Failed to convert image to data." : {
       "localizations" : {
         "zh-Hans" : {

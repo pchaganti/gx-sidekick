@@ -110,6 +110,7 @@
 		200AAE092EC2B249000995B7 /* KnowledgeGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200AAE052EC2B249000995B7 /* KnowledgeGraph.swift */; };
 		200AAE0B2EC3B587000995B7 /* Extension+Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200AAE0A2EC3B587000995B7 /* Extension+Task.swift */; };
 		200AAE0D2EC411CD000995B7 /* PercentProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200AAE0C2EC411CD000995B7 /* PercentProgressView.swift */; };
+		200AAE0F2EC43906000995B7 /* UserMessageAttachmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200AAE0E2EC43906000995B7 /* UserMessageAttachmentView.swift */; };
 		200B23652DB0D31A00127D48 /* ReminderFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200B23642DB0D31A00127D48 /* ReminderFunctions.swift */; };
 		200B23682DB1214800127D48 /* WebSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200B23672DB1214800127D48 /* WebSearch.swift */; };
 		200B236A2DB1227A00127D48 /* DuckDuckGoSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200B23692DB1227A00127D48 /* DuckDuckGoSearch.swift */; };
@@ -634,6 +635,7 @@
 		200AAE052EC2B249000995B7 /* KnowledgeGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnowledgeGraph.swift; sourceTree = "<group>"; };
 		200AAE0A2EC3B587000995B7 /* Extension+Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Task.swift"; sourceTree = "<group>"; };
 		200AAE0C2EC411CD000995B7 /* PercentProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PercentProgressView.swift; sourceTree = "<group>"; };
+		200AAE0E2EC43906000995B7 /* UserMessageAttachmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMessageAttachmentView.swift; sourceTree = "<group>"; };
 		200B23642DB0D31A00127D48 /* ReminderFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderFunctions.swift; sourceTree = "<group>"; };
 		200B23672DB1214800127D48 /* WebSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSearch.swift; sourceTree = "<group>"; };
 		200B23692DB1227A00127D48 /* DuckDuckGoSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuckDuckGoSearch.swift; sourceTree = "<group>"; };
@@ -2243,6 +2245,7 @@
 				20C5CBD42DA5F7640071F5F7 /* FunctionCallsView.swift */,
 				2000EF442DCCADAB006F9A95 /* MessageWrapperView.swift */,
 				202D4E712EBC30EA005D6F74 /* CollapsibleUserMessageView.swift */,
+				200AAE0E2EC43906000995B7 /* UserMessageAttachmentView.swift */,
 			);
 			path = Message;
 			sourceTree = "<group>";
@@ -2723,6 +2726,7 @@
 				20457D2A2D9250AD00954892 /* CompletionsTutorialView.swift in Sources */,
 				20ADCEC62DBE390B00B13C98 /* ZoomablePannableView.swift in Sources */,
 				200AADFE2EC2B1B3000995B7 /* EntityExtractor.swift in Sources */,
+				200AAE0F2EC43906000995B7 /* UserMessageAttachmentView.swift in Sources */,
 				200AADFF2EC2B1B3000995B7 /* GraphDatabase.swift in Sources */,
 				200AAE002EC2B1B3000995B7 /* GraphRetriever.swift in Sources */,
 				200AAE012EC2B1B3000995B7 /* CommunityDetector.swift in Sources */,

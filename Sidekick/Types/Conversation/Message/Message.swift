@@ -15,12 +15,16 @@ public struct Message: Identifiable, Codable, Hashable {
 		text: String,
 		sender: Sender,
 		model: String? = nil,
+        referencedURLs: [URL] = [],
         functionCallRecords: [FunctionCallRecord]? = nil,
 		expertId: UUID? = nil
     ) {
         self.id = UUID()
         self.text = text
         self.sender = sender
+        self.referencedURLs = referencedURLs.map { url in
+            return ReferencedURL(url: url)
+        }
         self.startTime = .now
         self.lastUpdated = .now
         self.outputEnded = false

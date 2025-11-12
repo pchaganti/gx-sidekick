@@ -47,7 +47,12 @@ struct ChatPromptEditor: View {
         MultilineTextField(
             text: self.$promptController.prompt.animation(.linear),
             insertionPoint: self.$promptController.insertionPoint,
-            prompt: sendDescription
+            prompt: sendDescription,
+            onImageDrop: { url in
+                Task {
+                    await self.promptController.addFile(url)
+                }
+            }
         )
         .textFieldStyle(.plain)
         .frame(maxWidth: .infinity)

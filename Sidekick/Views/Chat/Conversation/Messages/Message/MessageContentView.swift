@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MessageContentView: View {
-        
+    
     init(
         message: Message,
         isEditing: Binding<Bool>,
@@ -19,7 +19,7 @@ struct MessageContentView: View {
         self._isEditing = isEditing
         self.shimmer = shimmer
     }
-
+    
     @EnvironmentObject private var conversationManager: ConversationManager
     @EnvironmentObject private var conversationState: ConversationState
     
@@ -84,6 +84,9 @@ struct MessageContentView: View {
                                 view.padding(.bottom, 5)
                             }
                     }
+                    if self.message.getSender() == .user && !self.message.referencedURLs.isEmpty {
+                        userMessageReferences
+                    }
                     // Show message response
                     Group {
                         if self.message.getSender() != .user {
@@ -96,7 +99,7 @@ struct MessageContentView: View {
                         view.shimmering()
                     }
                     // Show references if needed
-                    if !self.message.referencedURLs.isEmpty {
+                    if self.message.getSender() != .user && !self.message.referencedURLs.isEmpty {
                         messageReferences
                     }
                 }
@@ -166,6 +169,21 @@ struct MessageContentView: View {
         .onAppear {
             ViewReferenceTip.hasReference = true
         }
+    }
+    
+    var userMessageReferences: some View {
+        HStack(
+            alignment: .center,
+            spacing: 6
+        ) {
+            ForEach(
+                Array(self.message.referencedURLs.enumerated()),
+                id: \.element
+            ) { _, referencedURL in
+                UserMessageAttachmentView(referencedURL: referencedURL)
+            }
+        }
+        .padding(.bottom, 8)
     }
     
     private func updateMessage() {
