@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ModelNameMenu: View {
     
+    var modelType: Sidekick.ModelType = .regular
     var modelTypes: [ModelNameMenu.ModelType]
     
     @AppStorage("endpoint") private var serverEndpoint: String = InferenceSettings.endpoint
@@ -65,6 +66,10 @@ struct ModelNameMenu: View {
             .onChange(
                 of: self.serverModelName
             ) {
+                // If is worker mode, return
+                if self.modelType == .worker {
+                    return
+                }
                 // Turn has vision on if model is in list and is multimodal
                 let serverModelHasVision: Bool =  KnownModel.availableModels.contains { model in
                     let nameMatches: Bool = self.serverModelName.contains(model.primaryName)

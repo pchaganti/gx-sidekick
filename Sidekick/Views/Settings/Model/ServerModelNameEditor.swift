@@ -38,6 +38,7 @@ struct ServerModelNameEditor: View {
             description
             Spacer()
             ModelNameMenu(
+                modelType: modelType,
                 modelTypes: [.remote],
                 serverModelName: self.$serverModelName
             )
