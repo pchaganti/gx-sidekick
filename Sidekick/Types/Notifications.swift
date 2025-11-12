@@ -8,10 +8,11 @@
 import Foundation
 
 public enum Notifications: String, NotificationName {
-	
-	case systemPromptChanged
-	case changedInferenceConfig
-	case didCommandSelectExpert
-	case newConversation
-	
+    
+    case systemPromptChanged
+    case changedInferenceConfig
+    case didCommandSelectExpert
+    case newConversation
+    case switchToConversation
+    
 }

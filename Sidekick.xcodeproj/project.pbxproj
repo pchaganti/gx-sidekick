@@ -111,6 +111,7 @@
 		200AAE0B2EC3B587000995B7 /* Extension+Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200AAE0A2EC3B587000995B7 /* Extension+Task.swift */; };
 		200AAE0D2EC411CD000995B7 /* PercentProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200AAE0C2EC411CD000995B7 /* PercentProgressView.swift */; };
 		200AAE0F2EC43906000995B7 /* UserMessageAttachmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200AAE0E2EC43906000995B7 /* UserMessageAttachmentView.swift */; };
+		200AAE112EC4F06C000995B7 /* StartupMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200AAE102EC4F06C000995B7 /* StartupMetrics.swift */; };
 		200B23652DB0D31A00127D48 /* ReminderFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200B23642DB0D31A00127D48 /* ReminderFunctions.swift */; };
 		200B23682DB1214800127D48 /* WebSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200B23672DB1214800127D48 /* WebSearch.swift */; };
 		200B236A2DB1227A00127D48 /* DuckDuckGoSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200B23692DB1227A00127D48 /* DuckDuckGoSearch.swift */; };
@@ -636,6 +637,7 @@
 		200AAE0A2EC3B587000995B7 /* Extension+Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Task.swift"; sourceTree = "<group>"; };
 		200AAE0C2EC411CD000995B7 /* PercentProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PercentProgressView.swift; sourceTree = "<group>"; };
 		200AAE0E2EC43906000995B7 /* UserMessageAttachmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMessageAttachmentView.swift; sourceTree = "<group>"; };
+		200AAE102EC4F06C000995B7 /* StartupMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartupMetrics.swift; sourceTree = "<group>"; };
 		200B23642DB0D31A00127D48 /* ReminderFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderFunctions.swift; sourceTree = "<group>"; };
 		200B23672DB1214800127D48 /* WebSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSearch.swift; sourceTree = "<group>"; };
 		200B23692DB1227A00127D48 /* DuckDuckGoSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuckDuckGoSearch.swift; sourceTree = "<group>"; };
@@ -1700,11 +1702,10 @@
 				20571F802CBD6A6D004F3344 /* SoundEffects.swift */,
 				2031B9972CEAE78F00627D53 /* ShortcutController.swift */,
 				209370752D6AB36900E1AF73 /* Refactorer.swift */,
-				200363282D769AC700770391 /* JavaScriptRunner.swift */,
-				202D4E782EBCDC97005D6F74 /* PythonRunner.swift */,
 				2051FED82D8E51FA001B1E0D /* SpeechService.swift */,
 				208E34A32EC1B019009B75C9 /* ContextCompressor.swift */,
 				2041868C2D81E6B2002A5D1C /* NetworkMonitor.swift */,
+				200AAE102EC4F06C000995B7 /* StartupMetrics.swift */,
 				206AB9662DB09BB800385510 /* Location.swift */,
 				208388D92CBF4DF500C2A9F8 /* Tavily.swift */,
 				200AADF92EC2B17B000995B7 /* GraphRAG */,
@@ -1835,6 +1836,8 @@
 		207E5EF02D6FDEBE00A8F6FA /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				200363282D769AC700770391 /* JavaScriptRunner.swift */,
+				202D4E782EBCDC97005D6F74 /* PythonRunner.swift */,
 				207E5EF12D6FDEEF00A8F6FA /* ImageSearch.swift */,
 				20457D332D92827900954892 /* CompletionsController.swift */,
 				20DFF4852DB741D900F3F76C /* FileMonitor.swift */,
@@ -2692,6 +2695,7 @@
 				200AACBF2EC1CEAE000995B7 /* FunctionSelectionManager.swift in Sources */,
 				20AF0A0A2CDC6339007780FE /* MarkdownCodeBlockView.swift in Sources */,
 				204AE3C02CEB57330086B42D /* CommandButton.swift in Sources */,
+				200AAE112EC4F06C000995B7 /* StartupMetrics.swift in Sources */,
 				204AE3B62CEAF4C20086B42D /* InlineAssistantView.swift in Sources */,
 				20457D232D92352900954892 /* InlineWritingAssistantSettingsView.swift in Sources */,
 				207A9F5D2CB8FD0900E727DE /* ResourceSectionView.swift in Sources */,

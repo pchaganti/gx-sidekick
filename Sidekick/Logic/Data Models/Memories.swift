@@ -21,11 +21,10 @@ public class Memories: ObservableObject {
     )
     
     init() {
+        let signpost = StartupMetrics.begin("Memories.init")
         self.patchFileIntegrity()
-        self.load()
-        Task {
-            await self.initSimilarityIndex()
-        }
+        self.loadAsync()
+        StartupMetrics.end("Memories.init", signpost)
     }
     
     /// Static constant for the global ``Memories`` object
@@ -37,7 +36,7 @@ public class Memories: ObservableObject {
             "Memory"
         )
     }
-
+    
     /// Computed property returning if datastore directory exists
     private static var datastoreDirExists: Bool {
         return Self.datastoreDirUrl.fileExists
@@ -52,14 +51,26 @@ public class Memories: ObservableObject {
     
     /// All memories
     @Published public var memories: [Memory] = []
+    /// Whether the datastore has been loaded
+    @Published private(set) var isLoaded: Bool = false
+    /// Task handling asynchronous datastore loading
+    private var loadTask: Task<Void, Never>?
     /// The memories similarity index
     private var similarityIndex: SimilarityIndex?
     /// Function to initialize similarity index
     private func initSimilarityIndex() async {
+        if self.similarityIndex != nil {
+            return
+        }
+        guard RetrievalSettings.useMemory else {
+            return
+        }
+        let signpost = StartupMetrics.begin("Memories.initSimilarityIndex")
         self.similarityIndex = await SimilarityIndex(
             model: DistilbertEmbeddings(),
             metric: CosineSimilarity()
         )
+        StartupMetrics.end("Memories.initSimilarityIndex", signpost)
     }
     
     /// Function to make new datastore
@@ -68,7 +79,39 @@ public class Memories: ObservableObject {
         self.patchFileIntegrity()
         // Add new datastore
         self.memories = []
+        self.isLoaded = true
         self.save()
+    }
+    
+    /// Loads memories asynchronously to avoid blocking startup
+    private func loadAsync() {
+        if let loadTask = self.loadTask, !loadTask.isCancelled {
+            return
+        }
+        let targetUrl: URL = Self.datastoreUrl
+        self.loadTask = Task.detached(priority: .userInitiated) { [weak self] in
+            let signpost = StartupMetrics.begin("Memories.loadDatastore")
+            defer { StartupMetrics.end("Memories.loadDatastore", signpost) }
+            let rawData: Data
+            do {
+                rawData = try Data(contentsOf: targetUrl)
+            } catch {
+                await MainActor.run {
+                    guard let self else { return }
+                    self.newDatastore()
+                    self.loadTask = nil
+                }
+                return
+            }
+            let decoder: JSONDecoder = JSONDecoder()
+            let memories = (try? decoder.decode([Memory].self, from: rawData)) ?? []
+            await MainActor.run {
+                guard let self else { return }
+                self.memories = memories
+                self.isLoaded = true
+                self.loadTask = nil
+            }
+        }
     }
     
     /// Function to reset datastore
@@ -89,17 +132,15 @@ public class Memories: ObservableObject {
     /// Function to load memories
     private func load() {
         do {
-            // Load data
             let rawData: Data = try Data(contentsOf: Self.datastoreUrl)
             let decoder: JSONDecoder = JSONDecoder()
             self.memories = try decoder.decode(
                 [Memory].self,
                 from: rawData
             )
+            self.isLoaded = true
         } catch {
-            // Indicate error
             print("Failed to load memories: \(error)")
-            // Make new datastore
             self.newDatastore()
         }
     }

@@ -148,6 +148,18 @@ struct ConversationManagerView: View {
         }
         .onReceive(
             NotificationCenter.default.publisher(
+                for: Notifications.switchToConversation.name
+            )
+        ) { output in
+            guard let targetId = output.object as? UUID else {
+                return
+            }
+            withAnimation(.linear) {
+                self.conversationState.selectedConversationId = targetId
+            }
+        }
+        .onReceive(
+            NotificationCenter.default.publisher(
                 for: Notifications.didCommandSelectExpert.name
             )
         ) { output in

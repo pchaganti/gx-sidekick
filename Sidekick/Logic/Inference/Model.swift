@@ -64,22 +64,12 @@ public class Model: ObservableObject {
         self.workerModelServer = LlamaServer(
             modelType: .worker
         )
-        // Load models if not using remote server
-        Task { [weak self] in
-            guard let self = self else { return }
-            let canReachRemoteServer: Bool = await self.remoteServerIsReachable()
-            do {
-                if !InferenceSettings.useServer || !canReachRemoteServer {
-                    try await self.mainModelServer.startServer(
-                        canReachRemoteServer: canReachRemoteServer
-                    )
-                    try await self.workerModelServer.startServer(
-                        canReachRemoteServer: canReachRemoteServer
-                    )
-                }
-            } catch {
-                print("Error starting `llama-server`: \(error)")
-            }
+        // Probe remote connectivity without blocking the main actor
+        Task.detached(priority: .userInitiated) { [weak self] in
+            guard let self else { return }
+            let signpost = StartupMetrics.begin("Model.remoteProbe")
+            defer { StartupMetrics.end("Model.remoteProbe", signpost) }
+            let _ = await self.remoteServerIsReachable()
         }
     }
     

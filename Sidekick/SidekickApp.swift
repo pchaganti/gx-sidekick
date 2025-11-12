@@ -14,55 +14,57 @@ import TipKit
 
 @main
 struct SidekickApp: App {
-	
-	@NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-	
-	@StateObject private var appState: AppState = .shared
-	@StateObject private var downloadManager: DownloadManager = .shared
-	@StateObject private var conversationManager: ConversationManager = .shared
-	@StateObject private var expertManager: ExpertManager = .shared
-	@StateObject private var commandManager: CommandManager = .shared
+    
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
+    @StateObject private var appState: AppState = .shared
+    @StateObject private var downloadManager: DownloadManager = .shared
+    @StateObject private var conversationManager: ConversationManager = .shared
+    @StateObject private var expertManager: ExpertManager = .shared
+    @StateObject private var commandManager: CommandManager = .shared
     @StateObject private var memories: Memories = .shared
-	
-	@StateObject private var lengthyTasksController: LengthyTasksController = .shared
-	
+    
+    @StateObject private var lengthyTasksController: LengthyTasksController = .shared
+    
     /// Updater object for Sparkle
-	private let updaterController: SPUStandardUpdaterController = .init(
-		startingUpdater: true,
-		updaterDelegate: nil,
-		userDriverDelegate: nil
-	)
+    private let updaterController: SPUStandardUpdaterController = .init(
+        startingUpdater: true,
+        updaterDelegate: nil,
+        userDriverDelegate: nil
+    )
     
     init() {
         // Hide all tips for now
         Tips.hideAllTipsForTesting()
         // Initialize model cache
         Task {
+            let signpost = StartupMetrics.begin("KnownModel.initializeModelCache")
             await KnownModel.initializeModelCache()
+            StartupMetrics.end("KnownModel.initializeModelCache", signpost)
         }
     }
-	
-	var body: some Scene {
-		
-		// Main window
-		WindowGroup {
-			ContentView()
-				.environmentObject(appState)
-				.environmentObject(downloadManager)
-				.environmentObject(conversationManager)
-				.environmentObject(expertManager)
-				.environmentObject(lengthyTasksController)
+    
+    var body: some Scene {
+        
+        // Main window
+        WindowGroup {
+            ContentView()
+                .environmentObject(appState)
+                .environmentObject(downloadManager)
+                .environmentObject(conversationManager)
+                .environmentObject(expertManager)
+                .environmentObject(lengthyTasksController)
                 .environmentObject(memories)
-				.applyWindowMaterial()
-		}
-		.windowToolbarStyle(.unified)
-		.commands {
+                .applyWindowMaterial()
+        }
+        .windowToolbarStyle(.unified)
+        .commands {
             // Commands for operations in conversations (e.g. Creating a new conversation)
-			ConversationCommands.commands
+            ConversationCommands.commands
             // Commands to use and manage experts
-			ConversationCommands.expertCommands
+            ConversationCommands.expertCommands
             // Commands to change the window state / appearance
-			WindowCommands.commands
+            WindowCommands.commands
             // Command replacing the help button
             HelpCommands.helpCommand
             // Commands useful for debugging
@@ -70,11 +72,11 @@ struct SidekickApp: App {
             // Commands to obtain help and report problems
             HelpCommands.commands
             // Command to check for update
-			CommandGroup(after: .appInfo) {
-				CheckForUpdatesView(updater: updaterController.updater)
-			}
-		}
-		
+            CommandGroup(after: .appInfo) {
+                CheckForUpdatesView(updater: updaterController.updater)
+            }
+        }
+        
         // Window for managing memories
         SwiftUI.Window("Memory", id: "memory") {
             MemoriesManagerView()
@@ -109,12 +111,12 @@ struct SidekickApp: App {
             SlideStudioView()
         }
         
-		// Settings window
-		SwiftUI.Settings {
-			SettingsView()
-				.environmentObject(commandManager)
-		}
-		
-	}
-	
+        // Settings window
+        SwiftUI.Settings {
+            SettingsView()
+                .environmentObject(commandManager)
+        }
+        
+    }
+    
 }

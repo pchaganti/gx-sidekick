@@ -14,22 +14,24 @@ import TipKit
 
 /// The app's delegate which handles life cycle events
 public class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
-	
-	/// A object of type  ``InlineAssistantController`` controller
-	let inlineAssistantController: InlineAssistantController = .shared
-	/// A object of type  ``CompletionsController`` controller
-	let completionsController: CompletionsController = .shared
-	
-	/// Function that runs after the app is initialized
-	public func applicationDidFinishLaunching(
-		_ notification: Notification
-	) {
+    
+    /// A object of type  ``InlineAssistantController`` controller
+    let inlineAssistantController: InlineAssistantController = .shared
+    /// A object of type  ``CompletionsController`` controller
+    let completionsController: CompletionsController = .shared
+    
+    /// Function that runs after the app is initialized
+    public func applicationDidFinishLaunching(
+        _ notification: Notification
+    ) {
         Tips.hideAllTipsForTesting()
         print("Hid all tips")
-		// Relocate legacy resources if setup finished
-		if Settings.setupComplete {
-			Refactorer.refactor()
-		}
+        // Relocate legacy resources if setup finished
+        if Settings.setupComplete {
+            let signpost = StartupMetrics.begin("Refactorer.refactor")
+            Refactorer.refactor()
+            StartupMetrics.end("Refactorer.refactor", signpost)
+        }
         // Configure Tip's data container
         try? Tips.configure(
             [
@@ -37,8 +39,12 @@ public class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
                 .displayFrequency(.daily)
             ]
         )
-		// Configure keyboard shortcuts
-		ShortcutController.setup()
+        // Configure keyboard shortcuts
+        ShortcutController.setup()
+        // Prepare an empty conversation for launch
+        Task { @MainActor in
+            await self.prepareInitialConversation()
+        }
         // Update endpoint format
         Task { @MainActor in
             await Refactorer.updateEndpoint()
@@ -52,21 +58,34 @@ public class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
             }
             ExpertManager.shared.update(modExpert)
         }
-	}
-	
-	/// Function that runs before the app is terminated
-	public func applicationShouldTerminate(
-		_ sender: NSApplication
-	) -> NSApplication.TerminateReply {
-		// Stop server
-		Task {
+    }
+    
+    /// Function that runs before the app is terminated
+    public func applicationShouldTerminate(
+        _ sender: NSApplication
+    ) -> NSApplication.TerminateReply {
+        // Stop server
+        Task {
             await Model.shared.stopServers()
-		}
-		// Remove stale sources
-		SourcesManager.shared.removeStaleSources()
-		// Remove non-persisted resources
-		ExpertManager.shared.removeUnpersistedResources()
-		return .terminateNow
-	}
-	
+        }
+        // Remove stale sources
+        SourcesManager.shared.removeStaleSources()
+        // Remove non-persisted resources
+        ExpertManager.shared.removeUnpersistedResources()
+        return .terminateNow
+    }
+    
+}
+
+extension AppDelegate {
+    
+    @MainActor
+    private func prepareInitialConversation() async {
+        let conversationManager = ConversationManager.shared
+        while !conversationManager.isLoaded {
+            try? await Task.sleep(nanoseconds: 50_000_000)
+        }
+        conversationManager.ensureBlankConversationForLaunch()
+    }
+    
 }

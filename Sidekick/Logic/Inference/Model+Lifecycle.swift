@@ -29,16 +29,8 @@ extension Model {
         self.workerModelServer = LlamaServer(
             modelType: .worker
         )
-        // Load model if needed
         let canReachRemoteServer: Bool = await self.remoteServerIsReachable()
-        if !InferenceSettings.useServer || !canReachRemoteServer {
-            try? await self.mainModelServer.startServer(
-                canReachRemoteServer: canReachRemoteServer
-            )
-            try? await self.workerModelServer.startServer(
-                canReachRemoteServer: canReachRemoteServer
-            )
-        }
+        self.wasRemoteServerAccessible = canReachRemoteServer
     }
     
     // MARK: - Token Counting
@@ -56,7 +48,8 @@ extension Model {
     // MARK: - Remote Reachability
     
     public func remoteServerIsReachable(
-        endpoint: String = InferenceSettings.endpoint
+        endpoint: String = InferenceSettings.endpoint,
+        timeout: TimeInterval = 1.5
     ) async -> Bool {
         // Return false if server is unused
         if !InferenceSettings.useServer { return false }
@@ -66,37 +59,53 @@ extension Model {
             Self.logger.info("Using cached remote server reachability result")
             return self.wasRemoteServerAccessible
         }
-        // Get last path change time
-        // If using server, check connection on multiple endpoints
-        let testEndpoints: [String] = [
-            "/models",
-            "/chat/completions"
-        ]
-        for testEndpoint in testEndpoints {
-            let endpoint: String = endpoint.replacingSuffix(
-                testEndpoint,
-                with: ""
-            ) + testEndpoint
-            guard let endpointUrl: URL = URL(
-                string: endpoint
-            ) else {
-                continue
-            }
-            if await endpointUrl.isAPIEndpointReachable(
-                timeout: 3
-            ) {
-                // Cache result, then return
-                self.wasRemoteServerAccessible = true
-                self.lastRemoteServerCheck = Date.now
-                Self.logger.info("Reached remote server at '\(endpoint, privacy: .public)'")
-                return true
-            }
+        let trimmedEndpoint = endpoint.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmedEndpoint.isEmpty else {
+            self.wasRemoteServerAccessible = false
+            self.lastRemoteServerCheck = Date.now
+            return false
         }
-        // If fell through, cache and return false
-        Self.logger.warning("Could not reach remote server at '\(endpoint, privacy: .public)'")
-        self.wasRemoteServerAccessible = false
+        let sanitizedBase = trimmedEndpoint.hasSuffix("/") ? String(trimmedEndpoint.dropLast()) : trimmedEndpoint
+        let normalizedBase = sanitizedBase.replacingSuffix("/chat/completions", with: "")
+        let testPaths: [String] = [
+            "models",
+            "chat/completions"
+        ]
+        let reachable: Bool = await withTaskGroup(of: Bool.self) { group in
+            for path in testPaths {
+                group.addTask {
+                    let urlString: String
+                    if normalizedBase.hasSuffix("/") {
+                        urlString = normalizedBase + path
+                    } else {
+                        urlString = "\(normalizedBase)/\(path)"
+                    }
+                    guard let endpointUrl = URL(string: urlString) else {
+                        return false
+                    }
+                    return await endpointUrl.isAPIEndpointReachable(
+                        timeout: timeout
+                    )
+                }
+            }
+            var success: Bool = false
+            while let result = await group.next() {
+                if result {
+                    success = true
+                    group.cancelAll()
+                    break
+                }
+            }
+            return success
+        }
+        self.wasRemoteServerAccessible = reachable
         self.lastRemoteServerCheck = Date.now
-        return false
+        if reachable {
+            Self.logger.info("Reached remote server at '\(normalizedBase, privacy: .public)'")
+        } else {
+            Self.logger.warning("Could not reach remote server at '\(normalizedBase, privacy: .public)'")
+        }
+        return reachable
     }
     
     // MARK: - Server Lifecycle

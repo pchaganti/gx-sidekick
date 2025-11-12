@@ -131,7 +131,6 @@ public class ExpertManager: ObservableObject {
     /// Function to load experts from disk
     public func load() {
         do {
-            // Load data
             let rawData: Data = try Data(
                 contentsOf: self.datastoreUrl
             )
@@ -141,9 +140,7 @@ public class ExpertManager: ObservableObject {
                 from: rawData
             )
         } catch {
-            // Indicate error
             print("Failed to load experts: \(error)")
-            // Make new datastore
             self.newDatastore()
         }
     }
