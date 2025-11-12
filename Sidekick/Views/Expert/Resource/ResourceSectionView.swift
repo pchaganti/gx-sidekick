@@ -93,16 +93,11 @@ struct ResourceSectionView: View {
         VStack(alignment: .leading) {
             HStack {
                 VStack(alignment: .leading) {
-                    Text("Resources:")
+                    Text("Resources")
                         .font(.title3)
                         .bold()
                     Text("Files, folders or websites stored in the chatbot's long-term memory")
                         .font(.caption)
-                }
-                if isUpdating {
-                    ProgressView()
-                        .progressViewStyle(.circular)
-                        .scaleEffect(0.5)
                 }
                 Spacer()
                 Button {
@@ -111,7 +106,6 @@ struct ResourceSectionView: View {
                     Text("Add")
                 }
                 .disabled(self.isUpdating)
-                
                 Button {
                     Task { await updateIndexes() }
                 } label: {
@@ -202,10 +196,6 @@ struct ResourceSectionView: View {
                                 .font(.caption)
                         }
                         Spacer()
-                        Button("Update Index") {
-                            Task { await updateIndexes() }
-                        }
-                        .disabled(isUpdating)
                         Button("Rebuild") {
                             rebuildGraph()
                         }
@@ -304,6 +294,8 @@ struct ResourceSectionView: View {
             allowMultipleSelection: true
         ) else { return }
         // Check
+        print("selectedUrls: \(selectedUrls)")
+        print("fileUrl: \(fileUrl?.lastPathComponent ?? "")")
         if selectedUrls != [fileUrl] {
             // Show alert and return
             Dialogs.showAlert(

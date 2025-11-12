@@ -54,8 +54,16 @@ public struct TemporaryResource: Identifiable, Sendable {
 	/// Function to scan the resource
 	@MainActor
 	public mutating func scan() async -> Bool {
+        // Check file extension
+        let speed: ExtractionSpeed = {
+            if ["pdf", "docx"].contains(self.url.pathExtension) {
+                return .fast
+            }
+            return .default
+        }()
 		let text: String? = try? await ExtractKit.shared.extractText(
-			url: url
+			url: url,
+            speed: speed
 		)
 		// Update state
 		if let text {

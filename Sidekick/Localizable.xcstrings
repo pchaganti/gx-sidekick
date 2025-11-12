@@ -4112,16 +4112,6 @@
         }
       }
     },
-    "Resources:" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "资源："
-          }
-        }
-      }
-    },
     "Response" : {
       "localizations" : {
         "zh-Hans" : {
