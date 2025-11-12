@@ -323,7 +323,6 @@ struct ResourceSectionView: View {
         })
         Task { @MainActor in
             var current = expert
-            let wasEmpty = current.resources.resources.isEmpty
             current.resources.addResources(resources)
             expert = current
             expertManager.update(current)

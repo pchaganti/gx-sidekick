@@ -493,6 +493,7 @@ struct PromptInputField: View {
         }
         // Get and save conversation
         guard var conversation = self.promptController.sentConversation else { return }
+        let originalConversation: Conversation = conversation
         let preparedResources: [TemporaryResource] = await self.conversationTemporaryResources(
             for: conversation,
             currentResources: tempResources
@@ -549,9 +550,12 @@ struct PromptInputField: View {
             await model.interrupt()
             // Don't show error dialog for user-initiated cancellation
             if case .cancelled = error {
-                self.handleCancellation()
+                await self.handleCancellation(originalConversation: originalConversation)
             } else {
-                self.handleResponseError(error)
+                await self.handleResponseError(
+                    error,
+                    originalConversation: originalConversation
+                )
             }
             return
         } catch {
@@ -634,7 +638,10 @@ A user is chatting with an assistant and they have sent the message below. Gener
     }
     
     @MainActor
-    private func handleResponseError(_ error: LlamaServerError) {
+    private func handleResponseError(
+        _ error: LlamaServerError,
+        originalConversation: Conversation
+    ) {
         // Display error message
         let errorDescription: String = error.errorDescription ?? "Unknown Error"
         let recoverySuggestion: String = error.recoverySuggestion
@@ -642,40 +649,58 @@ A user is chatting with an assistant and they have sent the message below. Gener
             title: errorDescription,
             message: recoverySuggestion
         )
-        // Restore prompt
-        if let prompt: String = self.promptController.sentConversation?.messages.last?.text {
+        // Restore prompt if nothing new has been typed and we restored the conversation
+        let didRevert: Bool = self.revertConversationAfterFailure(originalConversation)
+        if didRevert,
+           self.promptController.prompt.isEmpty,
+           let prompt: String = originalConversation.messages.last?.text {
             self.promptController.prompt = prompt
-        }
-        // Remove messages
-        if let messages: [Message] = self.promptController.sentConversation?.messages.dropLast(1),
-           var conversation = self.promptController.sentConversation {
-            // Drop message and update
-            conversation.messages = messages
-            self.conversationManager.update(conversation)
         }
         // Reset model status
         self.model.status = .ready
         self.model.sentConversationId = nil
+        self.promptController.sentConversation = nil
     }
     
     @MainActor
-    private func handleCancellation() {
+    private func handleCancellation(
+        originalConversation: Conversation
+    ) {
         // Don't show error dialog for user-initiated cancellation
         // Just clean up the state silently
-        // Restore prompt
-        if let prompt: String = self.promptController.sentConversation?.messages.last?.text {
+        let didRevert: Bool = self.revertConversationAfterFailure(originalConversation)
+        if didRevert,
+           self.promptController.prompt.isEmpty,
+           let prompt: String = originalConversation.messages.last?.text {
             self.promptController.prompt = prompt
-        }
-        // Remove messages
-        if let messages: [Message] = self.promptController.sentConversation?.messages.dropLast(1),
-           var conversation = self.promptController.sentConversation {
-            // Drop message and update
-            conversation.messages = messages
-            self.conversationManager.update(conversation)
         }
         // Reset model status
         self.model.status = .ready
         self.model.sentConversationId = nil
+        self.promptController.sentConversation = nil
+    }
+    
+    @MainActor
+    private func revertConversationAfterFailure(
+        _ originalConversation: Conversation
+    ) -> Bool {
+        guard let lastMessage: Message = originalConversation.messages.last else {
+            return false
+        }
+        guard var activeConversation: Conversation = self.conversationManager.getConversation(
+            id: originalConversation.id
+        ) else {
+            return false
+        }
+        guard !activeConversation.messages.isEmpty else {
+            return false
+        }
+        guard activeConversation.messages.last?.id == lastMessage.id else {
+            return false
+        }
+        activeConversation.messages = Array(activeConversation.messages.dropLast())
+        self.conversationManager.update(activeConversation)
+        return true
     }
     
     /// Function to check if web search can be used

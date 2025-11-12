@@ -311,7 +311,7 @@ public struct KnownModel: Identifiable, Codable {
         public static func from(string: String) -> Organization? {
             let normalized = string.lowercased()
             switch normalized {
-                case "qwen", "qwen":
+                case "qwen":
                     return .qwen
                 case "amazon":
                     return .amazon
