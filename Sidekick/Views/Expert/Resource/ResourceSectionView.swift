@@ -170,17 +170,21 @@ struct ResourceSectionView: View {
                                 .font(.caption)
                         }
                         Spacer()
-                        statusIcon(for: expert.resources.graphStatus)
+                        
+                        if expert.resources.graphStatus == .building,
+                           let progress = expert.resources.graphProgress {
+                            PercentProgressView(progress: progress.clampedOverall)
+                                .frame(width: 40, height: 40)
+                        } else {
+                            statusIcon(for: expert.resources.graphStatus)
+                        }
                     }
                     
                     if expert.resources.graphStatus == .building,
                        let progress = expert.resources.graphProgress {
                         VStack(alignment: .leading, spacing: 6) {
-                            ProgressView(
-                                value: max(0.0, min(progress.percentComplete, 1.0)),
-                                total: 1.0
-                            )
-                            .progressViewStyle(.linear)
+                            ProgressView(value: progress.clampedStage, total: 1.0)
+                                .progressViewStyle(.linear)
                             
                             Text(progressCaption(for: progress))
                                 .font(.caption)
@@ -213,14 +217,14 @@ struct ResourceSectionView: View {
     }
     
     private func progressCaption(for progress: Resources.GraphProgress) -> String {
-        let percent = Int((progress.percentComplete * 100).rounded())
-        let fallback = "Building Knowledge Graph (\(percent)%)"
+        let stagePercent = Int((progress.clampedStage * 100).rounded())
+        let fallback = "Building Knowledge Graph (\(stagePercent)%)"
         
         guard let stage = progress.stage, !stage.isEmpty else {
             return fallback
         }
         
-        return "\(stage) (\(percent)%)"
+        return "\(stage) (\(stagePercent)%)"
     }
     
     private func statusText(for status: Resources.GraphStatus?) -> String {
@@ -357,6 +361,19 @@ struct ResourceSectionView: View {
             current.resources.graphProgress = progress
             ExpertManager.shared.update(current)
         }
+    }
+    
+}
+
+private extension Resources.GraphProgress {
+    
+    var clampedOverall: Double {
+        max(0.0, min(percentComplete, 1.0))
+    }
+    
+    var clampedStage: Double {
+        let stageValue = stagePercentComplete ?? percentComplete
+        return max(0.0, min(stageValue, 1.0))
     }
     
 }

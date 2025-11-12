@@ -105,8 +105,8 @@ extension LlamaServer {
         updateStatusHandler: (@Sendable (Model.Status) async -> Void)? = nil,
         progressHandler: (@Sendable (String) -> Void)? = nil
     ) async throws -> CompleteResponse {
-        // Reset cancellation flag at the start of new request
-        self.isCancelled = false
+        // Track this request so it can be cancelled independently
+        let requestID = UUID()
         // Get endpoint url & whether server is used
         let rawUrl = await self.url(
             "/chat/completions",
@@ -195,15 +195,32 @@ extension LlamaServer {
         )
         request.httpBody = requestJson.data(using: .utf8)
         // Use EventSource to receive server sent events
-        self.eventSource = EventSource(
+        let eventSource = EventSource(
             timeoutInterval: 6000 // Timeout after 100 minutes, enough for even reasoning models
         )
-        self.dataTask = self.eventSource!.dataTask(
+        let dataTask = eventSource.dataTask(
             for: request
         )
-        self.session = URLSession(
+        let session = URLSession(
             configuration: .default
         )
+        let context = ActiveRequestContext(
+            id: requestID,
+            eventSource: eventSource,
+            dataTask: dataTask,
+            session: session
+        )
+        self.activeRequests[requestID] = context
+        if self.pendingCancellationForAllRequests {
+            context.cancel()
+        }
+        defer {
+            session.invalidateAndCancel()
+            self.activeRequests.removeValue(forKey: requestID)
+            if self.activeRequests.isEmpty {
+                self.pendingCancellationForAllRequests = false
+            }
+        }
         // Init variables for content
         var pendingMessage: String = ""
         var responseDiff: Double = 0.0
@@ -224,7 +241,7 @@ extension LlamaServer {
         // Init variables for control
         var stopResponse: StopResponse? = nil
         // Start streaming completion events
-        listenLoop: for await event in self.dataTask!.events() {
+        listenLoop: for await event in context.dataTask.events() {
             switch event {
                 case .open:
                     continue listenLoop
@@ -359,7 +376,7 @@ extension LlamaServer {
             }
         }
         // Check if generation was cancelled
-        if self.isCancelled {
+        if context.isCancelled {
             Self.logger.notice("Generation was cancelled, not processing tool calls")
             throw LlamaServerError.cancelled
         }

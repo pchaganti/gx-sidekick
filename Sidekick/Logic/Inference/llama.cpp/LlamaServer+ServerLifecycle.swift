@@ -188,12 +188,20 @@ extension LlamaServer {
     }
     
     /// Function showing if connection was interrupted
-    public func interrupt() async {
-        self.isCancelled = true
-        if let dataTask = self.dataTask,
-           dataTask.readyState != .closed,
-           let session = self.session {
-            dataTask.cancel(urlSession: session)
+    public func interrupt(requestID: UUID? = nil) async {
+        if let requestID,
+           let context = self.activeRequests[requestID] {
+            context.cancel()
+            return
+        }
+        
+        guard requestID == nil else {
+            return
+        }
+        
+        self.pendingCancellationForAllRequests = true
+        for context in self.activeRequests.values {
+            context.cancel()
         }
     }
     

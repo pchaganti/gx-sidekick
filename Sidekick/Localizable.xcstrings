@@ -870,6 +870,9 @@
         }
       }
     },
+    "Completed indexing \"%@\"" : {
+
+    },
     "Completion Suggestion Threshold" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2333,6 +2336,16 @@
         }
       }
     },
+    "Finished item %lld of %lld in \"%@\"" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Finished item %1$lld of %2$lld in \"%3$@\""
+          }
+        }
+      }
+    },
     "Finished processing \"%@\"" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2812,6 +2825,9 @@
           }
         }
       }
+    },
+    "Indexing \"%@\"" : {
+
     },
     "Indexing in Progress" : {
       "localizations" : {
@@ -3690,6 +3706,9 @@
         }
       }
     },
+    "Preparing resource" : {
+
+    },
     "Preparing resources" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3755,6 +3774,9 @@
           }
         }
       }
+    },
+    "Processing resource" : {
+
     },
     "Processing resource %lld of %lld" : {
       "localizations" : {

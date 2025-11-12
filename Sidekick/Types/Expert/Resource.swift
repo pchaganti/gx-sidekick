@@ -81,6 +81,54 @@ public struct Resource: Identifiable, Codable, Hashable, Sendable {
         }
     }
     
+    /// Progress update information emitted while indexing a resource
+    public struct ProgressUpdate {
+        public var current: Int
+        public var total: Int
+        public var stage: String
+        public var entities: Int
+        public var fractionComplete: Double
+        
+        public init(
+            current: Int,
+            total: Int,
+            stage: String,
+            entities: Int = 0,
+            fractionComplete: Double
+        ) {
+            self.current = current
+            self.total = total
+            self.stage = stage
+            self.entities = entities
+            self.fractionComplete = fractionComplete
+        }
+    }
+    
+    /// Estimated number of work units required to index this resource (used for progress calculations)
+    mutating func workloadEstimate(useGraphRAG: Bool) -> Int {
+        // Web resources or files count as a single unit
+        if !self.url.hasDirectoryPath {
+            return 1
+        }
+        
+        // Directories: ensure children list is populated
+        self.updateChildrenList()
+        
+        if self.children.isEmpty {
+            return 1
+        }
+        
+        var totalUnits: Int = 0
+        for index in self.children.indices {
+            var child = self.children[index]
+            let units = child.workloadEstimate(useGraphRAG: useGraphRAG)
+            totalUnits += units
+            self.children[index] = child
+        }
+        
+        return max(1, totalUnits)
+    }
+    
     /// A Boolean value indicating if the file is still at its last recorded path
     public var wasMoved: Bool {
         return !url.fileExists
@@ -214,7 +262,7 @@ public struct Resource: Identifiable, Codable, Hashable, Sendable {
     public mutating func updateIndex(
         resourcesDirUrl: URL,
         useGraphRAG: Bool = false,
-        progressCallback: ((Int, Int, String, Int) -> Void)? = nil
+        progressCallback: ((ProgressUpdate) -> Void)? = nil
     ) async -> Bool {
         // Log
         let url: URL = self.url
@@ -250,6 +298,12 @@ public struct Resource: Identifiable, Codable, Hashable, Sendable {
         Self.logger.info("Starting index for resource \"\(url, privacy: .public)\"")
         // Extract text from url
         let text: String
+        progressCallback?(ProgressUpdate(
+            current: 0,
+            total: 1,
+            stage: String(localized: "Indexing \"\(self.name)\""),
+            fractionComplete: 0.0
+        ))
         do {
             text = try await ExtractKit.shared.extractText(
                 url: self.url,
@@ -274,26 +328,18 @@ public struct Resource: Identifiable, Codable, Hashable, Sendable {
         )
         Self.logger.info("Initialized index for resource \"\(url, privacy: .public)\"")
         // Add texts to index
-        await withTaskGroup(
-            of: Void.self
-        ) { group in
-            // Capture properties needed inside the closure
-            let idString = self.id.uuidString
-            let urlStrValue = self.url.isWebURL ? self.url.absoluteString : self.url.posixPath
-            // Add items to index
-            for (index, splitText) in splitTexts.enumerated() {
-                group.addTask {
-                    let indexItemId = "\(idString)_\(index)"
-                    await similarityIndex.addItem(
-                        id: indexItemId,
-                        text: splitText,
-                        metadata: [
-                            "source": urlStrValue,
-                            "itemIndex": "\(index)"
-                        ]
-                    )
-                }
-            }
+        let idString = self.id.uuidString
+        let urlStrValue = self.url.isWebURL ? self.url.absoluteString : self.url.posixPath
+        for (index, splitText) in splitTexts.enumerated() {
+            let indexItemId = "\(idString)_\(index)"
+            await similarityIndex.addItem(
+                id: indexItemId,
+                text: splitText,
+                metadata: [
+                    "source": urlStrValue,
+                    "itemIndex": "\(index)"
+                ]
+            )
         }
         Self.logger.info("Added items to index for resource \"\(url, privacy: .public)\"")
         // Save index
@@ -307,10 +353,24 @@ public struct Resource: Identifiable, Codable, Hashable, Sendable {
         var graphSuccess = true
         if useGraphRAG {
             Self.logger.notice("Graph RAG is enabled, starting graph build for resource \"\(url, privacy: .public)\"")
+            let graphProgressWrapper: ((Int, Int, String, Int) -> Void)?
+            if let progressCallback {
+                graphProgressWrapper = { current, total, stage, entities in
+                    progressCallback(ProgressUpdate(
+                        current: current,
+                        total: total,
+                        stage: stage,
+                        entities: entities,
+                        fractionComplete: 0.0
+                    ))
+                }
+            } else {
+                graphProgressWrapper = nil
+            }
             graphSuccess = await self.buildAndSaveGraph(
                 chunks: splitTexts,
                 resourcesDirUrl: resourcesDirUrl,
-                progressCallback: progressCallback
+                progressCallback: graphProgressWrapper
             )
             
             if graphSuccess {
@@ -330,6 +390,13 @@ public struct Resource: Identifiable, Codable, Hashable, Sendable {
         let loggerMsg: String = "Updated index for item \"\(self.url)\""
         Self.logger.notice("\(loggerMsg, privacy: .public)")
         
+        progressCallback?(ProgressUpdate(
+            current: 1,
+            total: 1,
+            stage: String(localized: "Completed indexing \"\(self.name)\""),
+            fractionComplete: 1.0
+        ))
+        
         return graphSuccess
     }
     
@@ -338,7 +405,7 @@ public struct Resource: Identifiable, Codable, Hashable, Sendable {
     private mutating func preprocessIndexUpdate(
         resourcesDirUrl: URL,
         useGraphRAG: Bool,
-        progressCallback: ((Int, Int, String, Int) -> Void)?
+        progressCallback: ((ProgressUpdate) -> Void)?
     ) async -> PreprocessResult {
         // Exit update if file resource was moved
         if !self.isWebResource && self.wasMoved {
@@ -355,21 +422,55 @@ public struct Resource: Identifiable, Codable, Hashable, Sendable {
             self.updateChildrenList()
             var allChildrenSucceeded = true
             let childCount = max(self.children.count, 1)
+            
+            var childWorkUnits: [Int] = []
+            childWorkUnits.reserveCapacity(childCount)
             for index in self.children.indices {
-                if useGraphRAG {
-                    progressCallback?(
-                        index,
-                        childCount,
-                        String(localized: "Processing item \(index + 1) of \(childCount) in \"\(self.name)\""),
-                        0
-                    )
-                }
+                var childCopy = self.children[index]
+                let units = childCopy.workloadEstimate(useGraphRAG: useGraphRAG)
+                childWorkUnits.append(units)
+                self.children[index] = childCopy
+            }
+            let totalUnits = max(childWorkUnits.reduce(0, +), 1)
+            var completedUnits: Double = 0
+            
+            for index in self.children.indices {
+                let childUnits = Double(childWorkUnits[index])
                 
-                let childSuccess = await self.children[index].updateIndex(
+                progressCallback?(ProgressUpdate(
+                    current: index,
+                    total: childCount,
+                    stage: String(localized: "Processing item \(index + 1) of \(childCount) in \"\(self.name)\""),
+                    fractionComplete: completedUnits / Double(totalUnits)
+                ))
+                
+                var child = self.children[index]
+                let childSuccess = await child.updateIndex(
                     resourcesDirUrl: resourcesDirUrl,
                     useGraphRAG: useGraphRAG,
-                    progressCallback: progressCallback
+                    progressCallback: { update in
+                        let fraction = (
+                            completedUnits + (childUnits * max(0.0, min(update.fractionComplete, 1.0)))
+                        ) / Double(totalUnits)
+                        progressCallback?(ProgressUpdate(
+                            current: update.current,
+                            total: update.total,
+                            stage: update.stage,
+                            entities: update.entities,
+                            fractionComplete: fraction
+                        ))
+                    }
                 )
+                self.children[index] = child
+                
+                completedUnits += childUnits
+                
+                progressCallback?(ProgressUpdate(
+                    current: index + 1,
+                    total: childCount,
+                    stage: String(localized: "Finished item \(index + 1) of \(childCount) in \"\(self.name)\""),
+                    fractionComplete: completedUnits / Double(totalUnits)
+                ))
                 
                 if !childSuccess {
                     allChildrenSucceeded = false
@@ -379,12 +480,12 @@ public struct Resource: Identifiable, Codable, Hashable, Sendable {
             self.prevIndexDate = .now
             
             if useGraphRAG {
-                progressCallback?(
-                    childCount,
-                    childCount,
-                    String(localized: "Finished processing \"\(self.name)\""),
-                    0
-                )
+                progressCallback?(ProgressUpdate(
+                    current: childCount,
+                    total: childCount,
+                    stage: String(localized: "Finished processing \"\(self.name)\""),
+                    fractionComplete: 1.0
+                ))
             }
             
             return .skip(success: allChildrenSucceeded)

@@ -50,7 +50,6 @@ struct MessageShareMenu: View {
         } else { // Primary color is black
             shouldInvert = (luminance < 0.5)
         }
-        print("shouldInvert: \(shouldInvert)")
         return shouldInvert
     }
     

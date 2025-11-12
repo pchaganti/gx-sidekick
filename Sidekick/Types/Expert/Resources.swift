@@ -61,11 +61,43 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
     /// Represents progress when building graph indexes
     public struct GraphProgress: Codable, Hashable, Sendable {
         public var percentComplete: Double
+        public var stagePercentComplete: Double?
         public var stage: String?
+        public var stageIdentifier: String?
         
-        public init(percentComplete: Double, stage: String? = nil) {
+        public init(
+            percentComplete: Double,
+            stagePercentComplete: Double? = nil,
+            stage: String? = nil,
+            stageIdentifier: String? = nil
+        ) {
             self.percentComplete = percentComplete
+            self.stagePercentComplete = stagePercentComplete
             self.stage = stage
+            self.stageIdentifier = stageIdentifier
+        }
+        
+        enum CodingKeys: String, CodingKey {
+            case percentComplete
+            case stagePercentComplete
+            case stage
+            case stageIdentifier
+        }
+        
+        public init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            self.percentComplete = try container.decode(Double.self, forKey: .percentComplete)
+            self.stagePercentComplete = try container.decodeIfPresent(Double.self, forKey: .stagePercentComplete)
+            self.stage = try container.decodeIfPresent(String.self, forKey: .stage)
+            self.stageIdentifier = try container.decodeIfPresent(String.self, forKey: .stageIdentifier)
+        }
+        
+        public func encode(to encoder: Encoder) throws {
+            var container = encoder.container(keyedBy: CodingKeys.self)
+            try container.encode(percentComplete, forKey: .percentComplete)
+            try container.encodeIfPresent(stagePercentComplete, forKey: .stagePercentComplete)
+            try container.encodeIfPresent(stage, forKey: .stage)
+            try container.encodeIfPresent(stageIdentifier, forKey: .stageIdentifier)
         }
     }
     
@@ -151,7 +183,12 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
         // Log
         self.status = .indexing
         if self.useGraphRAG {
-            let initialProgress = GraphProgress(percentComplete: 0.0, stage: String(localized: "Preparing resources"))
+            let initialProgress = GraphProgress(
+                percentComplete: 0.0,
+                stagePercentComplete: 0.0,
+                stage: String(localized: "Preparing resources"),
+                stageIdentifier: String(localized: "Preparing resources")
+            )
             self.graphStatus = .building
             self.graphProgress = initialProgress
             progressUpdate?(initialProgress)
@@ -167,15 +204,33 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
         var allGraphsSucceeded = true
         
         let totalResourceCount = max(resources.count, 1)
+        var resourceWorkUnits: [Int] = []
+        for index in resources.indices {
+            var resource = resources[index]
+            let units = resource.workloadEstimate(useGraphRAG: useGraphRAG)
+            resourceWorkUnits.append(units)
+            resources[index] = resource
+        }
+        let totalWorkUnits = max(resourceWorkUnits.reduce(0, +), 1)
+        var completedWorkUnits: Double = 0
         
         var latestProgress: GraphProgress? = self.graphProgress
         
         for index in resources.indices {
+            let resourceUnits = Double(resourceWorkUnits[index])
             // Update progress at start of each resource
             if useGraphRAG {
+                let stageDescription = String(
+                    localized: "Processing resource \(index + 1) of \(totalResourceCount)"
+                )
+                let stageIdentifier = String(localized: "Preparing resource")
+                    .graphStageIdentifier(fallback: "preparing resource")
+                let overallProgress = completedWorkUnits / Double(totalWorkUnits)
                 let progress = GraphProgress(
-                    percentComplete: Double(index) / Double(totalResourceCount),
-                    stage: String(localized: "Processing resource \(index + 1) of \(totalResourceCount)")
+                    percentComplete: overallProgress,
+                    stagePercentComplete: 0.0,
+                    stage: stageDescription,
+                    stageIdentifier: stageIdentifier
                 )
                 self.graphStatus = .building
                 self.graphProgress = progress
@@ -186,17 +241,31 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
             let success = await resources[index].updateIndex(
                 resourcesDirUrl: indexUrl,
                 useGraphRAG: useGraphRAG,
-                progressCallback: { current, total, stage, entities in
-                    totalEntities = entities
-                    // Note: Can't update self here due to escaping closure limitations
-                    // Progress is updated at the resource level instead
+                progressCallback: { update in
+                    totalEntities = update.entities
                     guard useGraphRAG else { return }
-                    let stageProgress = total > 0 ? Double(current) / Double(total) : 0.0
-                    let clampedStageProgress = max(0.0, min(stageProgress, 1.0))
-                    let overallProgress = (Double(index) + clampedStageProgress) / Double(totalResourceCount)
+                    
+                    let resourceFraction = max(0.0, min(update.fractionComplete, 1.0))
+                    let overallProgress = (
+                        completedWorkUnits + (resourceUnits * resourceFraction)
+                    ) / Double(totalWorkUnits)
                     let clampedOverall = max(0.0, min(overallProgress, 1.0))
-                    let stageDescription = stage.isEmpty ? String(localized: "Processing resource \(index + 1) of \(totalResourceCount)") : stage
-                    let progressValue = GraphProgress(percentComplete: clampedOverall, stage: stageDescription)
+                    
+                    let stageDescription = update.stage.isEmpty ? String(
+                        localized: "Processing resource \(index + 1) of \(totalResourceCount)"
+                    ) : update.stage
+                    let stageIdentifier = stageDescription.graphStageIdentifier(
+                        fallback: String(localized: "Processing resource")
+                    )
+                    
+                    let stageProgressRaw = update.total > 0 ? Double(update.current) / Double(update.total) : resourceFraction
+                    let stageProgress = max(0.0, min(stageProgressRaw, 1.0))
+                    let progressValue = GraphProgress(
+                        percentComplete: clampedOverall,
+                        stagePercentComplete: stageProgress,
+                        stage: stageDescription,
+                        stageIdentifier: stageIdentifier
+                    )
                     latestProgress = progressValue
                     progressUpdate?(progressValue)
                 }
@@ -205,6 +274,10 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
             if useGraphRAG && !success {
                 allGraphsSucceeded = false
                 Self.logger.error("Graph building failed for resource at index \(index)")
+            }
+            
+            if useGraphRAG {
+                completedWorkUnits += resourceUnits
             }
             
             if useGraphRAG, let latest = latestProgress {
@@ -219,7 +292,13 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
             if self.useGraphRAG {
                 self.graphStatus = allGraphsSucceeded ? .ready : .error
                 if allGraphsSucceeded {
-                    let finalProgress = GraphProgress(percentComplete: 1.0, stage: String(localized: "Completed"))
+                    completedWorkUnits = Double(totalWorkUnits)
+                    let finalProgress = GraphProgress(
+                        percentComplete: 1.0,
+                        stagePercentComplete: 1.0,
+                        stage: String(localized: "Completed"),
+                        stageIdentifier: String(localized: "Completed")
+                    )
                     self.graphProgress = finalProgress
                     progressUpdate?(finalProgress)
                 }
@@ -386,6 +465,43 @@ public struct Resources: Identifiable, Codable, Hashable, Sendable {
         await MainActor.run {
             FileManager.showItemInFinder(url: self.indexUrl)
         }
+    }
+    
+}
+
+// MARK: - Graph Progress Helpers
+
+private extension String {
+    
+    func graphStageIdentifier(fallback: String) -> String {
+        let sanitized = self.sanitizedStageIdentifier()
+        if sanitized.isEmpty {
+            let fallbackSanitized = fallback.sanitizedStageIdentifier()
+            return fallbackSanitized.isEmpty ? fallback.lowercased() : fallbackSanitized
+        }
+        return sanitized
+    }
+    
+    private func sanitizedStageIdentifier() -> String {
+        var base = self
+        let patterns = [
+            "\\([^)]*\\)",
+            "\\b\\d+\\/\\d+\\b",
+            "\\b\\d+%\\b",
+            "\\b\\d+\\b"
+        ]
+        for pattern in patterns {
+            if let regex = try? NSRegularExpression(pattern: pattern, options: []) {
+                let range = NSRange(base.startIndex..., in: base)
+                base = regex.stringByReplacingMatches(in: base, options: [], range: range, withTemplate: "")
+            }
+        }
+        if let whitespaceRegex = try? NSRegularExpression(pattern: "\\s+", options: []) {
+            let range = NSRange(base.startIndex..., in: base)
+            base = whitespaceRegex.stringByReplacingMatches(in: base, options: [], range: range, withTemplate: " ")
+        }
+        base = base.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        return base
     }
     
 }
