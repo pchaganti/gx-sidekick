@@ -272,17 +272,14 @@ struct ResourceSectionView: View {
             // Capture values before async context
             let expertId = expert.id
             let expertName = expert.name
-            
             await MainActor.run {
                 expert.resources.graphStatus = .building
                 expertManager.update(expert)
             }
-            
             var updatedExpert = expert
             await updatedExpert.resources.migrateToGraphRAG(expertName: expertName) { progress in
                 updateExpertProgress(expertId: expertId, progress: progress)
             }
-            
             await MainActor.run {
                 expert = updatedExpert
                 expertManager.update(updatedExpert)

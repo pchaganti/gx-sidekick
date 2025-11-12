@@ -298,12 +298,6 @@ public struct Resource: Identifiable, Codable, Hashable, Sendable {
         Self.logger.info("Starting index for resource \"\(url, privacy: .public)\"")
         // Extract text from url
         let text: String
-        progressCallback?(ProgressUpdate(
-            current: 0,
-            total: 1,
-            stage: String(localized: "Indexing \"\(self.name)\""),
-            fractionComplete: 0.0
-        ))
         do {
             text = try await ExtractKit.shared.extractText(
                 url: self.url,
@@ -327,10 +321,109 @@ public struct Resource: Identifiable, Codable, Hashable, Sendable {
             metric: metric
         )
         Self.logger.info("Initialized index for resource \"\(url, privacy: .public)\"")
-        // Add texts to index
+        
+        let totalChunkCount = splitTexts.count
+        let displayTotal = max(totalChunkCount, 1)
+        var processedChunkIndices: Set<Int> = []
+        var processedChunkCount = 0
+        var chunkIdsNeedingUpdate: Set<Int> = []
+        var indexChanged = false
+        var existingItemsByChunk: [Int: SimilarityIndex.IndexItem] = [:]
+        
+        do {
+            if let existingItems = try similarityIndex.loadIndex(
+                fromDirectory: self.getIndexDirUrl(resourcesDirUrl: resourcesDirUrl),
+                name: self.filename
+            ) {
+                var staleItemIds: [String] = []
+                for item in existingItems {
+                    guard let indexString = item.metadata["itemIndex"],
+                          let chunkIndex = Int(indexString) else {
+                        staleItemIds.append(item.id)
+                        continue
+                    }
+                    if chunkIndex < totalChunkCount {
+                        existingItemsByChunk[chunkIndex] = item
+                    } else {
+                        staleItemIds.append(item.id)
+                    }
+                }
+                
+                for (index, splitText) in splitTexts.enumerated() {
+                    if let existingItem = existingItemsByChunk[index] {
+                        if existingItem.text == splitText {
+                            processedChunkIndices.insert(index)
+                        } else {
+                            chunkIdsNeedingUpdate.insert(index)
+                            staleItemIds.append(existingItem.id)
+                        }
+                    } else {
+                        chunkIdsNeedingUpdate.insert(index)
+                    }
+                }
+                
+                if !staleItemIds.isEmpty {
+                    for itemId in staleItemIds {
+                        similarityIndex.removeItem(id: itemId)
+                    }
+                    indexChanged = true
+                    self.saveIndex(
+                        resourcesDirUrl: resourcesDirUrl,
+                        similarityIndex: similarityIndex
+                    )
+                }
+                
+                processedChunkCount = processedChunkIndices.count
+                
+                if processedChunkCount > 0 {
+                    Self.logger.info("Resuming index for resource \"\(url, privacy: .public)\" (\(processedChunkCount)/\(splitTexts.count) chunks already processed)")
+                    let fraction = Double(processedChunkCount) / Double(totalChunkCount)
+                    progressCallback?(ProgressUpdate(
+                        current: processedChunkCount,
+                        total: displayTotal,
+                        stage: String(localized: "Resuming indexing \"\(self.name)\""),
+                        fractionComplete: fraction
+                    ))
+                }
+            } else {
+                chunkIdsNeedingUpdate = Set(0..<totalChunkCount)
+            }
+        } catch {
+            Self.logger.error("Failed to load existing index for resource \(url, privacy: .public): \(error, privacy: .public)")
+            chunkIdsNeedingUpdate = Set(0..<totalChunkCount)
+        }
+        
+        if chunkIdsNeedingUpdate.isEmpty && totalChunkCount > 0 {
+            Self.logger.info("Index already up to date for resource \"\(url, privacy: .public)\"")
+        }
+        
+        let initialStage: String
+        let initialFraction: Double
+        if totalChunkCount > 0 {
+            initialFraction = min(1.0, Double(processedChunkCount) / Double(totalChunkCount))
+        } else {
+            initialFraction = 1.0
+        }
+        if processedChunkCount == 0 {
+            initialStage = String(localized: "Indexing \"\(self.name)\"")
+        } else if processedChunkCount < totalChunkCount {
+            initialStage = String(localized: "Resuming indexing \"\(self.name)\"")
+        } else {
+            initialStage = String(localized: "Index up-to-date for \"\(self.name)\"")
+        }
+        progressCallback?(ProgressUpdate(
+            current: processedChunkCount,
+            total: displayTotal,
+            stage: initialStage,
+            fractionComplete: initialFraction
+        ))
+        
+        // Add texts to index, skipping chunks we've already processed
         let idString = self.id.uuidString
         let urlStrValue = self.url.isWebURL ? self.url.absoluteString : self.url.posixPath
-        for (index, splitText) in splitTexts.enumerated() {
+        for index in chunkIdsNeedingUpdate.sorted() {
+            let splitText = splitTexts[index]
+            
             let indexItemId = "\(idString)_\(index)"
             await similarityIndex.addItem(
                 id: indexItemId,
@@ -340,18 +433,45 @@ public struct Resource: Identifiable, Codable, Hashable, Sendable {
                     "itemIndex": "\(index)"
                 ]
             )
+            
+            processedChunkIndices.insert(index)
+            processedChunkCount += 1
+            indexChanged = true
+            
+            self.saveIndex(
+                resourcesDirUrl: resourcesDirUrl,
+                similarityIndex: similarityIndex
+            )
+            
+            let fraction = Double(processedChunkCount) / Double(totalChunkCount)
+            progressCallback?(ProgressUpdate(
+                current: processedChunkCount,
+                total: displayTotal,
+                stage: String(localized: "Indexed chunk \(processedChunkCount) of \(splitTexts.count) in \"\(self.name)\""),
+                fractionComplete: fraction
+            ))
         }
         Self.logger.info("Added items to index for resource \"\(url, privacy: .public)\"")
         // Save index
-        self.saveIndex(
-            resourcesDirUrl: resourcesDirUrl,
-            similarityIndex: similarityIndex
-        )
-        Self.logger.info("Saved index for resource \"\(url, privacy: .public)\"")
+        if indexChanged || totalChunkCount == 0 {
+            self.saveIndex(
+                resourcesDirUrl: resourcesDirUrl,
+                similarityIndex: similarityIndex
+            )
+            Self.logger.info("Saved index for resource \"\(url, privacy: .public)\"")
+        } else {
+            Self.logger.info("Skipped saving index for resource \"\(url, privacy: .public)\" (no changes detected)")
+        }
         
         // Build and save knowledge graph if enabled
         var graphSuccess = true
-        if useGraphRAG {
+        let graphDatabasePath = self.getGraphDatabasePath(resourcesDirUrl: resourcesDirUrl)
+        let graphFileExists = FileManager.default.fileExists(atPath: graphDatabasePath)
+        let shouldBuildGraph = useGraphRAG && (indexChanged || !graphFileExists)
+        if useGraphRAG && !shouldBuildGraph {
+            Self.logger.notice("Graph RAG up to date for resource \"\(url, privacy: .public)\" — skipping rebuild")
+        }
+        if shouldBuildGraph {
             Self.logger.notice("Graph RAG is enabled, starting graph build for resource \"\(url, privacy: .public)\"")
             let graphProgressWrapper: ((Int, Int, String, Int) -> Void)?
             if let progressCallback {
