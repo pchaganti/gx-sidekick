@@ -57,6 +57,11 @@ struct ConversationNameEditor: View {
 		if self.conversationState.selectedConversationId == self.conversation.id {
 			self.conversationState.selectedConversationId = nil
 		}
+        // Delete temp resources
+        let resourcesUrl: URL = Settings.cacheUrl
+            .appendingPathComponent("Temporary Resources")
+            .appendingPathComponent(self.conversation.id.uuidString)
+        try? FileManager.default.removeItem(at: resourcesUrl)
         // Delete
 		self.conversationManager.delete(conversation)
 		// If no conversations, create new
