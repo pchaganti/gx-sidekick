@@ -58,15 +58,15 @@ struct UserMessageAttachmentView: View {
             )
             .aspectRatio(contentMode: .fill)
             .frame(width: 44, height: 44)
-            .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
             .overlay(
-                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                RoundedRectangle(cornerRadius: 8, style: .continuous)
                     .stroke(Color.primary.opacity(0.12), lineWidth: 1)
             )
             .clipped()
         } else {
             ZStack {
-                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                RoundedRectangle(cornerRadius: 8, style: .continuous)
                     .fill(Color.primary.opacity(0.08))
                 Image(systemName: "globe")
                     .font(.system(size: 18, weight: .medium))
