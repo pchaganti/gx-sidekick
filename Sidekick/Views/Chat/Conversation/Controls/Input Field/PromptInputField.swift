@@ -155,6 +155,15 @@ struct PromptInputField: View {
             .frame(height: 25)
         }
         .padding([.vertical, .leading], 10)
+        .onDrop(
+            of: [
+                UTType.fileURL,
+                UTType.image,
+                UTType.png,
+                UTType.tiff
+            ],
+            delegate: self.promptController
+        )
     }
     
     /// Set up NSEvent keyDown monitor

@@ -232,7 +232,28 @@ class PromptingTextView: NSTextView {
     override func paste(
         _ sender: Any?
     ) {
-        if let plainText = NSPasteboard.general.string(forType: .string) {
+        let pasteboard = NSPasteboard.general
+        
+        let fileURLClasses: [AnyClass] = [NSURL.self]
+        let options: [NSPasteboard.ReadingOptionKey: Any] = [
+            .urlReadingFileURLsOnly: true
+        ]
+        if let urls = pasteboard.readObjects(forClasses: fileURLClasses, options: options) as? [URL],
+           !urls.isEmpty {
+            Self.logger.info("Handling pasted file URLs")
+            if handleFileURLs(urls) {
+                return
+            }
+        }
+        
+        if let imageData = pasteboard.data(forType: .png) ?? pasteboard.data(forType: .tiff) {
+            Self.logger.info("Handling pasted image data")
+            if handleImageData(imageData, pasteboard: pasteboard) {
+                return
+            }
+        }
+        
+        if let plainText = pasteboard.string(forType: .string) {
             self.insertText(plainText, replacementRange: self.selectedRange())
         } else {
             super.paste(sender)
@@ -268,15 +289,9 @@ class PromptingTextView: NSTextView {
         }
         
         // Try to handle file URLs
-        if let urls = pasteboard.readObjects(forClasses: [NSURL.self], options: nil) as? [URL] {
-            Self.logger.info("Found \(urls.count, privacy: .public) file URLs")
-            for url in urls {
-                Self.logger.info("Dropped file URL: \(url.path, privacy: .public)")
-                DispatchQueue.main.async { [weak self] in
-                    self?.onImageDrop?(url)
-                }
-            }
-            return true
+        if let urls = pasteboard.readObjects(forClasses: [NSURL.self], options: nil) as? [URL],
+           !urls.isEmpty {
+            return handleFileURLs(urls)
         }
         
         Self.logger.warning("No valid data found in drop")
@@ -359,6 +374,24 @@ class PromptingTextView: NSTextView {
             Self.logger.error("Failed to save image: \(error.localizedDescription, privacy: .public)")
             return false
         }
+    }
+    
+    private func handleFileURLs(_ urls: [URL]) -> Bool {
+        guard !urls.isEmpty else {
+            Self.logger.warning("No file URLs provided to handleFileURLs")
+            return false
+        }
+        
+        Self.logger.info("Handling \(urls.count, privacy: .public) file URLs")
+        
+        for url in urls {
+            Self.logger.info("Processing file URL: \(url.path, privacy: .public)")
+            DispatchQueue.main.async { [weak self] in
+                self?.onImageDrop?(url)
+            }
+        }
+        
+        return true
     }
 }
 

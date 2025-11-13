@@ -5,6 +5,7 @@
 //  Created by Bean John on 10/30/24.
 //
 
+import AppKit
 import FSKit_macOS
 import SwiftUI
 
@@ -72,6 +73,7 @@ struct MessageShareMenu: View {
         Menu {
             self.saveTextButton
             self.saveHTMLButton
+            self.savePNGButton
         } label: {
             Label("Export", systemImage: "square.and.arrow.up")
                 .symbolRenderingMode(.monochrome)
@@ -96,6 +98,15 @@ struct MessageShareMenu: View {
             self.saveHTML()
         } label: {
             Label("Save as HTML", systemImage: "square.and.arrow.up")
+                .labelStyle(.titleOnly)
+        }
+    }
+    
+    var savePNGButton: some View {
+        Button {
+            self.savePNG()
+        } label: {
+            Label("Save as PNG", systemImage: "square.and.arrow.up")
                 .labelStyle(.titleOnly)
         }
     }
@@ -204,4 +215,92 @@ struct MessageShareMenu: View {
         )
     }
     
+    /// Function to export messages as PNG
+    private func savePNG() {
+        // Determine background color based on color scheme
+        let backgroundColor: Color = colorScheme == .dark ? Color(red: 0.15, green: 0.15, blue: 0.15) : .white
+        
+        // Create a renderable view of all messages
+        let renderView = ConversationRenderView(messages: self.messages, colorScheme: colorScheme)
+            .environmentObject(model)
+            .environmentObject(conversationManager)
+            .environmentObject(expertManager)
+            .environmentObject(conversationState)
+            .environment(\.colorScheme, colorScheme) // Apply current color scheme
+            .frame(width: 800) // Fixed width for rendering
+            .padding()
+            .background(backgroundColor)
+        
+        // Select save location
+        guard var destination: URL = try? FileManager.selectFile(
+            dialogTitle: String(localized: "Select a Save Location"),
+            canSelectFiles: false,
+            canSelectDirectories: true,
+            allowMultipleSelection: false,
+            persistPermissions: false
+        ).first else {
+            return
+        }
+        
+        // Generate filename
+        let filename: String = "\(self.conversationName).png"
+        destination = destination.appendingPathComponent(filename)
+        
+        // Render and save
+        let renderer = ImageRenderer(content: renderView)
+        renderer.scale = 2.0
+        
+        // Get the actual size needed for the content
+        let proposedSize = renderer.proposedSize
+        
+        // Set renderer to use the full size without constraints
+        renderer.proposedSize = ProposedViewSize(width: 800, height: .infinity)
+        
+        guard let cgImage = renderer.cgImage else {
+            self.showSaveErrorDialog()
+            return
+        }
+        
+        // Save the image
+        let bitmapRep = NSBitmapImageRep(cgImage: cgImage)
+        guard let imageData = bitmapRep.representation(
+            using: .png,
+            properties: [:]
+        ) else {
+            self.showSaveErrorDialog()
+            return
+        }
+        
+        do {
+            try imageData.write(to: destination, options: .atomic)
+        } catch {
+            self.showSaveErrorDialog()
+        }
+    }
+    
+}
+
+/// Helper view to render the conversation for export
+private struct ConversationRenderView: View {
+    let messages: [Message]
+    let colorScheme: ColorScheme
+    
+    @EnvironmentObject private var model: Model
+    @EnvironmentObject private var conversationManager: ConversationManager
+    @EnvironmentObject private var expertManager: ExpertManager
+    @EnvironmentObject private var conversationState: ConversationState
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 13) {
+            ForEach(messages) { message in
+                MessageView(message: message)
+                    .environmentObject(model)
+                    .environmentObject(conversationManager)
+                    .environmentObject(conversationState)
+                    .environmentObject(PromptController())
+                    .environmentObject(Memories.shared)
+                    .environment(\.colorScheme, colorScheme)
+            }
+        }
+    }
 }
