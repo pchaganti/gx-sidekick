@@ -34,6 +34,12 @@ struct MultilineTextField: NSViewRepresentable {
         textView.textContainerInset = NSSize(width: 2, height: 4)
         textView.backgroundColor = .clear
         textView.drawsBackground = false
+        textView.usesAdaptiveColorMappingForDarkAppearance = true
+        textView.isRichText = false
+        textView.importsGraphics = false
+        textView.textColor = .labelColor
+        textView.typingAttributes[.foregroundColor] = NSColor.labelColor
+        textView.insertionPointColor = NSColor.controlAccentColor
         textView.isVerticallyResizable = true
         textView.isHorizontallyResizable = false
         // Set min and max size for proper scrolling
@@ -68,6 +74,19 @@ struct MultilineTextField: NSViewRepresentable {
         let coordinator = context.coordinator
         let isFirstResponder = textView.window?.firstResponder == textView
         let hasMarkedText = textView.hasMarkedText()
+        let desiredTextColor: NSColor = .labelColor
+        let desiredInsertionColor: NSColor = .controlAccentColor
+        if textView.textColor != desiredTextColor {
+            textView.textColor = desiredTextColor
+        }
+        if textView.insertionPointColor != desiredInsertionColor {
+            textView.insertionPointColor = desiredInsertionColor
+        }
+        if (textView.typingAttributes[.foregroundColor] as? NSColor) != desiredTextColor {
+            var attributes = textView.typingAttributes
+            attributes[.foregroundColor] = desiredTextColor
+            textView.typingAttributes = attributes
+        }
         
         // Save current scroll position
         let currentScrollPosition = nsView.contentView.bounds.origin

@@ -38,6 +38,7 @@ struct PromptInputField: View {
     
     // NSEvent monitor token
     @State private var keyEventMonitor: Any?
+    @State private var delayedClearTask: DispatchWorkItem?
     
     var selectedConversation: Conversation? {
         guard let selectedConversationId = conversationState.selectedConversationId else {
@@ -116,6 +117,12 @@ struct PromptInputField: View {
             }
             .onDisappear {
                 self.removeKeyEventMonitor()
+                self.cancelDelayedClear()
+            }
+            .onChange(of: self.promptController.prompt) { newValue in
+                if !newValue.isEmpty {
+                    self.cancelDelayedClear()
+                }
             }
             .popoverTip(addFilesTip)
     }
@@ -332,9 +339,7 @@ struct PromptInputField: View {
         }
         // Clear prompt
         self.clearInputs()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.clearInputs()
-        }
+        self.scheduleDelayedClear()
     }
     
     private func startTextGeneration(
@@ -364,6 +369,7 @@ struct PromptInputField: View {
         DispatchQueue.main.async {
             self.promptController.didManuallyToggleReasoning = false
             self.promptController.prompt.removeAll()
+            self.promptController.insertionPoint = 0
         }
     }
     
@@ -730,6 +736,23 @@ A user is chatting with an assistant and they have sent the message below. Gener
     private func handleModelChange() {
         // Function to be filled in
         return
+    }
+    
+    private func scheduleDelayedClear() {
+        self.cancelDelayedClear()
+        let task = DispatchWorkItem {
+            if self.promptController.prompt.isEmpty {
+                self.clearInputs()
+            }
+            self.delayedClearTask = nil
+        }
+        self.delayedClearTask = task
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: task)
+    }
+    
+    private func cancelDelayedClear() {
+        self.delayedClearTask?.cancel()
+        self.delayedClearTask = nil
     }
     
 }

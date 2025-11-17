@@ -434,7 +434,6 @@
 		20DAC4422DADF01F0039208E /* WebFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DAC4412DADF01F0039208E /* WebFunctions.swift */; };
 		20DEABED2CC4D68A0046447C /* Extension+CGImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DEABEC2CC4D68A0046447C /* Extension+CGImage.swift */; };
 		20DFF47F2DB7187C00F3F76C /* Markdown in Resources */ = {isa = PBXBuildFile; fileRef = 20DFF47E2DB7187C00F3F76C /* Markdown */; };
-		20DFF4812DB718E000F3F76C /* ExpertSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DFF4802DB718E000F3F76C /* ExpertSetupView.swift */; };
 		20DFF4842DB73C9000F3F76C /* mermaid-cli in Resources */ = {isa = PBXBuildFile; fileRef = 20DFF4832DB73C9000F3F76C /* mermaid-cli */; };
 		20DFF4862DB741D900F3F76C /* FileMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DFF4852DB741D900F3F76C /* FileMonitor.swift */; };
 		20DFF48B2DB76B9E00F3F76C /* Memories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DFF48A2DB76B9E00F3F76C /* Memories.swift */; };
@@ -447,6 +446,7 @@
 		20E48C292CB560B50085E7D6 /* ConversationControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E48C282CB560B50085E7D6 /* ConversationControlsView.swift */; };
 		20E48C2B2CB560E30085E7D6 /* Extension+CGKeyCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E48C2A2CB560E30085E7D6 /* Extension+CGKeyCode.swift */; };
 		20F2D5122CC1F33B004CE730 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 20F2D5112CC1F33B004CE730 /* Localizable.xcstrings */; };
+		20F4EC4E2EC5622400F8C33E /* marp in Resources */ = {isa = PBXBuildFile; fileRef = 20F4EC4D2EC5622400F8C33E /* marp */; };
 		20F84B992D1CFED400F44990 /* DefaultModels in Frameworks */ = {isa = PBXBuildFile; productRef = 20F84B982D1CFED400F44990 /* DefaultModels */; };
 		20FB0D892CBA8327006D062A /* Extension+SimilarityIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FB0D882CBA8327006D062A /* Extension+SimilarityIndex.swift */; };
 		20FB0D8B2CBA8828006D062A /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FB0D8A2CBA8828006D062A /* SearchResult.swift */; };
@@ -924,7 +924,6 @@
 		20DAC4412DADF01F0039208E /* WebFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebFunctions.swift; sourceTree = "<group>"; };
 		20DEABEC2CC4D68A0046447C /* Extension+CGImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+CGImage.swift"; sourceTree = "<group>"; };
 		20DFF47E2DB7187C00F3F76C /* Markdown */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Markdown; sourceTree = "<group>"; };
-		20DFF4802DB718E000F3F76C /* ExpertSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertSetupView.swift; sourceTree = "<group>"; };
 		20DFF4832DB73C9000F3F76C /* mermaid-cli */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "mermaid-cli"; sourceTree = "<group>"; };
 		20DFF4852DB741D900F3F76C /* FileMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileMonitor.swift; sourceTree = "<group>"; };
 		20DFF48A2DB76B9E00F3F76C /* Memories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memories.swift; sourceTree = "<group>"; };
@@ -937,7 +936,7 @@
 		20E48C282CB560B50085E7D6 /* ConversationControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationControlsView.swift; sourceTree = "<group>"; };
 		20E48C2A2CB560E30085E7D6 /* Extension+CGKeyCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+CGKeyCode.swift"; sourceTree = "<group>"; };
 		20F2D5112CC1F33B004CE730 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
-		20F7CAE92E17CFB90021B325 /* marp */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = marp; sourceTree = "<group>"; };
+		20F4EC4D2EC5622400F8C33E /* marp */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = marp; sourceTree = "<group>"; };
 		20FB0D882CBA8327006D062A /* Extension+SimilarityIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+SimilarityIndex.swift"; sourceTree = "<group>"; };
 		20FB0D8A2CBA8828006D062A /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 		20FDE29F2DAE50E7000A16F8 /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
@@ -1665,7 +1664,6 @@
 			children = (
 				20B97CD82CAFF2E7009A0A5D /* IntroductionView.swift */,
 				204D09862D1182EC0066B060 /* IntroductionPageView.swift */,
-				20DFF4822DB7194500F3F76C /* Expert */,
 			);
 			path = Introduction;
 			sourceTree = "<group>";
@@ -1851,7 +1849,7 @@
 		207E5EF32D70582200A8F6FA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				20F7CAEA2E17CFC80021B325 /* bin */,
+				20F4EC4C2EC5621A00F8C33E /* bin */,
 				207E5EF42D70584500A8F6FA /* marpCheatsheet.md */,
 			);
 			path = Resources;
@@ -2263,14 +2261,6 @@
 			path = "Toggle Buttons";
 			sourceTree = "<group>";
 		};
-		20DFF4822DB7194500F3F76C /* Expert */ = {
-			isa = PBXGroup;
-			children = (
-				20DFF4802DB718E000F3F76C /* ExpertSetupView.swift */,
-			);
-			path = Expert;
-			sourceTree = "<group>";
-		};
 		20DFF48E2DB7AB5100F3F76C /* Memories */ = {
 			isa = PBXGroup;
 			children = (
@@ -2289,10 +2279,10 @@
 			path = Styles;
 			sourceTree = "<group>";
 		};
-		20F7CAEA2E17CFC80021B325 /* bin */ = {
+		20F4EC4C2EC5621A00F8C33E /* bin */ = {
 			isa = PBXGroup;
 			children = (
-				20F7CAE92E17CFB90021B325 /* marp */,
+				20F4EC4D2EC5622400F8C33E /* marp */,
 			);
 			path = bin;
 			sourceTree = "<group>";
@@ -2523,6 +2513,7 @@
 				200AADCD2EC28395000995B7 /* dataVisualization2.png in Resources */,
 				200AADCE2EC28395000995B7 /* modelLibrary.png in Resources */,
 				200AADCF2EC28395000995B7 /* firstChat.png in Resources */,
+				20F4EC4E2EC5622400F8C33E /* marp in Resources */,
 				200AADD02EC28395000995B7 /* canvasExport.png in Resources */,
 				200AADD12EC28395000995B7 /* dataVisualizationDrag.png in Resources */,
 				200AADD22EC28395000995B7 /* expertList.png in Resources */,
@@ -2856,7 +2847,6 @@
 				204AE3BB2CEAF5AC0086B42D /* Command.swift in Sources */,
 				20A40CF92D73763500A9D9A9 /* Extension+Date.swift in Sources */,
 				209D397C2DC0E71600D1E5E5 /* ServerArgumentsManager.swift in Sources */,
-				20DFF4812DB718E000F3F76C /* ExpertSetupView.swift in Sources */,
 				20C62EC72D71403A00996566 /* SlideStudioQuickPromptsView.swift in Sources */,
 				208E34A62EC1BF40009B75C9 /* MalformedToolCall.swift in Sources */,
 				20E48C2B2CB560E30085E7D6 /* Extension+CGKeyCode.swift in Sources */,

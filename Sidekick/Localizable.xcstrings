@@ -68,6 +68,7 @@
       }
     },
     "### Experts are the primary way Sidekick taps into domain specific knowledge and gains context about you and your work. \n\n### Let's create an tutorial expert so you can learn about Sidekick!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -748,6 +749,7 @@
       }
     },
     "Click \"Add\", select \"File / Folder\", then click \"Open\" to add files." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -949,6 +951,7 @@
       }
     },
     "Configure the system prompt to customize the expert's behaviour" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -4254,6 +4257,9 @@
           }
         }
       }
+    },
+    "Save as PNG" : {
+
     },
     "Save as Text" : {
       "localizations" : {

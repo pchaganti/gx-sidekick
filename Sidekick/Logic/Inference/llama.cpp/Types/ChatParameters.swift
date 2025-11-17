@@ -154,8 +154,6 @@ The `\(expert.name)` is currently active. Use `query_database` to query the `\(e
     var stream: Bool = true
     var stream_options: StreamOptions = .init()
     
-    var provider: ProviderRoutingOptions = .init()
-    
     var reasoning: ReasoningOptions?
     
     /// Function to convert chat parameters to JSON
@@ -184,7 +182,6 @@ The `\(expert.name)` is currently active. Use `query_database` to query the `\(e
             let stream: Bool?
             let stream_options: StreamOptions?
             let tools: [OpenAIFunction]?
-            let provider: ProviderRoutingOptions?
             let reasoning: ReasoningOptions?
             
             init(
@@ -197,7 +194,6 @@ The `\(expert.name)` is currently active. Use `query_database` to query the `\(e
                 self.stream = omitted.contains(.stream) ? nil : parent.stream
                 self.stream_options = omitted.contains(.stream_options) ? nil : parent.stream_options
                 self.tools = omitted.contains(.tools) ? nil : parent.tools
-                self.provider = omitted.contains(.provider) ? nil : parent.provider
                 self.reasoning = omitted.contains(.reasoning) ? nil : parent.reasoning
             }
             
@@ -210,9 +206,6 @@ The `\(expert.name)` is currently active. Use `query_database` to query the `\(e
                 if let stream = stream      { try container.encode(stream, forKey: .stream) }
                 if let stream_options = stream_options { try container.encode(stream_options, forKey: .stream_options) }
                 if let tools = tools        { try container.encode(tools, forKey: .tools) }
-                if let provider = provider {
-                    try container.encode(provider, forKey: .provider)
-                }
                 if let reasoning = reasoning {
                     try container.encode(reasoning, forKey: .reasoning)
                 }
@@ -316,18 +309,6 @@ The `\(expert.name)` is currently active. Use `query_database` to query the `\(e
     
     struct StreamOptions: Codable {
         var include_usage: Bool = true
-    }
-    
-    struct ProviderRoutingOptions: Codable {
-        
-        var sort: SortOrder = .throughput
-        
-        enum SortOrder: String, Codable {
-            case throughput
-            case latency
-            case price
-        }
-        
     }
     
     struct ReasoningOptions: Codable {

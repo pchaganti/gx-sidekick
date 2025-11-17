@@ -19,9 +19,6 @@ struct IntroductionView: View {
     var body: some View {
         Group {
             switch introductionViewController.page {
-                case .setupExpert:
-                    ExpertSetupView()
-                        .padding(.horizontal)
                 case .done:
                     SetupCompleteView(
                         description: String(localized: "Sidekick is ready to use.")
